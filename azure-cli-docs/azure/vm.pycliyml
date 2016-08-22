@@ -1,0 +1,825 @@
+examples: []
+children:
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --vhd-name-prefix
+    isRequired: true
+    summary: The VHD name prefix specify for the VM disks.
+    description: ''
+  - name: --overwrite
+    summary: Overwrite the existing disk file.
+    description: ''
+    defaultValue: True
+  - name: --storage-container
+    summary: The storage account container name to save the disks.
+    description: ''
+    defaultValue: vhds
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: capture
+  name: az vm capture
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples:
+  - title: Create a simple Windows Server VM with private IP address only
+    code: "az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 \n --public-ip-address-type none"
+  - title: Create a simple Windows Server VM with public IP address and DNS entry
+    code: az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 --public-ip-address-dns-name my_globally_unique_vm_dns_name
+  - title: Create a Linux VM with SSH key authentication, add a public DNS entry and add to an existing Virtual Network and Availability Set.
+    code: az vm create -n my_vm_name -g myrg --image <linux image from 'az vm image list'> --authentication-type ssh --vnet my_existing_vnet --subnet-name subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The VM name.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --admin-password
+    summary: Password for the Virtual Machine if Authentication Type is Password.
+    description: ''
+  - name: --admin-username
+    summary: Username for the Virtual Machine.
+    description: ''
+    defaultValue: appveyor
+  - name: --authentication-type
+    summary: Password or SSH public key authentication. Defaults to password for Windows and SSH public key for Linux.
+    description: ''
+    parameterValueGroup:
+    - ssh, password
+  - name: --availability-set
+    summary: Name or ID of the resource.  None by default.
+    description: ''
+  - name: --custom-os-disk-type
+    summary: Custom image OS type.
+    description: ''
+    defaultValue: windows
+  - name: --image
+    summary: OS image (URN alias, URN or URI).
+    description: >-
+      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008SP1, Win2012Datacenter, Win2012R2Datacenter.
+
+      Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest.
+
+      Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
+    defaultValue: Win2012R2Datacenter
+    valueFrom: az vm image list, az vm image show
+  - name: --location -l
+    summary: Location.
+    description: ''
+  - name: --nics
+    summary: Names or IDs of existing NICs to reference.  The first NIC will be the primary NIC.
+    description: ''
+  - name: --nsg
+    summary: Name or ID of the resource.  Creates new by default.  Use "" for none.
+    description: ''
+  - name: --nsg-rule
+    summary: Network security group rule to create. Defaults open ports for allowing RDP on Windows and allowing SSH on Linux.
+    description: ''
+    parameterValueGroup:
+    - RDP, SSH
+  - name: --os-disk-name
+    summary: Name of new VM OS disk.
+    description: ''
+  - name: --private-ip-address
+    summary: Static private IP address (e.g. 10.0.0.5).
+    description: ''
+  - name: --public-ip-address
+    summary: Name or ID of the resource.  Creates new by default.  Use "" for none.
+    description: ''
+  - name: --public-ip-address-allocation
+    summary: ''
+    description: ''
+    defaultValue: dynamic
+    parameterValueGroup:
+    - dynamic, static
+  - name: --public-ip-address-dns-name
+    summary: Globally unique DNS Name for the Public IP.
+    description: ''
+  - name: --size
+    summary: The VM Size that should be created.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    description: ''
+    defaultValue: Standard_DS1
+  - name: --ssh-dest-key-path
+    summary: Destination file path on VM for SSH key.
+    description: ''
+  - name: --ssh-key-value
+    summary: SSH public key or public key file path.
+    description: ''
+  - name: --storage-account
+    summary: Name or ID of the resource.  Uses existing resource.
+    description: ''
+  - name: --storage-caching
+    summary: Storage caching type for the VM OS disk.
+    description: ''
+    defaultValue: ReadWrite
+  - name: --storage-container-name
+    summary: Name of storage container for the VM OS disk.
+    description: ''
+    defaultValue: vhds
+  - name: --storage-type
+    summary: The VM storage type.
+    description: ''
+    defaultValue: Premium_LRS
+  - name: --subnet-ip-address-prefix
+    summary: The subnet address prefix in CIDR format.
+    description: ''
+    defaultValue: 10.0.0.0/24
+  - name: --subnet-name
+    summary: The subnet name.  Creates if creating a new VNet, references if referencing an existing VNet.
+    description: ''
+  - name: --tags
+    summary: Multiple semicolon separated tags in 'key[=value]' format.  Use "" to clear existing tags.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of the resource.  Uses existing resource.
+    description: ''
+  - name: --vnet-ip-address-prefix
+    summary: The virtual network IP address prefix in CIDR format.
+    description: ''
+    defaultValue: 10.0.0.0/16
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: create
+  name: az vm create
+  description: See <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-quick-create-cli/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-quick-create-cli/</a> for an end-to-end tutorial.
+  summary: Create an Azure Virtual Machine.
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: deallocate
+  name: az vm deallocate
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: delete
+  name: az vm delete
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: generalize
+  name: az vm generalize
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: get-instance-view
+  name: az vm get-instance-view
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: list
+  name: az vm list
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: list-ip-addresses
+  name: az vm list-ip-addresses
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --location -l
+    isRequired: true
+    summary: Location.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: list-sizes
+  name: az vm list-sizes
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --location -l
+    isRequired: true
+    summary: Location.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: list-usage
+  name: az vm list-usage
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: list-vm-resize-options
+  name: az vm list-vm-resize-options
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine to open inbound traffic on.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --apply-to-subnet
+    summary: Allow inbound traffic on the subnet instead of the NIC.
+    description: ''
+  - name: --nsg-name
+    summary: The name of the network security group to create if one does not exist. Ignored if an NSG already exists.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: open-port
+  name: az vm open-port
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: redeploy
+  name: az vm redeploy
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --size
+    isRequired: true
+    summary: Sizes such as Standard_A4, Standard_F4s, etc.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: resize
+  name: az vm resize
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: restart
+  name: az vm restart
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: show
+  name: az vm show
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: start
+  name: az vm start
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: stop
+  name: az vm stop
+  description: ''
+  summary: ''
+  Metadata: {}
+- examples:
+  - title: Add or update a tag
+    code: az <command> -n name -g group --set tags.tagName=tagValue
+  - title: Remove a tag
+    code: az <command> -n name -g group --remove tags.tagName
+  - title: Set primary NIC
+    code: az <command> -n name -g group --set networkProfile.networkInterfaces[1].primary=false networkProfile.networkInterfaces[0].primary=true
+  - title: Add new non-primary NIC
+    code: az <command> -n name -g group --add networkProfile.networkInterfaces primary=false id=<NIC_ID>
+  - title: Remove fourth NIC
+    code: az <command> -n name -g group --remove networkProfile.networkInterfaces 3
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --api-version
+    summary: Client Api Version.
+    description: ''
+    defaultValue: 2016-03-30
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.list key=<value>.'
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <index>.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=value.'
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: update
+  name: az vm update
+  description: Update VM objects and properties using paths that correspond to 'az vm show'.  See examples.
+  summary: Update VM properties.
+  Metadata: {}
+uid: vm
+name: az vm
+description: ''
+summary: ''
+Metadata:
+  doc_source_url_repo: https://github.com/formulahendry/azure-cli/blob/appveyor-private-clone/
+  doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
