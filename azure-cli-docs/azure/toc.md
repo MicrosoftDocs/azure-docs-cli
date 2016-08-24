@@ -122,4 +122,7 @@
 ### [az vm image](vm\image.pycliyml)
 ### [az vm nic](vm\nic.pycliyml)
 ## [az vmss](vmss.pycliyml)
+### [az vmss diagnostics](vmss\diagnostics.pycliyml)
+### [az vmss extension](vmss\extension.pycliyml)
+#### [az vmss extension image](vmss\extension\image.pycliyml)
 ## [az webapp](webapp.pycliyml)
