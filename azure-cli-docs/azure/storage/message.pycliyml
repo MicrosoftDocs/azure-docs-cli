@@ -42,7 +42,7 @@ children:
   uid: clear
   name: az storage message clear
   description: ''
-  summary: ''
+  summary: Deletes all messages from the specified queue.
   Metadata: {}
 - examples: []
   parameters:
@@ -93,8 +93,8 @@ children:
     description: ''
   uid: delete
   name: az storage message delete
-  description: ''
-  summary: ''
+  description: "Normally after a client retrieves a message with the get_messages operation, \nthe client is expected to process and delete the message. To delete the \nmessage, you must have two items of data: id and pop_receipt. The \nid is returned from the previous get_messages operation. The \npop_receipt is returned from the most recent get_messages() or \nupdate_message() operation. In order for the delete_message operation \nto succeed, the pop_receipt specified on the request must match the \npop_receipt returned from the get_messages() or update_message() \noperation."
+  summary: Deletes the specified message.
   Metadata: {}
 - examples: []
   parameters:
@@ -143,8 +143,8 @@ children:
     description: ''
   uid: get
   name: az storage message get
-  description: ''
-  summary: ''
+  description: "When a message is retrieved from the queue, the response includes the message \ncontent and a pop_receipt value, which is required to delete the message. \nThe message is not automatically deleted from the queue, but after it has \nbeen retrieved, it is not visible to other clients for the time interval \nspecified by the visibility_timeout parameter."
+  summary: Retrieves one or more messages from the front of the queue.
   Metadata: {}
 - examples: []
   parameters:
@@ -190,8 +190,11 @@ children:
     description: ''
   uid: peek
   name: az storage message peek
-  description: ''
-  summary: ''
+  description: "Only messages that are visible may be retrieved. When a message is retrieved \nfor the first time with a call to get_messages, its dequeue_count property \nis set to 1. If it is not deleted and is subsequently retrieved again, the \ndequeue_count property is incremented. The client may use this value to \ndetermine how many times a message has been retrieved. Note that a call \nto peek_messages does not increment the value of DequeueCount, but returns \nthis value for the client to read."
+  summary: >-
+    Retrieves one or more messages from the front of the queue, but does
+
+    not alter the visibility of the message.
   Metadata: {}
 - examples: []
   parameters:
@@ -244,8 +247,8 @@ children:
     description: ''
   uid: put
   name: az storage message put
-  description: ''
-  summary: ''
+  description: "The visibility timeout specifies the time that the message will be \ninvisible. After the timeout expires, the message will become visible. \nIf a visibility timeout is not specified, the default value of 0 is used.\n\nThe message time-to-live specifies how long a message will remain in the \nqueue. The message will be deleted from the queue when the time-to-live \nperiod expires."
+  summary: Adds a new message to the back of the message queue.
   Metadata: {}
 - examples: []
   parameters:
@@ -303,8 +306,8 @@ children:
     description: ''
   uid: update
   name: az storage message update
-  description: ''
-  summary: ''
+  description: "You can also use this\noperation to update the contents of a message.\n\nThis operation can be used to continually extend the invisibility of a \nqueue message. This functionality can be useful if you want a worker role \nto “lease” a queue message. For example, if a worker role calls get_messages \nand recognizes that it needs more time to process a message, it can \ncontinually extend the message’s invisibility until it is processed. If \nthe worker role were to fail during processing, eventually the message \nwould become visible again and another worker role could process it."
+  summary: Updates the visibility timeout of a message.
   Metadata: {}
 uid: message
 name: az storage message
