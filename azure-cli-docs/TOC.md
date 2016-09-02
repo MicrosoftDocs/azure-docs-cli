@@ -52,7 +52,6 @@
 #### [az network nic ip-config](network\nic\ip-config.pycliyml)
 ##### [az network nic ip-config address-pool](network\nic\ip-config\address-pool.pycliyml)
 ##### [az network nic ip-config inbound-nat-rule](network\nic\ip-config\inbound-nat-rule.pycliyml)
-#### [az network nic scale-set](network\nic\scale-set.pycliyml)
 ### [az network nsg](network\nsg.pycliyml)
 #### [az network nsg rule](network\nsg\rule.pycliyml)
 ### [az network public-ip](network\public-ip.pycliyml)
@@ -128,4 +127,5 @@
 ### [az vmss diagnostics](vmss\diagnostics.pycliyml)
 ### [az vmss extension](vmss\extension.pycliyml)
 #### [az vmss extension image](vmss\extension\image.pycliyml)
+### [az vmss nic](vmss\nic.pycliyml)
 ## [az webapp](webapp.pycliyml)
