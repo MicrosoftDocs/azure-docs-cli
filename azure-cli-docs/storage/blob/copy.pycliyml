@@ -39,16 +39,16 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Var: AZURE_STORAGE_KEY.'
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Var: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
     description: ''
   - name: --connection-string
-    summary: 'Storage account connection string. Var: AZURE_STORAGE_CONNECTION_STRING.'
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
   - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Var: AZURE_SAS_TOKEN.'
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   uid: az_storage_blob_copy_cancel
   name: az storage blob copy cancel
@@ -68,10 +68,6 @@ children:
     isRequired: true
     summary: The container name.
     description: ''
-  - name: --source-uri -u
-    isRequired: true
-    summary: 'A URL of up to 2 KB in length that specifies an Azure file or blob. The value should be URL-encoded as it would appear in a request URI. If the source is in another account, the source must either be public or must be authenticated via a shared access signature. If the source is public, no authentication is required. Examples: <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a><a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a>?snapshot=&lt;DateTime&gt; <a href="https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken">https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken</a>.'
-    description: ''
   - name: --destination-if-match
     summary: An ETag value, or the wildcard character (*). Specify an ETag value for this conditional header to copy the blob only if the specified ETag value matches the ETag value for an existing destination blob. If the ETag for the destination blob does not match the ETag specified for If-Match, the Blob service returns status code 412 (Precondition Failed).
     description: ''
@@ -88,7 +84,13 @@ children:
     summary: The lease ID specified for this header must match the lease ID of the destination blob. If the request does not include the lease ID or it is not valid, the operation fails with status code 412 (Precondition Failed).
     description: ''
   - name: --metadata
-    summary: Metadata in space-separated key=value pairs.
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --source-blob
+    summary: The blob name for the source storage account.
+    description: ''
+  - name: --source-container
+    summary: The container name for the source storage account.
     description: ''
   - name: --source-if-match
     summary: An ETag value, or the wildcard character (*). Specify this conditional header to copy the source blob only if its ETag matches the value specified. If the ETag values do not match, the Blob service returns status code 412 (Precondition Failed). This header cannot be specified if the source is an Azure File.
@@ -104,6 +106,21 @@ children:
     description: ''
   - name: --source-lease-id
     summary: Specify this to perform the Copy Blob operation only if the lease ID given matches the active lease ID of the source blob.
+    description: ''
+  - name: --source-path
+    summary: The file path for the source storage account.
+    description: ''
+  - name: --source-sas
+    summary: The shared access signature for the source storage account.
+    description: ''
+  - name: --source-share
+    summary: The share name for the source storage account.
+    description: ''
+  - name: --source-snapshot
+    summary: The blob snapshot for the source storage account.
+    description: ''
+  - name: --source-uri -u
+    summary: 'A URL of up to 2 KB in length that specifies an Azure file or blob. The value should be URL-encoded as it would appear in a request URI. If the source is in another account, the source must either be public or must be authenticated via a shared access signature. If the source is public, no authentication is required. Examples: <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a><a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a>?snapshot=&lt;DateTime&gt; <a href="https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken">https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken</a>.'
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -127,16 +144,16 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Var: AZURE_STORAGE_KEY.'
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Var: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
     description: ''
   - name: --connection-string
-    summary: 'Storage account connection string. Var: AZURE_STORAGE_CONNECTION_STRING.'
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
   - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Var: AZURE_SAS_TOKEN.'
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   uid: az_storage_blob_copy_start
   name: az storage blob copy start
@@ -150,3 +167,5 @@ summary: ''
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/commit/befd4650a69482bf296c27c967d198f8cee9a5e7
