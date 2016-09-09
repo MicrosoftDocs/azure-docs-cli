@@ -13,10 +13,10 @@ children:
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --public-access
-    summary: Specifies whether data in the container may be accessed publically. By default, container data is private to the account owner. Use "blob" to allow public read access for blobs. Use "container" to allow public read and list access to the entire container.
+    summary: Specifies whether data in the container may be accessed publically. By default, container data is private ("off") to the account owner. Use "blob" to allow public read access for blobs. Use "container" to allow public read and list access to the entire container.
     description: ''
     parameterValueGroup:
-    - blob, container
+    - container, off, blob
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
@@ -69,12 +69,6 @@ children:
   - name: --fail-not-exist
     summary: Throw an exception if the container does not exist.
     description: ''
-  - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
-    description: ''
-  - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
-    description: ''
   - name: --lease-id
     summary: If specified, delete_container only succeeds if the container's lease is active and matches this ID. Required if the container has an active lease.
     description: ''
@@ -98,6 +92,12 @@ children:
     description: ''
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  - name: --if-modified-since
+    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -288,6 +288,67 @@ children:
   name: az storage container list
   description: "The generator will lazily follow the continuation tokens returned by\nthe service and stop when all containers have been returned or num_results is reached.\n\nIf num_results is specified and the account has more than that number of \ncontainers, the generator will have a populated next_marker field once it \nfinishes. This marker can be used to create a new generator if more \nresults are desired."
   summary: Returns a generator to list the containers under the specified account.
+  Metadata: {}
+- examples: []
+  parameters:
+  - name: --name -n
+    isRequired: true
+    summary: The container name.
+    description: ''
+  - name: --lease-id
+    summary: If specified, set_container_acl only succeeds if the container's lease is active and matches this ID.
+    description: ''
+  - name: --public-access
+    summary: Specifies whether data in the container may be accessed publically. By default, container data is private ("off") to the account owner. Use "blob" to allow public read access for blobs. Use "container" to allow public read and list access to the entire container.
+    description: ''
+    parameterValueGroup:
+    - container, off, blob
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, tsv, list, table, jsonc
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  - name: --if-modified-since
+    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  uid: az_storage_container_set-permission
+  name: az storage container set-permission
+  description: >-
+    The permissions
+
+    indicate whether blobs in a container may be accessed publicly.
+  summary: "Sets the permissions for the specified container or stored access \npolicies that may be used with Shared Access Signatures."
   Metadata: {}
 - examples: []
   parameters:

@@ -108,7 +108,6 @@
 #### [az storage share metadata](storage\share\metadata.pycliyml)
 #### [az storage share policy](storage\share\policy.pycliyml)
 ### [az storage table](storage\table.pycliyml)
-#### [az storage table batch](storage\table\batch.pycliyml)
 #### [az storage table policy](storage\table\policy.pycliyml)
 ## [az tag](tag.pycliyml)
 ## [az taskhelp](taskhelp.pycliyml)
