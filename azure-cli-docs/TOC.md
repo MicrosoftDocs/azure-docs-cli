@@ -30,7 +30,6 @@
 ##### [az network dns record mx](network\dns\record\mx.pycliyml)
 ##### [az network dns record ns](network\dns\record\ns.pycliyml)
 ##### [az network dns record ptr](network\dns\record\ptr.pycliyml)
-##### [az network dns record soa](network\dns\record\soa.pycliyml)
 ##### [az network dns record srv](network\dns\record\srv.pycliyml)
 ##### [az network dns record txt](network\dns\record\txt.pycliyml)
 #### [az network dns record-set](network\dns\record-set.pycliyml)
