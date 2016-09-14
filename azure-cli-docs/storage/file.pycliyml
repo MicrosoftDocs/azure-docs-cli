@@ -71,18 +71,10 @@ children:
     summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the file. If this is the entire file, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be valuable if the file is being concurrently modified to enforce atomicity or if many files are expected to be empty as an extra request is required for empty files if max_connections is greater than 1.
     description: ''
     defaultValue: 2
-  - name: --max-retries
-    summary: Number of times to retry download of file chunk if an error occurs.
-    description: ''
-    defaultValue: 5
   - name: --open-mode
     summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
     description: ''
     defaultValue: wb
-  - name: --retry-interval
-    summary: Sleep time in secs between retries.
-    description: ''
-    defaultValue: 1.0
   - name: --start-range
     summary: 'Start of byte range to use for downloading a section of the file. If no end_range is given, all bytes after the start_range will be downloaded. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
     description: ''
@@ -269,6 +261,9 @@ children:
   - name: --share-name -s
     isRequired: true
     summary: The file share name.
+    description: ''
+  - name: '---context'
+    summary: ''
     description: ''
   - name: --marker
     summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
@@ -529,20 +524,12 @@ children:
     summary: Maximum number of parallel connections to use.
     description: ''
     defaultValue: 2
-  - name: --max-retries
-    summary: Number of times to retry upload of file chunk if an error occurs.
-    description: ''
-    defaultValue: 5
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --path -p
     summary: The path to the file within the file share. If the file name is omitted, the source file name will be used.
     description: ''
-  - name: --retry-interval
-    summary: Sleep time in secs between retries.
-    description: ''
-    defaultValue: 1.0
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
@@ -646,4 +633,4 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/commit/53844cc40dbcab48e3751eae3013a7d9fbeacdf4
+  gitcommit: https://github.com/Azure/azure-cli/commit/617c5a2ce047c75c06d9a49aaccd3010c9004344
