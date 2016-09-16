@@ -60,6 +60,7 @@
 #### [az network traffic-manager endpoint](network\traffic-manager\endpoint.pycliyml)
 #### [az network traffic-manager profile](network\traffic-manager\profile.pycliyml)
 ### [az network vnet](network\vnet.pycliyml)
+#### [az network vnet peering](network\vnet\peering.pycliyml)
 #### [az network vnet subnet](network\vnet\subnet.pycliyml)
 ### [az network vpn-connection](network\vpn-connection.pycliyml)
 #### [az network vpn-connection shared-key](network\vpn-connection\shared-key.pycliyml)
