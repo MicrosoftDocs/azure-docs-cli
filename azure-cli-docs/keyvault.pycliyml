@@ -10,10 +10,6 @@ children:
     isRequired: true
     summary: Name of the key vault.
     description: ''
-  - name: --resource-group -g
-    isRequired: true
-    summary: Name of resource group.
-    description: ''
   - name: --enabled-for-deployment
     summary: Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault.
     description: ''
@@ -26,6 +22,9 @@ children:
   - name: --no-self-perms
     summary: If specified, don't add permissions for the current user in the new vault.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
   - name: --sku
     summary: SKU details.
     description: ''
@@ -33,7 +32,7 @@ children:
     parameterValueGroup:
     - premium, standard
   - name: --tags
-    summary: ''
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -55,19 +54,17 @@ children:
     description: ''
   uid: create
   name: az keyvault create
-  description: ''
-  summary: Properties of the vault.
+  description: Default permissions are created for the current user unless the --no-self-perms flag is specified.
+  summary: Create a new Key Vault.
   Metadata: {}
 - examples: []
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
+    isRequired: true
     summary: Name of the key vault.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group.
+    summary: Proceed only if Key Vault belongs to the specified resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -90,27 +87,25 @@ children:
   uid: delete
   name: az keyvault delete
   description: ''
-  summary: Deletes the specified Azure key vault.
+  summary: Delete a Key Vault.
   Metadata: {}
 - examples: []
   parameters:
+  - name: --name -n
+    isRequired: true
+    summary: Name of the key vault.
+    description: ''
   - name: --object-id
     summary: A GUID that identifies the principal that will receive permissions.
+    description: ''
+  - name: --resource-group -g
+    summary: Proceed only if Key Vault belongs to the specified resource group.
     description: ''
   - name: --spn
     summary: Name of a service principal that will receive permissions.
     description: ''
   - name: --upn
     summary: Name of a user principal that will receive permissions.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    summary: Name of the key vault.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -161,18 +156,19 @@ children:
   uid: list
   name: az keyvault list
   description: ''
-  summary: List Vaults.
+  summary: List Key Vaults within a subscription or resource group.
   Metadata: {}
 - examples: []
   parameters:
+  - name: --name -n
+    isRequired: true
+    summary: Name of the key vault.
+    description: ''
   - name: --object-id
     summary: A GUID that identifies the principal that will receive permissions.
     description: ''
-  - name: --perms-to-keys
-    summary: Permissions to keys.
-    description: ''
-  - name: --perms-to-secrets
-    summary: Permissions to secrets.
+  - name: --resource-group -g
+    summary: Proceed only if Key Vault belongs to the specified resource group.
     description: ''
   - name: --spn
     summary: Name of a service principal that will receive permissions.
@@ -180,14 +176,14 @@ children:
   - name: --upn
     summary: Name of a user principal that will receive permissions.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+  - name: --certificate-permissions
+    summary: 'Space separated list. Possible values: all, get, list, delete, create, import, update, managecontacts, getissuers, listissuers, setissuers, deleteissuers, manageissuers.'
     description: ''
-  - name: --name -n
-    summary: Name of the key vault.
+  - name: --key-permissions
+    summary: 'Space separated list. Possible values: all, encrypt, decrypt, wrapKey, unwrapKey, sign, verify, get, list, create, update, import, delete, backup, restore.'
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group.
+  - name: --secret-permissions
+    summary: 'Space separated list. Possible values: all, get, list, set, delete.'
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -214,14 +210,12 @@ children:
   Metadata: {}
 - examples: []
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
+    isRequired: true
     summary: Name of the key vault.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group.
+    summary: Proceed only if Key Vault belongs to the specified resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -244,18 +238,16 @@ children:
   uid: show
   name: az keyvault show
   description: ''
-  summary: Gets the specified Azure key vault.
+  summary: Show details of a Key Vault.
   Metadata: {}
 - examples: []
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
+    isRequired: true
     summary: Name of the key vault.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group.
+    summary: Proceed only if Key Vault belongs to the specified resource group.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -287,7 +279,7 @@ children:
   uid: update
   name: az keyvault update
   description: ''
-  summary: ''
+  summary: Update properties of a Key Vault.
   Metadata: {}
 uid: keyvault
 name: az keyvault
@@ -297,4 +289,4 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/commit/c550e6526dc2e349e71a1346046330ddbf0f151b
+  gitcommit: https://github.com/Azure/azure-cli/commit/d72cfaa7f2f24a96d5a0e1c5da5f6d00c0ed8467
