@@ -21,7 +21,6 @@
 ### [az iot device](iot\device.pycliyml)
 ### [az iot hub](iot\hub.pycliyml)
 ## [az keyvault](keyvault.pycliyml)
-### [az keyvault certificate](keyvault\certificate.pycliyml)
 ### [az keyvault key](keyvault\key.pycliyml)
 ### [az keyvault secret](keyvault\secret.pycliyml)
 ## [az network](network.pycliyml)
