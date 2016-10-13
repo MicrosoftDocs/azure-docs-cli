@@ -1,18 +1,14 @@
 examples: []
 children:
-- examples: []
+- examples:
+  - title: create a deployment from a remote template file
+    code: az resource group deployment create -g mygroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
+  - title: create a deployment from a local template file and use parameter values in string
+    code: 'az resource group deployment create -g mygroup --template-file azuredeploy.json --parameters "{"location": {"value": "westus"}}"'
   parameters:
-  - name: --name -n
-    isRequired: true
-    summary: The deployment name.
-    description: ''
   - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
-    description: ''
-  - name: --template-file-path
-    isRequired: true
-    summary: Path to deployment template JSON file.
     description: ''
   - name: --mode
     summary: Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
@@ -20,8 +16,17 @@ children:
     defaultValue: incremental
     parameterValueGroup:
     - Complete, Incremental
-  - name: --parameters-file-path
-    summary: Path to deployment parameters JSON file.
+  - name: --name -n
+    summary: The deployment name. Default to template file base name.
+    description: ''
+  - name: --parameters
+    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file.
+    description: ''
+  - name: --template-file
+    summary: A template file path in the file system.
+    description: ''
+  - name: --template-uri
+    summary: A uri to a remote template file.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -44,7 +49,7 @@ children:
   uid: create
   name: az resource group deployment create
   description: ''
-  summary: Deploy resources with an ARM template.
+  summary: Start a deployment.
   Metadata: {}
 - examples: []
   parameters:
@@ -74,10 +79,10 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: exists
-  name: az resource group deployment exists
+  uid: delete
+  name: az resource group deployment delete
   description: ''
-  summary: Checks whether deployment exists.
+  summary: Delete deployment.
   Metadata: {}
 - examples: []
   parameters:
@@ -186,18 +191,20 @@ children:
     isRequired: true
     summary: Name of resource group.
     description: ''
-  - name: --template-file-path
-    isRequired: true
-    summary: Path to deployment template JSON file.
-    description: ''
   - name: --mode
     summary: Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
     description: ''
     defaultValue: incremental
     parameterValueGroup:
     - Complete, Incremental
-  - name: --parameters-file-path
-    summary: Path to deployment parameters JSON file.
+  - name: --parameters
+    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file.
+    description: ''
+  - name: --template-file
+    summary: A template file path in the file system.
+    description: ''
+  - name: --template-uri
+    summary: A uri to a remote template file.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -220,7 +227,7 @@ children:
   uid: validate
   name: az resource group deployment validate
   description: ''
-  summary: Validate an ARM template.
+  summary: ''
   Metadata: {}
 uid: deployment
 name: az resource group deployment
@@ -230,4 +237,4 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/commit/de2c7e69afc5da26953f1340e3e1b5eb272c9957
+  gitcommit: https://github.com/Azure/azure-cli/commit/98aae45754eec14c600e9f8c5e0704062e79767b
