@@ -1,38 +1,28 @@
 examples: []
 children:
-- examples: []
+- examples:
+  - title: Create a container registry with a new storage account
+    code: az acr create -n myRegistry -g myResourceGroup -l southus
+  - title: Create a container registry with an existing storage account
+    code: az acr create -n myRegistry -g myResourceGroup -l southus -s myStorageAccount
   parameters:
+  - name: --location -l
+    isRequired: true
+    summary: Location.
+    description: ''
   - name: --name -n
     isRequired: true
-    summary: Connection name.
+    summary: Name of container registry.
     description: ''
   - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
-  - name: --vnet-gateway1-id
-    isRequired: true
-    summary: Connect from this gateway to another gateway or express route circuit.
+  - name: --enable-admin
+    summary: Enable admin user.
     description: ''
-  - name: --express-route-circuit2-id
-    summary: Connect to this express route circuit from vnet gateway 1 using connection type ExpressRoute.
-    description: ''
-  - name: --local-gateway2-id
-    summary: Connect to this local gateway from vnet gateway 1 using connection type IPSec.
-    description: ''
-  - name: --location -l
-    summary: Location.
-    description: ''
-  - name: --routing-weight
-    summary: Connection routing weight.
-    description: ''
-    defaultValue: 10
-  - name: --shared-key
-    summary: Shared IPSec key, base64 contents of the certificate file or file path.
-    description: ''
-    defaultValue: none
-  - name: --vnet-gateway2-id
-    summary: Connect to this vnet gateway from vnet gateway 1 using connection type Vnet2Vnet.
+  - name: --storage-account-name -s
+    summary: Name of an existing storage account.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -53,17 +43,15 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   uid: create
-  name: az network vpn-connection create
+  name: az acr create
   description: ''
-  summary: Create or update a virtual machine.
+  summary: Create a container registry.
   Metadata: {}
 - examples: []
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    summary: The name of the virtual network gateway connection.
+    isRequired: true
+    summary: Name of container registry.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group.
@@ -87,19 +75,17 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   uid: delete
-  name: az network vpn-connection delete
+  name: az acr delete
   description: ''
-  summary: >-
-    The Delete VirtualNetworkGatewayConnection operation deletes the
-
-    specified virtual network Gateway connection through Network resource
-
-    provider.
+  summary: Delete a container registry.
   Metadata: {}
-- examples: []
+- examples:
+  - title: List container registries and show result in a table
+    code: az acr list -o table
+  - title: List container registries in a resource group and show result in a table
+    code: az acr list -g myResourceGroup -o table
   parameters:
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -121,20 +107,15 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   uid: list
-  name: az network vpn-connection list
+  name: az acr list
   description: ''
-  summary: >-
-    The List VirtualNetworkGatewayConnections operation retrieves all the
-
-    virtual network gateways connections created.
+  summary: List container registries.
   Metadata: {}
 - examples: []
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    summary: The name of the virtual network gateway connection.
+    isRequired: true
+    summary: Name of container registry.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group.
@@ -158,34 +139,34 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   uid: show
-  name: az network vpn-connection show
+  name: az acr show
   description: ''
-  summary: >-
-    The Get VirtualNetworkGatewayConnection operation retrieves
-
-    information about the specified virtual network gateway connection
-
-    through Network resource provider.
+  summary: Get a container registry.
   Metadata: {}
-- examples: []
+- examples:
+  - title: Update tags for a container registry
+    code: az acr update -n myRegistry --tags key1=value1 key2=value2
+  - title: Enable admin user for a container registry
+    code: az acr update -n myRegistry --enable-admin
   parameters:
-  - name: --ids
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    summary: The name of the virtual network gateway connection.
+    isRequired: true
+    summary: Name of container registry.
+    description: ''
+  - name: --disable-admin
+    summary: Disable admin user.
+    description: ''
+  - name: --enable-admin
+    summary: Enable admin user.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --tags
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  - name: --tenant-id -t
+    summary: 'Tenant id for service principal login. Warning: Changing tenant id will invalidate assigned access of existing service principals.'
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -206,18 +187,12 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   uid: update
-  name: az network vpn-connection update
+  name: az acr update
   description: ''
-  summary: ''
+  summary: Update a container registry.
   Metadata: {}
-uid: vpn-connection
-name: az network vpn-connection
+uid: acr
+name: az acr
 description: ''
-summary: Manage VPN connections.
-Metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/097931a17e73471b54e2360fdc19db719889f0af/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 9/20/2016 7:43:34 PM
-  ms.date: 9/20/2016
+summary: Commands to manage Azure container registries.
+Metadata: {}
