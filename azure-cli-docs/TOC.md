@@ -16,6 +16,7 @@
 ### [az appservice web](appservice\web.pycliyml)
 #### [az appservice web config](appservice\web\config.pycliyml)
 ##### [az appservice web config appsettings](appservice\web\config\appsettings.pycliyml)
+##### [az appservice web config container](appservice\web\config\container.pycliyml)
 ##### [az appservice web config hostname](appservice\web\config\hostname.pycliyml)
 #### [az appservice web deployment](appservice\web\deployment.pycliyml)
 ##### [az appservice web deployment slot](appservice\web\deployment\slot.pycliyml)
