@@ -3,7 +3,6 @@
 ## [az acr](acr.pycliyml)
 ### [az acr credential](acr\credential.pycliyml)
 ### [az acr repository](acr\repository.pycliyml)
-### [az acr storage](acr\storage.pycliyml)
 ## [az acs](acs.pycliyml)
 ### [az acs dcos](acs\dcos.pycliyml)
 ## [az ad](ad.pycliyml)
