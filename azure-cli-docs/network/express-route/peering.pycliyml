@@ -1,69 +1,58 @@
-htmlId: circuit-peering
+htmlId: peering
 examples: []
 children:
 - htmlId: create
   examples: []
   parameters:
-  - name: --bandwidth-in-mbps
-    isRequired: true
-    summary: Bandwidth in Mbps of the circuit being created. It must exactly match one of the available bandwidth offers List ExpressRoute Service Providers API call.
-    description: ''
   - name: --circuit-name
     isRequired: true
-    summary: Name of the ExpressRoute circuit.
+    summary: Express Route circuit name.
     description: ''
   - name: --peer-asn
     isRequired: true
-    summary: The autonomous system number of the customer/connectivity provider.
+    summary: Autonomous system number of the customer/connectivity provider.
     description: ''
-  - name: --peering-location
+  - name: --peering-type
     isRequired: true
-    summary: Name of the peering location and not the ARM resource location. It must exactly match one of the available peering locations from List ExpressRoute Service Providers API call.
+    summary: BGP peering type for the circuit.
     description: ''
-  - name: --primary-peer-address-prefix
+    parameterValueGroup:
+    - AzurePrivatePeering, AzurePublicPeering, MicrosoftPeering
+  - name: --primary-peer-subnet
     isRequired: true
-    summary: /30 subnet used to configure IP addresses for interfaces on Link1.
+    summary: /30 subnet used to configure IP addresses for primary interface.
     description: ''
   - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
-  - name: --secondary-peer-address-prefix
+  - name: --secondary-peer-subnet
     isRequired: true
-    summary: /30 subnet used to configure IP addresses for interfaces on Link2.
-    description: ''
-  - name: --service-provider-name
-    isRequired: true
-    summary: Name of the ExpressRoute Service Provider. It must exactly match one of the Service Providers from List ExpressRoute Service Providers API call.
+    summary: /30 subnet used to configure IP addresses for secondary interface.
     description: ''
   - name: --vlan-id
     isRequired: true
-    summary: Specifies the identifier that is used to identify the customer.
+    summary: Identifier used to identify the customer.
     description: ''
-  - name: --location -l
-    summary: Location.
+  - name: --shared-key
+    summary: Key for generating an MD5 for the BGP session.
     description: ''
-  - name: --peering-type
-    summary: BGP peering type for the Circuit.
+  - name: --advertised-public-prefix-state
+    summary: Configuration state of the BGP session.
     description: ''
-    defaultValue: AzurePrivatePeering
     parameterValueGroup:
-    - AzurePrivatePeering, AzurePublicPeering, MicrosoftPeering
-  - name: --sku-family
-    summary: Chosen SKU family of ExpressRoute circuit.
+    - Configured, Configuring, NotConfigured, ValidationNeeded
+  - name: --advertised-public-prefixes
+    summary: List of prefixes to be advertised through the BGP peering.
     description: ''
-    defaultValue: MeteredData
+  - name: --customer-asn
+    summary: Autonomous system number of the customer.
+    description: ''
+  - name: --routing-registry-name
+    summary: Internet Routing Registry / Regional Internet Registry.
+    description: ''
     parameterValueGroup:
-    - MeteredData, UnlimitedData
-  - name: --sku-tier
-    summary: Chosen SKU Tier of ExpressRoute circuit.
-    description: ''
-    defaultValue: Standard
-    parameterValueGroup:
-    - Premium, Standard
-  - name: --tags
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
+    - AFRINIC, ALTDB, APNIC, ARIN, LACNIC, LEVEL3, RADB, RIPENCC
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
     description: ''
@@ -82,24 +71,24 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_network_express-route_circuit-peering_create
-  name: az network express-route circuit-peering create
+  uid: az_network_express-route_peering_create
+  name: az network express-route peering create
   description: ''
-  summary: Create or update a virtual machine.
+  summary: Create peering settings in an Express Route circuit.
   Metadata: {}
 - htmlId: delete
   examples: []
   parameters:
   - name: --circuit-name
-    isRequired: true
-    summary: The name of the express route circuit.
+    summary: Express Route circuit name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    isRequired: true
     summary: The name of the peering.
     description: ''
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -120,23 +109,21 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_network_express-route_circuit-peering_delete
-  name: az network express-route circuit-peering delete
+  uid: az_network_express-route_peering_delete
+  name: az network express-route peering delete
   description: ''
-  summary: >-
-    The delete peering operation deletes the specified peering from the
-
-    ExpressRouteCircuit.
+  summary: Delete peering settings in an Express Route circuit.
   Metadata: {}
 - htmlId: list
   examples: []
   parameters:
   - name: --circuit-name
-    isRequired: true
-    summary: The name of the circuit.
+    summary: Express Route circuit name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -157,27 +144,24 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_network_express-route_circuit-peering_list
-  name: az network express-route circuit-peering list
+  uid: az_network_express-route_peering_list
+  name: az network express-route peering list
   description: ''
-  summary: >-
-    The List peering operation retrieves all the peerings in an
-
-    ExpressRouteCircuit.
+  summary: List peering settings of an Express Route circuit.
   Metadata: {}
 - htmlId: show
   examples: []
   parameters:
   - name: --circuit-name
-    isRequired: true
-    summary: The name of the express route circuit.
+    summary: Express Route circuit name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    isRequired: true
     summary: The name of the peering.
     description: ''
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -198,31 +182,24 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_network_express-route_circuit-peering_show
-  name: az network express-route circuit-peering show
+  uid: az_network_express-route_peering_show
+  name: az network express-route peering show
   description: ''
-  summary: >-
-    The GET peering operation retrieves the specified authorization from
-
-    the ExpressRouteCircuit.
+  summary: Show peering details of an Express Route circuit.
   Metadata: {}
 - htmlId: update
   examples: []
   parameters:
   - name: --circuit-name
-    isRequired: true
-    summary: The name of the express route circuit.
+    summary: Express Route circuit name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    isRequired: true
     summary: The name of the peering.
     description: ''
-  - name: --peering-parameters
-    isRequired: true
-    summary: Parameters supplied to the create/update ExpressRouteCircuit Peering operation.
-    description: ''
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --add
@@ -252,19 +229,19 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_network_express-route_circuit-peering_update
-  name: az network express-route circuit-peering update
+  uid: az_network_express-route_peering_update
+  name: az network express-route peering update
   description: ''
-  summary: ''
+  summary: Update peering settings in an Express Route circuit.
   Metadata: {}
-uid: az_network_express-route_circuit-peering
-name: az network express-route circuit-peering
+uid: az_network_express-route_peering
+name: az network express-route peering
 description: ''
-summary: Manage express route peering.
+summary: Manage Express Route peering.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/097931a17e73471b54e2360fdc19db719889f0af/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 9/20/2016 7:43:34 PM
-  ms.date: 9/20/2016
+  gitcommit: https://github.com/Azure/azure-cli/blob/b4431dbd34545d425ace9f9f1d4a2a294dc587cf/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+  updated_at: 11/1/2016 11:57:46 PM
+  ms.date: 11/1/2016
