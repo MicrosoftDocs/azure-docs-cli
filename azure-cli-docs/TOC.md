@@ -36,6 +36,7 @@
 #### [az keyvault certificate contact](keyvault\certificate\contact.pycliyml)
 #### [az keyvault certificate issuer](keyvault\certificate\issuer.pycliyml)
 ##### [az keyvault certificate issuer admin](keyvault\certificate\issuer\admin.pycliyml)
+#### [az keyvault certificate pending](keyvault\certificate\pending.pycliyml)
 ### [az keyvault key](keyvault\key.pycliyml)
 ### [az keyvault secret](keyvault\secret.pycliyml)
 ## [az network](network.pycliyml)
