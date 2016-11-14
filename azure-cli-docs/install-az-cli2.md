@@ -2,7 +2,7 @@
 title: Install Azure CLI 2.0 Preview  | Microsoft Docs
 description: Learn how to install the Azure CLI 2.0
 keywords: Azure CLI 2.0 Preview, Azure CLI 2.0, Install Azure CLI 2.0, Azure Python CLI
-author: douge
+author: erickson-doug
 manager: douge
 ms.author: douge
 ms.date: 11/15/2016
