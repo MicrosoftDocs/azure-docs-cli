@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
-# Install the the Azure CLI 2.0 'Preview'
+# Install the Azure CLI 2.0 'Preview'
 
 ## Install with interactive install script
 
