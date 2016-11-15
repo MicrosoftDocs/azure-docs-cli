@@ -1,6 +1,3 @@
----
-title: Welcome to Azure CLI 2.0 'Preview' | Microsoft Docs
-description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0 Preview, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: erickson-doug
 manager: douge
@@ -10,7 +7,7 @@ ms.topic: reference
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azure-cli
-ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
+ms.assetid: b09c3675-9a30-4bdd-8272-7d0033f59e4a
 ---
 
 # Welcome to the Azure CLI 2.0 'Preview'
