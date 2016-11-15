@@ -1,3 +1,4 @@
+---
 keywords: Azure CLI 2.0 Preview, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: erickson-doug
 manager: douge
