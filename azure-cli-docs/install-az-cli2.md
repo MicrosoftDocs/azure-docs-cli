@@ -1,7 +1,7 @@
 ---
-title: Install Azure CLI 2.0 Preview  | Microsoft Docs
-description: Learn how to install the Azure CLI 2.0
-keywords: Azure CLI 2.0 Preview, Azure CLI 2.0, Install Azure CLI 2.0, Azure Python CLI
+title: Welcome to Azure CLI 2.0 'Preview' | Microsoft Docs
+description: Reference docs for Azure CLI 2.0
+keywords: Azure CLI 2.0 Preview, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: erickson-doug
 manager: douge
 ms.author: douge
@@ -10,11 +10,10 @@ ms.topic: reference
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azure-cli
-ms.assetid: 1d31be22-2f2f-494f-9f7c-8f51c3074323
+ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
-# Install Azure CLI 2.0 'Preview'
-
+# Welcome to the Azure CLI 2.0 'Preview'
 
 ## Install with interactive install script
 
