@@ -1,5 +1,5 @@
 ---
-title: Welcome to Azure CLI 2.0 'Preview' | Microsoft Docs
+title: Install the Azure CLI 2.0 'Preview' | Microsoft Docs
 description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0 Preview, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: erickson-doug
@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
-# Welcome to the Azure CLI 2.0 'Preview'
+# Install the the Azure CLI 2.0 'Preview'
 
 ## Install with interactive install script
 
@@ -33,7 +33,7 @@ Some prerequisites may be required. See our [Preview Install Guide](https://gith
 
 ## Install with pip
 
-For those familiar with pip, use the following:
+For those familiar with pip, use the following command from the shell:
 
 ```command
 $ pip install azure-cli
@@ -45,7 +45,7 @@ Enable tab completion with source `az.completion.sh.`
 
 ## Install with apt-get
 
-A Debian/Ubuntu package is also available. Install as follows:
+A Debian/Ubuntu package is also available. Install it as follows:
 
 ```command
 $ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
@@ -70,7 +70,7 @@ For installation steps for common platforms, as well as dependency troubleshooti
 
 ## Getting Started
 
-After installation, use the az configure command to help setup your environment and get you logged in.
+After installation, use the `az configure` command to help setup your environment and get you logged in.
 
 ```command
 $ az configure
