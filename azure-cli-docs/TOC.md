@@ -1,4 +1,4 @@
-# [Azure CLI 2.0 'Preview'](index.pycliyml)
+# [Azure CLI 2.0 Preview](index.pycliyml)
 ## [Get started](https://docs.microsoft.com/cli/azure/get-started)
 ## [Old and new CLIs](https://docs.microsoft.com/cli/azure/get-started/old-and-new-clis)
 ## [az account](account.pycliyml)
