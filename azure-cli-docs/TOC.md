@@ -1,5 +1,6 @@
 # [Azure CLI 2.0 'Preview'](index.pycliyml)
-## [Install Azure CLI 2.0 'Preview'](install-az-cli2.md)
+## [Get started](https://docs.microsoft.com/cli/azure/get-started)
+## [Old and new CLIs](https://docs.microsoft.com/cli/azure/get-started/old-and-new-clis)
 ## [az account](account.pycliyml)
 ## [az acr](acr.pycliyml)
 ### [az acr credential](acr\credential.pycliyml)
