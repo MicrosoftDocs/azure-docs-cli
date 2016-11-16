@@ -17,6 +17,8 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 ## Install with interactive install script
 
+[TEST](~/cdn/)
+
 For OSX and Linux, you can install using curl:
 
 ```command
