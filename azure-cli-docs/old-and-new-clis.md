@@ -36,7 +36,7 @@ As we set out to develop our next generation of command-line tools, we quickly s
   from DevOps (Chef, Ansible) solutions to query languages (JMESPath).
 - **It must be evergreen and current with Azure:**
   In an age of continuous delivery, it's not enough to simply deploy a service.
-  We must have up-to-date tools that let our customers immediately take advantage of that service. 
+  We must have up-to-date tools that let our customers immediately take advantage of that service.
 
 As we applied these principles, we realized that the scope of improvements went beyond a few breaking changes,
 and when combined with the feedback we’ve received about our old CLI,
@@ -48,5 +48,5 @@ When you use the service management deployment model, you need to contiunue to u
 You can, of course, continue to use Azure CLI (azure) with the resource manager deployment model as you do today,
 but we recommend you plan to switch to Azure CLI 2.0 Preview when you're able to do that.
 
-[Get started](index.md) with Azure CLI 2.0 Preview now.
+[Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 Preview now.
 
