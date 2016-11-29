@@ -1,6 +1,6 @@
 ---
 title: Old and new Azure CLIs
-description: There is a new CLI for Azure - Azure CLI 2.0 Preview. How do the old and new CLIs compare?
+description: There is a new CLI for Azure - Azure CLI 2.0 (Preview). How do the old and new CLIs compare?
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
@@ -22,7 +22,7 @@ and difficulties with installing and maintaining the Node environment (on which 
 
 Based on this feedback - along with the growth in the Azure Resource Manager-based configuration model -
 we improved the CLI experience and now provide a great experience for Azure.
-We’re calling it the Azure CLI 2.0 Preview, now available as a beta on [GitHub](http://github.com/azure/azure-cli).
+We’re calling it the Azure CLI 2.0 (Preview), now available as a beta on [GitHub](http://github.com/azure/azure-cli).
 
 As we set out to develop our next generation of command-line tools, we quickly settled on some guiding principles:
 - **It must be natural and easy to install:**
@@ -43,10 +43,10 @@ and when combined with the feedback we’ve received about our old CLI,
 it made sense to start from the ground up.
 This choice allowed us to focus exclusively on the resource manager [deployment model](https://docs.microsoft.com/azure/resource-manager-deployment-model).
 
-So Azure CLI 2.0 Preview (az) is applicable when you use the resource manager deployment model.
-When you use the service management deployment model, you need to contiunue to use Azure CLI (azure).
-You can, of course, continue to use Azure CLI (azure) with the resource manager deployment model as you do today,
-but we recommend you plan to switch to Azure CLI 2.0 Preview when you're able to do that.
+So Azure CLI 2.0 (Preview) - az - is applicable when you use the resource manager deployment model.
+When you use the service management deployment model, you need to contiunue to use Azure CLI - azure.
+You can, of course, continue to use Azure CLI with the resource manager deployment model as you do today,
+but we recommend you plan to switch to Azure CLI 2.0 (Preview) when you're able to do that.
 
-[Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 Preview now.
+[Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 (Preview) now.
 
