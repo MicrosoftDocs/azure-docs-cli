@@ -1,5 +1,5 @@
 ---
-title: Install the Azure CLI 2.0 'Preview' | Microsoft Docs
+title: Install the Azure CLI 2.0 Preview | Microsoft Docs
 description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0 Preview, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: erickson-doug
@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
-# Install the Azure CLI 2.0 'Preview'
+# Install the Azure CLI 2.0 Preview
 
 ## Install with interactive install script
 
@@ -84,7 +84,7 @@ $ az vm create -h
 ```
 
 ## Highlights
-Here are a few features and concepts that can help you get the most out of the Azure CLI 2.0 'Preview'.
+Here are a few features and concepts that can help you get the most out of the Azure CLI 2.0 Preview.
  
 The following examples are showing using the `--output` table format. You can change your default using the `$ az configure` command.
 
