@@ -56,7 +56,7 @@ on whatever platform you use.
 
     You'll be prompted to log in using your credentials.
     
-5. Login in.
+5. Log in.
 
     Now you can run any command that accesses your account.
 
