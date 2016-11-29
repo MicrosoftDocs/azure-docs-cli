@@ -15,7 +15,7 @@ ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 
 There is a new CLI for Azure: the Azure CLI 2.0 (Preview), now available as a beta on [GitHub](http://github.com/azure/azure-cli).
 Azure CLI 2.0 (Preview) is applicable when you use the resource manager [deployment model](https://docs.microsoft.com/azure/resource-manager-deployment-model).
-When you use the service management deployment model, you need to contiunue to use Azure CLI.
+When you use the classic deployment model, you need to contiunue to use Azure CLI.
 
 Today Azure CLI 2.0 (Preview) supports these services, with more coming online:
 - Active Directory
