@@ -122,7 +122,7 @@
 ### [az storage blob](storage\blob.pycliyml)
 #### [az storage blob copy](storage\blob\copy.pycliyml)
 #### [az storage blob lease](storage\blob\lease.pycliyml)
-### [az storage blob metadata](storage\blob\metadata.pycliyml)
+#### [az storage blob metadata](storage\blob\metadata.pycliyml)
 #### [az storage blob service-properties](storage\blob\service-properties.pycliyml)
 ### [az storage container](storage\container.pycliyml)
 #### [az storage container lease](storage\container\lease.pycliyml)
