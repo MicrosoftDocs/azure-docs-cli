@@ -2,25 +2,34 @@ htmlId: resource
 examples: []
 children:
 - htmlId: delete
-  examples: []
+  examples:
+  - title: delete a virtual machine
+    code: az vm delete -g mygroup -n myvm --resource-type "Microsoft.Compute/virtualMachines"
+  - title: delete a webapp using resource id
+    code: az resource delete --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/myGroup/providers/Microsoft.Web/sites/myWebapp
+  - title: delete a subnet using id
+    code: az resource delete --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/myGroup/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/mysubnet
   parameters:
-  - name: --name -n
-    isRequired: true
-    summary: The resource name.
-    description: ''
-  - name: --resource-group -g
-    isRequired: true
-    summary: Name of resource group.
-    description: ''
-  - name: --resource-type
-    isRequired: true
-    summary: The resource type in <namespace>/<type> format.
-    description: ''
   - name: --api-version
     summary: The api version of the resource (omit for latest).
     description: ''
+  - name: --id
+    summary: Resource ID.
+    description: ''
+  - name: --name -n
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
+    description: ''
   - name: --parent
-    summary: The parent resource type in <type>/<name> format.
+    summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --resource-type
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -42,23 +51,36 @@ children:
     description: ''
   uid: az_resource_delete
   name: az resource delete
-  description: .
-  summary: Delete resource and all of its resources.
+  description: Delete a resource like /subscriptions/0000/resourceGroups/myGroup/providers/Microsoft.Provider/resA/myA/resB/myB/resC/myC.
+  summary: Delete a resource. Reference the examples for help with arguments.
   Metadata: {}
 - htmlId: list
-  examples: []
+  examples:
+  - title: list all resource in a region
+    code: az resource list --location westus
+  - title: list resource with a name
+    code: az resource list --name thename
+  - title: list resources with a tag
+    code: az resource list --tag something
+  - title: list resource with a tag with a particular prefix
+    code: az resource list --tag some*
+  - title: list resource with a tag value
+    code: az resource list --tag something=else
   parameters:
   - name: --location -l
     summary: Location.
     description: ''
   - name: --name -n
-    summary: The resource name.
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group.
     description: ''
   - name: --resource-type
-    summary: The resource type in <namespace>/<type> format.
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --tag
     summary: A single tag in 'key[=value]' format. Use "" to clear existing tags.
@@ -84,7 +106,7 @@ children:
   uid: az_resource_list
   name: az resource list
   description: ''
-  summary: 'List resources EXAMPLES:     az resource list --location westus     az resource list --name thename     az resource list --name thename --location westus     az resource list --tag something     az resource list --tag some*     az resource list --tag something=else.'
+  summary: List resource.
   Metadata: {}
 - htmlId: move
   examples: []
@@ -127,26 +149,35 @@ children:
   examples:
   - title: show a virtual machine
     code: az vm show -g mygroup -n myvm --resource-type "Microsoft.Compute/virtualMachines"
-  - title: show a webapp
-    code: az resource show -g mygroup -n mywebapp --resource-type "Microsoft.web/sites"
+  - title: show a webapp using resource id
+    code: az resource show --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/myGroup/providers/Microsoft.Web/sites/myWebapp
+  - title: show a subnet
+    code: az resource show -g mygroup -n mysubnet --namespace microsoft.network --parent virtualnetworks/myvnet --resource-type subnets
+  - title: show a subnet using id
+    code: az resource show --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/myGroup/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/mysubnet
+  - title: show an app gateway path rule
+    code: az resource show -g myGroup --namespace Microsoft.Network --parent applicationGateways/ag1/urlPathMaps/map1 --resource-type pathRules -n rule1
   parameters:
-  - name: --name -n
-    isRequired: true
-    summary: The resource name.
-    description: ''
-  - name: --resource-group -g
-    isRequired: true
-    summary: Name of resource group.
-    description: ''
-  - name: --resource-type
-    isRequired: true
-    summary: The resource type in <namespace>/<type> format.
-    description: ''
   - name: --api-version
     summary: The api version of the resource (omit for latest).
     description: ''
+  - name: --id
+    summary: Resource ID.
+    description: ''
+  - name: --name -n
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
+    description: ''
   - name: --parent
-    summary: The parent resource type in <type>/<name> format.
+    summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --resource-type
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -168,24 +199,16 @@ children:
     description: ''
   uid: az_resource_show
   name: az resource show
-  description: ''
+  description: Get details of a resource like /subscriptions/0000/resourceGroups/myGroup/providers/Microsoft.Provider/resA/myA/resB/myB/resC/myC.
   summary: Display a resource detail.
   Metadata: {}
 - htmlId: tag
-  examples: []
+  examples:
+  - title: tag a virtual machine
+    code: az resource tag --tags vmlist=vm1 -g mygroup -n myvm --resource-type "Microsoft.Compute/virtualMachines"
+  - title: tag a webapp using resource id
+    code: az resource tag --tags vmlist=vm1 --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/myGroup/providers/Microsoft.Web/sites/myWebapp
   parameters:
-  - name: --name -n
-    isRequired: true
-    summary: The resource name.
-    description: ''
-  - name: --resource-group -g
-    isRequired: true
-    summary: Name of resource group.
-    description: ''
-  - name: --resource-type
-    isRequired: true
-    summary: The resource type in <namespace>/<type> format.
-    description: ''
   - name: --tags
     isRequired: true
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -193,8 +216,23 @@ children:
   - name: --api-version
     summary: The api version of the resource (omit for latest).
     description: ''
+  - name: --id
+    summary: Resource ID.
+    description: ''
+  - name: --name -n
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
+    description: ''
   - name: --parent
-    summary: The parent resource type in <type>/<name> format.
+    summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --resource-type
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -216,15 +254,19 @@ children:
     description: ''
   uid: az_resource_tag
   name: az resource tag
-  description: To clear tags, specify the --tag option without anything else.
-  summary: Updates the tags on an existing resource.
+  description: Tag a resource like /subscriptions/0000/resourceGroups/myGroup/providers/Microsoft.Provider/resA/myA/resB/myB/resC/myC.
+  summary: Tag a resource. Reference the examples for help with arguments.
   Metadata: {}
 - htmlId: update
   examples: []
   parameters:
   - name: --name -n
     isRequired: true
-    summary: The resource name.
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    isRequired: true
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
     description: ''
   - name: --resource-group -g
     isRequired: true
@@ -232,13 +274,13 @@ children:
     description: ''
   - name: --resource-type
     isRequired: true
-    summary: The resource type in <namespace>/<type> format.
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --api-version
     summary: The api version of the resource (omit for latest).
     description: ''
   - name: --parent
-    summary: The parent resource type in <type>/<name> format.
+    summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -270,7 +312,7 @@ children:
   uid: az_resource_update
   name: az resource update
   description: ''
-  summary: ''
+  summary: Update a resource.
   Metadata: {}
 uid: az_resource
 name: az resource
@@ -280,6 +322,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/98aae45754eec14c600e9f8c5e0704062e79767b/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  updated_at: 10/13/2016 11:09:47 PM
-  ms.date: 10/13/2016
+  gitcommit: https://github.com/Azure/azure-cli/blob/487f0196fc30715f5cf70b7c781185b5c2a5bf18/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+  updated_at: 11/15/2016 10:24:07 PM
+  ms.date: 11/15/2016
