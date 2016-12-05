@@ -21,7 +21,7 @@ Today Azure CLI 2.0 (Preview) supports these services, with more coming online:
 - Active Directory
 - App Service
 - Container Service
-- Internet of Things
+- IoT Hub
 - Key Vault
 - Resource manager
 - Redis Cache

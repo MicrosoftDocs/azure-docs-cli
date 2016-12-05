@@ -2,7 +2,13 @@ htmlId: hub
 examples: []
 children:
 - htmlId: create
-  examples: []
+  examples:
+  - title: Create an IoT Hub with free pricing tier F1, in the region of resource group.
+    code: az iot hub create --resource-group my-resource-group --name my-iot-hub
+  - title: Create an IoT Hub with standard pricing tier S1, in the region of resource group.
+    code: az iot hub create --resource-group my-resource-group --name my-iot-hub --sku S1
+  - title: Create an IoT Hub with free pricing tier F1, in `westus` region.
+    code: az iot hub create --resource-group my-resource-group --name my-iot-hub --location westus
   parameters:
   - name: --name -n
     isRequired: true
@@ -77,11 +83,48 @@ children:
   description: If resource group is provided, IoT Hubs in target resource group will be listed. Otherwise, IoT Hubs in your subscription will be listed.
   summary: List IoT Hubs in your subscription or resource group.
   Metadata: {}
+- htmlId: list-skus
+  examples: []
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_iot_hub_list-skus
+  name: az iot hub list-skus
+  description: ''
+  summary: List all valid pricing tiers.
+  Metadata: {}
 - htmlId: show
   examples: []
   parameters:
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: true
     summary: IoT Hub name.
     description: ''
   - name: --resource-group -g
@@ -111,15 +154,32 @@ children:
   summary: Show non-security metadata of an IoT Hub.
   Metadata: {}
 - htmlId: show-connection-string
-  examples: []
+  examples:
+  - title: Show connection string of an IoT Hub using default policy (`iothubowner`) and primary key.
+    code: az iot hub show-connection-string --name my-iot-hub
+  - title: Show connection string of an IoT Hub using policy `service` and secondary key.
+    code: az iot hub show-connection-string --name my-iot-hub --policy-name service --key secondary
+  - title: Show connection strings of all IoT Hubs in a resource group.
+    code: az iot hub show-connection-string --resource-group my-resource-group
+  - title: Show connection strings of all IoT Hubs in current subscription.
+    code: az iot hub show-connection-string
   parameters:
+  - name: --key
+    summary: The key to use.
+    description: ''
+    defaultValue: primary
+    parameterValueGroup:
+    - primary, secondary
+  - name: --policy-name
+    summary: Shared access policy to use.
+    description: ''
+    defaultValue: iothubowner
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
     summary: IoT Hub name.
     description: ''
-  - name: --policy-name
-    summary: The access policy you choose to use.
-    description: ''
-    defaultValue: iothubowner
   - name: --resource-group -g
     summary: Name of resource group.
     description: ''
@@ -144,16 +204,86 @@ children:
   uid: az_iot_hub_show-connection-string
   name: az iot hub show-connection-string
   description: If resource group and IoT Hub name are not provided, connection strings for all IoT Hubs in your subscription will be returned. If only resource group is provided, connection strings for all IoT Hubs in the resource group will be returned. If both resource group and IoT Hub name are provided, connection string of the IoT Hub will be returned.
-  summary: Show connection string of target Azure IoT Hub.
+  summary: Show connection string of an IoT Hub.
+  Metadata: {}
+- htmlId: show-quota-metrics
+  examples: []
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_iot_hub_show-quota-metrics
+  name: az iot hub show-quota-metrics
+  description: ''
+  summary: Show quota metrics for an IoT Hub.
+  Metadata: {}
+- htmlId: show-stats
+  examples: []
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_iot_hub_show-stats
+  name: az iot hub show-stats
+  description: ''
+  summary: Show stats of an IoT Hub.
   Metadata: {}
 uid: az_iot_hub
 name: az iot hub
 description: ''
-summary: ''
+summary: Manage IoT Hubs.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/808513cb14c217ad62ee36197a337c63d354984c/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-  updated_at: 11/2/2016 3:57:45 PM
-  ms.date: 11/2/2016
+  gitcommit: https://github.com/Azure/azure-cli/blob/a317d187ef42d04c2da303266a2a9bafa5f292df/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+  updated_at: 12/1/2016 7:47:39 PM
+  ms.date: 12/1/2016
