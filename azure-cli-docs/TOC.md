@@ -134,7 +134,7 @@
 ### [az storage entity](storage\entity.pycliyml)
 ### [az storage file](storage\file.pycliyml)
 #### [az storage file copy](storage\file\copy.pycliyml)
-### [az storage file metadata](storage\file\metadata.pycliyml)
+#### [az storage file metadata](storage\file\metadata.pycliyml)
 ### [az storage logging](storage\logging.pycliyml)
 ### [az storage message](storage\message.pycliyml)
 ### [az storage metrics](storage\metrics.pycliyml)
