@@ -1,122 +1,21 @@
-htmlId: acs
+htmlId: message
 examples: []
 children:
-- htmlId: create
+- htmlId: abandon
   examples: []
   parameters:
-  - name: --dns-prefix -d
+  - name: --device-id -d
     isRequired: true
-    summary: Sets the Domain name prefix for the cluster. The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address.
+    summary: Device Id.
     description: ''
-  - name: --name -n
+  - name: --hub-name
     isRequired: true
-    summary: ACS cluster name.
+    summary: IoT Hub name.
     description: ''
-  - name: --resource-group -g
+  - name: --lock-token
     isRequired: true
-    summary: Name of resource group.
+    summary: Message lock token.
     description: ''
-  - name: --admin-username
-    summary: User name for the Linux Virtual Machines.
-    description: ''
-    defaultValue: azureuser
-  - name: --agent-count
-    summary: The number of agents for the cluster.  Note, for DC/OS clusters you will also get 1 or 2 public agents in addition to these seleted masters.
-    description: ''
-    defaultValue: 3
-  - name: --agent-vm-size
-    summary: The size of the Virtual Machine.
-    description: ''
-    defaultValue: Standard_D2_v2
-  - name: --client-secret
-    summary: Client secret to use with the service principal for making calls to Azure APIs.
-    description: ''
-  - name: --generate-ssh-keys
-    summary: Generate SSH public and private key files if missing.
-    description: ''
-  - name: --location -l
-    summary: Location.
-    description: ''
-  - name: --master-count
-    summary: The number of DC/OS masters for the cluster.
-    description: ''
-    defaultValue: 3
-  - name: --orchestrator-type
-    summary: The type of orchestrator used to manage the applications on the cluster.
-    description: ''
-    defaultValue: dcos
-    parameterValueGroup:
-    - Custom, DCOS, Kubernetes, Swarm
-  - name: --service-principal
-    summary: Service principal for making calls into Azure APIs.
-    description: ''
-  - name: --ssh-key-value
-    summary: SSH key file value or key file path.
-    description: ''
-    defaultValue: C:Usersappveyor.sshid_rsa.pub
-  - name: --tags
-    summary: Tags object.
-    description: ''
-  - name: --debug
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup:
-    - json, jsonc, list, table, tsv
-  - name: --query
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  uid: az_acs_create
-  name: az acs create
-  description: ''
-  summary: Create a container service with your preferred orchestrator.
-  Metadata: {}
-- htmlId: delete
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: true
-    summary: The name of the container service.
-    description: ''
-  - name: --resource-group -g
-    isRequired: true
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup:
-    - json, jsonc, list, table, tsv
-  - name: --query
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  uid: az_acs_delete
-  name: az acs delete
-  description: ''
-  summary: Delete a container service.
-  Metadata: {}
-- htmlId: list
-  examples: []
-  parameters:
   - name: --resource-group -g
     summary: Name of resource group.
     description: ''
@@ -138,24 +37,27 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_acs_list
-  name: az acs list
+  uid: az_iot_device_message_abandon
+  name: az iot device message abandon
   description: ''
-  summary: List container services.
+  summary: Abandon a cloud-to-device message.
   Metadata: {}
-- htmlId: scale
+- htmlId: complete
   examples: []
   parameters:
-  - name: --name -n
+  - name: --device-id -d
     isRequired: true
-    summary: The name of the container service.
+    summary: Device Id.
     description: ''
-  - name: --new-agent-count
+  - name: --hub-name
     isRequired: true
-    summary: The number of agents for the cluster.
+    summary: IoT Hub name.
+    description: ''
+  - name: --lock-token
+    isRequired: true
+    summary: Message lock token.
     description: ''
   - name: --resource-group -g
-    isRequired: true
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -176,20 +78,31 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_acs_scale
-  name: az acs scale
+  uid: az_iot_device_message_complete
+  name: az iot device message complete
   description: ''
-  summary: Change private agent count of a container service.
+  summary: Complete a cloud-to-device message.
   Metadata: {}
-- htmlId: show
-  examples: []
+- htmlId: receive
+  examples:
+  - title: Receive a cloud-to-device message from IoT Hub with default lock timeout.
+    code: az iot device message receive --hub-name my-iot-hub --device-id my-device
+  - title: Receive a cloud-to-device message from IoT Hub with lock timeout of 300 seconds.
+    code: az iot device message receive --hub-name my-iot-hub --device-id my-device --lock-timeout 300
   parameters:
-  - name: --name -n
+  - name: --device-id -d
     isRequired: true
-    summary: The name of the container service.
+    summary: Device Id.
     description: ''
-  - name: --resource-group -g
+  - name: --hub-name
     isRequired: true
+    summary: IoT Hub name.
+    description: ''
+  - name: --lock-timeout
+    summary: In case a message returned to this call, this specifies the amount of time in seconds, the message will be invisible to other receive calls.
+    description: ''
+    defaultValue: 60
+  - name: --resource-group -g
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -210,19 +123,114 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_acs_show
-  name: az acs show
+  uid: az_iot_device_message_receive
+  name: az iot device message receive
   description: ''
-  summary: Show a container service.
+  summary: Receive a cloud-to-device message.
   Metadata: {}
-uid: az_acs
-name: az acs
+- htmlId: reject
+  examples: []
+  parameters:
+  - name: --device-id -d
+    isRequired: true
+    summary: Device Id.
+    description: ''
+  - name: --hub-name
+    isRequired: true
+    summary: IoT Hub name.
+    description: ''
+  - name: --lock-token
+    isRequired: true
+    summary: Message lock token.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_iot_device_message_reject
+  name: az iot device message reject
+  description: ''
+  summary: Reject a cloud-to-device message.
+  Metadata: {}
+- htmlId: send
+  examples:
+  - title: Send a device-to-cloud message to IoT Hub with default message.
+    code: az iot device message send --hub-name my-iot-hub --device-id my-device
+  - title: Send a device-to-cloud message to IoT Hub with custom message.
+    code: az iot device message send --hub-name my-iot-hub --device-id my-device --data "Custom Message"
+  parameters:
+  - name: --device-id -d
+    isRequired: true
+    summary: Device Id.
+    description: ''
+  - name: --hub-name
+    isRequired: true
+    summary: IoT Hub name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group.
+    description: ''
+  - name: --correlation-id
+    summary: Device-to-cloud message correlation Id.
+    description: ''
+  - name: --data
+    summary: Device-to-cloud message body.
+    description: ''
+    defaultValue: Ping from Azure CLI
+  - name: --message-id
+    summary: Device-to-cloud message Id.
+    description: ''
+  - name: --user-id
+    summary: Device-to-cloud message user Id.
+    description: ''
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_iot_device_message_send
+  name: az iot device message send
+  description: ''
+  summary: Send a device-to-cloud message.
+  Metadata: {}
+uid: az_iot_device_message
+name: az iot device message
 description: ''
-summary: Manage Azure container services.
+summary: IoT device messaging commands.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/487f0196fc30715f5cf70b7c781185b5c2a5bf18/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-  updated_at: 11/15/2016 10:24:07 PM
-  ms.date: 11/15/2016
+  doc_source_url_path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/98d6d3a4ef4121b83f8af8976b96800b22bda2ca/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+  updated_at: 12/5/2016 8:43:06 PM
+  ms.date: 12/5/2016

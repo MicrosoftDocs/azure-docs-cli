@@ -1,72 +1,61 @@
-htmlId: sp
+htmlId: acs
 examples: []
 children:
 - htmlId: create
   examples: []
   parameters:
-  - name: --id
-    isRequired: true
-    summary: Identifier uri, application id, or object id of the associated application.
-    description: ''
-  - name: --debug
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup:
-    - json, jsonc, list, table, tsv
-  - name: --query
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  uid: az_ad_sp_create
-  name: az ad sp create
-  description: ''
-  summary: ''
-  Metadata: {}
-- htmlId: create-for-rbac
-  examples:
-  - title: Create with defaults
-    code: az ad sp create-for-rbac
-  - title: Create with a custom name
-    code: az ad sp create-for-rbac -n "http://my-app"
-  - title: Create role assignments at the same time
-    code: az ad sp create-for-rbac -n "http://my-app" --role contributor --scopes /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/mygroup /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/my-another-group
-  - title: Login with this service principal
-    code: az login --service-principal -u <name> -p <password> --tenant <tenant>
-  - title: Reset credentials on expiration
-    code: az ad sp reset-credentials --name <name>
-  - title: Create role assignments
-    code: az role assignment create --assignee <name> --role Contributor
-  - title: Revoke the service principal when done with it
-    code: az ad app delete --id <name>
-  parameters:
-  - name: --expanded-view
-    summary: Once created, display more information like subscription and cloud environments.
-    description: ''
   - name: --name -n
-    summary: An unique uri. If missing, the command will generate one.
+    isRequired: true
+    summary: ACS cluster name.
     description: ''
-  - name: --password
-    summary: The password used to login. If missing, command will generate one.
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
     description: ''
-  - name: --role
-    summary: Role the service principal has on the resources. only use with 'resource-ids'.
+  - name: --admin-username
+    summary: User name for the Linux Virtual Machines.
     description: ''
-  - name: --scopes
-    summary: Space separated scopes the service principal's role assignment applies to.
+    defaultValue: azureuser
+  - name: --agent-count
+    summary: The number of agents for the cluster.  Note, for DC/OS clusters you will also get 1 or 2 public agents in addition to these seleted masters.
     description: ''
-  - name: --years
-    summary: Years the password will be valid.
+    defaultValue: 3
+  - name: --agent-vm-size
+    summary: The size of the Virtual Machine.
     description: ''
-    defaultValue: 1
+    defaultValue: Standard_D2_v2
+  - name: --client-secret
+    summary: Client secret to use with the service principal for making calls to Azure APIs.
+    description: ''
+  - name: --dns-prefix -d
+    summary: Sets the Domain name prefix for the cluster. The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address.
+    description: ''
+  - name: --generate-ssh-keys
+    summary: Generate SSH public and private key files if missing.
+    description: ''
+  - name: --location -l
+    summary: Location.
+    description: ''
+  - name: --master-count
+    summary: The number of DC/OS masters for the cluster.
+    description: ''
+    defaultValue: 3
+  - name: --orchestrator-type
+    summary: The type of orchestrator used to manage the applications on the cluster.
+    description: ''
+    defaultValue: dcos
+    parameterValueGroup:
+    - Custom, DCOS, Kubernetes, Swarm
+  - name: --service-principal
+    summary: Service principal for making calls into Azure APIs.
+    description: ''
+  - name: --ssh-key-value
+    summary: SSH key file value or key file path.
+    description: ''
+    defaultValue: C:Usersappveyor.sshid_rsa.pub
+  - name: --tags
+    summary: Tags object.
+    description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
     description: ''
@@ -85,17 +74,21 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_ad_sp_create-for-rbac
-  name: az ad sp create-for-rbac
+  uid: az_acs_create
+  name: az acs create
   description: ''
-  summary: Create a service principal that can access or modify resources.
+  summary: Create a container service with your preferred orchestrator.
   Metadata: {}
 - htmlId: delete
   examples: []
   parameters:
-  - name: --id
+  - name: --name -n
     isRequired: true
-    summary: Service principal name, or object id.
+    summary: The name of the container service.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -115,22 +108,16 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_ad_sp_delete
-  name: az ad sp delete
+  uid: az_acs_delete
+  name: az acs delete
   description: ''
-  summary: ''
+  summary: Delete a container service.
   Metadata: {}
 - htmlId: list
   examples: []
   parameters:
-  - name: --display-name
-    summary: Object's display name or its prefix.
-    description: ''
-  - name: --filter
-    summary: OData filter.
-    description: ''
-  - name: --spn
-    summary: Service principal name.
+  - name: --resource-group -g
+    summary: Name of resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -150,25 +137,26 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_ad_sp_list
-  name: az ad sp list
+  uid: az_acs_list
+  name: az acs list
   description: ''
-  summary: ''
+  summary: List container services.
   Metadata: {}
-- htmlId: reset-credentials
+- htmlId: scale
   examples: []
   parameters:
   - name: --name -n
     isRequired: true
-    summary: The uri representing the name of the service principal.
+    summary: The name of the container service.
     description: ''
-  - name: --password
-    summary: The password used to login. If missing, command will generate one.
+  - name: --new-agent-count
+    isRequired: true
+    summary: The number of agents for the cluster.
     description: ''
-  - name: --years
-    summary: Years the password will be valid.
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
     description: ''
-    defaultValue: 1
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
     description: ''
@@ -187,17 +175,21 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_ad_sp_reset-credentials
-  name: az ad sp reset-credentials
+  uid: az_acs_scale
+  name: az acs scale
   description: ''
-  summary: Reset credential, on expiration or you forget it.
+  summary: Change private agent count of a container service.
   Metadata: {}
 - htmlId: show
   examples: []
   parameters:
-  - name: --id
+  - name: --name -n
     isRequired: true
-    summary: Service principal name, or object id.
+    summary: The name of the container service.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -217,19 +209,19 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_ad_sp_show
-  name: az ad sp show
+  uid: az_acs_show
+  name: az acs show
   description: ''
-  summary: ''
+  summary: Show a container service.
   Metadata: {}
-uid: az_ad_sp
-name: az ad sp
+uid: az_acs
+name: az acs
 description: ''
-summary: Manages AAD service principals for automation authentication.
+summary: Manage Azure container services.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/487f0196fc30715f5cf70b7c781185b5c2a5bf18/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+  doc_source_url_path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/487f0196fc30715f5cf70b7c781185b5c2a5bf18/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
   updated_at: 11/15/2016 10:24:07 PM
   ms.date: 11/15/2016
