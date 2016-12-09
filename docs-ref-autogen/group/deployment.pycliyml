@@ -1,19 +1,37 @@
-htmlId: group
+htmlId: deployment
 examples: []
 children:
 - htmlId: create
-  examples: []
+  examples:
+  - title: create a deployment from a remote template file
+    code: az group deployment create -g mygroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
+  - title: create a deployment from a local template file and use parameter values in string
+    code: 'az group deployment create -g mygroup --template-file azuredeploy.json --parameters "{"location": {"value": "westus"}}"'
   parameters:
-  - name: --location -l
-    isRequired: true
-    summary: Location.
-    description: ''
-  - name: --name -n
+  - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
-  - name: --tags
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+  - name: --mode
+    summary: Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    description: ''
+    defaultValue: incremental
+    parameterValueGroup:
+    - Complete, Incremental
+  - name: --name -n
+    summary: The deployment name. Default to template file base name.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long running operation to finish.
+    description: ''
+  - name: --parameters
+    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file.
+    description: ''
+  - name: --template-file
+    summary: A template file path in the file system.
+    description: ''
+  - name: --template-uri
+    summary: A uri to a remote template file.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -33,48 +51,19 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_create
-  name: az resource group create
+  uid: az_group_deployment_create
+  name: az group deployment create
   description: ''
-  summary: Create a new resource group.
+  summary: Start a deployment.
   Metadata: {}
 - htmlId: delete
   examples: []
   parameters:
   - name: --name -n
     isRequired: true
-    summary: Name of resource group.
+    summary: The deployment name.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --debug
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup:
-    - json, jsonc, list, table, tsv
-  - name: --query
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  uid: az_resource_group_delete
-  name: az resource group delete
-  description: ''
-  summary: Delete resource group.
-  Metadata: {}
-- htmlId: exists
-  examples: []
-  parameters:
-  - name: --name -n
+  - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
@@ -96,23 +85,21 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_exists
-  name: az resource group exists
+  uid: az_group_deployment_delete
+  name: az group deployment delete
   description: ''
-  summary: Checks whether resource group exists.
+  summary: Delete deployment.
   Metadata: {}
 - htmlId: export
   examples: []
   parameters:
   - name: --name -n
     isRequired: true
+    summary: The deployment name.
+    description: ''
+  - name: --resource-group -g
+    isRequired: true
     summary: Name of resource group.
-    description: ''
-  - name: --include-comments
-    summary: Export template with comments.
-    description: ''
-  - name: --include-parameter-default-value
-    summary: Export template parameter with default value.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -132,16 +119,23 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_export
-  name: az resource group export
+  uid: az_group_deployment_export
+  name: az group deployment export
   description: ''
-  summary: Captures a resource group as a template.
+  summary: ''
   Metadata: {}
 - htmlId: list
   examples: []
   parameters:
-  - name: --tag
-    summary: A single tag in 'key[=value]' format. Use "" to clear existing tags.
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --filter
+    summary: The filter to apply on the operation.
+    description: ''
+  - name: --top
+    summary: Query parameters. If null is passed returns all deployments.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -161,56 +155,66 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_list
-  name: az resource group list
+  uid: az_group_deployment_list
+  name: az group deployment list
   description: ''
-  summary: List resource groups, optionally filtered by a tag.
+  summary: Get a list of deployments.
   Metadata: {}
 - htmlId: show
   examples: []
   parameters:
   - name: --name -n
     isRequired: true
-    summary: Name of resource group.
+    summary: The deployment name.
     description: ''
-  - name: --debug
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup:
-    - json, jsonc, list, table, tsv
-  - name: --query
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  uid: az_resource_group_show
-  name: az resource group show
-  description: ''
-  summary: Get a resource group.
-  Metadata: {}
-- htmlId: update
-  examples: []
-  parameters:
-  - name: --name -n
+  - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --debug
+    summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+  - name: --help -h
+    summary: Show this help message and exit.
     description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  - name: --output -o
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup:
+    - json, jsonc, list, table, tsv
+  - name: --query
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  uid: az_group_deployment_show
+  name: az group deployment show
+  description: ''
+  summary: Get a deployment.
+  Metadata: {}
+- htmlId: validate
+  examples: []
+  parameters:
+  - name: --resource-group -g
+    isRequired: true
+    summary: Name of resource group.
+    description: ''
+  - name: --mode
+    summary: Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    description: ''
+    defaultValue: incremental
+    parameterValueGroup:
+    - Complete, Incremental
+  - name: --parameters
+    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file.
+    description: ''
+  - name: --template-file
+    summary: A template file path in the file system.
+    description: ''
+  - name: --template-uri
+    summary: A uri to a remote template file.
     description: ''
   - name: --debug
     summary: Increase logging verbosity to show all debug logs.
@@ -230,8 +234,8 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_update
-  name: az resource group update
+  uid: az_group_deployment_validate
+  name: az group deployment validate
   description: ''
   summary: ''
   Metadata: {}
@@ -239,6 +243,10 @@ children:
   examples: []
   parameters:
   - name: --name -n
+    isRequired: true
+    summary: The deployment name.
+    description: ''
+  - name: --resource-group -g
     isRequired: true
     summary: Name of resource group.
     description: ''
@@ -283,19 +291,13 @@ children:
   - name: --verbose
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  uid: az_resource_group_wait
-  name: az resource group wait
+  uid: az_group_deployment_wait
+  name: az group deployment wait
   description: ''
   summary: ''
   Metadata: {}
-uid: az_resource_group
-name: az resource group
+uid: az_group_deployment
+name: az group deployment
 description: ''
-summary: Commands to manage resource groups.
-Metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/487f0196fc30715f5cf70b7c781185b5c2a5bf18/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  updated_at: 11/15/2016 10:24:07 PM
-  ms.date: 11/15/2016
+summary: Commands to execute or manage ARM deployments.
+Metadata: {}
