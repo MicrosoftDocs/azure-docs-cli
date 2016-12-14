@@ -1,4 +1,4 @@
-htmlId: vpn-gateway
+htmlId: vnet-gateway
 examples: []
 children:
 - htmlId: create
@@ -20,10 +20,6 @@ children:
     isRequired: True
     summary: Name or ID of an existing virtual network which has a subnet named 'GatewaySubnet'.
     description: ''
-  - name: --enable-bgp
-    isRequired: False
-    summary: Enable BGP (Border Gateway Protocol).
-    description: ''
   - name: --gateway-type
     isRequired: False
     summary: The gateway type.
@@ -40,20 +36,32 @@ children:
     description: ''
   - name: --sku
     isRequired: False
-    summary: VPN gateway SKU.
+    summary: VNet gateway SKU.
     description: ''
     defaultValue: Basic
-    parameterValueGroup: Basic, HighPerformance, Standard
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance
   - name: --tags
     isRequired: False
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --vpn-type
     isRequired: False
-    summary: VPN gateway type.
+    summary: VPN routing type.
     description: ''
     defaultValue: RouteBased
-    parameterValueGroup: PolicyBased, RouteBased
+    parameterValueGroup: Dedicated, PolicyBased, RouteBased
+  - name: --asn
+    isRequired: False
+    summary: Autonomous System Number to use for the BGP settings.
+    description: ''
+  - name: --bgp-peering-address
+    isRequired: False
+    summary: IP address to use for BGP peering.
+    description: ''
+  - name: --peer-weight
+    isRequired: False
+    summary: Weight (0-100) added to routes learned through BGP peering.
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -77,10 +85,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_create
-  name: az network vpn-gateway create
+  uid: az_network_vnet-gateway_create
+  name: az network vnet-gateway create
   description: ''
-  summary: Create a VPN gateway.
+  summary: Create a VNet gateway.
   Metadata: {}
 - htmlId: delete
   examples: []
@@ -120,10 +128,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_delete
-  name: az network vpn-gateway delete
+  uid: az_network_vnet-gateway_delete
+  name: az network vnet-gateway delete
   description: ''
-  summary: Delete a VPN gateway.
+  summary: Delete a VNet gateway.
   Metadata: {}
 - htmlId: list
   examples: []
@@ -155,10 +163,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_list
-  name: az network vpn-gateway list
+  uid: az_network_vnet-gateway_list
+  name: az network vnet-gateway list
   description: ''
-  summary: List VPN gateways in a resource group or subscription.
+  summary: List VNet gateways in a resource group or subscription.
   Metadata: {}
 - htmlId: reset
   examples: []
@@ -202,10 +210,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_reset
-  name: az network vpn-gateway reset
+  uid: az_network_vnet-gateway_reset
+  name: az network vnet-gateway reset
   description: ''
-  summary: Reset a VPN gateway.
+  summary: Reset a VNet gateway.
   Metadata: {}
 - htmlId: show
   examples: []
@@ -245,10 +253,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_show
-  name: az network vpn-gateway show
+  uid: az_network_vnet-gateway_show
+  name: az network vnet-gateway show
   description: ''
-  summary: Show details of a VPN gateway.
+  summary: Show details of a VNet gateway.
   Metadata: {}
 - htmlId: update
   examples: []
@@ -257,11 +265,6 @@ children:
     isRequired: False
     summary: List of address prefixes for the VPN gateway.  Prerequisite for uploading certificates.
     description: ''
-  - name: --enable-bgp
-    isRequired: False
-    summary: Enable BGP (Border Gateway Protocol).
-    description: ''
-    parameterValueGroup: false, true
   - name: --gateway-type
     isRequired: False
     summary: The gateway type.
@@ -277,9 +280,9 @@ children:
     description: ''
   - name: --sku
     isRequired: False
-    summary: VPN gateway SKU.
+    summary: VNet gateway SKU.
     description: ''
-    parameterValueGroup: Basic, HighPerformance, Standard
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance
   - name: --tags
     isRequired: False
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -288,11 +291,11 @@ children:
     isRequired: False
     summary: Name or ID of a virtual network that contains a subnet named 'GatewaySubnet'.
     description: ''
-  - name: --vpn-gateway-type
+  - name: --vpn-type
     isRequired: False
-    summary: VPN gateway type.
+    summary: VPN routing type.
     description: ''
-    parameterValueGroup: PolicyBased, RouteBased
+    parameterValueGroup: Dedicated, PolicyBased, RouteBased
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
@@ -304,6 +307,23 @@ children:
   - name: --resource-group -g
     isRequired: False
     summary: Name of resource group.
+    description: ''
+  - name: --asn
+    isRequired: False
+    summary: Autonomous System Number to use for the BGP settings.
+    description: ''
+  - name: --bgp-peering-address
+    isRequired: False
+    summary: IP address to use for BGP peering.
+    description: ''
+  - name: --enable-bgp
+    isRequired: False
+    summary: Enable BGP (Border Gateway Protocol).
+    description: ''
+    parameterValueGroup: false, true
+  - name: --peer-weight
+    isRequired: False
+    summary: Weight (0-100) added to routes learned through BGP peering.
     description: ''
   - name: --add
     isRequired: False
@@ -340,10 +360,10 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_update
-  name: az network vpn-gateway update
+  uid: az_network_vnet-gateway_update
+  name: az network vnet-gateway update
   description: ''
-  summary: Update a VPN gateway.
+  summary: Update a VNet gateway.
   Metadata: {}
 - htmlId: wait
   examples: []
@@ -413,19 +433,19 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_network_vpn-gateway_wait
-  name: az network vpn-gateway wait
+  uid: az_network_vnet-gateway_wait
+  name: az network vnet-gateway wait
   description: ''
   summary: ''
   Metadata: {}
-uid: az_network_vpn-gateway
-name: az network vpn-gateway
+uid: az_network_vnet-gateway
+name: az network vnet-gateway
 description: ''
 summary: Establish secure, cross-premises connectivity.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/2b157020a295a0a409cdb0195ee8ee41472ba7ed/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 12/12/2016 6:31:01 PM
-  ms.date: 12/12/2016
+  gitcommit: https://github.com/Azure/azure-cli/blob/1e88309da4b55023bbd7d2c05a432169bc9b9548/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+  updated_at: 12/14/2016 9:33:30 PM
+  ms.date: 12/14/2016
