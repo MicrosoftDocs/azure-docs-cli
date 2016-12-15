@@ -124,7 +124,7 @@ Run
 docker run -it azuresdk/azure-cli-python:latest bash`
 ```
 
-## Windows (cmd)
+## Windows
 
 The CLI is available for Windows though PIP using the steps below.  If you do not have Python/PIP installed, consider using [Docker](#docker) to access the CLI.
 
