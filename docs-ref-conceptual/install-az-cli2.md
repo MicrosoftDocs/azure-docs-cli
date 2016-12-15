@@ -22,7 +22,7 @@ curl -L https://aka.ms/InstallAzureCli | bash
 
 ## Ubuntu
 
-### 12.04 LTS
+### Ubuntu 12.04 LTS
 On a fresh Ubuntu 12.04 VM, install the CLI by executing the following.
 Python 2.7.3 should be already on the machine.
 
