@@ -115,15 +115,6 @@ curl -L https://aka.ms/InstallAzureCli | bash
 
 Doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
-## Docker
-
-> Note that our docker images contain the latest code from the master branch.
-
-Run 
-```shell
-docker run -it azuresdk/azure-cli-python:latest bash`
-```
-
 ## Windows
 
 The CLI is available for Windows though PIP using the steps below.  If you do not have Python/PIP installed, consider using [Docker](#docker) to access the CLI.
@@ -153,6 +144,15 @@ And after the installation complete, you can run the Azure CLI 2.0 from the comm
 
 ```shell
    C:\temp> az
+```
+
+## Docker
+
+> Note that our docker images contain the latest code from the master branch.
+
+Run 
+```shell
+docker run -it azuresdk/azure-cli-python:latest bash`
 ```
 
 ## Installation Troubleshooting
