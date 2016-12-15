@@ -20,7 +20,9 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## Ubuntu 12.04 LTS
+## Ubuntu
+
+### Ubuntu 12.04 LTS
 On a fresh Ubuntu 12.04 VM, install the CLI by executing the following.
 Python 2.7.3 should be already on the machine.
 
@@ -29,7 +31,7 @@ sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-### Known warnings
+#### Known warnings
 Warning 1:
 You may see the following warning message during install and execution of `az`.
 ```
@@ -38,7 +40,7 @@ You may see the following warning message during install and execution of `az`.
 ```
 See also https://github.com/pypa/pip/issues/1074.
 
-## Ubuntu 14.04 LTS and BASH on Windows (Build 14362+)
+### Ubuntu 14.04 LTS and BASH on Windows (Build 14362+)
 Python 2.7.6 should be already on the machine.
 
 ```
@@ -46,50 +48,56 @@ sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## Ubuntu 15.10
+### Ubuntu 15.10
 Python 2.7.10 should be already on the machine.
 ```
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## Ubuntu 16.04 LTS
+### Ubuntu 16.04 LTS
 Python 2.7.11 should be already on the machine.
 ```
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## Debian 7
+## Debian
+
+### Debian 7
 Python 2.7.3 should be already on the machine.
 ```
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## Debian 8
+### Debian 8
 Python 2.7.9 should be already on the machine.
 ```
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## CentOS 6.5 / 6.6 / 6.7
+## CentOS
+
+### CentOS 6.5 / 6.6 / 6.7
 
 Not supported with the default version of Python (2.6.6) on the machine.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
-## CentOS 7.1 / 7.2
+### CentOS 7.1 / 7.2
 Python 2.7.5 should be already on the machine.
 ```
 sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## RedHat RHEL 6.7
+## RedHat RHEL
+
+### RedHat RHEL 6.7
 
 Not supported with the default version of Python (2.6.6) on the machine.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
-## RedHat RHEL 7.2
+### RedHat RHEL 7.2
 Python 2.7.5 should be already on the machine.
 ```
 sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
