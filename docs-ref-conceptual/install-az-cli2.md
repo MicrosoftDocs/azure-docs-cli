@@ -26,7 +26,7 @@ curl -L https://aka.ms/InstallAzureCli | bash
 On a fresh Ubuntu 12.04 VM, install the CLI by executing the following.
 Python 2.7.3 should be already on the machine.
 
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
@@ -34,7 +34,7 @@ curl -L https://aka.ms/InstallAzureCli | bash
 #### Known warnings
 Warning 1:
 You may see the following warning message during install and execution of `az`.
-```
+```shell
 /usr/local/az/envs/default/local/lib/python2.7/site-packages/pip/pep425tags.py:30: RuntimeWarning: invalid Python installation: unable to open /usr/az/envs/default/lib/python2.7/config/Makefile (No such file or directory)
   warnings.warn("{0}".format(e), RuntimeWarning)
 ```
@@ -43,21 +43,21 @@ See also https://github.com/pypa/pip/issues/1074.
 ### Ubuntu 14.04 LTS and BASH on Windows (Build 14362+)
 Python 2.7.6 should be already on the machine.
 
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 ### Ubuntu 15.10
 Python 2.7.10 should be already on the machine.
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 ### Ubuntu 16.04 LTS
 Python 2.7.11 should be already on the machine.
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
@@ -66,14 +66,14 @@ curl -L https://aka.ms/InstallAzureCli | bash
 
 ### Debian 7
 Python 2.7.3 should be already on the machine.
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 ### Debian 8
 Python 2.7.9 should be already on the machine.
-```
+```shell
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
@@ -86,7 +86,7 @@ Not supported with the default version of Python (2.6.6) on the machine.  We rec
 
 ### CentOS 7.1 / 7.2
 Python 2.7.5 should be already on the machine.
-```
+```shell
 sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
@@ -99,14 +99,14 @@ Not supported with the default version of Python (2.6.6) on the machine.  We rec
 
 ### RedHat RHEL 7.2
 Python 2.7.5 should be already on the machine.
-```
+```shell
 sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 ## SUSE OpenSUSE 13.2
 Python 2.7.8 should be already on the machine.
-```
+```shell
 sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
@@ -214,7 +214,6 @@ Ubuntu 15 may require `build-essential` also:
 ### Example Errors
 
 ```shell
-
     Downloading cffi-1.5.2.tar.gz (388kB)
       100% |################################| 389kB 3.9MB/s
       Complete output from command python setup.py egg_info:
