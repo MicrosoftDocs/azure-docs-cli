@@ -36,20 +36,19 @@ Get Azure 2.0 CLI (Preview) on Windows using pip.
     Check your Python installation from a command prompt.
 
     ```
-        C:\temp> python --version
-        Python 3.5.2
+        python --version
     ```
 
 2. Install Azure CLI 2.0 (Preview) using pip.
 
     ```
-        C:\temp> pip install azure-cli
+        pip install azure-cli
     ```
 
     Run Azure CLI 2.0 (Preview) from the command prompt.
 
     ```
-       C:\temp> az
+       az
     ```
 
 
