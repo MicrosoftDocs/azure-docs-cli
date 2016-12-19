@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 11/15/2016
+ms.date: 12/19/2016
 ms.topic: reference
 ms.prod: azure
 ms.technology: azure
@@ -20,6 +20,39 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
+## Windows
+
+Get Azure 2.0 CLI (Preview) on Windows using pip. 
+
+> - You can use [Docker](#docker) to access the CLI without installing Python and pip.
+> - If you're running Ubuntu on Windows, follow the steps for [Ubuntu](#ubuntu).
+
+1. If you don't already have Python 2.7, 3.4 or 3.5 installed, install version 3.5.x.
+
+    Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for your OS.  
+
+    > We recommend checking the "Add Python 3.5 to PATH" option during install.
+
+    Check your Python installation from a command prompt.
+
+    ```shell
+        C:\temp> python --version
+        Python 3.5.2
+    ```
+
+2. Install Azure CLI 2.0 (Preview) using pip.
+
+    ```shell
+        C:\temp> pip install azure-cli
+    ```
+
+    Run Azure CLI 2.0 (Preview) from the command prompt.
+
+    ```shell
+       C:\temp> az
+    ```
+
+
 ## Ubuntu
 
 ### Ubuntu 12.04 LTS
@@ -31,14 +64,12 @@ sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-#### Known warnings
-Warning 1:
-You may see the following warning message during install and execution of `az`.
-```
-/usr/local/az/envs/default/local/lib/python2.7/site-packages/pip/pep425tags.py:30: RuntimeWarning: invalid Python installation: unable to open /usr/az/envs/default/lib/python2.7/config/Makefile (No such file or directory)
-  warnings.warn("{0}".format(e), RuntimeWarning)
-```
-See also https://github.com/pypa/pip/issues/1074.
+> You may see the following warning message during install and execution of `az`.
+> ```
+> /usr/local/az/envs/default/local/lib/python2.7/site-packages/pip/pep425tags.py:30: RuntimeWarning: invalid Python installation: unable to open /usr/az/envs/default/lib/python2.7/config/Makefile (No such file or directory)
+>   warnings.warn("{0}".format(e), RuntimeWarning)
+> ```
+> Here's some information that should help you resolve the issue: [https://github.com/pypa/pip/issues/1074](https://github.com/pypa/pip/issues/1074).
 
 ### Ubuntu 14.04 LTS and BASH on Windows (Build 14362+)
 Python 2.7.6 should be already on the machine.
@@ -114,37 +145,6 @@ curl -L https://aka.ms/InstallAzureCli | bash
 ## CoreOS Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
 
 Doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
-
-## Windows
-
-The CLI is available for Windows though PIP using the steps below.  If you do not have Python/PIP installed, consider using [Docker](#docker) to access the CLI.
-
-### Step 1: Install Python 3.5.x
-
-If Python 2.7, 3.4 or 3.5 is already installed, skip to step 2.
-
-Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for your OS.  
-> **NOTE**: We recommend checking the "Add Python 3.5 to PATH" option during install.
-Once the install is complete, if you open a new command prompt, you should test your Python installation:
-
-```shell
-    C:\temp> python --version
-    Python 3.5.2
-```
-
-### Step 2: Install Azure CLI using PIP
-
-Run the following from a command prompt to install the Azure CLI 2.0 using the Python package manager, PIP:
-
-```shell
-    C:\temp> pip install azure-cli
-```
-
-And after the installation complete, you can run the Azure CLI 2.0 from the command prompt:
-
-```shell
-   C:\temp> az
-```
 
 ## Docker
 
