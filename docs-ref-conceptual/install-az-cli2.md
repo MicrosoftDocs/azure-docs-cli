@@ -35,20 +35,20 @@ Get Azure 2.0 CLI (Preview) on Windows using pip.
 
     Check your Python installation from a command prompt.
 
-    ```shell
+    ```
         C:\temp> python --version
         Python 3.5.2
     ```
 
 2. Install Azure CLI 2.0 (Preview) using pip.
 
-    ```shell
+    ```
         C:\temp> pip install azure-cli
     ```
 
     Run Azure CLI 2.0 (Preview) from the command prompt.
 
-    ```shell
+    ```
        C:\temp> az
     ```
 
@@ -151,7 +151,7 @@ Doesn't have python installed by default and is not currently supported.  We rec
 > Note that our docker images contain the latest code from the master branch.
 
 Run 
-```shell
+```
 docker run -it azuresdk/azure-cli-python:latest bash`
 ```
 
@@ -161,7 +161,7 @@ docker run -it azuresdk/azure-cli-python:latest bash`
 ### Errors with curl redirection
 
 If you get an error with the curl command regarding the `-L` parameter or an error saying `Object Moved`, try using the full url instead of the aka.ms url:
-```shell
+```
 # If you see this:
 $ curl -L https://aka.ms/InstallAzureCli | bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -179,14 +179,14 @@ $ curl https://azurecliprod.blob.core.windows.net/install | bash
 
 If you get errors on install on **OS X**, upgrade pip by typing:
 
-```shell
+```
     pip install --upgrade --force-reinstall pip
 ```
 
 If you get errors on install on **Debian or Ubuntu** such as the examples below,
 install libssl-dev and libffi-dev by typing:
 
-```shell
+```
     sudo apt-get update
     sudo apt-get install -y libssl-dev libffi-dev
 ```
@@ -195,25 +195,25 @@ Also install Python Dev for your version of Python.
 
 Python 2:
 
-```shell
+```
     sudo apt-get install -y python-dev
 ```
 
 Python 3:
 
-```shell
+```
     sudo apt-get install -y python3-dev
 ```
 
 Ubuntu 15 may require `build-essential` also:
 
-```shell
+```
     sudo apt-get install -y build-essential
 ```
 
 ### Example Errors
 
-```shell
+```
 
     Downloading cffi-1.5.2.tar.gz (388kB)
       100% |################################| 389kB 3.9MB/s
@@ -229,7 +229,7 @@ Ubuntu 15 may require `build-essential` also:
     Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-77i2fido/cffi/
 ```
 
-```shell
+```
     #include <openssl/e_os2.h>
                              ^
     compilation terminated.
