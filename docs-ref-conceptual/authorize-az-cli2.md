@@ -59,7 +59,7 @@ but it's a good way to authorize your automated tasks with just the credentials 
 
     > You can add role assignments after you create the role, too, using `az role assignments`.
 
-1. Log in withe service principal.
+1. Log in with the service principal.
 
     ```azurecli
     az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
