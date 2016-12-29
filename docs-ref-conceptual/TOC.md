@@ -2,3 +2,8 @@
 ## [Get started](get-started-with-az-cli2.md)
 ## [Authorize](authorize-az-cli2.md)
 ## [Old and new CLIs](old-and-new-clis.md)
+## [Create a Linux VM](..\..\azure/virtual-machines\virtual-machines-linux-quick-create-cli)
+## [Create a complete Linux environment](..\..\azure\virtual-machines\virtual-machines-linux-create-cli-complete)
+## [Open ports and endpoints to a Linux VM](..\..\azure\virtual-machines\virtual-machines-linux-nsg-quickstart)
+## [Create an Azure Container Service cluster](..\..\azure\container-service\container-service-create-acs-cluster-cli)
+## [Create an IoT hub](..\..\azure\iot-hub\iot-hub-create-using-cli)
