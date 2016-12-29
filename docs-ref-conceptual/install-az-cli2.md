@@ -138,16 +138,21 @@ sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## SUSE OpenSUSE 13.2
+## SUSE
+
+### OpenSUSE 13.2
+
 Python 2.7.8 should be already on the machine.
 ```
 sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## CoreOS Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+## CoreOS
 
-Doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
+### Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+
+CoreOS doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
 ## Docker
 
