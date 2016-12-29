@@ -1,3 +1,8 @@
 # [Install the Azure CLI 2.0 (Preview)](install-az-cli2.md)
 ## [Get started](get-started-with-az-cli2.md)
 ## [Old and new CLIs](old-and-new-clis.md)
+## [Create a Linux VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-quick-create-cli)
+## [Create a complete Linux environment](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-cli-complete)
+## [Open ports and endpoints to a Linux VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-nsg-quickstart)
+## [Create an Azure Container Service cluster](https://docs.microsoft.com/azure/container-service/container-service-create-acs-cluster-cli)
+## [Create an IoT hub](https://docs.microsoft.com/azure/iot-hub/iot-hub-create-using-cli)
