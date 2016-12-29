@@ -1,5 +1,6 @@
 # [Install the Azure CLI 2.0 (Preview)](install-az-cli2.md)
 ## [Get started](get-started-with-az-cli2.md)
+## [Authorize](authrorize-az-cli2.md)
 ## [Old and new CLIs](old-and-new-clis.md)
 ## [Create a Linux VM](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-quick-create-cli)
 ## [Create a complete Linux environment](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-cli-complete)

@@ -94,6 +94,8 @@ Here are some other things to try:
     az vm create -h
     ```
 
+- Authorize using a [service principal](authorize-az-cli2.md#service-principal).
+
 - Read the [API reference docs](https://docs.microsoft.com/cli/azure).
 
 - Send us your feedback using `az feedback`.
