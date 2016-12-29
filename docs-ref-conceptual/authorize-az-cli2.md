@@ -44,7 +44,7 @@ az login -u <username> -p <password>
 
 > You can't log in this way if your account has enabled multi-factor authentication.
 
-## Service Principal
+## Service principal
 
 A service principal is a little more work,
 but it's a good way to authorize your automated tasks with just the credentials needed for that task.
@@ -59,7 +59,7 @@ but it's a good way to authorize your automated tasks with just the credentials 
 
     > You can add role assignments after you create the role, too, using `az role assignments`.
 
-1. Log in withe service principal.
+1. Log in with the service principal.
 
     ```azurecli
     az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
