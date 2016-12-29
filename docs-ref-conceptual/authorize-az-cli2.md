@@ -44,7 +44,7 @@ az login -u <username> -p <password>
 
 > You can't log in this way if your account has enabled multi-factor authentication.
 
-## Service Principal
+## Service principal
 
 A service principal is a little more work,
 but it's a good way to authorize your automated tasks with just the credentials needed for that task.
