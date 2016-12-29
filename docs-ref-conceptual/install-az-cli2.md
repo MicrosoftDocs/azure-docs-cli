@@ -1,12 +1,12 @@
 ---
-title: Install the Azure CLI 2.0 (Preview) | Microsoft Docs
+title: Install the Azure CLI 2.0 (Preview)
 description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 12/28/2016
-ms.topic: reference
+ms.date: 12/29/2016
+ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azure-cli
@@ -138,16 +138,21 @@ sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## SUSE OpenSUSE 13.2
+## SUSE
+
+### OpenSUSE 13.2
+
 Python 2.7.8 should be already on the machine.
 ```
 sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## CoreOS Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+## CoreOS
 
-Doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
+### Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+
+CoreOS doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
 ## Docker
 
