@@ -15,7 +15,7 @@ ms.assetid: 5e3c57b4-6cfb-44d5-aae6-f8f83d54354b
 
 # Authorize with Azure CLI 2.0 (Preview)
 
-You can authorize with Azure CLI 2.0 (Preview) interactrively,
+You can authorize with Azure CLI 2.0 (Preview) interactively,
 by providing your credentials on the command-line, or using a service principal.
 
 ## Interactive
