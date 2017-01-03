@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 12/29/2016
+ms.date: 01/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -16,7 +16,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 # Install Azure CLI 2.0 (Preview)
 
 > Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
-> You can also [install Azure CLI](https://docs.microsoft.com/en-us/azure/xplat-cli-install),
+> You can also [install Azure CLI](/azure/xplat-cli-install),
 > which is released and works with all services.
 
 ## OS X

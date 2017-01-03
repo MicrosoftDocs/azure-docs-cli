@@ -1,11 +1,11 @@
 ---
-title: Aurhorize with the Azure CLI 2.0 (Preview)
+title: Authorize with the Azure CLI 2.0 (Preview)
 description: How to authorize using Azure CLI 2.0 (Preview) interactrively or using a service principal
 keywords: Azure CLI 2.0 (Preview), Authorize, Azure Python CLI
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 12/29/2016
+ms.date: 01/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -17,6 +17,11 @@ ms.assetid: 5e3c57b4-6cfb-44d5-aae6-f8f83d54354b
 
 You can authorize with Azure CLI 2.0 (Preview) interactively,
 by providing your credentials on the command-line, or using a service principal.
+
+> Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
+> If you're using Azure CLI, 
+> which is released and works with all services,
+> here's [how to authorize](/azure/xplat-cli-connect).
 
 ## Interactive
 
