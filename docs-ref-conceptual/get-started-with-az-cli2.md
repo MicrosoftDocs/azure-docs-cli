@@ -96,6 +96,6 @@ Here are some other things to try:
 
 - Authorize using a [service principal](authorize-az-cli2.md#service-principal).
 
-- Read the [API reference docs](https://docs.microsoft.com/cli/azure).
+- Read the [API reference docs](/cli/azure).
 
 - Send us your feedback using `az feedback`.
