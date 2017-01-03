@@ -19,8 +19,9 @@ You can authorize with Azure CLI 2.0 (Preview) interactively,
 by providing your credentials on the command-line, or using a service principal.
 
 > Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
-> You can also [install Azure CLI](/azure/xplat-cli-install),
-> which is released and works with all services. 
+> If you're using Azure CLI, 
+> which is released and works with all services,
+> here's [how to authorize](/azure/xplat-cli-connect).
 
 ## Interactive
 
