@@ -1,12 +1,12 @@
 ---
-title: Install the Azure CLI 2.0 (Preview) | Microsoft Docs
+title: Install the Azure CLI 2.0 (Preview)
 description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 12/28/2016
-ms.topic: reference
+ms.date: 01/03/2017
+ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azure-cli
@@ -16,7 +16,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 # Install Azure CLI 2.0 (Preview)
 
 > Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
-> You can also [install Azure CLI](https://docs.microsoft.com/en-us/azure/xplat-cli-install),
+> You can also [install Azure CLI](/azure/xplat-cli-install),
 > which is released and works with all services.
 
 ## OS X
@@ -138,16 +138,21 @@ sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## SUSE OpenSUSE 13.2
+## SUSE
+
+### OpenSUSE 13.2
+
 Python 2.7.8 should be already on the machine.
 ```
 sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-## CoreOS Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+## CoreOS
 
-Doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
+### Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
+
+CoreOS doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
 ## Docker
 

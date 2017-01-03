@@ -4,7 +4,7 @@ description: Get started with Azure 2.0 CLI Preview on Linux, Mac, or Windows.
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 11/14/2016
+ms.date: 01/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -94,6 +94,8 @@ Here are some other things to try:
     az vm create -h
     ```
 
-- Read the [API reference docs](https://docs.microsoft.com/cli/azure).
+- Authorize using a [service principal](authorize-az-cli2.md#service-principal).
+
+- Read the [API reference docs](/cli/azure).
 
 - Send us your feedback using `az feedback`.

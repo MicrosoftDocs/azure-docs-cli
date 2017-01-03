@@ -4,7 +4,7 @@ description: There is a new CLI for Azure - Azure CLI 2.0 (Preview). How do the 
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 11/29/2016
+ms.date: 01/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -14,8 +14,9 @@ ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 # Old and new Azure CLIs
 
 There is a new CLI for Azure: the Azure CLI 2.0 (Preview), now available as a beta on [GitHub](http://github.com/azure/azure-cli).
-Azure CLI 2.0 (Preview) is applicable when you use the resource manager [deployment model](https://docs.microsoft.com/azure/resource-manager-deployment-model).
-When you use the classic deployment model, you need to contiunue to use Azure CLI.
+Azure CLI 2.0 (Preview) is applicable when you use the resource manager [deployment model](/azure/resource-manager-deployment-model).
+You can continue to use [Azure CLI](/azure/xplat-cli-install?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
+with either the classic or the resource manager deployment model.
 
 Today Azure CLI 2.0 (Preview) supports these services, with more coming online:
 - Active Directory
