@@ -113,6 +113,8 @@
 ## [az role](role.pycliyml)
 ### [az role assignment](role\assignment.pycliyml)
 ### [az role definition](role\definition.pycliyml)
+## [az sql](sql.pycliyml)
+### [az sql server](sql\server.pycliyml)
 ## [az storage](storage.pycliyml)
 ### [az storage account](storage\account.pycliyml)
 #### [az storage account keys](storage\account\keys.pycliyml)
