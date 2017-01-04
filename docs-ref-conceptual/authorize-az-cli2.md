@@ -58,7 +58,7 @@ but it's a good way to authorize your automated tasks with just the credentials 
     ```azurecli
     az ad sp create-for-rbac -n "http://my-app" --role contributor --scopes
         /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/mygroup
-        /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/my-another-group
+        /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/my-other-group
     ```
 
     > You can add role assignments after you create the role, too, using `az role assignments`.
