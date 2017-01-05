@@ -4,7 +4,7 @@ description: There is a new CLI for Azure - Azure CLI 2.0 (Preview). How do the 
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 11/29/2016
+ms.date: 01/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
