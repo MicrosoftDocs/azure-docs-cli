@@ -72,7 +72,7 @@ but it's a good way to authorize your automated tasks with just the credentials 
     
     ```azurecli
     az role assignment --name <roleName>
-    ````
+    ```
 
 1. Log in with the service principal.
 
