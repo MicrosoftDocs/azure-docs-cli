@@ -100,7 +100,97 @@ Here are some other things to try:
     For example, the following lists the sql endpoints for each Azure cloud.
 
     ```azurecli
-    az cloud list --query [*].[name,endpoints.sql_management]
+    az cloud list --query [*].[name,endpoints.sqlManagement]
+    ```
+
+- Use the `--output` parameter to format the output of the command into one of these forms.
+
+    --output | Description
+    ---------|-------------------------------
+    json     | json string. This is the default.
+    json     | colorized json string.
+    list     | an easily read list.
+    table    | table with column headings.
+    tsv      | tab-separated values.
+
+    For example, the following displays the list of Azure clouds in an easy to read list format.
+
+    ```azurecli
+    az cloud list --output list
+    ```
+
+    The results are in this form.
+
+    ```
+    Name      : AzureCloud
+    Endpoints :
+        Active Directory                   : https://login.microsoftonline.com
+        Active Directory Graph Resource Id : https://graph.windows.net/
+        Active Directory Resource Id       : https://management.core.windows.net/
+        Gallery                            : https://gallery.azure.com/
+        Management                         : https://management.core.windows.net/
+        Resource Manager                   : https://management.azure.com/
+        Sql Management                     : https://management.core.windows.net:8443/
+    Suffixes  :
+        Azure Datalake Analytics Catalog And Job Endpoint : azuredatalakeanalytics.net
+        Azure Datalake Store File System Endpoint         : azuredatalakestore.net
+        Keyvault Dns                                      : .vault.azure.net
+        Sql Server Hostname                               : .database.windows.net
+        Storage Endpoint                                  : core.windows.net
+    ```
+
+    When you use table or tsv, nested objects aren't included in the output.
+    Since the only name-value pair at the top level of the cloud object is the name,
+    that's all you get with either `--output table` or `--output tsv`.
+
+    ```azurecli
+    az cloud list --output table
+    ```
+
+    Just returns the top level name-value pairs, which is just the names in this case.
+
+    ```
+    Name
+    -----------------
+    AzureCloud
+    AzureChinaCloud
+    AzureUSGovernment
+    AzureGermanCloud
+    ```
+
+    You can use a JMESPath operation to flatten the object.
+    If we get the name and the sql endpoint, it looks like this.
+
+    ```azurecli
+    az cloud list --query [*].[name,endpoints.sqlManagement] --output table
+    ```
+
+    ```
+    Column1            Column2
+    -----------------  -----------------------------------------------
+    AzureCloud         https://management.core.windows.net:8443/
+    AzureChinaCloud    https://management.core.chinacloudapi.cn:8443/
+    AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
+    AzureGermanCloud   https://management.core.cloudapi.de:8443/
+    ```
+
+    The column names are lost in this case because they don't exist in our JMESPath query results.
+    To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
+    add them to the JMESPath query like this.
+
+    ```azurecli
+    az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
+    ```
+
+    The results have the column headings.
+
+    ```
+    Name               SQL
+    -----------------  -----------------------------------------------
+    AzureCloud         https://management.core.windows.net:8443/
+    AzureChinaCloud    https://management.core.chinacloudapi.cn:8443/
+    AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
+    AzureGermanCloud   https://management.core.cloudapi.de:8443/
     ```
 
 - Read the [API reference docs](/cli/azure).
