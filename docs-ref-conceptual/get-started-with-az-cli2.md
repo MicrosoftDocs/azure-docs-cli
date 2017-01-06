@@ -96,6 +96,7 @@ Here are some other things to try:
 
 - Authorize using a [service principal](authorize-az-cli2.md#service-principal).
 
+<a id="query"></a>
 - Use the `--query` parameter to executer a [JMESPath query](http://jmespath.org) on the results of your `az` command.
     For example, the following lists the sql endpoints for each Azure cloud.
 
@@ -103,6 +104,7 @@ Here are some other things to try:
     az cloud list --query [*].[name,endpoints.sqlManagement]
     ```
 
+<a id="output"></a>
 - Use the `--output` parameter to format the output of the command into one of these forms.
 
     --output | Description
