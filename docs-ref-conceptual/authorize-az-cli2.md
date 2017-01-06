@@ -15,13 +15,14 @@ ms.assetid: 5e3c57b4-6cfb-44d5-aae6-f8f83d54354b
 
 # Authorize with Azure CLI 2.0 (Preview)
 
-You can authorize with Azure CLI 2.0 (Preview) interactively,
+You can log in toAzure CLI 2.0 (Preview) interactively,
 by providing your credentials on the command-line, or using a service principal.
+You'll stay logged unless you log out or you don't use the command-line for a few weeks.
 
 > Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
 > If you're using Azure CLI, 
 > which is released and works with all services,
-> here's [how to authorize](/azure/xplat-cli-connect).
+> here's [how to log in with Azure CLI](/azure/xplat-cli-connect).
 
 ## Interactive
 
@@ -57,12 +58,21 @@ but it's a good way to authorize your automated tasks with just the credentials 
 1. If you don't already have one, create a service principal with the appropriate role assignment.
 
     ```azurecli
-    az ad sp create-for-rbac -n "http://my-app" --role contributor --scopes
-        /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/mygroup
-        /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/my-other-group
+    az ad sp create-for-rbac -n "http://my-app" --role contributor
     ```
 
-    > You can add role assignments after you create the role, too, using `az role assignments`.
+    The `contributor` role is very broad and may not be the best choice in many cases.
+    You can get a list of available roles to see which is appropriate in your case.
+
+    ```azurecli
+    az role definition list --query [*].roleName
+    ```
+
+    You can add role assignments after you create the role, too.
+    
+    ```azurecli
+    az role assignment --name <roleName>
+    ````
 
 1. Log in with the service principal.
 
