@@ -68,11 +68,11 @@ but it's a good way to authorize your automated tasks with just the credentials 
     az role definition list --query [*].roleName
     ```
 
-    You can add role assignments after you create the role, too.
+    You can add role assignments after you create the service principal, too.
     
     ```azurecli
     az role assignment --name <roleName>
-    ````
+    ```
 
 1. Log in with the service principal.
 
