@@ -96,6 +96,13 @@ Here are some other things to try:
 
 - Authorize using a [service principal](authorize-az-cli2.md#service-principal).
 
+- Use the `--query` parameter to executer a [JMESPath query](http://jmespath.org) on the results of your `az` command.
+    For example, the following lists the sql endpoints for each Azure cloud.
+
+    ```azurecli
+    az cloud list --query [*].[name,endpoints.sql_management]
+    ```
+
 - Read the [API reference docs](/cli/azure).
 
 - Send us your feedback using `az feedback`.
