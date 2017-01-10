@@ -60,29 +60,30 @@ on whatever platform you use.
 
     Now you can run any command that accesses your account.
 
-Here are some other things to try:
-
-- Create a resource group
+## Create a resource group
 
     ```azurecli
     az resource group create -l westus -n MyRG
     ```
 
-- Create a VM
+
+## Create a VM
 
     ```azurecli
     az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@1234
     ```
 
-- Look at more [samples](https://github.com/Azure/azure-cli-samples).
+## Get samples
 
-- Get help.
+[Samples](https://github.com/Azure/azure-cli-samples)
+
+## Get help.
 
     ```azurecli
     az [command-group [command]] -h
     ```
 
-    For example, to get see what commands and subgroups are available for VMs, use
+    For example, to see what commands and subgroups are available for VMs, use
 
     ```azurecli
     az vm -h
@@ -94,17 +95,21 @@ Here are some other things to try:
     az vm create -h
     ```
 
-- Authorize using a [service principal](authorize-az-cli2.md#service-principal).
+## Authorize using a service principal
 
-<a id="query"></a>
-- Use the `--query` parameter to executer a [JMESPath query](http://jmespath.org) on the results of your `az` command.
+[Service principal](authorize-az-cli2.md#service-principal)
+
+## Query the results
+
+- Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
     For example, the following lists the sql endpoints for each Azure cloud.
 
     ```azurecli
     az cloud list --query [*].[name,endpoints.sqlManagement]
     ```
 
-<a id="output"></a>
+## Format the output
+
 - Use the `--output` parameter to format the output of the command into one of these forms.
 
     --output | Description
@@ -195,6 +200,12 @@ Here are some other things to try:
     AzureGermanCloud   https://management.core.cloudapi.de:8443/
     ```
 
-- Read the [API reference docs](/cli/azure).
+## Read the API reference docs
 
-- Send us your feedback using `az feedback`.
+[API reference](/cli/azure)
+
+## Send us your feedback
+
+```azurecli
+az feedback
+```
