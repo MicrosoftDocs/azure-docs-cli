@@ -78,14 +78,12 @@ on whatever platform you use.
     azurecli
     az [command-group [command]] -h
 
-### Help specific to commands or sub-commands
-
-### See commands and subgroups are available for VMs
+### Command help example - See commands and subgroups are available for VMs
 
     azurecli
     az vm -h
     
-### To get help with the command to create a VM
+### Command help example - To get help with the command to create a VM
 
     azurecli
     az vm create -h
