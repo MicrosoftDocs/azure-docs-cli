@@ -62,16 +62,16 @@ on whatever platform you use.
 
 ## Create a resource group
 
-    ```azurecli
-    az resource group create -l westus -n MyRG
-    ```
+```azurecli
+az resource group create -l westus -n MyRG
+```
 
 
 ## Create a VM
 
-    ```azurecli
-    az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@1234
-    ```
+```azurecli
+az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@1234
+```
 
 ## Get samples
 
@@ -79,21 +79,21 @@ on whatever platform you use.
 
 ## Get help.
 
-    ```azurecli
-    az [command-group [command]] -h
-    ```
+```azurecli
+az [command-group [command]] -h
+```
 
-    For example, to see what commands and subgroups are available for VMs, use
+For example, to see what commands and subgroups are available for VMs, use
 
-    ```azurecli
-    az vm -h
-    ```
+```azurecli
+az vm -h
+```
 
-    To get help with the command to create a VM, use
+To get help with the command to create a VM, use
 
-    ```azurecli
-    az vm create -h
-    ```
+```azurecli
+az vm create -h
+```
 
 ## Authorize using a service principal
 
