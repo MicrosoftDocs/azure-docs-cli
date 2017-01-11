@@ -46,7 +46,8 @@ on whatever platform you use.
 
 3. Run the login command.
 
-    ```azurecli
+    ```
+    azurecli
     az login
     ```
     
@@ -62,14 +63,16 @@ on whatever platform you use.
 
 ## Create a resource group
 
-    ```azurecli
+    ```
+    azurecli
     az resource group create -l westus -n MyRG
     ```
 
 
 ## Create a VM
 
-    ```azurecli
+    ```
+    azurecli
     az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@1234
     ```
 
@@ -79,19 +82,22 @@ on whatever platform you use.
 
 ## Get help.
 
-    ```azurecli
+    ```
+    azurecli
     az [command-group [command]] -h
     ```
 
     For example, to see what commands and subgroups are available for VMs, use
 
-    ```azurecli
+    ```
+    azurecli
     az vm -h
     ```
 
     To get help with the command to create a VM, use
 
-    ```azurecli
+    ```
+    azurecli
     az vm create -h
     ```
 
@@ -104,7 +110,8 @@ on whatever platform you use.
 - Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
     For example, the following lists the sql endpoints for each Azure cloud.
 
-    ```azurecli
+    ```
+    azurecli
     az cloud list --query [*].[name,endpoints.sqlManagement]
     ```
 
@@ -122,7 +129,8 @@ on whatever platform you use.
 
     For example, the following displays the list of Azure clouds in an easy to read list format.
 
-    ```azurecli
+    ```
+    azurecli
     az cloud list --output list
     ```
 
@@ -150,7 +158,8 @@ on whatever platform you use.
     Since the only name-value pair at the top level of the cloud object is the name,
     that's all you get with either `--output table` or `--output tsv`.
 
-    ```azurecli
+    ```
+    azurecli
     az cloud list --output table
     ```
 
@@ -168,7 +177,8 @@ on whatever platform you use.
     You can use a JMESPath operation to flatten the object.
     If we get the name and the sql endpoint, it looks like this.
 
-    ```azurecli
+    ```
+    azurecli
     az cloud list --query [*].[name,endpoints.sqlManagement] --output table
     ```
 
@@ -185,7 +195,8 @@ on whatever platform you use.
     To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
     add them to the JMESPath query like this.
 
-    ```azurecli
+    ```
+    azurecli
     az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
     ```
 
@@ -206,6 +217,7 @@ on whatever platform you use.
 
 ## Send us your feedback
 
-```azurecli
+```
+azurecli
 az feedback
 ```
