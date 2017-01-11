@@ -78,7 +78,9 @@ on whatever platform you use.
     azurecli
     az [command-group [command]] -h
 
-### Help - See commands and subgroups are available for VMs
+### Help specific to commands or sub-commands
+
+### See commands and subgroups are available for VMs
 
     azurecli
     az vm -h
