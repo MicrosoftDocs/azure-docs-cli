@@ -46,8 +46,8 @@ on whatever platform you use.
 
 3. Run the login command.
 
-    azurecli
-    az login
+        azurecli
+        az login
     
     You'll be prompted to open https://aka.ms/devicelogin and enter a code.
 
@@ -74,20 +74,20 @@ on whatever platform you use.
 [Samples](https://github.com/Azure/azure-cli-samples)
 
 ## Get help.
-    
+```    
         azurecli
         az [command-group [command]] -h
-
+```
     For example, to see what commands and subgroups are available for VMs, use
-
+```
         azurecli
         az vm -h
-
+```
     To get help with the command to create a VM, use
-
+```
         azurecli
         az vm create -h
-
+```
 ## Authorize using a service principal
 
 [Service principal](authorize-az-cli2.md#service-principal)
