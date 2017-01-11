@@ -46,10 +46,8 @@ on whatever platform you use.
 
 3. Run the login command.
 
-    ```
     azurecli
     az login
-    ```
     
     You'll be prompted to open https://aka.ms/devicelogin and enter a code.
 
@@ -63,43 +61,32 @@ on whatever platform you use.
 
 ## Create a resource group
 
-    ```
     azurecli
     az resource group create -l westus -n MyRG
-    ```
-
 
 ## Create a VM
 
-    ```
     azurecli
     az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@1234
-    ```
-
+    
 ## Get samples
 
 [Samples](https://github.com/Azure/azure-cli-samples)
 
 ## Get help.
-
-    ```
-    azurecli
-    az [command-group [command]] -h
-    ```
+    
+        azurecli
+        az [command-group [command]] -h
 
     For example, to see what commands and subgroups are available for VMs, use
 
-    ```
-    azurecli
-    az vm -h
-    ```
+        azurecli
+        az vm -h
 
     To get help with the command to create a VM, use
 
-    ```
-    azurecli
-    az vm create -h
-    ```
+        azurecli
+        az vm create -h
 
 ## Authorize using a service principal
 
@@ -110,10 +97,8 @@ on whatever platform you use.
 - Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
     For example, the following lists the sql endpoints for each Azure cloud.
 
-    ```
-    azurecli
-    az cloud list --query [*].[name,endpoints.sqlManagement]
-    ```
+        azurecli
+        az cloud list --query [*].[name,endpoints.sqlManagement]
 
 ## Format the output
 
@@ -129,10 +114,8 @@ on whatever platform you use.
 
     For example, the following displays the list of Azure clouds in an easy to read list format.
 
-    ```
-    azurecli
-    az cloud list --output list
-    ```
+        azurecli
+        az cloud list --output list
 
     The results are in this form.
 
