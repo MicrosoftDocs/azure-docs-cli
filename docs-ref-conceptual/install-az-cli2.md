@@ -20,9 +20,20 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 > which is released and works with all services.
 
 ## OS X
-```
-curl -L https://aka.ms/InstallAzureCli | bash
-```
+
+1. If you don't have it, install [Python](https://www.python.org/downloads)
+
+2. Install Azure CLI 2.0 (Preview).
+
+    ```
+    curl -L https://aka.ms/InstallAzureCli | bash
+    ```
+
+3. Restart your shell.
+
+    ```
+    exec -l $SHELL
+    ```
 
 ## Windows
 
