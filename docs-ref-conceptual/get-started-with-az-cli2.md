@@ -77,7 +77,7 @@ az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@12
 
 [Samples](https://github.com/Azure/azure-cli-samples)
 
-## Get help.
+## Get help
 
 ```azurecli
 az [command-group [command]] -h
@@ -95,9 +95,9 @@ To get help with the command to create a VM, use
 az vm create -h
 ```
 
-## Authorize using a service principal
+## Authenticating using a service principal
 
-[Service principal](authorize-az-cli2.md#service-principal)
+[Service principal](authenticate-az-cli2.md#service-principal)
 
 ## Query the results
 
