@@ -171,7 +171,7 @@ CoreOS doesn't have python installed by default and is not currently supported. 
 
 Run 
 ```
-docker run -it azuresdk/azure-cli-python:latest bash`
+docker run -it azuresdk/azure-cli-python:latest bash
 ```
 
 ## Installation Troubleshooting
