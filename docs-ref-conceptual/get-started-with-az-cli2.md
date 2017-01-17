@@ -115,7 +115,7 @@ az vm create -h
     --output | Description
     ---------|-------------------------------
     json     | json string. This is the default.
-    json     | colorized json string.
+    jsonc    | colorized json string.
     list     | an easily read list.
     table    | table with column headings.
     tsv      | tab-separated values.
