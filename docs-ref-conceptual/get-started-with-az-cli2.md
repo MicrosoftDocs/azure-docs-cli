@@ -75,7 +75,7 @@ az vm create -g MyRG -n MyVM --admin-username admin --admin-password Password@12
 
 ## Get samples
 
-[Samples](https://github.com/Azure/azure-cli-samples)
+Get the Azure CLI 2.0 Preview samples from the github repository [Azure/azure-cli-samples](https://github.com/Azure/azure-cli-samples).
 
 ## Get help
 
@@ -95,9 +95,9 @@ To get help with the command to create a VM, use
 az vm create -h
 ```
 
-## Authenticating using a service principal
+## Authenticate using a service principal
 
-[Service principal](authenticate-az-cli2.md#service-principal)
+In your automation tools, you can authenticate using a [service principal](authenticate-az-cli2.md#service-principal).
 
 ## Query the results
 
