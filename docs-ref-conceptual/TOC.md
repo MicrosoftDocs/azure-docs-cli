@@ -1,6 +1,6 @@
 # [Overview](old-and-new-clis.md)
-## [Get started](get-started-with-az-cli2.md)
 ## [Install](install-az-cli2.md)
+## [Get started](get-started-with-az-cli2.md)
 # How to
 ## [Create a Linux VM](..\..\azure\virtual-machines\virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Create a complete Linux environment](..\..\azure\virtual-machines\virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
