@@ -44,19 +44,64 @@ on whatever platform you use.
         vmss     : Create highly available, auto-scalable Linux or Windows virtual machines.
     ```
 
-3. Run the login command.
+3. Log in.
 
-    ```azurecli
-    az login
-    ```
+    You can log in interactively or, if your account doesn't have multi-factor authentication enabled,
+    you can provide your credentials on the command-line.
+    You can also authenticate using a service principal.
+    Using a service principal is a little more work,
+    but it's a good way to make sure your automated tasks have just the credentials needed.
+
+    - Log in interactively.
+
+        1. Run the login command.
+
+            ```azurecli
+            az login
+            ```
+        
+            You'll be prompted to open https://aka.ms/devicelogin and enter a code.
+
+        2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+            and enter the code to authenticate.
+
+            You'll be prompted to log in using your credentials.
     
-    You'll be prompted to open https://aka.ms/devicelogin and enter a code.
+        3. Log in.
 
-4. Use a web browser to open the page https://aka.ms/devicelogin and enter the code to authenticate.
+    - Provide your credentials on the command-line.
 
-    You'll be prompted to log in using your credentials.
-    
-5. Log in.
+        ```azurecli
+        az login -u <username> -p <password>
+        ```
+
+    <a id="service-principal"></a>
+    - Log in using a service principal.
+
+        1. If you don't already have one, create a service principal with the appropriate role assignment.
+
+            ```azurecli
+            az ad sp create-for-rbac -n "http://my-app" --role contributor
+            ```
+
+            The `contributor` role is very broad and may not be the best choice in many cases.
+            You can get a list of available roles to see which is appropriate for your case.
+
+            ```azurecli
+            az role definition list --query [*].roleName
+            ```
+
+            You can add role assignments after you create the service principal, too.
+            
+            ```azurecli
+            az role assignment --name <roleName>
+            ```
+
+        1. Log in with the service principal.
+
+            ```azurecli
+            az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
+            ```
 
     Now you can run any command that accesses your account.
 
@@ -94,10 +139,6 @@ To get help with the command to create a VM, use
 ```azurecli
 az vm create -h
 ```
-
-## Authenticate using a service principal
-
-In your automation tools, you can authenticate using a [service principal](authenticate-az-cli2.md#service-principal).
 
 ## Query the results
 
