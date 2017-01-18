@@ -1,6 +1,6 @@
 # [Overview](..\docs-ref-conceptual\old-and-new-clis.md)
-## [Get started](..\docs-ref-conceptual\get-started-with-az-cli2.md)
 ## [Install](..\docs-ref-conceptual\install-az-cli2.md)
+## [Get started](..\docs-ref-conceptual\get-started-with-az-cli2.md)
 # How to
 ## [Create a Linux VM](..\docs-ref-conceptual\..\..\azure\virtual-machines\virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Create a complete Linux environment](..\docs-ref-conceptual\..\..\azure\virtual-machines\virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
