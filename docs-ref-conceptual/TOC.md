@@ -5,6 +5,13 @@
 ## [Create a Linux VM](..\..\azure\virtual-machines\virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Create a complete Linux environment](..\..\azure\virtual-machines\virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
 ## [Open ports and endpoints to a Linux VM](..\..\azure\virtual-machines\virtual-machines-linux-nsg-quickstart?toc=%2fcli%2fazure%2ftoc.json)
+## Deploy
+### [ASP.NET web app](..\..\azure\app-service-web\app-service-web-get-started-dotnet.json)
+### [Java web app](..\..\azure\app-service-web\app-service-web-get-started-java.json)
+### [PHP web app](..\..\azure\app-service-web\app-service-web-get-started-php.json)
+### [Python web app](..\..\azure\app-service-web\app-service-web-get-started-python.json)
+### [Node.js web app](..\..\azure\app-service-web\app-service-web-get-started-nodejs.json)
+### [Basic web app](..\..\azure\app-service-web\app-service-web-get-started-html.json)
 ## [Create an Azure Container Service cluster](..\..\azure\container-service\container-service-create-acs-cluster-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Create an IoT hub](..\..\azure\iot-hub\iot-hub-create-using-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Use and manage storage](..\..\azure\storage\storage-azure-cli?toc=%2fcli%2fazure%2ftoc.json)
