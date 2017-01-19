@@ -1,4 +1,4 @@
-# [Overview](old-and-new-clis.md)
+# [Overview](overview.md)
 ## [Install](install-az-cli2.md)
 ## [Get started](get-started-with-az-cli2.md)
 # How to
