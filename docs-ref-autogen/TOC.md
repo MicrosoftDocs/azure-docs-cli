@@ -2,9 +2,9 @@
 ## [Install](..\docs-ref-conceptual\install-az-cli2.md)
 ## [Get started](..\docs-ref-conceptual\get-started-with-az-cli2.md)
 # How to
-## [Create a Linux VM](..\docs-ref-conceptual\../../azure/virtual-machines/virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
-## [Create a complete Linux environment](..\docs-ref-conceptual\../../azure/virtual-machines/virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
-## [Open ports and endpoints to a Linux VM](..\docs-ref-conceptual\../../azure/virtual-machines/virtual-machines-linux-nsg-quickstart?toc=%2fcli%2fazure%2ftoc.json)
+## [Create a Linux VM](../../azure/virtual-machines/virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
+## [Create a complete Linux environment](../../azure/virtual-machines/virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
+## [Open ports and endpoints to a Linux VM](../../azure/virtual-machines/virtual-machines-linux-nsg-quickstart?toc=%2fcli%2fazure%2ftoc.json)
 ## Deploy a web app
 ### [Basic (HTML)](..\docs-ref-conceptual\../../azure/app-service-web/app-service-web-get-started-html?toc=%2fcli%2fazure%2ftoc.json)
 ### [ASP.NET](..\docs-ref-conceptual\../../azure/app-service-web/app-service-web-get-started-dotnet?toc=%2fcli%2fazure%2ftoc.json)
