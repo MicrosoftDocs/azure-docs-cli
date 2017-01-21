@@ -1,3 +1,3 @@
 ---
-redirect-url: get-started-with-az-cli2
+redirect_url: get-started-with-az-cli2
 ---
