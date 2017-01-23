@@ -1,6 +1,7 @@
 ﻿param(
 [String] $refDocPath = "docs-ref-autogen",
-[String] $conceptDocPath = "docs-ref-conceptual"
+[String] $conceptDocPath = "docs-ref-conceptual",
+[String] $tocTitleMappingFileName = ""
 )
 
 Write-Host "Start merging TOC in folder: $refDocPath and $conceptDocPath"
@@ -14,10 +15,74 @@ if(-not (Test-Path $conceptTocFile))
 
 $conceptLines = Get-Content $conceptTocFile
 $refTocFile = [System.IO.Path]::Combine($refDocPath, "refTOC.md")
-$refLines = Get-Content $refTocFile
+
+function Insert-RefTOC
+{
+  param([System.Collections.Generic.List[System.String]] $finalLines,
+        [String] $refTocFile,
+        [String] $topRefGroupName,
+        [String] $prefix)
+  $refLines = Get-Content $refTocFile
+  $firstLine = $true
+  foreach($line in $refLines)
+  {
+    if($firstLine)
+    {
+      $firstLine = $false
+      $originalTitle = Find-TocTitle $line
+      $line = $line.Replace($originalTitle, $topRefGroupName)
+    }
+    $finalLines.Add($prefix + $line)
+  }
+}
+
+function Find-TocTitle
+{
+  param([String] $line)
+  if([String]::IsNullOrWhiteSpace($line))
+  {
+    return $null
+  }
+  $leftPos = $line.IndexOf('[');
+  $rightPos = $line.IndexOf(']');
+  if($leftPos -ge 0 -and $rightPos -gt $leftPos)
+  {
+    return $line.Substring($leftPos, $rightPos - $leftPos + 1)
+  }
+  return $null
+}
+
+function Replace-TocTitle
+{
+  param([System.Collections.Generic.List[System.String]] $finalLines,
+        [String] $tocTitleMappingFileName)
+  if(![String]::IsNullOrEmpty($tocTitleMappingFileName))
+  {
+    Write-Host "Start replacing toc title with mapping file: $tocTitleMappingFileName"
+    $titleMappingSrc = Get-Content -Raw -Path $tocTitleMappingFileName | ConvertFrom-Json
+    $tocTitleMap = @{}
+    foreach($map in $titleMappingSrc | Get-Member -MemberType Properties)
+    {
+      $tocTitleMap["[" + $map.Name + "]"] = "[" + $titleMappingSrc.$($map.Name) + "]"
+    }
+    for($index = 0; $index -lt $finalLines.Count; ++$index)
+    {
+      $line = $finalLines[$index]
+      $originalToc = Find-TocTitle $line
+      if([String] -ne $null)
+      {
+        if($tocTitleMap.ContainsKey($originalToc))
+        {
+          $finalLines[$index] = $line.Replace($originalToc, $tocTitleMap[$originalToc])
+        }
+      }
+    }
+  }
+  Write-Host "Finishing replacing toc title"
+}
 
 $finalTocLines = New-Object System.Collections.Generic.List[System.String]
-
+$includeRefDoc = $false
 $level = 0
 foreach($line in $conceptLines)
 {
@@ -50,27 +115,25 @@ foreach($line in $conceptLines)
   }
 
   $level = $curLevel
-  # $line = $line.Replace("](", "](..\" + $conceptDocPath + "\");
-  $finalTocLines.Add($line)
-}
-
-$indent = ""
-# if($level -ne 0)
-# {
-#   $indent = "#"
-# }
-
-foreach($line in $refLines)
-{
-  $line = $line.TrimEnd()
-  if(-not $line.EndsWith(".md)", [System.StringComparison]::OrdinalIgnoreCase))
+  if($line.IndexOf("refTOC.md", [System.StringComparison]::OrdinalIgnoreCase) -ge 0)
   {
-    $finalTocLines.Add($indent + $line)
+    $includeRefDoc = $true
+    $prefixIndent = "#"*($level-1)
+    $topRefGroupName = Find-TocTitle $line
+    Insert-RefTOC $finalTocLines $refTocFile $topRefGroupName $prefixIndent
+  }
+  else
+  {
+    #fix the link to point correct conceptual doc, leave absolute link alone
+    $line = $line -replace '\][ ]*\([ ]*([a-zA-Z])','](_CONCEPTDOCPATH_$1'
+    $line = $line.Replace("_CONCEPTDOCPATH_", "../$conceptDocPath/")
+    $finalTocLines.Add($line)
   }
 }
 
-$tocFile = [System.IO.Path]::Combine($refDocPath, "TOC.md")
+Replace-TocTitle $finalTocLines $tocTitleMappingFileName
 
+$tocFile = [System.IO.Path]::Combine($refDocPath, "TOC.md")
 Set-Content $tocFile $finalTocLines
 
 Write-Host "Complete merging TOC"
