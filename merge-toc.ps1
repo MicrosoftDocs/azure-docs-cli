@@ -50,15 +50,15 @@ foreach($line in $conceptLines)
   }
 
   $level = $curLevel
-  $line = $line.Replace("](", "](..\" + $conceptDocPath + "\");
+  # $line = $line.Replace("](", "](..\" + $conceptDocPath + "\");
   $finalTocLines.Add($line)
 }
 
 $indent = ""
-if($level -ne 0)
-{
-  $indent = "#"
-}
+# if($level -ne 0)
+# {
+#   $indent = "#"
+# }
 
 foreach($line in $refLines)
 {
