@@ -1,7 +1,7 @@
 ﻿param(
 [String] $refDocPath = "docs-ref-autogen",
 [String] $conceptDocPath = "docs-ref-conceptual",
-[String] $titleMappingFileName = ""
+[String] $titleMappingFileName = "titleMapping.json"
 )
 
 function Insert-RefTOC
