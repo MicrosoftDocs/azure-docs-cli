@@ -73,122 +73,39 @@ children:
   - title: Windows scaleset with 5 instances, a load balancer and a public IP address
     code: az vmss create -n myName -g myResourceGroup --admin-password MyPassword123 --instance-count 5 --image Win2012R2Datacenter
   - title: Linux scaleset with SSH authentication, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network
-    code: az vmss create  -n myName -g myResourceGroup --dns-name-for-public-ip myGloballyUniqueDnsName --load-balancer-type existing --load-balancer-name myLoadBalancer --virtual-network-type existing --virtual-network-name myVNET --subnet-name mySubnet --image <linux image from 'az vm image list'> --authentication-type ssh --ssh-key-value "<ssh-key-value or ssh-key-file-path>"
+    code: az vmss create  -n myName -g myResourceGroup --dns-name-for-public-ip myGloballyUniqueDnsName --load-balancer myLoadBalancer --vnet-name myVNET --subnet mySubnet --image <linux image from 'az vm image list'> --ssh-key-value "<ssh-key-value or ssh-key-file-path>"
   parameters:
   - name: --image
     isRequired: True
     summary: OS image (URN alias, URN or URI).
     description: >-
-      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008SP1, Win2012Datacenter, Win2012R2Datacenter.
+      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
                                           Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
   - name: --name -n
     isRequired: True
-    summary: Scale set name.
+    summary: Name of the virtual machine scale set.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --admin-password
-    isRequired: False
-    summary: Password for the Virtual Machine if Authentication Type is Password.
-    description: ''
-  - name: --admin-username
-    isRequired: False
-    summary: Username for the Virtual Machine.
-    description: ''
-    defaultValue: appveyor
-  - name: --authentication-type
-    isRequired: False
-    summary: Password or SSH public key authentication. Defaults to password for Windows and SSH public key for Linux.
-    description: ''
-    parameterValueGroup: password, ssh
-  - name: --custom-os-disk-type
-    isRequired: False
-    summary: Custom image OS type.
-    description: ''
-    defaultValue: windows
   - name: --disable-overprovision
     isRequired: False
     summary: Overprovision option (see <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/</a> for details).
     description: ''
   - name: --instance-count
     isRequired: False
-    summary: Number of VMs in scale set.
+    summary: Number of VMs in the scale set.
     description: ''
     defaultValue: 2
-  - name: --load-balancer
-    isRequired: False
-    summary: Name or ID of the resource.  Creates new by default. Use "" for none.
-    description: ''
-  - name: --load-balancer-backend-pool-name
-    isRequired: False
-    summary: Name of load balancer backend pool.
-    description: ''
-  - name: --load-balancer-nat-pool-name
-    isRequired: False
-    summary: Name of load balancer NAT pool.
-    description: ''
   - name: --location -l
     isRequired: False
-    summary: Location in which to create the VM and related resources. If not specified, defaults to the resource group's location.
+    summary: Location in which to create VM and related resources. Defaults to the resource group's location.
     description: ''
-  - name: --nat-backend-port
+  - name: --no-wait
     isRequired: False
-    summary: Backend port to open with NAT rules.  Defaults to 22 on Linux and 3389 on Windows.
-    description: ''
-  - name: --os-disk-name
-    isRequired: False
-    summary: Name of new VM OS disk.
-    description: ''
-    defaultValue: osdiskimage
-  - name: --public-ip-address
-    isRequired: False
-    summary: Name or ID of the resource.  Creates new by default. Use "" for none.
-    description: ''
-  - name: --public-ip-address-allocation
-    isRequired: False
-    summary: ''
-    description: ''
-    defaultValue: dynamic
-    parameterValueGroup: dynamic, static
-  - name: --public-ip-address-dns-name
-    isRequired: False
-    summary: Globally unique DNS Name for the Public IP.
-    description: ''
-  - name: --ssh-dest-key-path
-    isRequired: False
-    summary: Destination file path on VM for SSH key.
-    description: ''
-  - name: --ssh-key-value
-    isRequired: False
-    summary: SSH key file data.
-    description: ''
-  - name: --storage-caching
-    isRequired: False
-    summary: Storage caching type.
-    description: ''
-    defaultValue: ReadOnly
-  - name: --storage-container-name
-    isRequired: False
-    summary: Name of storage container for the VM OS disk.
-    description: ''
-    defaultValue: vhds
-  - name: --storage-type
-    isRequired: False
-    summary: The VM storage type.
-    description: ''
-    defaultValue: Standard_LRS
-    parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
-  - name: --subnet-ip-address-prefix
-    isRequired: False
-    summary: The subnet address prefix in CIDR format.
-    description: ''
-    defaultValue: 10.0.0.0/24
-  - name: --subnet-name
-    isRequired: False
-    summary: The subnet name.  Creates if creating a new VNet, references if referencing an existing VNet.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --tags
     isRequired: False
@@ -200,20 +117,112 @@ children:
     description: ''
     defaultValue: manual
     parameterValueGroup: Automatic, Manual
+  - name: --validate
+    isRequired: False
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
   - name: --vm-sku
     isRequired: False
-    summary: Size of VMs in the VM Scale Set.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    summary: Size of VMs in the scale set.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
     description: ''
     defaultValue: Standard_D1_v2
-  - name: --vnet
+  - name: --admin-password
     isRequired: False
-    summary: Name or ID of the resource.  Uses existing resource.
+    summary: Password for the VM if authentication type is 'Password'.
     description: ''
-  - name: --vnet-ip-address-prefix
+  - name: --admin-username
     isRequired: False
-    summary: The virtual network IP address prefix in CIDR format.
+    summary: Username for the VM.
+    description: ''
+    defaultValue: appveyor
+  - name: --authentication-type
+    isRequired: False
+    summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux.
+    description: ''
+    parameterValueGroup: password, ssh
+  - name: --ssh-dest-key-path
+    isRequired: False
+    summary: Destination file path on the VM for the SSH key.
+    description: ''
+  - name: --ssh-key-value
+    isRequired: False
+    summary: SSH public key or public key file path.
+    description: ''
+  - name: --backend-pool-name
+    isRequired: False
+    summary: Name to use for the backend pool when creating a new load balancer.
+    description: ''
+  - name: --backend-port
+    isRequired: False
+    summary: Backend port to open with NAT rules. Defaults to 22 on Linux and 3389 on Windows.
+    description: ''
+  - name: --load-balancer
+    isRequired: False
+    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
+    description: ''
+  - name: --nat-pool-name
+    isRequired: False
+    summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --public-ip-address
+    isRequired: False
+    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
+    description: ''
+  - name: --public-ip-address-allocation
+    isRequired: False
+    summary: ''
+    description: ''
+    defaultValue: dynamic
+    parameterValueGroup: dynamic, static
+  - name: --public-ip-address-dns-name
+    isRequired: False
+    summary: Globally unique DNS name for a newly created Public IP.
+    description: ''
+  - name: --subnet
+    isRequired: False
+    summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
+    description: ''
+  - name: --subnet-address-prefix
+    isRequired: False
+    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+    defaultValue: 10.0.0.0/24
+  - name: --vnet-address-prefix
+    isRequired: False
+    summary: The IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
     defaultValue: 10.0.0.0/16
+  - name: --vnet-name
+    isRequired: False
+    summary: Name of the virtual network when creating a new one or referencing an existing one.
+    description: ''
+  - name: --os-disk-name
+    isRequired: False
+    summary: The name of the new VM OS disk.
+    description: ''
+    defaultValue: osdiskimage
+  - name: --os-type
+    isRequired: False
+    summary: Type of OS installed on a custom VHD. Do not use when specifiying an URN or URN alias.
+    description: ''
+    parameterValueGroup: linux, windows
+  - name: --storage-caching
+    isRequired: False
+    summary: Storage caching type for the VM OS disk.
+    description: ''
+    defaultValue: ReadOnly
+    parameterValueGroup: ReadOnly, ReadWrite
+  - name: --storage-container-name
+    isRequired: False
+    summary: Name of the storage container for the VM OS disk.
+    description: ''
+    defaultValue: vhds
+  - name: --storage-sku
+    isRequired: False
+    summary: The storage SKU to use for new storage accounts.
+    description: ''
+    defaultValue: Standard_LRS
+    parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -300,10 +309,6 @@ children:
   htmlId: delete
   examples: []
   parameters:
-  - name: --force
-    isRequired: False
-    summary: Do not prompt for confirmation.
-    description: ''
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
@@ -1026,6 +1031,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/765af3e5965103d4c16201a302eed4b9a430535a/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/24/2017 8:35:40 PM
-  ms.date: 1/24/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 1/26/2017 8:07:26 PM
+  ms.date: 1/26/2017
