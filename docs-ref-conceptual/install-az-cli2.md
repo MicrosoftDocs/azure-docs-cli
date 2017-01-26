@@ -1,7 +1,7 @@
 ---
-title: Install the Azure CLI 2.0 (Preview)
+title: Install the Azure CLI 2.0
 description: Reference docs for Azure CLI 2.0
-keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
+keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
 author: allclark
 manager: douge
 ms.author: allclark
@@ -13,17 +13,17 @@ ms.devlang: azure-cli
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
-# Install Azure CLI 2.0 (Preview)
+# Install Azure CLI 2.0
 
-> Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
+> Azure CLI 2.0 works with the resource manager deployment model.
 > You can also [install Azure CLI](/azure/xplat-cli-install),
-> which is released and works with all services.
+> which works with both the classic and resource manager deployment models.
 
 ## OS X
 
 1. If you don't have it, install [Python](https://www.python.org/downloads)
 
-2. Install Azure CLI 2.0 (Preview).
+2. Install Azure CLI 2.0.
 
     ```
     curl -L https://aka.ms/InstallAzureCli | bash
@@ -37,7 +37,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 ## Windows
 
-Get Azure 2.0 CLI (Preview) on Windows using pip. 
+Get Azure CLI 2.0 on Windows using pip. 
 
 > - You can use [Docker](#docker) to access the CLI without installing Python and pip.
 > - If you're running Ubuntu on Windows, follow the steps for [Ubuntu](#ubuntu).
@@ -54,13 +54,13 @@ Get Azure 2.0 CLI (Preview) on Windows using pip.
     python --version
     ```
 
-2. Install Azure CLI 2.0 (Preview) using pip.
+2. Install Azure CLI 2.0 using pip.
 
     ```
     pip install azure-cli
     ```
 
-    Run Azure CLI 2.0 (Preview) from the command prompt.
+    Run Azure CLI 2.0 from the command prompt.
 
     ```
     az
