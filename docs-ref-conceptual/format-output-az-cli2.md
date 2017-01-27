@@ -86,8 +86,8 @@ AzureGermanCloud   https://management.core.cloudapi.de:8443/
 ```
 
 The column names are lost in this case because they don't exist in our JMESPath query results.
-To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
-add them to the [JMESPath query](http://jmespath.org) like this.
+To get meaningful column names when displaying the results of a [JMESPath](http://jmespath.org) query in a table,
+add them to the query like this.
 The results include the column specified in the query.
 
 ```azurecli
