@@ -85,10 +85,9 @@ AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
 AzureGermanCloud   https://management.core.cloudapi.de:8443/
 ```
 
-The column names are lost in this case because they don't exist in our JMESPath query results.
-To get meaningful column names when displaying the results of a [JMESPath](http://jmespath.org) query in a table,
-add them to the query like this.
-The results include the column specified in the query.
+The column names are lost in this case because they don't exist in our [JMESPath](http://jmespath.org) query results.
+To get meaningful column names when displaying the results of a query in a table,
+add them to the query.
 
 ```azurecli
 az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
