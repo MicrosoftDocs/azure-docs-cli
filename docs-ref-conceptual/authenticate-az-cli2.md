@@ -13,10 +13,6 @@ ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 
 # Log in to Azure CLI 2.0
 
-You can log in interactively or, if your account doesn't have multi-factor authentication enabled,
-you can provide your credentials on the command-line.
-You can also authenticate using a service principal.
-
 ## Interactive
 
 Log in interactively.
