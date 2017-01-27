@@ -44,24 +44,22 @@ on whatever platform you use.
         vmss     : Create highly available, auto-scalable Linux or Windows virtual machines.
     ```
 
-3. Log in.
+1. Run the login command.
 
-    1. Run the login command.
+    ```azurecli
+    az login
+    ```
 
-        ```azurecli
-        az login
-        ```
+    You'll be prompted to open https://aka.ms/devicelogin and enter a code.
 
-        You'll be prompted to open https://aka.ms/devicelogin and enter a code.
+1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+    and enter the code to authenticate.
 
-    2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
-        and enter the code to authenticate.
+    You'll be prompted to log in using your credentials.
 
-        You'll be prompted to log in using your credentials.
+1. Log in.
 
-    3. Log in.
-    
-    Now you can run any command that accesses your account.
+Now you can run any command that accesses your account.
 
 ## Create a resource group
 
