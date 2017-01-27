@@ -46,8 +46,21 @@ on whatever platform you use.
 
 3. Log in.
 
-    [!INCLUDE [log-in-interactively](./include/login-interactive.md)]
+    1. Run the login command.
 
+        ```azurecli
+        az login
+        ```
+
+        You'll be prompted to open https://aka.ms/devicelogin and enter a code.
+
+    2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+        and enter the code to authenticate.
+
+        You'll be prompted to log in using your credentials.
+
+    3. Log in.
+    
     Now you can run any command that accesses your account.
 
 ## Create a resource group
