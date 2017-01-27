@@ -53,11 +53,7 @@ When you use table or tsv, nested objects aren't included in the output.
 Since the only name-value pair at the top level of the cloud object is the name,
 that's all you get with either `--output table` or `--output tsv`.
 
-```azurecli
-az cloud list --output table
-```
-
-Just returns the top level name-value pairs, which is just the names in this case.
+`az cloud list --output table` just returns the top level name-value pairs, which is just the cloud names in this case.
 
 ```
 Name
