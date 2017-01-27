@@ -53,7 +53,12 @@ When you use table or tsv, nested objects aren't included in the output.
 Since the only name-value pair at the top level of the cloud object is the name,
 that's all you get with either `--output table` or `--output tsv`.
 
-For example, `az cloud list --output table` just returns the cloud names.
+For example, listing clouds but using the table output option  returns just the cloud names,
+because Name is the only name-value pair at the top of the object.
+
+```azurecli
+az cloud list --output table
+```
 
 ```
 Name
@@ -83,12 +88,11 @@ AzureGermanCloud   https://management.core.cloudapi.de:8443/
 The column names are lost in this case because they don't exist in our JMESPath query results.
 To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
 add them to the [JMESPath query](http://jmespath.org) like this.
+The results include the column specified in the query.
 
 ```azurecli
 az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
 ```
-
-The results have the column headings.
 
 ```
 Name               SQL
