@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 ---
 
-# Formate command output
+# Format command output
 
 Use the `--output` parameter to format the output of the command into one of these forms.
 
@@ -64,7 +64,7 @@ AzureUSGovernment
 AzureGermanCloud
 ```
 
-You can use a JMESPath operation to flatten the object.
+You can use a [query](query-az-cli2.md) to flatten the object.
 If we get the name and the sql endpoint, it looks like this.
 
 ```azurecli
@@ -82,7 +82,7 @@ AzureGermanCloud   https://management.core.cloudapi.de:8443/
 
 The column names are lost in this case because they don't exist in our JMESPath query results.
 To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
-add them to the JMESPath query like this.
+add them to the [JMESPath query](http://jmespath.org) like this.
 
 ```azurecli
 az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
@@ -98,4 +98,3 @@ AzureChinaCloud    https://management.core.chinacloudapi.cn:8443/
 AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
 AzureGermanCloud   https://management.core.cloudapi.de:8443/
 ```
-
