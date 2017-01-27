@@ -1,5 +1,5 @@
 ---
-title: Format Azure CLI 2.0 Output
+title: Output formats for Azure CLI 2.0 
 description: Use --output to format the output of Azure CLI 2.0 commands to tables, lists or json.
 keywords: Azure CLI 2.0, output, format, table, list, json, Linux, Mac, Windows, OS X
 author: allclark
@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 ---
 
-# Format command output
+# Output formats for Azure CLI 2.0 commands
 
 Use the `--output` parameter to format the output of the command into one of these forms.
 

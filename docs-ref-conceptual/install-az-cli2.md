@@ -258,9 +258,6 @@ Failed building wheel for cryptography
 
 See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
 
-## More Samples and Snippets
-For more usage examples, take a look at our [GitHub samples repo](http://github.com/Azure/azure-cli-samples).
-
 ## Reporting issues and feedback
 If you encounter any bugs with the tool please file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
 To provide feedback from the command line, try the `az feedback` command.
