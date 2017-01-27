@@ -19,3 +19,28 @@ For example, the following lists the sql endpoints for each Azure cloud.
 ```azurecli
 az cloud list --query [*].[name,endpoints.sqlManagement]
 ```
+
+By default, the results are [JSON](http://json.org).
+
+```json
+[
+  [
+    "AzureCloud",
+    "https://management.core.windows.net:8443/"
+  ],
+  [
+    "AzureChinaCloud",
+    "https://management.core.chinacloudapi.cn:8443/"
+  ],
+  [
+    "AzureUSGovernment",
+    "https://management.core.usgovcloudapi.net:8443/"
+  ],
+  [
+    "AzureGermanCloud",
+    "https://management.core.cloudapi.de:8443/"
+  ]
+]
+```
+
+You can also [format the output](format-output-az-cli2.md).
