@@ -20,8 +20,6 @@ For example, the following lists the sql endpoints for each Azure cloud.
 az cloud list --query [*].[name,endpoints.sqlManagement]
 ```
 
-By default, the results are [JSON](http://json.org).
-
 ```json
 [
   [
@@ -43,4 +41,5 @@ By default, the results are [JSON](http://json.org).
 ]
 ```
 
-You can also [format the output](format-output-az-cli2.md).
+By default, the results are [JSON](http://json.org).
+You can [specif a different format](format-output-az-cli2.md).
