@@ -19,6 +19,8 @@ You can also authenticate using a service principal.
 
 ## Interactive
 
+Log in interactively.
+
 1. Run the login command.
 
     ```azurecli
@@ -27,12 +29,12 @@ You can also authenticate using a service principal.
 
     You'll be prompted to open https://aka.ms/devicelogin and enter a code.
 
-2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
     and enter the code to authenticate.
 
     You'll be prompted to log in using your credentials.
 
-3. Log in.
+1. Log in.
 
 ## Command-line
 
