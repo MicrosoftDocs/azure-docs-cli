@@ -43,3 +43,5 @@ az cloud list --query [*].[name,endpoints.sqlManagement]
 
 By default, the results are [JSON](http://json.org).
 You can [specify a different format](format-output-az-cli2.md).
+
+There is a good tutorials for JMESPath at [JMESPath.org/tutorial](http:/JMESPath.org/tutoriual).
