@@ -1,4 +1,4 @@
-﻿param(
+param(
 [String] $refDocPath = "docs-ref-autogen",
 [String] $conceptDocPath = "docs-ref-conceptual",
 [String] $titleMappingFileName = "titleMapping.json"
