@@ -1,90 +1,48 @@
 commandList:
-- name: az network express-route auth
-  description: Manage ExpressRoute circuit authentication.
-  href: auth
-  isGroup: true
-- name: az network express-route create
-  description: Create an ExpressRoute circuit.
+- name: az documentdb check-name-exists
+  description: Checks that the Azure DocumentDB account name already exists.
+  href: '#check-name-exists'
+- name: az documentdb create
+  description: Create a new Azure DocumentDB database account.
   href: '#create'
-- name: az network express-route delete
-  description: Delete an ExpressRoute circuit.
+- name: az documentdb delete
+  description: Deletes an existing Azure DocumentDB database account.
   href: '#delete'
-- name: az network express-route get-stats
-  description: Show stats of an ExpressRoute circuit.
-  href: '#get-stats'
-- name: az network express-route list
-  description: List ExpressRoute circuits in a subscription or resource group.
+- name: az documentdb failover-priority-change
+  description: Changes the failover priority for the Azure DocumentDB database account.
+  href: '#failover-priority-change'
+- name: az documentdb list
+  description: Lists all the Azure DocumentDB database accounts available under the given resource group.
   href: '#list'
-- name: az network express-route list-arp-tables
-  description: List the currently advertised ARP table of an ExpressRoute circuit.
-  href: '#list-arp-tables'
-- name: az network express-route list-route-tables
-  description: List the currently advertised route tables of an ExpressRoute circuit.
-  href: '#list-route-tables'
-- name: az network express-route list-service-providers
-  description: List available ExpressRoute service providers.
-  href: '#list-service-providers'
-- name: az network express-route peering
-  description: Manage ExpressRoute peering.
-  href: peering
-  isGroup: true
-- name: az network express-route show
-  description: Show details of an ExpressRoute circuit.
+- name: az documentdb list-all
+  description: Lists all the Azure DocumentDB database accounts available under the subscription.
+  href: '#list-all'
+- name: az documentdb list-keys
+  description: Lists the access keys for the specified Azure DocumentDB database account.
+  href: '#list-keys'
+- name: az documentdb list-read-only-keys
+  description: Lists the read-only access keys for the specified Azure DocumentDB database account.
+  href: '#list-read-only-keys'
+- name: az documentdb regenerate-key
+  description: Regenerates an access key for the specified Azure DocumentDB database account.
+  href: '#regenerate-key'
+- name: az documentdb show
+  description: Retrieves the properties of an existing Azure DocumentDB database account.
   href: '#show'
-- name: az network express-route update
-  description: Update settings of an ExpressRoute circuit.
-  href: '#update'
-htmlId: express-route
+htmlId: documentdb
 examples: []
-source:
-  remote:
-    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-    branch: master
-    repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
+  htmlId: check-name-exists
   examples: []
   parameters:
-  - name: --bandwidth
-    isRequired: True
-    summary: Bandwidth in Mbps of the circuit. It must exactly match one of the available bandwidth offers from the 'list-service-providers' command.
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    isRequired: True
-    summary: ExpressRoute circuit name.
-    description: ''
-  - name: --peering-location
-    isRequired: True
-    summary: Name of the peering location. It must exactly match one of the available peering locations from the 'list-service-providers' command.
-    description: ''
-  - name: --provider
-    isRequired: True
-    summary: Name of the ExpressRoute Service Provider. It must exactly match one of the Service Providers from the 'list-service-providers' command.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --location -l
     isRequired: False
-    summary: Location.
-    description: ''
-  - name: --sku-family
-    isRequired: False
-    summary: Chosen SKU family of ExpressRoute circuit.
-    description: ''
-    defaultValue: MeteredData
-    parameterValueGroup: MeteredData, UnlimitedData
-  - name: --sku-tier
-    isRequired: False
-    summary: SKU Tier of ExpressRoute circuit.
-    description: ''
-    defaultValue: Standard
-    parameterValueGroup: Premium, Standard
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --debug
     isRequired: False
@@ -108,16 +66,80 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_create
-  name: az network express-route create
+  uid: az_documentdb_check-name-exists
+  name: az documentdb check-name-exists
+  description: A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters.
+  summary: Checks that the Azure DocumentDB account name already exists.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples: []
+  parameters:
+  - name: --locations
+    isRequired: True
+    summary: Space separated locations in 'regionName=failoverPriority' format. E.g "East US"=0. Failover priority values are 0 for write regions and greater than 0 for read regions. A failover priority value must be unique and less than the total number of regions.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the DocumentDB database account.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of the resource group.
+    description: ''
+  - name: --default-consistency-level
+    isRequired: False
+    summary: Default consistency level of the DocumentDB database account.
+    description: ''
+    parameterValueGroup: BoundedStaleness, Eventual, Session, Strong
+  - name: --ip-range-filter
+    isRequired: False
+    summary: Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma separated and must not contain any spaces.
+    description: ''
+  - name: --kind
+    isRequired: False
+    summary: The type of DocumentDB database account to create.
+    description: ''
+    defaultValue: GlobalDocumentDB
+    parameterValueGroup: GlobalDocumentDB, MongoDB, Parse
+  - name: --max-interval
+    isRequired: False
+    summary: When used with Bounded Staleness consistency, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 1 - 100.
+    description: ''
+    defaultValue: 5
+  - name: --max-staleness-prefix
+    isRequired: False
+    summary: When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 1 - 2,147,483,647.
+    description: ''
+    defaultValue: 100
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_documentdb_create
+  name: az documentdb create
   description: ''
-  summary: Create an ExpressRoute circuit.
+  summary: Create a new Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -129,7 +151,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: ExpressRoute circuit name.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -157,28 +179,27 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_delete
-  name: az network express-route delete
+  uid: az_documentdb_delete
+  name: az documentdb delete
   description: ''
-  summary: Delete an ExpressRoute circuit.
+  summary: Deletes an existing Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
-  htmlId: get-stats
+  htmlId: failover-priority-change
   examples: []
   parameters:
+  - name: --failover-policies
+    isRequired: False
+    summary: Space separated failover policies in 'regionName=failoverPriority' format. E.g "East US"=0.
+    description: ''
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
-    summary: ExpressRoute circuit name.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -206,23 +227,18 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_get-stats
-  name: az network express-route get-stats
-  description: ''
-  summary: Show stats of an ExpressRoute circuit.
+  uid: az_documentdb_failover-priority-change
+  name: az documentdb failover-priority-change
+  description: A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists.
+  summary: Changes the failover priority for the Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -247,37 +263,55 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_list
-  name: az network express-route list
+  uid: az_documentdb_list
+  name: az documentdb list
   description: ''
-  summary: List ExpressRoute circuits in a subscription or resource group.
+  summary: Lists all the Azure DocumentDB database accounts available under the given resource group.
   Metadata: {}
 - commandList: []
-  htmlId: list-arp-tables
+  htmlId: list-all
   examples: []
   parameters:
-  - name: --path
-    isRequired: True
-    summary: The path of the device.
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
     description: ''
-    parameterValueGroup: primary, secondary
-  - name: --peering-name
-    isRequired: True
-    summary: The name of the peering.
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
     description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_documentdb_list-all
+  name: az documentdb list-all
+  description: ''
+  summary: Lists all the Azure DocumentDB database accounts available under the subscription.
+  Metadata: {}
+- commandList: []
+  htmlId: list-keys
+  examples: []
+  parameters:
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
-    summary: ExpressRoute circuit name.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -305,37 +339,23 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_list-arp-tables
-  name: az network express-route list-arp-tables
+  uid: az_documentdb_list-keys
+  name: az documentdb list-keys
   description: ''
-  summary: List the currently advertised ARP table of an ExpressRoute circuit.
+  summary: Lists the access keys for the specified Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
-  htmlId: list-route-tables
+  htmlId: list-read-only-keys
   examples: []
   parameters:
-  - name: --path
-    isRequired: True
-    summary: The path of the device.
-    description: ''
-    parameterValueGroup: primary, secondary
-  - name: --peering-name
-    isRequired: True
-    summary: The name of the peering.
-    description: ''
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
-    summary: ExpressRoute circuit name.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -363,21 +383,33 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_list-route-tables
-  name: az network express-route list-route-tables
+  uid: az_documentdb_list-read-only-keys
+  name: az documentdb list-read-only-keys
   description: ''
-  summary: List the currently advertised route tables of an ExpressRoute circuit.
+  summary: Lists the read-only access keys for the specified Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
-  htmlId: list-service-providers
+  htmlId: regenerate-key
   examples: []
   parameters:
+  - name: --key-kind
+    isRequired: True
+    summary: The access key to regenerate.
+    description: ''
+    parameterValueGroup: primary, primaryReadonly, secondary, secondaryReadonly
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: Name of the DocumentDB database account.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group.
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -400,16 +432,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_list-service-providers
-  name: az network express-route list-service-providers
+  uid: az_documentdb_regenerate-key
+  name: az documentdb regenerate-key
   description: ''
-  summary: List available ExpressRoute service providers.
+  summary: Regenerates an access key for the specified Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -421,7 +448,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: ExpressRoute circuit name.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -449,112 +476,14 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_express-route_show
-  name: az network express-route show
+  uid: az_documentdb_show
+  name: az documentdb show
   description: ''
-  summary: Show details of an ExpressRoute circuit.
+  summary: Retrieves the properties of an existing Azure DocumentDB database account.
   Metadata: {}
-- commandList: []
-  htmlId: update
-  examples: []
-  parameters:
-  - name: --bandwidth
-    isRequired: False
-    summary: Bandwidth in Mbps of the circuit. It must exactly match one of the available bandwidth offers from the 'list-service-providers' command.
-    description: ''
-  - name: --peering-location
-    isRequired: False
-    summary: Name of the peering location. It must exactly match one of the available peering locations from the 'list-service-providers' command.
-    description: ''
-  - name: --provider
-    isRequired: False
-    summary: Name of the ExpressRoute Service Provider. It must exactly match one of the Service Providers from the 'list-service-providers' command.
-    description: ''
-  - name: --sku-family
-    isRequired: False
-    summary: Chosen SKU family of ExpressRoute circuit.
-    description: ''
-    parameterValueGroup: MeteredData, UnlimitedData
-  - name: --sku-tier
-    isRequired: False
-    summary: SKU Tier of ExpressRoute circuit.
-    description: ''
-    parameterValueGroup: Premium, Standard
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: ExpressRoute circuit name.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --add
-    isRequired: False
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --remove
-    isRequired: False
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    isRequired: False
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_express-route_update
-  name: az network express-route update
-  description: ''
-  summary: Update settings of an ExpressRoute circuit.
-  Metadata: {}
-uid: az_network_express-route
-name: Express routes - az network express-route
+uid: az_documentdb
+name: Azure DocumentDB (NoSQL) database accounts - az documentdb
 description: ''
-summary: Dedicated private network fiber connections to Azure.
-Metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/79997ad6a4958e3cf176d6d1053dd4dc4ee533ea/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 2/1/2017 3:48:55 PM
-  ms.date: 2/1/2017
+summary: Commands to manage your Azure DocumentDB (NoSQL) database accounts.
+Metadata: {}
