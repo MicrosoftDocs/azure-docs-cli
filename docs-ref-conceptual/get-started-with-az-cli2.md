@@ -16,7 +16,7 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 1. [Install Azure CLI 2.0 (Preview)](install-az-cli2.md)
 on whatever platform you use.
 
-2. Run `az` with no arguments to verify the installation. You should get a page like this:
+2. To verify the installation, run `az` with no arguments . You should get a page like this:
 
     ```
     Welcome to the cool new Azure CLI!
@@ -47,7 +47,7 @@ on whatever platform you use.
 3. Log in.
 
     You can log in interactively or, if your account doesn't have multi-factor authentication enabled,
-    you can provide your credentials on the command-line.
+    you can provide your credentials on the command line.
     You can also authenticate using a service principal.
     Using a service principal is a little more work,
     but it's a good way to make sure your automated tasks have just the credentials needed.
@@ -60,16 +60,16 @@ on whatever platform you use.
             az login
             ```
         
-            You'll be prompted to open https://aka.ms/devicelogin and enter a code.
+            You're prompted to open https://aka.ms/devicelogin and enter a code.
 
         2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
             and enter the code to authenticate.
 
-            You'll be prompted to log in using your credentials.
+            You're prompted to log in using your credentials.
     
         3. Log in.
 
-    - Provide your credentials on the command-line.
+    - Provide your credentials on the command line.
 
         ```azurecli
         az login -u <username> -p <password>
@@ -84,7 +84,7 @@ on whatever platform you use.
             az ad sp create-for-rbac -n "http://my-app" --role contributor
             ```
 
-            The `contributor` role is very broad and may not be the best choice in many cases.
+            The `contributor` role is broad and often may not be the best choice.
             You can get a list of available roles to see which is appropriate for your case.
 
             ```azurecli
@@ -155,7 +155,7 @@ az vm create -h
 
     --output | Description
     ---------|-------------------------------
-    `json`   | json string. This is the default.
+    `json`   | json string. `json` is the default.
     `jsonc`  | colorized json string.
     `list`   | an easily read list.
     `table`  | table with column headings.
@@ -195,7 +195,7 @@ az vm create -h
     az cloud list --output table
     ```
 
-    Just returns the top level name-value pairs, which is just the names in this case.
+    Just returns the top level name-value pairs, which are just the names in this case.
 
     ```
     Name
