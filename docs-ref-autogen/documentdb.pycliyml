@@ -1,107 +1,48 @@
 commandList:
-- name: az redis create
-  description: Create new Redis Cache instance.
+- name: az documentdb check-name-exists
+  description: Checks that the Azure DocumentDB account name already exists.
+  href: '#check-name-exists'
+- name: az documentdb create
+  description: Create a new Azure DocumentDB database account.
   href: '#create'
-- name: az redis delete
-  description: Deletes a redis cache.
+- name: az documentdb delete
+  description: Deletes an existing Azure DocumentDB database account.
   href: '#delete'
-- name: az redis export
-  description: Export data stored in a redis cache.
-  href: '#export'
-- name: az redis force-reboot
-  description: Reboot specified redis node(s).
-  href: '#force-reboot'
-- name: az redis import-method
-  description: Import data into a redis cache.
-  href: '#import-method'
-- name: az redis list
-  description: Gets all redis caches in a resource group.
+- name: az documentdb failover-priority-change
+  description: Changes the failover priority for the Azure DocumentDB database account.
+  href: '#failover-priority-change'
+- name: az documentdb list
+  description: Lists all the Azure DocumentDB database accounts available under the given resource group.
   href: '#list'
-- name: az redis list-all
-  description: Gets all redis caches in the specified subscription.
+- name: az documentdb list-all
+  description: Lists all the Azure DocumentDB database accounts available under the subscription.
   href: '#list-all'
-- name: az redis list-keys
-  description: Retrieve a redis cache's access keys.
+- name: az documentdb list-keys
+  description: Lists the access keys for the specified Azure DocumentDB database account.
   href: '#list-keys'
-- name: az redis patch-schedule
-  description: Commands to manage redis patch schedules.
-  href: patch-schedule
-  isGroup: true
-- name: az redis regenerate-keys
-  description: Regenerate redis cache's access keys.
-  href: '#regenerate-keys'
-- name: az redis show
-  description: Gets a redis cache (resource description).
+- name: az documentdb list-read-only-keys
+  description: Lists the read-only access keys for the specified Azure DocumentDB database account.
+  href: '#list-read-only-keys'
+- name: az documentdb regenerate-key
+  description: Regenerates an access key for the specified Azure DocumentDB database account.
+  href: '#regenerate-key'
+- name: az documentdb show
+  description: Retrieves the properties of an existing Azure DocumentDB database account.
   href: '#show'
-- name: az redis update-settings
-  description: Update the settings of a redis cache.
-  href: '#update-settings'
-htmlId: redis
+htmlId: documentdb
 examples: []
-source:
-  remote:
-    path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-    branch: master
-    repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
+  htmlId: check-name-exists
   examples: []
   parameters:
-  - name: --location -l
-    isRequired: True
-    summary: Location.
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    isRequired: True
-    summary: The primary resource name.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --sku-capacity
-    isRequired: True
-    summary: What size of redis cache to deploy. Valid values for C family (0, 1, 2, 3, 4, 5, 6), for P family (1, 2, 3, 4).
-    description: ''
-    parameterValueGroup: 0, 1, 2, 3, 4, 5, 6
-  - name: --sku-family
-    isRequired: True
-    summary: 'Which family to use. Valid values: (C, P).'
-    description: ''
-    parameterValueGroup: C, P
-  - name: --sku-name
-    isRequired: True
-    summary: 'What type of redis cache to deploy. Valid values: (Basic, Standard, Premium).'
-    description: ''
-    parameterValueGroup: Basic, Premium, Standard
-  - name: --enable-non-ssl-port
     isRequired: False
-    summary: If the value is true, then the non-ssl redis server port (6379) will be enabled.
-    description: ''
-  - name: --redis-configuration
-    isRequired: False
-    summary: All Redis Settings. Few possible keys rdb-backup-enabled, rdb-storage-connection-string, rdb-backup-frequency, maxmemory-delta, maxmemory-policy, notify-keyspace-events, maxmemory-samples, slowlog-log-slower-than, slowlog-max-len, list-max-ziplist-entries, list-max-ziplist-value, hash-max-ziplist-entries, hash-max-ziplist-value, set-max-intset-entries, zset-max-ziplist-entries, zset-max-ziplist-value etc.
-    description: ''
-  - name: --shard-count
-    isRequired: False
-    summary: The number of shards to be created on a Premium Cluster Cache.
-    description: ''
-  - name: --static-ip
-    isRequired: False
-    summary: Required when deploying a redis cache inside an existing Azure Virtual Network.
-    description: ''
-  - name: --subnet-id
-    isRequired: False
-    summary: The full resource ID of a subnet in a virtual network to deploy the redis cache in. Example format /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
-    description: ''
-  - name: --tags
-    isRequired: False
-    summary: ''
-    description: ''
-  - name: --tenant-settings
-    isRequired: False
-    summary: Json dictionary with tenant settings.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --debug
     isRequired: False
@@ -125,16 +66,80 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_create
-  name: az redis create
+  uid: az_documentdb_check-name-exists
+  name: az documentdb check-name-exists
+  description: A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters.
+  summary: Checks that the Azure DocumentDB account name already exists.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples: []
+  parameters:
+  - name: --locations
+    isRequired: True
+    summary: Space separated locations in 'regionName=failoverPriority' format. E.g "East US"=0. Failover priority values are 0 for write regions and greater than 0 for read regions. A failover priority value must be unique and less than the total number of regions.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the DocumentDB database account.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of the resource group.
+    description: ''
+  - name: --default-consistency-level
+    isRequired: False
+    summary: Default consistency level of the DocumentDB database account.
+    description: ''
+    parameterValueGroup: BoundedStaleness, Eventual, Session, Strong
+  - name: --ip-range-filter
+    isRequired: False
+    summary: Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma separated and must not contain any spaces.
+    description: ''
+  - name: --kind
+    isRequired: False
+    summary: The type of DocumentDB database account to create.
+    description: ''
+    defaultValue: GlobalDocumentDB
+    parameterValueGroup: GlobalDocumentDB, MongoDB, Parse
+  - name: --max-interval
+    isRequired: False
+    summary: When used with Bounded Staleness consistency, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 1 - 100.
+    description: ''
+    defaultValue: 5
+  - name: --max-staleness-prefix
+    isRequired: False
+    summary: When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 1 - 2,147,483,647.
+    description: ''
+    defaultValue: 100
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_documentdb_create
+  name: az documentdb create
   description: ''
-  summary: Create new Redis Cache instance.
+  summary: Create a new Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -146,7 +151,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the redis cache.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -174,90 +179,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_delete
-  name: az redis delete
-  description: This operation takes a while to complete.
-  summary: Deletes a redis cache.
-  Metadata: {}
-- commandList: []
-  htmlId: export
-  examples: []
-  parameters:
-  - name: --container
-    isRequired: True
-    summary: ''
-    description: ''
-  - name: --prefix
-    isRequired: True
-    summary: ''
-    description: ''
-  - name: --file-format
-    isRequired: False
-    summary: ''
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Name of the redis cache.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_redis_export
-  name: az redis export
+  uid: az_documentdb_delete
+  name: az documentdb delete
   description: ''
-  summary: Export data stored in a redis cache.
+  summary: Deletes an existing Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
-  htmlId: force-reboot
+  htmlId: failover-priority-change
   examples: []
   parameters:
-  - name: --reboot-type
-    isRequired: True
-    summary: Which redis node(s) to reboot. Depending on this value data loss is possible.
-    description: ''
-    parameterValueGroup: AllNodes, PrimaryNode, SecondaryNode
-  - name: --shard-id
+  - name: --failover-policies
     isRequired: False
-    summary: In case of cluster cache, this specifies shard id which should be rebooted.
+    summary: Space separated failover policies in 'regionName=failoverPriority' format. E.g "East US"=0.
     description: ''
   - name: --ids
     isRequired: False
@@ -265,7 +199,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the redis cache.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -293,73 +227,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_force-reboot
-  name: az redis force-reboot
-  description: This operation requires write permission to the cache resource. There can be potential data loss.
-  summary: Reboot specified redis node(s).
-  Metadata: {}
-- commandList: []
-  htmlId: import-method
-  examples: []
-  parameters:
-  - name: --file-format
-    isRequired: True
-    summary: ''
-    description: ''
-  - name: --files
-    isRequired: True
-    summary: ''
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Name of the redis cache.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_redis_import-method
-  name: az redis import-method
-  description: ''
-  summary: Import data into a redis cache.
+  uid: az_documentdb_failover-priority-change
+  name: az documentdb failover-priority-change
+  description: A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists.
+  summary: Changes the failover priority for the Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: list
@@ -391,16 +263,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_list
-  name: az redis list
+  uid: az_documentdb_list
+  name: az documentdb list
   description: ''
-  summary: Gets all redis caches in a resource group.
+  summary: Lists all the Azure DocumentDB database accounts available under the given resource group.
   Metadata: {}
 - commandList: []
   htmlId: list-all
@@ -428,16 +295,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_list-all
-  name: az redis list-all
+  uid: az_documentdb_list-all
+  name: az documentdb list-all
   description: ''
-  summary: Gets all redis caches in the specified subscription.
+  summary: Lists all the Azure DocumentDB database accounts available under the subscription.
   Metadata: {}
 - commandList: []
   htmlId: list-keys
@@ -449,7 +311,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the redis cache.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -477,33 +339,23 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_list-keys
-  name: az redis list-keys
-  description: This operation requires write permission to the cache resource.
-  summary: Retrieve a redis cache's access keys.
+  uid: az_documentdb_list-keys
+  name: az documentdb list-keys
+  description: ''
+  summary: Lists the access keys for the specified Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
-  htmlId: regenerate-keys
+  htmlId: list-read-only-keys
   examples: []
   parameters:
-  - name: --key-type
-    isRequired: True
-    summary: Which redis access key to reset.
-    description: ''
-    parameterValueGroup: Primary, Secondary
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the redis cache.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -531,16 +383,60 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_regenerate-keys
-  name: az redis regenerate-keys
-  description: This operation requires write permission to the cache resource.
-  summary: Regenerate redis cache's access keys.
+  uid: az_documentdb_list-read-only-keys
+  name: az documentdb list-read-only-keys
+  description: ''
+  summary: Lists the read-only access keys for the specified Azure DocumentDB database account.
+  Metadata: {}
+- commandList: []
+  htmlId: regenerate-key
+  examples: []
+  parameters:
+  - name: --key-kind
+    isRequired: True
+    summary: The access key to regenerate.
+    description: ''
+    parameterValueGroup: primary, primaryReadonly, secondary, secondaryReadonly
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: Name of the DocumentDB database account.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_documentdb_regenerate-key
+  name: az documentdb regenerate-key
+  description: ''
+  summary: Regenerates an access key for the specified Azure DocumentDB database account.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -552,7 +448,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the redis cache.
+    summary: Name of the DocumentDB database account.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -580,78 +476,14 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_redis_show
-  name: az redis show
+  uid: az_documentdb_show
+  name: az documentdb show
   description: ''
-  summary: Gets a redis cache (resource description).
+  summary: Retrieves the properties of an existing Azure DocumentDB database account.
   Metadata: {}
-- commandList: []
-  htmlId: update-settings
-  examples: []
-  parameters:
-  - name: --redis-configuration
-    isRequired: True
-    summary: ''
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Name of the redis cache.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_redis_update-settings
-  name: az redis update-settings
-  description: ''
-  summary: Update the settings of a redis cache.
-  Metadata: {}
-uid: az_redis
-name: Redis cache - az redis
-description: If you don't have the redis component installed, add it with az component update --add redis.
-summary: Access to a secure, dedicated cache for your Azure applications.
-Metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/fd60b070624a6b62b14b8eac52c78467e3662249/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-  updated_at: 1/12/2017 7:17:56 PM
-  ms.date: 1/12/2017
+uid: az_documentdb
+name: Azure DocumentDB (NoSQL) database accounts - az documentdb
+description: ''
+summary: Commands to manage your Azure DocumentDB (NoSQL) database accounts.
+Metadata: {}
