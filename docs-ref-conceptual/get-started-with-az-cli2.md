@@ -44,20 +44,7 @@ on whatever platform you use.
         vmss     : Create highly available, auto-scalable Linux or Windows virtual machines.
     ```
 
-1. Run the login command.
-
-    ```azurecli
-    az login
-    ```
-
-    You'll be prompted to open https://aka.ms/devicelogin and enter a code.
-
-1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
-    and enter the code to authenticate.
-
-    You'll be prompted to log in using your credentials.
-
-1. Log in.
+[!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 Now you can run any command that accesses your account.
 

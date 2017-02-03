@@ -17,20 +17,7 @@ ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 
 Log in interactively.
 
-1. Run the login command.
-
-    ```azurecli
-    az login
-    ```
-
-    You'll be prompted to open https://aka.ms/devicelogin and enter a code.
-
-1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
-    and enter the code to authenticate.
-
-    You'll be prompted to log in using your credentials.
-
-1. Log in.
+[!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 ## Command-line
 
