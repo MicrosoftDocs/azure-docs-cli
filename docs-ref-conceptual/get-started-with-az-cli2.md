@@ -16,7 +16,7 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 1. [Install Azure CLI 2.0 (Preview)](install-az-cli2.md)
 on whatever platform you use.
 
-2. To verify the installation, run `az` with no arguments . You should get a page like this:
+2. To verify the installation, run `az` with no arguments. You should get this output:
 
     ```
     Welcome to the cool new Azure CLI!
@@ -195,7 +195,7 @@ az vm create -h
     az cloud list --output table
     ```
 
-    Just returns the top level name-value pairs, which are just the names in this case.
+    Just returns the top-level name-value pairs, which are just the names in this case.
 
     ```
     Name
@@ -207,7 +207,7 @@ az vm create -h
     ```
 
     You can use a JMESPath operation to flatten the object.
-    If we get the name and the sql endpoint, it looks like this.
+    If we get the name and the sql endpoint, it looks like this query.
 
     ```azurecli
     az cloud list --query [*].[name,endpoints.sqlManagement] --output table
