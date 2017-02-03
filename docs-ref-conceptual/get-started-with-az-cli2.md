@@ -155,11 +155,11 @@ az vm create -h
 
     --output | Description
     ---------|-------------------------------
-    json     | json string. This is the default.
-    jsonc    | colorized json string.
-    list     | an easily read list.
-    table    | table with column headings.
-    tsv      | tab-separated values.
+    `json`   | json string. This is the default.
+    `jsonc`  | colorized json string.
+    `list`   | an easily read list.
+    `table`  | table with column headings.
+    `tsv`    | tab-separated values.
 
     For example, the following displays the list of Azure clouds in an easy to read list format.
 
@@ -223,7 +223,7 @@ az vm create -h
     ```
 
     The column names are lost in this case because they don't exist in our JMESPath query results.
-    To get meaningful column names when displaying the results of a JMESPatch qyery in a table,
+    To get meaningful column names when displaying the results of a JMESPatch query in a table,
     add them to the JMESPath query like this.
 
     ```azurecli
