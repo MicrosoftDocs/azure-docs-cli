@@ -4,7 +4,7 @@ description: Overview of the Azure CLI 2.0 (Preview).
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 01/10/2017
+ms.date: 02/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure

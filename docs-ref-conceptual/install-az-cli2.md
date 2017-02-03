@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 01/03/2017
+ms.date: 02/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
