@@ -1,7 +1,118 @@
+commandList:
+- name: az vm access
+  description: Manage user access.
+  href: access
+  isGroup: true
+- name: az vm availability-set
+  description: Group resources into availability-sets for high-availability requirements.
+  href: availability-set
+  isGroup: true
+- name: az vm boot-diagnostics
+  description: Troubleshoot virtual machine start-up.
+  href: boot-diagnostics
+  isGroup: true
+- name: az vm capture
+  description: Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
+  href: '#capture'
+- name: az vm create
+  description: Create an Azure Virtual Machine.
+  href: '#create'
+- name: az vm deallocate
+  description: Shuts down the virtual machine and releases the compute resources.
+  href: '#deallocate'
+- name: az vm delete
+  description: The operation to delete a virtual machine.
+  href: '#delete'
+- name: az vm diagnostics
+  description: Configure the Azure VM diagnostics extension.
+  href: diagnostics
+  isGroup: true
+- name: az vm disk
+  description: Manage VM storage disks.
+  href: disk
+  isGroup: true
+- name: az vm extension
+  description: Extend the functionality of your VMs with vm extensions.
+  href: extension
+  isGroup: true
+- name: az vm generalize
+  description: Sets the state of the virtual machine to generalized.
+  href: '#generalize'
+- name: az vm get-instance-view
+  description: Gets a VM including instance information (powerState).
+  href: '#get-instance-view'
+- name: az vm image
+  description: VM images available on the Azure marketplace.
+  href: image
+  isGroup: true
+- name: az vm list
+  description: List Virtual Machines.
+  href: '#list'
+- name: az vm list-ip-addresses
+  description: Get IP addresses from one or more Virtual Machines.
+  href: '#list-ip-addresses'
+- name: az vm list-sizes
+  description: Lists all available virtual machine sizes for a subscription in a location.
+  href: '#list-sizes'
+- name: az vm list-usage
+  description: Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
+  href: '#list-usage'
+- name: az vm list-vm-resize-options
+  description: Lists all available virtual machine sizes to which the specified virtual machine can be resized.
+  href: '#list-vm-resize-options'
+- name: az vm nic
+  description: Manage VM network interfaces, see also 'az network nic'.
+  href: nic
+  isGroup: true
+- name: az vm open-port
+  description: Opens a VM to all inbound traffic and protocols by adding a security rule to the network security group (NSG) that is attached to the VM's network interface (NIC) or subnet.
+  href: '#open-port'
+- name: az vm redeploy
+  description: The operation to redeploy a virtual machine.
+  href: '#redeploy'
+- name: az vm resize
+  description: Update vm size.
+  href: '#resize'
+- name: az vm restart
+  description: The operation to restart a virtual machine.
+  href: '#restart'
+- name: az vm show
+  description: ''
+  href: '#show'
+- name: az vm start
+  description: The operation to start a virtual machine.
+  href: '#start'
+- name: az vm stop
+  description: The operation to power off (stop) a virtual machine.
+  href: '#stop'
+- name: az vm update
+  description: Update VM properties.
+  href: '#update'
+- name: az vm wait
+  description: Place the CLI in a waiting state until a condition of the VM is met.
+  href: '#wait'
+- name: az vmss diagnostics
+  description: Configure the Azure VMSS diagnostics extension.
+  href: diagnostics
+  isGroup: true
+- name: az vmss extension
+  description: Extend the functionality of your scale-set with VM extensions.
+  href: extension
+  isGroup: true
+- name: az vmss nic
+  description: ''
+  href: nic
+  isGroup: true
 htmlId: vm
 examples: []
+source:
+  remote:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    branch: master
+    repo: https://github.com/Azure/azure-cli.git
 children:
-- htmlId: capture
+- commandList: []
+  htmlId: capture
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
@@ -29,7 +140,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -57,18 +168,26 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_capture
   name: az vm capture
   description: See <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/</a> for an end-to-end tutorial.
   summary: Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
   Metadata: {}
-- htmlId: create
+- commandList: []
+  htmlId: create
   examples:
   - title: Create a Linux VM with SSH key authentication, add a public DNS entry and add to an existing Virtual Network and Availability Set.
-    code: az vm create -n my_vm_name -g myrg --image <linux image from 'az vm image list'> --authentication-type ssh --vnet my_existing_vnet --subnet-name subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
+    code: az vm create -n my_vm_name -g myrg --image <linux image from 'az vm image list'> --vnet-name my_existing_vnet --subnet subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
   - title: Create a simple Windows Server VM with private IP address only
-    code: "az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 \n                         --public-ip-address \"\" --image Win2012R2Datacenter"
+    code: >-
+      az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234
+                               --public-ip-address "" --image Win2012R2Datacenter
   - title: Create a simple Windows Server VM with public IP address and DNS entry
     code: az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 --public-ip-address-dns-name my_globally_unique_vm_dns_name --image Win2012R2Datacenter
   parameters:
@@ -76,73 +195,89 @@ children:
     isRequired: True
     summary: OS image (URN alias, URN or URI).
     description: >-
-      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008SP1, Win2012Datacenter, Win2012R2Datacenter.
-                                          Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest.
+      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
+                                          Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
     valueFrom: az vm image list, az vm image show
   - name: --name -n
     isRequired: True
-    summary: The VM name.
+    summary: Name of the virtual machine.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --admin-password
-    isRequired: False
-    summary: Password for the Virtual Machine if Authentication Type is Password.
-    description: ''
-  - name: --admin-username
-    isRequired: False
-    summary: Username for the Virtual Machine.
-    description: ''
-    defaultValue: appveyor
-  - name: --authentication-type
-    isRequired: False
-    summary: Password or SSH public key authentication. Defaults to password for Windows and SSH public key for Linux.
-    description: ''
-    parameterValueGroup: password, ssh
   - name: --availability-set
     isRequired: False
-    summary: Name or ID of the resource.  None by default.
+    summary: Name or ID of an existing availability set to add the VM to. None by default.
     description: ''
-  - name: --custom-os-disk-type
+  - name: --generate-ssh-keys
     isRequired: False
-    summary: Custom image OS type.
+    summary: Generate SSH public and private key files if missing.
     description: ''
-    defaultValue: windows
   - name: --location -l
     isRequired: False
-    summary: Location in which to create the VM and related resources. If not specified, defaults to the resource group's location.
-    description: ''
-  - name: --nics
-    isRequired: False
-    summary: Names or IDs of existing NICs to reference.  The first NIC will be the primary NIC.
+    summary: Location in which to create VM and related resources. Defaults to the resource group's location.
     description: ''
   - name: --no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
+  - name: --size
+    isRequired: False
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    description: ''
+    defaultValue: Standard_DS1
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validate
+    isRequired: False
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
+  - name: --admin-password
+    isRequired: False
+    summary: Password for the VM if authentication type is 'Password'.
+    description: ''
+  - name: --admin-username
+    isRequired: False
+    summary: Username for the VM.
+    description: ''
+    defaultValue: appveyor
+  - name: --authentication-type
+    isRequired: False
+    summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux.
+    description: ''
+    parameterValueGroup: password, ssh
+  - name: --ssh-dest-key-path
+    isRequired: False
+    summary: Destination file path on the VM for the SSH key.
+    description: ''
+  - name: --ssh-key-value
+    isRequired: False
+    summary: SSH public key or public key file path.
+    description: ''
+  - name: --nics
+    isRequired: False
+    summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, vnet, public IP or NSG.
+    description: ''
   - name: --nsg
     isRequired: False
-    summary: Name or ID of the resource.  Creates new by default. Use "" for none.
+    summary: The name to use when creating a new Network Security Group (default) or referencing an existing one. Can also reference an existing NSG by ID or specify "" for none.
     description: ''
   - name: --nsg-rule
     isRequired: False
-    summary: Network security group rule to create. Defaults open ports for allowing RDP on Windows and allowing SSH on Linux.
+    summary: NSG rule to create when creating a new NSG. Defaults to open ports for allowing RDP on Windows and allowing SSH on Linux.
     description: ''
     parameterValueGroup: RDP, SSH
-  - name: --os-disk-name
-    isRequired: False
-    summary: Name of new VM OS disk.
-    description: ''
   - name: --private-ip-address
     isRequired: False
     summary: Static private IP address (e.g. 10.0.0.5).
     description: ''
   - name: --public-ip-address
     isRequired: False
-    summary: Name or ID of the resource.  Creates new by default. Use "" for none.
+    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
     description: ''
   - name: --public-ip-address-allocation
     isRequired: False
@@ -152,63 +287,56 @@ children:
     parameterValueGroup: dynamic, static
   - name: --public-ip-address-dns-name
     isRequired: False
-    summary: Globally unique DNS Name for the Public IP.
+    summary: Globally unique DNS name for a newly created Public IP.
     description: ''
-  - name: --size
+  - name: --subnet
     isRequired: False
-    summary: The VM Size that should be created.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
     description: ''
-    defaultValue: Standard_DS1
-  - name: --ssh-dest-key-path
+  - name: --subnet-address-prefix
     isRequired: False
-    summary: Destination file path on VM for SSH key.
+    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
-  - name: --ssh-key-value
+    defaultValue: 10.0.0.0/24
+  - name: --vnet-address-prefix
     isRequired: False
-    summary: SSH public key or public key file path.
+    summary: The IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
+    defaultValue: 10.0.0.0/16
+  - name: --vnet-name
+    isRequired: False
+    summary: Name of the virtual network when creating a new one or referencing an existing one.
+    description: ''
+  - name: --os-disk-name
+    isRequired: False
+    summary: The name of the new VM OS disk.
+    description: ''
+  - name: --os-type
+    isRequired: False
+    summary: Type of OS installed on a custom VHD. Do not use when specifiying an URN or URN alias.
+    description: ''
+    parameterValueGroup: linux, windows
   - name: --storage-account
     isRequired: False
-    summary: Name or ID of the resource.  Uses existing resource.
+    summary: The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
     description: ''
   - name: --storage-caching
     isRequired: False
     summary: Storage caching type for the VM OS disk.
     description: ''
     defaultValue: ReadWrite
+    parameterValueGroup: ReadOnly, ReadWrite
   - name: --storage-container-name
     isRequired: False
-    summary: Name of storage container for the VM OS disk.
+    summary: Name of the storage container for the VM OS disk.
     description: ''
     defaultValue: vhds
-  - name: --storage-type
+  - name: --storage-sku
     isRequired: False
-    summary: The VM storage type.
+    summary: The storage SKU to use for new storage accounts.
     description: ''
     defaultValue: Premium_LRS
     parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
-  - name: --subnet-ip-address-prefix
-    isRequired: False
-    summary: The subnet address prefix in CIDR format.
-    description: ''
-    defaultValue: 10.0.0.0/24
-  - name: --subnet-name
-    isRequired: False
-    summary: The subnet name.  Creates if creating a new VNet, references if referencing an existing VNet.
-    description: ''
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --vnet
-    isRequired: False
-    summary: Name or ID of the resource.  Uses existing resource.
-    description: ''
-  - name: --vnet-ip-address-prefix
-    isRequired: False
-    summary: The virtual network IP address prefix in CIDR format.
-    description: ''
-    defaultValue: 10.0.0.0/16
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -231,13 +359,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_create
   name: az vm create
   description: See <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-quick-create-cli/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-quick-create-cli/</a> for an end-to-end tutorial.
   summary: Create an Azure Virtual Machine.
   Metadata: {}
-- htmlId: deallocate
+- commandList: []
+  htmlId: deallocate
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
@@ -251,7 +385,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -279,22 +413,32 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_deallocate
   name: az vm deallocate
   description: See <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/</a> for an end-to-end tutorial.
   summary: Shuts down the virtual machine and releases the compute resources.
   Metadata: {}
-- htmlId: delete
+- commandList: []
+  htmlId: delete
   examples: []
   parameters:
+  - name: --force
+    isRequired: False
+    summary: Do not prompt for confirmation.
+    description: ''
   - name: --ids
     isRequired: False
     summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -322,13 +466,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_delete
   name: az vm delete
   description: ''
   summary: The operation to delete a virtual machine.
   Metadata: {}
-- htmlId: generalize
+- commandList: []
+  htmlId: generalize
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
@@ -342,7 +492,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -370,13 +520,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_generalize
   name: az vm generalize
   description: See <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-linux-capture-image/</a> for an end-to-end tutorial.
   summary: Sets the state of the virtual machine to generalized.
   Metadata: {}
-- htmlId: get-instance-view
+- commandList: []
+  htmlId: get-instance-view
   examples: []
   parameters:
   - name: --ids
@@ -385,7 +541,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -413,18 +569,28 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_get-instance-view
   name: az vm get-instance-view
   description: ''
   summary: Gets a VM including instance information (powerState).
   Metadata: {}
-- htmlId: list
+- commandList: []
+  htmlId: list
   examples: []
   parameters:
   - name: --resource-group -g
     isRequired: False
     summary: Name of resource group.
+    description: ''
+  - name: --show-details -d
+    isRequired: False
+    summary: Show public ip address, FQDN, and power states. command will run slow.
     description: ''
   - name: --debug
     isRequired: False
@@ -448,13 +614,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_list
   name: az vm list
   description: ''
   summary: List Virtual Machines.
   Metadata: {}
-- htmlId: list-ip-addresses
+- commandList: []
+  htmlId: list-ip-addresses
   examples: []
   parameters:
   - name: --ids
@@ -463,7 +635,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -491,13 +663,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_list-ip-addresses
   name: az vm list-ip-addresses
   description: ''
   summary: Get IP addresses from one or more Virtual Machines.
   Metadata: {}
-- htmlId: list-sizes
+- commandList: []
+  htmlId: list-sizes
   examples: []
   parameters:
   - name: --location -l
@@ -526,13 +704,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_list-sizes
   name: az vm list-sizes
   description: ''
   summary: Lists all available virtual machine sizes for a subscription in a location.
   Metadata: {}
-- htmlId: list-usage
+- commandList: []
+  htmlId: list-usage
   examples: []
   parameters:
   - name: --location -l
@@ -561,13 +745,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_list-usage
   name: az vm list-usage
   description: ''
   summary: Gets, for the specified location, the current compute resource usage information as well as the limits for compute resources under the subscription.
   Metadata: {}
-- htmlId: list-vm-resize-options
+- commandList: []
+  htmlId: list-vm-resize-options
   examples: []
   parameters:
   - name: --ids
@@ -576,7 +766,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -604,13 +794,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_list-vm-resize-options
   name: az vm list-vm-resize-options
   description: ''
   summary: Lists all available virtual machine sizes to which the specified virtual machine can be resized.
   Metadata: {}
-- htmlId: open-port
+- commandList: []
+  htmlId: open-port
   examples: []
   parameters:
   - name: --apply-to-subnet
@@ -655,13 +851,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_open-port
   name: az vm open-port
   description: The existing NSG will be used or a new one will be created. The rule name is 'open-port-cmd' and will overwrite an existing rule with this name. For multi-NIC VMs, or for more fine grained control, use the appropriate network commands directly (nsg rule create, etc).
   summary: Opens a VM to all inbound traffic and protocols by adding a security rule to the network security group (NSG) that is attached to the VM's network interface (NIC) or subnet.
   Metadata: {}
-- htmlId: redeploy
+- commandList: []
+  htmlId: redeploy
   examples: []
   parameters:
   - name: --ids
@@ -670,7 +872,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -698,13 +900,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_redeploy
   name: az vm redeploy
   description: ''
   summary: The operation to redeploy a virtual machine.
   Metadata: {}
-- htmlId: resize
+- commandList: []
+  htmlId: resize
   examples: []
   parameters:
   - name: --size
@@ -717,7 +925,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -745,13 +953,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_resize
   name: az vm resize
   description: ''
   summary: Update vm size.
   Metadata: {}
-- htmlId: restart
+- commandList: []
+  htmlId: restart
   examples: []
   parameters:
   - name: --ids
@@ -760,7 +974,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -788,18 +1002,24 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_restart
   name: az vm restart
   description: ''
   summary: The operation to restart a virtual machine.
   Metadata: {}
-- htmlId: show
+- commandList: []
+  htmlId: show
   examples: []
   parameters:
-  - name: --expand
+  - name: --show-details -d
     isRequired: False
-    summary: The expand expression to apply on the operation.
+    summary: Show public ip address, FQDN, and power states. command will run slow.
     description: ''
   - name: --ids
     isRequired: False
@@ -807,7 +1027,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -835,13 +1055,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_show
   name: az vm show
   description: ''
-  summary: Retrieves information about the model view or the instance view of a virtual machine.
+  summary: ''
   Metadata: {}
-- htmlId: start
+- commandList: []
+  htmlId: start
   examples: []
   parameters:
   - name: --ids
@@ -850,7 +1076,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -878,13 +1104,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_start
   name: az vm start
   description: ''
   summary: The operation to start a virtual machine.
   Metadata: {}
-- htmlId: stop
+- commandList: []
+  htmlId: stop
   examples: []
   parameters:
   - name: --ids
@@ -893,7 +1125,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -921,13 +1153,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_stop
   name: az vm stop
   description: The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
   summary: The operation to power off (stop) a virtual machine.
   Metadata: {}
-- htmlId: update
+- commandList: []
+  htmlId: update
   examples:
   - title: Add or update a tag
     code: az <command> -n name -g group --set tags.tagName=tagValue
@@ -950,7 +1188,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -990,13 +1228,19 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_update
   name: az vm update
   description: Update VM objects and properties using paths that correspond to 'az vm show'.  See examples.
   summary: Update VM properties.
   Metadata: {}
-- htmlId: wait
+- commandList: []
+  htmlId: wait
   examples: []
   parameters:
   - name: --ids
@@ -1005,7 +1249,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the virtual machine.
+    summary: The name of the Virtual Machine.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -1063,6 +1307,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
   children: []
   uid: az_vm_wait
   name: az vm wait
@@ -1070,13 +1319,13 @@ children:
   summary: Place the CLI in a waiting state until a condition of the VM is met.
   Metadata: {}
 uid: az_vm
-name: az vm
+name: Azure CLI 2.0 (Preview): Virtual machines (VM) - az vm
 description: ''
 summary: Provision Linux and Windows virtual machines in minutes.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/0e2f45e2a59ad6adda39bef0869266daf9b53aaa/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/5/2017 12:17:14 AM
-  ms.date: 1/5/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 1/26/2017 8:07:26 PM
+  ms.date: 1/26/2017
