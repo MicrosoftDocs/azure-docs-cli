@@ -187,6 +187,7 @@
 ### [az documentdb list-read-only-keys](documentdb.pycliyml#list-read-only-keys)
 ### [az documentdb regenerate-key](documentdb.pycliyml#regenerate-key)
 ### [az documentdb show](documentdb.pycliyml#show)
+### [az documentdb update](documentdb.pycliyml#update)
 ## [az feature](feature.pycliyml)
 ### [az feature list](feature.pycliyml#list)
 ### [az feature register](feature.pycliyml#register)
