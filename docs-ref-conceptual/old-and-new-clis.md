@@ -21,7 +21,6 @@ Today Azure CLI 2.0 (Preview) supports these services, with more coming online:
 - Virual Machines
 - Virtual Networks
 
-> [!Note]
 > If you use both CLIs, just remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0 (Preview). 
 
 [Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 (Preview) now.
