@@ -1,17 +1,17 @@
 commandList:
-- name: az batch application package activate
-  description: Activates the specified application package. This step is unnecessary if the package has already been successfully activated by the 'create' command.
-  href: package#activate
-- name: az batch application package create
-  description: Creates an application package record and attempts to activate it.
-  href: package#create
-- name: az batch application package delete
-  description: Deletes an application package record and its associated binary file.
-  href: package#delete
-- name: az batch application package show
-  description: Gets information about the specified application package.
-  href: package#show
-htmlId: package
+- name: az batch certificate create
+  description: Adds a certificate.
+  href: certificate#create
+- name: az batch certificate delete
+  description: Deletes the specified Batch certificate.
+  href: certificate#delete
+- name: az batch certificate list
+  description: Lists all of the certificates that have been added to the specified account.
+  href: certificate#list
+- name: az batch certificate show
+  description: Gets information about the specified certificate.
+  href: certificate#show
+htmlId: certificate
 examples: []
 source:
   remote:
@@ -20,85 +20,32 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: activate
-  examples: []
-  parameters:
-  - name: --application-id
-    isRequired: True
-    summary: The id of the application.
-    description: ''
-  - name: --format
-    isRequired: True
-    summary: The format of the application package binary file.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: Name of the Batch account.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
-    description: ''
-  - name: --version
-    isRequired: True
-    summary: The version of the application to activate.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_batch_application_package_activate
-  name: az batch application package activate
-  description: ''
-  summary: Activates the specified application package. This step is unnecessary if the package has already been successfully activated by the 'create' command.
-  Metadata: {}
-- commandList: []
   htmlId: create
   examples: []
   parameters:
-  - name: --application-id
+  - name: --certificate-file
     isRequired: True
-    summary: The ID of the application.
+    summary: 'The certificate file: cer file or pfx file.'
     description: ''
-  - name: --name -n
+  - name: --thumbprint
     isRequired: True
-    summary: Name of the Batch account.
+    summary: The certificate thumbprint.
     description: ''
-  - name: --package-file
-    isRequired: True
-    summary: The path of the application package in zip format.
+  - name: --password
+    isRequired: False
+    summary: The password to access the certificate's private key.
     description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
     description: ''
-  - name: --version
-    isRequired: True
-    summary: The version of the application.
+  - name: --account-key
+    isRequired: False
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
     description: ''
   - name: --debug
     isRequired: False
@@ -128,35 +75,39 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_package_create
-  name: az batch application package create
+  uid: az_batch_certificate_create
+  name: az batch certificate create
   description: ''
-  summary: Creates an application package record and attempts to activate it.
+  summary: Adds a certificate.
   Metadata: {}
 - commandList: []
   htmlId: delete
   examples: []
   parameters:
-  - name: --application-id
+  - name: --thumbprint
     isRequired: True
-    summary: The id of the application.
+    summary: The certificate thumbprint.
     description: ''
-  - name: --name -n
-    isRequired: True
-    summary: Name of the Batch account.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
-    description: ''
-  - name: --version
-    isRequired: True
-    summary: The version of the application to delete.
+  - name: --abort
+    isRequired: False
+    summary: Cancel the failed certificate deletion operation.
     description: ''
   - name: --force
     isRequired: False
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -185,30 +136,91 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_package_delete
-  name: az batch application package delete
+  uid: az_batch_certificate_delete
+  name: az batch certificate delete
   description: ''
-  summary: Deletes an application package record and its associated binary file.
+  summary: Deletes the specified Batch certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --filter
+    isRequired: False
+    summary: An OData $filter clause.
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_certificate_list
+  name: az batch certificate list
+  description: ''
+  summary: Lists all of the certificates that have been added to the specified account.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
-  - name: --application-id
+  - name: --thumbprint
     isRequired: True
-    summary: The id of the application.
+    summary: The certificate thumbprint.
     description: ''
-  - name: --name -n
-    isRequired: True
-    summary: Name of the Batch account.
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
     description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
     description: ''
-  - name: --version
-    isRequired: True
-    summary: The version of the application.
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
     description: ''
   - name: --debug
     isRequired: False
@@ -238,15 +250,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_package_show
-  name: az batch application package show
+  uid: az_batch_certificate_show
+  name: az batch certificate show
   description: ''
-  summary: Gets information about the specified application package.
+  summary: Gets information about the specified certificate.
   Metadata: {}
-uid: az_batch_application_package
-name: 'Batch application packages - az batch application package'
+uid: az_batch_certificate
+name: az batch certificate
 description: ''
-summary: Commands to manage your Batch application packages.
+summary: Commands to manage your Batch certificates.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py

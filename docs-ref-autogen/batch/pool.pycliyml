@@ -1,0 +1,698 @@
+commandList:
+- name: az batch pool all-statistics
+  description: Commands to view statistics of all pools under your Batch account.
+  href: pool/all-statistics
+  isGroup: true
+- name: az batch pool all-statistics show
+  description: Gets lifetime summary statistics for all of the pools in the specified account. Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
+  href: pool/all-statistics#show
+- name: az batch pool autoscale
+  description: Commands to manage automatic scaling of your Batch pools.
+  href: pool/autoscale
+  isGroup: true
+- name: az batch pool autoscale disable
+  description: Disables automatic scaling for a pool.
+  href: pool/autoscale#disable
+- name: az batch pool autoscale enable
+  description: Enables automatic scaling for a pool.
+  href: pool/autoscale#enable
+- name: az batch pool autoscale evaluate
+  description: Gets the result of evaluating an automatic scaling formula on the pool.
+  href: pool/autoscale#evaluate
+- name: az batch pool create
+  description: Creates a pool in the specified account. When creating a pool, please chose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
+  href: pool#create
+- name: az batch pool delete
+  description: Deletes a pool from the specified account.
+  href: pool#delete
+- name: az batch pool list
+  description: Lists all of the pools in the specified account.
+  href: pool#list
+- name: az batch pool node-agent-skus
+  description: Commands to retrieve node agent SKUs of pools using a Virtual Machine Configuration.
+  href: pool/node-agent-skus
+  isGroup: true
+- name: az batch pool node-agent-skus list
+  description: Lists all node agent SKUs supported by the Azure Batch service.
+  href: pool/node-agent-skus#list
+- name: az batch pool os
+  description: Commands to manage the operating system of your Batch pools.
+  href: pool/os
+  isGroup: true
+- name: az batch pool os upgrade
+  description: Upgrades the operating system of the specified pool.
+  href: pool/os#upgrade
+- name: az batch pool reset
+  description: Updates the properties of the specified pool. All updatable properties are replaced with the values specified or cleared/defaulted if unspecified.
+  href: pool#reset
+- name: az batch pool resize
+  description: Resizes (or stops resizing) the Batch pool.
+  href: pool#resize
+- name: az batch pool set
+  description: Updates the properties of the specified pool. Properties can be updated independently, but please note that an updated property in a sub-group (i.e. 'start task') will result in all properties of that group being reset.
+  href: pool#set
+- name: az batch pool show
+  description: Gets information about the specified pool.
+  href: pool#show
+- name: az batch pool usage-metrics
+  description: Commands to view usage metrics of your Batch pools.
+  href: pool/usage-metrics
+  isGroup: true
+- name: az batch pool usage-metrics list
+  description: Lists the usage metrics, aggregated by pool across individual time intervals, for the specified account.
+  href: pool/usage-metrics#list
+htmlId: pool
+examples: []
+source:
+  remote:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    branch: master
+    repo: https://github.com/Azure/azure-cli.git
+children:
+- commandList: []
+  htmlId: create
+  examples: []
+  parameters:
+  - name: --json-file
+    isRequired: False
+    summary: A file containing the pool specification in JSON format. If this parameter is specified, all 'Pool Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-package-references
+    isRequired: False
+    summary: The list of application packages to be installed on each compute node in the pool. Space separated application IDs with optional version in 'id[#version]' format.
+    description: ''
+  - name: --auto-scale-formula
+    isRequired: False
+    summary: A formula for the desired number of compute nodes in the pool.
+    description: ''
+  - name: --certificate-references
+    isRequired: False
+    summary: The list of certificates to be installed on each compute node in the pool. Space separated certificate thumbprints.
+    description: ''
+  - name: --enable-inter-node-communication
+    isRequired: False
+    summary: Whether the pool permits direct communication between nodes. True if flag present, otherwise defaults to False.
+    description: ''
+  - name: --id
+    isRequired: False
+    summary: A string that uniquely identifies the pool within the account. The id can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. It is common to use a GUID for the id.
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the pool as metadata. Space separated values in 'key=value' format.
+    description: ''
+  - name: --resize-timeout
+    isRequired: False
+    summary: The timeout for allocation of compute nodes to the pool. The default value is 10 minutes. Expected format is an ISO-8601 duration.
+    description: ''
+  - name: --target-dedicated
+    isRequired: False
+    summary: The desired number of compute nodes in the pool. This property must have the default value if enableAutoScale is true. It is required if enableAutoScale is false.
+    description: ''
+  - name: --vm-size
+    isRequired: False
+    summary: The size of virtual machines in the pool. All virtual machines in a pool are the same size.
+    description: ''
+  - name: --os-family
+    isRequired: False
+    summary: The Azure Guest OS family to be installed on the virtual machines in the pool.
+    description: ''
+    parameterValueGroup: 2, 3, 4, 5
+  - name: --start-task-command-line
+    isRequired: False
+    summary: The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    description: ''
+  - name: --start-task-resource-files
+    isRequired: False
+    summary: A list of files that the Batch service will download to the compute node before running the command line. Space separated resource references in filename=blobsource format.
+    description: ''
+  - name: --start-task-run-elevated
+    isRequired: False
+    summary: Whether to run the start task in elevated mode. The default value is false. True if flag present, otherwise defaults to False.
+    description: ''
+  - name: --start-task-wait-for-success
+    isRequired: False
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. True if flag present, otherwise defaults to False.
+    description: ''
+  - name: --image
+    isRequired: False
+    summary: >-
+      OS image URN in 'publisher:offer:sku[:version]' format. Version is optional and if omitted latest will be used.
+                                          	Values from 'az batch pool node-agent-skus list'.
+                                          	Example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'.
+    description: ''
+  - name: --node-agent-sku-id
+    isRequired: False
+    summary: The SKU of Batch Node Agent to be provisioned on the compute node. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_create
+  name: az batch pool create
+  description: ''
+  summary: Creates a pool in the specified account. When creating a pool, please chose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
+  Metadata: {}
+- commandList: []
+  htmlId: delete
+  examples: []
+  parameters:
+  - name: --pool-id
+    isRequired: True
+    summary: The id of the pool to delete.
+    description: ''
+  - name: --force
+    isRequired: False
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag is an exact match as specified.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has been modified since the specified date/time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag does not match the specified ETag.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has not been modified since the specified date/time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_delete
+  name: az batch pool delete
+  description: ''
+  summary: Deletes a pool from the specified account.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: An OData $expand clause.
+    description: ''
+  - name: --filter
+    isRequired: False
+    summary: An OData $filter clause.
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_list
+  name: az batch pool list
+  description: ''
+  summary: Lists all of the pools in the specified account.
+  Metadata: {}
+- commandList: []
+  htmlId: reset
+  examples: []
+  parameters:
+  - name: --pool-id
+    isRequired: True
+    summary: The ID of the pool to update.
+    description: ''
+  - name: --json-file
+    isRequired: False
+    summary: The file containing pool update properties parameter specification in JSON format. If this parameter is specified, all 'Pool Update Properties Parameter Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-package-references
+    isRequired: False
+    summary: A list of application packages to be installed on each compute node in the pool. If you specify an empty collection, any existing application packages references are removed from the pool.
+    description: ''
+  - name: --certificate-references
+    isRequired: False
+    summary: A list of certificates to be installed on each compute node in the pool. If you specify an empty collection, any existing certificate references are removed from the pool.
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the pool as metadata. If you specify an empty collection, any existing metadata is removed from the pool.
+    description: ''
+  - name: --start-task-command-line
+    isRequired: False
+    summary: The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    description: ''
+  - name: --start-task-environment-settings
+    isRequired: False
+    summary: A list of environment variable settings for the start task. Space separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-max-task-retry-count
+    isRequired: False
+    summary: The maximum number of times the task may be retried.
+    description: ''
+  - name: --start-task-run-elevated
+    isRequired: False
+    summary: Whether to run the start task in elevated mode. The default value is false. True if flag present, otherwise defaults to False.
+    description: ''
+  - name: --start-task-wait-for-success
+    isRequired: False
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. True if flag present, otherwise defaults to False.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_reset
+  name: az batch pool reset
+  description: ''
+  summary: Updates the properties of the specified pool. All updatable properties are replaced with the values specified or cleared/defaulted if unspecified.
+  Metadata: {}
+- commandList: []
+  htmlId: resize
+  examples: []
+  parameters:
+  - name: --pool-id
+    isRequired: True
+    summary: The ID of the pool.
+    description: ''
+  - name: --abort
+    isRequired: False
+    summary: Stop the pool resize operation.
+    description: ''
+  - name: --node-deallocation-option
+    isRequired: False
+    summary: When nodes may be removed from the pool, if the pool size is decreasing.
+    description: ''
+    parameterValueGroup: requeue, retaineddata, taskcompletion, terminate
+  - name: --resize-timeout
+    isRequired: False
+    summary: The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. The default value is 10 minutes.
+    description: ''
+  - name: --target-dedicated
+    isRequired: False
+    summary: The desired number of compute nodes in the pool.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: The operation will be performed only if the resource's current ETag exactly matches the specified value.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: The operation will be performed only if the resource has been modified since the specified timestamp.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: The operation will not be performed only if the resource's current ETag exactly matches the specified value.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: The operation will not be performed only if the resource has been modified since the specified timestamp.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_resize
+  name: az batch pool resize
+  description: ''
+  summary: Resizes (or stops resizing) the Batch pool.
+  Metadata: {}
+- commandList: []
+  htmlId: set
+  examples: []
+  parameters:
+  - name: --pool-id
+    isRequired: True
+    summary: The id of the pool to update.
+    description: ''
+  - name: --json-file
+    isRequired: False
+    summary: A file containing the pool patch parameter specification in JSON format. If this parameter is specified, all 'Pool Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-package-references
+    isRequired: False
+    summary: A list of application packages to be installed on each compute node in the pool. If omitted, any existing application package references are left unchanged. Space separated application IDs with optional version in 'id[#version]' format.
+    description: ''
+  - name: --certificate-references
+    isRequired: False
+    summary: A list of certificates to be installed on each compute node in the pool. If omitted, any existing certificate references are left unchanged. Space separated certificate thumbprints.
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the pool as metadata. If omitted, any existing metadata is left unchanged. Space separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-command-line
+    isRequired: False
+    summary: The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    description: ''
+  - name: --start-task-environment-settings
+    isRequired: False
+    summary: A list of environment variable settings for the start task. Space separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-max-task-retry-count
+    isRequired: False
+    summary: The maximum number of times the task may be retried.
+    description: ''
+  - name: --start-task-resource-files
+    isRequired: False
+    summary: A list of files that the Batch service will download to the compute node before running the command line. Space separated resource references in filename=blobsource format.
+    description: ''
+  - name: --start-task-run-elevated
+    isRequired: False
+    summary: Whether to run the start task in elevated mode. The default value is false. Specify either 'true' or 'false' to update the property.
+    description: ''
+  - name: --start-task-wait-for-success
+    isRequired: False
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. Specify either 'true' or 'false' to update the property.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag is an exact match as specified.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has been modified since the specified date/time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag does not match the specified ETag.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has not been modified since the specified date/time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_set
+  name: az batch pool set
+  description: ''
+  summary: Updates the properties of the specified pool. Properties can be updated independently, but please note that an updated property in a sub-group (i.e. 'start task') will result in all properties of that group being reset.
+  Metadata: {}
+- commandList: []
+  htmlId: show
+  examples: []
+  parameters:
+  - name: --pool-id
+    isRequired: True
+    summary: The id of the pool to get.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: An OData $expand clause.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag is an exact match as specified.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has been modified since the specified date/time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag is specified. Specify this header to perform the operation only if the resource's ETag does not match the specified ETag.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has not been modified since the specified date/time.
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_pool_show
+  name: az batch pool show
+  description: ''
+  summary: Gets information about the specified pool.
+  Metadata: {}
+uid: az_batch_pool
+name: az batch pool
+description: ''
+summary: Commands to manage your Batch pools.
+Metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
+  doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/ba47219ce18e531be1dcc75c68273a8bcf8fd4d1/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  updated_at: 2/7/2017 11:30:31 PM
+  ms.date: 2/7/2017

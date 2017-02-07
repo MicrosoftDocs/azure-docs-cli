@@ -1,46 +1,17 @@
 commandList:
-- name: az batch application create
-  description: Adds an application to the specified Batch account.
-  href: application#create
-- name: az batch application delete
-  description: Deletes an application.
-  href: application#delete
-- name: az batch application list
-  description: Lists all of the applications in the specified account.
-  href: application#list
-- name: az batch application package
-  description: Commands to manage your Batch application packages.
-  href: application/package
-  isGroup: true
-- name: az batch application package activate
-  description: Activates the specified application package. This step is unnecessary if the package has already been successfully activated by the 'create' command.
-  href: application/package#activate
-- name: az batch application package create
-  description: Creates an application package record and attempts to activate it.
-  href: application/package#create
-- name: az batch application package delete
-  description: Deletes an application package record and its associated binary file.
-  href: application/package#delete
-- name: az batch application package show
-  description: Gets information about the specified application package.
-  href: application/package#show
-- name: az batch application set
-  description: Updates the properties of the specified application. Properties that are not specified remain unchanged.
-  href: application#set
-- name: az batch application show
-  description: Gets information about the specified application.
-  href: application#show
-- name: az batch application summary
-  description: Commands to view a summary of your Batch application packages.
-  href: application/summary
-  isGroup: true
-- name: az batch application summary list
-  description: Lists all of the applications available in the specified account.
-  href: application/summary#list
-- name: az batch application summary show
-  description: Gets information about the specified application.
-  href: application/summary#show
-htmlId: application
+- name: az batch node file delete
+  description: Deletes the specified task file from the compute node.
+  href: file#delete
+- name: az batch node file download
+  description: Downloads the content of the specified node file.
+  href: file#download
+- name: az batch node file list
+  description: Lists all of the files in task directories on the specified compute node.
+  href: file#list
+- name: az batch node file show
+  description: Gets the properties of the specified compute node file.
+  href: file#show
+htmlId: file
 examples: []
 source:
   remote:
@@ -49,82 +20,41 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
-  examples: []
-  parameters:
-  - name: --application-id
-    isRequired: True
-    summary: The id of the application.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: Name of the Batch account.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
-    description: ''
-  - name: --allow-updates
-    isRequired: False
-    summary: Specify to indicate whether packages within the application may be overwritten using the same version string. True if flag present.
-    description: ''
-  - name: --display-name
-    isRequired: False
-    summary: The display name for the application.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_batch_application_create
-  name: az batch application create
-  description: ''
-  summary: Adds an application to the specified Batch account.
-  Metadata: {}
-- commandList: []
   htmlId: delete
   examples: []
   parameters:
-  - name: --application-id
+  - name: --file-name
     isRequired: True
-    summary: The id of the application.
+    summary: The path to the file that you want to delete.
     description: ''
-  - name: --name -n
+  - name: --node-id
     isRequired: True
-    summary: Name of the Batch account.
+    summary: The id of the compute node from which you want to delete the file.
     description: ''
-  - name: --resource-group -g
+  - name: --pool-id
     isRequired: True
-    summary: Name of the resource group.
+    summary: The id of the pool that contains the compute node.
     description: ''
   - name: --force
     isRequired: False
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --recursive
+    isRequired: False
+    summary: Whether to delete children of a directory. If the fileName parameter represents a directory instead of a file, you can set Recursive to true to delete the directory and all of the files and subdirectories in it. If Recursive is false then the directory must be empty or deletion will fail.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -153,26 +83,123 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_delete
-  name: az batch application delete
+  uid: az_batch_node_file_delete
+  name: az batch node file delete
   description: ''
-  summary: Deletes an application.
+  summary: Deletes the specified task file from the compute node.
+  Metadata: {}
+- commandList: []
+  htmlId: download
+  examples: []
+  parameters:
+  - name: --destination
+    isRequired: True
+    summary: The path to the destination file or directory.
+    description: ''
+  - name: --file-name
+    isRequired: True
+    summary: The path to the task file that you want to get the content of.
+    description: ''
+  - name: --node-id
+    isRequired: True
+    summary: The id of the compute node that contains the file.
+    description: ''
+  - name: --pool-id
+    isRequired: True
+    summary: The id of the pool that contains the compute node.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --end-range
+    isRequired: False
+    summary: The byte range to be retrieved. If not set the file will be retrieved to the end.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has been modified since the specified date/time.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has not been modified since the specified date/time.
+    description: ''
+  - name: --start-range
+    isRequired: False
+    summary: The byte range to be retrieved. If not set the file will be retrieved from the beginning.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_batch_node_file_download
+  name: az batch node file download
+  description: ''
+  summary: Downloads the content of the specified node file.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
-  - name: --name -n
+  - name: --node-id
     isRequired: True
-    summary: Name of the Batch account.
+    summary: The id of the compute node whose files you want to list.
     description: ''
-  - name: --resource-group -g
+  - name: --pool-id
     isRequired: True
-    summary: Name of the resource group.
+    summary: The id of the pool that contains the compute node.
     description: ''
-  - name: --maxresults
+  - name: --recursive
     isRequired: False
-    summary: The maximum number of items to return in the response.
+    summary: Whether to list children of a directory.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --filter
+    isRequired: False
+    summary: An OData $filter clause.
     description: ''
   - name: --debug
     isRequired: False
@@ -202,87 +229,46 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_list
-  name: az batch application list
+  uid: az_batch_node_file_list
+  name: az batch node file list
   description: ''
-  summary: Lists all of the applications in the specified account.
-  Metadata: {}
-- commandList: []
-  htmlId: set
-  examples: []
-  parameters:
-  - name: --application-id
-    isRequired: True
-    summary: The ID of the application.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: Name of the Batch account.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of the resource group.
-    description: ''
-  - name: --allow-updates
-    isRequired: False
-    summary: Specify to indicate whether packages within the application may be overwritten using the same version string. Specify either 'true' or 'false' to update the property.
-    description: ''
-  - name: --default-version
-    isRequired: False
-    summary: The package to use if a client requests the application but does not specify a version.
-    description: ''
-  - name: --display-name
-    isRequired: False
-    summary: The display name for the application.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_batch_application_set
-  name: az batch application set
-  description: ''
-  summary: Updates the properties of the specified application. Properties that are not specified remain unchanged.
+  summary: Lists all of the files in task directories on the specified compute node.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
-  - name: --application-id
+  - name: --file-name
     isRequired: True
-    summary: The id of the application.
+    summary: The path to the compute node file that you want to get the properties of.
     description: ''
-  - name: --name -n
+  - name: --node-id
     isRequired: True
-    summary: Name of the Batch account.
+    summary: The id of the compute node that contains the file.
     description: ''
-  - name: --resource-group -g
+  - name: --pool-id
     isRequired: True
-    summary: Name of the resource group.
+    summary: The id of the pool that contains the compute node.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has been modified since the specified date/time.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: Specify this header to perform the operation only if the resource has not been modified since the specified date/time.
     description: ''
   - name: --debug
     isRequired: False
@@ -312,15 +298,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_batch_application_show
-  name: az batch application show
+  uid: az_batch_node_file_show
+  name: az batch node file show
   description: ''
-  summary: Gets information about the specified application.
+  summary: Gets the properties of the specified compute node file.
   Metadata: {}
-uid: az_batch_application
-name: 'Batch applications - az batch application'
+uid: az_batch_node_file
+name: az batch node file
 description: ''
-summary: Commands to manage your Batch applications.
+summary: Commands to manage your Batch compute node files.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
