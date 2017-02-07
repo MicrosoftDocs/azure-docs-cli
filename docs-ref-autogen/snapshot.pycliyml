@@ -1,89 +1,41 @@
 commandList:
-- name: az vm availability-set convert
-  description: Convert an availability set to contain VMs with managed disks.
-  href: availability-set#convert
-- name: az vm availability-set create
-  description: Create an availability set.
-  href: availability-set#create
-- name: az vm availability-set delete
-  description: Delete an availability set.
-  href: availability-set#delete
-- name: az vm availability-set list
-  description: Lists all availability sets in a resource group.
-  href: availability-set#list
-- name: az vm availability-set list-sizes
-  description: Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
-  href: availability-set#list-sizes
-- name: az vm availability-set show
-  description: Retrieves information about an availability set.
-  href: availability-set#show
-- name: az vm availability-set update
-  description: Update an availability set.
-  href: availability-set#update
-htmlId: availability-set
+- name: az snapshot create
+  description: Create a snapshot.
+  href: snapshot#create
+- name: az snapshot delete
+  description: Deletes a snapshot.
+  href: snapshot#delete
+- name: az snapshot grant-access
+  description: Grant read access to a snapshot.
+  href: snapshot#grant-access
+- name: az snapshot list
+  description: List snapshots under a resource group or under current subscription.
+  href: snapshot#list
+- name: az snapshot revoke-access
+  description: Revoke read access to a snapshot.
+  href: snapshot#revoke-access
+- name: az snapshot show
+  description: Gets information about a snapshot.
+  href: snapshot#show
+- name: az snapshot update
+  description: Update a snapshot.
+  href: snapshot#update
+htmlId: snapshot
 examples: []
-source:
-  remote:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    branch: master
-    repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: convert
-  examples: []
-  parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Name of the availability set.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_vm_availability-set_convert
-  name: az vm availability-set convert
-  description: ''
-  summary: Convert an availability set to contain VMs with managed disks.
-  Metadata: {}
-- commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create by importing from blob uri
+    code: az snapshot create -g myRG -n mySnapshot --source https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd
+  - title: Create an empty snapshot
+    code: az snapshot create -g myRG -n mySnapshot --size-gb 10
+  - title: Create by copying from an existing disk from the same resource group
+    code: az snapshot create -g myRG -n mySnapshot2 --source myDisk
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Name of the availability set.
+    summary: The name of the snapshot.
     description: ''
   - name: --resource-group -g
     isRequired: True
@@ -93,31 +45,18 @@ children:
     isRequired: False
     summary: Location.
     description: ''
-  - name: --no-wait
+  - name: --size-gb -z
     isRequired: False
-    summary: ''
+    summary: Size in GB.
     description: ''
-  - name: --platform-fault-domain-count
+  - name: --sku
     isRequired: False
-    summary: ''
+    summary: Underlying storage sku.
     description: ''
-    defaultValue: 5
-  - name: --platform-update-domain-count
+    parameterValueGroup: Premium_LRS, Standard_LRS
+  - name: --source
     isRequired: False
-    summary: ''
-    description: ''
-    defaultValue: 5
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --unmanaged
-    isRequired: False
-    summary: Contained VMs should use unmanaged disks.
-    description: ''
-  - name: --validate
-    isRequired: False
-    summary: Generate and validate the ARM template without creating any resources.
+    summary: Source to create the disk from, including a sas uri to a blob, managed disk id or name, or snapshot id or name.
     description: ''
   - name: --debug
     isRequired: False
@@ -141,16 +80,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_create
-  name: az vm availability-set create
-  description: For more info, see <a href="https://blogs.technet.microsoft.com/yungchou/2013/05/14/window-azure-fault-domain-and-upgrade-domain-explained-explained-reprised/">https://blogs.technet.microsoft.com/yungchou/2013/05/14/window-azure-fault-domain-and-upgrade-domain-explained-explained-reprised/</a>.
-  summary: Create an availability set.
+  uid: az_snapshot_create
+  name: az snapshot create
+  description: ''
+  summary: Create a snapshot.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -162,7 +96,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the availability set.
+    summary: The name of the snapshot.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -190,23 +124,66 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_delete
-  name: az vm availability-set delete
+  uid: az_snapshot_delete
+  name: az snapshot delete
   description: ''
-  summary: Delete an availability set.
+  summary: Deletes a snapshot.
+  Metadata: {}
+- commandList: []
+  htmlId: grant-access
+  examples: []
+  parameters:
+  - name: --duration-in-seconds
+    isRequired: True
+    summary: Time duration in seconds until the SAS access expires.
+    description: ''
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: The name of the snapshot.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_snapshot_grant-access
+  name: az snapshot grant-access
+  description: ''
+  summary: Grant read access to a snapshot.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -231,19 +208,14 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_list
-  name: az vm availability-set list
+  uid: az_snapshot_list
+  name: az snapshot list
   description: ''
-  summary: Lists all availability sets in a resource group.
+  summary: List snapshots under a resource group or under current subscription.
   Metadata: {}
 - commandList: []
-  htmlId: list-sizes
+  htmlId: revoke-access
   examples: []
   parameters:
   - name: --ids
@@ -252,7 +224,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the availability set.
+    summary: The name of the snapshot.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -280,16 +252,11 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_list-sizes
-  name: az vm availability-set list-sizes
+  uid: az_snapshot_revoke-access
+  name: az snapshot revoke-access
   description: ''
-  summary: Lists all available virtual machine sizes that can be used to create a new virtual machine in an existing availability set.
+  summary: Revoke read access to a snapshot.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -301,7 +268,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: False
-    summary: Name of the availability set.
+    summary: The name of the snapshot.
     description: ''
   - name: --resource-group -g
     isRequired: False
@@ -329,27 +296,31 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_show
-  name: az vm availability-set show
+  uid: az_snapshot_show
+  name: az snapshot show
   description: ''
-  summary: Retrieves information about an availability set.
+  summary: Gets information about a snapshot.
   Metadata: {}
 - commandList: []
   htmlId: update
   examples: []
   parameters:
+  - name: --sku
+    isRequired: False
+    summary: Underlying storage sku.
+    description: ''
+    parameterValueGroup: Premium_LRS, Standard_LRS
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: True
-    summary: ''
+    isRequired: False
+    summary: The name of the snapshot.
     description: ''
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
     description: ''
   - name: --add
@@ -386,25 +357,14 @@ children:
     isRequired: False
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_availability-set_update
-  name: az vm availability-set update
+  uid: az_snapshot_update
+  name: az snapshot update
   description: ''
-  summary: Update an availability set.
+  summary: Update a snapshot.
   Metadata: {}
-uid: az_vm_availability-set
-name: 'VM availability sets - az vm availability-set'
+uid: az_snapshot
+name: az snapshot
 description: ''
-summary: Group resources into availability-sets for high-availability requirements.
-Metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/68b1425ef8fc764d85622db99c5c67ff0b0389cb/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/7/2017 12:36:30 AM
-  ms.date: 2/7/2017
+summary: Commands to manage snapshots.
+Metadata: {}

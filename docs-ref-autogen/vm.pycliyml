@@ -19,6 +19,9 @@ commandList:
   description: Group resources into availability-sets for high-availability requirements.
   href: vm/availability-set
   isGroup: true
+- name: az vm availability-set convert
+  description: Convert an availability set to contain VMs with managed disks.
+  href: vm/availability-set#convert
 - name: az vm availability-set create
   description: Create an availability set.
   href: vm/availability-set#create
@@ -53,6 +56,9 @@ commandList:
 - name: az vm capture
   description: Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
   href: vm#capture
+- name: az vm convert
+  description: Convert VM with unmanaged disks to use managed disks.
+  href: vm#convert
 - name: az vm create
   description: Create an Azure Virtual Machine.
   href: vm#create
@@ -73,21 +79,15 @@ commandList:
   description: Enable diagnostics on a virtual machine.
   href: vm/diagnostics#set
 - name: az vm disk
-  description: Manage VM storage disks.
+  description: Manage VM data disks.
   href: vm/disk
   isGroup: true
-- name: az vm disk attach-existing
-  description: Attach an existing disk to an existing Virtual Machine.
-  href: vm/disk#attach-existing
-- name: az vm disk attach-new
-  description: Attach a new disk to an existing Virtual Machine.
-  href: vm/disk#attach-new
+- name: az vm disk attach
+  description: Attach a managed disk.
+  href: vm/disk#attach
 - name: az vm disk detach
-  description: Detach a disk from a Virtual Machine.
+  description: Detach a managed disk.
   href: vm/disk#detach
-- name: az vm disk list
-  description: List disks for a Virtual Machine.
-  href: vm/disk#list
 - name: az vm extension
   description: Extend the functionality of your VMs with vm extensions.
   href: vm/extension
@@ -200,6 +200,19 @@ commandList:
 - name: az vm stop
   description: The operation to power off (stop) a virtual machine.
   href: vm#stop
+- name: az vm unmanaged-disk
+  description: Manage VM unmanaged data disks.
+  href: vm/unmanaged-disk
+  isGroup: true
+- name: az vm unmanaged-disk attach
+  description: Attach an unmanaged disk.
+  href: vm/unmanaged-disk#attach
+- name: az vm unmanaged-disk detach
+  description: Detach a disk from a Virtual Machine.
+  href: vm/unmanaged-disk#detach
+- name: az vm unmanaged-disk list
+  description: List disks for a Virtual Machine.
+  href: vm/unmanaged-disk#list
 - name: az vm update
   description: Update VM properties.
   href: vm#update
@@ -283,6 +296,55 @@ children:
   summary: Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
   Metadata: {}
 - commandList: []
+  htmlId: convert
+  examples: []
+  parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: The name of the Virtual Machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, list, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_vm_convert
+  name: az vm convert
+  description: ''
+  summary: Convert VM with unmanaged disks to use managed disks.
+  Metadata: {}
+- commandList: []
   htmlId: create
   examples:
   - title: Create a Linux VM with SSH key authentication, add a public DNS entry and add to an existing Virtual Network and Availability Set.
@@ -291,17 +353,15 @@ children:
     code: >-
       az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234
                                --public-ip-address "" --image Win2012R2Datacenter
-  - title: Create a simple Windows Server VM with public IP address and DNS entry
-    code: az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 --public-ip-address-dns-name my_globally_unique_vm_dns_name --image Win2012R2Datacenter
+  - title: Create a simple Ubuntu VM with public IP address, DNS entry, 2 data disk(10GB, 20GB), and generate ssh key pairs under ~/.ssh
+    code: az vm create -n my_vm_name -g myrg --admin-username myadmin --admin-password Password@1234 --public-ip-address-dns-name my_globally_unique_vm_dns_name --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2 --generate-ssh-keys
+  - title: Create a VM from a custom managed image
+    code: az vm create -g myrg -n my_vm_name --image my_image_in_myrg --admin-username myadmin --admin-password Password@1234
+  - title: Create a VM with unmanaged os disk by using image blob uri
+    code: az vm create -g myrg -n my_vm_name --image https://account123.blob.core.windows.net/Images/my_vhd-osDisk.vhd --os-type linux --admin-username myadmin --admin-password Password@1234
+  - title: Create a VM by attaching to an existing specialized managed os disk
+    code: az vm create -g myrg -n my_vm_name --managed-os-disk my-os-disk --os-type linux --admin-username myadmin --admin-password Password@1234
   parameters:
-  - name: --image
-    isRequired: True
-    summary: OS image (URN alias, URN or URI).
-    description: >-
-      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
-                                          Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
-                                          Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
-    valueFrom: az vm image list, az vm image show
   - name: --name -n
     isRequired: True
     summary: Name of the virtual machine.
@@ -318,6 +378,15 @@ children:
     isRequired: False
     summary: Generate SSH public and private key files if missing.
     description: ''
+  - name: --image
+    isRequired: False
+    summary: OS image (URN alias, URN, Custom Image name or ID, VHD Blob URI).
+    description: >-
+      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
+                                          Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
+                                          Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/myrg/providers/Microsoft.Compute/images/myImage
+                                          Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
+    valueFrom: az vm image list, az vm image show
   - name: --location -l
     isRequired: False
     summary: Location in which to create VM and related resources. Defaults to the resource group's location.
@@ -410,6 +479,14 @@ children:
     isRequired: False
     summary: Name of the virtual network when creating a new one or referencing an existing one.
     description: ''
+  - name: --attach-os-disk
+    isRequired: False
+    summary: Create VM by attaching to an existing managed OS disk.
+    description: ''
+  - name: --data-disk-sizes-gb
+    isRequired: False
+    summary: Space separated empty managed data disk sizes in GB to create.
+    description: ''
   - name: --os-disk-name
     isRequired: False
     summary: The name of the new VM OS disk.
@@ -421,7 +498,7 @@ children:
     parameterValueGroup: linux, windows
   - name: --storage-account
     isRequired: False
-    summary: The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
+    summary: Only applicable when use with '--use-unmanaged-disk'. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
     description: ''
   - name: --storage-caching
     isRequired: False
@@ -431,15 +508,19 @@ children:
     parameterValueGroup: ReadOnly, ReadWrite
   - name: --storage-container-name
     isRequired: False
-    summary: Name of the storage container for the VM OS disk.
+    summary: Only applicable when use with '--use-unmanaged-disk'. Name of the storage container for the VM OS disk.
     description: ''
     defaultValue: vhds
   - name: --storage-sku
     isRequired: False
-    summary: The storage SKU to use for new storage accounts.
+    summary: The sku of storage account to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. Using with --use-unmanaged-disk, all are available.
     description: ''
-    defaultValue: Premium_LRS
+    defaultValue: Standard_LRS
     parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
+  - name: --use-unmanaged-disk
+    isRequired: False
+    summary: Do not use managed disk to persist VM.
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -1429,6 +1510,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/26/2017 8:07:26 PM
-  ms.date: 1/26/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/68b1425ef8fc764d85622db99c5c67ff0b0389cb/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/7/2017 12:36:30 AM
+  ms.date: 2/7/2017
