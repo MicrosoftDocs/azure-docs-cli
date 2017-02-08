@@ -126,7 +126,7 @@ function Replace-TocTitle
           Write-Host "New Title" $tocTitle
 
           $line = $line.Replace($originalToc, $tocTitle)
-          $line = $line.Replace(')', ' "' + $originalToc + '")')
+          $line = $line.TrimEnd(')') + ' "' + $originalToc + '")' 
 
           Write-Host "With this: " $line
 
