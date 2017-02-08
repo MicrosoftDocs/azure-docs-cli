@@ -1,4 +1,4 @@
-param(
+﻿param(
 [String] $refDocPath = "docs-ref-autogen",
 [String] $conceptDocPath = "docs-ref-conceptual",
 [String] $titleMappingFileName = "titleMapping.json"
@@ -75,9 +75,9 @@ function Replace-ContentTitle
       $originalNameLine = "name: " + $name
       foreach($line in $lines)
       {
-        if($line -eq $originalNameLine)
+        if($line.StartsWith("name: "))
         {
-          $line = "name: $($Script:titleMap.$name) - $name"
+          $line = "name: '$($Script:titleMap.$name) - $name'"
         }
         $finalLines.Add($line)
       }

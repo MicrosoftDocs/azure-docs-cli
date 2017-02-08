@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0 (Preview), Azure CLI 2.0 Reference, Install Azure CLI 2.
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 01/03/2017
+ms.date: 02/03/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -15,7 +15,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0 (Preview)
 
-> Azure CLI 2.0 is in preview and it works only with the resource manager deployment model.
+> Azure CLI 2.0 is in preview and it works only with the Resource Manager deployment model.
 > You can also [install Azure CLI](/azure/xplat-cli-install),
 > which is released and works with all services.
 
@@ -70,15 +70,15 @@ Get Azure 2.0 CLI (Preview) on Windows using pip.
 ## Ubuntu
 
 ### Ubuntu 12.04 LTS
-On a fresh Ubuntu 12.04 VM, install the CLI by executing the following.
-Python 2.7.3 should be already on the machine.
+On a fresh Ubuntu 12.04 VM, install the CLI.
+(Python 2.7.3 should be already on the machine.)
 
 ```
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-> You may see the following warning message during install and execution of `az`.
+> You may see this warning message during install and execution of `az`.
 > ```
 > /usr/local/az/envs/default/local/lib/python2.7/site-packages/pip/pep425tags.py:30: RuntimeWarning: invalid Python installation: unable to open /usr/az/envs/default/lib/python2.7/config/Makefile (No such file or directory)
 >   warnings.warn("{0}".format(e), RuntimeWarning)
@@ -167,7 +167,7 @@ CoreOS doesn't have python installed by default and is not currently supported. 
 
 ## Docker
 
-> Note that our docker images contain the latest code from the master branch.
+> Our docker images contain the latest code from the master branch.
 
 Run 
 ```
@@ -194,16 +194,16 @@ $ curl https://azurecliprod.blob.core.windows.net/install | bash
 ```
 
 
-### Errors on install with cffi or cryptography
+### Errors on install with `cffi` or cryptography
 
-If you get errors on install on **OS X**, upgrade pip by typing:
+If you get errors on install on OS X, upgrade pip.
 
 ```
 pip install --upgrade --force-reinstall pip
 ```
 
 If you get errors on install on **Debian or Ubuntu** such as the examples below,
-install libssl-dev and libffi-dev by typing:
+install `libssl-dev` and `libffi-dev`.
 
 ```
 sudo apt-get update
@@ -259,8 +259,9 @@ Failed building wheel for cryptography
 See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
 
 ## More Samples and Snippets
-For more usage examples, take a look at our [GitHub samples repo](http://github.com/Azure/azure-cli-samples).
+For more usage examples, look at our [GitHub samples repo](http://github.com/Azure/azure-cli-samples).
 
 ## Reporting issues and feedback
-If you encounter any bugs with the tool please file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
+If you encounter any bugs with the tool,
+file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
 To provide feedback from the command line, try the `az feedback` command.
