@@ -1,4 +1,7 @@
 commandList:
+- name: az vm availability-set convert
+  description: Convert an availability set to contain VMs with managed disks.
+  href: availability-set#convert
 - name: az vm availability-set create
   description: Create an availability set.
   href: availability-set#create
@@ -26,34 +29,24 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
-  examples: []
+  htmlId: convert
+  examples:
+  - title: Convert AV Set with unmanaged disks to managed by resource group and name
+    code: vm availability-set convert -g group_name -n av_set_name
+  - title: Convert AV Set with unmanaged disks to managed by Ids
+    code: az vm availability-set convert --ids $(az vm availability-set     list -g group_name --query "[].id" -o tsv)
   parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: True
+    isRequired: False
     summary: Name of the availability set.
     description: ''
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
-    description: ''
-  - name: --location -l
-    isRequired: False
-    summary: Location.
-    description: ''
-  - name: --platform-fault-domain-count
-    isRequired: False
-    summary: Number of Fault Domains.
-    description: ''
-    defaultValue: 3
-  - name: --platform-update-domain-count
-    isRequired: False
-    summary: Number of Update Domains.
-    description: ''
-    defaultValue: 5
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --debug
     isRequired: False
@@ -68,7 +61,84 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_vm_availability-set_convert
+  name: az vm availability-set convert
+  description: ''
+  summary: Convert an availability set to contain VMs with managed disks.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples:
+  - title: Create Availability Set
+    code: az vm availability-set create -n av_set_name -g group_name
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the availability set.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --location -l
+    isRequired: False
+    summary: Location.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: ''
+    description: ''
+  - name: --platform-fault-domain-count
+    isRequired: False
+    summary: ''
+    description: ''
+    defaultValue: 5
+  - name: --platform-update-domain-count
+    isRequired: False
+    summary: ''
+    description: ''
+    defaultValue: 5
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --unmanaged
+    isRequired: False
+    summary: Contained VMs should use unmanaged disks.
+    description: ''
+  - name: --validate
+    isRequired: False
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -90,14 +160,20 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: delete
-  examples: []
+  examples:
+  - title: Delete Availability Set
+    code: az vm availability-set delete -n av_set_name -g group_name
   parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: True
+    isRequired: False
     summary: Name of the availability set.
     description: ''
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -113,7 +189,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -135,7 +211,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list
-  examples: []
+  examples:
+  - title: List Availability Sets in Resource Group
+    code: az vm availability-set list -g group_name
   parameters:
   - name: --resource-group -g
     isRequired: True
@@ -154,7 +232,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -176,14 +254,20 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-sizes
-  examples: []
+  examples:
+  - title: List VM sizes for an Availability Set
+    code: az vm availability-set list-sizes -n av_set_name -g group_name
   parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: True
+    isRequired: False
     summary: Name of the availability set.
     description: ''
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -199,7 +283,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -221,14 +305,20 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: show
-  examples: []
+  examples:
+  - title: Retrieve information about an Availability Set
+    code: az vm availability-set show -n av_set_name -g group_name
   parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --name -n
-    isRequired: True
+    isRequired: False
     summary: Name of the availability set.
     description: ''
   - name: --resource-group -g
-    isRequired: True
+    isRequired: False
     summary: Name of resource group.
     description: ''
   - name: --debug
@@ -244,7 +334,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -266,7 +356,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: update
-  examples: []
+  examples:
+  - title: Update Availability Set
+    code: az vm availability-set update -n av_set_name -g group_name
+  - title: Update Availability Set Tag
+    code: az vm availability-set update -n av_set_name -g group_name --set tags.foo=value
+  - title: Remove Availability Set Tag
+    code: az vm availability-set update -n av_set_name -g group_name --remove tags.foo
   parameters:
   - name: --name -n
     isRequired: True
@@ -301,7 +397,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -323,12 +419,12 @@ children:
   Metadata: {}
 uid: az_vm_availability-set
 name: 'VM availability sets - az vm availability-set'
-description: ''
+description: To provide redundancy to your application, we recommend that you group two or more virtual machines in an availability set. This configuration ensures that during either a planned or unplanned maintenance event, at least one virtual machine will be available and meet the 99.95% Azure SLA.
 summary: Group resources into availability-sets for high-availability requirements.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/26/2017 8:07:26 PM
-  ms.date: 1/26/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/2aa2a7ffa56bb4227b039c8eb22cd143216e6518/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/8/2017 11:04:57 PM
+  ms.date: 2/8/2017

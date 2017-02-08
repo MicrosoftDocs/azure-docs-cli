@@ -21,7 +21,13 @@ source:
 children:
 - commandList: []
   htmlId: list
-  examples: []
+  examples:
+  - title: List unique publishers for extensions
+    code: az vm extension image list --query "[].publisher" -o tsv | sort -u
+  - title: Find extensions with Docker in the name
+    code: az vm extension image list --query "[].name" -o tsv | sort -u | grep Docker
+  - title: List extension names where publisher name starts with "Microsoft.Azure.App"
+    code: az vm extension image list --query     "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher"     -o tsv | sort -u | xargs -I{} az vm extension image list-names --publisher {} -l westus
   parameters:
   - name: --latest
     isRequired: False
@@ -41,7 +47,7 @@ children:
     description: ''
   - name: --version
     isRequired: False
-    summary: Image version.
+    summary: Extension version.
     description: ''
   - name: --debug
     isRequired: False
@@ -56,7 +62,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -78,7 +84,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-names
-  examples: []
+  examples:
+  - title: Find Docker extension by publisher and location
+    code: az vm extension image list-names --publisher Microsoft.Azure.Extensions     -l westus --query "[?starts_with(name, 'Docker')]"
+  - title: Find the CustomScript extension by publisher and location
+    code: az vm extension image list-names --publisher Microsoft.Azure.Extensions     -l westus --query "[?starts_with(name, 'Custom')]"
   parameters:
   - name: --location -l
     isRequired: True
@@ -101,7 +111,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -123,7 +133,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-versions
-  examples: []
+  examples:
+  - title: Find the available versions for the DockerExtension
+    code: az vm extension image list-versions --publisher Microsoft.Azure.Extensions     -l westus -n DockerExtension -otable
   parameters:
   - name: --location -l
     isRequired: True
@@ -131,7 +143,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: True
-    summary: ''
+    summary: Name of the extension.
     description: ''
   - name: --publisher -p
     isRequired: True
@@ -162,7 +174,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -184,7 +196,16 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: show
-  examples: []
+  examples:
+  - title: Show the CustomScript extension version 2.0.2
+    code: az vm extension image show -l westus -n CustomScript   --publisher Microsoft.Azure.Extensions --version 2.0.2
+  - title: Show the latest version of the DockerExtension
+    code: >-
+      publisher=Microsoft.Azure.Extensions
+                              extension=DockerExtension
+                              location=westus
+                              latest=$(az vm extension image list-versions   --publisher ${publisher} -l ${location} -n ${extension}   --query "[].name" -o tsv | sort | tail -n 1)
+                              az vm extension image show -l ${location}   --publisher ${publisher} -n ${extension} --version ${latest}
   parameters:
   - name: --location -l
     isRequired: True
@@ -192,7 +213,7 @@ children:
     description: ''
   - name: --name -n
     isRequired: True
-    summary: ''
+    summary: Name of the extension.
     description: ''
   - name: --publisher -p
     isRequired: True
@@ -200,7 +221,7 @@ children:
     description: ''
   - name: --version
     isRequired: True
-    summary: ''
+    summary: Extension version.
     description: ''
   - name: --debug
     isRequired: False
@@ -215,7 +236,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -243,6 +264,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/26/2017 8:07:26 PM
-  ms.date: 1/26/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/2aa2a7ffa56bb4227b039c8eb22cd143216e6518/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/8/2017 11:04:57 PM
+  ms.date: 2/8/2017

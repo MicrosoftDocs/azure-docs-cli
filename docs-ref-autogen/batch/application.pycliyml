@@ -13,10 +13,10 @@ commandList:
   href: application/package
   isGroup: true
 - name: az batch application package activate
-  description: Activates the specified application package.
+  description: Activates the specified application package. This step is unnecessary if the package has already been successfully activated by the 'create' command.
   href: application/package#activate
 - name: az batch application package create
-  description: Creates an application package record.
+  description: Creates an application package record and attempts to activate it.
   href: application/package#create
 - name: az batch application package delete
   description: Deletes an application package record and its associated binary file.
@@ -25,11 +25,21 @@ commandList:
   description: Gets information about the specified application package.
   href: application/package#show
 - name: az batch application set
-  description: Parameters for an ApplicationOperations.
+  description: Updates the properties of the specified application. Properties that are not specified remain unchanged.
   href: application#set
 - name: az batch application show
   description: Gets information about the specified application.
   href: application#show
+- name: az batch application summary
+  description: Commands to view a summary of your Batch application packages.
+  href: application/summary
+  isGroup: true
+- name: az batch application summary list
+  description: Lists all of the applications available in the specified account.
+  href: application/summary#list
+- name: az batch application summary show
+  description: Gets information about the specified application.
+  href: application/summary#show
 htmlId: application
 examples: []
 source:
@@ -52,11 +62,11 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group.
+    summary: Name of the resource group.
     description: ''
   - name: --allow-updates
     isRequired: False
-    summary: A value indicating whether packages within the application may be overwritten using the same version string.
+    summary: Specify to indicate whether packages within the application may be overwritten using the same version string. True if flag present.
     description: ''
   - name: --display-name
     isRequired: False
@@ -75,7 +85,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -109,7 +119,11 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group.
+    summary: Name of the resource group.
+    description: ''
+  - name: --yes -y
+    isRequired: False
+    summary: Do not prompt for confirmation.
     description: ''
   - name: --debug
     isRequired: False
@@ -124,7 +138,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -154,7 +168,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group.
+    summary: Name of the resource group.
     description: ''
   - name: --maxresults
     isRequired: False
@@ -173,7 +187,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -199,7 +213,7 @@ children:
   parameters:
   - name: --application-id
     isRequired: True
-    summary: ''
+    summary: The ID of the application.
     description: ''
   - name: --name -n
     isRequired: True
@@ -207,11 +221,11 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group.
+    summary: Name of the resource group.
     description: ''
   - name: --allow-updates
     isRequired: False
-    summary: A value indicating whether packages within the application may be overwritten using the same version string.
+    summary: Specify to indicate whether packages within the application may be overwritten using the same version string. Specify either 'true' or 'false' to update the property.
     description: ''
   - name: --default-version
     isRequired: False
@@ -234,7 +248,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -251,8 +265,8 @@ children:
   children: []
   uid: az_batch_application_set
   name: az batch application set
-  description: UpdateApplication request.
-  summary: Parameters for an ApplicationOperations.
+  description: ''
+  summary: Updates the properties of the specified application. Properties that are not specified remain unchanged.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -268,7 +282,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group.
+    summary: Name of the resource group.
     description: ''
   - name: --debug
     isRequired: False
@@ -283,7 +297,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -311,6 +325,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/412f531daa7f3049072ae3b4e4ea48d2efbe1b0a/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-  updated_at: 1/9/2017 6:38:57 PM
-  ms.date: 1/9/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/ba47219ce18e531be1dcc75c68273a8bcf8fd4d1/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  updated_at: 2/7/2017 11:30:31 PM
+  ms.date: 2/7/2017

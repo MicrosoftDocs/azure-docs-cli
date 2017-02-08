@@ -21,6 +21,16 @@ commandList:
 - name: az vmss diagnostics set
   description: Enable diagnostics on a virtual machine scale set.
   href: vmss/diagnostics#set
+- name: az vmss disk
+  description: ''
+  href: vmss/disk
+  isGroup: true
+- name: az vmss disk attach
+  description: ''
+  href: vmss/disk#attach
+- name: az vmss disk detach
+  description: ''
+  href: vmss/disk#detach
 - name: az vmss extension
   description: Extend the functionality of your scale-set with VM extensions.
   href: vmss/extension
@@ -65,6 +75,9 @@ commandList:
 - name: az vmss list-skus
   description: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
   href: vmss#list-skus
+- name: az vmss list_instance_connection_info
+  description: Get IP address and port number used to connect to individual instances.
+  href: vmss#list_instance_connection_info
 - name: az vmss nic
   description: ''
   href: vmss/nic
@@ -113,10 +126,12 @@ children:
 - commandList: []
   htmlId: create
   examples:
-  - title: Windows scaleset with 5 instances, a load balancer and a public IP address
-    code: az vmss create -n myName -g myResourceGroup --admin-password MyPassword123 --instance-count 5 --image Win2012R2Datacenter
-  - title: Linux scaleset with SSH authentication, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network
-    code: az vmss create  -n myName -g myResourceGroup --dns-name-for-public-ip myGloballyUniqueDnsName --load-balancer myLoadBalancer --vnet-name myVNET --subnet mySubnet --image <linux image from 'az vm image list'> --ssh-key-value "<ssh-key-value or ssh-key-file-path>"
+  - title: Windows scaleset with 5 instances, a load balancer, a public IP address and a 2GB data disk
+    code: az vmss create -n my_vmss_name -g myrg --admin-password MyPassword123 --instance-count 5 --image Win2012R2Datacenter --data-disk-sizes-gb 2
+  - title: Linux scaleset with auto-generated ssh key pair under ~/.ssh, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network
+    code: az vmss create -n my_vmss_name -g myrg --dns-name-for-public-ip myGloballyUniqueDnsName --load-balancer myLoadBalancer --vnet-name myVNET --subnet mySubnet --image UbuntuLTS --generate-ssh-keys
+  - title: Scaleset created from custom Linux image using existing ssh public key of ~/.ssh/id_rsa.pub
+    code: az vmss create -n my_vmss_name -g myrg --image my_linuximage_in_myrg
   parameters:
   - name: --image
     isRequired: True
@@ -124,6 +139,7 @@ children:
     description: >-
       URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
                                           Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
+                                          Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/myrg/providers/Microsoft.Compute/images/myImage
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
   - name: --name -n
     isRequired: True
@@ -154,6 +170,11 @@ children:
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
+  - name: --single-placement-group
+    isRequired: False
+    summary: Enable single placement group. This flag will default to True if instance count <=100, and default to False for instance count >100.
+    description: ''
+    parameterValueGroup: false, true
   - name: --tags
     isRequired: False
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -233,7 +254,6 @@ children:
     isRequired: False
     summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
-    defaultValue: 10.0.0.0/24
   - name: --vnet-address-prefix
     isRequired: False
     summary: The IP address prefix to use when creating a new VNet in CIDR format.
@@ -243,11 +263,14 @@ children:
     isRequired: False
     summary: Name of the virtual network when creating a new one or referencing an existing one.
     description: ''
+  - name: --data-disk-sizes-gb
+    isRequired: False
+    summary: Space separated empty managed data disk sizes in GB to create.
+    description: ''
   - name: --os-disk-name
     isRequired: False
     summary: The name of the new VM OS disk.
     description: ''
-    defaultValue: osdiskimage
   - name: --os-type
     isRequired: False
     summary: Type of OS installed on a custom VHD. Do not use when specifiying an URN or URN alias.
@@ -261,15 +284,19 @@ children:
     parameterValueGroup: ReadOnly, ReadWrite
   - name: --storage-container-name
     isRequired: False
-    summary: Name of the storage container for the VM OS disk.
+    summary: Only applicable when use with '--use-unmanaged-disk'. Name of the storage container for the VM OS disk.
     description: ''
     defaultValue: vhds
   - name: --storage-sku
     isRequired: False
-    summary: The storage SKU to use for new storage accounts.
+    summary: The sku of storage account to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. Using with --use-unmanaged-disk, all are available.
     description: ''
     defaultValue: Standard_LRS
     parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
+  - name: --use-unmanaged-disk
+    isRequired: False
+    summary: Do not use managed disk to persist VM.
+    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -283,7 +310,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -332,7 +359,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -358,7 +385,7 @@ children:
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -381,7 +408,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -430,7 +457,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -483,7 +510,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -524,7 +551,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -562,7 +589,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -585,7 +612,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -611,7 +638,7 @@ children:
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -634,7 +661,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -653,6 +680,55 @@ children:
   name: az vmss list-skus
   description: ''
   summary: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
+  Metadata: {}
+- commandList: []
+  htmlId: list_instance_connection_info
+  examples: []
+  parameters:
+  - name: --ids
+    isRequired: False
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: Scale set name.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_vmss_list_instance_connection_info
+  name: az vmss list_instance_connection_info
+  description: ''
+  summary: Get IP address and port number used to connect to individual instances.
   Metadata: {}
 - commandList: []
   htmlId: reimage
@@ -687,7 +763,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -736,7 +812,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -766,7 +842,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -789,7 +865,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -842,7 +918,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -891,7 +967,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -940,7 +1016,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -966,7 +1042,7 @@ children:
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1001,7 +1077,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -1050,7 +1126,7 @@ children:
     summary: Output format.
     description: ''
     defaultValue: json
-    parameterValueGroup: json, jsonc, list, table, tsv
+    parameterValueGroup: json, jsonc, table, tsv
   - name: --query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -1078,6 +1154,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/49343955803819d0fca55be166288d7fc6886c4f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 1/26/2017 8:07:26 PM
-  ms.date: 1/26/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/2aa2a7ffa56bb4227b039c8eb22cd143216e6518/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/8/2017 11:04:57 PM
+  ms.date: 2/8/2017
