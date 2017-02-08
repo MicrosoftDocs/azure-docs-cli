@@ -76,7 +76,7 @@ commandList:
   description: Show the default config file which defines data to be collected.
   href: vm/diagnostics#get-default-config
 - name: az vm diagnostics set
-  description: Enable diagnostics on a virtual machine.
+  description: Configure the Azure VM diagnostics extension.
   href: vm/diagnostics#set
 - name: az vm disk
   description: Manage VM data disks.
@@ -131,19 +131,19 @@ commandList:
   href: vm/image
   isGroup: true
 - name: az vm image list
-  description: Vm image list.
+  description: List the VM images available on the Azure marketplace.
   href: vm/image#list
 - name: az vm image list-offers
-  description: Gets a list of virtual machine image offers for the specified location and publisher.
+  description: List the VM image offers available on the Azure marketplace.
   href: vm/image#list-offers
 - name: az vm image list-publishers
-  description: Gets a list of virtual machine image publishers for the specified Azure location.
+  description: List the VM image publishers available on the Azure marketplace.
   href: vm/image#list-publishers
 - name: az vm image list-skus
-  description: Gets a list of virtual machine image SKUs for the specified location, publisher, and offer.
+  description: List the VM image skus available on the Azure marketplace.
   href: vm/image#list-skus
 - name: az vm image show
-  description: Gets a virtual machine image.
+  description: Show a VM image available on the Azure marketplace.
   href: vm/image#show
 - name: az vm list
   description: List Virtual Machines.
@@ -235,6 +235,12 @@ children:
       az vm deallocate -g my_rg -n my_vm_name
                               az vm generalize -g my_rg -n my_vm_name
                               az vm capture -g my_rg -n my_vm_name --vhd-name-prefix my_prefix
+  - title: Process to deallocate, generalize, and capture multiple stopped virtual machines
+    code: >-
+      vms_ids=$(az vm list -g group_name --query "[].id" -o tsv)
+                              az vm deallocate --ids ${vms_ids}
+                              az vm generalize --ids ${vms_ids}
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
   parameters:
   - name: --vhd-name-prefix
     isRequired: True
@@ -252,7 +258,7 @@ children:
     defaultValue: vhds
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -297,11 +303,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: convert
-  examples: []
+  examples:
+  - title: Convert VM with unmanaged disks to managed by resource group and name
+    code: az vm convert -g group_name -n vm_name
+  - title: Convert VM with unmanaged disks to managed by Ids
+    code: az vm convert --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -562,10 +572,16 @@ children:
       az vm deallocate -g my_rg -n my_vm_name
                               az vm generalize -g my_rg -n my_vm_name
                               az vm capture -g my_rg -n my_vm_name --vhd-name-prefix my_prefix
+  - title: Process to deallocate, generalize, and capture multiple stopped virtual machines
+    code: >-
+      vms_ids=$(az vm list -g group_name --query "[].id" -o tsv)
+                              az vm deallocate --ids ${vms_ids}
+                              az vm generalize --ids ${vms_ids}
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -610,7 +626,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: delete
-  examples: []
+  examples:
+  - title: Delete a virtual machine without prompt for confirmation
+    code: az vm delete -g group_name -n vm_name --force
+  - title: Delete a virtual machine by Ids
+    code: az vm delete --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --yes -y
     isRequired: False
@@ -618,7 +638,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -669,10 +689,16 @@ children:
       az vm deallocate -g my_rg -n my_vm_name
                               az vm generalize -g my_rg -n my_vm_name
                               az vm capture -g my_rg -n my_vm_name --vhd-name-prefix my_prefix
+  - title: Process to deallocate, generalize, and capture multiple stopped virtual machines
+    code: >-
+      vms_ids=$(az vm list -g group_name --query "[].id" -o tsv)
+                              az vm deallocate --ids ${vms_ids}
+                              az vm generalize --ids ${vms_ids}
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -717,11 +743,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: get-instance-view
-  examples: []
+  examples:
+  - title: Get instance view by name and resource group
+    code: az vm get-instance-view -g group_name -n vm_name
+  - title: Get instance view by Ids
+    code: az vm get-instance-view --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -766,7 +796,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list
-  examples: []
+  examples:
+  - title: List all VMs
+    code: az vm list
+  - title: List all VMs by group
+    code: az vm list -g group_name
+  - title: List all VMs by group with details
+    code: az vm list -g group_name -d
   parameters:
   - name: --resource-group -g
     isRequired: False
@@ -811,11 +847,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-ip-addresses
-  examples: []
+  examples:
+  - title: Get IP addresses for a VM
+    code: az vm list-ip-addresses -g group_name -n vm_name
+  - title: Get IP addresses for VMs by Ids
+    code: az vm list-ip-addresses --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -860,7 +900,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-sizes
-  examples: []
+  examples:
+  - title: List available VM sizes in West US
+    code: az vm list-sizes -l westus
   parameters:
   - name: --location -l
     isRequired: True
@@ -901,7 +943,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-usage
-  examples: []
+  examples:
+  - title: Get the compute resource usage for West US
+    code: az vm list-usage -l westus
   parameters:
   - name: --location -l
     isRequired: True
@@ -942,11 +986,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list-vm-resize-options
-  examples: []
+  examples:
+  - title: List all available VM sizes for resizing for a VM by resource group and VM name
+    code: az vm list-vm-resize-options -g group_name -n vm_name
+  - title: List all available VM sizes for resizing by VM Ids
+    code: az vm list-vm-resize-options --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -991,7 +1039,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: open-port
-  examples: []
+  examples:
+  - title: Open all ports on a VM to inbound traffic by resource group and VM name
+    code: az vm open-port -g group_name -n vm_name
+  - title: Open all ports for multiple VMs by Ids
+    code: az vm open-port --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --port
     isRequired: True
@@ -1012,7 +1064,7 @@ children:
     defaultValue: 900
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1052,16 +1104,20 @@ children:
   children: []
   uid: az_vm_open-port
   name: az vm open-port
-  description: The existing NSG will be used or a new one will be created. The rule name is 'open-port-{port}' and will overwrite an existing rule with this name. For multi-NIC VMs, or for more fine grained control, use the appropriate network commands directly (nsg rule create, etc).
+  description: ''
   summary: Opens a VM to inbound traffic on specified ports by adding a security rule to the network security group (NSG) that is attached to the VM's network interface (NIC) or subnet.
   Metadata: {}
 - commandList: []
   htmlId: redeploy
-  examples: []
+  examples:
+  - title: Redeploy VM by resource group and VM name
+    code: az vm redeploy -g group_name -n vm_name
+  - title: Redeploy VMs by VM Ids
+    code: az vm redeploy --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1106,7 +1162,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: resize
-  examples: []
+  examples:
+  - title: Resize VM by resource group and VM name
+    code: az vm resize -g group_name -n vm_name --size Standard_DS3_v2
+  - title: Resize VMs by VM Ids
+    code: az vm redeploy --size Standard_DS3_v2 --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --size
     isRequired: True
@@ -1114,7 +1174,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1159,11 +1219,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: restart
-  examples: []
+  examples:
+  - title: Restart VM by resource group and VM name
+    code: az vm restart -g group_name -n vm_name
+  - title: Restart VM by by VM Ids
+    code: az vm restart --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1208,7 +1272,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: show
-  examples: []
+  examples:
+  - title: Show VM details by resource group and VM name
+    code: az vm show -g group_name -n vm_name -d
+  - title: Show VM details by by VM Ids
+    code: az vm show -d --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --show-details -d
     isRequired: False
@@ -1216,7 +1284,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1261,11 +1329,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: start
-  examples: []
+  examples:
+  - title: Start a stopped VM by resource group and VM name
+    code: az vm start -g group_name -n vm_name
+  - title: Start stopped VMs by by VM Ids
+    code: az vm start --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1310,11 +1382,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: stop
-  examples: []
+  examples:
+  - title: Stop a running VM by resource group and VM name
+    code: az vm stop -g group_name -n vm_name
+  - title: Stop running VMs by by VM Ids
+    code: az vm stop --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1354,7 +1430,7 @@ children:
   children: []
   uid: az_vm_stop
   name: az vm stop
-  description: The virtual machine can be restarted with the same provisioned resources. You are still charged for this virtual machine.
+  description: ''
   summary: The operation to power off (stop) a virtual machine.
   Metadata: {}
 - commandList: []
@@ -1377,7 +1453,7 @@ children:
     description: ''
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1434,11 +1510,15 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: wait
-  examples: []
+  examples:
+  - title: Wait until VM is created
+    code: az vm wait -g group_name -n vm_name --created
+  - title: Wait until VMs are deleted by Ids
+    code: az vm wait --deleted --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
-    summary: One or more resource IDs. If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     isRequired: False
@@ -1519,6 +1599,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/68b1425ef8fc764d85622db99c5c67ff0b0389cb/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/7/2017 12:36:30 AM
-  ms.date: 2/7/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/2aa2a7ffa56bb4227b039c8eb22cd143216e6518/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/8/2017 11:04:57 PM
+  ms.date: 2/8/2017
