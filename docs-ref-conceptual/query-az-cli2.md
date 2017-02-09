@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 ---
 
-## Query with Azure CLI 2.0 (Preview)
+# Query with Azure CLI 2.0 (Preview)
 
 Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
 For example, the following lists the sql endpoints for each Azure cloud.
