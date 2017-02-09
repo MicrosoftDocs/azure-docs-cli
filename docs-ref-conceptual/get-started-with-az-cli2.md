@@ -1,7 +1,7 @@
 ---
-title: Get started with Azure CLI 2.0 (Preview)
-description: Get started with Azure CLI 2.0 (Preview) on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0 (Preview), Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
+title: Get started with Azure CLI 2.0
+description: Get started with Azure CLI 2.0 on Linux, Mac, or Windows.
+keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
 ms.date: 02/18/2017
@@ -11,9 +11,9 @@ ms.technology: azure
 ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 ---
 
-# Get started with Azure CLI 2.0 (Preview)
+# Get started with Azure CLI 2.0
 
-1. [Install Azure CLI 2.0 (Preview)](install-az-cli2.md)
+1. [Install Azure CLI 2.0](install-az-cli2.md)
 on whatever platform you use.
 
 2. To verify the installation, run `az` with no arguments. You should get this output:
@@ -74,7 +74,7 @@ Use the [`--output` parameter](format-output-az-cli2.md) to format the output of
 
 ## Get samples
 
-Get the Azure CLI 2.0 (Preview) samples from the github repository [Azure/azure-cli-samples](https://github.com/Azure/azure-cli-samples).
+Get the Azure CLI 2.0 samples from the github repository [Azure/azure-cli-samples](https://github.com/Azure/azure-cli-samples).
 
 ## Get help
 

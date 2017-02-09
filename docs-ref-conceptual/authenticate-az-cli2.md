@@ -1,7 +1,7 @@
 ---
-title: Log in to Azure CLI 2.0 (Preview)
+title: Log in to Azure CLI 2.0
 description: Get started with Azure 2.0 CLI on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0 (Preview), Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
+keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
 ms.date: 02/18/2017
@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 ---
 
-# Log in to Azure CLI 2.0 (Preview)
+# Log in to Azure CLI 2.0
 
 ## Interactive
 
