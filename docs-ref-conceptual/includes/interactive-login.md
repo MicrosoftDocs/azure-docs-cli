@@ -8,7 +8,7 @@ ms.assetid: 16dae88b-a4b8-4bfd-aa3c-25245a9ad975
     az login
     ```
 
-    You are prompted to open https://aka.ms/devicelogin and enter a code.
+   You get a code to use in the next step. 
 
 1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
     and enter the code to authenticate.

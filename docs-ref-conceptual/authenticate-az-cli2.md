@@ -29,8 +29,10 @@ az login -u <username> -p <password>
 
 ## Service principal
 
-Using a service principal is a little more work,
-but it's a good way to make sure your automated tasks have just the credentials needed.
+Service principals are like user accounts to which you can apply rules using AAD.
+The rules control who can use the service principal and how they can use them.
+Authenticating with a service principal is the best way to secure the usage of your Azure resources
+from your scripts or applications that manipulate resources.
 
 1. If you don't already have one, create a service principal with the appropriate role assignment.
 
