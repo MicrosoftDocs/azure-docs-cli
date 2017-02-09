@@ -19,9 +19,9 @@ Log in interactively.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
-## Command-line
+## Command line
 
-Provide your credentials on the command-line.
+Provide your credentials on the command line.
 
 ```azurecli
 az login -u <username> -p <password>
@@ -38,7 +38,7 @@ but it's a good way to make sure your automated tasks have just the credentials 
     az ad sp create-for-rbac -n "http://my-app" --role contributor
     ```
 
-    The `contributor` role is very broad and may not be the best choice in many cases.
+    The `contributor` role is broad and may not be the best choice in your case.
     You can get a list of available roles to see which is appropriate for your case.
 
     ```azurecli
