@@ -86,7 +86,7 @@ AzureGermanCloud   https://management.core.cloudapi.de:8443/
 
 The column names are lost in this case because they don't exist in our JMESPath query results.
 To get meaningful column names when displaying the results of a JMESPatch query in a table,
-add them to the JMESPath query like this.
+add them to the JMESPath query.
 
 ```azurecli
 az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
