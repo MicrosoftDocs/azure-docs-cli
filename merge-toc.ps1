@@ -37,7 +37,7 @@ function Find-TocTitle
   $rightPos = $line.IndexOf(']');
   if($leftPos -ge 0 -and $rightPos -gt $leftPos)
   {
-    return $line.Substring($leftPos, $rightPos - $leftPos + 1)
+    return $line.Substring($leftPos + 1, $rightPos - $leftPos -1)
   }
   return $null
 }
@@ -50,13 +50,25 @@ function Initialize-TitleMap
   { return }
 
   $titleMappingSrc = Get-Content -Raw -Path $titleMappingFileName | ConvertFrom-Json
-  $titleMappingSrc | Get-Member -MemberType Properties | % { $Script:titleMap[$_.Name] = $titleMappingSrc.$($_.Name) }
+  foreach ($item in $titleMappingSrc.PSObject.Members) {
+
+    $itemKey = $item.Name
+    $TocTitle = $item.PSObject.Properties.Value.TocTitle
+    $PageTitle = $item.PSObject.Properties.Value.PageTitle
+    $newObj = New-Object System.Object
+    $newObj | Add-Member -type NoteProperty -name "TocTitle" -value $TocTitle
+    $newObj | Add-Member -type NoteProperty -name "PageTitle" -value $PageTitle
+
+    $Script:titleMap.Add($itemKey,$newObj)
+  }
 }
 
 function Replace-ContentTitle
 {
   foreach($name in $Script:titleMap.Keys)
   {
+    Write-Host "titleMap Key: " $name
+
     #find pycliyml file
     if($name -eq 'az')
     {
@@ -77,7 +89,10 @@ function Replace-ContentTitle
       {
         if($line.StartsWith("name: "))
         {
-          $line = "name: '$($Script:titleMap.$name) - $name'"
+          #Write-Host "Replacing This Line: " $line
+          $pageTitle = $Script:titleMap.Get_Item($name).PageTitle
+          $line = "name: '$pageTitle - $name'"
+          #Write-Host "With this: " $line
         }
         $finalLines.Add($line)
       }
@@ -93,20 +108,29 @@ function Replace-TocTitle
   if($Script:titleMap.Count -gt 0)
   {
     Write-Host "Start replacing toc title"
-    $tocTitleMap = @{}
-    foreach($name in $Script:titleMap.Keys)
-    {
-      $tocTitleMap["[$name]"] = $Script:titleMap.$name
-    }
+    Write-Host "Lines " + $finalLines.Count
+
     for($index = 0; $index -lt $finalLines.Count; ++$index)
     {
       $line = $finalLines[$index]
       $originalToc = Find-TocTitle $line
+
       if($originalToc -ne $null)
       {
-        if($tocTitleMap.ContainsKey($originalToc))
+        $originalToc = $originalToc.Trim()
+        Write-Host "Original TOC Title '"$originalToc"'"
+        if($Script:titleMap.ContainsKey($originalToc))
         {
-          $finalLines[$index] = $line.Replace($originalToc, $tocTitleMap[$originalToc])
+          $mapItem = $Script:titleMap.Get_Item($originalToc)
+          $tocTitle = $mapItem.TocTitle
+          Write-Host "New Title" $tocTitle
+
+          $line = $line.Replace($originalToc, $tocTitle)
+          $line = $line.TrimEnd(')') + ' "' + $originalToc + '")' 
+
+          Write-Host "With this: " $line
+
+          $finalLines[$index] = $line
         }
       }
     }
@@ -178,7 +202,7 @@ foreach($line in $conceptLines)
 
 Initialize-TitleMap $titleMappingFileName
 Replace-ContentTitle
-#Replace-TocTitle $finalTocLines
+Replace-TocTitle $finalTocLines
 
 $tocFile = [System.IO.Path]::Combine($refDocPath, "TOC.md")
 Set-Content $tocFile $finalTocLines
