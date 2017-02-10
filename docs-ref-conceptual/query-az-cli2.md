@@ -16,8 +16,6 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
 For example, the following lists the sql endpoints for each Azure cloud.
 
-## Get the Azure clouds
-
 ```azurecli
 az cloud list \
   --query [*].[name,endpoints.sqlManagement]
@@ -44,7 +42,11 @@ az cloud list \
 ]
 ```
 
-## Get a web app's host name
+## Get a property of an object
+
+Get the hostname of a specific web app.
+This query also [formats the output](format-output-az-cli2.md) as tab-separated values,
+which makes it well suited to assign to a variable.
 
 ```azurecli
 az appservice web show \
@@ -53,11 +55,14 @@ az appservice web show \
   --query hostNames --out tsv
 ```
 
-## Get the managed disk id for all VMs
+## Get labelled properties
+
+Get then name and mandaged disk ID, again formatted as tab-separated values.
+The query labels the name property "name" and it labels the managed disk id "mdid".
 
 ```azurecli
 az vm list \
-  --query "[].{ name:name, os:storageProfile.osDisk.managedDisk.id }" -o tsv
+  --query "[].{ name:name, mdid:storageProfile.osDisk.managedDisk.id }" -o tsv
 ```
 
 ## Filter with contains
