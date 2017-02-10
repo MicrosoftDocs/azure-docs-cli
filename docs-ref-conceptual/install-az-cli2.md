@@ -15,7 +15,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-> Azure CLI 2.0 is in preview and it works only with the Resource Manager deployment model.
+> Azure CLI 2.0 works with the Resource Manager deployment model.
 > You can also [install Azure CLI](/azure/xplat-cli-install),
 > which is released and works with all services.
 
@@ -37,7 +37,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 ## Windows
 
-Get Azure 2.0 CLI (Preview) on Windows using pip. 
+Get Azure 2.0 CLI on Windows using pip. 
 
 > - You can use [Docker](#docker) to access the CLI without installing Python and pip.
 > - If you're running Ubuntu on Windows, follow the steps for [Ubuntu](#ubuntu).
