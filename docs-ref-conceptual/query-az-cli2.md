@@ -65,7 +65,7 @@ az vm list \
   --query "[].{ name:name, md_id:storageProfile.osDisk.managedDisk.id }" -o tsv
 ```
 
-## Filter with contains
+## Filter with the contains function
 
 Use the JMESPath `contains` function to select objects.
 In this case, select the VMs in a specific resource group.
@@ -84,7 +84,7 @@ az vm list \
 
 ## Filter with grep
 
-Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tsv format
+Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tab-separated values
 and pipe that through grep.
 
 ```azurecli
