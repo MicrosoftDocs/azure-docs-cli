@@ -46,7 +46,7 @@ az cloud list \
 
 Get the hostname of a specific web app.
 This query also [formats the output](format-output-az-cli2.md) as tab-separated values,
-which is usefule when you want to assign the output to a variable in your script.
+which is useful when you want to assign the output to a variable in your script.
 
 ```azurecli
 az appservice web show \
