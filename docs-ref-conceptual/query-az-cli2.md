@@ -84,7 +84,7 @@ az vm list \
 
 ## Filter with grep
 
-Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tsv format
+Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tab-separated values
 and pipe that through grep.
 
 ```azurecli
