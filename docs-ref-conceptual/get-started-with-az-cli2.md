@@ -51,7 +51,7 @@ Now you can run any command that accesses your account.
 ## Create a resource group
 
 ```azurecli
-az resource group create -l westus -n MyRG
+az group create -l westus -n MyRG
 ```
 
 ## Create a VM
