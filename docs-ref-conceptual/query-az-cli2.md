@@ -46,7 +46,7 @@ az cloud list \
 
 Get the hostname of a specific web app.
 This query also [formats the output](format-output-az-cli2.md) as tab-separated values,
-which makes it well suited to assign to a variable.
+which is usefule when you want to assign the output to a variable in your script.
 
 ```azurecli
 az appservice web show \
@@ -55,14 +55,14 @@ az appservice web show \
   --query hostNames --out tsv
 ```
 
-## Get labelled properties
+## Get labeled properties
 
-Get then name and mandaged disk ID, again formatted as tab-separated values.
-The query labels the name property "name" and it labels the managed disk id "mdid".
+Get then name and managed disk ID, again formatted as tab-separated values.
+The query labels the name property "name" and it labels the managed disk id "md_id".
 
 ```azurecli
 az vm list \
-  --query "[].{ name:name, mdid:storageProfile.osDisk.managedDisk.id }" -o tsv
+  --query "[].{ name:name, md_id:storageProfile.osDisk.managedDisk.id }" -o tsv
 ```
 
 ## Filter with contains
