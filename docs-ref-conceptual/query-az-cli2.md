@@ -77,7 +77,7 @@ az vm list \
   --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
 ```
 
-# Filter with grep
+## Filter with grep
 
 Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tsv format
 and pipe that through grep.
@@ -89,7 +89,7 @@ az vm list \
 | grep Linux
 ```
 
-## Explore with JMESPath-terminal
+## Explore with jpterm
 
 You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
 and experiment with your JMESPath query there.
