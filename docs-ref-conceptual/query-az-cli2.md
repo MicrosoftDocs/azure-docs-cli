@@ -65,7 +65,7 @@ az vm list \
   --query "[].{ name:name, md_id:storageProfile.osDisk.managedDisk.id }" -o tsv
 ```
 
-## Filter with contains
+## Filter with the contains function
 
 Use the JMESPath `contains` function to select objects.
 In this case, select the VMs in a specific resource group.
