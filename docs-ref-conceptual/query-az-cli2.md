@@ -17,7 +17,8 @@ Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) o
 For example, the following lists the sql endpoints for each Azure cloud.
 
 ```azurecli
-az cloud list --query [*].[name,endpoints.sqlManagement]
+az cloud list \
+  --query [*].[name,endpoints.sqlManagement]
 ```
 
 ```json
@@ -41,7 +42,66 @@ az cloud list --query [*].[name,endpoints.sqlManagement]
 ]
 ```
 
-By default, the results are [JSON](http://json.org).
-You can [specify a different format](format-output-az-cli2.md).
+## Get a property of an object
+
+Get the hostname of a specific web app.
+This query also [formats the output](format-output-az-cli2.md) as tab-separated values,
+which is useful when you want to assign the output to a variable in your script.
+
+```azurecli
+az appservice web show \
+  -g myRg \
+  -n myApp \
+  --query hostNames --out tsv
+```
+
+## Apply a label to properties
+
+Get then name and managed disk ID, again formatted as tab-separated values.
+The query labels the name property "name" and it labels the managed disk id "md_id".
+
+```azurecli
+az vm list \
+  --query "[].{ name:name, md_id:storageProfile.osDisk.managedDisk.id }" -o tsv
+```
+
+## Filter with the contains function
+
+Use the JMESPath `contains` function to select objects.
+In this case, select the VMs in a specific resource group.
+
+```azurecli
+az vm list \
+  --query "[?contains(resourceGroup,'myRg')].{ resource: resourceGroup, name: name }"
+```
+
+In this case, select the VMs that have the vmSize 'Standard_DS1'.
+
+```azurecli
+az vm list \
+  --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
+```
+
+## Filter with grep
+
+Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tab-separated values
+and pipe that through grep.
+
+```azurecli
+az vm list \
+  --query "[].{ name: name, os: storageProfile.osDisk.osType }" \
+  --out tsv  \
+| grep Linux
+```
+
+## Explore with jpterm
+
+You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
+and experiment with your JMESPath query there.
+
+```bash
+pip install jmespath-terminal
+az vm list | jpterm
+```
 
 There is a good tutorial for JMESPath at [JMESPath.org/tutorial](http:/JMESPath.org/tutoriual.html).
