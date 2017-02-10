@@ -47,20 +47,20 @@ az cloud list \
 ## Get a web app's host name
 
 ```azurecli
-az appservice web show 
-  -g myRg 
-  -n myApp 
+az appservice web show \
+  -g myRg \
+  -n myApp \
   --query hostNames --out tsv
 ```
 
 ## Get the managed disk id for all VMs
 
 ```azurecli
-az vm list 
+az vm list \
   --query "[].{ name:name, os:storageProfile.osDisk.managedDisk.id }" -o tsv
 ```
 
-## Filter with contains
+## Filter with `contains`
 
 Use the JMESPath `contains` function to select objects.
 In this case, select the VMs in a specific resource group.
@@ -77,17 +77,7 @@ az vm list \
   --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
 ```
 
-## Explore with JMESPath-terminal
-
-You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
-and experiment with your JMESPath query there.
-
-```bash
-pip install jmespath-terminal
-az vm list | jpterm
-```
-
-# Filter with grep
+## Filter with grep
 
 Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tsv format
 and pipe that through grep.
@@ -97,6 +87,16 @@ az vm list \
   --query "[].{ name: name, os: storageProfile.osDisk.osType }" \
   --out tsv  \
 | grep Linux
+```
+
+## Explore with jpterm
+
+You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
+and experiment with your JMESPath query there.
+
+```bash
+pip install jmespath-terminal
+az vm list | jpterm
 ```
 
 There is a good tutorial for JMESPath at [JMESPath.org/tutorial](http:/JMESPath.org/tutoriual.html).

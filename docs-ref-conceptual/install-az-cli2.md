@@ -21,7 +21,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 ## OS X
 
-1. If you don't have it, install [Python](https://www.python.org/downloads)
+1. If you don't have it, install [Python](https://www.python.org/downloads).
 
 2. Install Azure CLI 2.0.
 
