@@ -16,8 +16,11 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
 For example, the following lists the sql endpoints for each Azure cloud.
 
+## Get the Azure clouds
+
 ```azurecli
-az cloud list --query [*].[name,endpoints.sqlManagement]
+az cloud list \
+  --query [*].[name,endpoints.sqlManagement]
 ```
 
 ```json
@@ -41,7 +44,59 @@ az cloud list --query [*].[name,endpoints.sqlManagement]
 ]
 ```
 
-By default, the results are [JSON](http://json.org).
-You can [specify a different format](format-output-az-cli2.md).
+## Get a web app's host name
+
+```azurecli
+az appservice web show 
+  -g myRg 
+  -n myApp 
+  --query hostNames --out tsv
+```
+
+## Get the managed disk id for all VMs
+
+```azurecli
+az vm list 
+  --query "[].{ name:name, os:storageProfile.osDisk.managedDisk.id }" -o tsv
+```
+
+## Filter with contains
+
+Use the JMESPath `contains` function to select objects.
+In this case, select the VMs in a specific resource group.
+
+```azurecli
+az vm list \
+  --query "[?contains(resourceGroup,'myRg')].{ resource: resourceGroup, name: name }"
+```
+
+In this case, select the VMs that have the vmSize 'Standard_DS1'.
+
+```azurecli
+az vm list \
+  --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
+```
+
+## Explore with JMESPath-terminal
+
+You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
+and experiment with your JMESPath query there.
+
+```bash
+pip install jmespath-terminal
+az vm list | jpterm
+```
+
+# Filter with grep
+
+Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tsv format
+and pipe that through grep.
+
+```azurecli
+az vm list \
+  --query "[].{ name: name, os: storageProfile.osDisk.osType }" \
+  --out tsv  \
+| grep Linux
+```
 
 There is a good tutorial for JMESPath at [JMESPath.org/tutorial](http:/JMESPath.org/tutoriual.html).
