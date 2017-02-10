@@ -55,7 +55,7 @@ az appservice web show \
   --query hostNames --out tsv
 ```
 
-## Get labeled properties
+## Apply a label to properties
 
 Get then name and managed disk ID, again formatted as tab-separated values.
 The query labels the name property "name" and it labels the managed disk id "md_id".
