@@ -1,17 +1,14 @@
 commandList:
-- name: az vm access delete-linux-user
-  description: Remove the user.
-  href: access#delete-linux-user
-- name: az vm access reset-linux-ssh
+- name: az vm user delete
+  description: Remove a user(not supported on Windows VM).
+  href: user#delete
+- name: az vm user reset-ssh
   description: Reset the SSH configuration.
-  href: access#reset-linux-ssh
-- name: az vm access reset-windows-admin
-  description: Update the password.
-  href: access#reset-windows-admin
-- name: az vm access set-linux-user
-  description: Create or update a user credential.
-  href: access#set-linux-user
-htmlId: access
+  href: user#reset-ssh
+- name: az vm user update
+  description: Update or Add(only on Linux VM) users.
+  href: user#update
+htmlId: user
 examples: []
 source:
   remote:
@@ -20,12 +17,12 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: delete-linux-user
+  htmlId: delete
   examples:
   - title: Delete User
-    code: az vm access delete-linux-user -u username -n vm-name -r group_name
+    code: az vm user delete -u username -n vm-name -r group_name
   - title: Delete User by VM Ids
-    code: az az vm access delete-linux-user -u username --ids $(az vm list -g group_name --query "[].id" -o tsv)
+    code: az az vm user delete -u username --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --username -u
     isRequired: True
@@ -71,18 +68,18 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_access_delete-linux-user
-  name: az vm access delete-linux-user
+  uid: az_vm_user_delete
+  name: az vm user delete
   description: Delete a user account without logging into to the VM directly.
-  summary: Remove the user.
+  summary: Remove a user(not supported on Windows VM).
   Metadata: {}
 - commandList: []
-  htmlId: reset-linux-ssh
+  htmlId: reset-ssh
   examples:
   - title: Reset SSH
-    code: az vm access reset-linux-ssh -n vm-name -r group_name
+    code: az vm user reset-ssh -n vm-name -r group_name
   - title: Reset SSH by VM Ids
-    code: az vm access reset-linux-ssh --ids $(az vm list -g group_name --query "[].id" -o tsv)
+    code: az vm user reset-ssh --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -124,79 +121,20 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_access_reset-linux-ssh
-  name: az vm access reset-linux-ssh
+  uid: az_vm_user_reset-ssh
+  name: az vm user reset-ssh
   description: The extension will restart the SSH server, open the SSH port on your VM, and reset the SSH configuration to default values. The user account (name, password or SSH keys) will not be changed.
   summary: Reset the SSH configuration.
   Metadata: {}
 - commandList: []
-  htmlId: reset-windows-admin
+  htmlId: update
   examples:
   - title: Reset Windows Admin
-    code: az vm access reset-windows-admin -u username -p password -n vm-name -g resource_group_name
-  - title: Reset Windows Admin by VM Ids
-    code: az vm access reset-windows-admin -u username -p password --ids $(az vm list -g group_name --query "[].id" -o tsv)
-  parameters:
-  - name: --password -p
-    isRequired: True
-    summary: The user password.
-    description: ''
-  - name: --username -u
-    isRequired: True
-    summary: The user name.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_vm_access_reset-windows-admin
-  name: az vm access reset-windows-admin
-  description: Note, this resets the admin's credentials. You can't add a new admin.
-  summary: Update the password.
-  Metadata: {}
-- commandList: []
-  htmlId: set-linux-user
-  examples:
-  - title: Set Linux User Access
-    code: az vm access set-linux-user -u username --ssh-key-value "$(< ~/.ssh/id_rsa.pub)" -n vm-name -r group_name
-  - title: Set Linux User Access by VM Ids
-    code: az vm access set-linux-user -u username --ssh-key-value "$(< ~/.ssh/id_rsa.pub)" --ids $(az vm list -g group_name --query "[].id" -o tsv)
+    code: az vm user update -u username -p password -n vm-name -g resource_group_name
+  - title: Set Linux User
+    code: az vm user update -u username --ssh-key-value "$(< ~/.ssh/id_rsa.pub)" -n vm-name -r group_name
+  - title: Set Linux User by VM Ids
+    code: az vm user update -u username --ssh-key-value "$(< ~/.ssh/id_rsa.pub)" --ids $(az vm list -g group_name --query "[].id" -o tsv)
   parameters:
   - name: --username -u
     isRequired: True
@@ -208,7 +146,7 @@ children:
     description: ''
   - name: --ssh-key-value
     isRequired: False
-    summary: SSH key file value or key file path.
+    summary: SSH public key file value or public key file path.
     description: ''
   - name: --ids
     isRequired: False
@@ -250,19 +188,19 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_vm_access_set-linux-user
-  name: az vm access set-linux-user
+  uid: az_vm_user_update
+  name: az vm user update
   description: Note, the user will have an admin's privilege.
-  summary: Create or update a user credential.
+  summary: Update or Add(only on Linux VM) users.
   Metadata: {}
-uid: az_vm_access
-name: 'VM user access - az vm access'
+uid: az_vm_user
+name: az vm user
 description: ''
-summary: Manage user access.
+summary: Manage users.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/be6e6279a2df92f648d137dd107a6be2d02d68f9/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/10/2017 10:29:11 PM
-  ms.date: 2/10/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/10bde97e2d231be588b5f4f3436d2b9077935d58/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/13/2017 6:00:38 PM
+  ms.date: 2/13/2017
