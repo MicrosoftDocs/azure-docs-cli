@@ -18,17 +18,28 @@ Azure CLI 2.0 is applicable when you use the Resource Manager [deployment model]
 You can continue to use [Azure CLI](/azure/xplat-cli-install?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
 with either the classic or the Resource Manager deployment model.
 
-Today Azure CLI 2.0 supports these services, with more coming online:
-- Active Directory
-- App Service
+Today Azure CLI 2.0 supports these services:
 - Container Service
-- IoT Hub
-- Key Vault
+- Cloud Service
+- Component
+- Configure
+- Feedback
+- Network
+- Profile
 - Resource Manager
-- Redis Cache
+- Role
 - Storage
 - Virtual Machines
-- Virtual Networks
+
+These services are available in preview:
+- App Service
+- Batch
+- Containers
+- Container Registry
+- DocumentDB
+- IoT Hub
+- Key Vault
+- Sql
 
 > [!Note]
 > If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
