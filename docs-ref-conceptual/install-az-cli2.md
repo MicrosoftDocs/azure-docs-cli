@@ -30,6 +30,7 @@ which is released and works with all services.
     ```
 
     Platform                   | Prerequisites
+    ---------------------------|---------------------------------------------
     OS X                       |
     Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
     Ubuntu                     | libssl-dev libffi-dev python-dev
