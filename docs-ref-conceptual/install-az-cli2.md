@@ -33,7 +33,7 @@ which is released and works with all services.
     ---------------------------|---------------------------------------------
     OS X                       |
     Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
-    Ubuntu                     | libssl-dev libffi-dev python-dev
+    Ubuntu (other)             | libssl-dev libffi-dev python-dev
     Debian 8                   | libssl-dev libffi-dev python-dev build-essential
     Debian 7                   | libssl-dev libffi-dev python-dev
     CentOS                     | gcc ibffi-devel python-devel openssl-devel
