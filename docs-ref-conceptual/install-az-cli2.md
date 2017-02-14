@@ -15,23 +15,40 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-> Azure CLI 2.0 works with the Resource Manager deployment model.
-> You can also [install Azure CLI](/azure/xplat-cli-install),
-> which is released and works with all services.
+Azure CLI 2.0 works with the Resource Manager deployment model.
+You can also [install Azure CLI](/azure/xplat-cli-install),
+which is released and works with all services.
 
-## OS X
+## Bash
 
 1. If you don't have it, install [Python](https://www.python.org/downloads).
 
+2. You may need to install requisites.
+
+    ```bash
+    sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+    ```
+
+    Platform                   | Prerequisites
+    OS X                       |
+    Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
+    Ubuntu                     | libssl-dev libffi-dev python-dev
+    Debian 8                   | libssl-dev libffi-dev python-dev build-essential
+    Debian 7                   | libssl-dev libffi-dev python-dev
+    CentOS                     | gcc ibffi-devel python-devel openssl-devel
+    RedHat                     | gcc libffi-devel python-devel openssl-devel
+    SUSE                       | gcc libffi-devel python-devel openssl-dev
+
+
 2. Install Azure CLI 2.0.
 
-    ```
+    ```bash
     curl -L https://aka.ms/InstallAzureCli | bash
     ```
 
 3. Restart your shell.
 
-    ```
+    ```bash
     exec -l $SHELL
     ```
 
@@ -40,13 +57,13 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 Get Azure 2.0 CLI on Windows using pip. 
 
 > - You can use [Docker](#docker) to access the CLI without installing Python and pip.
-> - If you're running Ubuntu on Windows, follow the steps for [Ubuntu](#ubuntu).
+> - If you're running Ubuntu on Windows, follow the steps for [bash](#bash).
 
 1. If you don't already have Python 2.7, 3.4 or 3.5 installed, install version 3.5.x.
 
     Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for your OS.  
 
-    > We recommend checking the "Add Python 3.5 to PATH" option during install.
+    > Add Python 3.5 to your path during installation.
 
     Check your Python installation from a command prompt.
 
@@ -66,104 +83,6 @@ Get Azure 2.0 CLI on Windows using pip.
     az
     ```
 
-
-## Ubuntu
-
-### Ubuntu 12.04 LTS
-On a fresh Ubuntu 12.04 VM, install the CLI.
-(Python 2.7.3 should be already on the machine.)
-
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-> You may see this warning message during install and execution of `az`.
-> ```
-> /usr/local/az/envs/default/local/lib/python2.7/site-packages/pip/pep425tags.py:30: RuntimeWarning: invalid Python installation: unable to open /usr/az/envs/default/lib/python2.7/config/Makefile (No such file or directory)
->   warnings.warn("{0}".format(e), RuntimeWarning)
-> ```
-> Here's some information that should help you resolve the issue: [https://github.com/pypa/pip/issues/1074](https://github.com/pypa/pip/issues/1074).
-
-### Ubuntu 14.04 LTS and BASH on Windows (Build 14362+)
-Python 2.7.6 should be already on the machine.
-
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-### Ubuntu 15.10
-Python 2.7.10 should be already on the machine.
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-### Ubuntu 16.04 LTS
-Python 2.7.11 should be already on the machine.
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-## Debian
-
-### Debian 7
-Python 2.7.3 should be already on the machine.
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-### Debian 8
-Python 2.7.9 should be already on the machine.
-```
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-## CentOS
-
-### CentOS 6.5 / 6.6 / 6.7
-
-Not supported with the default version of Python (2.6.6) on the machine.  We recommend using [Docker](#docker) to access the CLI on this platform.
-
-### CentOS 7.1 / 7.2
-Python 2.7.5 should be already on the machine.
-```
-sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-## RedHat RHEL
-
-### RedHat RHEL 6.7
-
-Not supported with the default version of Python (2.6.6) on the machine.  We recommend using [Docker](#docker) to access the CLI on this platform.
-
-### RedHat RHEL 7.2
-Python 2.7.5 should be already on the machine.
-```
-sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-## SUSE
-
-### OpenSUSE 13.2
-
-Python 2.7.8 should be already on the machine.
-```
-sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-## CoreOS
-
-### Stable-899.15.0 / Beta-1010.1.0 / Alpha-1010.1.0
-
-CoreOS doesn't have python installed by default and is not currently supported.  We recommend using [Docker](#docker) to access the CLI on this platform.
 
 ## Docker
 
