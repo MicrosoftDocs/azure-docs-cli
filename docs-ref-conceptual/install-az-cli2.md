@@ -56,8 +56,8 @@ which is released and works with all services.
 
 Get Azure 2.0 CLI on Windows using pip. 
 
-> - You can use [Docker](#docker) to access the CLI without installing Python and pip.
-> - If you're running Ubuntu on Windows, follow the steps for [bash](#bash).
+> - If you're running bash on Windows, follow the steps for [bash](#bash).
+> - You can also use [Docker](#docker) to access the CLI without installing Python and pip.
 
 1. If you don't already have Python 2.7, 3.4 or 3.5 installed, install version 3.5.x.
 
