@@ -20,14 +20,8 @@ with either the classic or the Resource Manager deployment model.
 
 Today Azure CLI 2.0 supports these services:
 - Container Service
-- Cloud Service
-- Component
-- Configure
-- Feedback
 - Network
-- Profile
 - Resource Manager
-- Role
 - Storage
 - Virtual Machines
 
@@ -35,10 +29,11 @@ These services are available in preview:
 - App Service
 - Batch
 - Containers
-- Container Registry
 - DocumentDB
 - IoT Hub
 - Key Vault
+- Redis
+- Role
 - SQL
 
 > [!Note]
