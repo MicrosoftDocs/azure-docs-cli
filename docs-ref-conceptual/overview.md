@@ -17,16 +17,16 @@ There is a new CLI for Azure: the Azure CLI 2.0, now available on [GitHub](http:
 Azure CLI 2.0 is applicable when you use the Resource Manager [deployment model](/azure/resource-manager-deployment-model).
 The CLI is generally available for some services and in preview for others.
 
-General availability | Preview
----------------------|--------
-Container Service    | App services
-Network              | Batch
-Resource Manager     | DocumentDB
-Storage              | IoT
-Virtual Machines     | Key Vault
-                     | Redis
-                     | Role
-                     | SQL
+| General availability | Preview      |
+|----------------------|--------------|
+| Container Service    | App services |
+| Network              | Batch        |
+| Resource Manager     | DocumentDB   |
+| Storage              | IoT          |
+| Virtual Machines     | Key Vault    |
+|                      | Redis        |
+|                      | Role         |
+|                      | SQL          |
 
 > [!Note]
 > If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
