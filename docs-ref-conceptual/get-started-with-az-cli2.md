@@ -53,7 +53,7 @@ For automated tasks, consider [logging in using a service principal](authenticat
 
 ## Query the results
 
-Use the `--query` parameter to execute a [JMESPath(http://jmespath.org) query on the results of your `az` command.
+Use the `--query` parameter to execute a JMESPath query on the results of your `az` command.
 Learn more in this article on [query](query-az-cli2.md).
 
 ## Format the output
