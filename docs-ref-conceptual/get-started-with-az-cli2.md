@@ -16,7 +16,7 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 1. [Install Azure CLI 2.0](install-az-cli2.md)
 on whatever platform you use.
 
-2. To verify the installation, run `az` with no arguments. 
+2. To verify the installation, run `az --version`. 
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
