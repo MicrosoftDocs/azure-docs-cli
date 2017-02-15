@@ -39,7 +39,7 @@ These services are available in preview:
 - DocumentDB
 - IoT Hub
 - Key Vault
-- Sql
+- SQL
 
 > [!Note]
 > If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
