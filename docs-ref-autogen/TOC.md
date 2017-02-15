@@ -257,7 +257,7 @@
 ### [az component list-available](component.pycliyml#list-available)
 ### [az component remove](component.pycliyml#remove)
 ### [az component update](component.pycliyml#update)
-## [az configure](index.pycliyml#configure)
+## [configure](index.pycliyml#configure "az configure")
 ## [Container](container.pycliyml "az container")
 ### [Builds](container\build.pycliyml "az container build")
 #### [az container build create](container\build.pycliyml#create)
