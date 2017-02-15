@@ -89,7 +89,7 @@ To get meaningful column names when displaying the results of a JMESPatch query 
 add them to the JMESPath query.
 
 ```azurecli
-az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
+az cloud list --query "[*].{Name:name,SQL:endpoints.sqlManagement}" --output table
 ```
 
 The results have the column headings.
