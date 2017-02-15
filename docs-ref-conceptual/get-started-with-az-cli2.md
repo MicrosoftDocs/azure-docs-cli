@@ -16,9 +16,22 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 1. [Install Azure CLI 2.0](install-az-cli2.md)
 on whatever platform you use.
 
-2. To verify the installation, run `az --version`. 
+1. To verify the installation, run `az --version`. 
 
-[!INCLUDE [interactive_login](includes/interactive-login.md)]
+1. Run the login command.
+
+    ```azurecli
+    az login
+    ```
+
+   You get a code to use in the next step. 
+
+1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+    and enter the code to authenticate.
+
+    You are prompted to log in using your credentials.
+
+1. Log in.
 
 Now you can run any command that accesses your account.
 
