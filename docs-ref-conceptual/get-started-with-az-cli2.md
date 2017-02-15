@@ -58,7 +58,7 @@ Learn more in this article on [query](query-az-cli2.md).
 
 ## Format the output
 
-Use the `--output` parameter to [format the output(format-output-az-cli2.md) of the command.
+Use the `--output` parameter to [format the output](format-output-az-cli2.md) of the command.
 
 ## Get samples
 
