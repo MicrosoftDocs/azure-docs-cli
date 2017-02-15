@@ -15,8 +15,6 @@ ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 
 There is a new CLI for Azure: the Azure CLI 2.0, now available as a beta on [GitHub](http://github.com/azure/azure-cli).
 Azure CLI 2.0 is applicable when you use the Resource Manager [deployment model](/azure/resource-manager-deployment-model).
-You can continue to use [Azure CLI](/azure/xplat-cli-install?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-with either the classic or the Resource Manager deployment model.
 
 Today Azure CLI 2.0 supports these services:
 - Container Service
