@@ -19,34 +19,94 @@ Use the `--output` parameter to format the output of the command into one of the
 ---------|-------------------------------
 `json`   | json string. `json` is the default.
 `jsonc`  | colorized json string.
-`list`   | an easily read list.
 `table`  | table with column headings.
 `tsv`    | tab-separated values.
 
-For example, the following displays the list of Azure clouds in an easy to read list format.
+For example, the following displays the list of Azure clouds in the json format.
 
 ```azurecli
-az cloud list --output list
+az cloud list --output json
 ```
 
-The results are in this form.
-
-```
-Name      : AzureCloud
-Endpoints :
-    Active Directory                   : https://login.microsoftonline.com
-    Active Directory Graph Resource Id : https://graph.windows.net/
-    Active Directory Resource Id       : https://management.core.windows.net/
-    Gallery                            : https://gallery.azure.com/
-    Management                         : https://management.core.windows.net/
-    Resource Manager                   : https://management.azure.com/
-    Sql Management                     : https://management.core.windows.net:8443/
-Suffixes  :
-    Azure Datalake Analytics Catalog And Job Endpoint : azuredatalakeanalytics.net
-    Azure Datalake Store File System Endpoint         : azuredatalakestore.net
-    Keyvault Dns                                      : .vault.azure.net
-    Sql Server Hostname                               : .database.windows.net
-    Storage Endpoint                                  : core.windows.net
+```json
+[
+  {
+    "endpoints": {
+      "activeDirectory": "https://login.microsoftonline.com",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "activeDirectoryResourceId": "https://management.core.windows.net/",
+      "gallery": "https://gallery.azure.com/",
+      "management": "https://management.core.windows.net/",
+      "resourceManager": "https://management.azure.com/",
+      "sqlManagement": "https://management.core.windows.net:8443/"
+    },
+    "name": "AzureCloud",
+    "suffixes": {
+      "azureDatalakeAnalyticsCatalogAndJobEndpoint": "azuredatalakeanalytics.net",
+      "azureDatalakeStoreFileSystemEndpoint": "azuredatalakestore.net",
+      "keyvaultDns": ".vault.azure.net",
+      "sqlServerHostname": ".database.windows.net",
+      "storageEndpoint": "core.windows.net"
+    }
+  },
+  {
+    "endpoints": {
+      "activeDirectory": "https://login.chinacloudapi.cn",
+      "activeDirectoryGraphResourceId": "https://graph.chinacloudapi.cn/",
+      "activeDirectoryResourceId": "https://management.core.chinacloudapi.cn/",
+      "gallery": "https://gallery.chinacloudapi.cn/",
+      "management": "https://management.core.chinacloudapi.cn/",
+      "resourceManager": "https://management.chinacloudapi.cn",
+      "sqlManagement": "https://management.core.chinacloudapi.cn:8443/"
+    },
+    "name": "AzureChinaCloud",
+    "suffixes": {
+      "azureDatalakeAnalyticsCatalogAndJobEndpoint": null,
+      "azureDatalakeStoreFileSystemEndpoint": null,
+      "keyvaultDns": ".vault.azure.cn",
+      "sqlServerHostname": ".database.chinacloudapi.cn",
+      "storageEndpoint": "core.chinacloudapi.cn"
+    }
+  },
+  {
+    "endpoints": {
+      "activeDirectory": "https://login.microsoftonline.com",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "activeDirectoryResourceId": "https://management.core.usgovcloudapi.net/",
+      "gallery": "https://gallery.usgovcloudapi.net/",
+      "management": "https://management.core.usgovcloudapi.net/",
+      "resourceManager": "https://management.usgovcloudapi.net/",
+      "sqlManagement": "https://management.core.usgovcloudapi.net:8443/"
+    },
+    "name": "AzureUSGovernment",
+    "suffixes": {
+      "azureDatalakeAnalyticsCatalogAndJobEndpoint": null,
+      "azureDatalakeStoreFileSystemEndpoint": null,
+      "keyvaultDns": ".vault.usgovcloudapi.net",
+      "sqlServerHostname": ".database.usgovcloudapi.net",
+      "storageEndpoint": "core.usgovcloudapi.net"
+    }
+  },
+  {
+    "endpoints": {
+      "activeDirectory": "https://login.microsoftonline.de",
+      "activeDirectoryGraphResourceId": "https://graph.cloudapi.de/",
+      "activeDirectoryResourceId": "https://management.core.cloudapi.de/",
+      "gallery": "https://gallery.cloudapi.de/",
+      "management": "https://management.core.cloudapi.de/",
+      "resourceManager": "https://management.microsoftazure.de",
+      "sqlManagement": "https://management.core.cloudapi.de:8443/"
+    },
+    "name": "AzureGermanCloud",
+    "suffixes": {
+      "azureDatalakeAnalyticsCatalogAndJobEndpoint": null,
+      "azureDatalakeStoreFileSystemEndpoint": null,
+      "keyvaultDns": ".vault.microsoftazure.de",
+      "sqlServerHostname": ".database.cloudapi.de",
+      "storageEndpoint": "core.cloudapi.de"
+    }
+  }
+]
 ```
 
 When you use table or tsv, nested objects aren't included in the output.
