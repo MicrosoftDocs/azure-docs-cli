@@ -119,6 +119,7 @@
 ##### [az batch account keys list](batch\account\keys.pycliyml#list)
 ##### [az batch account keys renew](batch\account\keys.pycliyml#renew)
 #### [az batch account list](batch\account.pycliyml#list)
+#### [az batch account login](batch\account.pycliyml#login)
 #### [az batch account set](batch\account.pycliyml#set)
 #### [az batch account show](batch\account.pycliyml#show)
 ### [az batch application](batch\application.pycliyml)
