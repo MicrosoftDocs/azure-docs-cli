@@ -1,20 +1,20 @@
 commandList:
-- name: az appservice plan create
-  description: Create an App Service plan.
-  href: plan#create
-- name: az appservice plan delete
-  description: Delete an App Service plan.
-  href: plan#delete
-- name: az appservice plan list
-  description: List App Service plans.
-  href: plan#list
-- name: az appservice plan show
-  description: Get the App Service plans for a resource group or a set of resource groups.
-  href: plan#show
-- name: az appservice plan update
-  description: Update an App Service plan.
-  href: plan#update
-htmlId: plan
+- name: az appservice web config backup create
+  description: Create a backup of a web app.
+  href: backup#create
+- name: az appservice web config backup list
+  description: List all of an app's backups.
+  href: backup#list
+- name: az appservice web config backup restore
+  description: Restore an app from a backup.
+  href: backup#restore
+- name: az appservice web config backup show
+  description: Show a web app's backup schedule.
+  href: backup#show
+- name: az appservice web config backup update
+  description: Configure a new backup schedule.
+  href: backup#update
+htmlId: backup
 examples: []
 source:
   remote:
@@ -26,33 +26,39 @@ children:
   htmlId: create
   examples: []
   parameters:
-  - name: --name -n
+  - name: --container-url
     isRequired: True
-    summary: Name of the new app service plan.
+    summary: URL with SAS token to the blob storage container.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --is-linux
-    isRequired: False
-    summary: Host webapp on Linux worker.
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
     description: ''
-  - name: --location -l
+  - name: --backup-name
     isRequired: False
-    summary: Location.
+    summary: Name of the backup. If unspecified, the backup will be named with the webapp name and a timestamp.
     description: ''
-  - name: --number-of-workers
+  - name: --slot
     isRequired: False
-    summary: Number of workers to be allocated.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
-    defaultValue: 1
-  - name: --sku
+  - name: --db-connection-string
     isRequired: False
-    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1(Premium Small), etc.
+    summary: Connection string for the database in the backup.
     description: ''
-    defaultValue: B1
-    parameterValueGroup: B1, B2, B3, D1, F1, FREE, P1, P2, P3, S1, S2, S3, SHARED
+  - name: --db-name
+    isRequired: False
+    summary: Name of the database in the backup.
+    description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -81,71 +87,26 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_appservice_plan_create
-  name: az appservice plan create
+  uid: az_appservice_web_config_backup_create
+  name: az appservice web config backup create
   description: ''
-  summary: Create an App Service plan.
-  Metadata: {}
-- commandList: []
-  htmlId: delete
-  examples: []
-  parameters:
-  - name: --yes -y
-    isRequired: False
-    summary: Do not prompt for confirmation.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the app service plan.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_appservice_plan_delete
-  name: az appservice plan delete
-  description: ''
-  summary: Delete an App Service plan.
+  summary: Create a backup of a web app.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -175,26 +136,108 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_appservice_plan_list
-  name: az appservice plan list
+  uid: az_appservice_web_config_backup_list
+  name: az appservice web config backup list
   description: ''
-  summary: List App Service plans.
+  summary: List all of an app's backups.
+  Metadata: {}
+- commandList: []
+  htmlId: restore
+  examples: []
+  parameters:
+  - name: --backup-name
+    isRequired: True
+    summary: Name of the backup to restore.
+    description: ''
+  - name: --container-url
+    isRequired: True
+    summary: URL with SAS token to the blob storage container.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --ignore-hostname-conflict
+    isRequired: False
+    summary: Ignores custom hostnames stored in the backup.
+    description: ''
+  - name: --overwrite
+    isRequired: False
+    summary: Overwrite the source webapp, if --target-name is not specified.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --target-name
+    isRequired: False
+    summary: The name to use for the restored webapp. If unspecified, will default to the name that was used when the backup was created.
+    description: ''
+  - name: --db-connection-string
+    isRequired: False
+    summary: Connection string for the database in the backup.
+    description: ''
+  - name: --db-name
+    isRequired: False
+    summary: Name of the database in the backup.
+    description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_appservice_web_config_backup_restore
+  name: az appservice web config backup restore
+  description: ''
+  summary: Restore an app from a backup.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the app service plan.
-    description: ''
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -224,53 +267,57 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_appservice_plan_show
-  name: az appservice plan show
+  uid: az_appservice_web_config_backup_show
+  name: az appservice web config backup show
   description: ''
-  summary: Get the App Service plans for a resource group or a set of resource groups.
+  summary: Show a web app's backup schedule.
   Metadata: {}
 - commandList: []
   htmlId: update
   examples: []
   parameters:
-  - name: --admin-site-name
-    isRequired: False
-    summary: The name of the admin web app.
-    description: ''
-  - name: --number-of-workers
-    isRequired: False
-    summary: Number of workers to be allocated.
-    description: ''
-    defaultValue: 1
-  - name: --sku
-    isRequired: False
-    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1(Premium Small), etc.
-    description: ''
-    parameterValueGroup: B1, B2, B3, D1, F1, FREE, P1, P2, P3, S1, S2, S3, SHARED
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the app service plan.
-    description: ''
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --add
-    isRequired: False
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
     description: ''
-  - name: --remove
+  - name: --container-url
     isRequired: False
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    summary: URL with SAS token to the blob storage container.
     description: ''
-  - name: --set
+  - name: --frequency
     isRequired: False
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    summary: How often to backup. Use a number followed by d or h, e.g. 5d = 5 days, 2h = 2 hours.
     description: ''
+  - name: --retain-one
+    isRequired: False
+    summary: Always keep one backup, regardless of how old it is.
+    description: ''
+    parameterValueGroup: false, true
+  - name: --retention
+    isRequired: False
+    summary: How many days to keep a backup before automatically deleting it. Set to 0 for indefinite retention.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --db-connection-string
+    isRequired: False
+    summary: Connection string for the database in the backup.
+    description: ''
+  - name: --db-name
+    isRequired: False
+    summary: Name of the database in the backup.
+    description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -299,15 +346,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_appservice_plan_update
-  name: az appservice plan update
+  uid: az_appservice_web_config_backup_update
+  name: az appservice web config backup update
   description: ''
-  summary: Update an App Service plan.
+  summary: Configure a new backup schedule.
   Metadata: {}
-uid: az_appservice_plan
-name: 'App Service plans - az appservice plan'
+uid: az_appservice_web_config_backup
+name: az appservice web config backup
 description: ''
-summary: Commands to manage App Service plans.
+summary: ''
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
