@@ -1,24 +1,24 @@
 commandList:
-- name: az network application-gateway frontend-ip create
-  description: Create a new application gateway front-end IP address.
-  href: frontend-ip#create
-- name: az network application-gateway frontend-ip delete
-  description: Delete an application gateway front-end IP address.
-  href: frontend-ip#delete
-- name: az network application-gateway frontend-ip list
-  description: List front-end IP addresses in an application gateway.
-  href: frontend-ip#list
-- name: az network application-gateway frontend-ip show
-  description: Show details of an application gateway front-end IP address.
-  href: frontend-ip#show
-- name: az network application-gateway frontend-ip update
-  description: Update an application gateway front-end IP address.
-  href: frontend-ip#update
-htmlId: frontend-ip
+- name: az appservice web config backup create
+  description: Create a backup of a web app.
+  href: backup#create
+- name: az appservice web config backup list
+  description: List all of an app's backups.
+  href: backup#list
+- name: az appservice web config backup restore
+  description: Restore an app from a backup.
+  href: backup#restore
+- name: az appservice web config backup show
+  description: Show a web app's backup schedule.
+  href: backup#show
+- name: az appservice web config backup update
+  description: Configure a new backup schedule.
+  href: backup#update
+htmlId: backup
 examples: []
 source:
   remote:
-    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+    path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
     branch: master
     repo: https://github.com/Azure/azure-cli.git
 children:
@@ -26,38 +26,39 @@ children:
   htmlId: create
   examples: []
   parameters:
-  - name: --gateway-name
+  - name: --container-url
     isRequired: True
-    summary: The name of the application gateway.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: The name of the frontend IP configuration.
+    summary: URL with SAS token to the blob storage container.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --no-wait
-    isRequired: False
-    summary: Do not wait for the long running operation to finish.
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
     description: ''
-  - name: --private-ip-address
+  - name: --backup-name
     isRequired: False
-    summary: Static private IP address to use.
+    summary: Name of the backup. If unspecified, the backup will be named with the webapp name and a timestamp.
     description: ''
-  - name: --public-ip-address
+  - name: --slot
     isRequired: False
-    summary: The name or ID of the public IP address.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
-  - name: --subnet
+  - name: --db-connection-string
     isRequired: False
-    summary: The name or ID of the subnet.
+    summary: Connection string for the database in the backup.
     description: ''
-  - name: --vnet-name
+  - name: --db-name
     isRequired: False
-    summary: The name of the virtual network corresponding to the subnet.
+    summary: Name of the database in the backup.
     description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -82,79 +83,30 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_frontend-ip_create
-  name: az network application-gateway frontend-ip create
+  uid: az_appservice_web_config_backup_create
+  name: az appservice web config backup create
   description: ''
-  summary: Create a new application gateway front-end IP address.
-  Metadata: {}
-- commandList: []
-  htmlId: delete
-  examples: []
-  parameters:
-  - name: --gateway-name
-    isRequired: True
-    summary: The name of the application gateway.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: The name of the frontend IP configuration.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --no-wait
-    isRequired: False
-    summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_application-gateway_frontend-ip_delete
-  name: az network application-gateway frontend-ip delete
-  description: ''
-  summary: Delete an application gateway front-end IP address.
+  summary: Create a backup of a web app.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
-  - name: --gateway-name
-    isRequired: True
-    summary: The name of the application gateway.
-    description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -180,30 +132,112 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_frontend-ip_list
-  name: az network application-gateway frontend-ip list
+  uid: az_appservice_web_config_backup_list
+  name: az appservice web config backup list
   description: ''
-  summary: List front-end IP addresses in an application gateway.
+  summary: List all of an app's backups.
+  Metadata: {}
+- commandList: []
+  htmlId: restore
+  examples: []
+  parameters:
+  - name: --backup-name
+    isRequired: True
+    summary: Name of the backup to restore.
+    description: ''
+  - name: --container-url
+    isRequired: True
+    summary: URL with SAS token to the blob storage container.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --ignore-hostname-conflict
+    isRequired: False
+    summary: Ignores custom hostnames stored in the backup.
+    description: ''
+  - name: --overwrite
+    isRequired: False
+    summary: Overwrite the source webapp, if --target-name is not specified.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --target-name
+    isRequired: False
+    summary: The name to use for the restored webapp. If unspecified, will default to the name that was used when the backup was created.
+    description: ''
+  - name: --db-connection-string
+    isRequired: False
+    summary: Connection string for the database in the backup.
+    description: ''
+  - name: --db-name
+    isRequired: False
+    summary: Name of the database in the backup.
+    description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_appservice_web_config_backup_restore
+  name: az appservice web config backup restore
+  description: ''
+  summary: Restore an app from a backup.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
-  - name: --gateway-name
-    isRequired: True
-    summary: The name of the application gateway.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: The name of the frontend IP configuration.
-    description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -229,67 +263,61 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_frontend-ip_show
-  name: az network application-gateway frontend-ip show
+  uid: az_appservice_web_config_backup_show
+  name: az appservice web config backup show
   description: ''
-  summary: Show details of an application gateway front-end IP address.
+  summary: Show a web app's backup schedule.
   Metadata: {}
 - commandList: []
   htmlId: update
   examples: []
   parameters:
-  - name: --no-wait
-    isRequired: False
-    summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --private-ip-address
-    isRequired: False
-    summary: Static private IP address to use.
-    description: ''
-  - name: --public-ip-address
-    isRequired: False
-    summary: The name or ID of the public IP address.
-    description: ''
-  - name: --subnet
-    isRequired: False
-    summary: The name or ID of the subnet.
-    description: ''
-  - name: --vnet-name
-    isRequired: False
-    summary: The name of the virtual network corresponding to the subnet.
-    description: ''
-  - name: --gateway-name
-    isRequired: False
-    summary: The name of the application gateway.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the frontend IP configuration.
-    description: ''
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --add
-    isRequired: False
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --webapp-name
+    isRequired: True
+    summary: The name of the webapp.
     description: ''
-  - name: --remove
+  - name: --container-url
     isRequired: False
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    summary: URL with SAS token to the blob storage container.
     description: ''
-  - name: --set
+  - name: --frequency
     isRequired: False
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    summary: How often to backup. Use a number followed by d or h, e.g. 5d = 5 days, 2h = 2 hours.
     description: ''
+  - name: --retain-one
+    isRequired: False
+    summary: Always keep one backup, regardless of how old it is.
+    description: ''
+    parameterValueGroup: false, true
+  - name: --retention
+    isRequired: False
+    summary: How many days to keep a backup before automatically deleting it. Set to 0 for indefinite retention.
+    description: ''
+  - name: --slot
+    isRequired: False
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --db-connection-string
+    isRequired: False
+    summary: Connection string for the database in the backup.
+    description: ''
+  - name: --db-name
+    isRequired: False
+    summary: Name of the database in the backup.
+    description: ''
+  - name: --db-type
+    isRequired: False
+    summary: Type of database in the backup.
+    description: ''
+    parameterValueGroup: LocalMySql, MySql, SqlAzure
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -314,23 +342,23 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_frontend-ip_update
-  name: az network application-gateway frontend-ip update
+  uid: az_appservice_web_config_backup_update
+  name: az appservice web config backup update
   description: ''
-  summary: Update an application gateway front-end IP address.
+  summary: Configure a new backup schedule.
   Metadata: {}
-uid: az_network_application-gateway_frontend-ip
-name: 'Front-end IP addresses - az network application-gateway frontend-ip'
+uid: az_appservice_web_config_backup
+name: az appservice web config backup
 description: ''
-summary: Manage application gateway front-end IP addresses.
+summary: ''
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/d3041f10f66611092f911ee278388a044a8477ca/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 2/16/2017 8:58:55 PM
+  doc_source_url_path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/fff21f80724640e5bb0119c64b90480391a030f9/src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+  updated_at: 2/16/2017 6:26:09 PM
   ms.date: 2/16/2017
