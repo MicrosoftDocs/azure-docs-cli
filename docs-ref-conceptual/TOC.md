@@ -6,8 +6,8 @@
 ## [Query](query-az-cli2.md)
 # Common examples
 ## [Virutal machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
-### [Quick Create a VM with the Azure CLI](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-quick-create?toc=%2fcli%2fazure%2ftoc.json)
-### [Create a VM with the Azure CLI](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm?toc=%2fcli%2fazure%2ftoc.json)
+### [Quick Create a VM](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-quick-create?toc=%2fcli%2fazure%2ftoc.json)
+### [Create a VM](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm?toc=%2fcli%2fazure%2ftoc.json)
 ### [Load balance traffic between highly avaliable VMs](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-nlb?toc=%2fcli%2fazure%2ftoc.json)
 ### [Monitor VMs with Operations Management Suite](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-oms?toc=%2fcli%2fazure%2ftoc.json)
 ### [Secure network traffic network traffic](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-nsg?toc=%2fcli%2fazure%2ftoc.json)
