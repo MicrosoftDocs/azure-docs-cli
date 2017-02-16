@@ -15,9 +15,8 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-Azure CLI 2.0 works with the Resource Manager deployment model.
-You can also [install Azure CLI](/azure/xplat-cli-install),
-which works with all services.
+This is the new version of CLI for Azure -
+improved and updated to provide a more native command line experience in bash for managing Azure resources.
 
 ## Bash
 
