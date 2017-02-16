@@ -4,6 +4,10 @@
 ## [Authenticate](authenticate-az-cli2.md)
 ## [Output formats](format-output-az-cli2.md)
 ## [Query](query-az-cli2.md)
+# Common examples
+## [Virutal machines](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+## [Web apps](https://docs.microsoft.com/en-us/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+## [SQl database](https://review.docs.microsoft.com/en-us/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 # How to
 ## [Create a Linux VM](/azure/virtual-machines/virtual-machines-linux-quick-create-cli?toc=%2fcli%2fazure%2ftoc.json)
 ## [Create a complete Linux environment](/azure/virtual-machines/virtual-machines-linux-create-cli-complete?toc=%2fcli%2fazure%2ftoc.json)
