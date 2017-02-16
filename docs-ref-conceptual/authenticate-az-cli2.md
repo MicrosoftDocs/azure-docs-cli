@@ -23,6 +23,8 @@ Log in interactively.
 
 Provide your credentials on the command line.
 
+> This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
+
 ```azurecli
 az login -u <username> -p <password>
 ```
@@ -57,4 +59,26 @@ from your scripts or applications that manipulate resources.
 
     ```azurecli
     az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
+    ```
+
+    To get your tenant, log in interactively and then get the tenantId from your subscription.
+
+    ```azurecli
+    az login
+    az account show
+    ```
+
+    ```json
+    {
+        "environmentName": "AzureCloud",
+        "id": "********-****-****-****-************",
+        "isDefault": true,
+        "name": "Pay-As-You-Go",
+        "state": "Enabled",
+        "tenantId": "********-****-****-****-************",
+        "user": {
+        "name": "********",
+        "type": "user"
+        }
+    }
     ```
