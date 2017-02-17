@@ -253,7 +253,7 @@
 #### [az batch task stop](batch\task.pycliyml#stop)
 #### [Subtasks](batch\task\subtask.pycliyml "az batch task subtask")
 ##### [az batch task subtask list](batch\task\subtask.pycliyml#list)
-## [Cloud Services](cloud.pycliyml "az cloud")
+## [Cloud management](cloud.pycliyml "az cloud")
 ### [az cloud list](cloud.pycliyml#list)
 ### [az cloud register](cloud.pycliyml#register)
 ### [az cloud set](cloud.pycliyml#set)
