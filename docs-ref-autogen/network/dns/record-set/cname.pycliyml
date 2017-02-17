@@ -1,26 +1,23 @@
 commandList:
-- name: az network dns zone create
-  description: Creates a new DNS zone.
-  href: zone#create
-- name: az network dns zone delete
-  description: Deletes a DNS zone and all associated records.
-  href: zone#delete
-- name: az network dns zone export
-  description: Export a DNS zone as a DNS zone file.
-  href: zone#export
-- name: az network dns zone import
-  description: Create a DNS zone using a DNS zone file.
-  href: zone#import
-- name: az network dns zone list
-  description: List DNS zones in a resource group or subscription.
-  href: zone#list
-- name: az network dns zone show
-  description: Gets DNS zone parameters. Does not show DNS records within the zone.
-  href: zone#show
-- name: az network dns zone update
-  description: Updates DNS zone properties. Does not modify DNS records within the zone.
-  href: zone#update
-htmlId: zone
+- name: az network dns record-set cname create
+  description: Create an empty CNAME record set.
+  href: cname#create
+- name: az network dns record-set cname delete
+  description: Delete a CNAME record set and all records within.
+  href: cname#delete
+- name: az network dns record-set cname list
+  description: List all CNAME record sets in a zone.
+  href: cname#list
+- name: az network dns record-set cname remove-record
+  description: Remove CNAME record from its record set.
+  href: cname#remove-record
+- name: az network dns record-set cname set-record
+  description: Sets the value of the CNAME record.
+  href: cname#set-record
+- name: az network dns record-set cname show
+  description: Show details of CNAME record set.
+  href: cname#show
+htmlId: cname
 examples: []
 source:
   remote:
@@ -34,20 +31,33 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the zone.
+    summary: The name of the record set, relative to the name of the zone.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: The etag of Recordset.
+    description: ''
   - name: --if-none-match
     isRequired: False
-    summary: Create only if there isn't an existing DNS zone matches the given one.
+    summary: Defines the If-None-Match condition. Set to '*' to force Create-If-Not-Exist. Other values will be ignored.
     description: ''
-  - name: --tags
+  - name: --metadata
     isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
+  - name: --ttl
+    isRequired: False
+    summary: ''
+    description: ''
+    defaultValue: 3600
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -76,10 +86,10 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_dns_zone_create
-  name: az network dns zone create
+  uid: az_network_dns_record-set_cname_create
+  name: az network dns record-set cname create
   description: ''
-  summary: Creates a new DNS zone.
+  summary: Create an empty CNAME record set.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -87,11 +97,15 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the zone.
+    summary: The name of the record set, relative to the name of the zone.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
     description: ''
   - name: --if-match
     isRequired: False
@@ -101,10 +115,6 @@ children:
     isRequired: False
     summary: Defines the If-None-Match condition. The delete operation will be performed only if the ETag of the zone on the server does not match this value.
     description: ''
-  - name: --yes -y
-    isRequired: False
-    summary: Do not prompt for confirmation.
-    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -133,112 +143,22 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_dns_zone_delete
-  name: az network dns zone delete
-  description: 'WARNING: This operation cannot be undone.'
-  summary: Deletes a DNS zone and all associated records.
-  Metadata: {}
-- commandList: []
-  htmlId: export
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: True
-    summary: The name of the zone.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_dns_zone_export
-  name: az network dns zone export
+  uid: az_network_dns_record-set_cname_delete
+  name: az network dns record-set cname delete
   description: ''
-  summary: Export a DNS zone as a DNS zone file.
-  Metadata: {}
-- commandList: []
-  htmlId: import
-  examples: []
-  parameters:
-  - name: --file-name -f
-    isRequired: True
-    summary: Path to the DNS zone file to import.
-    description: ''
-  - name: --name -n
-    isRequired: True
-    summary: The name of the zone.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_dns_zone_import
-  name: az network dns zone import
-  description: ''
-  summary: Create a DNS zone using a DNS zone file.
+  summary: Delete a CNAME record set and all records within.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
     description: ''
   - name: --debug
     isRequired: False
@@ -268,10 +188,116 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_dns_zone_list
-  name: az network dns zone list
+  uid: az_network_dns_record-set_cname_list
+  name: az network dns record-set cname list
   description: ''
-  summary: List DNS zones in a resource group or subscription.
+  summary: List all CNAME record sets in a zone.
+  Metadata: {}
+- commandList: []
+  htmlId: remove-record
+  examples: []
+  parameters:
+  - name: --cname -c
+    isRequired: True
+    summary: Canonical name.
+    description: ''
+  - name: --record-set-name -n
+    isRequired: True
+    summary: The name of the record set relative to the zone.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_network_dns_record-set_cname_remove-record
+  name: az network dns record-set cname remove-record
+  description: ''
+  summary: Remove CNAME record from its record set.
+  Metadata: {}
+- commandList: []
+  htmlId: set-record
+  examples: []
+  parameters:
+  - name: --cname -c
+    isRequired: True
+    summary: Canonical name.
+    description: ''
+  - name: --record-set-name -n
+    isRequired: True
+    summary: The name of the record set relative to the zone. Creates a new record set if one does not exist.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_network_dns_record-set_cname_set-record
+  name: az network dns record-set cname set-record
+  description: ''
+  summary: Sets the value of the CNAME record.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -279,11 +305,15 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the zone.
+    summary: The name of the record set, relative to the name of the zone.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --zone-name -z
+    isRequired: True
+    summary: The name of the zone.
     description: ''
   - name: --debug
     isRequired: False
@@ -313,76 +343,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_dns_zone_show
-  name: az network dns zone show
+  uid: az_network_dns_record-set_cname_show
+  name: az network dns record-set cname show
   description: ''
-  summary: Gets DNS zone parameters. Does not show DNS records within the zone.
+  summary: Show details of CNAME record set.
   Metadata: {}
-- commandList: []
-  htmlId: update
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: True
-    summary: The name of the zone.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --if-match
-    isRequired: False
-    summary: Update only if the resource with the same ETAG exists.
-    description: ''
-  - name: --add
-    isRequired: False
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --remove
-    isRequired: False
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    isRequired: False
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_dns_zone_update
-  name: az network dns zone update
-  description: ''
-  summary: Updates DNS zone properties. Does not modify DNS records within the zone.
-  Metadata: {}
-uid: az_network_dns_zone
-name: 'DNS zones - az network dns zone'
+uid: az_network_dns_record-set_cname
+name: az network dns record-set cname
 description: ''
-summary: Manage DNS zones.
+summary: Manage DNS CNAME records.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
