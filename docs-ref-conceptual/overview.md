@@ -11,13 +11,15 @@ ms.technology: azure
 ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 ---
 
-# Azure CLI 2.0
+# Overview of the Azure CLI 2.0
 
-This is the new version of CLI for Azure -
-improved and updated to provide a more native command line experience in bash for managing Azure resources.
-Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).
-It works with the Resource Manager deployment model and can be used for all management tasks.
-If you use the previous version of the CLI (Azure CLI), you can continue to use it.
+The Azure CLI 2.0 is Azure's new command line experience in Bash for managing Azure resources.  
+Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).  For help with installation please see our [Install article] (install-az-cli2.md).
+
+Azure CLI 2.0 works with the Resource Manager deployment model and can be used for all management tasks.
+
+The table below lists which services are generally available and which are still in preview.  The table will be updated regularly as we make more of our services generally available to customers.
+
 
 | General availability | Preview      |
 |----------------------|--------------|
@@ -30,8 +32,11 @@ If you use the previous version of the CLI (Azure CLI), you can continue to use 
 |                      | Role         |
 |                      | SQL          |
 
-> [!Note]
-> If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
-
 [Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 now.
+
+
+> [!Note]
+> If you use the previous version of the CLI (Azure CLI), you can continue to use it.  If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
+
+
 
