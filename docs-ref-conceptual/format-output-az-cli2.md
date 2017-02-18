@@ -13,7 +13,7 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Azure CLI 2.0 uses .json as its default output option, but offers a variety of ways for you format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
+Azure CLI 2.0 uses .json as its default output option, but offers a variety of ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
 
 --output | Description
 ---------|-------------------------------
