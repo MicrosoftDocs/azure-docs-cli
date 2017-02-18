@@ -13,12 +13,11 @@ ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 
 # Overview of the Azure CLI 2.0
 
-The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows
+The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.  Azure CLI 2.0 works with the Resource Manager deployment model and is optimized for managing and administering Azure resources from the command line as well as building automation scripts.
+
 Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).  For help with installation please see our [Install article] (install-az-cli2.md).
 
-Azure CLI 2.0 works with the Resource Manager deployment model and is optimized for managing and administering Azure resources from the command line as well as building automation scripts.
-
-The table below lists which services are generally available.  We are continually adding new commands and will update the table regularly as we make more of our services generally available to customers.
+We are continually adding new commands to the Azure CLI.  The table below lists those services which are generally available. The table will be udpatedregularly as we make more of our services generally available to customers.
 
 
 | General availability |
