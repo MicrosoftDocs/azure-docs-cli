@@ -4,6 +4,152 @@
 [String] $titleMappingFileName = "titleMapping.json"
 )
 
+
+function Sort-RefLines
+{
+  param($refLines)
+  $parents = new-object system.collections.stack
+  $refToc = @()
+    $TextInfo = (Get-Culture).TextInfo
+
+  $parentItem = $Null
+  $previousItem = $Null
+
+  foreach($line in $refLines)
+  {
+    $tocLine = New-Object System.Object
+    $curLevel = 0
+    $index = 0;
+
+    while($index -lt $line.Length -and $line[$index] -eq '#')
+    {
+      ++$index
+      ++$curLevel
+    }
+
+    $originalTitle = Find-TocTitle $line
+    $originalHref = Find-TocHref $line
+    $unalteredTitle = $originalTitle
+    if ($originalHref -Match '#')
+    {
+    }
+    else {
+        $originalTitle = "zzz" + $originalTitle
+    }
+
+    Write-Host $line -ForegroundColor Red
+    if ($previousItem -ne $Null)
+    {
+      if ($previousItem.Level -eq $curLevel)
+      {
+        #no change to parent item
+        #$parentItem = $parentItem
+      }
+      elseif ($previousItem.Level -lt $curLevel) {
+      #  if ## A
+      #  Then ### B
+        $parentItem = $previousItem;
+        $parents.Push($parentItem);
+      }
+      elseif ($previousItem.Level -gt $curLevel) {
+        
+        # # Ref
+        # ## A
+        # ### B
+        # ## C
+
+        # # Ref
+        # ## A
+        # ## B
+        # ### C
+        # ### D
+        # #### E
+        # ### F
+        # ## G
+
+
+        While($parentItem.Level -ge $curLevel -and $parents.Count -gt 0)
+        {
+            Write-Host "Before Pop: Current Parent " + $parentItem.TocTitle
+            $parentItem = $parents.Pop()
+        }
+
+        if ($parentItem -ne $null)
+        {
+            $parents.Push($parentItem)
+        }
+
+      }
+      $sortKey = $parentItem.SortKey + "." + $originalTitle
+
+    }
+    else
+    {
+        #No Parent
+      $sortKey = $originalTitle
+    }
+
+    $tocLine | Add-Member -type NoteProperty -name SortKey -value $sortKey
+
+
+    $tocLine | Add-Member -type NoteProperty -name Level -value $curLevel
+    $tocLine | Add-Member -type NoteProperty -name TocTitle -value $originalTitle
+    $tocLine | Add-Member -type NoteProperty -name OriginalTitle -value $unalteredTitle
+
+    if($Script:titleMap.ContainsKey($unalteredTitle))
+    {
+        $mapItem = $Script:titleMap.Get_Item($unalteredTitle)
+        $tocTitle = $mapItem.TocTitle
+
+        $line = $line.Replace($unalteredTitle, $tocTitle)
+        $line = $line.TrimEnd(')') + ' "' + $unalteredTitle + '")' 
+    }
+    else {
+        $parentText = "az"
+
+        if ($parentItem -ne $Null -and $parentItem.OriginalTitle -ne 'Reference')
+        {
+            $parentText = $parentItem.OriginalTitle
+        }
+
+        #nothing in the mapping, should do *default* replace
+        if ($parentText -ne $Null -and $unalteredTitle -match $parentText)
+        {
+            $newTitle = $unalteredTitle -replace $parentText,''
+            $newTitle = $newTitle.Trim()
+
+            $newTitle = $TextInfo.ToTitleCase($newTitle)
+
+            $line = $line.Replace($unalteredTitle, $newTitle)
+            $line = $line.TrimEnd(')') + ' "' + $unalteredTitle + '")' 
+        }
+    }
+
+    $tocLine | Add-Member -type NoteProperty -name OriginalLine -value $line
+
+    $refToc += $tocLine
+
+    $previousItem = $tocLine
+  }
+
+
+  $refToc = $refToc | Sort-Object -Property SortKey
+
+
+  [System.Collections.Generic.List[System.String]] $finalLines
+
+  foreach ($item in $refToc) {
+    $finalLines.Add($item.OriginalLine)
+    Write-Host $item.OriginalLine -ForegroundColor Yellow
+  }
+
+  $refLines.Clear()
+  $refLines.AddRange($finalLines)
+
+  Write-Host "Finishing sort of TOC"
+}
+
+
 function Insert-RefTOC
 {
   param([System.Collections.Generic.List[System.String]] $finalLines,
@@ -12,6 +158,18 @@ function Insert-RefTOC
         [String] $prefix)
 
   $refLines = Get-Content $refTocFile
+
+  $refLineColl = New-Object System.Collections.Generic.List[System.String]
+
+  foreach($line in $refLines)
+  {
+    $refLineColl.Add($line)
+  }
+
+  Sort-RefLines $refLineColl
+
+  $refLines = $refLineColl.ToArray()
+
   $firstLine = $true
   foreach($line in $refLines)
   {
@@ -41,6 +199,24 @@ function Find-TocTitle
   }
   return $null
 }
+
+function Find-TocHref
+{
+  param([String] $line)
+
+  if([String]::IsNullOrWhiteSpace($line))
+  {
+    return $null
+  }
+  $leftPos = $line.IndexOf('(');
+  $rightPos = $line.IndexOf(')');
+  if($leftPos -ge 0 -and $rightPos -gt $leftPos)
+  {
+    return $line.Substring($leftPos + 1, $rightPos - $leftPos -1)
+  }
+  return $null
+}
+
 
 function Initialize-TitleMap
 {
@@ -101,43 +277,6 @@ function Replace-ContentTitle
   }
 }
 
-function Replace-TocTitle
-{
-  param([System.Collections.Generic.List[System.String]] $finalLines)
-
-  if($Script:titleMap.Count -gt 0)
-  {
-    Write-Host "Start replacing toc title"
-    Write-Host "Lines " + $finalLines.Count
-
-    for($index = 0; $index -lt $finalLines.Count; ++$index)
-    {
-      $line = $finalLines[$index]
-      $originalToc = Find-TocTitle $line
-
-      if($originalToc -ne $null)
-      {
-        $originalToc = $originalToc.Trim()
-        Write-Host "Original TOC Title '"$originalToc"'"
-        if($Script:titleMap.ContainsKey($originalToc))
-        {
-          $mapItem = $Script:titleMap.Get_Item($originalToc)
-          $tocTitle = $mapItem.TocTitle
-          Write-Host "New Title" $tocTitle
-
-          $line = $line.Replace($originalToc, $tocTitle)
-          $line = $line.TrimEnd(')') + ' "' + $originalToc + '")' 
-
-          Write-Host "With this: " $line
-
-          $finalLines[$index] = $line
-        }
-      }
-    }
-  }
-  Write-Host "Finishing replacing toc title"
-}
-
 Write-Host "Start merging TOC in folder: $refDocPath and $conceptDocPath"
 
 $conceptTocFile = [System.IO.Path]::Combine($conceptDocPath, "TOC.md")
@@ -149,7 +288,6 @@ if(-not (Test-Path $conceptTocFile))
 
 $conceptLines = Get-Content $conceptTocFile
 $refTocFile = [System.IO.Path]::Combine($refDocPath, "refTOC.md")
-$titleMap = @{}
 $finalTocLines = New-Object System.Collections.Generic.List[System.String]
 $includeRefDoc = $false
 $level = 0
@@ -183,6 +321,10 @@ foreach($line in $conceptLines)
     exit(1)
   }
 
+  $titleMap = @{}
+  Initialize-TitleMap $titleMappingFileName
+
+
   $level = $curLevel
   if($line.IndexOf("refTOC.md", [System.StringComparison]::OrdinalIgnoreCase) -ge 0)
   {
@@ -200,9 +342,7 @@ foreach($line in $conceptLines)
   }
 }
 
-Initialize-TitleMap $titleMappingFileName
 Replace-ContentTitle
-Replace-TocTitle $finalTocLines
 
 $tocFile = [System.IO.Path]::Combine($refDocPath, "TOC.md")
 Set-Content $tocFile $finalTocLines
