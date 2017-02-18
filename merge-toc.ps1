@@ -4,64 +4,6 @@
 [String] $titleMappingFileName = "titleMapping.json"
 )
 
-function Replace-TocTitle
-{
-  param($finalLines)
-
-  if($Script:titleMap.Count -gt 0)
-  {
-    Write-Host "Start replacing toc title"
-    Write-Host "Lines " + $finalLines.Count
-
-    $previousItem = $Null
-
-    for($index = 0; $index -lt $finalLines.Count; ++$index)
-    {
-      $line = $finalLines[$index]
-      $originalToc = Find-TocTitle $line
-
-      if($originalToc -ne $null)
-      {
-        $originalToc = $originalToc.Trim()
-        Write-Host "Original TOC Title '"$originalToc"'"
-        if($Script:titleMap.ContainsKey($originalToc))
-        {
-          $mapItem = $Script:titleMap.Get_Item($originalToc)
-          $tocTitle = $mapItem.TocTitle
-          Write-Host "New Title" $tocTitle
-
-          $line = $line.Replace($originalToc, $tocTitle)
-          $line = $line.TrimEnd(')') + ' "' + $originalToc + '")' 
-
-          Write-Host "With this: " $line
-
-          $finalLines[$index] = $line
-        }
-        else {
-            Write-Host "Nothing In Mapping"
-            Write-Host $previousItem
-            Write-Host $originalToc
-
-            #nothing in the mapping, should do *default* replace
-            if ($previousItem -ne $Null -and $originalToc -match $previousItem)
-            {
-                $newTitle = $originalToc -replace $previousItem,''
-                $newTitle = $newTitle.Trim()
-                $line = $line.Replace($originalToc, $newTitle)
-                $line = $line.TrimEnd(')') + ' "' + $originalToc + '")' 
-                Write-Host "With this: " $line
-                $finalLines[$index] = $line
-            }
-        }
-        $previousItem = $originalToc.Trim()
-      }
-    }
-  }
-  else {
-    Write-Host "No Title Map"
-  }
-  Write-Host "Finishing replacing toc title"
-}
 
 function Sort-RefLines
 {
@@ -161,22 +103,13 @@ function Sort-RefLines
 
         $line = $line.Replace($unalteredTitle, $tocTitle)
         $line = $line.TrimEnd(')') + ' "' + $unalteredTitle + '")' 
-
-        Write-Host "With this: " $line
     }
     else {
-        Write-Host "Nothing In Mapping"
-
         $parentText = "az"
 
         if ($parentItem -ne $Null -and $parentItem.OriginalTitle -ne 'Reference')
         {
             $parentText = $parentItem.OriginalTitle
-        }
-
-        if ($unalteredTitle -match 'feedback')
-        {
-            Write-Host $unalteredTitle
         }
 
         #nothing in the mapping, should do *default* replace
@@ -232,8 +165,6 @@ function Insert-RefTOC
   {
     $refLineColl.Add($line)
   }
-
-
 
   Sort-RefLines $refLineColl
 
