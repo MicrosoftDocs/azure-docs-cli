@@ -13,7 +13,7 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of these forms.
+Azure CLI 2.0 uses .json as its default output option, but offers a variety of ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
 
 --output | Description
 ---------|-------------------------------
@@ -23,7 +23,9 @@ Use the `--output` (or `--out` or `-o`) parameter to format the output of the co
 `tsv`    | tab-separated values.
 `list`   | an easy to read list.
 
-For example, the following displays the list of Azure clouds in an easy to read list format.
+## Using the .json option
+
+The following example displays the list of Azure clouds in the default. json format.
 
 ```azurecli
 az cloud list --output json
@@ -54,16 +56,13 @@ The results are in this form.
   }
 ]
 ```
+## Using the table or tsv option
 
-When you use table or tsv, nested objects aren't included in the output.
-Since the only name-value pair at the top level of the cloud object is the name,
-that's all you get with either `--output table` or `--output tsv`.
+The table or tsv option provides an easy to ready set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above the example will provide only the name-value pair at the top level, which is the Azure cloud name.
 
 ```azurecli
 az cloud list --out table
 ```
-
-Just returns the top-level name-value pairs, which are just the names in this case.
 
 ```
 Name
@@ -74,8 +73,9 @@ AzureUSGovernment
 AzureGermanCloud
 ```
 
-You can use a JMESPath operation to flatten the object.
-If we get the name and the sql endpoint, it looks like this query.
+To get the details retrieved using the `--output json` option but provide a more readable set of output you can use a JMESPath operation to flatten the object.  
+
+Leveraging the above example, if we want the cloud name and the sql endpoint in our ouput we would add the `--query` parameter to the command.
 
 ```azurecli
 az cloud list --query [*].[name,endpoints.sqlManagement] -o table
@@ -90,7 +90,7 @@ AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
 AzureGermanCloud   https://management.core.cloudapi.de:8443/
 ```
 
-The column names are lost in this case because they don't exist in our JMESPath query results.
+The column names are lost in this case because they don't exist in our JMESPath query results. 
 To get meaningful column names when displaying the results of a JMESPatch query in a table,
 add them to the JMESPath query.
 
@@ -98,7 +98,7 @@ add them to the JMESPath query.
 az cloud list --query "[*].{Name:name,SQL:endpoints.sqlManagement}" --output table
 ```
 
-The results have the column headings.
+The results now have the column headings.
 
 ```
 Name               SQL
