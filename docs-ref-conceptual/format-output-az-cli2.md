@@ -21,90 +21,109 @@ Azure CLI 2.0 uses .json as its default output option, but offers a variety of w
 `jsonc`  | colorized json string.
 `table`  | table with column headings.
 `tsv`    | tab-separated values.
-`list`   | an easy to read list.
 
 ## Using the .json option
 
 The following example displays the list of Azure clouds in the default. json format.
 
 ```azurecli
-az cloud list --output json
+az vm list --output json
 ```
 
-The results are in this form.
+The results are in this form (only showing partial output for sake of brevity).
 
 ```json
 [
   {
-    "endpoints": {
-      "activeDirectory": "https://login.microsoftonline.com",
-      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
-      "activeDirectoryResourceId": "https://management.core.windows.net/",
-      "gallery": "https://gallery.azure.com/",
-      "management": "https://management.core.windows.net/",
-      "resourceManager": "https://management.azure.com/",
-      "sqlManagement": "https://management.core.windows.net:8443/"
+    "availabilitySet": null,
+    "diagnosticsProfile": null,
+    "hardwareProfile": {
+      "vmSize": "Standard_DS1"
     },
-    "name": "AzureCloud",
-    "suffixes": {
-      "azureDatalakeAnalyticsCatalogAndJobEndpoint": "azuredatalakeanalytics.net",
-      "azureDatalakeStoreFileSystemEndpoint": "azuredatalakestore.net",
-      "keyvaultDns": ".vault.azure.net",
-      "sqlServerHostname": ".database.windows.net",
-      "storageEndpoint": "core.windows.net"
-    }
+    "id": "/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010",
+    "instanceView": null,
+    "licenseType": null,
+    "location": "westus",
+    "name": "DemoVM010",
+    "networkProfile": {
+      "networkInterfaces": [
+        {
+          "id": "/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/DemoVM010VMNic",
+          "primary": null,
+          "resourceGroup": "demorg1"
+        }
+      ]
+    },
+          ...
+          ...
+          ...
+             "osDisk": {
+        "caching": "ReadWrite",
+        "createOption": "fromImage",
+        "diskSizeGb": null,
+        "encryptionSettings": null,
+        "image": null,
+        "managedDisk": null,
+        "name": "osdiskKBDemo020",
+        "osType": "Linux",
+        "vhd": {
+          "uri": "http://vhdstoragel7jtsfov6vnnu.blob.core.windows.net/vhds/osdiskimage.vhd"
+        }
+      }
+    },
+    "tags": {
+      "displayName": "VirtualMachine"
+    },
+    "type": "Microsoft.Compute/virtualMachines",
+    "vmId": "ed36baa9-9b80-48a8-b4a9-854c7a858ece"
   }
 ]
 ```
+ 
 ## Using the table or tsv option
 
-The table or tsv option provides an easy to ready set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above the example will provide only the name-value pair at the top level, which is the Azure cloud name.
+The table or tsv option provides an easy to ready set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
+
+'tsv' format returns a simple text-based and tab-separated output with no headings and dashes.
 
 ```azurecli
-az cloud list --out table
+az vm list --out table
 ```
 
 ```
-Name
------------------
-AzureCloud
-AzureChinaCloud
-AzureUSGovernment
-AzureGermanCloud
+Name         ResourceGroup    Location
+-----------  ---------------  ----------
+DemoVM010    DEMORG1          westus
+demovm212    DEMORG1          westus
+demovm213    DEMORG1          westus
+KBDemo001VM  RGDEMO001        westus
+KBDemo020    RGDEMO001        westus
 ```
-
-To get the details retrieved using the `--output json` option but provide a more readable set of output you can use a JMESPath operation to flatten the object.  
-
-Leveraging the above example, if we want the cloud name and the sql endpoint in our ouput we would add the `--query` parameter to the command.
 
 ```azurecli
-az cloud list --query [*].[name,endpoints.sqlManagement] -o table
+az vm list --out tsv
 ```
 
 ```
-Column1            Column2
------------------  -----------------------------------------------
-AzureCloud         https://management.core.windows.net:8443/
-AzureChinaCloud    https://management.core.chinacloudapi.cn:8443/
-AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
-AzureGermanCloud   https://management.core.cloudapi.de:8443/
+None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010	None	None	westus	DemoVM010			None	Succeeded	DEMORG1	None			Microsoft.Compute/virtualMachines	cbd56d9b-9340-44bc-a722-25f15b578444
+None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm212	None	None	westus	demovm212			None	Succeeded	DEMORG1	None			Microsoft.Compute/virtualMachines	4bdac85d-c2f7-410f-9907-ca7921d930b4
+None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm213	None	None	westus	demovm213			None	Succeeded	DEMORG1	None			Microsoft.Compute/virtualMachines	2131c664-221a-4b7f-9653-f6d542fbfa34
+None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo001VM	None	None	westus	KBDemo001VM			None	Succeeded	RGDEMO001	None			Microsoft.Compute/virtualMachines	14e74761-c17e-4530-a7be-9e4ff06ea74b
+None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None	None	westus	KBDemo020			None	Succeeded	RGDEMO001	None			Microsoft.Compute/virtualMachinesed36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-The column names are lost in this case because they don't exist in our JMESPath query results. 
-To get meaningful column names when displaying the results of a JMESPatch query in a table,
-add them to the JMESPath query.
+You can use the `--query` to filter and select specific properties, values and flatten nested properties from the json output. For more details on the Query topic, please look at the `Query` article.
+
+Leveraging the above example, if we only want to see the Resource Group and VM Name of all Virtual Machines that are in the Resource Group names starting with "RGD", add the following `--query` parameter to the command.
 
 ```azurecli
-az cloud list --query "[*].{Name:name,SQL:endpoints.sqlManagement}" --output table
+az vm list --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }" -o table
 ```
 
-The results now have the column headings.
+```
+Resource    Name
+----------  -----------
+RGDEMO001   KBDemo001VM
+RGDEMO001   KBDemo020
+```
 
-```
-Name               SQL
------------------  -----------------------------------------------
-AzureCloud         https://management.core.windows.net:8443/
-AzureChinaCloud    https://management.core.chinacloudapi.cn:8443/
-AzureUSGovernment  https://management.core.usgovcloudapi.net:8443/
-AzureGermanCloud   https://management.core.cloudapi.de:8443/
-```
