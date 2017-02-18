@@ -96,6 +96,7 @@ function Sort-RefLines
     $tocLine | Add-Member -type NoteProperty -name TocTitle -value $originalTitle
     $tocLine | Add-Member -type NoteProperty -name OriginalTitle -value $unalteredTitle
 
+
     if($Script:titleMap.ContainsKey($unalteredTitle))
     {
         $mapItem = $Script:titleMap.Get_Item($unalteredTitle)
@@ -135,16 +136,15 @@ function Sort-RefLines
 
   $refToc = $refToc | Sort-Object -Property SortKey
 
-
-  [System.Collections.Generic.List[System.String]] $finalLines
+  $returnLines = New-Object System.Collections.Generic.List[System.String]
 
   foreach ($item in $refToc) {
-    $finalLines.Add($item.OriginalLine)
+    $returnLines.Add($item.OriginalLine)
     Write-Host $item.OriginalLine -ForegroundColor Yellow
   }
 
   $refLines.Clear()
-  $refLines.AddRange($finalLines)
+  $refLines.AddRange($returnLines)
 
   Write-Host "Finishing sort of TOC"
 }
@@ -171,6 +171,7 @@ function Insert-RefTOC
   $refLines = $refLineColl.ToArray()
 
   $firstLine = $true
+
   foreach($line in $refLines)
   {
     if($firstLine)
@@ -288,9 +289,11 @@ if(-not (Test-Path $conceptTocFile))
 
 $conceptLines = Get-Content $conceptTocFile
 $refTocFile = [System.IO.Path]::Combine($refDocPath, "refTOC.md")
+
 $finalTocLines = New-Object System.Collections.Generic.List[System.String]
 $includeRefDoc = $false
 $level = 0
+
 foreach($line in $conceptLines)
 {
   if([System.String]::IsNullOrWhiteSpace($line))
