@@ -13,47 +13,18 @@ ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 
 # Log in to Azure CLI 2.0
 
-## Interactive
+There are several ways to log in and authenticate with the Azure CLI. Our recommended approach is to use service principals. However, you can log in interactively through your browser or using a simple login at the command line.
 
-Log in interactively.
+## Interactive log-in
+
+Log in interactively from your web browser.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
-## Command line
 
-Provide your credentials on the command line.
+## Logging in with a service principal
 
-> This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
-
-```azurecli
-az login -u <username> -p <password>
-```
-
-## Service principal
-
-Service principals are like user accounts to which you can apply rules using AAD.
-The rules control who can use the service principal and how they can use them.
-Authenticating with a service principal is the best way to secure the usage of your Azure resources
-from your scripts or applications that manipulate resources.
-
-1. If you don't already have one, create a service principal with the appropriate role assignment.
-
-    ```azurecli
-    az ad sp create-for-rbac -n "http://my-app" --role contributor
-    ```
-
-    The `contributor` role is broad and may not be the best choice in your case.
-    You can get a list of available roles to see which is appropriate for your case.
-
-    ```azurecli
-    az role definition list --query [*].roleName
-    ```
-
-    You can add role assignments after you create the service principal, too.
-    
-    ```azurecli
-    az role assignment --name <roleName>
-    ```
+Service principals are like user accounts to which you can apply rules using Azure Active Directory.  Authenticating with a service principal is the best way to secure the usage of your Azure resources from either your scripts or applications that manipulate resources.  You define the roles you want your users to have via the `az role` set of commands.  You can learn more and see examples of service principal roles in our [az role reference articles](cli/azure/role.md).
 
 1. Log in with the service principal.
 
@@ -82,3 +53,12 @@ from your scripts or applications that manipulate resources.
         }
     }
     ```
+## Command line
+
+Provide your credentials on the command line.
+
+> This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
+
+```azurecli
+az login -u <username> -p <password>
+```
