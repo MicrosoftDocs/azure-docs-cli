@@ -11,10 +11,13 @@ ms.technology: azure
 ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 ---
 
-# Query with Azure CLI 2.0
+# Using JMESPath queries with Azure CLI 2.0
 
-Use the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.
-For example, the following lists the sql endpoints for each Azure cloud.
+The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
+
+Queries can be run for a variety of different purposes.  We have listed several examples below.  
+
+## Get SQL endpoints for each Azure cloud
 
 ```azurecli
 az cloud list \
@@ -44,8 +47,8 @@ az cloud list \
 
 ## Get a property of an object
 
-Get the hostname of a specific web app.
-This query also [formats the output](format-output-az-cli2.md) as tab-separated values,
+This particular example retrieves the hostname of a specific web app.
+This query also [formats the output](format-output-az-cli2.md) as tab-separated values by using the tsv option
 which is useful when you want to assign the output to a variable in your script.
 
 ```azurecli
@@ -57,7 +60,7 @@ az appservice web show \
 
 ## Apply a label to properties
 
-Get then name and managed disk ID, again formatted as tab-separated values.
+This example retrieves and also adds labels name and managed disk ID, again formatted as tab-separated values.
 The query labels the name property "name" and it labels the managed disk id "md_id".
 
 ```azurecli
@@ -67,15 +70,15 @@ az vm list \
 
 ## Filter with the contains function
 
-Use the JMESPath `contains` function to select objects.
-In this case, select the VMs in a specific resource group.
+You can use the JMESPath `contains` function to refine your results returned in the query.
+In this example the results will limit the VMs returned to those in a specific resource group.
 
 ```azurecli
 az vm list \
   --query "[?contains(resourceGroup,'myRg')].{ resource: resourceGroup, name: name }"
 ```
 
-In this case, select the VMs that have the vmSize 'Standard_DS1'.
+With this example the results will return the VMs that have the vmSize 'Standard_DS1'.
 
 ```azurecli
 az vm list \
@@ -96,7 +99,7 @@ az vm list \
 
 ## Explore with jpterm
 
-You can pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
+You can also pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
 and experiment with your JMESPath query there.
 
 ```bash
@@ -104,4 +107,3 @@ pip install jmespath-terminal
 az vm list | jpterm
 ```
 
-There is a good tutorial for JMESPath at [JMESPath.org/tutorial](http:/JMESPath.org/tutoriual.html).
