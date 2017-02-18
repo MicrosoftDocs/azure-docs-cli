@@ -13,40 +13,46 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Use the `--output` parameter to format the output of the command into one of these forms.
+Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of these forms.
 
 --output | Description
 ---------|-------------------------------
 `json`   | json string. `json` is the default.
 `jsonc`  | colorized json string.
-`list`   | an easily read list.
 `table`  | table with column headings.
 `tsv`    | tab-separated values.
+`list`   | an easy to read list.
 
 For example, the following displays the list of Azure clouds in an easy to read list format.
 
 ```azurecli
-az cloud list --output list
+az cloud list --output json
 ```
 
 The results are in this form.
 
-```
-Name      : AzureCloud
-Endpoints :
-    Active Directory                   : https://login.microsoftonline.com
-    Active Directory Graph Resource Id : https://graph.windows.net/
-    Active Directory Resource Id       : https://management.core.windows.net/
-    Gallery                            : https://gallery.azure.com/
-    Management                         : https://management.core.windows.net/
-    Resource Manager                   : https://management.azure.com/
-    Sql Management                     : https://management.core.windows.net:8443/
-Suffixes  :
-    Azure Datalake Analytics Catalog And Job Endpoint : azuredatalakeanalytics.net
-    Azure Datalake Store File System Endpoint         : azuredatalakestore.net
-    Keyvault Dns                                      : .vault.azure.net
-    Sql Server Hostname                               : .database.windows.net
-    Storage Endpoint                                  : core.windows.net
+```json
+[
+  {
+    "endpoints": {
+      "activeDirectory": "https://login.microsoftonline.com",
+      "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+      "activeDirectoryResourceId": "https://management.core.windows.net/",
+      "gallery": "https://gallery.azure.com/",
+      "management": "https://management.core.windows.net/",
+      "resourceManager": "https://management.azure.com/",
+      "sqlManagement": "https://management.core.windows.net:8443/"
+    },
+    "name": "AzureCloud",
+    "suffixes": {
+      "azureDatalakeAnalyticsCatalogAndJobEndpoint": "azuredatalakeanalytics.net",
+      "azureDatalakeStoreFileSystemEndpoint": "azuredatalakestore.net",
+      "keyvaultDns": ".vault.azure.net",
+      "sqlServerHostname": ".database.windows.net",
+      "storageEndpoint": "core.windows.net"
+    }
+  }
+]
 ```
 
 When you use table or tsv, nested objects aren't included in the output.
@@ -54,7 +60,7 @@ Since the only name-value pair at the top level of the cloud object is the name,
 that's all you get with either `--output table` or `--output tsv`.
 
 ```azurecli
-az cloud list --output table
+az cloud list --out table
 ```
 
 Just returns the top-level name-value pairs, which are just the names in this case.
@@ -72,7 +78,7 @@ You can use a JMESPath operation to flatten the object.
 If we get the name and the sql endpoint, it looks like this query.
 
 ```azurecli
-az cloud list --query [*].[name,endpoints.sqlManagement] --output table
+az cloud list --query [*].[name,endpoints.sqlManagement] -o table
 ```
 
 ```
@@ -89,7 +95,7 @@ To get meaningful column names when displaying the results of a JMESPatch query 
 add them to the JMESPath query.
 
 ```azurecli
-az cloud list --query [*].{Name:name,SQL:endpoints.sqlManagement} --output table
+az cloud list --query "[*].{Name:name,SQL:endpoints.sqlManagement}" --output table
 ```
 
 The results have the column headings.

@@ -1,7 +1,7 @@
 ---
-title: Get started with Azure CLI 2.0 (Preview)
-description: Get started with Azure CLI 2.0 (Preview) on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0 (Preview), Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
+title: Get started with Azure CLI 2.0
+description: Get started with Azure CLI 2.0 on Linux, Mac, or Windows.
+keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
 ms.date: 02/18/2017
@@ -11,40 +11,27 @@ ms.technology: azure
 ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 ---
 
-# Get started with Azure CLI 2.0 (Preview)
+# Get started with Azure CLI 2.0
 
-1. [Install Azure CLI 2.0 (Preview)](install-az-cli2.md)
+1. [Install Azure CLI 2.0](install-az-cli2.md)
 on whatever platform you use.
 
-2. To verify the installation, run `az` with no arguments. You should get this output:
+1. To verify the installation, run `az --version`. 
 
-    ```
-    Welcome to the cool new Azure CLI!
+1. Run the login command.
 
-    Here are the base commands:
-
-        account  : Manages stored and default subscriptions.
-        acs      : Manage Azure container services.
-        ad       : Synchronize on-premises directories and manage Azure Active Directory (AAD)
-                resources.
-        cloud    : Manage the Azure clouds registered.
-        component: Manages and updates Azure CLI components.
-        configure: Interactive experience for setting up the Azure CLI.
-        context  : Manage contexts.
-        feedback : Loving or hating the CLI?  Let us know!
-        login    : Log in to access Azure subscriptions.
-        logout   : Log out to remove accesses to Azure subscriptions.
-        network  : Manages Network resources.
-        provider : Manage resource providers.
-        resource : Generic commands to manage Azure resources.
-        role     : Use role assignments to manage access to your Azure resources.
-        storage  : Durable, highly available, and massively scalable cloud storage.
-        tag      : Manage resource tags.
-        vm       : Provision Linux and Windows virtual machines in minutes.
-        vmss     : Create highly available, auto-scalable Linux or Windows virtual machines.
+    ```azurecli
+    az login
     ```
 
-[!INCLUDE [interactive_login](includes/interactive-login.md)]
+   You get a code to use in the next step. 
+
+1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+    and enter the code to authenticate.
+
+    You are prompted to log in using your credentials.
+
+1. Log in.
 
 Now you can run any command that accesses your account.
 
@@ -66,15 +53,16 @@ For automated tasks, consider [logging in using a service principal](authenticat
 
 ## Query the results
 
-Use the [`--query` parameter](query-az-cli2.md) to execute a [JMESPath query](http://jmespath.org) query on the results of your `az` command.
+Use the `--query` parameter to execute a JMESPath query on the results of your `az` command.
+Learn more in this article on [query](query-az-cli2.md).
 
 ## Format the output
 
-Use the [`--output` parameter](format-output-az-cli2.md) to format the output of the command.
+Use the `--output` parameter to [format the output](format-output-az-cli2.md) of the command.
 
 ## Get samples
 
-Get the Azure CLI 2.0 (Preview) samples from the github repository [Azure/azure-cli-samples](https://github.com/Azure/azure-cli-samples).
+Get the Azure CLI 2.0 samples from the github repository [Azure/azure-cli-samples](https://github.com/Azure/azure-cli-samples).
 
 ## Get help
 

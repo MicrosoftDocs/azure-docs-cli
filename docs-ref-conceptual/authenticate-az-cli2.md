@@ -1,7 +1,7 @@
 ---
-title: Log in to Azure CLI 2.0 (Preview)
+title: Log in to Azure CLI 2.0
 description: Get started with Azure 2.0 CLI on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0 (Preview), Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
+keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
 ms.date: 02/18/2017
@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 ---
 
-# Log in to Azure CLI 2.0 (Preview)
+# Log in to Azure CLI 2.0
 
 ## Interactive
 
@@ -22,6 +22,8 @@ Log in interactively.
 ## Command line
 
 Provide your credentials on the command line.
+
+> This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
 ```azurecli
 az login -u <username> -p <password>
@@ -57,4 +59,26 @@ from your scripts or applications that manipulate resources.
 
     ```azurecli
     az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
+    ```
+
+    To get your tenant, log in interactively and then get the tenantId from your subscription.
+
+    ```azurecli
+    az login
+    az account show
+    ```
+
+    ```json
+    {
+        "environmentName": "AzureCloud",
+        "id": "********-****-****-****-************",
+        "isDefault": true,
+        "name": "Pay-As-You-Go",
+        "state": "Enabled",
+        "tenantId": "********-****-****-****-************",
+        "user": {
+        "name": "********",
+        "type": "user"
+        }
+    }
     ```
