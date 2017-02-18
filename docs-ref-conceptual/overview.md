@@ -27,8 +27,7 @@ We are continually adding new commands to the Azure CLI.  The table below lists 
 | Resource Manager     |
 | Storage              |
 | Virtual Machines     |
-|                      |
-|                      |
+
 
 [Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 now.
 
