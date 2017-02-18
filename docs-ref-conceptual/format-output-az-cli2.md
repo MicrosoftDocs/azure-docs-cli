@@ -25,7 +25,7 @@ Azure CLI 2.0 uses .json as its default output option, but offers a variety of w
 
 ## Using the .json option
 
-The following examples displays the list of Azure clouds in an easy to read list format.
+The following example displays the list of Azure clouds in the default. json format.
 
 ```azurecli
 az cloud list --output json
