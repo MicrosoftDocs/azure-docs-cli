@@ -19,7 +19,11 @@ This is the new version of the Azure CLI - improved and updated to provide a gre
 
 ## macOS Install
 
-NOTE THAT WE NEED INSTALL INSTRUCTIONS FOR MACOS
+Install Azure CLI 2.0 with one curl command.
+
+    ```bash
+    curl -L https://aka.ms/InstallAzureCli | bash
+    ```
 
 ## Windows
 
