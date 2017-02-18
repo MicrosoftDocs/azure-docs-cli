@@ -13,7 +13,7 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Azure CLI 2.0 uses .json as its default output option, but offers a variety of ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
+Azure CLI 2.0 uses json as its default output option, but offers a variety of ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
 
 --output | Description
 ---------|-------------------------------
@@ -22,9 +22,9 @@ Azure CLI 2.0 uses .json as its default output option, but offers a variety of w
 `table`  | table with column headings.
 `tsv`    | tab-separated values.
 
-## Using the .json option
+## Using the json option
 
-The following example displays the list of Azure clouds in the default. json format.
+The following example displays the list of virtual machines in your subscriptions in the default json format.
 
 ```azurecli
 az vm list --output json
@@ -82,7 +82,7 @@ The results are in this form (only showing partial output for sake of brevity).
  
 ## Using the table or tsv option
 
-The table or tsv option provides an easy to ready set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
+The table or tsv option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
 
 'tsv' format returns a simple text-based and tab-separated output with no headings and dashes.
 
