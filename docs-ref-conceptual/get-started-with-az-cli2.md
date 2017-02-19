@@ -40,9 +40,9 @@ Before you can start using the Azure CLI, you must login to your Azure account (
 
 Now you can run any command on the Azure resources and services available to your account.
 
-[!NOTE]If you are using the Azure CLI 2.0 for the first time, you may want to run the `az configure` command to set up your environment as well as other preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. See `output format` article for details. You can also select other defaults according to your preference.
+> [!NOTE] If you are using the Azure CLI 2.0 for the first time, you may want to run the `az configure` command to set up your environment as well as other preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. See `output format` article for details. You can also select other defaults according to your preference.
 
-```output
+```Output
 What default output format would you like?
  [1] json - JSON formatted output that most closely matches API responses
  [2] jsonc - Colored JSON formatted output that most closely matches API responses
@@ -58,7 +58,7 @@ First, use the CLI to get a list of subscriptions for your Azure account. You do
 az account list
 ```
 
-```output
+```Output
 Name                                         CloudName    SubscriptionId                        State     IsDefault
 -------------------------------------------  -----------  ------------------------------------  --------  -----------
 Java-Demos                                   AzureCloud   1c638cf4-608f-4ee6-b680-c329e824c3a8  Enabled
@@ -74,7 +74,7 @@ To select a different subscription as the default, use the `az account set` comm
 az account set --subscription "Kamaljit_Subscription"
 ```
 
-```output
+```Output
 Name                                         CloudName    SubscriptionId                        State     IsDefault
 -------------------------------------------  -----------  ------------------------------------  --------  -----------
 Java-Demos                                   AzureCloud   1c638cf4-608f-4ee6-b680-c329e824c3a8  Enabled
@@ -92,7 +92,7 @@ Now, create a new Resource Group. Resource Groups in Azure provide a way to mana
 az group create -l westus2 -n MyRG
 ```
 
-```output
+```Output
 Location    Name
 ----------  ------
 westus2     MyRG
@@ -106,7 +106,7 @@ Next, create a virtual machine in the Resource Group we just created in the prev
 az vm create -n MyLinuxVM -g MyRG --image UbuntuLTS --size Standard_A2
 ```
 
-```output
+```Output
 Location    MacAddress         PowerState    PrivateIpAddress    PublicIpAddress    ResourceGroup
 ----------  -----------------  ------------  ------------------  -----------------  ---------------
 westus2     00-0D-3A-F7-30-7E  VM running    10.0.0.4            52.175.202.122     MyRG
@@ -208,7 +208,7 @@ You can use the `list` command to list and see the resources you have created in
 az vm list --output table
 ```
 
-```output
+```Output
 Name         ResourceGroup    Location
 -----------  ---------------  ----------
 DemoVM010    DEMORG1          westus
@@ -258,7 +258,7 @@ You can also use the `grep` command (on Mac and Linux) to further parse the outp
 az vm list --output tsv | grep MYRG | cut -f8
 ```
 
-```output
+```Output
 MyLinuxVM
 MyWinVM
 ```
@@ -272,7 +272,7 @@ You can use the `delete` command to delete the resources you no longer need. You
 ```azurecli
 az vm delete -n KBDemo020 -g RGDemo001
 ```
-```output
+```Output
 Are you sure you want to perform this operation? (y/n): y
 EndTime                           Name                                  StartTime                         Status
 --------------------------------  ------------------------------------  --------------------------------  ---------
