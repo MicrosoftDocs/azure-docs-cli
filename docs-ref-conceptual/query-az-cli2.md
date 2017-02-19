@@ -47,7 +47,7 @@ az vm list \
 ```
 
 ```json
-RGName     Name
+RGName     VMName
 ---------  -----------
 DEMORG1    DemoVM010
 DEMORG1    demovm111
@@ -60,9 +60,9 @@ RGDEMO001  KBDemo001VM
 RGDEMO001  KBDemo020
 ```
 
-## Selecting complex embedded properties
+## Selecting complex nested properties
 
-If the property you want to select is embedded deep in the JSON output then you have to supply the full path to that embedded property. The following example shows how to select the VMName and the OS type from the vm list command.
+If the property you want to select is nested deep in the JSON output then you have to supply the full path to that embedded property. The following example shows how to select the VMName and the OS type from the vm list command.
 
 ```azurecli
 az vm list \
@@ -94,7 +94,7 @@ az vm list \
 ```
 
 ```json
-Resource    Name
+Resource    VMName
 ----------  -----------
 RGDEMO001   KBDemo001VM
 RGDEMO001   KBDemo020
@@ -108,7 +108,7 @@ az vm list \
 ```
 
 ```json
-ResourceGroup    Name       VmId                                  Location    ProvisioningState
+ResourceGroup    VMName     VmId                                  Location    ProvisioningState
 ---------------  ---------  ------------------------------------  ----------  -------------------
 DEMORG1          DemoVM010  cbd56d9b-9340-44bc-a722-25f15b578444  westus      Succeeded
 DEMORG1          demovm111  c1c024eb-3837-4075-9117-bfbc212fa7da  westus      Succeeded
