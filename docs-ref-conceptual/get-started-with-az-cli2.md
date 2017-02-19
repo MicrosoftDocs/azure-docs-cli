@@ -294,7 +294,7 @@ Use the `--output` parameter to [format the output](format-output-az-cli2.md) of
 
 ## Get samples
 
-Look at more example command-line scripts at [common examples](common-examples.md).
+To learn more about ways to use the Azure CLI, check out our most common scripts for [Linux Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json), [Web apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json), and [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json).
 
 ## Get help
 
