@@ -19,7 +19,7 @@ Azure CLI 2.0 allows you to manage and administer your Azure resources from the 
 on whatever platform you use.
 
 2. To verify the installation, run `az --version`. 
-You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to `troubleshooting the installation` page for guidance, or post a comment in the discussion at the bottom of the page.
+You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to the "Installation Troubleshooting" section of [Azure CLI 2.0 installation documentation](install-az-cli2.md#) page for guidance, or post a comment in the discussion at the bottom of the page.
 
 Before you can start using the Azure CLI, you must login to your Azure account (with an associated subscription) from the command line. To do this, use the `az login` command. (There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about other Azure login options.)
 
