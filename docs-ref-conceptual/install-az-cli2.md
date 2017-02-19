@@ -15,10 +15,47 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-This is the new version of CLI for Azure -
-improved and updated to provide a more native command line experience in bash for managing Azure resources.
+This is the new version of the Azure CLI - improved and updated to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
 
-## Bash
+## macOS Install
+
+Install Azure CLI 2.0 with one curl command.
+
+    ```bash
+    curl -L https://aka.ms/InstallAzureCli | bash
+    ```
+
+## Windows
+
+Get Azure 2.0 CLI on Windows using pip. 
+
+1. If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend install version 3.5.x.
+
+    Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.  
+
+    > Add Python 3.5 to your path during installation.
+
+    Check your Python installation from a command prompt.
+
+    ```
+    python --version
+    ```
+
+2. Install Azure CLI 2.0 using pip.
+
+    ```
+    pip install azure-cli
+    ```
+
+    Run Azure CLI 2.0 from the command prompt.
+
+    ```
+    az
+    ```
+
+
+
+## Linux Install
 
 1. If you don't have it, install [Python](https://www.python.org/downloads).
 
@@ -52,46 +89,6 @@ improved and updated to provide a more native command line experience in bash fo
     exec -l $SHELL
     ```
 
-## Windows
-
-Get Azure 2.0 CLI on Windows using pip. 
-
-> - If you're running bash on Windows, follow the steps for [bash](#bash).
-> - You can also use [Docker](#docker) to access the CLI without installing Python and pip.
-
-1. If you don't already have Python 2.7, 3.4 or 3.5 installed, install version 3.5.x.
-
-    Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for your OS.  
-
-    > Add Python 3.5 to your path during installation.
-
-    Check your Python installation from a command prompt.
-
-    ```
-    python --version
-    ```
-
-2. Install Azure CLI 2.0 using pip.
-
-    ```
-    pip install azure-cli
-    ```
-
-    Run Azure CLI 2.0 from the command prompt.
-
-    ```
-    az
-    ```
-
-
-## Docker
-
-> Our docker images contain the latest code from the master branch.
-
-Run 
-```
-docker run -it azuresdk/azure-cli-python:latest bash
-```
 
 ## Installation Troubleshooting
 -------------------------------

@@ -11,27 +11,29 @@ ms.technology: azure
 ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 ---
 
-# Azure CLI 2.0
+# Overview of the Azure CLI 2.0
 
-This is the new version of CLI for Azure -
-improved and updated to provide a more native command line experience in bash for managing Azure resources.
-Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).
-It works with the Resource Manager deployment model and can be used for all management tasks.
-If you use the previous version of the CLI (Azure CLI), you can continue to use it.
+The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.  Azure CLI 2.0 works with the Resource Manager deployment model and is optimized for managing and administering Azure resources from the command line as well as building automation scripts.
 
-| General availability | Preview      |
-|----------------------|--------------|
-| Container Service    | App services |
-| Network              | Batch        |
-| Resource Manager     | DocumentDB   |
-| Storage              | IoT          |
-| Virtual Machines     | Key Vault    |
-|                      | Redis        |
-|                      | Role         |
-|                      | SQL          |
+Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).  For help with installation please see our [Install article] (install-az-cli2.md).
 
-> [!Note]
-> If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
+We are continually adding new commands to the Azure CLI.  The table below lists those services which are generally available. The table will be udpatedregularly as we make more of our services generally available to customers.
+
+
+| General availability |
+|----------------------|
+| Container Service    |
+| Networking           |
+| Resource Manager     |
+| Storage              |
+| Virtual Machines     |
+
 
 [Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 now.
+
+
+> [!Note]
+> If you use the previous version of the CLI (Azure CLI), you can continue to use it.  If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
+
+
 
