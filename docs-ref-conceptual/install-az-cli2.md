@@ -19,8 +19,8 @@ This is the new version of the Azure CLI! We've improved and updated it to provi
 
 ## macOS Install
 
-Install Azure CLI 2.0 with one curl command.
-
+Install Azure CLI 2.0 with one `curl` command.
+    
     ```
     curl -L https://aka.ms/InstallAzureCli | bash
     ```
