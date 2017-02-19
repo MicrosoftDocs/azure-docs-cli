@@ -19,9 +19,10 @@ Azure CLI 2.0 allows you to manage and administer your Azure resources from the 
 on whatever platform you use.
 
 2. To verify the installation, run `az --version`. 
-You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to the "Installation Troubleshooting" section of [Azure CLI 2.0 installation documentation](install-az-cli2.md#Installation Troubleshooting) page for guidance, or post a comment in the discussion at the bottom of the page.
 
-Before you can start using the Azure CLI, you must login to your Azure account (with an associated subscription) from the command line. To do this, use the `az login` command. (There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about other Azure login options.)
+  You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error   instead, there was a problem installing the CLI. Go to the "Installation Troubleshooting" section of [Azure CLI 2.0 installation documentation](install-az-cli2.md#Installation Troubleshooting) page for guidance, or post a comment in the discussion at the bottom of the page.
+
+  Before you can start using the Azure CLI, you must login to your Azure account (with an associated subscription) from the command line. To do this, use the `az login` command. (There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about other Azure login options.)
 
 3. Run the login command.
 
@@ -31,14 +32,14 @@ Before you can start using the Azure CLI, you must login to your Azure account (
 
    You get a code to use in the next step. 
 
-3.1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+  1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
     and enter the code to authenticate.
 
     You are prompted to log in using your credentials.
 
-3.2. Log in.
+  2. Log in.
 
-Now you can run any command on the Azure resources and services available to your account.
+    Now you can run any command on the Azure resources and services available to your account.
 
 > [!NOTE] If you are using the Azure CLI 2.0 for the first time, you may want to run the `az configure` command to set up your environment as well as other preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. See `output format` article for details. You can also select other defaults according to your preference.
 
