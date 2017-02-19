@@ -13,59 +13,74 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 
 # Using JMESPath queries with Azure CLI 2.0
 
-The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
+The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
 
 Queries can be run for a variety of different purposes.  We have listed several examples below.  
 
-## Get SQL endpoints for each Azure cloud
-
-```azurecli
-az cloud list \
-  --query [*].[name,endpoints.sqlManagement]
-```
-
-```json
-[
-  [
-    "AzureCloud",
-    "https://management.core.windows.net:8443/"
-  ],
-  [
-    "AzureChinaCloud",
-    "https://management.core.chinacloudapi.cn:8443/"
-  ],
-  [
-    "AzureUSGovernment",
-    "https://management.core.usgovcloudapi.net:8443/"
-  ],
-  [
-    "AzureGermanCloud",
-    "https://management.core.cloudapi.de:8443/"
-  ]
-]
-```
-
-## Get a property of an object
-
-This particular example retrieves the hostname of a specific web app.
-This query also [formats the output](format-output-az-cli2.md) as tab-separated values by using the tsv option
-which is useful when you want to assign the output to a variable in your script.
-
-```azurecli
-az appservice web show \
-  -g myRg \
-  -n myApp \
-  --query hostNames --out tsv
-```
-
-## Apply a label to properties
-
-This example retrieves and also adds labels name and managed disk ID, again formatted as tab-separated values.
-The query labels the name property "name" and it labels the managed disk id "md_id".
+## List resource group and VM names for all virtual machines in your subscription
 
 ```azurecli
 az vm list \
-  --query "[].{ name:name, md_id:storageProfile.osDisk.managedDisk.id }" -o tsv
+  --query [*].[name,resourceGroup]
+```
+
+```json
+Column1    Column2
+---------  -----------
+DEMORG1    DemoVM010
+DEMORG1    demovm111
+DEMORG1    demovm211
+DEMORG1    demovm212
+DEMORG1    demovm213
+DEMORG1    demovm214
+DEMORG1    demovm222
+RGDEMO001  KBDemo001VM
+RGDEMO001  KBDemo020
+```
+
+In the previous example you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or name to the properties you select as well.  In this example we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
+
+
+```azurecli
+az vm list \
+  --query "[].{RGName:resourceGroup, VMName:name}"
+```
+
+```json
+RGName     Name
+---------  -----------
+DEMORG1    DemoVM010
+DEMORG1    demovm111
+DEMORG1    demovm211
+DEMORG1    demovm212
+DEMORG1    demovm213
+DEMORG1    demovm214
+DEMORG1    demovm222
+RGDEMO001  KBDemo001VM
+RGDEMO001  KBDemo020
+```
+
+## Selecting complex embedded properties
+
+If the property you want to select is embedded deep in the JSON output then you have to supply the full path to that embedded property. The following example shows how to select the VMName and the OS type from the vm list command.
+
+```azurecli
+az vm list \
+  --query "[].{VMName:name,OSType:storageProfile.osDisk.osType}"
+```
+
+```json
+VMName       OSType
+-----------  --------
+DemoVM010    Linux
+demovm111    Linux
+demovm211    Linux
+demovm212    Linux
+demovm213    Linux
+demovm214    Linux
+demovm222    Linux
+KBDemo001VM  Linux
+KBDemo020    Linux
 ```
 
 ## Filter with the contains function
@@ -75,7 +90,14 @@ In this example the results will limit the VMs returned to those in a specific r
 
 ```azurecli
 az vm list \
-  --query "[?contains(resourceGroup,'myRg')].{ resource: resourceGroup, name: name }"
+  --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }"
+```
+
+```json
+Resource    Name
+----------  -----------
+RGDEMO001   KBDemo001VM
+RGDEMO001   KBDemo020
 ```
 
 With this example the results will return the VMs that have the vmSize 'Standard_DS1'.
@@ -83,6 +105,18 @@ With this example the results will return the VMs that have the vmSize 'Standard
 ```azurecli
 az vm list \
   --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
+```
+
+```json
+ResourceGroup    Name       VmId                                  Location    ProvisioningState
+---------------  ---------  ------------------------------------  ----------  -------------------
+DEMORG1          DemoVM010  cbd56d9b-9340-44bc-a722-25f15b578444  westus      Succeeded
+DEMORG1          demovm111  c1c024eb-3837-4075-9117-bfbc212fa7da  westus      Succeeded
+DEMORG1          demovm211  95eda642-417f-4036-9475-67246ac0f0d0  westus      Succeeded
+DEMORG1          demovm212  4bdac85d-c2f7-410f-9907-ca7921d930b4  westus      Succeeded
+DEMORG1          demovm213  2131c664-221a-4b7f-9653-f6d542fbfa34  westus      Succeeded
+DEMORG1          demovm214  48f419af-d27a-4df0-87f3-9481007c2e5a  westus      Succeeded
+DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Succeeded
 ```
 
 ## Filter with grep
