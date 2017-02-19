@@ -17,22 +17,22 @@ The Azure CLI 2.0 is Azure's new command line experience for managing Azure reso
 
 Azure CLI 2.0 is now available on [GitHub](https://github.com/Azure/azure-cli).  For help with installation please see our [Install article] (install-az-cli2.md).
 
-We are continually adding new commands to the Azure CLI.  The table below lists those services which are generally available. The table will be udpatedregularly as we make more of our services generally available to customers.
+We are continually adding new commands to the Azure CLI.  The table below lists those services which are generally available. The table will be udpated regularly as we make more of our services generally available to customers.
 
 
-| General availability |
-|----------------------|
-| Container Service    |
-| Networking           |
-| Resource Manager     |
-| Storage              |
-| Virtual Machines     |
+| General availability         |
+|------------------------------|
+| Azure Container Service (acs)|
+| Networking                   |
+| Resource Manager             |
+| Storage                      |
+| Virtual Machines             |
 
 
 [Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 now.
 
 
-> [!Note]
+> [!NOTE]
 > If you use the previous version of the CLI (Azure CLI), you can continue to use it.  If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
 
 
