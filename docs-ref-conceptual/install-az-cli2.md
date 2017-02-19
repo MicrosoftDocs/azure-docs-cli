@@ -89,34 +89,6 @@ Get Azure 2.0 CLI on Windows using pip.
     exec -l $SHELL
     ```
 
-## Windows
-
-Get Azure 2.0 CLI on Windows using pip. 
-
-1. If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend install version 3.5.x.
-
-    Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.  
-
-    > Add Python 3.5 to your path during installation.
-
-    Check your Python installation from a command prompt.
-
-    ```
-    python --version
-    ```
-
-2. Install Azure CLI 2.0 using pip.
-
-    ```
-    pip install azure-cli
-    ```
-
-    Run Azure CLI 2.0 from the command prompt.
-
-    ```
-    az
-    ```
-
 
 ## Installation Troubleshooting
 -------------------------------
