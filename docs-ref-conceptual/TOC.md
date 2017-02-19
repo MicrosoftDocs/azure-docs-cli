@@ -22,7 +22,7 @@
 ### [Scale a web app worldwide with a high-availabilty architecture](/azure/app-service/scripts/app-service-cli-scale-high-availability?toc=%2fcli%2fazure%2ftoc.json)
 ### [Connect a storage account to a web app](/azure/app-service/scripts/app-service-cli-app-service-storage?toc=%2fcli%2fazure%2ftoc.json)
 ### [Monitor a web app with Web Server Logs](/azure/app-service/scripts/app-service-cli-monitor?toc=%2fcli%2fazure%2ftoc.json)
-## [SQl database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+## [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ### [Create a SQL database and configure a firewall rule](/azure/sql-database/sql-database-create-and-configure-database-cli?toc=%2fcli%2fazure%2ftoc.json)
 ### [Monitor and scale a SQL database](/azure/sql-database/sql-database-monitor-and-scale-database-cli?toc=%2fcli%2fazure%2ftoc.json)
 ### [Create elastic pools and move databases between pools and out of a pool](/azure/sql-database/sql-database-move-database-between-pools-cli?toc=%2fcli%2fazure%2ftoc.json)
