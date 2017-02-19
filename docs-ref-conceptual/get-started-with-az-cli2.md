@@ -19,7 +19,7 @@ Azure CLI 2.0 allows you to manage and administer your Azure resources from the 
 on whatever platform you use.
 
 2. To verify the installation, run `az --version`. 
-You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to the "Installation Troubleshooting" section of [Azure CLI 2.0 installation documentation](install-az-cli2.md#) page for guidance, or post a comment in the discussion at the bottom of the page.
+You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to the "Installation Troubleshooting" section of [Azure CLI 2.0 installation documentation](install-az-cli2.md#Installation Troubleshooting) page for guidance, or post a comment in the discussion at the bottom of the page.
 
 Before you can start using the Azure CLI, you must login to your Azure account (with an associated subscription) from the command line. To do this, use the `az login` command. (There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about other Azure login options.)
 
@@ -31,12 +31,12 @@ Before you can start using the Azure CLI, you must login to your Azure account (
 
    You get a code to use in the next step. 
 
-4. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+3.1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
     and enter the code to authenticate.
 
     You are prompted to log in using your credentials.
 
-5. Log in.
+3.2. Log in.
 
 Now you can run any command on the Azure resources and services available to your account.
 
@@ -100,7 +100,7 @@ westus2     MyRG
 
 ## Create a VM
 
-Next, create a virtual machine in the Resource Group we just created in the previous step. Now, you'll create a Linux VM on Azure using the popular UbuntuLTS image with the default size (and other properties).
+Next, create a virtual machine in the Resource Group we just created in the previous step. Now, you'll create a Linux VM on Azure using the popular UbuntuLTS image with the default size.
 
 ```azurecli
 az vm create -n MyLinuxVM -g MyRG --image UbuntuLTS --size Standard_A2
@@ -200,7 +200,7 @@ az vm create -n MyLinuxVM -g MyRG --image UbuntuLTS --size Standard_A2 --no-wait
 
 ## Listing and querying the resources
 
-You can use the `list` command to list and see the resources you have created in your Azure subscription. There are various output formats and query options available to filter and sort the list of resources in the way you prefer to see them.
+You can use the `list` command to list the resources you have created in your Azure subscription. There are various output formats and query options available to filter and sort the list of resources in the way you prefer to see them.
 
 `az vm list` shows the list of VMs in a simple tabular format (if the `--output table` option is selected). Typically, the default format is 'table'.
 
@@ -263,7 +263,7 @@ MyLinuxVM
 MyWinVM
 ```
 
-You can also use the generic `az resource list` command to list all resoures and their resource types in your Azure subscription. `query` and `grep` options work on all list outputs.
+You can also use the generic `az resource list` command to list all resources and their resource types in your Azure subscription. `query` and `grep` options work on all list outputs.
 
 ## Deleting resources
 
@@ -272,6 +272,7 @@ You can use the `delete` command to delete the resources you no longer need. You
 ```azurecli
 az vm delete -n KBDemo020 -g RGDemo001
 ```
+
 ```Output
 Are you sure you want to perform this operation? (y/n): y
 EndTime                           Name                                  StartTime                         Status
