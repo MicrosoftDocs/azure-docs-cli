@@ -21,10 +21,10 @@ This is the new version of the Azure CLI! We've improved and updated it to provi
 
 Install Azure CLI 2.0 with one curl command.
 
-    ```bash
+    ```
     curl -L https://aka.ms/InstallAzureCli | bash
     ```
-
+    
 ## Windows
 
 Get Azure 2.0 CLI on Windows using `pip`. 
