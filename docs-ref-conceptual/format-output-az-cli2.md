@@ -56,27 +56,7 @@ The results are in this form (only showing partial output for sake of brevity).
     },
           ...
           ...
-          ...
-             "osDisk": {
-        "caching": "ReadWrite",
-        "createOption": "fromImage",
-        "diskSizeGb": null,
-        "encryptionSettings": null,
-        "image": null,
-        "managedDisk": null,
-        "name": "osdiskKBDemo020",
-        "osType": "Linux",
-        "vhd": {
-          "uri": "http://vhdstoragel7jtsfov6vnnu.blob.core.windows.net/vhds/osdiskimage.vhd"
-        }
-      }
-    },
-    "tags": {
-      "displayName": "VirtualMachine"
-    },
-    "type": "Microsoft.Compute/virtualMachines",
-    "vmId": "ed36baa9-9b80-48a8-b4a9-854c7a858ece"
-  }
+          ...   
 ]
 ```
  
@@ -112,7 +92,7 @@ None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RG
 None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None	None	westus	KBDemo020			None	Succeeded	RGDEMO001	None			Microsoft.Compute/virtualMachinesed36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-You can use the `--query` to filter and select specific properties, values and flatten nested properties from the json output. For more details on the Query topic, please look at the `Query` article.
+You can use the `--query` to filter and select specific properties, values and flatten nested properties from the json output. For more details on the Query topic, please look at the [Query](query-az-cli2.md) article.
 
 Leveraging the above example, if we only want to see the Resource Group and VM Name of all Virtual Machines that are in the Resource Group names starting with "RGD", add the following `--query` parameter to the command.
 
