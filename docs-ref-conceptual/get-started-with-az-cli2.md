@@ -19,9 +19,9 @@ Azure CLI 2.0 allows you to manage and administer your Azure resources from the 
 on whatever platform you use.
 
 2. To verify the installation, run `az --version`. 
-You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, then there was a problem in installing the CLI - go to `troubleshooting the installation` page to fix that.
+You should see the version number of Azure CLI and other dependent libraries installed on your computer. If you get an error instead, there was a problem installing the CLI. Go to `troubleshooting the installation` page for guidance, or post a comment in the discussion at the bottom of the page.
 
-Before you can start using the Azure CLI, you have to login to your Azure account and subscription from the command line. The easiest way to do that is by using the `az login` command. There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about these.
+Before you can start using the Azure CLI, you must login to your Azure account (with an associated subscription) from the command line. To do this, use the `az login` command. (There are other ways to login as well --  see the details of the `az login` command in the ref section to learn about other Azure login options.)
 
 3. Run the login command.
 
@@ -38,9 +38,9 @@ Before you can start using the Azure CLI, you have to login to your Azure accoun
 
 5. Log in.
 
-Now you can run any command that accesses your account.
+Now you can run any command on the Azure resources and services available to your account.
 
-If you are using the Azure CLI 2.0 for the first time, you may want to run the `az configure` command to set up your environment and default settings for output formats etc. For most common use, the easiest output format default is the "table" format - select 3 when prompted for output format choices. See `output format` article for details. You can also select other defaults according to your liking.
+[!NOTE]If you are using the Azure CLI 2.0 for the first time, you may want to run the `az configure` command to set up your environment as well as other preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. See `output format` article for details. You can also select other defaults according to your preference.
 
 ```output
 What default output format would you like?
@@ -52,7 +52,7 @@ Please enter a choice [3]:
 ```
 ## Get subscriptions list
 
-First, use the CLI to get a list of subscriptions for your Azure account. You can do this by running the `az account list` command. This command returns a list of all subscriptions in your account. It also shows the default subscription set for use in the Azure CLI.
+First, use the CLI to get a list of subscriptions for your Azure account. You do this by running the `az account list` command. This command returns a list of all subscriptions in your account. It also shows the default subscription set for use in the Azure CLI.
 
 ```azurecli
 az account list
@@ -112,7 +112,7 @@ Location    MacAddress         PowerState    PrivateIpAddress    PublicIpAddress
 westus2     00-0D-3A-F7-30-7E  VM running    10.0.0.4            52.175.202.122     MyRG
 ```
 
-Now that the VM has been created, you can logon to the VM using **ssh**. First you have to find the IP address of the VM.
+Now that the VM has been created, you can logon to the VM using **ssh**. First, get the IP address of the VM.
 
 ```azurecli
 az vm list-ip-addresses -g MyRG
@@ -159,7 +159,7 @@ applicable law.
 my-login@MyLinuxVM:~$
 ```
 
-Next, let's create a Windows VM. For creating a Windows VM, you have to specify an admin username and password. There are special rules for what characters can be used in the username and password, as well as the length of the username and password, and these must be followed.
+Now, create a Windows VM. WHen creating a Windows VM, you must specify an admin username and password. There are specific rules for what characters can be used in the username and password, as well as the length of the username and password, and these rules must be followed.
 
 ```azurecli
 az vm create -n MyWinVM -g MyRG --image Win2008R2SP1 --size Standard_A2 --admin-username adminku3r --admin-password p_l33mm0rd
@@ -171,11 +171,11 @@ Location    MacAddress         PowerState    PrivateIpAddress    PublicIpAddress
 westus2     00-0D-3A-F7-A9-AD  VM running    10.0.0.5            52.183.43.57       MyRG
 ```
 
-Now you can log on to the Windows VM and open a remote session (or use RDP).
+Log on to the Windows VM and open a remote session (or use RDP) to connect to it.
 
 ## Creating other resources on Azure
 
-Just like creating a virtual machine, you can create other resources on Azure from the command line. In general, the pattern for the create command is `az <resource type name> create` with parameters. Here are the commands you can use to create the most common resource types from the command line.
+Just like creating a virtual machine, you can create other resources on Azure from the command line. In general, the pattern for the `create` command is `az <resource type name> create` with parameters. Here are the commands you can use to create the most common resource types from the command line.
 
 ```
 Resource Type               Azure CLI create command
@@ -200,9 +200,9 @@ az vm create -n MyLinuxVM -g MyRG --image UbuntuLTS --size Standard_A2 --no-wait
 
 ## Listing and querying the resources
 
-You can use the `list` command to list and see the resources you have created in your Azure subscription. There are various output formats and query options available to filter and sort the list of resources in the way you want to see them.
+You can use the `list` command to list and see the resources you have created in your Azure subscription. There are various output formats and query options available to filter and sort the list of resources in the way you prefer to see them.
 
-`az vm list` shows the list of VMs in a simple tabular format (if the `--output table` option is selecte, or set by default to 'table').
+`az vm list` shows the list of VMs in a simple tabular format (if the `--output table` option is selected). Typically, the default format is 'table'.
 
 ```azurecli
 az vm list --output table
@@ -220,7 +220,7 @@ MyLinuxVM    MYRG             westus2
 MyWinVM      MYRG             westus2
 ```
 
-'tsv' output format is a text-based, tab-separated format without any headers.
+The *tsv* output format is a text-based, tab-separated format without any headers.
 
 ```azurecli
 az vm list --output tsv
@@ -252,7 +252,7 @@ MYRG        MyLinuxVM
 MYRG        MyWinVM
 ```
 
-You can also use grep command (on Mac and Linux) to further parse the output of the list command and perform other filter operations. Learn more in this article on [query](query-az-cli2.md).
+You can also use the `grep` command (on Mac and Linux) to further parse the output of the list command and perform other filter operations. Learn more in this article on [query](query-az-cli2.md).
 
 ```azurecli
 az vm list --output tsv | grep MYRG | cut -f8
@@ -263,7 +263,7 @@ MyLinuxVM
 MyWinVM
 ```
 
-You can also use the generic `az resource list' to list all resoures and their resource types in your Azure subscription.` 'Query' and 'grep' options work on all list outputs.
+You can also use the generic `az resource list` command to list all resoures and their resource types in your Azure subscription. `query` and `grep` options work on all list outputs.
 
 ## Deleting resources
 
@@ -302,13 +302,13 @@ To learn more about ways to use the Azure CLI, check out our most common scripts
 az [command-group [command]] -h
 ```
 
-For example, to see what commands and subgroups are available for VMs, use
+For example, to see what commands and subgroups are available for VMs, use:
 
 ```azurecli
 az vm -h
 ```
 
-To get help with the command to create a VM, use
+To get help with the command to create a VM, use:
 
 ```azurecli
 az vm create -h
