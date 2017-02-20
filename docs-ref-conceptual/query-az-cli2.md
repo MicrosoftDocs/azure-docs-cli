@@ -15,9 +15,14 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 
 The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
 
-Queries can be run for a variety of different purposes.  We have listed several examples below.  
+'Query' parameter is supported by every resource tyoe (e.g. Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for a variety of different purposes.  We have listed several examples below.
 
-## List resource group and VM names for all virtual machines in your subscription
+## Selecting simple properties
+
+The simple `list` command with `table` output format returns a curated set of most common simple properties for each resource type in an easy-to-read tabular format.
+
+
+List resource group and VM names for all virtual machines in your subscription
 
 ```azurecli
 az vm list \
