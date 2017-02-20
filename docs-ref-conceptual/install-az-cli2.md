@@ -15,16 +15,26 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-This is the new version of the Azure CLI! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
+Install the new version of the Azure CLI today! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
 
 ## macOS Install
 
 Install Azure CLI 2.0 with one `curl` command.
-    
-    ```
-    curl -L https://aka.ms/InstallAzureCli | bash
-    ```
-    
+
+```bash
+curl -L https://aka.ms/InstallAzureCli | bash
+```
+You may have to restart your command shell for some changes to take effect.
+
+```bash
+exec -l $SHELL
+```
+Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+```AzureCLI
+az
+```
+
 ## Windows
 
 Get Azure 2.0 CLI on Windows using `pip`. 
@@ -37,59 +47,63 @@ Get Azure 2.0 CLI on Windows using `pip`.
 
     Check your Python installation from a command prompt.
 
-    ```
-    python --version
-    ```
+```python
+python --version
+```
 
 2. Install Azure CLI 2.0 using `pip`.
 
-    ```
-    pip install azure-cli
-    ```
+```bash
+pip install azure-cli
+```
 
-    Run Azure CLI 2.0 from the command prompt with the 'az' command.
+Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
-    ```
-    az
-    ```
-
-
+```AzureCLI
+az
+```
 
 ## Linux Install
 
 1. If you don't have it, install [Python](https://www.python.org/downloads).
   [!NOTE] We recommend Python 3.5.
 
-2. You may need to install specific prerequisite libraries. Use `apt-get` to get them.
+2. You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
-    ```bash
-    sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-    ```
+```bash
+sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+```
+```
 
-    Platform                   | Prerequisites
-    ---------------------------|---------------------------------------------
-    OS X                       |
-    Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
-    Ubuntu (other)             | libssl-dev libffi-dev python-dev
-    Debian 8                   | libssl-dev libffi-dev python-dev build-essential
-    Debian 7                   | libssl-dev libffi-dev python-dev
-    CentOS                     | gcc ibffi-devel python-devel openssl-devel
-    RedHat                     | gcc libffi-devel python-devel openssl-devel
-    SUSE                       | gcc libffi-devel python-devel openssl-dev
-
+Platform                   | Prerequisites
+---------------------------|---------------------------------------------
+OS X                       |
+Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
+Ubuntu (other)             | libssl-dev libffi-dev python-dev
+Debian 8                   | libssl-dev libffi-dev python-dev build-essential
+Debian 7                   | libssl-dev libffi-dev python-dev
+CentOS                     | gcc ibffi-devel python-devel openssl-devel
+RedHat                     | gcc libffi-devel python-devel openssl-devel
+SUSE                       | gcc libffi-devel python-devel openssl-dev
+```
 
 2. Install Azure CLI 2.0.
 
-    ```bash
-    curl -L https://aka.ms/InstallAzureCli | bash
-    ```
+```bash
+curl -L https://aka.ms/InstallAzureCli | bash
+```
 
 3. Restart your shell.
 
-    ```bash
-    exec -l $SHELL
-    ```
+```bash
+exec -l $SHELL
+```
 
+Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+```AzureCLI
+az
+```
 
 ## Installation Troubleshooting
 -------------------------------
@@ -115,14 +129,14 @@ $ curl https://azurecliprod.blob.core.windows.net/install | bash
 
 If you get errors on install on OS X, upgrade `pip`.
 
-```
+```bash
 pip install --upgrade --force-reinstall pip
 ```
 
 If you get errors on install on **Debian** or **Ubuntu**, such as those seen in the examples below,
 install `libssl-dev` and `libffi-dev`.
 
-```
+```bash
 sudo apt-get update
 sudo apt-get install -y libssl-dev libffi-dev
 ```
@@ -131,19 +145,19 @@ Also install Python Dev for your version of Python.
 
 Python 2:
 
-```
+```bash
 sudo apt-get install -y python-dev
 ```
 
 Python 3:
 
-```
+```bash
 sudo apt-get install -y python3-dev
 ```
 
 Ubuntu 15 may require `build-essential` also:
 
-```
+```bash
 sudo apt-get install -y build-essential
 ```
 
