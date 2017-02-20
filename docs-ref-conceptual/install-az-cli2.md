@@ -58,7 +58,7 @@ python --version
 pip install azure-cli
 ```
 
-    Run Azure CLI 2.0 from the command prompt with the 'az' command.
+Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
 ```Azure CLI
 az
@@ -74,6 +74,7 @@ az
 ```bash
     sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 ```
+```output
 
     Platform                   | Prerequisites
     ---------------------------|---------------------------------------------
@@ -85,7 +86,7 @@ az
     CentOS                     | gcc ibffi-devel python-devel openssl-devel
     RedHat                     | gcc libffi-devel python-devel openssl-devel
     SUSE                       | gcc libffi-devel python-devel openssl-dev
-
+```
 
 2. Install Azure CLI 2.0.
 
@@ -163,7 +164,7 @@ sudo apt-get install -y build-essential
 
 ### Example Errors
 
-```
+```output
 Downloading cffi-1.5.2.tar.gz (388kB)
     100% |################################| 389kB 3.9MB/s
     Complete output from command python setup.py egg_info:
@@ -178,7 +179,7 @@ Downloading cffi-1.5.2.tar.gz (388kB)
 Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-77i2fido/cffi/
 ```
 
-```
+```output
 #include <openssl/e_os2.h>
                             ^
 compilation terminated.
