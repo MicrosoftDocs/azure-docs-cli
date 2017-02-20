@@ -15,14 +15,27 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 
 The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
 
-'Query' parameter is supported by every resource tyoe (e.g. Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for a variety of different purposes.  We have listed several examples below.
+`Query` parameter is supported by every resource type (e.g. Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for a variety of different purposes.  We have listed several examples below.
 
 ## Selecting simple properties
 
-The simple `list` command with `table` output format returns a curated set of most common simple properties for each resource type in an easy-to-read tabular format.
+The simple `list` command with `table` output format returns a curated set of most common, simple properties for each resource type in an easy-to-read tabular format.
 
+```azurecli
+az vm list --out table
+```
 
-List resource group and VM names for all virtual machines in your subscription
+```
+Name         ResourceGroup    Location
+-----------  ---------------  ----------
+DemoVM010    DEMORG1          westus
+demovm212    DEMORG1          westus
+demovm213    DEMORG1          westus
+KBDemo001VM  RGDEMO001        westus
+KBDemo020    RGDEMO001        westus
+```
+
+You can use the `--query` parameter to show just the Resource Group name and VM name for all virtual machines in your subscription.
 
 ```azurecli
 az vm list \
@@ -43,7 +56,7 @@ RGDEMO001  KBDemo001VM
 RGDEMO001  KBDemo020
 ```
 
-In the previous example you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or name to the properties you select as well.  In this example we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
+In the previous example you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
 
 
 ```azurecli
@@ -67,7 +80,7 @@ RGDEMO001  KBDemo020
 
 ## Selecting complex nested properties
 
-If the property you want to select is nested deep in the JSON output then you have to supply the full path to that embedded property. The following example shows how to select the VMName and the OS type from the vm list command.
+If the property you want to select is nested deep in the JSON output then you have to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
 
 ```azurecli
 az vm list \
@@ -91,7 +104,7 @@ KBDemo020    Linux
 ## Filter with the contains function
 
 You can use the JMESPath `contains` function to refine your results returned in the query.
-In this example the results will limit the VMs returned to those in a specific resource group.
+In the following example, the results will limit the VMs returned to those in a specific resource group.
 
 ```azurecli
 az vm list \
@@ -105,7 +118,7 @@ RGDEMO001   KBDemo001VM
 RGDEMO001   KBDemo020
 ```
 
-With this example the results will return the VMs that have the vmSize 'Standard_DS1'.
+With the next example, the results will return the VMs that have the vmSize 'Standard_DS1'.
 
 ```azurecli
 az vm list \
