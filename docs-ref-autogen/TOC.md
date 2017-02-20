@@ -4,7 +4,7 @@
 ## [Authenticate](../docs-ref-conceptual/authenticate-az-cli2.md)
 ## [Output formats](../docs-ref-conceptual/format-output-az-cli2.md)
 ## [Query](../docs-ref-conceptual/query-az-cli2.md)
-# Common examples
+# Samples
 ## [Virtual machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ### [Quick Create a VM](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm-quick-create?toc=%2fcli%2fazure%2ftoc.json)
 ### [Create a VM](/azure/virtual-machines/scripts/virtual-machines-linux-cli-sample-create-vm?toc=%2fcli%2fazure%2ftoc.json)
