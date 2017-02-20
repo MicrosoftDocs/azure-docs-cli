@@ -71,38 +71,38 @@ az
 2. You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
 ```bash
-    sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 ```
 ```output
 
-    Platform                   | Prerequisites
-    ---------------------------|---------------------------------------------
-    OS X                       |
-    Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
-    Ubuntu (other)             | libssl-dev libffi-dev python-dev
-    Debian 8                   | libssl-dev libffi-dev python-dev build-essential
-    Debian 7                   | libssl-dev libffi-dev python-dev
-    CentOS                     | gcc ibffi-devel python-devel openssl-devel
-    RedHat                     | gcc libffi-devel python-devel openssl-devel
-    SUSE                       | gcc libffi-devel python-devel openssl-dev
+Platform                   | Prerequisites
+---------------------------|---------------------------------------------
+OS X                       |
+Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
+Ubuntu (other)             | libssl-dev libffi-dev python-dev
+Debian 8                   | libssl-dev libffi-dev python-dev build-essential
+Debian 7                   | libssl-dev libffi-dev python-dev
+CentOS                     | gcc ibffi-devel python-devel openssl-devel
+RedHat                     | gcc libffi-devel python-devel openssl-devel
+SUSE                       | gcc libffi-devel python-devel openssl-dev
 ```
 
 2. Install Azure CLI 2.0.
 
 ```bash
-    curl -L https://aka.ms/InstallAzureCli | bash
+curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 3. Restart your shell.
 
 ```bash
-    exec -l $SHELL
+exec -l $SHELL
 ```
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```
-    az
+```AzureCLI
+az
 ```
 
 ## Installation Troubleshooting
