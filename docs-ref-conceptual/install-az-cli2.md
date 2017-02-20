@@ -31,7 +31,7 @@ exec -l $SHELL
 ```
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```AzureCLI
+```
 az
 ```
 
@@ -59,7 +59,7 @@ pip install azure-cli
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
-```AzureCLI
+```
 az
 ```
 
@@ -101,7 +101,7 @@ az
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```AzureCLI
+```
     az
 ```
 
