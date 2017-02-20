@@ -32,7 +32,7 @@ exec -l $SHELL
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```
+```Azure CLI
 az
 ```
 
@@ -48,19 +48,19 @@ Get Azure 2.0 CLI on Windows using `pip`.
 
     Check your Python installation from a command prompt.
 
-```
+```python
 python --version
 ```
 
 2. Install Azure CLI 2.0 using `pip`.
 
-```
+```bash
 pip install azure-cli
 ```
 
     Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
-```
+```Azure CLI
 az
 ```
 
@@ -101,7 +101,7 @@ az
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```
+```Azure CLI
     az
 ```
 
@@ -129,14 +129,14 @@ $ curl https://azurecliprod.blob.core.windows.net/install | bash
 
 If you get errors on install on OS X, upgrade `pip`.
 
-```
+```bash
 pip install --upgrade --force-reinstall pip
 ```
 
 If you get errors on install on **Debian** or **Ubuntu**, such as those seen in the examples below,
 install `libssl-dev` and `libffi-dev`.
 
-```
+```bash
 sudo apt-get update
 sudo apt-get install -y libssl-dev libffi-dev
 ```
@@ -145,19 +145,19 @@ Also install Python Dev for your version of Python.
 
 Python 2:
 
-```
+```bash
 sudo apt-get install -y python-dev
 ```
 
 Python 3:
 
-```
+```bash
 sudo apt-get install -y python3-dev
 ```
 
 Ubuntu 15 may require `build-essential` also:
 
-```
+```bash
 sudo apt-get install -y build-essential
 ```
 
