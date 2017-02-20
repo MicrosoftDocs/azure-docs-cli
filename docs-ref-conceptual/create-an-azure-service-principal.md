@@ -1,4 +1,5 @@
 ---
+METADATA GOES HERE
 ---
 
 # Create an Azure service principal with Azure CLI 2.0
@@ -6,7 +7,7 @@
 If you plan to automate your Azure CLI 2.0 script, you should run it under an Azure Active Directory (AAD) service principal, rather than your own login credentials. This topic steps you through creating a security principal with Azure CLI 2.0 and using it to manage your Azure resources.
 
 
-> [!NOTE] You can also create a service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](azure-resource-manager/resource-group-create-service-principal-portal) for more details.
+> [!NOTE] You can also create a service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
 
 ## Create the service principal
 
