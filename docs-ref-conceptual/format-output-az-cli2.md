@@ -60,11 +60,9 @@ The results are in this form (only showing partial output for sake of brevity).
 ]
 ```
  
-## Using the table or tsv option
+## Using the table option
 
-The table or tsv option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table` or `--output tsv` option, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
-
-'tsv' format returns a simple text-based and tab-separated output with no headings and dashes.
+The table option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table`, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
 
 ```azurecli
 az vm list --out table
@@ -79,6 +77,24 @@ demovm213    DEMORG1          westus
 KBDemo001VM  RGDEMO001        westus
 KBDemo020    RGDEMO001        westus
 ```
+
+You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
+
+```azurecli
+az vm list --query "[].{ resource: resourceGroup, name: name }" -o table
+```
+
+```
+Resource    Name
+----------  -----------
+DEMORG1     DemoVM010
+DEMORG1     demovm212
+DEMORG1     demovm213
+RGDEMO001   KBDemo001VM
+RGDEMO001   KBDemo020
+```
+
+'tsv' format returns a simple text-based and tab-separated output with no headings and dashes.
 
 ```azurecli
 az vm list --out tsv
