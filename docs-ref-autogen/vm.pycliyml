@@ -315,7 +315,7 @@ children:
   htmlId: convert
   examples:
   - title: Convert a VM with unmanaged disks to use managed disks.
-    code: az vm convert -g my_rg -n vm-name
+    code: az vm convert -g my_rg -n my_vm
   - title: Convert VM with unmanaged disks to managed by Ids
     code: az vm convert --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -367,22 +367,20 @@ children:
 - commandList: []
   htmlId: create
   examples:
-  - title: Create a Linux VM with SSH key authentication, add a public DNS entry, and then add it to an existing virtual network and availability set.
-    code: az vm create -n my_vm -g my_rg --image <linux image from 'az vm image list'> --vnet-name my_existing_vnet --subnet subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
   - title: Create a simple Windows Server VM with a private IP address.
     code: >-
       az vm create -n my_vm -g my_rg --admin-username my_admin --admin-password my_p
                                --public-ip-address "" --image Win2012R2Datacenter
-  - title: Create a simple Ubuntu Linux VM with a public IP address, DNS entry, 2 data disk(10GB, 20GB), and then generate ssh key pairs under ~/.ssh.
-    code: az vm create -n my_vm -g my_rg --admin-username my_admin --admin-password my_p --public-ip-address-dns-name my_globally_unique_vm_dns_name --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2 --generate-ssh-keys
-  - title: Create a VM from a custom managed image.
+  - title: Create a VM from a custom managed image (see `az image create` for generation information).
     code: az vm create -g my_rg -n my_vm --image my_image_in_my_rg --admin-username my_admin --admin-password my_p
-  - title: Create a VM with an unmanaged operating system disk by using an image blob uri.
-    code: az vm create -g my_rg -n my_vm --image https://account123.blob.core.windows.net/Images/my_vhd-osDisk.vhd --os-type linux --admin-username my_admin --admin-password my_p
   - title: Create a VM by attaching to a specialized managed operating system disk.
     code: az vm create -g my_rg -n my_vm --attach-os-disk my-os-disk --os-type linux --admin-username my_admin --admin-password my_p
   - title: Create an Ubuntu Linux VM and provide a cloud-init script (https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init).
     code: az vm create -g my_rg -n vm-ame --image debian --custom_data ./my-cloud-init-script.yml
+  - title: Create a Linux VM with SSH key authentication, add a public DNS entry, and then add it to an existing virtual network and availability set.
+    code: az vm create -n my_vm -g my_rg --image <linux image from 'az vm image list'> --vnet-name my_existing_vnet --subnet subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
+  - title: Create a simple Ubuntu Linux VM with a public IP address, DNS entry, 2 data disk(10GB, 20GB), and then generate ssh key pairs under ~/.ssh.
+    code: az vm create -n my_vm -g my_rg --admin-username my_admin --admin-password my_p --public-ip-address-dns-name my_globally_unique_vm_dns_name --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2 --generate-ssh-keys
   parameters:
   - name: --name -n
     isRequired: True
@@ -761,7 +759,7 @@ children:
   htmlId: get-instance-view
   examples:
   - title: Use resource group and name to get instance view information of a VM.
-    code: az vm get-instance-view -g my_rg -n vm-name
+    code: az vm get-instance-view -g my_rg -n my_vm
   - title: Get instance view by Ids
     code: az vm get-instance-view --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -865,7 +863,7 @@ children:
   htmlId: list-ip-addresses
   examples:
   - title: Get the IP addresses for a VM.
-    code: az vm list-ip-addresses -g my_rg -n vm-name
+    code: az vm list-ip-addresses -g my_rg -n my_vm
   - title: Get IP addresses for VMs by Ids
     code: az vm list-ip-addresses --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1004,7 +1002,7 @@ children:
   htmlId: list-vm-resize-options
   examples:
   - title: List all available VM sizes for resizing.
-    code: az vm list-vm-resize-options -g my_rg -n vm-name
+    code: az vm list-vm-resize-options -g my_rg -n my_vm
   - title: List all available VM sizes for resizing by VM Ids
     code: az vm list-vm-resize-options --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1057,7 +1055,9 @@ children:
   htmlId: open-port
   examples:
   - title: Open all ports on a VM to inbound traffic.
-    code: az vm open-port -g my_rg -n vm-name
+    code: az vm open-port -g my_rg -n my_vm --port *
+  - title: Open a range of ports on a VM to inbound traffic with the highest priority.
+    code: az vm open-port -g my_rg -n my_vm --port 80-100 --priority 100
   - title: Open all ports for multiple VMs by Ids
     code: az vm open-port --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1127,7 +1127,7 @@ children:
   htmlId: redeploy
   examples:
   - title: Redeploy a VM.
-    code: az vm redeploy -g my_rg -n vm-name
+    code: az vm redeploy -g my_rg -n my_vm
   - title: Redeploy VMs by VM Ids
     code: az vm redeploy --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1237,7 +1237,7 @@ children:
   htmlId: restart
   examples:
   - title: Restart a VM.
-    code: az vm restart -g my_rg -n vm-name
+    code: az vm restart -g my_rg -n my_vm
   - title: Restart VM by by VM Ids
     code: az vm restart --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1347,7 +1347,7 @@ children:
   htmlId: start
   examples:
   - title: Start a stopped VM.
-    code: az vm start -g my_rg -n vm-name
+    code: az vm start -g my_rg -n my_vm
   - title: Start stopped VMs by by VM Ids
     code: az vm start --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1400,7 +1400,7 @@ children:
   htmlId: stop
   examples:
   - title: Stop a running VM.
-    code: az vm stop -g my_rg -n vm-name
+    code: az vm stop -g my_rg -n my_vm
   - title: Stop running VMs by by VM Ids
     code: az vm stop --ids $(az vm list -g my_rg --query "[].id" -o tsv)
   parameters:
@@ -1615,6 +1615,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a698d135afaa8697f8c2d88b5af8333249ea1006/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/20/2017 1:07:27 AM
+  gitcommit: https://github.com/Azure/azure-cli/blob/71a279af038896a2a6b50c87ed1b53a30f41bbe3/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/20/2017 9:16:16 AM
   ms.date: 2/20/2017
