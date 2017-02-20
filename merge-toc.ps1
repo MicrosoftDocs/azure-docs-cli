@@ -30,12 +30,8 @@ function Sort-RefLines
     $originalTitle = Find-TocTitle $line
     $originalHref = Find-TocHref $line
     $unalteredTitle = $originalTitle
-    if ($originalHref -Match '#')
-    {
-    }
-    else {
-        $originalTitle = "zzz" + $originalTitle
-    }
+
+
 
     Write-Host $line -ForegroundColor Red
     if ($previousItem -ne $Null)
@@ -80,27 +76,16 @@ function Sort-RefLines
         }
 
       }
-      $sortKey = $parentItem.SortKey + "." + $originalTitle
 
     }
-    else
-    {
-        #No Parent
-      $sortKey = $originalTitle
-    }
 
-    $tocLine | Add-Member -type NoteProperty -name SortKey -value $sortKey
-
-
-    $tocLine | Add-Member -type NoteProperty -name Level -value $curLevel
-    $tocLine | Add-Member -type NoteProperty -name TocTitle -value $originalTitle
-    $tocLine | Add-Member -type NoteProperty -name OriginalTitle -value $unalteredTitle
-
-
+    # Update Title With New Value
     if($Script:titleMap.ContainsKey($unalteredTitle))
     {
         $mapItem = $Script:titleMap.Get_Item($unalteredTitle)
         $tocTitle = $mapItem.TocTitle
+
+        $originalTitle = $tocTitle
 
         $line = $line.Replace($unalteredTitle, $tocTitle)
         $line = $line.TrimEnd(')') + ' "' + $unalteredTitle + '")' 
@@ -121,10 +106,38 @@ function Sort-RefLines
 
             $newTitle = $TextInfo.ToTitleCase($newTitle)
 
+            $originalTitle = $newTitle
+
             $line = $line.Replace($unalteredTitle, $newTitle)
             $line = $line.TrimEnd(')') + ' "' + $unalteredTitle + '")' 
         }
     }
+
+    # if href ends with an anchor, it should be sorted before groups/sub-groups (so add zzz to those titles for sorting)
+    if ($originalHref -Match '#')
+    {
+    }
+    else {
+        $originalTitle = "zzz" + $originalTitle
+    }
+
+
+    # include parent text, so that sorting doesn't break the nesting
+    if ($parentItem -ne $Null) {
+      $sortKey = $parentItem.SortKey + "." + $originalTitle
+    }
+    else {
+       #No Parent
+      $sortKey = $originalTitle
+    }
+
+
+    $tocLine | Add-Member -type NoteProperty -name SortKey -value $sortKey
+
+
+    $tocLine | Add-Member -type NoteProperty -name Level -value $curLevel
+    $tocLine | Add-Member -type NoteProperty -name TocTitle -value $originalTitle
+    $tocLine | Add-Member -type NoteProperty -name OriginalTitle -value $unalteredTitle
 
     $tocLine | Add-Member -type NoteProperty -name OriginalLine -value $line
 
@@ -132,6 +145,7 @@ function Sort-RefLines
 
     $previousItem = $tocLine
   }
+
 
 
   $refToc = $refToc | Sort-Object -Property SortKey
