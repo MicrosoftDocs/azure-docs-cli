@@ -94,7 +94,9 @@ RGDEMO001   KBDemo001VM
 RGDEMO001   KBDemo020
 ```
 
-'tsv' format returns a simple text-based and tab-separated output with no headings and dashes.
+## Using the tsv option
+
+'tsv' output format returns a simple text-based and tab-separated output with no headings and dashes. This makes it easy to consume the output into other commands and tools that need to process the text in some form. Using the same example as above with the `tsv` option, outputs the tab-separated result.
 
 ```azurecli
 az vm list --out tsv
@@ -108,18 +110,15 @@ None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RG
 None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None	None	westus	KBDemo020			None	Succeeded	RGDEMO001	None			Microsoft.Compute/virtualMachinesed36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-You can use the `--query` to filter and select specific properties, values and flatten nested properties from the json output. For more details on the Query topic, please look at the [Query](query-az-cli2.md) article.
-
-Leveraging the above example, if we only want to see the Resource Group and VM Name of all Virtual Machines that are in the Resource Group names starting with "RGD", add the following `--query` parameter to the command.
+Next example shows how the `tsv` output can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. The `grep` command selects only items that have text "RGD" in them and then the `cut` command selects only the 8th field (separated by tabs) value to show in the output.
 
 ```azurecli
-az vm list --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }" -o table
+az vm list --out tsv | grep RGD | cut -f8
 ```
 
 ```
-Resource    Name
-----------  -----------
-RGDEMO001   KBDemo001VM
-RGDEMO001   KBDemo020
+KBDemo001VM
+KBDemo020
 ```
+
 
