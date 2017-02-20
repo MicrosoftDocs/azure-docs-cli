@@ -31,7 +31,7 @@ exec -l $SHELL
 ```
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```
+```AzureCLI
 az
 ```
 
