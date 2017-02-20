@@ -13,7 +13,7 @@ ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 
 # Log in to Azure CLI 2.0
 
-There are several ways to log in and authenticate with the Azure CLI. The simplest way to get started is to log-in interactively through your browser, or to login at the command line. Our recommended approach is to use service principals, which provide a way for you to create non-interactive accounts that you can use to manipulate resources. By granting just the appropriate permissions needed to a service principal, you can ensure your automation scripts are even more secure. 
+There are several ways to log in and authenticate with the Azure CLI. The simplest way to get started is to log in interactively through your browser, or to log in at the command line. Our recommended approach is to use service principals, which provide a way for you to create non-interactive accounts that you can use to manipulate resources. By granting just the appropriate permissions needed to a service principal, you can ensure your automation scripts are even more secure. 
 
 ## Interactive log-in
 
