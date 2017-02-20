@@ -13,7 +13,7 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Azure CLI 2.0 uses json as its default output option, but offers a variety of ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the below table. 
+Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the following table. 
 
 --output | Description
 ---------|-------------------------------
@@ -62,7 +62,7 @@ The results are in this form (only showing partial output for sake of brevity).
  
 ## Using the table option
 
-The table option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table`, unlike the .json example above.  Using the same example as above with 'table' output format will provide a curated list of most common property values.
+The table option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table`, unlike the preceding .json example.  Using the same example with 'table' output format provides a curated list of most common property values.
 
 ```azurecli
 az vm list --out table
@@ -96,7 +96,7 @@ RGDEMO001   KBDemo020
 
 ## Using the tsv option
 
-'tsv' output format returns a simple text-based and tab-separated output with no headings and dashes. This makes it easy to consume the output into other commands and tools that need to process the text in some form. Using the same example as above with the `tsv` option, outputs the tab-separated result.
+'tsv' output format returns a simple text-based and tab-separated output with no headings and dashes. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Using the preceding example with the `tsv` option outputs the tab-separated result.
 
 ```azurecli
 az vm list --out tsv
@@ -110,7 +110,7 @@ None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RG
 None	None		/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None	None	westus	KBDemo020			None	Succeeded	RGDEMO001	None			Microsoft.Compute/virtualMachinesed36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-Next example shows how the `tsv` output can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. The `grep` command selects only items that have text "RGD" in them and then the `cut` command selects only the 8th field (separated by tabs) value to show in the output.
+The next example shows how the `tsv` output can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. The `grep` command selects only items that have text "RGD" in them and then the `cut` command selects only the eighth field (separated by tabs) value to show in the output.
 
 ```azurecli
 az vm list --out tsv | grep RGD | cut -f8
@@ -121,7 +121,7 @@ KBDemo001VM
 KBDemo020
 ```
 
-> [!NOTE] You can use the `az configure` command to set up your environment as well as other preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
+> [!NOTE] You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
 
 ```Output
 What default output format would you like?
