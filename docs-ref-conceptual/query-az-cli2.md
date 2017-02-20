@@ -139,14 +139,15 @@ DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Su
 
 ## Filter with grep
 
-Use the [`--out`](format-output-az-cli2.md) parameter to format the output as tab-separated values
-and pipe that through grep.
+The `tsv` output format is a tab-separated text with no headers. It can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. In the following example, the `grep` command selects only items that have text "RGD" in them and then the `cut` command selects only the 8th field (separated by tabs) value to show in the output.
 
 ```azurecli
-az vm list \
-  --query "[].{ name: name, os: storageProfile.osDisk.osType }" \
-  --out tsv  \
-| grep Linux
+az vm list --out tsv | grep RGD | cut -f8
+```
+
+```
+KBDemo001VM
+KBDemo020
 ```
 
 ## Explore with jpterm
