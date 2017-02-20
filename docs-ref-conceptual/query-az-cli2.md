@@ -15,7 +15,7 @@ ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 
 The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http:/JMESPath.org/tutorial.html).
 
-`Query` parameter is supported by every resource type (e.g. Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for a variety of different purposes.  We have listed several examples below.
+`Query` parameter is supported by every resource type (Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for various different purposes.  We have listed several examples below.
 
 ## Selecting simple properties
 
@@ -42,7 +42,7 @@ az vm list \
   --query [*].[name,resourceGroup]
 ```
 
-```json
+```
 Column1    Column2
 ---------  -----------
 DEMORG1    DemoVM010
@@ -56,7 +56,7 @@ RGDEMO001  KBDemo001VM
 RGDEMO001  KBDemo020
 ```
 
-In the previous example you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
+In the previous example, you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
 
 
 ```azurecli
@@ -64,7 +64,7 @@ az vm list \
   --query "[].{RGName:resourceGroup, VMName:name}"
 ```
 
-```json
+```
 RGName     VMName
 ---------  -----------
 DEMORG1    DemoVM010
@@ -80,14 +80,14 @@ RGDEMO001  KBDemo020
 
 ## Selecting complex nested properties
 
-If the property you want to select is nested deep in the JSON output then you have to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
+If the property you want to select is nested deep in the JSON output you need to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
 
 ```azurecli
 az vm list \
   --query "[].{VMName:name,OSType:storageProfile.osDisk.osType}"
 ```
 
-```json
+```
 VMName       OSType
 -----------  --------
 DemoVM010    Linux
@@ -104,14 +104,14 @@ KBDemo020    Linux
 ## Filter with the contains function
 
 You can use the JMESPath `contains` function to refine your results returned in the query.
-In the following example, the results will limit the VMs returned to those in a specific resource group.
+In the following example, the command selects only VMs that have the text "RGD" in their name.  
 
 ```azurecli
 az vm list \
   --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }"
 ```
 
-```json
+```
 Resource    VMName
 ----------  -----------
 RGDEMO001   KBDemo001VM
@@ -125,7 +125,7 @@ az vm list \
   --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]"
 ```
 
-```json
+```
 ResourceGroup    VMName     VmId                                  Location    ProvisioningState
 ---------------  ---------  ------------------------------------  ----------  -------------------
 DEMORG1          DemoVM010  cbd56d9b-9340-44bc-a722-25f15b578444  westus      Succeeded
@@ -139,7 +139,7 @@ DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Su
 
 ## Filter with grep
 
-The `tsv` output format is a tab-separated text with no headers. It can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. In the following example, the `grep` command selects only items that have text "RGD" in them and then the `cut` command selects only the 8th field (separated by tabs) value to show in the output.
+The `tsv` output format is a tab-separated text with no headers. It can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. In the following example, the `grep` command selects only VMs that have text "RGD" in their name.  The `cut` command selects only the 8th field (separated by tabs) value to show in the output.
 
 ```azurecli
 az vm list --out tsv | grep RGD | cut -f8
