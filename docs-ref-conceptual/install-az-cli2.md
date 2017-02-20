@@ -20,11 +20,22 @@ This is the new version of the Azure CLI! We've improved and updated it to provi
 ## macOS Install
 
 Install Azure CLI 2.0 with one `curl` command.
-    
-    ```
+
+    ```bash
     curl -L https://aka.ms/InstallAzureCli | bash
     ```
-    
+You may have to restart your command shell for some changes to take effect.
+
+    ```bash
+    exec -l $SHELL
+    ```
+
+Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+    ```azurecli
+    az
+    ```
+
 ## Windows
 
 Get Azure 2.0 CLI on Windows using `pip`. 
@@ -60,7 +71,7 @@ Get Azure 2.0 CLI on Windows using `pip`.
 1. If you don't have it, install [Python](https://www.python.org/downloads).
   [!NOTE] We recommend Python 3.5.
 
-2. You may need to install specific prerequisite libraries. Use `apt-get` to get them.
+2. You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
     ```bash
     sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
@@ -90,6 +101,11 @@ Get Azure 2.0 CLI on Windows using `pip`.
     exec -l $SHELL
     ```
 
+Run Azure CLI 2.0 with the from the command prompt with the `az` command.
+
+    ```azurecli
+    az
+    ```
 
 ## Installation Troubleshooting
 -------------------------------
