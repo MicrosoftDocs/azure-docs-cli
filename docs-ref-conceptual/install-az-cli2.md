@@ -15,7 +15,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 # Install Azure CLI 2.0
 
-This is the new version of the Azure CLI! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
+Install the new version of the Azure CLI today! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
 
 ## macOS Install
 
