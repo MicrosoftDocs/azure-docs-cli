@@ -16,7 +16,7 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources. It can be used on macOS, Linux, and Windows. 
 
 Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line, and for building 
-automation scripts that work against the Azure Resource Manager.  This article helps get you started using it, and teach
+automation scripts that work against the Azure Resource Manager.  This article helps get you started using it, and teaches
 you the core concepts behind it.
 
 ## Install Azure CLI
@@ -212,7 +212,7 @@ az appservice web create -n MyWebApp43433 -g MyResourceGroup --plan MyAppService
 ```
 
 Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are 
-some popular Azure resource types and the appropriate Azure CLI create command to create them:
+some popular Azure resource types and the corresponding Azure CLI create command to create them:
 
 ```
 Resource Type               Azure CLI create command
@@ -230,7 +230,7 @@ SQL Database Server         az sql server create
 Document DB                 az documentdb create
 ```
 
-Visit the Reference documentation to learn more about the additional resource-specific parameters that you can pass to each of the above create commands, or learn about resource types you can create. 
+Visit the [Reference documentation](/azure/doc-ref-autogen) to learn more about the additional resource-specific parameters that you can pass to each of the above create commands, or learn about resource types you can create. 
 
 ## Useful tip: Optimizing create operations using --no-wait
 
@@ -397,7 +397,7 @@ resources in the "MyResourceGroup" resource group that we've used for all the sa
 az group delete -n MyResourceGroup
 ```
 
-```
+```Output
 Are you sure you want to perform this operation? (y/n): y
 ```
 
