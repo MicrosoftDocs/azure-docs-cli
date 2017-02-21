@@ -76,6 +76,7 @@ You add a password to this app object with the optional `--password {password}` 
 ```
 az ad app update --id 59db508a-3429-4094-a828-e8b4680fc790 --password "mypassword!"
 ```
+> [!WARNING] Please do NOT use the password above! You must create a password using the [Azure AD password rules and restrictions](/active-directory/active-directory-passwords-policy).
 
 Now, you can create the security principal with the basic `az ad sp create` command.
      
