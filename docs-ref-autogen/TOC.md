@@ -9,7 +9,7 @@
 ## [Web apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ## [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 # [Reference](index.pycliyml)
-## [configure](index.pycliyml#configure "az configure")
+## [Configure](index.pycliyml#configure "az configure")
 ## [Feedback](index.pycliyml#feedback "az feedback")
 ## [Login](index.pycliyml#login "az login")
 ## [Logout](index.pycliyml#logout "az logout")
