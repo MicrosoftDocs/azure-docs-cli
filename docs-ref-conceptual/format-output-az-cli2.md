@@ -121,7 +121,9 @@ KBDemo001VM
 KBDemo020
 ```
 
-> [!NOTE] You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
+## Setting the default output format
+
+You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
 
 ```Output
 What default output format would you like?
