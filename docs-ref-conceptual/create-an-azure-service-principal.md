@@ -110,7 +110,7 @@ If you need to get this at any time, use the `az ad sp show` command, like this:
 az ad show --id {servicePrincipalName}
 ```
 
-You can log in as your new security principal by supplying the app ID (as the user name), the password, and a tenant ID. An Azure "tenant", in this case, is an ID associated with an instance of Azure AD. Get the tenant ID with the `az account list` command and copying the *tenantId* value from the returned JSON:
+You can log in as your new security principal by supplying the app ID (as the user name), the password, and a tenant ID. An Azure "tenant", in this case, is an ID associated with an instance of Azure AD. Get the tenant ID with the `az account list` command and copy the *tenantId* value from the returned JSON:
 
 ```azurecli
 az login --service-principal -u {appId} --password {password} --tenant {tenantId}
