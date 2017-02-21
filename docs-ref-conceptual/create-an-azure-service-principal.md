@@ -137,7 +137,7 @@ When run on the example app from the previous section, the result is as follows:
 }
 ```
 
-> [!NOTE] The contributor has broad permissions and may not be the best choice depending on the scope of your app's interactions with Azure services. The **reader** role is more restrictive and can be a good choice for read-only apps. For more details on other roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md). You can view details on role-specific permissions or create custom ones through the Azure portal.
+> [!NOTE] The **contributor** role has broad permissions and may not be the best choice depending on the scope of your app's interactions with Azure services. The **reader** role is more restrictive and can be a good choice for read-only apps. For more details on other roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md). You can view details on role-specific permissions or create custom ones through the Azure portal.
 
 You can add additional roles with the following command:
 
