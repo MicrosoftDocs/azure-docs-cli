@@ -125,7 +125,7 @@ KBDemo020
 
 You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
 
-```Output
+```
 What default output format would you like?
  [1] json - JSON formatted output that most closely matches API responses
  [2] jsonc - Colored JSON formatted output that most closely matches API responses
