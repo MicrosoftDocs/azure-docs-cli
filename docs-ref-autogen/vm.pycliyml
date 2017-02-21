@@ -242,15 +242,15 @@ children:
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
-      az vm deallocate -g my_rg -n my_vm
-                              az vm generalize -g my_rg -n my_vm
-                              az vm capture -g my_rg -n myVm --vhd-name-prefix my_prefix
+      az vm deallocate -g MyResourceGroup -n MyVm
+                              az vm generalize -g MyResourceGroup -n MyVm
+                              az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
   - title: The process to deallocate, generalize, and capture multiple stopped virtual machines.
     code: >-
-      vms_ids=$(az vm list -g my_rg --query "[].id" -o tsv)
+      vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
                               az vm deallocate --ids ${vms_ids}
                               az vm generalize --ids ${vms_ids}
-                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - name: --vhd-name-prefix
     isRequired: True
@@ -315,9 +315,9 @@ children:
   htmlId: convert
   examples:
   - title: Convert a VM with unmanaged disks to use managed disks.
-    code: az vm convert -g my_rg -n my_vm
+    code: az vm convert -g MyResourceGroup -n MyVm
   - title: Convert VM with unmanaged disks to managed by Ids
-    code: az vm convert --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm convert --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -367,20 +367,22 @@ children:
 - commandList: []
   htmlId: create
   examples:
+  - title: Create a simple Ubuntu VM with automatic SSH authentication.
+    code: az vm create -n MyVm -g MyResourceGroup --image UbuntuLTS
   - title: Create a simple Windows Server VM with a private IP address.
     code: >-
-      az vm create -n myVm -g my_rg --admin-username my_admin --admin-password my_p
+      az vm create -n MyVm -g MyResourceGroup
                                --public-ip-address "" --image Win2012R2Datacenter
   - title: Create a VM from a custom managed image (see `az image create` for generation information).
-    code: az vm create -g my_rg -n myVm --image my_image_in_my_rg --admin-username my_admin --admin-password my_p
+    code: az vm create -g MyResourceGroup -n MyVm --image MyImage
   - title: Create a VM by attaching to a specialized managed operating system disk.
-    code: az vm create -g my_rg -n myVm --attach-os-disk my-os-disk --os-type linux --admin-username my_admin --admin-password my_p
+    code: az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux
   - title: Create an Ubuntu Linux VM and provide a cloud-init script (https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init).
-    code: az vm create -g my_rg -n vm-ame --image debian --custom_data ./my-cloud-init-script.yml
+    code: az vm create -g MyResourceGroup -n MyVm --image debian --custom_data MyCloudInitScript.yml
   - title: Create a Linux VM with SSH key authentication, add a public DNS entry, and then add it to an existing virtual network and availability set.
-    code: az vm create -n myVm -g my_rg --image <linux image from 'az vm image list'> --vnet-name my_existing_vnet --subnet subnet1 --availability-set my_existing_availability_set --public-ip-address-dns-name my_globally_unique_vm_dns_name --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
+    code: az vm create -n MyVm -g MyResourceGroup --image <linux image from 'az vm image list'> --vnet-name MyVnet --subnet subnet1 --availability-set MyAvailabilitySet --public-ip-address-dns-name MyUniqueDnsName --ssh-key-value "<ssh-rsa-key, key-file-path or not specified for default-key-path>"
   - title: Create a simple Ubuntu Linux VM with a public IP address, DNS entry, 2 data disk(10GB, 20GB), and then generate ssh key pairs under ~/.ssh.
-    code: az vm create -n myVm -g my_rg --admin-username my_admin --admin-password my_p --public-ip-address-dns-name my_globally_unique_vm_dns_name --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2 --generate-ssh-keys
+    code: az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 --generate-ssh-keys
   parameters:
   - name: --name -n
     isRequired: True
@@ -404,11 +406,11 @@ children:
     description: ''
   - name: --image
     isRequired: False
-    summary: The name of the operating system image (URN alias, URN, Custom Image name or ID, or VHD Blob URI).
+    summary: The name of the operating system image (URN alias, URN, Custom Image name or ID, or VHD Blob URI). In many cases, this parameter is required, but can be replaced by others (for example, --attach-os-disk).
     description: >-
       URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
                                           Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
-                                          Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/my_rg/providers/Microsoft.Compute/images/my_image
+                                          Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/images/MyImage
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
     valueFrom: az vm image list, az vm image show
   - name: --location -l
@@ -583,15 +585,15 @@ children:
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
-      az vm deallocate -g my_rg -n my_vm
-                              az vm generalize -g my_rg -n my_vm
-                              az vm capture -g my_rg -n myVm --vhd-name-prefix my_prefix
+      az vm deallocate -g MyResourceGroup -n MyVm
+                              az vm generalize -g MyResourceGroup -n MyVm
+                              az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
   - title: The process to deallocate, generalize, and capture multiple stopped virtual machines.
     code: >-
-      vms_ids=$(az vm list -g my_rg --query "[].id" -o tsv)
+      vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
                               az vm deallocate --ids ${vms_ids}
                               az vm generalize --ids ${vms_ids}
-                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - name: --ids
     isRequired: False
@@ -642,9 +644,9 @@ children:
   htmlId: delete
   examples:
   - title: Delete a VM without a prompt for confirmation.
-    code: az vm delete -g my_rg -n myVm --force
+    code: az vm delete -g MyResourceGroup -n MyVm --force
   - title: Delete a virtual machine by Ids
-    code: az vm delete --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --yes -y
     isRequired: False
@@ -700,15 +702,15 @@ children:
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
     code: >-
-      az vm deallocate -g my_rg -n my_vm
-                              az vm generalize -g my_rg -n my_vm
-                              az vm capture -g my_rg -n myVm --vhd-name-prefix my_prefix
+      az vm deallocate -g MyResourceGroup -n MyVm
+                              az vm generalize -g MyResourceGroup -n MyVm
+                              az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
   - title: The process to deallocate, generalize, and capture multiple stopped virtual machines.
     code: >-
-      vms_ids=$(az vm list -g my_rg --query "[].id" -o tsv)
+      vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
                               az vm deallocate --ids ${vms_ids}
                               az vm generalize --ids ${vms_ids}
-                              az vm capture --ids ${vms_ids} --vhd-name-prefix my_prefix
+                              az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - name: --ids
     isRequired: False
@@ -759,9 +761,9 @@ children:
   htmlId: get-instance-view
   examples:
   - title: Use resource group and name to get instance view information of a VM.
-    code: az vm get-instance-view -g my_rg -n my_vm
+    code: az vm get-instance-view -g MyResourceGroup -n MyVm
   - title: Get instance view by Ids
-    code: az vm get-instance-view --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm get-instance-view --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -814,9 +816,9 @@ children:
   - title: List all VMs.
     code: az vm list
   - title: List all VMs by resource group.
-    code: az vm list -g my_rg
+    code: az vm list -g MyResourceGroup
   - title: List all VMs by resource group with details.
-    code: az vm list -g my_rg -d
+    code: az vm list -g MyResourceGroup -d
   parameters:
   - name: --resource-group -g
     isRequired: False
@@ -863,9 +865,9 @@ children:
   htmlId: list-ip-addresses
   examples:
   - title: Get the IP addresses for a VM.
-    code: az vm list-ip-addresses -g my_rg -n my_vm
+    code: az vm list-ip-addresses -g MyResourceGroup -n MyVm
   - title: Get IP addresses for VMs by Ids
-    code: az vm list-ip-addresses --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm list-ip-addresses --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1002,9 +1004,9 @@ children:
   htmlId: list-vm-resize-options
   examples:
   - title: List all available VM sizes for resizing.
-    code: az vm list-vm-resize-options -g my_rg -n my_vm
+    code: az vm list-vm-resize-options -g MyResourceGroup -n MyVm
   - title: List all available VM sizes for resizing by VM Ids
-    code: az vm list-vm-resize-options --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm list-vm-resize-options --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1055,11 +1057,11 @@ children:
   htmlId: open-port
   examples:
   - title: Open all ports on a VM to inbound traffic.
-    code: az vm open-port -g my_rg -n myVm --port *
+    code: az vm open-port -g MyResourceGroup -n MyVm --port *
   - title: Open a range of ports on a VM to inbound traffic with the highest priority.
-    code: az vm open-port -g my_rg -n myVm --port 80-100 --priority 100
+    code: az vm open-port -g MyResourceGroup -n MyVm --port 80-100 --priority 100
   - title: Open all ports for multiple VMs by Ids
-    code: az vm open-port --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm open-port --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --port
     isRequired: True
@@ -1127,9 +1129,9 @@ children:
   htmlId: redeploy
   examples:
   - title: Redeploy a VM.
-    code: az vm redeploy -g my_rg -n my_vm
+    code: az vm redeploy -g MyResourceGroup -n MyVm
   - title: Redeploy VMs by VM Ids
-    code: az vm redeploy --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm redeploy --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1180,9 +1182,9 @@ children:
   htmlId: resize
   examples:
   - title: Resize a VM.
-    code: az vm resize -g my_rg -n myVm --size Standard_DS3_v2
+    code: az vm resize -g MyResourceGroup -n MyVm --size Standard_DS3_v2
   - title: Resize VMs by VM Ids
-    code: az vm redeploy --size Standard_DS3_v2 --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm redeploy --size Standard_DS3_v2 --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --size
     isRequired: True
@@ -1237,9 +1239,9 @@ children:
   htmlId: restart
   examples:
   - title: Restart a VM.
-    code: az vm restart -g my_rg -n my_vm
+    code: az vm restart -g MyResourceGroup -n MyVm
   - title: Restart VM by by VM Ids
-    code: az vm restart --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm restart --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1290,9 +1292,9 @@ children:
   htmlId: show
   examples:
   - title: Show information about a VM.
-    code: az vm show -g my_rg -n myVm -d
+    code: az vm show -g MyResourceGroup -n MyVm -d
   - title: Show VM details by by VM Ids
-    code: az vm show -d --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm show -d --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --show-details -d
     isRequired: False
@@ -1347,9 +1349,9 @@ children:
   htmlId: start
   examples:
   - title: Start a stopped VM.
-    code: az vm start -g my_rg -n my_vm
+    code: az vm start -g MyResourceGroup -n MyVm
   - title: Start stopped VMs by by VM Ids
-    code: az vm start --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm start --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1400,9 +1402,9 @@ children:
   htmlId: stop
   examples:
   - title: Stop a running VM.
-    code: az vm stop -g my_rg -n my_vm
+    code: az vm stop -g MyResourceGroup -n MyVm
   - title: Stop running VMs by by VM Ids
-    code: az vm stop --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm stop --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1528,9 +1530,9 @@ children:
   htmlId: wait
   examples:
   - title: Wait until the VM is created.
-    code: az vm wait -g my_rg -n myVm --created
+    code: az vm wait -g MyResourceGroup -n MyVm --created
   - title: Wait until VMs are deleted by Ids
-    code: az vm wait --deleted --ids $(az vm list -g my_rg --query "[].id" -o tsv)
+    code: az vm wait --deleted --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - name: --ids
     isRequired: False
@@ -1610,11 +1612,11 @@ children:
 uid: az_vm
 name: 'Virtual Machines (VM) - az vm'
 description: ''
-summary: Provision Linux or Windows virtual machines in minutes.
+summary: Provision Linux or Windows virtual machines in seconds.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/0d6cff3e865e14780cccab1bbecfc7ab0a41bc56/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/20/2017 12:27:31 PM
-  ms.date: 2/20/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 2/21/2017 11:13:36 PM
+  ms.date: 2/21/2017
