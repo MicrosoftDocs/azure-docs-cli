@@ -167,6 +167,12 @@ az role assignment list --query [*].properties.roleDefinitionName
 
 > [!NOTE] If your account does not have sufficient permissions to assign a role, you see an error message. The message states your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
 
+## Set expiry on credentials
+
+`az ad sp reset-credentials`
+
+default is 1 year
+
 That's it! Your AD application and service principal are set up.  
 
 
