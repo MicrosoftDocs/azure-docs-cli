@@ -125,7 +125,7 @@
 ##### [Create](batch\application\package.pycliyml#create "az batch application package create")
 ##### [Delete](batch\application\package.pycliyml#delete "az batch application package delete")
 ##### [Show](batch\application\package.pycliyml#show "az batch application package show")
-#### [Sumamrys](batch\application\summary.pycliyml "az batch application summary")
+#### [Summarys](batch\application\summary.pycliyml "az batch application summary")
 ##### [List](batch\application\summary.pycliyml#list "az batch application summary list")
 ##### [Show](batch\application\summary.pycliyml#show "az batch application summary show")
 ### [Certificates](batch\certificate.pycliyml "az batch certificate")
