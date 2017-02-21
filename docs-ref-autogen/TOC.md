@@ -217,7 +217,7 @@
 ##### [Show](batch\task\file.pycliyml#show "az batch task file show")
 #### [Subtasks](batch\task\subtask.pycliyml "az batch task subtask")
 ##### [List](batch\task\subtask.pycliyml#list "az batch task subtask list")
-## [Cloud managment](cloud.pycliyml "az cloud")
+## [Cloud management](cloud.pycliyml "az cloud")
 ### [List](cloud.pycliyml#list "az cloud list")
 ### [Register](cloud.pycliyml#register "az cloud register")
 ### [Set](cloud.pycliyml#set "az cloud set")
