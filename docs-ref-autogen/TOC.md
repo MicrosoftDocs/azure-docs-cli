@@ -316,7 +316,7 @@
 ##### [Delete](iot\hub\policy.pycliyml#delete "az iot hub policy delete")
 ##### [List](iot\hub\policy.pycliyml#list "az iot hub policy list")
 ##### [Show](iot\hub\policy.pycliyml#show "az iot hub policy show")
-## [Key Vult](keyvault.pycliyml "az keyvault")
+## [Key Vault](keyvault.pycliyml "az keyvault")
 ### [Create](keyvault.pycliyml#create "az keyvault create")
 ### [Delete](keyvault.pycliyml#delete "az keyvault delete")
 ### [Delete-Policy](keyvault.pycliyml#delete-policy "az keyvault delete-policy")
