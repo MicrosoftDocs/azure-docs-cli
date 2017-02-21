@@ -30,25 +30,25 @@ on whatever platform you use.
 
 You should see the version number of Azure CLI and other dependent libraries installed on your computer.  
   
-If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli2.md#installation-troubleshooting) 
+If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli2.md#Installation%20Troubleshooting) 
 for guidance, or post a comment in the discussion at the bottom of that page for help.
 
 ## Log in to Azure
 
 Now that you have the Azure CLI 2.0 installed, your next step will be to securely connect it with your Azure account. Use the `az login` command to do this.
 
-3. Run the following command from the command-line.
+1. Run the following command from the command-line.
 
     ```azurecli
     az login
     ```
    This command will output a code to use in the next step. 
 
-  1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin) and enter the code.
+2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin) and enter the code.
   
-  2. At the prompt, log in using your Azure credentials.
+3. At the prompt, log in using your Azure credentials.
 
-  Now you can run commands from the Azure CLI 2.0 on the Azure resources and services available to your account.
+Now you can run commands from the Azure CLI 2.0 on the Azure resources and services available to your account.
 
 ## Create a Resource Group
 
@@ -324,7 +324,7 @@ Visit the [output formats](format-output-az-cli2.md) article to learn more about
 Often you want to be able to query for only those resources that meet a specific condition.  
 
 The `list` command has built-in support
-that makes it easy to filter resources by ResourceGroup name.  For example, you can pass either a `--ResourceGroup` or `--g` parameter
+that makes it easy to filter resources by ResourceGroup name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
 to a `list` command to only retrieve those resources within a specific resource group:
 
 ```azurecli
