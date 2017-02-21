@@ -37,13 +37,11 @@ az
 
 ## Windows
 
-Get Azure 2.0 CLI on Windows using `pip`. 
+Get Azure CLI 2.0 on Windows using `pip`. 
 
 If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend you install version 3.5.x.
 
-    Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.  
-
-    > Add Python 3.5 to your path during installation.
+Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.  After the install completes, add Python 3.5 to your PATH environment variable (the installer will prompt you).
 
 Check your Python installation from a command prompt.
 
@@ -66,7 +64,8 @@ az
 ## Linux Install
 
 If you don't have it, install [Python](https://www.python.org/downloads).
-  [!NOTE] We recommend Python 3.5.
+
+> [!NOTE] We recommend Python 3.5.
 
 You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
