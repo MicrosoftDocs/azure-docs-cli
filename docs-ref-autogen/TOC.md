@@ -1111,7 +1111,7 @@
 #### [Attach](vm\unmanaged-disk.pycliyml#attach "az vm unmanaged-disk attach")
 #### [Detach](vm\unmanaged-disk.pycliyml#detach "az vm unmanaged-disk detach")
 #### [List](vm\unmanaged-disk.pycliyml#list "az vm unmanaged-disk list")
-### [User](vm\user.pycliyml "az vm user")
+### [Users](vm\user.pycliyml "az vm user")
 #### [Delete](vm\user.pycliyml#delete "az vm user delete")
 #### [Reset-Ssh](vm\user.pycliyml#reset-ssh "az vm user reset-ssh")
 #### [Update](vm\user.pycliyml#update "az vm user update")
