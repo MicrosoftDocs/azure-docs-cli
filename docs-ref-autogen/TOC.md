@@ -5,8 +5,8 @@
 ## [Output formats](../docs-ref-conceptual/format-output-az-cli2.md)
 ## [Query](../docs-ref-conceptual/query-az-cli2.md)
 # Sample Scripts
-## [Virtual machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
-## [Web apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+## [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+## [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ## [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 # [Reference](index.pycliyml)
 ## [Configure](index.pycliyml#configure "az configure")
