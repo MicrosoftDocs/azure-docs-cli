@@ -39,19 +39,19 @@ az
 
 Get Azure 2.0 CLI on Windows using `pip`. 
 
-1. If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend you install version 3.5.x.
+If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend you install version 3.5.x.
 
     Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.  
 
     > Add Python 3.5 to your path during installation.
 
-    Check your Python installation from a command prompt.
+Check your Python installation from a command prompt.
 
 ```python
 python --version
 ```
 
-2. Install Azure CLI 2.0 using `pip`.
+Install Azure CLI 2.0 using `pip`.
 
 ```bash
 pip install azure-cli
@@ -65,10 +65,10 @@ az
 
 ## Linux Install
 
-1. If you don't have it, install [Python](https://www.python.org/downloads).
+If you don't have it, install [Python](https://www.python.org/downloads).
   [!NOTE] We recommend Python 3.5.
 
-2. You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
+You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
 ```bash
 sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
@@ -87,13 +87,13 @@ RedHat                     | gcc libffi-devel python-devel openssl-devel
 SUSE                       | gcc libffi-devel python-devel openssl-dev
 ```
 
-2. Install Azure CLI 2.0.
+Install Azure CLI 2.0.
 
 ```bash
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-3. Restart your shell.
+Restart your shell.
 
 ```bash
 exec -l $SHELL
