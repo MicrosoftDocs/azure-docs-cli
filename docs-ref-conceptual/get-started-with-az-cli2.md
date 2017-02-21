@@ -30,7 +30,7 @@ on whatever platform you use.
 
 You should see the version number of Azure CLI and other dependent libraries installed on your computer.  
   
-If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli2.md#Installation%20Troubleshooting) 
+If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli2.md#installation-troubleshooting) 
 for guidance, or post a comment in the discussion at the bottom of that page for help.
 
 ## Log in to Azure
