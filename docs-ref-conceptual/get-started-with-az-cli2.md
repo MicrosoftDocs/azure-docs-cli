@@ -54,7 +54,7 @@ Now you can run commands from the Azure CLI 2.0 on the Azure resources and servi
 
 Now that we've got everything set up, let's use the Azure CLI to create new resources within Azure.
 
-First let's create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you 
+First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you 
 want to logically group together.  For example, you might create a Resource Group for a particular application or project you
 are working on and add a virtual machine, a database and a CDN service within it.
 

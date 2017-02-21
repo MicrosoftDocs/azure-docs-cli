@@ -76,6 +76,7 @@ You add a password to this app object with the optional `--password {password}` 
 ```
 az ad app update --id 59db508a-3429-4094-a828-e8b4680fc790 --password "mypassword!"
 ```
+> [!WARNING] Please do NOT use the password above! You must create a password using the [Azure AD password rules and restrictions](/active-directory/active-directory-passwords-policy).
 
 Now, you can create the security principal with the basic `az ad sp create` command.
      
@@ -109,7 +110,7 @@ If you need to get this at any time, use the `az ad sp show` command, like this:
 az ad show --id {servicePrincipalName}
 ```
 
-You can log in as your new security principal by supplying the app ID (as the user name), the password, and a tenant ID. An Azure "tenant", in this case, is an ID associated with an instance of Azure AD. Get the tenant ID with the `az account list` command and copying the *tenantId* value from the returned JSON:
+You can log in as your new security principal by supplying the app ID (as the user name), the password, and a tenant ID. An Azure "tenant", in this case, is an ID associated with an instance of Azure AD. Get the tenant ID with the `az account list` command and copy the *tenantId* value from the returned JSON:
 
 ```azurecli
 az login --service-principal -u {appId} --password {password} --tenant {tenantId}
