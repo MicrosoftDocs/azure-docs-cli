@@ -151,7 +151,8 @@ my-login@MyLinuxVM:~$
 
 Let's now create a Windows Server 2012 R2 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
 
-Azure requires that you avoid using easily guessed usernames/passwords; there are specific rules for what characters can be used as well as the minimum length of both username and password.  Substitute your own username/password when running the following command:
+Azure requires that you avoid using easily guessed usernames/passwords; there are specific rules for what characters can be used as well as the minimum length of both username and password.  
+> [!NOTE] Substitute your own username/password when running the following command.
 
 ```azurecli
 az vm create -n MyWinVM -g MyResourceGroup --image Win2012R2Datacenter --admin-username adminku3r --admin-password p_l33mm0rd --size Standard_DS1_v2
@@ -180,6 +181,14 @@ mstsc /v:52.183.47.216
 ```
 
 You need to supply the same username/password combination you used when creating the VM to log in.
+
+Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use the Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
+
+```azurecli
+az vm create -g MyResourceGroup -n MyLinuxVM2 --image ubuntults --size Standard_DS1_v2 --data-disk-sizes-gb 10 20
+```
+
+The above command creates a new Linux VM, named MyLinuxVM2, in the resource group MyResourceGroup with 2 managed disks of sizes 10gb and 20gb attached to it.
 
 ## Creating other resources in Azure
 
@@ -212,7 +221,7 @@ az appservice web create -n MyWebApp43433 -g MyResourceGroup --plan MyAppService
 ```
 
 Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are 
-some popular Azure resource types and the corresponding Azure CLI create command to create them:
+some popular Azure resource types and the corresponding Azure CLI create commands to create them:
 
 ```
 Resource Type               Azure CLI create command
@@ -307,7 +316,7 @@ MyWinVM    MyResourceGroup  westus2
 ```
 
 The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This is useful when you 
-want to pipe the output into another text-based tool like grep). 
+want to pipe the output into another text-based tool like grep. 
 
 ```azurecli
 az vm list --output tsv
@@ -324,7 +333,7 @@ Visit the [output formats](format-output-az-cli2.md) article to learn more about
 Often you want to be able to query for only those resources that meet a specific condition.  
 
 The `list` command has built-in support
-that makes it easy to filter resources by ResourceGroup name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
+that makes it easy to filter resources by Resource Group name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
 to a `list` command to only retrieve those resources within a specific resource group:
 
 ```azurecli
@@ -428,36 +437,6 @@ To get help with the command to create a VM, use:
 ```azurecli
 az vm create -h
 ```
-
-## Manage multiple Azure Subscriptions
-
-If you are brand new to Azure, you like have a single subscription and you can skip this section.
-
-If you have been using Azure for awhile, however, you might have created multiple Azure subscriptions to manage different projects under. If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription by running the `az account list` command to get a list of all subscriptions in your account. 
-
-```azurecli
-az account list --output table
-```
-
-```Output
-Name                                         CloudName    SubscriptionId                        State     IsDefault
--------------------------------------------  -----------  ------------------------------------  --------  -----------
-My Producton Subscription                    AzureCloud   1c638cf4-608f-4ee6-b680-c329e824c3a8  Enabled
-My DevTest Subscription                      AzureCloud   b6aa872b-f6a7-4cdc-bbc6-0fce6a8b9910  Enabled   True
-My Demos                                     AzureCloud   ff696af2-840a-43d1-af03-8f78cdfb5185  Enabled
-```
-
-The IsDefault property in the preceding table indicates the default subscription your Azure CLI commands run against.
-
-To select a different subscription as the default, use the `az account set` command. 
-
-```azurecli
-az account set --subscription "My Demos"
-```
-
-You can verify the change by running the `az account list --output table` command again.
-
-Once you set your default subscription, all subsequent Azure CLI commands run against this subscription.
 
 ## Send us your feedback
 
