@@ -65,7 +65,8 @@ az
 
 If you don't have it, install [Python](https://www.python.org/downloads).
 
-> [!NOTE] We recommend Python 3.5.
+> [!NOTE]
+> We recommend Python 3.5.
 
 You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
