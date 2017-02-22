@@ -4,7 +4,7 @@ description: Learn how to create a service principal for your app or service wit
 keywords: Azure CLI 2.0, Azure Active Directory, Azure Active directory, AD, RBAC
 author: erickson-doug
 manager: douge
-ms.date: 02/20/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
