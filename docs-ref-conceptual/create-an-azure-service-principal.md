@@ -16,7 +16,8 @@ ms.assetid: fab89cb8-dac1-4e21-9d34-5eadd5213c05
 If you plan to manage your app or service with Azure CLI 2.0, you should run it under an Azure Active Directory (AAD) service principal, rather than your own credentials.  This topic steps you through creating a security principal with Azure CLI 2.0.
 
 
-> [!NOTE] You can also create a service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
+> [!NOTE]
+> You can also create a service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
 
 ## What is a 'service principal'?
 
