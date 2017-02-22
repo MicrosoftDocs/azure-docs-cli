@@ -152,7 +152,9 @@ my-login@MyLinuxVM:~$
 Let's now create a Windows Server 2012 R2 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
 
 Azure requires that you avoid using easily guessed usernames/passwords; there are specific rules for what characters can be used as well as the minimum length of both username and password.  
-> [!NOTE] Substitute your own username/password when running the following command.
+
+> [!NOTE]
+> Substitute your own username/password when running the following command.
 
 ```azurecli
 az vm create -n MyWinVM -g MyResourceGroup --image Win2012R2Datacenter --admin-username adminku3r --admin-password p_l33mm0rd --size Standard_DS1_v2
