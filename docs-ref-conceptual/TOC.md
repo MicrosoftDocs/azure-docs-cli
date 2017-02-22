@@ -2,6 +2,7 @@
 ## [Install](install-az-cli2.md)
 ## [Get started](get-started-with-az-cli2.md)
 ## [Authenticate](authenticate-az-cli2.md)
+### [Create a service principal](create-an-azure-service-principal.md)
 ## [Output formats](format-output-az-cli2.md)
 ## [Query](query-az-cli2.md)
 # Sample Scripts
