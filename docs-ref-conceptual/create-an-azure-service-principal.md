@@ -136,14 +136,16 @@ It's a good security practice to review the permissions and update the password 
 For example, we can reset the expiry for the service principal credentials to a new value. (The default expiration is 1 year.) Here, we set it to expire in 2 years.
 
 ```azurecli
-az ad sp reset-credentials  --years 2
+az ad sp reset-credentials --name {appId} --password {current-password} --years 2
 ```
 
 Or we can assign a new password:
 
 ```azurecli
-az ad sp reset-credentials --password {my-new-password}
+az ad sp reset-credentials --name {appId} --password {my-new-password}
 ```
+
+If no value for `--password` is provided, a new one is generated for you. 
 
 
 
