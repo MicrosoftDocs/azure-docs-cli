@@ -33,7 +33,13 @@ az login -u <username> -p <password>
 
 ## Logging in with a service principal
 
-Service principals are like user accounts to which you can apply rules using Azure Active Directory.  Authenticating with a service principal is the best way to secure the usage of your Azure resources from either your scripts or applications that manipulate resources.  You define the roles you want your users to have via the `az role` set of commands.  You can learn more and see examples of service principal roles in our [az role reference articles](https://docs.microsoft.com/cli/azure/role.md).
+Service principals are like user accounts to which you can apply rules using Azure Active Directory.
+Authenticating with a service principal is the best way to secure the usage of your Azure resources
+from either your scripts or applications that manipulate resources.
+You define the roles you want your users to have via the `az role` set of commands.
+You can learn more and see examples of service principal roles in our [az role reference articles](https://docs.microsoft.com/cli/azure/role.md).
+
+1. If you don't already have a service principal, [create one](create-an-azure-service-principal.md).
 
 1. Log in with the service principal.
 
