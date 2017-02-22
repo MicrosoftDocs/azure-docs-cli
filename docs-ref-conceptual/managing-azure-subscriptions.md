@@ -1,6 +1,6 @@
 ## Manage multiple Azure Subscriptions
 
-If you are brand new to Azure, you likely have a single subscription. But if you have been using Azure for a while, you might have created multiple Azure subscriptions to manage different projects etc. If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription by running the `az account list` command to get a list of all subscriptions in your account and setting the default.
+If you are brand new to Azure, you most probably only have a single subscription. But if you have been using Azure for a while, you might have created multiple Azure subscriptions to manage different projects etc. If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription by running the `az account list` command to get a list of all subscriptions in your account and setting the default.
 
 ```azurecli
 az account list --output table
