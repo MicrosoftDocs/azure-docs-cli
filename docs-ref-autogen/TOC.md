@@ -2,6 +2,7 @@
 ## [Install](../docs-ref-conceptual/install-az-cli2.md)
 ## [Get started](../docs-ref-conceptual/get-started-with-az-cli2.md)
 ## [Authenticate](../docs-ref-conceptual/authenticate-az-cli2.md)
+### [Create a service principal](../docs-ref-conceptual/create-an-azure-service-principal.md)
 ## [Output formats](../docs-ref-conceptual/format-output-az-cli2.md)
 ## [Query](../docs-ref-conceptual/query-az-cli2.md)
 # Sample Scripts
