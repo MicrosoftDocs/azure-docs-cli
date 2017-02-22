@@ -37,7 +37,7 @@ for guidance, or post a comment in the discussion at the bottom of that page for
 
 Now that you have the Azure CLI 2.0 installed, your next step will be to securely connect it with your Azure account. Use the `az login` command to do this.
 
-1. Run the following command from the command-line.
+1. Run the following command from the command line.
 
     ```azurecli
     az login
