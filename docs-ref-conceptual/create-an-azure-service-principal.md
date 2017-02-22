@@ -66,13 +66,13 @@ Your results should look similar to this (but with values you supplied):
   "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 }
 ```
-You can now login as your new security principal for your app, with the *appId* and *password* you provided.  You will also supply the *tenant* GUID value from the results. 
+You can now login as your new service principal for your app, with the *appId* and *password* you provided.  You will also supply the *tenant* GUID value from the results. 
 
 ```azurecli
 az login --service-principal -u {appId} --password {password} --tenant {tenant}
 ``` 
 
-Run this command from a new CLI prompt and confirm that you are logged in as the security principal. You should see something like this:
+Run this command from a new CLI prompt and confirm that you are logged in as the service principal. You should see something like this:
 
 ```
 [
@@ -96,9 +96,9 @@ Congratulations! You can use the `name`, `password`, and `tenant` as the credent
 ## Managing roles 
 
 > [!NOTE]
-> Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and security principals. Roles have sets of permissions associated with them, which determine the resources a principal can read, access, write, or manage. For more details on on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
+> Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals. Roles have sets of permissions associated with them, which determine the resources a principal can read, access, write, or manage. For more details on on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
 
-You can add additional roles to your security principal with the `az ad sp create-for-rbac` command as well.
+You can add additional roles to your service principal with the `az ad sp create-for-rbac` command as well.
 
 ```azurecli
 az ad sp create-for-rbac --name {appId} --password "{strong password here}" --role {rolename}
@@ -110,7 +110,7 @@ And delete them with:
 az role assignment delete --assignee {appId} --role {rolename}
 ```
 
-The default role for a security principal is **Contributor**, but it may not be the best choice depending on the scope of your app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and can be a good choice for read-only apps. You can view details on role-specific permissions or create custom ones through the Azure portal.
+The default role for a service principal is **Contributor**, but it may not be the best choice depending on the scope of your app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and can be a good choice for read-only apps. You can view details on role-specific permissions or create custom ones through the Azure portal.
 
 In this example, we add the **Reader** role to our prior example, and delete the **Contributor** one:
 
