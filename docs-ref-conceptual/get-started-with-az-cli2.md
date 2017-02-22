@@ -182,7 +182,7 @@ mstsc /v:52.183.47.216
 
 You need to supply the same username/password combination you used when creating the VM to log in.
 
-Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use the Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
+Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
 
 ```azurecli
 az vm create -g MyResourceGroup -n MyLinuxVM2 --image ubuntults --size Standard_DS1_v2 --data-disk-sizes-gb 10 20
