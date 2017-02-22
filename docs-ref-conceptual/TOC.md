@@ -4,6 +4,7 @@
 ## [Authenticate](authenticate-az-cli2.md)
 ## [Output formats](format-output-az-cli2.md)
 ## [Query](query-az-cli2.md)
+## [Managing Subscriptions](managing-azure-subscriptions.md)
 # Sample Scripts
 ## [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ## [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
