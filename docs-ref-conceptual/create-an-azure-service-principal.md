@@ -26,7 +26,7 @@ Right now, Azure CLI 2.0 only supports the creation of password-based authentica
 
 ## Verify your own permission level
 
-First, you must have sufficient permissions in both your Azure Active Directory and your Azure subscription. Specifically, you must be able to create an app in the Active Directory, and assign the service principal to a role. 
+First, you must have sufficient permissions in both your Azure Active Directory and your Azure subscription. Specifically, you must be able to create an app in the Active Directory, and assign a role to the service principal” . 
 
 The easiest way to check whether your account has adequate permissions is through the portal. See [Check required permission in portal](/azure/azure-resource-manager/resource-group-create-service-principal-portal.md#required-permissions).
 
@@ -52,7 +52,7 @@ Logged in? Great! Let's create the service principal. To do that, use the `az ad
  > Please do NOT create a simple, insecure password! You should create a password using the [Azure AD password rules and restrictions](/active-directory/active-directory-passwords-policy) guidance.
 
 ```azurecli
-az ad sp create-for-rbac --name {appId} --password "{strong password here}" 
+az ad sp create-for-rbac --name {URL or display name of app} --password "{strong password here}" 
 ``` 
 
 Your results should look similar to this (but with values you supplied):
@@ -60,7 +60,7 @@ Your results should look similar to this (but with values you supplied):
 ```
 {
   "appId": "59db508a-3429-4094-a828-e8b4680fc790",
-  "displayName": null,
+  "displayName": "WebApplication17089",
   "name": "https://webapplication17089.azurewebsites.net",
   "password": {the password you supplied displayed here},
   "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47"
