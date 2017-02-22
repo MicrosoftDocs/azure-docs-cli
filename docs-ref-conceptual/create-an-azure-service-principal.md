@@ -22,7 +22,7 @@ If you plan to manage your app or service with Azure and the Azure CLI 2.0, you 
 
 An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a very specific role, and very tightly controlled permissions to access your resources. It only needs to be able to do very specific things, unlike a general user identity, and it improves security if you only grant it the minimum permissions level needed to perform its management tasks. 
 
-Right now, Azure CLI 2.0 only supports password-based authentication credentials. In this topic, we'll cover creating a service principal with a specific password, and optionally assigning specific roles to it.
+Right now, Azure CLI 2.0 only supports the creation of password-based authentication credentials. In this topic, we'll cover creating a service principal with a specific password, and optionally assigning specific roles to it.
 
 ## Verify your own permission level
 
