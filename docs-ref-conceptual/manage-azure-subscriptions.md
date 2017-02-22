@@ -15,7 +15,7 @@ ms.assetid: 98fb955e-6dbf-47e2-80ac-170d6d95cb70
 
 If you are brand new to Azure, you probably only have a single subscription.
 But if you have been using Azure for a while, you might have created multiple Azure subscriptions.
-If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription
+If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription.
 
 1. Get a list of all subscriptions in your account.
 
