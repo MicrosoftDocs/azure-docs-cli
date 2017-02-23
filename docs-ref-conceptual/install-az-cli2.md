@@ -53,6 +53,9 @@ Install Azure CLI 2.0 using `pip`.
 pip install --user azure-cli
 ```
 
+> [!NOTE]
+> Add %APPDATA%\PythonXY\Scripts to your PATH. Where `X.Y` is your Python version (for example, `%APPDATA%\Python27\Scripts`).
+
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
 ## Docker
