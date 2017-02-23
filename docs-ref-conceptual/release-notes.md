@@ -69,14 +69,14 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 > Some of the command modules have a "-preview" postfix.
 > These command modules are still in preview and will become generally available in the future.
 
-We also have nightly builds of the CLI.
-For information see these instructions on [getting the nightly builds](https://github.com/Azure/azure-cli#nightly-builds),
+We also have nightly preview builds of the CLI.
+For information, see these instructions on [getting the nightly builds](https://github.com/Azure/azure-cli#nightly-builds),
 and these instructions on [developer setup and contributing code](https://github.com/Azure/azure-cli#developer-setup).
-Of course, these builds aren't covered by the SLA, so don't contact Microsoft support.
-You can report issues with nightly builds on our [github issues list](https://github.com/azure/azure-cli/issues).
-You can ask questions on [StackOverflow using the azure-cli tag](http://stackoverflow.com/questions/tagged/azure-cli)
-or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
-You can provide feedback from the command line, use `az feedback`.
+
+You can report issues with nightly preview builds in the following ways:
+- Report issues in our [github issues list](https://github.com/azure/azure-cli/issues)
+- Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
+- Provide feedback from the command line, use `az feedback`.
 
 ### Known issues
 
