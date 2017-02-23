@@ -50,7 +50,7 @@ Logged in? Great! Let's create the service principal. To do that, use the `az ad
  Any one of these values works as your *appID* in the following examples. Now, let's use `az ad sp create-for-rbac` to create a service principal that supports Azure RBAC roles.
 
  > [!WARNING] 
- > Don't create a simple, insecure password! Create a password using the [Azure AD password rules and restrictions](/active-directory/active-directory-passwords-policy) guidance.
+ > Don't create a simple, insecure password! Create a password using the [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
 
 ```azurecli
 az ad sp create-for-rbac --name {URL or display name of app} --password "{strong password here}" 
