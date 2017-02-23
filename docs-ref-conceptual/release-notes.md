@@ -65,7 +65,7 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 ```
 
 > [!Note]
-> Some of the command modules have a b*n* postfix.
+> Some of the command modules have a "b*n*" postfix.
 > These command modules are still in preview and will become generally available in the future.
 
 ### Known issues
