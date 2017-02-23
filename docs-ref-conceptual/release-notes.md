@@ -24,7 +24,7 @@ General availability applies to these command modules:
 - Networking service
 - Storage service
 
-The commands in these command modules can be used in production and will be supported by standard Microsoft SLA.
+The commands in these command modules can be used in production and are supported by standard Microsoft SLA.
 You can contact Microsoft customer support,
 open issues directly with them or at our github issues list
 or contact the product team at <contact info>.
