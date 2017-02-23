@@ -50,7 +50,7 @@ python --version
 Install Azure CLI 2.0 using `pip`.
 
 ```bash
-pip install azure-cli
+pip install --user azure-cli
 ```
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
@@ -65,6 +65,9 @@ docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
 
+> [!NOTE]
+> The Docker container does not support the `component` feature.
+
 ## Linux Prerequisites
 
 If you don't have it, install [Python](https://www.python.org/downloads).
@@ -75,15 +78,15 @@ If you don't have it, install [Python](https://www.python.org/downloads).
 Then, depending on your Linux distribution, install the required prerequisites.
 
 ```
-Platform                   | Prerequisites
----------------------------|---------------------------------------------
-Ubuntu 16.06 LTS or 15.10  | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-Ubuntu (other)             | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-Debian 8                   | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-Debian 7                   | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-CentOS                     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-RedHat                     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-SUSE                       | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
+Platform              | Prerequisites
+----------------------|---------------------------------------------
+Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+Debian 8              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Debian 7              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 ```
 
 ## Troubleshooting
