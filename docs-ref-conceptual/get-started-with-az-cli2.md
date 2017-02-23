@@ -151,13 +151,11 @@ my-login@MyLinuxVM:~$
 
 Let's now create a Windows Server 2012 R2 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
 
-Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
-
 > [!NOTE]
-> Substitute your own username/password when running the following command:
+> You will be prompted to enter your username and password when running this command.
 
 ```azurecli
-az vm create -n MyWinVM -g MyResourceGroup --image Win2012R2Datacenter
+az vm create -n MyWinVM -g MyResourceGroup --image Win2016Datacenter
 ```
 
 The `az vm create` command output results once the VM has been fully created and is ready to be accessed and used.
@@ -187,7 +185,7 @@ Supply the same username/password combination you used when creating the VM to l
 Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
 
 ```azurecli
-az vm create -g MyResourceGroup -n MyLinuxVM2 --image ubuntults --data-disk-sizes-gb 10 20
+az vm create -g MyResourceGroup -n MyLinuxVM2 --image UbuntuLTS --data-disk-sizes-gb 10 20
 ```
 
 The preceding `az vm create` command creates a Linux VM, named MyLinuxVM2, in the resource group MyResourceGroup with two managed disks of sizes 10gb and 20gb attached to it.
