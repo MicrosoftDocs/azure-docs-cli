@@ -4,7 +4,7 @@ description: Get started with Azure CLI 2.0 on Linux, Mac, or Windows.
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 02/18/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -37,7 +37,7 @@ for guidance, or post a comment in the discussion at the bottom of that page for
 
 Now that you have the Azure CLI 2.0 installed, your next step will be to securely connect it with your Azure account. Use the `az login` command to do this.
 
-1. Run the following command from the command-line.
+1. Run the following command from the command line.
 
     ```azurecli
     az login
@@ -52,11 +52,11 @@ Now you can run commands from the Azure CLI 2.0 on the Azure resources and servi
 
 ## Create a Resource Group
 
-Now that we've got everything set up, let's use the Azure CLI to create new resources within Azure.
+Now that we've got everything set up, let's use the Azure CLI to create resources within Azure.
 
 First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you 
-want to logically group together.  For example, you might create a Resource Group for a particular application or project you
-are working on and add a virtual machine, a database and a CDN service within it.
+want to logically group together.  For example, you might create a Resource Group for an application or project
+and add a virtual machine, a database and a CDN service within it.
 
 Let's create a resource group named "MyResourceGroup" in the *westus2* region of Azure.  To do so type the following command:
 
@@ -151,8 +151,10 @@ my-login@MyLinuxVM:~$
 
 Let's now create a Windows Server 2012 R2 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
 
-Azure requires that you avoid using easily guessed usernames/passwords; there are specific rules for what characters can be used as well as the minimum length of both username and password.  
-> [!NOTE] Substitute your own username/password when running the following command.
+Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
+
+> [!NOTE]
+> Substitute your own username/password when running the following command:
 
 ```azurecli
 az vm create -n MyWinVM -g MyResourceGroup --image Win2012R2Datacenter --admin-username adminku3r --admin-password p_l33mm0rd --size Standard_DS1_v2
@@ -173,14 +175,14 @@ The `az vm create` command output results once the VM has been fully created and
 }
 ```
 
-Now log on to your newly created Windows Server VM using Remote Desktop and the public IP address of the VM (which is returned in the output above).  
+Now log on to your newly created Windows Server VM using Remote Desktop and the public IP address of the VM (which is returned in the output from `az vm create`).  
 If you are on a Windows-based system, you can do this from the command line using the `mstsc` command:
 
 ```azurecli
 mstsc /v:52.183.47.216
 ```
 
-You need to supply the same username/password combination you used when creating the VM to log in.
+Supply the same username/password combination you used when creating the VM to log in.
 
 Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
 
@@ -188,7 +190,7 @@ Azure also supports automatically scaled and managed storage disks for VMs that 
 az vm create -g MyResourceGroup -n MyLinuxVM2 --image ubuntults --size Standard_DS1_v2 --data-disk-sizes-gb 10 20
 ```
 
-The above command creates a new Linux VM, named MyLinuxVM2, in the resource group MyResourceGroup with 2 managed disks of sizes 10gb and 20gb attached to it.
+The preceding `az vm create` command creates a Linux VM, named MyLinuxVM2, in the resource group MyResourceGroup with two managed disks of sizes 10gb and 20gb attached to it.
 
 ## Creating other resources in Azure
 
@@ -206,10 +208,10 @@ We could also create a new private Virtual Network (commonly referred to as a "V
 az network vnet create -n MyVirtualNetwork -g MyResourceGroup --address-prefix 10.0.0.0/16
 ```
 
-What makes Azure and the Azure CLI really powerful is that we can use it not just to get cloud-based infrastructure but also to
+What makes Azure and the Azure CLI powerful is that we can use it not just to get cloud-based infrastructure but also to
 create managed platform services.  The managed platform services can also be combined with infrastructure to build even more powerful solutions.
 
-For example, you can use the Azure CLI to create an Azure AppService.  Azure AppService is a managed platform service that provides a great way to host web apps without having to worry about infrastructure.  After creating the Azure AppService you can create two new Azure Web Apps within the AppService using the following create commands:
+For example, you can use the Azure CLI to create an Azure AppService.  Azure AppService is a managed platform service that provides a great way to host web apps without having to worry about infrastructure.  After creating the Azure AppService, you can create two new Azure Web Apps within the AppService using the following create commands:
 
 ```azurecli
 # Create an Azure AppService that we can host any number of web apps within
@@ -239,7 +241,7 @@ SQL Database Server         az sql server create
 Document DB                 az documentdb create
 ```
 
-Visit the [Reference documentation](/azure/doc-ref-autogen) to learn more about the additional resource-specific parameters that you can pass to each of the above create commands, or learn about resource types you can create. 
+Visit the [Reference documentation](/azure/doc-ref-autogen) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create. 
 
 ## Useful tip: Optimizing create operations using --no-wait
 
@@ -250,7 +252,7 @@ not return until the VM is created and is ready for you to SSH or RDP into it.
 We use this approach because it makes it easier to write automation scripts that contain multiple steps with dependencies (and need a prior task to have completed successfully before continuing).
 
 If you do not need to wait on creation of a resource before continuing, you can use the `no-wait` option to start 
-a create action in the background and continue using the CLI for other commands.
+a create action in the background. You can continue using the CLI for other commands.
 
 For example, the following usage of the `az vm create` starts a VM deployment and then return much more quickly (and before the VM
 has fully booted):
@@ -302,7 +304,7 @@ The values returned are by default in JSON (only showing partial output for sake
 ]
 ```
 
-You can optionally modify the output format using the `--output` option.  Run the `az vm list` command below to see both the Linux and Windows Server VMs created earlier, along with the most common properties of a VM, using the easy to read *table* format option :
+You can optionally modify the output format using the `--output` option.  Run the `az vm list` command to see both the Linux and Windows Server VMs created earlier, along with the most common properties of a VM, using the easy to read *table* format option:
 
 ```azurecli
 az vm list --output table
@@ -315,7 +317,7 @@ MyLinuxVM  MyResourceGroup  westus2
 MyWinVM    MyResourceGroup  westus2
 ```
 
-The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This is useful when you 
+The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This format is useful when you 
 want to pipe the output into another text-based tool like grep. 
 
 ```azurecli
@@ -365,8 +367,7 @@ MYRESOURCEGROUP  Succeeded            MyWinVM    westus2     2ad8bdae-0971-4f7c-
 ```
 
 We could then choose to further refine the output by using the shaping capability of JMESPath queries to output different values
-as well.  For example, the following command will change the output so that instead of the standard columns displayed we
-retrieve the type of OS disk the VM is using to determine whether the OS is Linux or Windows based:
+as well.  For example, the following command retrieves the type of OS disk the VM is using to determine whether the OS is Linux or Windows based:
 
 ```azurecli
 az vm list --output table --query "[?contains(resourceGroup,'MY')].{ VMName:name,OSType:storageProfile.osDisk.osType }" 
@@ -379,7 +380,7 @@ MyLinuxVM  Linux
 MyWinVM    Windows
 ```
 
-The JMESPath support in Azure CLI is very powerful.  Learn more about how to use it in our [query](query-az-cli2.md) article.
+The JMESPath support in Azure CLI is powerful.  Learn more about how to use it in our [query](query-az-cli2.md) article.
 
 ## Deleting resources
 
@@ -390,7 +391,7 @@ any resource just like you can with the `create` command.
 az vm delete -n MyLinuxVM -g MyResourceGroup
 ```
 
-By default the CLI will prompt to confirm deletion.  You can suppress this prompt for automated scripts.
+By default the CLI prompts to confirm deletion.  You can suppress this prompt for automated scripts.
 
 ```Output
 Are you sure you want to perform this operation? (y/n): y
@@ -420,7 +421,7 @@ To learn more about ways to use the Azure CLI, check out our most common scripts
 
 ## Get help
 
-The Azure CLI has built-in help documentation which matches our web documentation that you can run from the command line:
+The Azure CLI has built-in help documentation, which matches our web documentation that you can run from the command line:
 
 ```azurecli
 az [command-group [command]] -h

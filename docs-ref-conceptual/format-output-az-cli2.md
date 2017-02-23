@@ -4,7 +4,7 @@ description: Use --output to format the output of Azure CLI 2.0 commands to tabl
 keywords: Azure CLI 2.0, output, format, table, list, json, Linux, Mac, Windows, OS X
 author: allclark
 manager: douge
-ms.date: 02/18/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure

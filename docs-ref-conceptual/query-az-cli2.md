@@ -4,7 +4,7 @@ description: Use --query to perform JMESPath queries on the output of Azure CLI 
 keywords: Azure CLI 2.0, JMESPath, query, Linux, Mac, Windows, OS X
 author: allclark
 manager: douge
-ms.date: 02/18/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure

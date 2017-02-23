@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure P
 author: allclark
 manager: douge
 ms.author: allclark
-ms.date: 02/03/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -65,7 +65,8 @@ az
 
 If you don't have it, install [Python](https://www.python.org/downloads).
 
-> [!NOTE] We recommend Python 3.5.
+> [!NOTE]
+> We recommend Python 3.5.
 
 You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
 
