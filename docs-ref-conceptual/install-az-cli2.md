@@ -17,7 +17,9 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 Install the new version of the Azure CLI today! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
 
-## macOS Install
+## Linux and macOS
+
+On Linux, you may need to install specific [prerequisite libraries](#linux-prerequisites).
 
 Install Azure CLI 2.0 with one `curl` command.
 
@@ -31,10 +33,6 @@ exec -l $SHELL
 ```
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```AzureCLI
-az
-```
-
 ## Windows
 
 Get Azure CLI 2.0 on Windows using `pip`. 
@@ -45,7 +43,7 @@ Visit the Python site and [download Python 3.5](https://www.python.org/downloads
 
 Check your Python installation from a command prompt.
 
-```python
+```bash
 python --version
 ```
 
@@ -55,54 +53,37 @@ Install Azure CLI 2.0 using `pip`.
 pip install azure-cli
 ```
 
-Run Azure CLI 2.0 from the command prompt with the 'az' command.
+Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```AzureCLI
-az
+## Docker
+
+We maintain a Docker image preconfigured with the Azure CLI.
+
+```bash
+docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
 ```
 
-## Linux Install
+See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+
+## Linux Prerequisites
 
 If you don't have it, install [Python](https://www.python.org/downloads).
 
 > [!NOTE]
 > We recommend Python 3.5.
 
-You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
+Then, depending on your Linux distribution, install the required prerequisites.
 
-```bash
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 ```
-```
-
 Platform                   | Prerequisites
 ---------------------------|---------------------------------------------
-OS X                       |
-Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
-Ubuntu (other)             | libssl-dev libffi-dev python-dev
-Debian 8                   | libssl-dev libffi-dev python-dev build-essential
-Debian 7                   | libssl-dev libffi-dev python-dev
-CentOS                     | gcc ibffi-devel python-devel openssl-devel
-RedHat                     | gcc libffi-devel python-devel openssl-devel
-SUSE                       | gcc libffi-devel python-devel openssl-dev
-```
-
-Install Azure CLI 2.0.
-
-```bash
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-Restart your shell.
-
-```bash
-exec -l $SHELL
-```
-
-Run Azure CLI 2.0 from the command prompt with the `az` command.
-
-```AzureCLI
-az
+Ubuntu 16.06 LTS or 15.10  | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Ubuntu (other)             | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+Debian 8                   | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Debian 7                   | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+CentOS                     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+RedHat                     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+SUSE                       | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 ```
 
 ## Troubleshooting
