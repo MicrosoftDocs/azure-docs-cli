@@ -70,7 +70,7 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 > These command modules are still in preview and will become generally available in the future.
 
 We also have nightly preview builds of the CLI.
-For information see these instructions on [getting the nightly builds](https://github.com/Azure/azure-cli#nightly-builds),
+For information, see these instructions on [getting the nightly builds](https://github.com/Azure/azure-cli#nightly-builds),
 and these instructions on [developer setup and contributing code](https://github.com/Azure/azure-cli#developer-setup).
 
 You can report issues with nightly preview builds in the following ways:
