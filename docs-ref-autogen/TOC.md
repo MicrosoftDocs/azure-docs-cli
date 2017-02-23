@@ -6,6 +6,7 @@
 ## [Output formats](../docs-ref-conceptual/format-output-az-cli2.md)
 ## [Query](../docs-ref-conceptual/query-az-cli2.md)
 ## [Subscriptions](../docs-ref-conceptual/manage-azure-subscriptions.md)
+## [Release notes](../docs-ref-conceptual/release-notes.md)
 # Sample Scripts
 ## [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 ## [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
