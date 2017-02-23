@@ -1,7 +1,7 @@
 ---
 title: Azure CLI 2.0 release notes
 description: Learn about the latest updates to Azure CLI 2.0
-keywords: Azure CLI 2.0, JMESPath, release notes
+keywords: Azure CLI 2.0, release notes
 author: allclark
 manager: douge
 ms.date: 02/27/2017
