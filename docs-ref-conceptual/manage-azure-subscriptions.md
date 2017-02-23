@@ -1,7 +1,7 @@
 ---
-title: Get started with Azure CLI 2.0
-description: Get started with Azure CLI 2.0 on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
+title: Manage Azure subscriptions with Azure CLI 2.0
+description: Manage Azure subscriptions with Azure CLI 2.0 on Linux, Mac, or Windows.
+keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, subscription
 author: kamaljit
 manager: douge
 ms.date: 02/27/2017
@@ -11,7 +11,7 @@ ms.technology: azure
 ms.assetid: 98fb955e-6dbf-47e2-80ac-170d6d95cb70
 ---
 
-## Manage multiple Azure Subscriptions
+## Manage multiple Azure subscriptions
 
 If you are brand new to Azure, you probably only have a single subscription.
 But if you have been using Azure for a while, you might have created multiple Azure subscriptions.
