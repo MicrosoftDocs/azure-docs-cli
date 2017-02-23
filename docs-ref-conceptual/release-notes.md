@@ -24,12 +24,13 @@ General availability applies to these command modules:
 - Networking service
 - Storage service
 
-The commands in these command modules can be used in production and are supported by standard Microsoft SLA.
-You can contact Microsoft customer support,
-open issues directly with them or at our github issues list
-or contact the product team at <contact info>.
+These command modules can be used in production and are supported by standard Microsoft SLA.
+You can open issues directly with Microsoft support or on our [github issues list](https://github.com/azure/azure-cli/issues).
+For questions, reach out on [StackOverflow using the azure-cli tag](http://stackoverflow.com/questions/tagged/azure-cli),
+or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
+To provide feedback from the command line, use `az feedback`.
 
-These commands are stable and the syntax will not change in upcoming releases of this version of Azure CLI.
+The commands in these modules are stable and the syntax will not change in upcoming releases of this version of Azure CLI.
 
 To verify the version of the CLI, use `az --version`.
 The output lists the version of the CLI itself (0.1.2 in this release), the individual command modules,
@@ -65,8 +66,17 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 ```
 
 > [!Note]
-> Some of the command modules have a "b*n*" postfix.
+> Some of the command modules have a "-preview" postfix.
 > These command modules are still in preview and will become generally available in the future.
+
+We also have nightly builds of the CLI, 
+see [these instructions](https://github.com/Azure/azure-cli#nightly-builds) for more details,
+and these instructions on [developer setup and contributing code](https://github.com/Azure/azure-cli#developer-setup).
+Of course, these builds aren't covered by the SLA, so don't contact Microsoft support.
+You can report issues with nightly builds on our [github issues list](https://github.com/azure/azure-cli/issues),
+reach out on [StackOverflow using the azure-cli tag](http://stackoverflow.com/questions/tagged/azure-cli),
+contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com),
+or provide feedback from the command line, use `az feedback`.
 
 ### Known issues
 
