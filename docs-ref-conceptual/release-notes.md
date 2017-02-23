@@ -20,9 +20,9 @@ Version 0.1.2
 This release of Azure CLI 2.0 is the first "Generally Available" release.
 General availability applies to these command modules:
 - Container Service (acs)
-- Compute service (including Resource Manager, VM, VM Scale Sets, Managed Disks)
-- Networking service
-- Storage service
+- Compute (including Resource Manager, VM, VM Scale Sets, Managed Disks)
+- Networking
+- Storage
 
 These command modules can be used in production and are supported by standard Microsoft SLA.
 You can open issues directly with Microsoft support or on our [github issues list](https://github.com/azure/azure-cli/issues).
