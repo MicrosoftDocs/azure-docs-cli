@@ -81,6 +81,7 @@
 ##### [Delete](appservice\web\source-control.pycliyml#delete "az appservice web source-control delete")
 ##### [Show](appservice\web\source-control.pycliyml#show "az appservice web source-control show")
 ##### [Sync](appservice\web\source-control.pycliyml#sync "az appservice web source-control sync")
+##### [Update-Token](appservice\web\source-control.pycliyml#update-token "az appservice web source-control update-token")
 ## [Azure Active Directory](ad.pycliyml "az ad")
 ### [Applications](ad\app.pycliyml "az ad app")
 #### [Create](ad\app.pycliyml#create "az ad app create")

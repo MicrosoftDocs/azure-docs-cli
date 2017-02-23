@@ -119,6 +119,7 @@
 ##### [az appservice web source-control delete](appservice\web\source-control.pycliyml#delete)
 ##### [az appservice web source-control show](appservice\web\source-control.pycliyml#show)
 ##### [az appservice web source-control sync](appservice\web\source-control.pycliyml#sync)
+##### [az appservice web source-control update-token](appservice\web\source-control.pycliyml#update-token)
 #### [az appservice web start](appservice\web.pycliyml#start)
 #### [az appservice web stop](appservice\web.pycliyml#stop)
 ## [az batch](batch.pycliyml)
