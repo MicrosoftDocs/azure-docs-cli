@@ -19,7 +19,7 @@ Install the new version of the Azure CLI today! We've improved and updated it to
 
 ## Linux and macOS
 
-On Linux, you may need to install specific [prerequisite libraries](#linux-prerequisites).
+On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
 
 Install Azure CLI 2.0 with one `curl` command.
 
