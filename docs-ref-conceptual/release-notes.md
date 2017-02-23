@@ -17,7 +17,7 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 Version 0.1.2
 
-This is the first "Generally Available" release of Azure CLI 2.0.
+This release of Azure CLI 2.0 is the first "Generally Available" release.
 General availability applies to these command modules:
 - Container Service (acs)
 - Compute service (including Resource Manager, VM, VM Scale Sets, Managed Disks)
