@@ -13,11 +13,14 @@ ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 
 # Get started with Azure CLI 2.0
 
-The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources. It can be used on macOS, Linux, and Windows. 
+The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources.
+It can be used on macOS, Linux, and Windows. 
 
-Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line, and for building 
-automation scripts that work against the Azure Resource Manager.  This article helps get you started using it, and teaches
-you the core concepts behind it.
+Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line,
+and for building automation scripts that work against the Azure Resource Manager.
+This article helps get you started using it, and teaches you the core concepts behind it.
+
+For information about the latest release, see the [release notes](release-notes-az-cli.md).
 
 ## Install Azure CLI
 
@@ -102,10 +105,10 @@ The `az vm create` command returns output once the VM has been fully created and
   "fqdns": "",
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM",
   "location": "westus2",
-  "macAddress": "00-0D-3A-F7-40-B6",
+  "macAddress": "xx-xx-xx-xx-xx-xx",
   "powerState": "VM running",
-  "privateIpAddress": "10.0.0.4",
-  "publicIpAddress": "52.175.211.81",
+  "privateIpAddress": "xx.x.x.x",
+  "publicIpAddress": "xx.xxx.xxx.xx",
   "resourceGroup": "MyResourceGroup"
 }
 ```
@@ -113,7 +116,7 @@ The `az vm create` command returns output once the VM has been fully created and
 Now that the VM has been created, you can log on to your new Linux VM using **SSH** with the public IP address of the VM you created:
 
 ```azurecli
-ssh 52.175.202.122
+ssh xx.xxx.xxx.xxx
 ```
 
 ```Output
@@ -167,10 +170,10 @@ The `az vm create` command output results once the VM has been fully created and
   "fqdns": "",
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM",
   "location": "westus2",
-  "macAddress": "00-0D-3A-F7-78-41",
+  "macAddress": "xx-xx-xx-xx-xx-xx",
   "powerState": "VM running",
-  "privateIpAddress": "10.0.0.5",
-  "publicIpAddress": "52.183.47.216",
+  "privateIpAddress": "xx.x.x.x",
+  "publicIpAddress": "xx.xxx.xx.xxx",
   "resourceGroup": "MyResourceGroup"
 }
 ```
@@ -179,7 +182,7 @@ Now log on to your newly created Windows Server VM using Remote Desktop and the 
 If you are on a Windows-based system, you can do this from the command line using the `mstsc` command:
 
 ```azurecli
-mstsc /v:52.183.47.216
+mstsc /v:xx.xxx.xx.xxx
 ```
 
 Supply the same username/password combination you used when creating the VM to log in.
@@ -325,8 +328,8 @@ az vm list --output tsv
 ```
 
 ```
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       e4858940-f06d-4152-ad81-619903f61917
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       2ad8bdae-0971-4f7c-ad4a-afd097c7f480
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 Visit the [output formats](format-output-az-cli.md) article to learn more about the additional ways to list resources and format the output.
 
@@ -362,8 +365,8 @@ az vm list --output table --query "[?contains(resourceGroup,'MY')]"
 ```Output
 ResourceGroup    ProvisioningState    Name       Location    VmId
 ---------------  -------------------  ---------  ----------  ------------------------------------
-MYRESOURCEGROUP  Succeeded            MyLinuxVM  westus2     e4858940-f06d-4152-ad81-619903f61917
-MYRESOURCEGROUP  Succeeded            MyWinVM    westus2     2ad8bdae-0971-4f7c-ad4a-afd097c7f480
+MYRESOURCEGROUP  Succeeded            MyLinuxVM  westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MYRESOURCEGROUP  Succeeded            MyWinVM    westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 We could then choose to further refine the output by using the shaping capability of JMESPath queries to output different values
