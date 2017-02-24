@@ -23,14 +23,14 @@ you the core concepts behind it.
 
 The first step is to make sure you have the latest version of the Azure CLI installed:
 
-1. [Install Azure CLI 2.0](install-az-cli2.md)
+1. [Install Azure CLI 2.0](install-az-cli.md)
 on whatever platform you use.
 
 2. To verify the installation was successful, run `az --version` from your command line. 
 
 You should see the version number of Azure CLI and other dependent libraries installed on your computer.  
   
-If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli2.md#troubleshooting) 
+If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-az-cli.md#troubleshooting) 
 for guidance, or post a comment in the discussion at the bottom of that page for help.
 
 ## Log in to Azure
@@ -328,7 +328,7 @@ az vm list --output tsv
 None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       e4858940-f06d-4152-ad81-619903f61917
 None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       2ad8bdae-0971-4f7c-ad4a-afd097c7f480
 ```
-Visit the [output formats](format-output-az-cli2.md) article to learn more about the additional ways to list resources and format the output.
+Visit the [output formats](format-output-az-cli.md) article to learn more about the additional ways to list resources and format the output.
 
 ## Querying resources and shaping outputs
 
@@ -380,7 +380,7 @@ MyLinuxVM  Linux
 MyWinVM    Windows
 ```
 
-The JMESPath support in Azure CLI is powerful.  Learn more about how to use it in our [query](query-az-cli2.md) article.
+The JMESPath support in Azure CLI is powerful.  Learn more about how to use it in our [query](query-az-cli.md) article.
 
 ## Deleting resources
 
