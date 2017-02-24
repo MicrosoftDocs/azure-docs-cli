@@ -66,7 +66,7 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 ```
 
 > [!Note]
-> Some of the command modules have a "-preview" postfix.
+> Some of the command modules have a "b*n*" or "rc*n*" postfix.
 > These command modules are still in preview and will become generally available in the future.
 
 We also have nightly preview builds of the CLI.
