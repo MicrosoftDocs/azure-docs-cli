@@ -15,7 +15,7 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 ## February 27, 2017
 
-Version 0.1.2
+Version 2.0.0
 
 This release of Azure CLI 2.0 is the first "Generally Available" release.
 General availability applies to these command modules:
@@ -30,7 +30,7 @@ You can ask questions on [StackOverflow using the azure-cli tag](http://stackove
 or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
 You can provide feedback from the command line, use `az feedback`.
 
-The commands in these modules are stable and the syntax will not change in upcoming releases of this version of Azure CLI.
+The commands in these modules are stable and the syntax is not expected to change in upcoming releases of this version of Azure CLI.
 
 To verify the version of the CLI, use `az --version`.
 The output lists the version of the CLI itself (0.1.2 in this release), the individual command modules,
