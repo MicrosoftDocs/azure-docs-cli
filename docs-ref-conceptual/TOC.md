@@ -2,7 +2,7 @@
 ## [Install](install-az-cli.md)
 ## [Get started](get-started-with-az-cli.md)
 ## [Log in to Azure](authenticate-az-cli.md)
-### [Log in with a service principal](create-an-azure-service-principal-az-cli.md)
+### [Create a service principal](create-an-azure-service-principal-az-cli.md)
 ## [Output formats](format-output-az-cli.md)
 ## [Query](query-az-cli.md)
 ## [Subscriptions](manage-azure-subscriptions-az-cli.md)
