@@ -68,7 +68,7 @@ Once the resource group has been created, the `az group create` command outputs 
 
 ```Output
 {
-  "id": "/subscriptions/79d35904-6ebb-471a-93c0-4e81261b8077/resourceGroups/MyResourceGroup",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup",
   "location": "westus2",
   "managedBy": null,
   "name": "MyResourceGroup",
@@ -100,7 +100,7 @@ The `az vm create` command returns output once the VM has been fully created and
 ```Output
 {
   "fqdns": "",
-  "id": "/subscriptions/79d35904-6ebb-471a-93c0-4e81261b8077/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM",
   "location": "westus2",
   "macAddress": "00-0D-3A-F7-40-B6",
   "powerState": "VM running",
@@ -165,7 +165,7 @@ The `az vm create` command output results once the VM has been fully created and
 ```Output
 {
   "fqdns": "",
-  "id": "/subscriptions/79d35904-6ebb-471a-93c0-4e81261b8077/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM",
   "location": "westus2",
   "macAddress": "00-0D-3A-F7-78-41",
   "powerState": "VM running",
@@ -284,7 +284,7 @@ The values returned are by default in JSON (only showing partial output for sake
     "hardwareProfile": {
       "vmSize": "Standard_DS1_v2"
     },
-    "id": "/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010",
+    "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010",
     "instanceView": null,
     "licenseType": null,
     "location": "westus2",
@@ -292,7 +292,7 @@ The values returned are by default in JSON (only showing partial output for sake
     "networkProfile": {
       "networkInterfaces": [
         {
-          "id": "/subscriptions/ff696af2-840a-43d1-af03-8f78cdfb5185/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/DemoVM010VMNic",
+          "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/DemoVM010VMNic",
           "primary": null,
           "resourceGroup": "MyResourceGroup"
         }
@@ -325,8 +325,8 @@ az vm list --output tsv
 ```
 
 ```
-None    None            /subscriptions/79d35904-6ebb-471a-93c0-4e81261b8077/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       e4858940-f06d-4152-ad81-619903f61917
-None    None            /subscriptions/79d35904-6ebb-471a-93c0-4e81261b8077/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       2ad8bdae-0971-4f7c-ad4a-afd097c7f480
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       e4858940-f06d-4152-ad81-619903f61917
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       2ad8bdae-0971-4f7c-ad4a-afd097c7f480
 ```
 Visit the [output formats](format-output-az-cli2.md) article to learn more about the additional ways to list resources and format the output.
 
