@@ -17,9 +17,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 
 Install the new version of the Azure CLI today! We've improved and updated it to provide a great native command line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows.
 
-## Linux and macOS
-
-On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
+## macOS
 
 Install Azure CLI 2.0 with one `curl` command.
 
@@ -58,6 +56,22 @@ pip install --user azure-cli
 
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
+## Linux
+
+On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
+
+Install Azure CLI 2.0 with one `curl` command.
+
+```bash
+curl -L https://aka.ms/InstallAzureCli | bash
+```
+You may have to restart your command shell for some changes to take effect.
+
+```bash
+exec -l $SHELL
+```
+Run Azure CLI 2.0 from the command prompt with the `az` command.
+
 ## Docker
 
 We maintain a Docker image preconfigured with the Azure CLI.
@@ -70,6 +84,35 @@ See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) 
 
 > [!NOTE]
 > The Docker container does not support the `component` feature.
+
+## apt-get
+
+For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
+
+First, modify your sources list.
+
+**32 bit system**
+
+```bash
+$ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
+
+**64 bit system**
+
+```bash
+$ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
+
+Then, run the following.
+
+```bash
+$ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+$ sudo apt-get install apt-transport-https
+$ sudo apt-get update && sudo apt-get install azure-cli
+```
+
+> [!NOTE]
+> This install does not support the component feature.
 
 ## Linux Prerequisites
 
