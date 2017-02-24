@@ -78,5 +78,3 @@ You can report issues with nightly preview builds in the following ways:
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
 - Provide feedback from the command line, use `az feedback`.
 
-### Known issues
-
