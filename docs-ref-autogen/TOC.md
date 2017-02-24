@@ -1123,7 +1123,7 @@
 ### [Delete-Instances](vmss.pycliyml#delete-instances "az vmss delete-instances")
 ### [Get-Instance-View](vmss.pycliyml#get-instance-view "az vmss get-instance-view")
 ### [List](vmss.pycliyml#list "az vmss list")
-### [List_Instance_Connection_Info](vmss.pycliyml#list_instance_connection_info "az vmss list_instance_connection_info")
+### [List-Instance-Connection-Info](vmss.pycliyml#list-instance-connection-info "az vmss list-instance-connection-info")
 ### [List-Instances](vmss.pycliyml#list-instances "az vmss list-instances")
 ### [List-Skus](vmss.pycliyml#list-skus "az vmss list-skus")
 ### [Reimage](vmss.pycliyml#reimage "az vmss reimage")
