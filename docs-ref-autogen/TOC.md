@@ -1,7 +1,7 @@
 # [Overview](../docs-ref-conceptual/overview.md)
 ## [Install](../docs-ref-conceptual/install-az-cli.md)
 ## [Get started](../docs-ref-conceptual/get-started-with-az-cli.md)
-## [Log in to Azure](../docs-ref-conceptual/authenticate-az-cli.md)
+## [Log in](../docs-ref-conceptual/authenticate-az-cli.md)
 ### [Create a service principal](../docs-ref-conceptual/create-an-azure-service-principal-az-cli.md)
 ## [Output formats](../docs-ref-conceptual/format-output-az-cli.md)
 ## [Query](../docs-ref-conceptual/query-az-cli.md)
