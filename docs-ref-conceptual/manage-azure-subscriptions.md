@@ -26,9 +26,9 @@ If so, you can configure Azure CLI 2.0 to execute commands against a particular 
     ```Output
     Name                                         CloudName    SubscriptionId                        State     IsDefault
     -------------------------------------------  -----------  ------------------------------------  --------  -----------
-    My Production Subscription                    AzureCloud   {subscription-id-here}  Enabled
-    My DevTest Subscription                      AzureCloud   {subscription-id-here}  Enabled   True
-    My Demos                                     AzureCloud   {subscription-id-here}  Enabled
+    My Production Subscription                    AzureCloud   XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX  Enabled
+    My DevTest Subscription                      AzureCloud   XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX  Enabled   True
+    My Demos                                     AzureCloud   XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX  Enabled
     ```
 
 1. Set the default.
