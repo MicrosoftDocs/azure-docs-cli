@@ -278,8 +278,6 @@
 ### [Regenerate-Key](documentdb.pycliyml#regenerate-key "az documentdb regenerate-key")
 ### [Show](documentdb.pycliyml#show "az documentdb show")
 ### [Update](documentdb.pycliyml#update "az documentdb update")
-## [Help content](taskhelp.pycliyml "az taskhelp")
-### [Deploy-Arm-Template](taskhelp.pycliyml#deploy-arm-template "az taskhelp deploy-arm-template")
 ## [IoT](iot.pycliyml "az iot")
 ### [Devices](iot\device.pycliyml "az iot device")
 #### [Create](iot\device.pycliyml#create "az iot device create")
