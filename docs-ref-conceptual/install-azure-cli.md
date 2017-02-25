@@ -88,9 +88,7 @@ docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
 
 > [!NOTE]
-> The Docker container does not support the `component` feature.
-
-If you don't have it, install [Python](https://www.python.org/downloads).
+> The Docker image does not support the `component` feature.
 
 ## apt-get
 
