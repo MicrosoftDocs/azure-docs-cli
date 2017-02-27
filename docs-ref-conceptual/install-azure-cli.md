@@ -20,7 +20,7 @@ We've improved and updated it to provide a great native command line experience 
 It can be used on macOS, Linux, and Windows.
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
-## macOS Install
+## macOS
 
 Install Azure CLI 2.0 with one `curl` command.
 
@@ -34,10 +34,6 @@ exec -l $SHELL
 ```
 Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-```AzureCLI
-az
-```
-
 ## Windows
 
 Get Azure CLI 2.0 on Windows using `pip`. 
@@ -50,64 +46,98 @@ After the install completes, add Python 3.5 to your PATH environment variable (t
 
 Check your Python installation from a command prompt.
 
-```python
+```bash
 python --version
 ```
 
 Install Azure CLI 2.0 using `pip`.
 
 ```bash
-pip install azure-cli
+pip install --user azure-cli
 ```
+
+> [!NOTE]
+> Add `%APPDATA%\PythonXY\Scripts` to your PATH. Where `X.Y` is your Python version (for example, `%APPDATA%\Python27\Scripts`).
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
-```AzureCLI
-az
+## Linux
+
+On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
+
+Install Azure CLI 2.0 with one `curl` command.
+
+```bash
+curl -L https://aka.ms/InstallAzureCli | bash
+```
+You may have to restart your command shell for some changes to take effect.
+
+```bash
+exec -l $SHELL
+```
+Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+## Docker
+
+We maintain a Docker image preconfigured with the Azure CLI.
+
+```bash
+docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
 ```
 
-## Linux Install
+See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+
+> [!NOTE]
+> The Docker image does not support the `component` feature.
+
+## apt-get
+
+For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
+
+First, modify your sources list.
+
+**32 bit system**
+
+```bash
+$ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
+
+**64 bit system**
+
+```bash
+$ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+```
+
+Then, run the following.
+
+```bash
+$ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+$ sudo apt-get install apt-transport-https
+$ sudo apt-get update && sudo apt-get install azure-cli
+```
+
+> [!NOTE]
+> This install does not support the `component` feature.
+
+## Linux Prerequisites
 
 If you don't have it, install [Python](https://www.python.org/downloads).
 
 > [!NOTE]
 > We recommend Python 3.5.
 
-You may need to install specific prerequisite libraries. On Debian/Ubuntu systems, use `apt-get` to get them.
+Then, depending on your Linux distribution, install the required prerequisites.
 
-```bash
-sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
 ```
-```
-
-Platform                   | Prerequisites
----------------------------|---------------------------------------------
-OS X                       |
-Ubuntu 16.06 LTS or 15.10  | libssl-dev libffi-dev python-dev build-essential
-Ubuntu (other)             | libssl-dev libffi-dev python-dev
-Debian 8                   | libssl-dev libffi-dev python-dev build-essential
-Debian 7                   | libssl-dev libffi-dev python-dev
-CentOS                     | gcc ibffi-devel python-devel openssl-devel
-RedHat                     | gcc libffi-devel python-devel openssl-devel
-SUSE                       | gcc libffi-devel python-devel openssl-dev
-```
-
-Install Azure CLI 2.0.
-
-```bash
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-
-Restart your shell.
-
-```bash
-exec -l $SHELL
-```
-
-Run Azure CLI 2.0 from the command prompt with the `az` command.
-
-```AzureCLI
-az
+Platform              | Prerequisites
+----------------------|---------------------------------------------
+Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+Debian 8              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+Debian 7              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
 ```
 
 ## Troubleshooting
