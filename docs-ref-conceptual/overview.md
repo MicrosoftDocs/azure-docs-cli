@@ -22,6 +22,7 @@ az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
 Review the [Install article](install-azure-cli.md) to get Azure CLI 2.0 up and running on your system. Then read the [Get Started](get-started-with-azure-cli.md) article to begin using it.
+For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
 The following samples can help you learn how to perform common scenarios with Azure CLI 2.0:
 - [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fazure%2ftoc.json)
