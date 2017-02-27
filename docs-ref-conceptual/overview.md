@@ -1,37 +1,40 @@
 ---
-title: Azure CLI 2.0 (Preview)
-description: Overview of the Azure CLI 2.0 (Preview).
+title: Azure CLI 2.0
+description: Overview of the Azure CLI 2.0.
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
 author: allclark
 manager: douge
-ms.date: 02/03/2017
+ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 ---
 
-# Azure CLI 2.0 (Preview)
+# Overview of the Azure CLI 2.0
 
-There is a new CLI for Azure: the Azure CLI 2.0 (Preview), now available as a beta on [GitHub](http://github.com/azure/azure-cli).
-Azure CLI 2.0 (Preview) is applicable when you use the Resource Manager [deployment model](/azure/resource-manager-deployment-model).
-You can continue to use [Azure CLI](/azure/xplat-cli-install?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json)
-with either the classic or the Resource Manager deployment model.
+The Azure CLI 2.0 is Azure's new command-line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows. 
 
-Today Azure CLI 2.0 (Preview) supports these services, with more coming online:
-- Active Directory
-- App Service
-- Container Service
-- IoT Hub
-- Key Vault
-- Resource Manager
-- Redis Cache
-- Storage
-- Virtual Machines
-- Virtual Networks
+Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. Using the Azure CLI 2.0, you can create VMs within Azure as easily as typing the following command:
 
-> [!Note]
-> If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0 (Preview). 
+```azurecli
+az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
+```
 
-[Get started](get-started-with-az-cli2.md) with Azure CLI 2.0 (Preview) now.
+Review the [Install article](install-azure-cli.md) to get Azure CLI 2.0 up and running on your system. Then read the [Get Started](get-started-with-azure-cli.md) article to begin using it.
+
+The following samples can help you learn how to perform common scenarios with Azure CLI 2.0:
+- [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fazure%2ftoc.json)
+- [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+- [SQL Database](/azure/sql-database/sql-databsse-cli-samples?toc=%2fazure%2ftoc.json)
+
+A detailed [reference](/azure/doc-ref-autogen) is also available that documents how to use each individual Azure CLI 2.0 command.
+
+[Get started](get-started-with-azure-cli.md) with Azure CLI 2.0 now.
+
+
+> [!NOTE]
+> If you use the previous version of the CLI (Azure CLI), you can continue to use it.  If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
+
+
 

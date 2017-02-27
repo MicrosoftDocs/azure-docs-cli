@@ -1,3 +1,3 @@
 ---
-redirect_url: authenticate-az-cli2
+redirect_url: authenticate-azure-cli
 ---

@@ -1,6 +1,6 @@
 commandList:
 - name: az network nsg rule create
-  description: Create a new NSG rule.
+  description: Create an NSG rule.
   href: rule#create
 - name: az network nsg rule delete
   description: Delete an NSG rule.
@@ -24,7 +24,11 @@ source:
 children:
 - commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create a basic "Allow" NSG rule with the highest priority (that is, 100).  By default, source address and port are "*" and destination address is "*:80".
+    code: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --priority 100
+  - title: Create a "Deny" rule over TCP for a specific IP address range with the lowest priority (that is, 4096).
+    code: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --priority 4096 --source-address-prefix 208.130.28/24 --source-port-range 80 --destination-address-prefix * --destination-port-range 80 --access Deny --protocol Tcp --description "Deny from specific IP address range on 80."
   parameters:
   - name: --name -n
     isRequired: True
@@ -115,7 +119,7 @@ children:
   uid: az_network_nsg_rule_create
   name: az network nsg rule create
   description: ''
-  summary: Create a new NSG rule.
+  summary: Create an NSG rule.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -274,7 +278,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: update
-  examples: []
+  examples:
+  - title: Update an NSG rule with a new wildcard destination address prefix.
+    code: az network nsg rule update -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --destination-address-prefix *
   parameters:
   - name: --access
     isRequired: False
@@ -377,13 +383,13 @@ children:
   summary: Update an NSG rule.
   Metadata: {}
 uid: az_network_nsg_rule
-name: 'NSG rules - az network nsg rule'
+name: 'Network security group rules - az network nsg rule'
 description: ''
 summary: Manage NSG rules.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/76db1860f03b4a9586454bcae88d5322e6af6344/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 2/17/2017 10:27:56 PM
-  ms.date: 2/17/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+  updated_at: 2/21/2017 11:13:36 PM
+  ms.date: 2/21/2017
