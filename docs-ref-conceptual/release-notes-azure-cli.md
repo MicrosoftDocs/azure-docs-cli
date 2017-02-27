@@ -28,7 +28,7 @@ These command modules can be used in production and are supported by standard Mi
 You can open issues directly with Microsoft support or on our [github issues list](https://github.com/azure/azure-cli/issues).
 You can ask questions on [StackOverflow using the azure-cli tag](http://stackoverflow.com/questions/tagged/azure-cli),
 or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
-You can provide feedback from the command line, use `az feedback`.
+You can provide feedback from the command line with the `az feedback` command.
 
 The commands in these modules are stable and the syntax is not expected to change in upcoming releases of this version of Azure CLI.
 
@@ -76,5 +76,5 @@ and these instructions on [developer setup and contributing code](https://github
 You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
-- Provide feedback from the command line, use `az feedback`.
+- Provide feedback from the command line with the `az feedback` command.
 
