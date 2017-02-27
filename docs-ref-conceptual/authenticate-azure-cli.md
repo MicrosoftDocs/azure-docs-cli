@@ -39,7 +39,7 @@ from either your scripts or applications that manipulate resources.
 You define the roles you want your users to have via the `az role` set of commands.
 You can learn more and see examples of service principal roles in our [az role reference articles](https://docs.microsoft.com/cli/azure/role.md).
 
-1. If you don't already have a service principal, [create one](create-an-azure-service-principal-az-cli.md).
+1. If you don't already have a service principal, [create one](create-an-azure-service-principal-azure-cli.md).
 
 1. Log in with the service principal.
 

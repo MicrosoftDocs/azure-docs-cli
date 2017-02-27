@@ -1,3 +1,3 @@
 ---
-redirect_url: format-output-az-cli
+redirect_url: format-output-azure-cli
 ---

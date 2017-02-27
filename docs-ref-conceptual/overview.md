@@ -21,7 +21,7 @@ Azure CLI 2.0 is optimized for managing and administering Azure resources from t
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
-Review the [Install article](install-az-cli.md) to get Azure CLI 2.0 up and running on your system. Then read the [Get Started](get-started-with-az-cli.md) article to begin using it.
+Review the [Install article](install-azure-cli.md) to get Azure CLI 2.0 up and running on your system. Then read the [Get Started](get-started-with-azure-cli.md) article to begin using it.
 
 The following samples can help you learn how to perform common scenarios with Azure CLI 2.0:
 - [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fazure%2ftoc.json)
@@ -30,7 +30,7 @@ The following samples can help you learn how to perform common scenarios with Az
 
 A detailed [reference](/azure/doc-ref-autogen) is also available that documents how to use each individual Azure CLI 2.0 command.
 
-[Get started](get-started-with-az-cli.md) with Azure CLI 2.0 now.
+[Get started](get-started-with-azure-cli.md) with Azure CLI 2.0 now.
 
 
 > [!NOTE]
