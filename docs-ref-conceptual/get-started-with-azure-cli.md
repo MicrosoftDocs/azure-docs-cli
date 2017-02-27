@@ -89,13 +89,13 @@ Now that we have our resource group, let's create a Linux VM within it.
 You can create a Linux VM using the popular UbuntuLTS image with the following command:
 
 ```azurecli
-az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --size Standard_DS1_v2
+az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
 When you run the preceding command, the Azure CLI 2.0 looks for an SSH key pair stored under your ~/.ssh directory.  If you don't already have an SSH key pair stored there, you can ask the Azure CLI to automatically create one for you by passing the --generate-ssh-keys parameter:
 
 ```azurecli
-az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --size Standard_DS1_v2 --generate-ssh-keys
+az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --generate-ssh-keys
 ```
 
 The `az vm create` command returns output once the VM has been fully created and is ready to be accessed and used. The `az vm create` command outputs several properties of the newly created VM including its public IP address:
@@ -157,10 +157,10 @@ Let's now create a Windows Server 2012 R2 based VM using the `az vm create` comm
 Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
 
 > [!NOTE]
-> Substitute your own username/password when running the following command:
+> You will be prompted to enter your username and password when running this command.
 
 ```azurecli
-az vm create -n MyWinVM -g MyResourceGroup --image Win2012R2Datacenter --admin-username adminku3r --admin-password p_l33mm0rd --size Standard_DS1_v2
+az vm create -n MyWinVM -g MyResourceGroup --image Win2016Datacenter
 ```
 
 The `az vm create` command output results once the VM has been fully created and is ready to be accessed and used.
@@ -190,7 +190,7 @@ Supply the same username/password combination you used when creating the VM to l
 Azure also supports automatically scaled and managed storage disks for VMs that provide better reliability and security. You can use Azure CLI 2.0 to automatically create managed disks and attach them to your VM. In the following example, you can use the `--data-disk-sizes-gb` parameter with the `az vm create` command to specify the number and size of managed disks to attach to your VM.
 
 ```azurecli
-az vm create -g MyResourceGroup -n MyLinuxVM2 --image ubuntults --size Standard_DS1_v2 --data-disk-sizes-gb 10 20
+az vm create -g MyResourceGroup -n MyLinuxVM2 --image UbuntuLTS --data-disk-sizes-gb 10 20
 ```
 
 The preceding `az vm create` command creates a Linux VM, named MyLinuxVM2, in the resource group MyResourceGroup with two managed disks of sizes 10gb and 20gb attached to it.
