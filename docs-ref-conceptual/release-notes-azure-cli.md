@@ -33,7 +33,7 @@ You can provide feedback from the command line, use `az feedback`.
 The commands in these modules are stable and the syntax is not expected to change in upcoming releases of this version of Azure CLI.
 
 To verify the version of the CLI, use `az --version`.
-The output lists the version of the CLI itself (0.1.2 in this release), the individual command modules,
+The output lists the version of the CLI itself (2.0.0 in this release), the individual command modules,
 and the versions of Python and GCC that you're using.
 
 ```
