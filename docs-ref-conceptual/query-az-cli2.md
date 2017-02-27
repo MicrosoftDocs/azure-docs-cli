@@ -1,3 +1,3 @@
 ---
-redirect_url: query-az-cli
+redirect_url: query-azure-cli
 ---
