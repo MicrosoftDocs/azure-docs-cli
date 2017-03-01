@@ -1,80 +1,46 @@
 commandList:
+- name: az sql db copy
+  description: Creates a copy of an existing database.
+  href: db#copy
 - name: az sql db create
-  description: Create an Azure SQL database.
+  description: Creates a database.
   href: db#create
-- name: az sql db data-warehouse
-  description: Manage database data warehouse.
-  href: db/data-warehouse
-  isGroup: true
-- name: az sql db data-warehouse pause
-  description: Pause an Azure SQL Data Warehouse database.
-  href: db/data-warehouse#pause
-- name: az sql db data-warehouse resume
-  description: Resume an Azure SQL Data Warehouse database.
-  href: db/data-warehouse#resume
+- name: az sql db create-replica
+  description: Creates a readable secondary replica of an existing database.
+  href: db#create-replica
 - name: az sql db delete
-  description: Deletes an Azure SQL database.
+  description: Deletes a database.
   href: db#delete
 - name: az sql db list
-  description: Returns information about an Azure SQL database.
+  description: Lists all databases in a server, or all databases in an elastic pool.
   href: db#list
-- name: az sql db replication-link
-  description: Manage database replication links.
-  href: db/replication-link
+- name: az sql db replica-link
+  description: Manage links between database replicas.
+  href: db/replica-link
   isGroup: true
-- name: az sql db replication-link delete
-  description: Deletes the Azure SQL database replication link with the given ID.
-  href: db/replication-link#delete
-- name: az sql db replication-link failover
-  description: Failover the Azure SQL database replication link with the given ID.
-  href: db/replication-link#failover
-- name: az sql db replication-link force-failover
-  description: Force failover the Azure SQL database replication link with the given ID which may result in data loss.
-  href: db/replication-link#force-failover
-- name: az sql db replication-link list
-  description: Gets information about Azure SQL database replication links.
-  href: db/replication-link#list
-- name: az sql db replication-link show
-  description: Gets information about an Azure SQL database replication link.
-  href: db/replication-link#show
-- name: az sql db restore-point
-  description: Manage database restore points.
-  href: db/restore-point
-  isGroup: true
-- name: az sql db restore-point list
-  description: Returns a list of Azure SQL database restore points.
-  href: db/restore-point#list
-- name: az sql db service-tier-advisor
-  description: Manage database service tier advisors.
-  href: db/service-tier-advisor
-  isGroup: true
-- name: az sql db service-tier-advisor list
-  description: Returns information about service tier advisors for specified database.
-  href: db/service-tier-advisor#list
-- name: az sql db service-tier-advisor show
-  description: Gets information about a service tier advisor.
-  href: db/service-tier-advisor#show
-- name: az sql db show
-  description: Gets information about an Azure SQL database.
-  href: db#show
-- name: az sql db show-usage
-  description: Returns information about Azure SQL database usages.
-  href: db#show-usage
-- name: az sql db transparent-data-encryption
-  description: Manage database transparent data encryption.
-  href: db/transparent-data-encryption
-  isGroup: true
-- name: az sql db transparent-data-encryption create
-  description: Creates or updates an Azure SQL Database Transparent Data Encryption Operation.
-  href: db/transparent-data-encryption#create
-- name: az sql db transparent-data-encryption show-activity
-  description: Returns an Azure SQL Database Transparent Data Encryption Activity Response.
-  href: db/transparent-data-encryption#show-activity
-- name: az sql db transparent-data-encryption show-configuration
-  description: Gets an Azure SQL Database Transparent Data Encryption Response.
-  href: db/transparent-data-encryption#show-configuration
-- name: az sql db update
+- name: az sql db replica-link delete
+  description: Deletes a database replication link.
+  href: db/replica-link#delete
+- name: az sql db replica-link failover
+  description: Failover the database replication link.
+  href: db/replica-link#failover
+- name: az sql db replica-link force-failover
+  description: Force failover the database replication link, which may result in data loss.
+  href: db/replica-link#force-failover
+- name: az sql db replica-link list
+  description: Lists a database's replication links.
+  href: db/replica-link#list
+- name: az sql db replica-link show
+  description: Gets a database replication link.
+  href: db/replica-link#show
+- name: az sql db restore
   description: ''
+  href: db#restore
+- name: az sql db show
+  description: Gets a database.
+  href: db#show
+- name: az sql db update
+  description: Updates a database.
   href: db#update
 htmlId: db
 examples: []
@@ -85,56 +51,117 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
+  htmlId: copy
   examples: []
   parameters:
-  - name: --location -l
+  - name: --dest-name
     isRequired: True
-    summary: Location.
+    summary: Name of the database that will be created as the copy destinaton.
     description: ''
   - name: --name -n
     isRequired: True
-    summary: The name of the Azure SQL database to be operated on (updated or created).
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --server-name
+  - name: --server -s
     isRequired: True
-    summary: The name of the Azure SQL server.
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --dest-elastic-pool
+    isRequired: False
+    summary: Name of elastic pool to create the new database in.
+    description: ''
+  - name: --dest-resource-group
+    isRequired: False
+    summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
+    description: ''
+  - name: --dest-server
+    isRequired: False
+    summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
+    description: ''
+  - name: --dest-service-objective
+    isRequired: False
+    summary: Name of service objective for the new database.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Resource tags.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_copy
+  name: az sql db copy
+  description: ''
+  summary: Creates a copy of an existing database.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
     description: ''
   - name: --collation
     isRequired: False
-    summary: The collation of the Azure SQL database.
-    description: ''
-  - name: --create-mode
-    isRequired: False
-    summary: Specifies the type of database to create.
+    summary: The collation of the database. If createMode is not Default, this value is ignored.
     description: ''
   - name: --edition
     isRequired: False
     summary: The edition of the Azure SQL database.
     description: ''
-  - name: --elastic-pool-name
+  - name: --elastic-pool
     isRequired: False
-    summary: The name of the Azure SQL Elastic Pool the database is in.
+    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored.
     description: ''
-  - name: --max-size-bytes
+  - name: --sample-name
     isRequired: False
-    summary: 'The max size of the Azure SQL database expressed in bytes. Note: Only the following sizes are supported (in addition to limitations being placed on each edition): { 100 MB | 500 MB |1 GB | 5 GB | 10 GB | 20 GB | 30 GB … 150 GB | 200 GB … 500 GB }.'
+    summary: Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored.
     description: ''
-  - name: --requested-service-objective-id
+  - name: --service-objective
     isRequired: False
-    summary: The configured Service Level Objective ID of the Azure SQL database. This is the Service Level Objective that is in the process of being applied to the Azure SQL database. Once successfully updated, it will match the value of currentServiceObjectiveId property.
+    summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
     description: ''
-  - name: --requested-service-objective-name
+  - name: --storage
     isRequired: False
-    summary: The name of the configured Service Level Objective of the Azure SQL database. This is the Service Level Objective that is in the process of being applied to the Azure SQL database. Once successfully updated, it will match the value of serviceLevelObjective property.
-    description: ''
-  - name: --source-database-id
-    isRequired: False
-    summary: 'Conditional. Specifies the resource ID of the source database. If createMode is not set to Default, then this value must be specified. The name of the source database must be the same. NOTE: Collation, Edition, and MaxSizeBytes must remain the same while the link is active. Values specified for these parameters will be ignored.'
+    summary: 'The max storage of the database. Only the following sizes are supported (in addition to limitations being placed on each edition): 100MB, 500MB, 1GB, 5GB, 10GB, 20GB, 30GB, 150GB, 200GB, 500GB. If no unit is specified, defaults to bytes (B).'
     description: ''
   - name: --tags
     isRequired: False
@@ -171,7 +198,76 @@ children:
   uid: az_sql_db_create
   name: az sql db create
   description: ''
-  summary: Create an Azure SQL database.
+  summary: Creates a database.
+  Metadata: {}
+- commandList: []
+  htmlId: create-replica
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --secondary-server
+    isRequired: True
+    summary: Name of the server to create the new secondary database in.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --secondary-elastic-pool
+    isRequired: False
+    summary: Name of elastic pool to create the new database in.
+    description: ''
+  - name: --secondary-resource-group
+    isRequired: False
+    summary: Name of the resource group to create the new secondary database in. If unspecified, defaults to the origin resource group.
+    description: ''
+  - name: --secondary-service-objective
+    isRequired: False
+    summary: Name of service objective for the new secondary database.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Resource tags.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_create-replica
+  name: az sql db create-replica
+  description: ''
+  summary: Creates a readable secondary replica of an existing database.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -179,15 +275,15 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the Azure SQL database to be deleted.
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --server-name
+  - name: --server -s
     isRequired: True
-    summary: The name of the Azure SQL server.
+    summary: Name of the Azure SQL server.
     description: ''
   - name: --debug
     isRequired: False
@@ -220,7 +316,7 @@ children:
   uid: az_sql_db_delete
   name: az sql db delete
   description: ''
-  summary: Deletes an Azure SQL database.
+  summary: Deletes a database.
   Metadata: {}
 - commandList: []
   htmlId: list
@@ -230,9 +326,13 @@ children:
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --server-name
+  - name: --server -s
     isRequired: True
-    summary: The name of the Azure SQL server.
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --elastic-pool
+    isRequired: False
+    summary: If specified, lists only the databases in this elastic pool.
     description: ''
   - name: --debug
     isRequired: False
@@ -265,7 +365,88 @@ children:
   uid: az_sql_db_list
   name: az sql db list
   description: ''
-  summary: Returns information about an Azure SQL database.
+  summary: Lists all databases in a server, or all databases in an elastic pool.
+  Metadata: {}
+- commandList: []
+  htmlId: restore
+  examples: []
+  parameters:
+  - name: --dest-name
+    isRequired: True
+    summary: ''
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --dest-elastic-pool
+    isRequired: False
+    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored.
+    description: ''
+  - name: --dest-resource-group
+    isRequired: False
+    summary: ''
+    description: ''
+  - name: --dest-server-name
+    isRequired: False
+    summary: ''
+    description: ''
+  - name: --dest-service-objective
+    isRequired: False
+    summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
+    description: ''
+  - name: --edition
+    isRequired: False
+    summary: The edition of the Azure SQL database.
+    description: ''
+  - name: --restore-point-in-time
+    isRequired: False
+    summary: Conditional. If createMode is set to PointInTimeRestore, then this value must be specified. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Resource tags.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_restore
+  name: az sql db restore
+  description: ''
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -273,19 +454,15 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the Azure SQL database to be retrieved.
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --server-name
+  - name: --server -s
     isRequired: True
-    summary: The name of the Azure SQL server.
-    description: ''
-  - name: --expand
-    isRequired: False
-    summary: 'The comma separated list of child objects to expand in the response. Possible properties: serviceTierAdvisors, upgradeHint, transparentDataEncryption.'
+    summary: Name of the Azure SQL server.
     description: ''
   - name: --debug
     isRequired: False
@@ -318,56 +495,7 @@ children:
   uid: az_sql_db_show
   name: az sql db show
   description: ''
-  summary: Gets information about an Azure SQL database.
-  Metadata: {}
-- commandList: []
-  htmlId: show-usage
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: True
-    summary: The name of the Azure SQL database.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group.
-    description: ''
-  - name: --server-name
-    isRequired: True
-    summary: The name of the Azure SQL server.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_sql_db_show-usage
-  name: az sql db show-usage
-  description: ''
-  summary: Returns information about Azure SQL database usages.
+  summary: Gets a database.
   Metadata: {}
 - commandList: []
   htmlId: update
@@ -375,15 +503,27 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the Azure SQL database to be retrieved.
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group.
     description: ''
-  - name: --server-name
+  - name: --server -s
     isRequired: True
-    summary: The name of the Azure SQL server.
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --elastic-pool
+    isRequired: False
+    summary: The name of the elastic pool to move the database into.
+    description: ''
+  - name: --service-objective
+    isRequired: False
+    summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
+    description: ''
+  - name: --storage
+    isRequired: False
+    summary: The new maximum size of the database expressed in bytes.
     description: ''
   - name: --add
     isRequired: False
@@ -428,7 +568,7 @@ children:
   uid: az_sql_db_update
   name: az sql db update
   description: ''
-  summary: ''
+  summary: Updates a database.
   Metadata: {}
 uid: az_sql_db
 name: 'SQL Databases (Preview) - az sql db'
@@ -438,6 +578,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/7f61e4356a0faea2fb23d4a6f36e1fa44639b7a2/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 2/18/2017 7:03:08 PM
-  ms.date: 2/18/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/372306113eeda8b7302f24e02bb9fedf01ca7677/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  updated_at: 3/1/2017 6:08:21 PM
+  ms.date: 3/1/2017

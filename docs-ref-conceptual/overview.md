@@ -25,9 +25,10 @@ Review the [Install article](install-azure-cli.md) to get Azure CLI 2.0 up and r
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
 The following samples can help you learn how to perform common scenarios with Azure CLI 2.0:
-- [Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fazure%2ftoc.json)
-- [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
-- [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fazure%2ftoc.json)
+- [Linux Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+- [Windows Virtual Machines](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+- [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+- [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 
 A detailed [reference](/cli/azure/) is also available that documents how to use each individual Azure CLI 2.0 command.
 
