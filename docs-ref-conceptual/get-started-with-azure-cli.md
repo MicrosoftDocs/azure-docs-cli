@@ -152,7 +152,7 @@ my-login@MyLinuxVM:~$
 
 ## Create a Windows Server Virtual Machine
 
-Let's now create a Windows Server 2012 R2 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
+Let's now create a Windows Server 2016 based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.
 
 Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
 
