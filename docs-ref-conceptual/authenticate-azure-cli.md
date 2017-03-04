@@ -15,7 +15,7 @@ ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 
 There are several ways to log in and authenticate with the Azure CLI. The simplest way to get started is to log in interactively through your browser, or to log in at the command line. Our recommended approach is to use service principals, which provide a way for you to create non-interactive accounts that you can use to manipulate resources. By granting just the appropriate permissions needed to a service principal, you can ensure your automation scripts are even more secure.
 
-Commands you run with the CLI will be run against your default subscription.  If you have more than one subscription you may want to [confirm your default subscription](manage-azure-subscriptions-azure-cli.md) and change it appropriately.
+Commands that you run with the CLI are run against your default subscription.  If you have more than one subscription, you may want to [confirm your default subscription](manage-azure-subscriptions-azure-cli.md) and change it appropriately.
 
 ## Interactive log-in
 
