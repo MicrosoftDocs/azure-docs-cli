@@ -98,7 +98,7 @@ When you run the preceding command, the Azure CLI 2.0 looks for an SSH key pair 
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --generate-ssh-keys
 ```
 
-The `az vm create` command returns output once the VM has been fully created and is ready to be accessed and used. The `az vm create` command outputs several properties of the newly created VM including its public IP address:
+The `az vm create` command returns output once the VM has been fully created and is ready to be accessed and used. The output includes several properties of the newly created VM including its public IP address:
 
 ```Output
 {
