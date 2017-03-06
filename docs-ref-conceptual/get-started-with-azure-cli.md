@@ -61,10 +61,10 @@ First, create a Resource Group.  Resource Groups in Azure provide a way to manag
 want to logically group together.  For example, you might create a Resource Group for an application or project
 and add a virtual machine, a database and a CDN service within it.
 
-Let's create a resource group named "MyResourceGroup" in the *westus2* region of Azure.  To do so type the following command:
+Let's create a resource group named "MyResourceGroup" in the *westus* region of Azure.  To do so type the following command:
 
 ```azurecli
-az group create -n MyResourceGroup -l westus2 
+az group create -n MyResourceGroup -l westus 
 ```
 
 Once the resource group has been created, the `az group create` command outputs several properties of the newly created resource:
@@ -72,7 +72,7 @@ Once the resource group has been created, the `az group create` command outputs 
 ```Output
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup",
-  "location": "westus2",
+  "location": "westus",
   "managedBy": null,
   "name": "MyResourceGroup",
   "properties": {
@@ -104,7 +104,7 @@ The `az vm create` command returns output once the VM has been fully created and
 {
   "fqdns": "",
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM",
-  "location": "westus2",
+  "location": "westus",
   "macAddress": "xx-xx-xx-xx-xx-xx",
   "powerState": "VM running",
   "privateIpAddress": "xx.x.x.x",
@@ -169,7 +169,7 @@ The `az vm create` command output results once the VM has been fully created and
 {
   "fqdns": "",
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM",
-  "location": "westus2",
+  "location": "westus",
   "macAddress": "xx-xx-xx-xx-xx-xx",
   "powerState": "VM running",
   "privateIpAddress": "xx.x.x.x",
@@ -282,7 +282,7 @@ The values returned are by default in JSON (only showing partial output for sake
     "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010",
     "instanceView": null,
     "licenseType": null,
-    "location": "westus2",
+    "location": "westus",
     "name": "MyLinuxVM",
     "networkProfile": {
       "networkInterfaces": [
@@ -308,8 +308,8 @@ az vm list --output table
 ```Output
 Name       ResourceGroup    Location
 ---------  ---------------  ----------
-MyLinuxVM  MyResourceGroup  westus2
-MyWinVM    MyResourceGroup  westus2
+MyLinuxVM  MyResourceGroup  westus
+MyWinVM    MyResourceGroup  westus
 ```
 
 The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This format is useful when you 
@@ -320,8 +320,8 @@ az vm list --output tsv
 ```
 
 ```
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 Visit the [output formats](format-output-azure-cli.md) article to learn more about the additional ways to list resources and format the output.
 
@@ -340,8 +340,8 @@ az vm list -g MyResouceGroup --output table
 ```Output
 Name       ResourceGroup    Location
 ---------  ---------------  ----------
-MyLinuxVM  MyResourceGroup  westus2
-MyWinVM    MyResourceGroup  westus2
+MyLinuxVM  MyResourceGroup  westus
+MyWinVM    MyResourceGroup  westus
 ```
 
 For even more powerful querying support, you can use the `--query` parameter to execute 
@@ -357,8 +357,8 @@ az vm list --output table --query "[?contains(resourceGroup,'MY')]"
 ```Output
 ResourceGroup    ProvisioningState    Name       Location    VmId
 ---------------  -------------------  ---------  ----------  ------------------------------------
-MYRESOURCEGROUP  Succeeded            MyLinuxVM  westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-MYRESOURCEGROUP  Succeeded            MyWinVM    westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MYRESOURCEGROUP  Succeeded            MyLinuxVM  westus     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+MYRESOURCEGROUP  Succeeded            MyWinVM    westus     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 We could then choose to further refine the output by using the shaping capability of JMESPath queries to output different values
