@@ -21,6 +21,9 @@ commandList:
 - name: az keyvault certificate download
   description: Download a certificate from a KeyVault.
   href: certificate#download
+- name: az keyvault certificate get-default-policy
+  description: Get a default policy for a self-signed certificate.
+  href: certificate#get-default-policy
 - name: az keyvault certificate import
   description: Imports a certificate into the specified vault.
   href: certificate#import
@@ -91,7 +94,9 @@ source:
 children:
 - commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create a self-signed certificate with a the default policy and add to a virtual machine
+    code: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - name: --name -n
     isRequired: True
@@ -151,7 +156,7 @@ children:
   children: []
   uid: az_keyvault_certificate_create
   name: az keyvault certificate create
-  description: If this is the first version, the certificate resource is created.
+  description: Create a Key Vault certificate. Certificates can also be used as a secrets in provisioned virtual machines.
   summary: Creates a new certificate version.
   Metadata: {}
 - commandList: []
@@ -257,6 +262,49 @@ children:
   name: az keyvault certificate download
   description: ''
   summary: Download a certificate from a KeyVault.
+  Metadata: {}
+- commandList: []
+  htmlId: get-default-policy
+  examples:
+  - title: Create a self-signed certificate with a the default policy
+    code: "az keyvault create -g group-name -n vaultname -l westus --enabled-for-deployment true   --enabled-for-template-deployment true\n                        \n                        az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\""
+  parameters:
+  - name: --scaffold
+    isRequired: False
+    summary: Create a fully formed policy structure with default values.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_get-default-policy
+  name: az keyvault certificate get-default-policy
+  description: "This default policy can be used in conjunction with <title_reference>az keyvault create</title_reference> to create a self-signed certificate. The default policy can also be used as a starting point to create derivative policies. \r\n                            \r\n                            Also see: <a href=\"https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>."
+  summary: Get a default policy for a self-signed certificate.
   Metadata: {}
 - commandList: []
   htmlId: import
@@ -552,6 +600,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/7f61e4356a0faea2fb23d4a6f36e1fa44639b7a2/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 2/18/2017 7:03:08 PM
-  ms.date: 2/18/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 3/6/2017 9:06:56 PM
+  ms.date: 3/6/2017
