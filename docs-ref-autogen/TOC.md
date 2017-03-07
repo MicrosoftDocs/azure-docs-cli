@@ -7,7 +7,7 @@
 ## [Query](../docs-ref-conceptual/query-azure-cli.md)
 ## [Subscriptions](../docs-ref-conceptual/manage-azure-subscriptions-azure-cli.md)
 ## [Release notes](../docs-ref-conceptual/release-notes-azure-cli.md)
-# Samples
+# Sample Scripts
 ## [Linux VMs](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 ## [Windows VMs](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 ## [Web Apps](/azure/app-service/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
