@@ -61,6 +61,10 @@ pip install --user azure-cli
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
+
+> [!NOTE]
+> Sometimes the 'az' commands are added to a different file directory than where your default Python environment variable is pointing.  If the 'az' command is not found, add the following: ` C:\Users\X\AppData\Roaming\Python\Python36\Scripts` to your User Variables PATH, where `X` is your domain username. Restart your command prompt and try running 'az' again.
+
 ## Linux
 
 On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
