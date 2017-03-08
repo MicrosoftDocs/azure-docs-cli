@@ -134,6 +134,8 @@ children:
     code: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
   - title: Create a Linux VM scale set with a cloud-init script (https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init).
     code: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom_data MyCloudInitScript.yml
+  - title: Create an Debian VM scaleset and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
+    code: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - name: --image
     isRequired: True
@@ -171,6 +173,10 @@ children:
   - name: --no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
+    description: ''
+  - name: --secrets
+    isRequired: False
+    summary: 'One or many Key Vault secrets as JSON strings or files via ''@<file path>'' containing ''[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]''.'
     description: ''
   - name: --single-placement-group
     isRequired: False
@@ -1157,6 +1163,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/bde5e83bcc9f8fec05e28d88277e4935406ba5c3/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 2/24/2017 7:08:23 PM
-  ms.date: 2/24/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 3/6/2017 9:06:56 PM
+  ms.date: 3/6/2017
