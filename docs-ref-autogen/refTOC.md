@@ -281,6 +281,7 @@
 ### [az feature register](feature.pycliyml#register)
 ### [az feature show](feature.pycliyml#show)
 ## [az feedback](index.pycliyml#feedback)
+## [az find](index.pycliyml#find)
 ## [az group](group.pycliyml)
 ### [az group create](group.pycliyml#create)
 ### [az group delete](group.pycliyml#delete)

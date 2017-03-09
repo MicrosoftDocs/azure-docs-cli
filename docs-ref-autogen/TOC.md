@@ -15,6 +15,7 @@
 # [Reference](index.pycliyml)
 ## [Configure](index.pycliyml#configure "az configure")
 ## [Feedback](index.pycliyml#feedback "az feedback")
+## [Find](index.pycliyml#find "az find")
 ## [Login](index.pycliyml#login "az login")
 ## [Logout](index.pycliyml#logout "az logout")
 ## [App Service](appservice.pycliyml "az appservice")
