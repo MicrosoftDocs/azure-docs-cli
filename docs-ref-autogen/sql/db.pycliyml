@@ -34,7 +34,7 @@ commandList:
   description: Gets a database replication link.
   href: db/replica-link#show
 - name: az sql db restore
-  description: ''
+  description: Creates a new database by restoring from a database backup.
   href: db#restore
 - name: az sql db show
   description: Gets a database or data warehouse.
@@ -56,7 +56,7 @@ children:
   parameters:
   - name: --dest-name
     isRequired: True
-    summary: Name of the database that will be created as the copy destinaton.
+    summary: Name of the database that will be created as the copy destination.
     description: ''
   - name: --name -n
     isRequired: True
@@ -70,10 +70,6 @@ children:
     isRequired: True
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --dest-elastic-pool
-    isRequired: False
-    summary: Name of elastic pool to create the new database in.
-    description: ''
   - name: --dest-resource-group
     isRequired: False
     summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
@@ -82,9 +78,13 @@ children:
     isRequired: False
     summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
     description: ''
-  - name: --dest-service-objective
+  - name: --elastic-pool
     isRequired: False
-    summary: Name of service objective for the new database.
+    summary: Name of the elastic pool to create the new database in.
+    description: ''
+  - name: --service-objective
+    isRequired: False
+    summary: Name of the service objective for the new database.
     description: ''
   - name: --tags
     isRequired: False
@@ -220,17 +220,17 @@ children:
     isRequired: True
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --secondary-elastic-pool
+  - name: --elastic-pool
     isRequired: False
-    summary: Name of elastic pool to create the new database in.
+    summary: Name of the elastic pool to create the new database in.
     description: ''
   - name: --secondary-resource-group
     isRequired: False
     summary: Name of the resource group to create the new secondary database in. If unspecified, defaults to the origin resource group.
     description: ''
-  - name: --secondary-service-objective
+  - name: --service-objective
     isRequired: False
-    summary: Name of service objective for the new secondary database.
+    summary: Name of the service objective for the new secondary database.
     description: ''
   - name: --tags
     isRequired: False
@@ -373,7 +373,7 @@ children:
   parameters:
   - name: --dest-name
     isRequired: True
-    summary: ''
+    summary: Name of the database that will be created as the restore destination.
     description: ''
   - name: --name -n
     isRequired: True
@@ -387,37 +387,21 @@ children:
     isRequired: True
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --collation
-    isRequired: False
-    summary: The collation of the database. If createMode is not Default, this value is ignored.
-    description: ''
-  - name: --dest-elastic-pool
-    isRequired: False
-    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored.
-    description: ''
-  - name: --dest-resource-group
-    isRequired: False
-    summary: ''
-    description: ''
-  - name: --dest-server-name
-    isRequired: False
-    summary: ''
-    description: ''
-  - name: --dest-service-objective
-    isRequired: False
-    summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
+  - name: --time -t
+    isRequired: True
+    summary: The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value.
     description: ''
   - name: --edition
     isRequired: False
-    summary: The edition of the database.
+    summary: The edition for the new database.
     description: ''
-  - name: --max-size
+  - name: --elastic-pool
     isRequired: False
-    summary: 'The max storage size of the database. Only the following sizes are supported (in addition to limitations being placed on each edition): 100MB, 500MB, 1GB, 5GB, 10GB, 20GB, 30GB, 150GB, 200GB, 500GB. If no unit is specified, defaults to bytes (B).'
+    summary: Name of the elastic pool to create the new database in.
     description: ''
-  - name: --restore-point-in-time
+  - name: --service-objective
     isRequired: False
-    summary: Conditional. If createMode is set to PointInTimeRestore, then this value must be specified. Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value.
+    summary: Name of service objective for the new database.
     description: ''
   - name: --tags
     isRequired: False
@@ -454,7 +438,7 @@ children:
   uid: az_sql_db_restore
   name: az sql db restore
   description: ''
-  summary: ''
+  summary: Creates a new database by restoring from a database backup.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -586,6 +570,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/7d7ae5f528e85e28456558c6ebe03af68490fa98/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 3/9/2017 12:37:50 AM
+  gitcommit: https://github.com/Azure/azure-cli/blob/f03bfe6fc909e84fa40eb814e136025bb5dd1f9a/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  updated_at: 3/9/2017 3:06:20 AM
   ms.date: 3/9/2017
