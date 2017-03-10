@@ -1,48 +1,59 @@
 commandList:
-- name: az iot hub consumer-group create
-  description: Create an event hub consumer group.
-  href: consumer-group#create
-- name: az iot hub consumer-group delete
-  description: Delete an event hub consumer group.
-  href: consumer-group#delete
-- name: az iot hub consumer-group list
-  description: List all event hub consumer groups.
-  href: consumer-group#list
-- name: az iot hub consumer-group show
-  description: Get an event hub consumer group.
-  href: consumer-group#show
-htmlId: consumer-group
+- name: az sql db replica create
+  description: Creates a database as a readable secondary replica of an existing database.
+  href: replica#create
+- name: az sql db replica delete-link
+  description: Permanently stops data replication between two database replicas.
+  href: replica#delete-link
+- name: az sql db replica list-links
+  description: Lists the replicas of a database and corresponding replication status.
+  href: replica#list-links
+- name: az sql db replica set-primary
+  description: Sets which replica database is primary by failing over from the current primary replica database.
+  href: replica#set-primary
+htmlId: replica
 examples: []
 source:
   remote:
-    path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
     branch: master
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
   htmlId: create
-  examples:
-  - title: Create a consumer group `cg1` in the default event hub endpoint `events`.
-    code: az iot hub consumer-group create --hub-name MyIotHub --name cg1
-  - title: Create a consumer group `cg1` in the operation monitoring event hub endpoint `operationsMonitoringEvents`.
-    code: az iot hub consumer-group create --hub-name MyIotHub --event-hub-name operationsMonitoringEvents --name cg1
+  examples: []
   parameters:
-  - name: --hub-name
-    isRequired: True
-    summary: IoT Hub name.
-    description: ''
   - name: --name -n
     isRequired: True
-    summary: Event hub consumer group name.
+    summary: Name of the Azure SQL Database.
     description: ''
-  - name: --event-hub-name
-    isRequired: False
-    summary: Event hub endpoint name.
+  - name: --partner-server
+    isRequired: True
+    summary: Name of the server to create the new replica in.
     description: ''
-    defaultValue: events
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --elastic-pool
+    isRequired: False
+    summary: Name of elastic pool to create the new replica in.
+    description: ''
+  - name: --partner-resource-group
+    isRequired: False
+    summary: Name of the resource group to create the new replica in. If unspecified, defaults to the origin resource group.
+    description: ''
+  - name: --service-objective
+    isRequired: False
+    summary: Name of service objective for the new replica.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Resource tags.
     description: ''
   - name: --debug
     isRequired: False
@@ -68,39 +79,38 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_iot_hub_consumer-group_create
-  name: az iot hub consumer-group create
+  uid: az_sql_db_replica_create
+  name: az sql db replica create
   description: ''
-  summary: Create an event hub consumer group.
+  summary: Creates a database as a readable secondary replica of an existing database.
   Metadata: {}
 - commandList: []
-  htmlId: delete
+  htmlId: delete-link
   examples: []
   parameters:
-  - name: --event-hub-name
-    isRequired: False
-    summary: Event hub endpoint name.
-    description: ''
-    defaultValue: events
-  - name: --hub-name
-    isRequired: False
-    summary: IoT Hub name.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Event hub consumer group name.
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --partner-server
+    isRequired: True
+    summary: Name of the server that the other replica is in.
     description: ''
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --partner-resource-group
+    isRequired: False
+    summary: Name of the resource group that the other replica is in. If unspecified, defaults to the first database's resource group.
     description: ''
   - name: --debug
     isRequired: False
@@ -126,93 +136,30 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_iot_hub_consumer-group_delete
-  name: az iot hub consumer-group delete
+  uid: az_sql_db_replica_delete-link
+  name: az sql db replica delete-link
   description: ''
-  summary: Delete an event hub consumer group.
+  summary: Permanently stops data replication between two database replicas.
   Metadata: {}
 - commandList: []
-  htmlId: list
+  htmlId: list-links
   examples: []
   parameters:
-  - name: --event-hub-name
-    isRequired: False
-    summary: Event hub endpoint name.
-    description: ''
-    defaultValue: events
-  - name: --hub-name
-    isRequired: False
-    summary: IoT Hub name.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_iot_hub_consumer-group_list
-  name: az iot hub consumer-group list
-  description: ''
-  summary: List all event hub consumer groups.
-  Metadata: {}
-- commandList: []
-  htmlId: show
-  examples: []
-  parameters:
-  - name: --event-hub-name
-    isRequired: False
-    summary: Event hub endpoint name.
-    description: ''
-    defaultValue: events
-  - name: --hub-name
-    isRequired: False
-    summary: IoT Hub name.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Event hub consumer group name.
+    isRequired: True
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    isRequired: False
+    isRequired: True
     summary: Name of resource group.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
     description: ''
   - name: --debug
     isRequired: False
@@ -238,23 +185,76 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_iot_hub_consumer-group_show
-  name: az iot hub consumer-group show
+  uid: az_sql_db_replica_list-links
+  name: az sql db replica list-links
   description: ''
-  summary: Get an event hub consumer group.
+  summary: Lists the replicas of a database and corresponding replication status.
   Metadata: {}
-uid: az_iot_hub_consumer-group
-name: 'IoT hub consumer groups (Preview) - az iot hub consumer-group'
+- commandList: []
+  htmlId: set-primary
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the database to fail over.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of the resource group containing the secondary replica that will become the new primary.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the server containing the secondary replica that will become the new primary.
+    description: ''
+  - name: --allow-data-loss
+    isRequired: False
+    summary: If specified, the failover operation will allow data loss.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_replica_set-primary
+  name: az sql db replica set-primary
+  description: ''
+  summary: Sets which replica database is primary by failing over from the current primary replica database.
+  Metadata: {}
+uid: az_sql_db_replica
+name: az sql db replica
 description: ''
-summary: Manage event hub consumer groups of an IoT Hub.
+summary: Manage replication between databases.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-iot/azure/cli/command_modules/iot/_help.py
-  updated_at: 2/21/2017 11:13:36 PM
-  ms.date: 2/21/2017
+  doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/ad9c974caea7edbded242dca11c265f5981532e9/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  updated_at: 3/10/2017 4:22:47 AM
+  ms.date: 3/10/2017
