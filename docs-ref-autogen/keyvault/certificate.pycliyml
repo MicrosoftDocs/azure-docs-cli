@@ -1,0 +1,605 @@
+commandList:
+- name: az keyvault certificate contact
+  description: Manage contacts for certificate management.
+  href: certificate/contact
+  isGroup: true
+- name: az keyvault certificate contact add
+  description: Add a contact to the specified vault to receive notifications of certificate operations.
+  href: certificate/contact#add
+- name: az keyvault certificate contact delete
+  description: Remove a certificate contact from the specified vault.
+  href: certificate/contact#delete
+- name: az keyvault certificate contact list
+  description: Gets the certificate contacts for the specified vault.
+  href: certificate/contact#list
+- name: az keyvault certificate create
+  description: Creates a new certificate version.
+  href: certificate#create
+- name: az keyvault certificate delete
+  description: Deletes a certificate from the specified vault.
+  href: certificate#delete
+- name: az keyvault certificate download
+  description: Download a certificate from a KeyVault.
+  href: certificate#download
+- name: az keyvault certificate get-default-policy
+  description: Get a default policy for a self-signed certificate.
+  href: certificate#get-default-policy
+- name: az keyvault certificate import
+  description: Imports a certificate into the specified vault.
+  href: certificate#import
+- name: az keyvault certificate issuer
+  description: Manage certificate issuer information.
+  href: certificate/issuer
+  isGroup: true
+- name: az keyvault certificate issuer admin
+  description: Manage admin information for certificate issuers.
+  href: certificate/issuer/admin
+  isGroup: true
+- name: az keyvault certificate issuer admin add
+  description: Add admin details for a specified certificate issuer.
+  href: certificate/issuer/admin#add
+- name: az keyvault certificate issuer admin delete
+  description: Remove admin details for the specified certificate issuer.
+  href: certificate/issuer/admin#delete
+- name: az keyvault certificate issuer admin list
+  description: List admins for a specified certificate issuer.
+  href: certificate/issuer/admin#list
+- name: az keyvault certificate issuer create
+  description: Create a certificate issuer record.
+  href: certificate/issuer#create
+- name: az keyvault certificate issuer delete
+  description: Deletes the specified certificate issuer.
+  href: certificate/issuer#delete
+- name: az keyvault certificate issuer list
+  description: List certificate issuers for the specified vault.
+  href: certificate/issuer#list
+- name: az keyvault certificate issuer show
+  description: Gets the specified certificate issuer.
+  href: certificate/issuer#show
+- name: az keyvault certificate issuer update
+  description: Update a certificate issuer record.
+  href: certificate/issuer#update
+- name: az keyvault certificate list
+  description: List certificates in the specified vault.
+  href: certificate#list
+- name: az keyvault certificate list-versions
+  description: List the versions of a certificate.
+  href: certificate#list-versions
+- name: az keyvault certificate pending
+  description: Manage pending certificate creation operations.
+  href: certificate/pending
+  isGroup: true
+- name: az keyvault certificate pending delete
+  description: Deletes the certificate operation.
+  href: certificate/pending#delete
+- name: az keyvault certificate pending merge
+  description: Merges a certificate or a certificate chain with a key pair existing on the server.
+  href: certificate/pending#merge
+- name: az keyvault certificate pending show
+  description: Gets the certificate operation response.
+  href: certificate/pending#show
+- name: az keyvault certificate set-attributes
+  description: Updates the attributes associated with the specified certificate.
+  href: certificate#set-attributes
+- name: az keyvault certificate show
+  description: Gets a Certificate.
+  href: certificate#show
+htmlId: certificate
+examples: []
+source:
+  remote:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    branch: master
+    repo: https://github.com/Azure/azure-cli.git
+children:
+- commandList: []
+  htmlId: create
+  examples:
+  - title: Create a self-signed certificate with a the default policy and add to a virtual machine
+    code: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --policy -p
+    isRequired: True
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --disabled
+    isRequired: False
+    summary: Create certificate in disabled state.
+    description: ''
+  - name: --expires
+    isRequired: False
+    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --not-before
+    isRequired: False
+    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_create
+  name: az keyvault certificate create
+  description: Create a Key Vault certificate. Certificates can also be used as a secrets in provisioned virtual machines.
+  summary: Creates a new certificate version.
+  Metadata: {}
+- commandList: []
+  htmlId: delete
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_delete
+  name: az keyvault certificate delete
+  description: ''
+  summary: Deletes a certificate from the specified vault.
+  Metadata: {}
+- commandList: []
+  htmlId: download
+  examples: []
+  parameters:
+  - name: --file -f
+    isRequired: True
+    summary: File to receive the binary certificate contents.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --encoding -e
+    isRequired: False
+    summary: How to store base64 certificate contents in file.
+    description: ''
+    defaultValue: binary
+    parameterValueGroup: binary, string
+  - name: --version -v
+    isRequired: False
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_download
+  name: az keyvault certificate download
+  description: ''
+  summary: Download a certificate from a KeyVault.
+  Metadata: {}
+- commandList: []
+  htmlId: get-default-policy
+  examples:
+  - title: Create a self-signed certificate with a the default policy
+    code: "az keyvault create -g group-name -n vaultname -l westus --enabled-for-deployment true   --enabled-for-template-deployment true\n                        \n                        az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\""
+  parameters:
+  - name: --scaffold
+    isRequired: False
+    summary: Create a fully formed policy structure with default values.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_get-default-policy
+  name: az keyvault certificate get-default-policy
+  description: "This default policy can be used in conjunction with <title_reference>az keyvault create</title_reference> to create a self-signed certificate. The default policy can also be used as a starting point to create derivative policies. \r\n                            \r\n                            Also see: <a href=\"https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>."
+  summary: Get a default policy for a self-signed certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: import
+  examples: []
+  parameters:
+  - name: --file -f
+    isRequired: True
+    summary: PKCS12 file or PEM file containing the certificate and private key.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --disabled
+    isRequired: False
+    summary: Create certificate in disabled state.
+    description: ''
+  - name: --expires
+    isRequired: False
+    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --not-before
+    isRequired: False
+    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --password
+    isRequired: False
+    summary: If the private key in base64EncodedCertificate is encrypted, the password used for encryption.
+    description: ''
+  - name: --policy -p
+    isRequired: False
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_import
+  name: az keyvault certificate import
+  description: ''
+  summary: Imports a certificate into the specified vault.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --maxresults
+    isRequired: False
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_list
+  name: az keyvault certificate list
+  description: ''
+  summary: List certificates in the specified vault.
+  Metadata: {}
+- commandList: []
+  htmlId: list-versions
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --maxresults
+    isRequired: False
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_list-versions
+  name: az keyvault certificate list-versions
+  description: ''
+  summary: List the versions of a certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: set-attributes
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --enabled
+    isRequired: False
+    summary: Enable the certificate.
+    description: ''
+    parameterValueGroup: false, true
+  - name: --expires
+    isRequired: False
+    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --not-before
+    isRequired: False
+    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --policy -p
+    isRequired: False
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --version -v
+    isRequired: False
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_set-attributes
+  name: az keyvault certificate set-attributes
+  description: ''
+  summary: Updates the attributes associated with the specified certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: show
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --version -v
+    isRequired: False
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_show
+  name: az keyvault certificate show
+  description: ''
+  summary: Gets a Certificate.
+  Metadata: {}
+uid: az_keyvault_certificate
+name: 'Key Vault certificates (Preview) - az keyvault certificate'
+description: ''
+summary: Manage certificates.
+Metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
+  doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 3/6/2017 9:06:56 PM
+  ms.date: 3/6/2017
