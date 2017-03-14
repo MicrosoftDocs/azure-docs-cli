@@ -63,7 +63,7 @@
 ###### [Unbind](appservice\web\config\ssl.pycliyml#unbind "az appservice web config ssl unbind")
 ###### [Upload](appservice\web\config\ssl.pycliyml#upload "az appservice web config ssl upload")
 #### [Deployments](appservice\web\deployment.pycliyml "az appservice web deployment")
-##### [List-Site-Credentials](appservice\web\deployment.pycliyml#list-site-credentials "az appservice web deployment list-site-credentials")
+##### [List-Publishing-Profiles](appservice\web\deployment.pycliyml#list-publishing-profiles "az appservice web deployment list-publishing-profiles")
 ##### [Deployment slots](appservice\web\deployment\slot.pycliyml "az appservice web deployment slot")
 ###### [Auto-Swap](appservice\web\deployment\slot.pycliyml#auto-swap "az appservice web deployment slot auto-swap")
 ###### [Create](appservice\web\deployment\slot.pycliyml#create "az appservice web deployment slot create")
