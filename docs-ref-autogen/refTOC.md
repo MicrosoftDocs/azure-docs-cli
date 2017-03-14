@@ -96,7 +96,7 @@
 #### [az appservice web create](appservice\web.pycliyml#create)
 #### [az appservice web delete](appservice\web.pycliyml#delete)
 #### [az appservice web deployment](appservice\web\deployment.pycliyml)
-##### [az appservice web deployment list-site-credentials](appservice\web\deployment.pycliyml#list-site-credentials)
+##### [az appservice web deployment list-publishing-profiles](appservice\web\deployment.pycliyml#list-publishing-profiles)
 ##### [az appservice web deployment slot](appservice\web\deployment\slot.pycliyml)
 ###### [az appservice web deployment slot auto-swap](appservice\web\deployment\slot.pycliyml#auto-swap)
 ###### [az appservice web deployment slot create](appservice\web\deployment\slot.pycliyml#create)
