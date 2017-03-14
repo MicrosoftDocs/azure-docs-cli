@@ -16,7 +16,7 @@ ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 # Install Azure CLI 2.0
 
 Install the new version of the Azure CLI today!
-We've improved and updated it to provide a great native command line experience for managing Azure resources.
+We've improved and updated it to provide a great native command-line experience for managing Azure resources.
 It can be used on macOS, Linux, and Windows.
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
@@ -97,19 +97,19 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 First, modify your sources list.
 
-**32 bit system**
+**32-bit system**
 
 ```bash
 $ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
-**64 bit system**
+**64-bit system**
 
 ```bash
 $ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
-Then, run the following.
+Then, run the following sudo commands.
 
 ```bash
 $ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
@@ -127,7 +127,7 @@ If you don't have it, install [Python](https://www.python.org/downloads).
 > [!NOTE]
 > We recommend Python 3.5.
 
-Then, depending on your Linux distribution, install the required prerequisites.
+Then, depending on your Linux distribution, install the prerequisites.
 
 ```
 Platform              | Prerequisites
