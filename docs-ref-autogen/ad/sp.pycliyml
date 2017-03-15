@@ -69,21 +69,35 @@ children:
 - commandList: []
   htmlId: create-for-rbac
   examples:
-  - title: Create role assignments with defaults.
+  - title: Create with a default role assignment.
     code: az ad sp create-for-rbac
-  - title: Create role assignments with a custom name.
+  - title: Create using a custom name, and with a default assiggment.
     code: az ad sp create-for-rbac -n "http://MyApp"
-  - title: Create role assignments at the same time.
+  - title: Create without a default assignment.
+    code: az ad sp create-for-rbac --skip-assignment
+  - title: Create with customized assignments
     code: az ad sp create-for-rbac -n "http://MyApp" --role contributor --scopes /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/MyResourceGroup /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/MyAnotherResourceGroup
+  - title: Create using self-signed certificte
+    code: az ad sp create-for-rbac --create-cert
   - title: Login with a service principal.
     code: az login --service-principal -u <name> -p <password> --tenant <tenant>
+  - title: Login with self-signed certificate
+    code: az login --service-principal -u <name> -p <certificate file path> --tenant <tenant>
   - title: Reset credentials on expiration.
     code: az ad sp reset-credentials --name <name>
-  - title: Create role assignments.
+  - title: Create extra role assignments in future.
     code: az role assignment create --assignee <name> --role Contributor
   - title: Revoke the service principal when done with it.
     code: az ad app delete --id <name>
   parameters:
+  - name: --cert
+    isRequired: False
+    summary: PEM formatted public certificate. Do not include private key info.
+    description: ''
+  - name: --create-cert
+    isRequired: False
+    summary: Create and upload self-signed certificate which you can use to login.
+    description: ''
   - name: --expanded-view
     isRequired: False
     summary: Once created, display more information like subscription and cloud environments.
@@ -245,6 +259,14 @@ children:
     isRequired: True
     summary: The name, can be the app id uri, app id guid, or display name.
     description: ''
+  - name: --cert
+    isRequired: False
+    summary: PEM formatted public certificate. Do not include private key info.
+    description: ''
+  - name: --create-cert
+    isRequired: False
+    summary: Re-create and upload self-signed certificate.
+    description: ''
   - name: --password
     isRequired: False
     summary: The password used to login. If missing, command will generate one.
@@ -336,6 +358,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-  updated_at: 2/21/2017 11:13:36 PM
-  ms.date: 2/21/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/96fd150a68b6f81444df6c6aa0f1e8bd4e9874e1/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+  updated_at: 3/15/2017 8:57:14 PM
+  ms.date: 3/15/2017
