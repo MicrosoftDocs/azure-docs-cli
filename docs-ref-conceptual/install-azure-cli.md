@@ -57,8 +57,10 @@ pip install --user azure-cli
 ```
 
 > [!NOTE]
-> Add `%USERPROFILE%\AppData\Roaming\PythonXY\Scripts` to your PATH,
-> where `X.Y` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python27\Scripts`).
+> Add `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts` to your PATH,
+> where `X.Y` is your Python version (for example, for Python 3.5, `%USERPROFILE%\AppData\Roaming\Python\Python35\Scripts`).
+> 
+> Be sure to restart your machine after changing PATH for the changes to take affect
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
