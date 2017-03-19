@@ -53,7 +53,7 @@ python --version
 Install Azure CLI 2.0 using `pip`.
 
 ```bash
-pip install --user azure-cli
+pip install azure-cli
 ```
 
 > [!NOTE]
