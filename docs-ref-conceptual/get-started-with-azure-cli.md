@@ -437,11 +437,10 @@ az vm create -h
 ## Switch from Azure CLI 1.0
 
 If you already know how to use Azure CLI 1.0 (azure.js),
-you'll notice places where the commands aren't quite the same,
-or even significantly different,
-to perform a given task.
-We think it's also easier to use once you learn the new commands and their usage.
-To help you make the switch, we have started this [command mapping](https://github.com/Azure/azure-cli/blob/master/doc/azure2az_commands.rst).
+you'll notice places where the commands aren't quite the same.
+Sometimes the commands to perform a task are significantly different.
+To help you make the switch from Azure CLI 1.0 to Azure CLI 2.0,
+we've started this [command mapping](https://github.com/Azure/azure-cli/blob/master/doc/azure2az_commands.rst).
 
 ## Send us your feedback
 
