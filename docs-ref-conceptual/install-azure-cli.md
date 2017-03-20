@@ -63,7 +63,7 @@ pip install --user azure-cli
 > The CLI `az.py` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
 > or `%USERPROFILE%\AppData\Roaming\Python\PythonX.Y\Scripts`
 > where `X.Y` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
-> Add the folder that conains `az.py` to your path.
+> Add the folder that contains `az.py` to your path.
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
