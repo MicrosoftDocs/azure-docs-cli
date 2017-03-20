@@ -8,6 +8,12 @@ commandList:
 - name: az sql db delete
   description: Deletes a database or data warehouse.
   href: db#delete
+- name: az sql db export
+  description: Exports a database to a bacpac.
+  href: db#export
+- name: az sql db import
+  description: Imports a bacpac into an existing database.
+  href: db#import
 - name: az sql db list
   description: Lists all databases and data warehouses in a server, or all databases in an elastic pool.
   href: db#list
@@ -76,9 +82,17 @@ children:
     isRequired: False
     summary: Name of the elastic pool to create the new database in.
     description: ''
+  - name: --recovery-services-recovery-point-resource-id
+    isRequired: False
+    summary: Conditional. If createMode is RestoreLongTermRetentionBackup, then this value is required. Specifies the resource ID of the recovery point to restore from.
+    description: ''
   - name: --service-objective
     isRequired: False
     summary: Name of the service objective for the new database.
+    description: ''
+  - name: --source-database-deletion-date
+    isRequired: False
+    summary: Conditional. If createMode is Restore and sourceDatabaseId is the deleted database's original resource id when it existed (as opposed to its current restorable dropped database id), then this value is required. Specifies the time that the database was deleted.
     description: ''
   - name: --tags
     isRequired: False
@@ -143,19 +157,27 @@ children:
     description: ''
   - name: --elastic-pool
     isRequired: False
-    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored.
+    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored. Not supported for DataWarehouse edition.
     description: ''
   - name: --max-size
     isRequired: False
     summary: 'The max storage size of the database. Only the following sizes are supported (in addition to limitations being placed on each edition): 100MB, 500MB, 1GB, 5GB, 10GB, 20GB, 30GB, 150GB, 200GB, 500GB. If no unit is specified, defaults to bytes (B).'
     description: ''
+  - name: --recovery-services-recovery-point-resource-id
+    isRequired: False
+    summary: Conditional. If createMode is RestoreLongTermRetentionBackup, then this value is required. Specifies the resource ID of the recovery point to restore from.
+    description: ''
   - name: --sample-name
     isRequired: False
-    summary: Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored.
+    summary: Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored. Not supported for DataWarehouse edition.
     description: ''
   - name: --service-objective
     isRequired: False
     summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
+    description: ''
+  - name: --source-database-deletion-date
+    isRequired: False
+    summary: Conditional. If createMode is Restore and sourceDatabaseId is the deleted database's original resource id when it existed (as opposed to its current restorable dropped database id), then this value is required. Specifies the time that the database was deleted.
     description: ''
   - name: --tags
     isRequired: False
@@ -248,6 +270,160 @@ children:
   summary: Deletes a database or data warehouse.
   Metadata: {}
 - commandList: []
+  htmlId: export
+  examples: []
+  parameters:
+  - name: --admin-password -p
+    isRequired: True
+    summary: The password of the SQL administrator.
+    description: ''
+  - name: --admin-user -u
+    isRequired: True
+    summary: The name of the SQL administrator.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --storage-key
+    isRequired: True
+    summary: The storage key to use.
+    description: ''
+  - name: --storage-key-type
+    isRequired: True
+    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    description: ''
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+  - name: --storage-uri
+    isRequired: True
+    summary: The storage uri to use.
+    description: ''
+  - name: --auth_type
+    isRequired: False
+    summary: The authentication type - if not specified, will default to SQL.
+    description: ''
+    parameterValueGroup: ADPassword, SQL
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_export
+  name: az sql db export
+  description: ''
+  summary: Exports a database to a bacpac.
+  Metadata: {}
+- commandList: []
+  htmlId: import
+  examples: []
+  parameters:
+  - name: --admin-password -p
+    isRequired: True
+    summary: The password of the SQL administrator.
+    description: ''
+  - name: --admin-user -u
+    isRequired: True
+    summary: The name of the SQL administrator.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --storage-key
+    isRequired: True
+    summary: The storage key to use.
+    description: ''
+  - name: --storage-key-type
+    isRequired: True
+    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    description: ''
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+  - name: --storage-uri
+    isRequired: True
+    summary: The storage uri to use.
+    description: ''
+  - name: --auth_type
+    isRequired: False
+    summary: The authentication type - if not specified, will default to SQL.
+    description: ''
+    parameterValueGroup: ADPassword, SQL
+  - name: --type
+    isRequired: False
+    summary: The type of the extension.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_import
+  name: az sql db import
+  description: ''
+  summary: Imports a bacpac into an existing database.
+  Metadata: {}
+- commandList: []
   htmlId: list
   examples: []
   parameters:
@@ -328,9 +504,17 @@ children:
     isRequired: False
     summary: Name of the elastic pool to create the new database in.
     description: ''
+  - name: --recovery-services-recovery-point-resource-id
+    isRequired: False
+    summary: Conditional. If createMode is RestoreLongTermRetentionBackup, then this value is required. Specifies the resource ID of the recovery point to restore from.
+    description: ''
   - name: --service-objective
     isRequired: False
     summary: Name of service objective for the new database.
+    description: ''
+  - name: --source-database-deletion-date
+    isRequired: False
+    summary: Conditional. If createMode is Restore and sourceDatabaseId is the deleted database's original resource id when it existed (as opposed to its current restorable dropped database id), then this value is required. Specifies the time that the database was deleted.
     description: ''
   - name: --tags
     isRequired: False
@@ -499,6 +683,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/ad9c974caea7edbded242dca11c265f5981532e9/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 3/10/2017 4:22:47 AM
-  ms.date: 3/10/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/5ce8235ccf4add5c5dbc4983ff9a67edd723ee7c/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  updated_at: 3/19/2017 6:44:53 PM
+  ms.date: 3/19/2017
