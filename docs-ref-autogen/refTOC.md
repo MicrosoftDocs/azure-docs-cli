@@ -917,6 +917,8 @@
 #### [az sql db copy](sql\db.pycliyml#copy)
 #### [az sql db create](sql\db.pycliyml#create)
 #### [az sql db delete](sql\db.pycliyml#delete)
+#### [az sql db export](sql\db.pycliyml#export)
+#### [az sql db import](sql\db.pycliyml#import)
 #### [az sql db list](sql\db.pycliyml#list)
 #### [az sql db replica](sql\db\replica.pycliyml)
 ##### [az sql db replica create](sql\db\replica.pycliyml#create)

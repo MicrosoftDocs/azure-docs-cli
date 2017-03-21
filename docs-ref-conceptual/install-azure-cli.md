@@ -20,6 +20,9 @@ We've improved and updated it to provide a great native command-line experience 
 It can be used on macOS, Linux, and Windows.
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
+> [!NOTE]
+> If you need the previous version of the Azure CLI, here's how to [install Azure 1.0](/azure/cli-install-nodejs).
+
 ## macOS
 
 Install Azure CLI 2.0 with one `curl` command.
@@ -46,21 +49,21 @@ After the install completes, add Python 3.5 to your PATH environment variable (t
 
 Check your Python installation from a command prompt.
 
-```bash
+```
 python --version
 ```
 
 Install Azure CLI 2.0 using `pip`.
 
-```bash
+```
 pip install --user azure-cli
 ```
 
 > [!NOTE]
-> Add `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts` to your PATH,
-> where `X.Y` is your Python version (for example, for Python 3.5, `%USERPROFILE%\AppData\Roaming\Python\Python35\Scripts`).
-> 
-> Be sure to restart your machine after changing PATH for the changes to take affect
+> The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
+> or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
+> where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
+> Add the folder that contains `az.bat` to your path and then open a new command prompt to pick up the new path.
 
 Run Azure CLI 2.0 from the command prompt with the 'az' command.
 

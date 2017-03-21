@@ -928,6 +928,8 @@
 #### [Copy](sql\db.pycliyml#copy "az sql db copy")
 #### [Create](sql\db.pycliyml#create "az sql db create")
 #### [Delete](sql\db.pycliyml#delete "az sql db delete")
+#### [Export](sql\db.pycliyml#export "az sql db export")
+#### [Import](sql\db.pycliyml#import "az sql db import")
 #### [List](sql\db.pycliyml#list "az sql db list")
 #### [Restore](sql\db.pycliyml#restore "az sql db restore")
 #### [Show](sql\db.pycliyml#show "az sql db show")
