@@ -45,15 +45,15 @@ az vm list \
 ```
 Column1    Column2
 ---------  -----------
-DEMORG1    DemoVM010
-DEMORG1    demovm111
-DEMORG1    demovm211
-DEMORG1    demovm212
-DEMORG1    demovm213
-DEMORG1    demovm214
-DEMORG1    demovm222
-RGDEMO001  KBDemo001VM
-RGDEMO001  KBDemo020
+DemoVM010    DEMORG1
+demovm111    DEMORG1
+demovm211    DEMORG1
+demovm212    DEMORG1
+demovm213    DEMORG1
+demovm214    DEMORG1
+demovm222    DEMORG1
+KBDemo001VM  RGDEMO001
+KBDemo020    RGDEMO001
 ```
 
 In the previous example, you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
