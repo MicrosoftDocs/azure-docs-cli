@@ -84,6 +84,7 @@
 ##### [az appservice web config hostname](appservice\web\config\hostname.pycliyml)
 ###### [az appservice web config hostname add](appservice\web\config\hostname.pycliyml#add)
 ###### [az appservice web config hostname delete](appservice\web\config\hostname.pycliyml#delete)
+###### [az appservice web config hostname get-external-ip](appservice\web\config\hostname.pycliyml#get-external-ip)
 ###### [az appservice web config hostname list](appservice\web\config\hostname.pycliyml#list)
 ##### [az appservice web config show](appservice\web\config.pycliyml#show)
 ##### [az appservice web config ssl](appservice\web\config\ssl.pycliyml)

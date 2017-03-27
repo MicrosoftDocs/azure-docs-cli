@@ -55,6 +55,7 @@
 ##### [Hostnames](appservice\web\config\hostname.pycliyml "az appservice web config hostname")
 ###### [Add](appservice\web\config\hostname.pycliyml#add "az appservice web config hostname add")
 ###### [Delete](appservice\web\config\hostname.pycliyml#delete "az appservice web config hostname delete")
+###### [Get-External-Ip](appservice\web\config\hostname.pycliyml#get-external-ip "az appservice web config hostname get-external-ip")
 ###### [List](appservice\web\config\hostname.pycliyml#list "az appservice web config hostname list")
 ##### [SSL certificates](appservice\web\config\ssl.pycliyml "az appservice web config ssl")
 ###### [Bind](appservice\web\config\ssl.pycliyml#bind "az appservice web config ssl bind")
