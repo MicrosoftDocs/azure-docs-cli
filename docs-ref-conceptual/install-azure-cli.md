@@ -2,14 +2,15 @@
 title: Install the Azure CLI 2.0
 description: Reference docs for Azure CLI 2.0
 keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI
-author: allclark
+author: rloutlaw
+ms.author: routlaw
 manager: douge
-ms.author: allclark
 ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
-ms.devlang: azure-cli
+ms.devlang: azurecli
+ms.service: multiple
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
 ---
 
@@ -88,13 +89,21 @@ Run Azure CLI 2.0 from the command prompt with the `az` command.
 We maintain a Docker image preconfigured with the Azure CLI.
 
 ```bash
-docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
+docker run azuresdk/azure-cli-python:<version>
 ```
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
 
 > [!NOTE]
-> The Docker image does not support the `component` feature.
+> If you want to pick up the SSH keys from your user environment,
+> you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
+>
+> ```bash
+> docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
+> ```
+
+The Docker image does not support the [`component` feature](/cli/azure/component).
+To update the Azure CLI 2.0, use `docker run` to install the latest image, or the specific image that you want.
 
 ## apt-get
 
@@ -114,7 +123,7 @@ $ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | su
 $ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
-Then, run the following sudo commands.
+Then, run the following sudo commands:
 
 ```bash
 $ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
@@ -174,7 +183,7 @@ If you get errors on install on OS X, upgrade `pip`.
 pip install --upgrade --force-reinstall pip
 ```
 
-If you get errors on install on **Debian** or **Ubuntu**, such as those seen in the examples below,
+If you get errors on install on **Debian** or **Ubuntu**, like these examples,
 install `libssl-dev` and `libffi-dev`.
 
 ```bash

@@ -2,12 +2,15 @@
 title: Query command results with Azure CLI 2.0
 description: Use --query to perform JMESPath queries on the output of Azure CLI 2.0 commands.
 keywords: Azure CLI 2.0, JMESPath, query, Linux, Mac, Windows, OS X
-author: allclark
+author: rloutlaw
+ms.author: routlaw
 manager: douge
 ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
+ms.devlang: azurecli
+ms.service: multiple
 ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 ---
 
@@ -43,17 +46,17 @@ az vm list \
 ```
 
 ```
-Column1    Column2
----------  -----------
-DEMORG1    DemoVM010
-DEMORG1    demovm111
-DEMORG1    demovm211
-DEMORG1    demovm212
-DEMORG1    demovm213
-DEMORG1    demovm214
-DEMORG1    demovm222
-RGDEMO001  KBDemo001VM
-RGDEMO001  KBDemo020
+Column1     Column2
+---------   -----------
+DemoVM010   DEMORG1
+demovm111   DEMORG1
+demovm211   DEMORG1
+demovm212   DEMORG1
+demovm213   DEMORG1
+demovm214   DEMORG1
+demovm222   DEMORG1
+KBDemo001VM RGDEMO001
+KBDemo020   RGDEMO001
 ```
 
 In the previous example, you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
