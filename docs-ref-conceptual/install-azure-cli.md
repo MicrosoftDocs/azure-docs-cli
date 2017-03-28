@@ -103,7 +103,7 @@ See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) 
 > ```
 
 > [!NOTE]
-> The Docker image does not support the `component` feature.
+> The Docker image does not support the [`component` feature](/cli/azure/component).
 
 ## apt-get
 
