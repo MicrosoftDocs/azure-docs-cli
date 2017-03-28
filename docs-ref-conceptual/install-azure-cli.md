@@ -96,7 +96,7 @@ See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) 
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
-> you can use `-v ${HOME}:/root` to mount your local user $HOME as `/root`.
+> you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
 >
 > ```bash
 > docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
