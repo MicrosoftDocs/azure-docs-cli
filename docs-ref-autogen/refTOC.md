@@ -383,6 +383,7 @@
 ### [az documentdb delete](documentdb.pycliyml#delete)
 ### [az documentdb failover-priority-change](documentdb.pycliyml#failover-priority-change)
 ### [az documentdb list](documentdb.pycliyml#list)
+### [az documentdb list-connection-strings](documentdb.pycliyml#list-connection-strings)
 ### [az documentdb list-keys](documentdb.pycliyml#list-keys)
 ### [az documentdb list-read-only-keys](documentdb.pycliyml#list-read-only-keys)
 ### [az documentdb regenerate-key](documentdb.pycliyml#regenerate-key)

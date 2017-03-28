@@ -387,6 +387,7 @@
 ### [Delete](documentdb.pycliyml#delete "az documentdb delete")
 ### [Failover-Priority-Change](documentdb.pycliyml#failover-priority-change "az documentdb failover-priority-change")
 ### [List](documentdb.pycliyml#list "az documentdb list")
+### [List-Connection-Strings](documentdb.pycliyml#list-connection-strings "az documentdb list-connection-strings")
 ### [List-Keys](documentdb.pycliyml#list-keys "az documentdb list-keys")
 ### [List-Read-Only-Keys](documentdb.pycliyml#list-read-only-keys "az documentdb list-read-only-keys")
 ### [Regenerate-Key](documentdb.pycliyml#regenerate-key "az documentdb regenerate-key")
