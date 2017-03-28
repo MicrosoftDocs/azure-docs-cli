@@ -3,6 +3,7 @@ title: Manage Azure subscriptions with Azure CLI 2.0
 description: Manage Azure subscriptions with Azure CLI 2.0 on Linux, Mac, or Windows.
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, subscription
 author: kamaljit
+ms.author: routlaw
 manager: douge
 ms.date: 02/27/2017
 ms.topic: article
