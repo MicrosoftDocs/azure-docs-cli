@@ -90,8 +90,16 @@ Run Azure CLI 2.0 from the command prompt with the `az` command.
 We maintain a Docker image preconfigured with the Azure CLI.
 
 ```bash
-docker run -v ${HOME}:/root -it azuresdk/azure-cli-python:<version>
+docker run azuresdk/azure-cli-python:<version>
 ```
+
+> [!NOTE]
+> If you want to pick up the SSH keys from your user environment,
+> you can use `-v ${HOME}:/root` to mount your local user $HOME as `/root`.
+>
+> ```bash
+> docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
+> ```
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
 
