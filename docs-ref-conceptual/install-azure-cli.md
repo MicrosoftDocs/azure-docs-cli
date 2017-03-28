@@ -103,7 +103,7 @@ See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) 
 > ```
 
 The Docker image does not support the [`component` feature](/cli/azure/component).
-To update the Azure CLI 2.0, use docker run to install the latest image, or the specific image that you want.
+To update the Azure CLI 2.0, use `docker run` to install the latest image, or the specific image that you want.
 
 ## apt-get
 
@@ -183,7 +183,7 @@ If you get errors on install on OS X, upgrade `pip`.
 pip install --upgrade --force-reinstall pip
 ```
 
-If you get errors on install on **Debian** or **Ubuntu**, such as those seen in the examples below,
+If you get errors on install on **Debian** or **Ubuntu**, likie these examples,
 install `libssl-dev` and `libffi-dev`.
 
 ```bash
