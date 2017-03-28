@@ -5,7 +5,6 @@ keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure P
 author: rloutlaw
 ms.author: routlaw
 manager: douge
-ms.author: allclark
 ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
