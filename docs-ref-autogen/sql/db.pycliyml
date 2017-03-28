@@ -4,7 +4,7 @@ commandList:
   href: db/audit-policy
   isGroup: true
 - name: az sql db audit-policy show
-  description: Gets a blob auditing policy associated with a database.
+  description: Gets a database's blob auditing policy.
   href: db/audit-policy#show
 - name: az sql db audit-policy update
   description: Updates a database's auditing policy.
@@ -54,7 +54,7 @@ commandList:
   href: db/threat-policy
   isGroup: true
 - name: az sql db threat-policy show
-  description: Gets a Threat Detection policy associated with a database.
+  description: Gets a database's threat detection policy.
   href: db/threat-policy#show
 - name: az sql db threat-policy update
   description: Updates a database's threat detection policy.
@@ -181,7 +181,7 @@ children:
     description: ''
   - name: --service-objective
     isRequired: False
-    summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
+    summary: 'The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.".'
     description: ''
   - name: --tags
     isRequired: False
@@ -275,7 +275,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: export
-  examples: []
+  examples:
+  - title: Get SAS key for use in export operation
+    code: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions w --expiry 2018-01-01T00:00:00Z
+  - title: Export bacpac using SAS key
+    code: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - title: Export bacpac using storage account Key
+    code: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
   parameters:
   - name: --admin-password -p
     isRequired: True
@@ -299,21 +305,22 @@ children:
     description: ''
   - name: --storage-key
     isRequired: True
-    summary: The storage key to use.
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - name: --storage-key-type
     isRequired: True
-    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    summary: The type of the storage key to use.
     description: ''
     parameterValueGroup: SharedAccessKey, StorageAccessKey
   - name: --storage-uri
     isRequired: True
     summary: The storage uri to use.
     description: ''
-  - name: --auth_type
+  - name: --auth-type
     isRequired: False
-    summary: The authentication type - if not specified, will default to SQL.
+    summary: The authentication type.
     description: ''
+    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
   - name: --debug
     isRequired: False
@@ -350,7 +357,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: import
-  examples: []
+  examples:
+  - title: Get SAS key for use in import operation
+    code: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions r --expiry 2018-01-01T00:00:00Z
+  - title: Import bacpac into an existing database using SAS key
+    code: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - title: Import bacpac into an existing database using storage account key
+    code: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
   parameters:
   - name: --admin-password -p
     isRequired: True
@@ -374,26 +387,23 @@ children:
     description: ''
   - name: --storage-key
     isRequired: True
-    summary: The storage key to use.
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - name: --storage-key-type
     isRequired: True
-    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    summary: The type of the storage key to use.
     description: ''
     parameterValueGroup: SharedAccessKey, StorageAccessKey
   - name: --storage-uri
     isRequired: True
     summary: The storage uri to use.
     description: ''
-  - name: --auth_type
+  - name: --auth-type
     isRequired: False
-    summary: The authentication type - if not specified, will default to SQL.
+    summary: The authentication type.
     description: ''
+    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
-  - name: --type
-    isRequired: False
-    summary: The type of the extension.
-    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -679,6 +689,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7c9c68600e520e98f4bfa1b778382d34d963f09/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 3/22/2017 3:07:20 AM
-  ms.date: 3/22/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/afee409b3374de98fb868cd0e5bcbb3161899b92/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+  updated_at: 3/25/2017 3:36:46 PM
+  ms.date: 3/25/2017
