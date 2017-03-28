@@ -9,6 +9,8 @@ ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
+ms.devlang: azurecli
+ms.service: multiple
 ms.assetid: fab89cb8-dac1-4e21-9d34-5eadd5213c05
 ---
 
