@@ -183,7 +183,7 @@ If you get errors on install on OS X, upgrade `pip`.
 pip install --upgrade --force-reinstall pip
 ```
 
-If you get errors on install on **Debian** or **Ubuntu**, likie these examples,
+If you get errors on install on **Debian** or **Ubuntu**, like these examples,
 install `libssl-dev` and `libffi-dev`.
 
 ```bash
