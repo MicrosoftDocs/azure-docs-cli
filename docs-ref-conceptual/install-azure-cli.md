@@ -123,7 +123,7 @@ $ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | su
 $ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
-Then, run the following sudo commands.
+Then, run the following sudo commands:
 
 ```bash
 $ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
