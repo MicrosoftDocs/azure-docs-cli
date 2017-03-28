@@ -92,8 +92,6 @@ We maintain a Docker image preconfigured with the Azure CLI.
 docker run azuresdk/azure-cli-python:<version>
 ```
 
-See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
-
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
 > you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
@@ -101,6 +99,11 @@ See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) 
 > ```bash
 > docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
 > ```
+
+See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+
+> [!NOTE]
+> The Docker image does not support the `component` feature.
 
 ## apt-get
 
