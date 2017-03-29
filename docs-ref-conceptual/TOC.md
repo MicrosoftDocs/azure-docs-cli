@@ -1,4 +1,4 @@
-# [Overview](overview.md)
+# [Azure CLI 2.0](overview.md)
 ## [Install](install-azure-cli.md)
 ## [Get started](get-started-with-azure-cli.md)
 ## [Log in](authenticate-azure-cli.md)

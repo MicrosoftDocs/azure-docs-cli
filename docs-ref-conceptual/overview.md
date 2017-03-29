@@ -14,7 +14,7 @@ ms.service: multiple
 ms.assetid: 80ae9f6c-adb7-483c-bfb4-fbb958e075ba
 ---
 
-# Overview of the Azure CLI 2.0
+# Azure CLI 2.0
 
 The Azure CLI 2.0 is Azure's new command-line experience for managing Azure resources.  It can be used on macOS, Linux, and Windows. 
 
