@@ -16,11 +16,13 @@ ms.assetid: fab89cb8-dac1-4e21-9d34-5eadd5213c05
 
 # Create an Azure service principal with Azure CLI 2.0
 
-If you plan to manage your app or service with Azure CLI 2.0, you should run it under an Azure Active Directory (AAD) service principal, rather than your own credentials.  This topic steps you through creating a security principal with Azure CLI 2.0.
-
+If you plan to manage your app or service with Azure CLI 2.0,
+you should run it under an Azure Active Directory (AAD) service principal rather than your own credentials.
+This topic steps you through creating a security principal with Azure CLI 2.0.
 
 > [!NOTE]
-> You can also create a service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
+> You can also create a service principal through the Azure portal.
+> Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
 
 ## What is a 'service principal'?
 
@@ -53,7 +55,8 @@ Logged in? Great! Let's create the service principal. To do that, use the `az ad
  Any one of these values works as your *appID* in the following examples. Now, let's use `az ad sp create-for-rbac` to create a service principal that supports Azure RBAC roles.
 
  > [!WARNING] 
- > Don't create a simple, insecure password! Create a password using the [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
+ > Don't create a simple, insecure password! Create a password using the
+ > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
 
 ```azurecli
 az ad sp create-for-rbac --name {URL or display name of app} --password "{strong password here}" 
@@ -100,7 +103,10 @@ Congratulations! You can use the `name`, `password`, and `tenant` as the credent
 ## Managing roles 
 
 > [!NOTE]
-> Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals. Roles have sets of permissions associated with them, which determine the resources a principal can read, access, write, or manage. For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
+> Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals.
+> Roles have sets of permissions associated with them,
+> which determine the resources a principal can read, access, write, or manage.
+> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
 
 You can add additional roles to your service principal with the `az ad sp create-for-rbac` command as well.
 
@@ -130,7 +136,9 @@ az role assignment list --query [*].properties.roleDefinitionName
 ```
 
 > [!NOTE] 
-> If your account does not have sufficient permissions to assign a role, you see an error message. The message states your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
+> If your account does not have sufficient permissions to assign a role, you see an error message.
+> The message states your account "does not have authorization to perform action
+> 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
 
 
 ## Reset the security principal credentials
@@ -150,12 +158,3 @@ az ad sp reset-credentials --name {appId} --password {my-new-password}
 ```
 
 If no value for `--password` is provided, a new one is generated for you. 
-
-
-
-
-
-
-
-
-
