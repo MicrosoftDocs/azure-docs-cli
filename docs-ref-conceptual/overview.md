@@ -39,7 +39,5 @@ A detailed [reference](/cli/azure/) is also available that documents how to use 
 
 
 > [!NOTE]
-> If you use the previous version of the CLI (Azure CLI), you can continue to use it.  If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 
-
-
-
+> If you use the previous version of the CLI (Azure CLI), you can continue to use it.
+> If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0. 

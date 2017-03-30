@@ -45,9 +45,10 @@ Now that you have the Azure CLI 2.0 installed, your next step will be to securel
 
 1. Run the following command from the command line.
 
-    ```azurecli
-    az login
-    ```
+   ```azurecli
+   az login
+   ```
+   
    This command will output a code to use in the next step. 
 
 2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin) and enter the code.

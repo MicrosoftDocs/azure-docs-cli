@@ -161,6 +161,7 @@ SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive ins
 ### Errors with curl redirection
 
 If you get an error from the `curl` command regarding the `-L` parameter, or an error saying "Object Moved", try using the full url instead of the aka.ms url:
+
 ```
 # If you see this:
 $ curl -L https://aka.ms/InstallAzureCli | bash
@@ -240,6 +241,7 @@ Failed building wheel for cryptography
 See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
 
 ## Reporting issues and feedback
+
 If you encounter any bugs with the tool,
 file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
 To provide feedback from the command line, try the `az feedback` command.
