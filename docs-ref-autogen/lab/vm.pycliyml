@@ -3,7 +3,7 @@ commandList:
   description: Command to apply artifacts to virtual machine in Azure DevTest Lab.
   href: vm#apply-artifacts
 - name: az lab vm create
-  description: Command to create vm of in Azure DevTest Lab.
+  description: Command to create VM in a DevTest Lab.
   href: vm#create
 - name: az lab vm delete
   description: Delete virtual machine.
@@ -37,7 +37,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of the lab resource group.
+    summary: Name of lab's resource group.
     description: ''
   - name: --artifacts
     isRequired: False
@@ -73,7 +73,21 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create a Virtual Machine in the lab from gallery image.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from gallery image with ssh authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
+  - title: Create a claimable Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
+  - title: Create a windows Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from custom image.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab with public ip configuration.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
+  - title: Create a Virtual Machine from a formula.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --formula MyFormula
   parameters:
   - name: --lab-name
     isRequired: True
@@ -85,11 +99,11 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of the lab resource group.
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --allow-claim
     isRequired: False
-    summary: Indicates whether another user can take ownership of the virtual machine.
+    summary: Flag indicating whether the VM will be created as a claimable VM in the lab.
     description: ''
   - name: --artifacts
     isRequired: False
@@ -105,7 +119,7 @@ children:
     description: ''
   - name: --formula
     isRequired: False
-    summary: Name of the formula. Use az lab formula list for available formulas.
+    summary: Name of the formula. Use az lab formula list for available formulas. Use --artifacts to pass-in parameters required by the artifacts of the formula.
     description: ''
   - name: --image
     isRequired: False
@@ -115,17 +129,13 @@ children:
     isRequired: False
     summary: Type of the image. Allowed values are gallery, custom.
     description: ''
-  - name: --location -l
-    isRequired: False
-    summary: Location where to create VM. Defaults to the location of the lab.
-    description: ''
   - name: --notes
     isRequired: False
     summary: Notes for the virtual machine.
     description: ''
   - name: --size
     isRequired: False
-    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info. Required when creating VM from gallery or custom image.
     description: ''
   - name: --tags
     isRequired: False
@@ -153,9 +163,9 @@ children:
     isRequired: False
     summary: The SSH public key or public key file path. Use --generate-ssh-keys to regen ssh keys.
     description: ''
-  - name: --disallow-public-ip-address
+  - name: --ip-configuration
     isRequired: False
-    summary: To allow public ip address set to true or false. If omitted, based on the defaulted subnet this will be set to true or false.
+    summary: Type of ip configuration to use with the VM. Allowed values are shared, public, private. If omitted, will be selected based on selected vnet.
     description: ''
   - name: --subnet
     isRequired: False
@@ -191,7 +201,7 @@ children:
   uid: az_lab_vm_create
   name: az lab vm create
   description: ''
-  summary: Command to create vm of in Azure DevTest Lab.
+  summary: Command to create VM in a DevTest Lab.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -247,7 +257,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of the lab resource group.
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --expand
     isRequired: False
@@ -444,5 +454,5 @@ children:
 uid: az_lab_vm
 name: 'Dev/Test Lab virtual machines - az lab vm'
 description: ''
-summary: Commands to manage vm of Azure DevTest Lab.
+summary: Commands to manage VM in a DevTest Lab.
 Metadata: {}
