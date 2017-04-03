@@ -114,21 +114,22 @@ First, modify your sources list.
 **32-bit system**
 
 ```bash
-$ echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
 **64-bit system**
 
 ```bash
-$ echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | \
+    sudo tee /etc/apt/sources.list.d/azure-cli.list
 ```
 
 Then, run the following sudo commands:
 
 ```bash
-$ sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
-$ sudo apt-get install apt-transport-https
-$ sudo apt-get update && sudo apt-get install azure-cli
+sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+sudo apt-get install apt-transport-https
+sudo apt-get update && sudo apt-get install azure-cli
 ```
 
 > [!NOTE]
@@ -164,7 +165,7 @@ If you get an error from the `curl` command regarding the `-L` parameter, or an 
 
 ```
 # If you see this:
-$ curl -L https://aka.ms/InstallAzureCli | bash
+curl -L https://aka.ms/InstallAzureCli | bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   175  100   175    0     0    562      0 --:--:-- --:--:-- --:--:--   560
@@ -172,7 +173,7 @@ bash: line 1: syntax error near unexpected token `<'
 'ash: line 1: `<html><head><title>Object moved</title></head><body>
 
 #### Try this instead:
-$ curl https://azurecliprod.blob.core.windows.net/install | bash
+curl https://azurecliprod.blob.core.windows.net/install | bash
 ```
 
 
