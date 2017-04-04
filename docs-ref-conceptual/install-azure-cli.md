@@ -44,7 +44,7 @@ Get Azure CLI 2.0 on Windows using `pip`.
 
 If you don't already have Python 2.7, 3.4 or 3.5 installed, we recommend you install version 3.5.x.
 
-Visit the Python site and [download Python 3.5](https://www.python.org/downloads/release/python-352/) for Windows.
+Visit the Python site and [download Python 3.5](https://www.python.org/downloads/) for Windows.
 Be sure to install the Pip component when you install Python.
 After the install completes, add Python 3.5 to your PATH environment variable (the installer will prompt you).
 
