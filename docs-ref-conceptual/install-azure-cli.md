@@ -111,18 +111,19 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 First, modify your sources list.
 
-**32-bit system**
+- 32-bit system
 
-```bash
-echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
-```
+   ```bash
+   echo "deb https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
+   ```
 
-**64-bit system**
+- 64-bit system
 
-```bash
-echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | \
-    sudo tee /etc/apt/sources.list.d/azure-cli.list
-```
+   ```bash
+   echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/azure-cli/ wheezy main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
+   ```
 
 Then, run the following sudo commands:
 
@@ -132,8 +133,8 @@ sudo apt-get install apt-transport-https
 sudo apt-get update && sudo apt-get install azure-cli
 ```
 
-> [!NOTE]
-> This install does not support the `component` feature.
+When you install with apt-get, `az component` isn't supported.
+To update the CLI, use these instructions to install the latest version.
 
 ## Linux Prerequisites
 
