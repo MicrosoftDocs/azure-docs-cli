@@ -211,4 +211,4 @@ az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --passwor
 }
 ```
 
-If no value for `--password` is provided, a new one is generated for you and displayed in the output. Make sure to keep it safe-if you forget this password you'll need to reset the credentials again.
+The CLI generates a new password for you if you leave out the `--password` option. 
