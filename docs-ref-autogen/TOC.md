@@ -382,6 +382,7 @@
 ##### [Set-Permission](dls\fs\access.pycliyml#set-permission "az dls fs access set-permission")
 ##### [Show](dls\fs\access.pycliyml#show "az dls fs access show")
 ## [DevTest Lab](lab.pycliyml "az lab")
+### [Delete](lab.pycliyml#delete "az lab delete")
 ### [Get](lab.pycliyml#get "az lab get")
 ### [Artifact sources](lab\artifact-source.pycliyml "az lab artifact-source")
 #### [Get](lab\artifact-source.pycliyml#get "az lab artifact-source get")

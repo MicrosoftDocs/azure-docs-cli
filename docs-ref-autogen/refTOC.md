@@ -524,6 +524,7 @@
 #### [az lab custom-image delete](lab\custom-image.pycliyml#delete)
 #### [az lab custom-image list](lab\custom-image.pycliyml#list)
 #### [az lab custom-image show](lab\custom-image.pycliyml#show)
+### [az lab delete](lab.pycliyml#delete)
 ### [az lab formula](lab\formula.pycliyml)
 #### [az lab formula delete](lab\formula.pycliyml#delete)
 #### [az lab formula get](lab\formula.pycliyml#get)
