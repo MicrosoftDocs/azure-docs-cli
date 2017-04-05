@@ -138,7 +138,7 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
    ```
 
 When you install with apt-get, `az component` isn't supported.
-To update the CLI use the following commands.
+To update the CLI use the following commands:
 
 ```bash
 sudo apt-get update && sudo apt-get install azure-cli
