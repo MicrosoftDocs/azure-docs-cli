@@ -36,52 +36,91 @@ First, you must have sufficient permissions in both your Azure Active Directory 
 
 The easiest way to check whether your account has adequate permissions is through the portal. See [Check required permission in portal](/azure/azure-resource-manager/resource-group-create-service-principal-portal.md#required-permissions).
 
-If you have this permission level, log in to your Azure account.
+## Create a service principal for your application
+
+You must have one of the following to identify the app you want to create a service principal for:
+
+  * The unique name or base URI of your deployed app (such as "MyDemoWebApp" in the following examples) 
+  * the Application ID, the unique GUID associated with your deployed app, service, or object
+
+These values identify your application when creating a service principal.
+
+### Get information about your application
+
+Get identity information about your application with the Azure CLI 2.0. 
 
 ```azurecli
-az login -u {your username} -p {password}
+az ad app list --display-name MyDemoWebApp
 ```
 
-or use `az login` (no flags) and copy the returned code into [the Azure device login portal](https://aka.ms/devicelogin).
+The `--display-name` filters the returned list of apps and only shows those with display names starting with MyDemoWebApp.
 
-## Create a service principal for your app 
+```json
+{
+    "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
+    "appPermissions": null,
+    "availableToOtherTenants": false,
+    "displayName": "MyDemoWebApp",
+    "homepage": "http://MyDemoWebApp.azurewebsites.net",
+    "identifierUris": [
+      "http://MyDemoWebApp"
+    ],
+    "objectId": "bd07205b-629f-4a2e-945e-1ee5dadf610b9",
+    "objectType": "Application",
+    "replyUrls": []
+  }
+```
 
-Logged in? Great! Let's create the service principal. To do that, use the `az ad sp create-for-rbac` command. You must have one of the following ways to identify your deployled app:
+### Create the service principal
 
-  * The unique name of your deployed app (such as "WebApplication17089" in the following examples) 
-  * A base URL ("https://webapplication17089.azurewebsites.net" in the following examples) for your deployed web app
-  * an app or object ID (a unique GUID value associated with your deployed app, service, or object)
+```azurecli
+az ad sp create-for-rbac --name {appId} --password "{strong password here}" 
+``` 
 
- Any one of these values works as your *appID* in the following examples. Now, let's use `az ad sp create-for-rbac` to create a service principal that supports Azure RBAC roles.
+```json
+{
+  "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
+  "displayName": "MyDemoWebApp",
+  "name": "http://MyDemoWebApp.azurewebsites.net",
+  "password": {the password you supplied displayed here},
+  "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+}
+```
 
  > [!WARNING] 
  > Don't create a simple, insecure password! Create a password using the
  > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
 
+### Get information about the service principal
+
 ```azurecli
-az ad sp create-for-rbac --name {URL or display name of app} --password "{strong password here}" 
-``` 
-
-Your results should look similar to this output (but with values you supplied):
-
+az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 ```
+
+```json
 {
-  "appId": "59db508a-3429-4094-a828-e8b4680fc790",
-  "displayName": "WebApplication17089",
-  "name": "https://webapplication17089.azurewebsites.net",
-  "password": {the password you supplied displayed here},
-  "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
+  "displayName": "MyDemoWebApp",
+  "objectId": "0ceae62e-1a1a-446f-aa56-2300d176659bde",
+  "objectType": "ServicePrincipal",
+  "servicePrincipalNames": [
+    "http://MyDemoWebApp.azurewebsites.net",
+    "a487e0c1-82af-47d9-9a0b-af184eb87646d"
+  ]
 }
 ```
-You can now log in as the new service principal for your app using the *appId* and *password* you provided.  Supply the *tenant* GUID value from the results. 
+
+### Sign in using the service principal
+
+You can now log in as the new service principal for your app using the *appId* and *password* from `az ad sp show`.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
 
 ```azurecli
-az login --service-principal -u {appId} --password {password} --tenant {tenant}
+az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password} --tenant {tenant}
 ``` 
 
-Run this command from a new CLI prompt and confirm that you are logged in as the service principal. You should see something like this:
+Run this command from a new CLI prompt. After a successful sign-on you will see output like this:
 
-```
+```json
 [
   {
     "cloudName": "AzureCloud",
@@ -91,14 +130,14 @@ Run this command from a new CLI prompt and confirm that you are logged in as the
     "state": "Enabled",
     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
     "user": {
-      "name": "https://webapplication17089.azurewebsites.net",
+      "name": "https://MyDemoWebApp.azurewebsites.net",
       "type": "servicePrincipal"
     }
   }
 ]
 ```
 
-Congratulations! You can use the `name`, `password`, and `tenant` as the credentials for running your app. You may need to tweak the permissions, though; we'll discuss that in the next section.
+Use the `name`, `password`, and `tenant` values  as the credentials for running your app. 
 
 ## Managing roles 
 
@@ -108,31 +147,26 @@ Congratulations! You can use the `name`, `password`, and `tenant` as the credent
 > which determine the resources a principal can read, access, write, or manage.
 > For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
 
-You can add additional roles to your service principal with the `az ad sp create-for-rbac` command as well.
+The Azure CLI 2.0 provides the following commands to manage role assignments:
+
+* List the current roles granted to a service principal: [az role assignment list](https://docs.microsoft.com/en-us/cli/azure/role/assignment#list)
+* Add additional roles to a service principal: [az role assignment create](https://docs.microsoft.com/en-us/cli/azure/role/assignment#create)
+* Remove a role assignment from a service principal: [az role assignment delete](https://docs.microsoft.com/en-us/cli/azure/role/assignment#delete)
+
+The default role for a service principal is **Contributor**. It may not be the best choice for an app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and is a good choice for read-only access. You can view details on role-specific permissions or create custom ones through the Azure portal.
+
+In this example, we add the **Reader** role to our prior example, and delete the **Contributor**
+one:
 
 ```azurecli
-az ad sp create-for-rbac --name {appId} --password "{strong password here}" --role {rolename}
+az role assignment create --assignee 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --role Reader
+az role assignment delete --assignee https://MyDemoWebApp.azurewebsites.net --role Contributor
 ```
 
-And delete them with:
+Verify the changes by listing the currently assigned roles:
 
 ```azurecli
-az role assignment delete --assignee {appId} --role {rolename}
-```
-
-The default role for a service principal is **Contributor**. It may not be the best choice depending on the scope of your app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and can be a good choice for read-only apps. You can view details on role-specific permissions or create custom ones through the Azure portal.
-
-In this example, we add the **Reader** role to our prior example, and delete the **Contributor** one:
-
-```
-az ad sp create-for-rbac --name {appId} --role Reader
-az role assignment delete --assignee https://webapplication17089.azurewebsites.net --role Contributor
-```
-
-You can view the currently assigned roles with the following command:
-
-```azurecli
-az role assignment list --query [*].properties.roleDefinitionName
+az role assignment list --assignee 20bce7de-3cd7-49f4-ab64-bb5b443838c3
 ```
 
 > [!NOTE] 
@@ -141,20 +175,23 @@ az role assignment list --query [*].properties.roleDefinitionName
 > 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
 
 
-## Reset the security principal credentials
+## Change the credentials of a security principal
 
-It's a good security practice to review the permissions and update the password regularly. You may also want to manage and modify the security credentials as your app changes. Use the `az ad sp reset-credentials` command. 
+It's a good security practice to review permissions and update passwords regularly. You may also want to manage and modify the security credentials as your app changes.
 
-For example, we can reset the expiry for the service principal credentials to a new value. (The default expiration is one year.) Here, we set it to expire in two years.
+### Reset a service principal password
 
 ```azurecli
-az ad sp reset-credentials --name {appId} --password {current-password} --years 2
+az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --password {new-password} --years 2
 ```
 
-Or we can assign a new password:
-
-```azurecli
-az ad sp reset-credentials --name {appId} --password {my-new-password}
+```json
+{
+  "appId": "20bce7de-3cd7-49f4-ab64-bb5b443838c3",
+  "name": "20bce7de-3cd7-49f4-ab64-bb5b443838c3",
+  "password": {new-password},
+  "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+}
 ```
 
 If no value for `--password` is provided, a new one is generated for you. 
