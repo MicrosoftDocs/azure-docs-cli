@@ -40,6 +40,9 @@ For information about the latest release, see the [release notes](release-notes-
    
 3. Run Azure CLI 2.0 from the command prompt with the `az` command.
 
+> [!Note]
+> To uninstall, see the [manual uninstall instructions](#uninstall).
+
 ## Windows
 
 Get Azure CLI 2.0 on Windows using `pip`. 
@@ -85,6 +88,9 @@ Get Azure CLI 2.0 on Windows using `pip`.
    ```
 
 4. Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+> [!Note]
+> To uninstall, see the [manual uninstall instructions](#uninstall).
 
 ## Docker
 
@@ -246,6 +252,24 @@ Failed building wheel for cryptography
 ```
 
 See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
+
+## Uninstall
+
+If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
+
+If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
+
+1. Remove the installed files.
+
+   ```bash
+   rm -r <install location>/lib/azure-cli
+   rm <install location>/bin/az
+   ```
+
+2. Delete the line `<install location>/lib/azure-cli/az.completion` from <install location>/.bash_profile.
+
+> [!Note]
+> The default install location is /Users/<username>.
 
 ## Reporting issues and feedback
 
