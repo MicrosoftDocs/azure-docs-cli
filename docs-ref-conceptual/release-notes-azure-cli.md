@@ -20,7 +20,7 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 Version 2.0.2
 
-We released the following components in this release: ACR, Batch, SQL, KeyVault.
+We released the ACR, Batch, KeyVault, and SQL components in this release.
 
 ```
 azure-cli (2.0.2)
