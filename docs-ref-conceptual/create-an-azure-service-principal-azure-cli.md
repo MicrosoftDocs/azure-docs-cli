@@ -96,7 +96,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
 ### Get information about the service principal
 
 ```azurecli
-az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb8d36d
+az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 ```
 
 ```json
