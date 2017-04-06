@@ -255,8 +255,6 @@ See Stack Overflow question - [Failed to install Python Cryptography package wit
 
 ## Uninstall
 
-If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
-
 If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
 
 1. Remove the installed files.
@@ -270,6 +268,8 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
 
 > [!Note]
 > The default install location is /Users/<username>.
+
+If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
 
 ## Reporting issues and feedback
 
