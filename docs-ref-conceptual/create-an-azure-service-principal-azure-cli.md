@@ -73,7 +73,7 @@ The `--display-name` option filters the returned list of apps to show those with
 
 ### Create the service principal
 
-Use [az ad sp create-for-rbac](https://docs.microsoft.com/en-us/cli/azure/ad/sp#create-for-rbac) to create the new service principal. 
+Use [az ad sp create-for-rbac](https://docs.microsoft.com/en-us/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
 
 ```azurecli
 az ad sp create-for-rbac --name {appId} --password "{strong password}" 
@@ -90,7 +90,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
 ```
 
  > [!WARNING] 
- > Don't create a simple, insecure password!  Follow the
+ > Don't create an insecure password.  Follow the
  > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
 
 ### Get information about the service principal
@@ -120,7 +120,7 @@ You can now log in as the new service principal for your app using the *appId* a
 az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password} --tenant {tenant}
 ``` 
 
-Run this command from a new CLI prompt. After a successful sign-on you will see output like this:
+You will see this output after a successful sign-on:
 
 ```json
 [
@@ -196,10 +196,10 @@ It's a good security practice to review permissions and update passwords regular
 
 ### Reset a service principal password
 
-Use `az ad sp reset-credentials` to reset the current password for the service principal to a new value `new-password` with a two year expiration:
+Use `az ad sp reset-credentials` to reset the current password for the service principal.
 
 ```azurecli
-az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --password {new-password} --years 2
+az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --password {new-password}
 ```
 
 ```json
@@ -211,4 +211,4 @@ az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --passwor
 }
 ```
 
-The CLI generates a new password for you if you leave out the `--password` option. 
+The CLI generates a secure password if you leave out the `--password` option.
