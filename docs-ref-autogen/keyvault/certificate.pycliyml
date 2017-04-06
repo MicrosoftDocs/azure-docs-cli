@@ -25,7 +25,7 @@ commandList:
   description: Get a default policy for a self-signed certificate.
   href: certificate#get-default-policy
 - name: az keyvault certificate import
-  description: Imports a certificate into the specified vault.
+  description: Import a certificate into Key Vault. Certificates can also be used as a secrets in provisioned virtual machines.
   href: certificate#import
 - name: az keyvault certificate issuer
   description: Manage certificate issuer information.
@@ -309,7 +309,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: import
-  examples: []
+  examples:
+  - title: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
+    code: "az group create -g my-group -l westus \n                        \n                        service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - name: --file -f
     isRequired: True
@@ -325,20 +327,12 @@ children:
     description: ''
   - name: --disabled
     isRequired: False
-    summary: Create certificate in disabled state.
+    summary: Import the certificate in disabled state.
     description: ''
     parameterValueGroup: false, true
-  - name: --expires
-    isRequired: False
-    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
-  - name: --not-before
-    isRequired: False
-    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
   - name: --password
     isRequired: False
-    summary: If the private key in base64EncodedCertificate is encrypted, the password used for encryption.
+    summary: If the private key in certificate is encrypted, the password used for encryption.
     description: ''
   - name: --policy -p
     isRequired: False
@@ -378,8 +372,8 @@ children:
   children: []
   uid: az_keyvault_certificate_import
   name: az keyvault certificate import
-  description: ''
-  summary: Imports a certificate into the specified vault.
+  description: Import a certificate into Key Vault. Certificates can also be used as a secrets in provisioned virtual machines.
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: list
@@ -594,6 +588,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a8eac778b9a395ffe24fbe7516ec13e37d596ef5/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 3/14/2017 5:08:42 PM
-  ms.date: 3/14/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/e0ca649f8ec8b4f460edf829cb067ea1f00afb5f/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 4/6/2017 7:49:04 PM
+  ms.date: 4/6/2017
