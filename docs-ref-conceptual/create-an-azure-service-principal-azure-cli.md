@@ -73,7 +73,7 @@ The `--display-name` option filters the returned list of apps to show those with
 
 ### Create the service principal
 
-Use [az ad sp create-for-rbac](https://docs.microsoft.com/en-us/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
+Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
 
 ```azurecli
 az ad sp create-for-rbac --name {appId} --password "{strong password}" 
@@ -84,7 +84,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
   "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
   "displayName": "MyDemoWebApp",
   "name": "http://MyDemoWebApp",
-  "password": {the password you supplied displayed here},
+  "password": {strong password},
   "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 }
 ```
@@ -150,9 +150,9 @@ Use the `id`, `password`, and `tenant` values as the credentials for running you
 
 The Azure CLI 2.0 provides the following commands to manage role assignments:
 
-* [az role assignment list](https://docs.microsoft.com/en-us/cli/azure/role/assignment#list)
-* [az role assignment create](https://docs.microsoft.com/en-us/cli/azure/role/assignment#create)
-* [az role assignment delete](https://docs.microsoft.com/en-us/cli/azure/role/assignment#delete)
+* [az role assignment list](/cli/azure/role/assignment#list)
+* [az role assignment create](/cli/azure/role/assignment#create)
+* [az role assignment delete](/cli/azure/role/assignment#delete)
 
 The default role for a service principal is **Contributor**. It may not be the best choice for an app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and is a good choice for read-only access. You can view details on role-specific permissions or create custom ones through the Azure portal.
 
