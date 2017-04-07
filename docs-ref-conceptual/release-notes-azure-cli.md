@@ -54,7 +54,7 @@ vm (2.0.2)
 
 ### Core
 
-* Add acr, lab, monitor and find modules to default list.
+* Add acr, lab, monitor, and find modules to default list.
 * Login: skip erroneous tenant ([#2634](https://github.com/Azure/azure-cli/pull/2634))
 * login: set default subscription to one with the state of "Enabled" ([#2575](https://github.com/Azure/azure-cli/pull/2575))
 * Add wait commands and --no-wait support to more commands ([#2524](https://github.com/Azure/azure-cli/pull/2524))
@@ -88,12 +88,12 @@ vm (2.0.2)
 
 ### VM
 
-* [Compute] Add AppGateway support to VMSS create ([#2570](https://github.com/Azure/azure-cli/pull/2570))
+* [Compute] Add AppGateway support to virtual machine scale set create ([#2570](https://github.com/Azure/azure-cli/pull/2570))
 * [VM/VMSS] Improved disk caching support ([#2522](https://github.com/Azure/azure-cli/pull/2522))
 * VM/VMSS: incorporate credentials validation logic used by portal ([#2537](https://github.com/Azure/azure-cli/pull/2537))
 * Add wait commands and --no-wait support ([#2524](https://github.com/Azure/azure-cli/pull/2524))
-* vmss: support * to list instance view across vms ([#2467](https://github.com/Azure/azure-cli/pull/2467))
-* Add --secrets for VM and VMSS ([#2212}(https://github.com/Azure/azure-cli/pull/2212))
+* Virtual machine scale set: support * to list instance view across vms ([#2467](https://github.com/Azure/azure-cli/pull/2467))
+* Add --secrets for VM and virtual machine scale set ([#2212}(https://github.com/Azure/azure-cli/pull/2212))
 * Allow VM creation with specialized VHD ([#2256](https://github.com/Azure/azure-cli/pull/2256))
 
 ## February 27, 2017
@@ -103,7 +103,7 @@ Version 2.0.0
 This release of Azure CLI 2.0 is the first "Generally Available" release.
 General availability applies to these command modules:
 - Container Service (acs)
-- Compute (including Resource Manager, VM, VM Scale Sets, Managed Disks)
+- Compute (including Resource Manager, VM, virtual machine scale sets, Managed Disks)
 - Networking
 - Storage
 
