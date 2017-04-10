@@ -90,7 +90,7 @@ Once the resource group has been created, the `az group create` command outputs 
 
 Now that we have our resource group, let's create a Linux VM within it.
 
-You can create a Linux VM using the popular UbuntuTLS image, with two attached storage disks of 10GB and 20GB, with the following command:
+You can create a Linux VM using the popular UbuntuLTS image, with two attached storage disks of 10GB and 20GB, with the following command:
 
 ```azurecli
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes-gb 10 20
