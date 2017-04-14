@@ -264,10 +264,10 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
    rm <install location>/bin/az
    ```
 
-2. Delete the line `<install location>/lib/azure-cli/az.completion` from <install location>/.bash_profile.
+2. Delete the line `<install location>/lib/azure-cli/az.completion` from `<install location>/.bash_profile`.
 
 > [!Note]
-> The default install location is /Users/<username>.
+> The default install location is `/Users/<username>`.
 
 If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
 
