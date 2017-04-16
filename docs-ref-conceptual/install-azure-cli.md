@@ -22,7 +22,7 @@ It can be used on macOS, Linux, and Windows.
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
 > [!NOTE]
-> If you need the previous version of the Azure CLI, here's how to [install Azure 1.0](/azure/cli-install-nodejs).
+> If you need the previous version of the Azure CLI, here's how to [install Azure CLI 1.0](/azure/cli-install-nodejs).
 
 ## macOS
 
