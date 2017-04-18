@@ -63,7 +63,9 @@ Get Azure CLI 2.0 on Windows using `pip`.
    pip install --user azure-cli
    ```
 
-   > [!NOTE]
+ Just tell them to install the 3.x version - the 3.x  version is in `%USERPROFILE%\AppData\Roaming\Python\Python<version>\Scripts`
+Then add this step - not as an obtrustive note that is skipped (see customer comments) but as a step
+
    > The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
    > or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
    > where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
