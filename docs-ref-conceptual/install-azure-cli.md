@@ -45,7 +45,34 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## Windows
 
-Get Azure CLI 2.0 on Windows using `pip`. 
+### Bash on Windows
+
+Azure CLI 2.0 supports Bash command syntax, making Bash on Windows a great way to use the CLI.
+
+1. If you don't have Bash on Windows, [install it](https://docs.microsoft.com/cli/azure/install-azure-cli).
+
+2. Open the Bash shell.
+
+2. Install Azure CLI 2.0 with one `curl` command.
+
+   ```bash
+   curl -L https://aka.ms/InstallAzureCli | bash
+   ```
+
+3. You may have to restart your command shell for some changes to take effect.
+
+   ```bash
+   exec -l $SHELL
+   ```
+
+4. Run Azure CLI 2.0 from the command prompt with the `az` command.
+
+> [!Note]
+> To uninstall, see the [manual uninstall instructions](#uninstall).
+
+### Windows command-line 
+
+You can use Azure CLI 2.0 in the Windows command line using `pip`. 
 
 1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
    Be sure to install the Pip component when you install Python.
@@ -63,11 +90,11 @@ Get Azure CLI 2.0 on Windows using `pip`.
    pip install --user azure-cli
    ```
 
-   > [!NOTE]
-   > The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
-   > or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
-   > where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
-   > Add the folder that contains `az.bat` to your path.
+4. Add the folder that contains az.bat to your path.
+   The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
+   or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
+   where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
+   Add the folder that contains `az.bat` to your path.
    
 4. Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
