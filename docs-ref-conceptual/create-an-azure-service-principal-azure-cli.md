@@ -146,7 +146,7 @@ Use the `id`, `password`, and `tenant` values as the credentials for running you
 > Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals.
 > Roles have sets of permissions associated with them,
 > which determine the resources a principal can read, access, write, or manage.
-> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
+> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
 The Azure CLI 2.0 provides the following commands to manage role assignments:
 
