@@ -104,9 +104,9 @@ You can use Azure CLI 2.0 in the Windows command line using `pip`.
 4. Run Azure CLI 2.0 from the command prompt with the 'az' command.
 
 > [NOTE]
-> If you already have Azure CLI 2.0 isntalled and you want to see whether you have the latest version,
-> use `az --version` to see what version you have,
-> and compare that to the latest version avaiable at [https://pypi.python.org/pypi/azure-cli](https://pypi.python.org/pypi/azure-cli).
+> If you already have Azure CLI 2.0 installed and you want to see whether you have the latest version,
+> use `az --version` to see what version you have.
+> Compare that to the latest version available at [https://pypi.python.org/pypi/azure-cli](https://pypi.python.org/pypi/azure-cli).
 
 ## Linux
 
