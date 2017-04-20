@@ -64,9 +64,17 @@ children:
   - title: Set up default diagnostics on a Linux VM.
     code: "default_config=$(az vm diagnostics get-default-config     --query \"merge(@, {storageAccount: 'MyStorageAccount'})\")\n                        \n                        storage_key=$(az storage account keys list -g MyResourceGroup -n MyStorageAccount     --query \"[?keyName=='key1'] | [0].value\" -o tsv)\n                        \n                        settings=\"{'storageAccountName': 'MyStorageAccount', 'storageAccountKey':     '${storage_key}'}\"\n                        \n                        az vm diagnostics set --settings \"${default_config}\" --protected-settings \"${settings}\"     -n setting_name -g MyResourceGroup"
   parameters:
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    description: ''
   - name: --settings
     isRequired: True
     summary: Json string or a file path, which defines data to be collected.
+    description: ''
+  - name: --vm-name
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
     description: ''
   - name: --no-auto-upgrade
     isRequired: False
@@ -79,18 +87,6 @@ children:
   - name: --version
     isRequired: False
     summary: Version of the diagnostics extension. Will use the latest if not specfied.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
-    description: ''
-  - name: --vm-name
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
     description: ''
   - name: --debug
     isRequired: False
