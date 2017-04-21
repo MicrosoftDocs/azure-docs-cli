@@ -49,7 +49,7 @@ For information about the latest release, see the [release notes](release-notes-
 
 Azure CLI 2.0 supports Bash command syntax, making Bash on Windows a great way to use the CLI.
 
-1. If you don't have Bash on Windows, [install it](https://docs.microsoft.com/cli/azure/install-azure-cli).
+1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
 
 2. Open the Bash shell.
 
