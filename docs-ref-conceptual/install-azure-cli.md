@@ -40,8 +40,7 @@ For information about the latest release, see the [release notes](release-notes-
    
 3. Run Azure CLI 2.0 from the command prompt with the `az` command.
 
-> [!Note]
-> To uninstall, see the [manual uninstall instructions](#uninstall).
+Note: To uninstall, see the [manual uninstall instructions](#uninstall).
 
 ## Windows
 
@@ -80,10 +79,7 @@ Azure CLI 2.0 supports Bash command syntax, making Bash on Windows a great way t
 
 You can use Azure CLI 2.0 in the Windows command line using `pip`. 
 
-1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
-   Be sure to install the Pip component when you install Python.
-   After the install completes, add Python to your PATH environment variable (the installer will prompt you).
-
+1. [Download and install Python](https://www.python.org/downloads/) for Windows. Select the 3.x version. Select the default installation which installs Pip. Check the **Add Python to PATH** box.
 2. Check your Python installation from a command prompt.
 
    ```bash
