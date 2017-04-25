@@ -48,9 +48,10 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## Windows
 
-### Bash in Ubuntu on Windows
+Azure CLI 2.0 supports Bash command syntax, making Bash on Ubuntu on Windows a great way to use the CLI.
+If you don't use Bash, you can install and use the CLI in the Windows command-line.
 
-Azure CLI 2.0 supports Bash command syntax, making Bash on Windows a great way to use the CLI.
+### Bash on Ubuntu on Windows
 
 1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/commandline/wsl/install_guide).
 
@@ -78,8 +79,6 @@ Azure CLI 2.0 supports Bash command syntax, making Bash on Windows a great way t
 > To uninstall, run `sudo apt-get remove azure-cli`.
 
 ### Windows command-line 
-
-You can use Azure CLI 2.0 in the Windows command line using `pip`. 
 
 1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
    Be sure to install the Pip component when you install Python.
