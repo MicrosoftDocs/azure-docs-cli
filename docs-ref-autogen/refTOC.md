@@ -1019,6 +1019,7 @@
 #### [az role definition delete](role\definition.pycliyml#delete)
 #### [az role definition list](role\definition.pycliyml#list)
 #### [az role definition update](role\definition.pycliyml#update)
+## [az shell](index.pycliyml#shell)
 ## [az snapshot](snapshot.pycliyml)
 ### [az snapshot create](snapshot.pycliyml#create)
 ### [az snapshot delete](snapshot.pycliyml#delete)

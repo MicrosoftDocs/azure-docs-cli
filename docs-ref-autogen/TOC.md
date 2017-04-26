@@ -18,6 +18,7 @@
 ## [Find](index.pycliyml#find "az find")
 ## [Login](index.pycliyml#login "az login")
 ## [Logout](index.pycliyml#logout "az logout")
+## [Shell](index.pycliyml#shell "az shell")
 ## [App Service](appservice.pycliyml "az appservice")
 ### [List-Locations](appservice.pycliyml#list-locations "az appservice list-locations")
 ### [Plans](appservice\plan.pycliyml "az appservice plan")
