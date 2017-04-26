@@ -1,14 +1,17 @@
 commandList:
-- name: az role assignment create
-  description: Create a new role assignment.
-  href: assignment#create
-- name: az role assignment delete
-  description: Delete role assignments.
-  href: assignment#delete
-- name: az role assignment list
-  description: List role assignments.
-  href: assignment#list
-htmlId: assignment
+- name: az ad group member add
+  description: Add a memeber to a group.
+  href: member#add
+- name: az ad group member check
+  description: Checks whether the specified user, group, contact, or service principal is a direct or a transitive member of the specified group.
+  href: member#check
+- name: az ad group member list
+  description: Gets the members of a group.
+  href: member#list
+- name: az ad group member remove
+  description: Remove a memeber from a group.
+  href: member#remove
+htmlId: member
 examples: []
 source:
   remote:
@@ -17,87 +20,16 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: create
-  examples:
-  - title: Create role assignment for a specified user, group, or service principal.
-    code: az role assignment create --assignee sp_name --role a_role
-  parameters:
-  - name: --assignee
-    isRequired: True
-    summary: 'Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.'
-    description: ''
-  - name: --role
-    isRequired: True
-    summary: Role name or id.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Use it only if the role or assignment was added at the level of a resource group.
-    description: ''
-  - name: --scope
-    isRequired: False
-    summary: Scope at which the role assignment or definition applies to, e.g., /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333, /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup, or /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup/providers/Microsoft.Compute/virtualMachines/myVM.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_role_assignment_create
-  name: az role assignment create
-  description: ''
-  summary: Create a new role assignment.
-  Metadata: {}
-- commandList: []
-  htmlId: delete
+  htmlId: add
   examples: []
   parameters:
-  - name: --assignee
-    isRequired: False
-    summary: 'Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.'
+  - name: --group -g
+    isRequired: True
+    summary: Group's object id or display name(prefix also works if there is a unique match).
     description: ''
-  - name: --ids
-    isRequired: False
-    summary: Space separated role assignment ids.
-    description: ''
-  - name: --include-inherited
-    isRequired: False
-    summary: Include assignments applied on parent scopes.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Use it only if the role or assignment was added at the level of a resource group.
-    description: ''
-  - name: --role
-    isRequired: False
-    summary: Role name or id.
-    description: ''
-  - name: --scope
-    isRequired: False
-    summary: Scope at which the role assignment or definition applies to, e.g., /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333, /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup, or /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup/providers/Microsoft.Compute/virtualMachines/myVM.
+  - name: --member-id
+    isRequired: True
+    summary: The object ID of the contact, group, user, or service principal.
     description: ''
   - name: --debug
     isRequired: False
@@ -127,42 +59,63 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_role_assignment_delete
-  name: az role assignment delete
+  uid: az_ad_group_member_add
+  name: az ad group member add
+  description: 'Reference: <a href="https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/groups-operations#AddGroupMembers">https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/groups-operations#AddGroupMembers</a>.'
+  summary: Add a memeber to a group.
+  Metadata: {}
+- commandList: []
+  htmlId: check
+  examples: []
+  parameters:
+  - name: --group -g
+    isRequired: True
+    summary: Group's object id or display name(prefix also works if there is a unique match).
+    description: ''
+  - name: --member-id
+    isRequired: True
+    summary: The object ID of the contact, group, user, or service principal to check for membership in the specified group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_ad_group_member_check
+  name: az ad group member check
   description: ''
-  summary: Delete role assignments.
+  summary: Checks whether the specified user, group, contact, or service principal is a direct or a transitive member of the specified group.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
-  - name: --all
-    isRequired: False
-    summary: Show all assignments under the current subscription.
-    description: ''
-  - name: --assignee
-    isRequired: False
-    summary: 'Represent a user, group, or service principal. supported format: object id, user sign-in name, or service principal name.'
-    description: ''
-  - name: --include-groups
-    isRequired: False
-    summary: Include extra assignments to the groups of which the user is a member(transitively). Supported only for a user principal.
-    description: ''
-  - name: --include-inherited
-    isRequired: False
-    summary: Include assignments applied on parent scopes.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Use it only if the role or assignment was added at the level of a resource group.
-    description: ''
-  - name: --role
-    isRequired: False
-    summary: Role name or id.
-    description: ''
-  - name: --scope
-    isRequired: False
-    summary: Scope at which the role assignment or definition applies to, e.g., /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333, /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup, or /subscriptions/0b1f6471-1bf0-4dda-aec3-111122223333/resourceGroups/myGroup/providers/Microsoft.Compute/virtualMachines/myVM.
+  - name: --group -g
+    isRequired: True
+    summary: Group's object id or display name(prefix also works if there is a unique match).
     description: ''
   - name: --debug
     isRequired: False
@@ -192,15 +145,60 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_role_assignment_list
-  name: az role assignment list
+  uid: az_ad_group_member_list
+  name: az ad group member list
   description: ''
-  summary: List role assignments.
+  summary: Gets the members of a group.
   Metadata: {}
-uid: az_role_assignment
-name: 'Role assignments - az role assignment'
+- commandList: []
+  htmlId: remove
+  examples: []
+  parameters:
+  - name: --group -g
+    isRequired: True
+    summary: Group's object id or display name(prefix also works if there is a unique match).
+    description: ''
+  - name: --member-id
+    isRequired: True
+    summary: The object ID of the contact, group, user, or service principal.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_ad_group_member_remove
+  name: az ad group member remove
+  description: 'Reference: <a href="https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/groups-operations#DeleteGroupMember">https://msdn.microsoft.com/en-us/library/azure/ad/graph/api/groups-operations#DeleteGroupMember</a>.'
+  summary: Remove a memeber from a group.
+  Metadata: {}
+uid: az_ad_group_member
+name: az ad group member
 description: ''
-summary: Manage role assignments.
+summary: Manage Azure Active Directory group members.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
