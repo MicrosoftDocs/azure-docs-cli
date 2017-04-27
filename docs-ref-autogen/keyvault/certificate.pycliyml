@@ -10,13 +10,13 @@ commandList:
   description: Remove a certificate contact from the specified vault.
   href: certificate/contact#delete
 - name: az keyvault certificate contact list
-  description: Gets the certificate contacts for the specified vault.
+  description: Lists the certificate contacts for a specified key vault.
   href: certificate/contact#list
 - name: az keyvault certificate create
-  description: Creates a new certificate version.
+  description: Creates a new certificate.
   href: certificate#create
 - name: az keyvault certificate delete
-  description: Deletes a certificate from the specified vault.
+  description: Deletes a certificate from a specified key vault.
   href: certificate#delete
 - name: az keyvault certificate download
   description: Download a certificate from a KeyVault.
@@ -51,16 +51,16 @@ commandList:
   description: Deletes the specified certificate issuer.
   href: certificate/issuer#delete
 - name: az keyvault certificate issuer list
-  description: List certificate issuers for the specified vault.
+  description: List certificate issuers for a specified key vault.
   href: certificate/issuer#list
 - name: az keyvault certificate issuer show
-  description: Gets the specified certificate issuer.
+  description: Lists the specified certificate issuer.
   href: certificate/issuer#show
 - name: az keyvault certificate issuer update
   description: Update a certificate issuer record.
   href: certificate/issuer#update
 - name: az keyvault certificate list
-  description: List certificates in the specified vault.
+  description: List certificates in a specified key vault.
   href: certificate#list
 - name: az keyvault certificate list-versions
   description: List the versions of a certificate.
@@ -70,19 +70,19 @@ commandList:
   href: certificate/pending
   isGroup: true
 - name: az keyvault certificate pending delete
-  description: Deletes the certificate operation.
+  description: Deletes the operation for a specified certificate.
   href: certificate/pending#delete
 - name: az keyvault certificate pending merge
   description: Merges a certificate or a certificate chain with a key pair existing on the server.
   href: certificate/pending#merge
 - name: az keyvault certificate pending show
-  description: Gets the certificate operation response.
+  description: Gets the operation associated with a specified certificate.
   href: certificate/pending#show
 - name: az keyvault certificate set-attributes
-  description: Updates the attributes associated with the specified certificate.
+  description: Updates the specified attributes associated with the given certificate.
   href: certificate#set-attributes
 - name: az keyvault certificate show
-  description: Gets a Certificate.
+  description: Gets information about a specified certificate.
   href: certificate#show
 htmlId: certificate
 examples: []
@@ -154,7 +154,7 @@ children:
   uid: az_keyvault_certificate_create
   name: az keyvault certificate create
   description: Create a Key Vault certificate. Certificates can also be used as a secrets in provisioned virtual machines.
-  summary: Creates a new certificate version.
+  summary: Creates a new certificate.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -199,11 +199,15 @@ children:
   uid: az_keyvault_certificate_delete
   name: az keyvault certificate delete
   description: ''
-  summary: Deletes a certificate from the specified vault.
+  summary: Deletes a certificate from a specified key vault.
   Metadata: {}
 - commandList: []
   htmlId: download
-  examples: []
+  examples:
+  - title: Download a PEM and check it's fingerprint in openssl
+    code: "az keyvault certificate download --vault-name vault -n cert-name -f cert.pem \n                        openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint"
+  - title: Download a DER and check it's fingerprint in openssl
+    code: "az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER \n                        openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint"
   parameters:
   - name: --file -f
     isRequired: True
@@ -219,10 +223,10 @@ children:
     description: ''
   - name: --encoding -e
     isRequired: False
-    summary: How to store base64 certificate contents in file.
+    summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
     description: ''
-    defaultValue: binary
-    parameterValueGroup: binary, string
+    defaultValue: PEM
+    parameterValueGroup: DER, PEM
   - name: --version -v
     isRequired: False
     summary: The certificate version. If omitted, uses the latest version.
@@ -257,7 +261,7 @@ children:
   children: []
   uid: az_keyvault_certificate_download
   name: az keyvault certificate download
-  description: ''
+  description: Download the public portion of a Key Vault certificate formatted as either PEM or DER. PEM formatting is the default.
   summary: Download a certificate from a KeyVault.
   Metadata: {}
 - commandList: []
@@ -414,7 +418,7 @@ children:
   uid: az_keyvault_certificate_list
   name: az keyvault certificate list
   description: ''
-  summary: List certificates in the specified vault.
+  summary: List certificates in a specified key vault.
   Metadata: {}
 - commandList: []
   htmlId: list-versions
@@ -525,7 +529,7 @@ children:
   uid: az_keyvault_certificate_set-attributes
   name: az keyvault certificate set-attributes
   description: ''
-  summary: Updates the attributes associated with the specified certificate.
+  summary: Updates the specified attributes associated with the given certificate.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -574,7 +578,7 @@ children:
   uid: az_keyvault_certificate_show
   name: az keyvault certificate show
   description: ''
-  summary: Gets a Certificate.
+  summary: Gets information about a specified certificate.
   Metadata: {}
 uid: az_keyvault_certificate
 name: 'Key Vault certificates - az keyvault certificate'
@@ -584,6 +588,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/f556fe81868c9e9b277a5d6187d7a81d33bf6982/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 4/24/2017 10:10:20 PM
-  ms.date: 4/24/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/0184a166e86690065d6325489ca0490be5f92f4b/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 4/27/2017 6:25:02 PM
+  ms.date: 4/27/2017
