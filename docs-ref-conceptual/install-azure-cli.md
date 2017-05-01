@@ -57,20 +57,23 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 
 2. Open the Bash shell.
 
-2. If you don't have Python, install it.
+3. If you don't have Python, install it.
 
    ```bash
    sudo apt-get install python3
    ```
 
-3. Modify your sources list.
+   > [!NOTE]
+   > To see if you have python installed, run `python --version`.
+
+4. Modify your sources list.
 
    ```bash
    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
         sudo tee /etc/apt/sources.list.d/azure-cli.list
    ```
 
-4. Run the following sudo commands:
+5. Run the following sudo commands:
 
    ```bash
    sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
