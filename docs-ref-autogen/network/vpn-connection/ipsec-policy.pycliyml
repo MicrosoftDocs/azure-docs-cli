@@ -1,14 +1,14 @@
 commandList:
-- name: az network application-gateway waf-config list-rule-sets
-  description: (PREVIEW) Lookup information on available WAF rule sets, rule groups, and rule IDs.
-  href: waf-config#list-rule-sets
-- name: az network application-gateway waf-config set
-  description: Update the firewall configuration of a web application.
-  href: waf-config#set
-- name: az network application-gateway waf-config show
-  description: Show the firewall configuration of a web application.
-  href: waf-config#show
-htmlId: waf-config
+- name: az network vpn-connection ipsec-policy add
+  description: Add a VPN connection IPSec policy.
+  href: ipsec-policy#add
+- name: az network vpn-connection ipsec-policy clear
+  description: Delete all IPSec policies on a VPN connection.
+  href: ipsec-policy#clear
+- name: az network vpn-connection ipsec-policy list
+  description: List IPSec policies associated with a VPN connection.
+  href: ipsec-policy#list
+htmlId: ipsec-policy
 examples: []
 source:
   remote:
@@ -17,108 +17,59 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
-  htmlId: list-rule-sets
-  examples:
-  - title: List available rule groups in OWASP type rule sets.
-    code: az network application-gateway waf-config list-rule-sets --type OWASP
-  - title: List available rules in the OWASP 3.0 rule set.
-    code: az network application-gateway waf-config list-rule-sets --group * --type OWASP --version 3.0
-  - title: List available rules in the 'crs_35_bad_robots' rule group.
-    code: az network application-gateway waf-config list-rule-sets --group crs_35_bad_robots
-  parameters:
-  - name: --group
-    isRequired: False
-    summary: List rules for the specified rule group. Use '*' to list rules for all groups. Omit to suppress listing individual rules.
-    description: ''
-  - name: --type
-    isRequired: False
-    summary: Rule set type to list. Omit to list all types.
-    description: ''
-  - name: --version
-    isRequired: False
-    summary: Rule set version to list. Omit to list all versions.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  source:
-    remote:
-      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-      branch: master
-      repo: https://github.com/Azure/azure-cli.git
-  children: []
-  uid: az_network_application-gateway_waf-config_list-rule-sets
-  name: az network application-gateway waf-config list-rule-sets
-  description: ''
-  summary: (PREVIEW) Lookup information on available WAF rule sets, rule groups, and rule IDs.
-  Metadata: {}
-- commandList: []
-  htmlId: set
+  htmlId: add
   examples: []
   parameters:
-  - name: --enabled
+  - name: --connection-name
     isRequired: True
-    summary: Specify whether the application firewall is enabled.
+    summary: Connection name.
     description: ''
-    parameterValueGroup: false, true
-  - name: --gateway-name
+  - name: --dh-group
     isRequired: True
-    summary: The name of the application gateway.
+    summary: The DH Groups used in IKE Phase 1 for initial SA.
     description: ''
+    parameterValueGroup: DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None
+  - name: --ike-encryption
+    isRequired: True
+    summary: The IKE encryption algorithm (IKE phase 2).
+    description: ''
+    parameterValueGroup: AES128, AES192, AES256, DES, DES3
+  - name: --ike-integrity
+    isRequired: True
+    summary: The IKE integrity algorithm (IKE phase 2).
+    description: ''
+    parameterValueGroup: MD5, SHA1, SHA256, SHA384
+  - name: --ipsec-encryption
+    isRequired: True
+    summary: The IPSec encryption algorithm (IKE phase 1).
+    description: ''
+    parameterValueGroup: AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES192, GCMAES256, None
+  - name: --ipsec-integrity
+    isRequired: True
+    summary: The IPSec integrity algorithm (IKE phase 1).
+    description: ''
+    parameterValueGroup: GCMAES128, GCMAES192, GCMAES256, MD5, SHA1, SHA256
+  - name: --pfs-group
+    isRequired: True
+    summary: The DH Groups used in IKE Phase 2 for new child SA.
+    description: ''
+    parameterValueGroup: ECP256, ECP384, None, PFS1, PFS2, PFS2048, PFS24
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --disabled-rule-groups
-    isRequired: False
-    summary: Space separated list of rule groups to disable. This disables the entire group. To disable specifc rules, use '--disabled-rule-ids'.
+  - name: --sa-lifetime
+    isRequired: True
+    summary: The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel.
     description: ''
-    valueFrom: az application-gateway waf-config list-rule-sets
-  - name: --disabled-rules
-    isRequired: False
-    summary: Space separated list of rule IDs to disable.
+  - name: --sa-max-size
+    isRequired: True
+    summary: The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel.
     description: ''
-    valueFrom: az application-gateway waf-config list-rule-sets
-  - name: --firewall-mode
-    isRequired: False
-    summary: Web application firewall mode.
-    description: ''
-    defaultValue: Detection
-    parameterValueGroup: Detection, Prevention
   - name: --no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --rule-set-type
-    isRequired: False
-    summary: Rule set type.
-    description: ''
-    defaultValue: OWASP
-    valueFrom: az application-gateway waf-config list-rule-sets
-  - name: --rule-set-version
-    isRequired: False
-    summary: Rule set version.
-    description: ''
-    valueFrom: az application-gateway waf-config list-rule-sets
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -147,18 +98,67 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_waf-config_set
-  name: az network application-gateway waf-config set
+  uid: az_network_vpn-connection_ipsec-policy_add
+  name: az network vpn-connection ipsec-policy add
   description: ''
-  summary: Update the firewall configuration of a web application.
+  summary: Add a VPN connection IPSec policy.
   Metadata: {}
 - commandList: []
-  htmlId: show
+  htmlId: clear
   examples: []
   parameters:
-  - name: --gateway-name
+  - name: --connection-name
     isRequired: True
-    summary: The name of the application gateway.
+    summary: Connection name.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_network_vpn-connection_ipsec-policy_clear
+  name: az network vpn-connection ipsec-policy clear
+  description: ''
+  summary: Delete all IPSec policies on a VPN connection.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --connection-name
+    isRequired: True
+    summary: Connection name.
     description: ''
   - name: --resource-group -g
     isRequired: True
@@ -192,15 +192,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_application-gateway_waf-config_show
-  name: az network application-gateway waf-config show
+  uid: az_network_vpn-connection_ipsec-policy_list
+  name: az network vpn-connection ipsec-policy list
   description: ''
-  summary: Show the firewall configuration of a web application.
+  summary: List IPSec policies associated with a VPN connection.
   Metadata: {}
-uid: az_network_application-gateway_waf-config
-name: 'Web application firewall settings - az network application-gateway waf-config'
-description: This command is only applicable to application gateways with SKU type of WAF.
-summary: Configure the settings of a web application firewall.
+uid: az_network_vpn-connection_ipsec-policy
+name: az network vpn-connection ipsec-policy
+description: ''
+summary: Manage VPN connection IPSec policies.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py

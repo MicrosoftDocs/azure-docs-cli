@@ -1,20 +1,23 @@
 commandList:
-- name: az network vnet peering create
-  description: Create a peering.
-  href: peering#create
-- name: az network vnet peering delete
-  description: Delete a peering.
-  href: peering#delete
-- name: az network vnet peering list
-  description: List peerings.
-  href: peering#list
-- name: az network vnet peering show
-  description: Show details of a peering.
-  href: peering#show
-- name: az network vnet peering update
-  description: Update a peering.
-  href: peering#update
-htmlId: peering
+- name: az network route-filter rule create
+  description: Create a rule in a route filter.
+  href: rule#create
+- name: az network route-filter rule delete
+  description: Delete a rule from a route filter.
+  href: rule#delete
+- name: az network route-filter rule list
+  description: List rules in a route filter.
+  href: rule#list
+- name: az network route-filter rule list-service-communities
+  description: Gets all the available bgp service communities.
+  href: rule#list-service-communities
+- name: az network route-filter rule show
+  description: Show details of a rule in a route filter.
+  href: rule#show
+- name: az network route-filter rule update
+  description: Update a rule in a route filter.
+  href: rule#update
+htmlId: rule
 examples: []
 source:
   remote:
@@ -26,37 +29,35 @@ children:
   htmlId: create
   examples: []
   parameters:
+  - name: --access
+    isRequired: True
+    summary: The access type of the rule.
+    description: ''
+    parameterValueGroup: Allow, Deny
+  - name: --communities
+    isRequired: True
+    summary: 'Space separated list of BGP community values to filter on. (e.g.: 12076:5010).'
+    description: ''
+    valueFrom: az network route-filter rule list-service-communities
+  - name: --filter-name
+    isRequired: True
+    summary: Name of the route filter.
+    description: ''
   - name: --name -n
     isRequired: True
-    summary: The name of the VNet peering.
-    description: ''
-  - name: --remote-vnet-id
-    isRequired: True
-    summary: ID of the remote VNet.
+    summary: Name of the route filter rule.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --vnet-name
-    isRequired: True
-    summary: The virtual network (VNet) name.
-    description: ''
-  - name: --allow-forwarded-traffic
+  - name: --location -l
     isRequired: False
-    summary: Allows forwarded traffic from the VMs in the remote VNet.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
     description: ''
-  - name: --allow-gateway-transit
+  - name: --tags
     isRequired: False
-    summary: Allows gateway link to be used in the remote VNet.
-    description: ''
-  - name: --allow-vnet-access
-    isRequired: False
-    summary: Allows VMs in the remote VNet to access all VMs in the local VNet.
-    description: ''
-  - name: --use-remote-gateways
-    isRequired: False
-    summary: Allows VNet to use the remote VNet's gateway. Remote VNet gateway must have --allow-gateway-transit enabled for remote peering. Only 1 peering can have this flag enabled. Cannot be set if the VNet already has a gateway.
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --debug
     isRequired: False
@@ -86,26 +87,26 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_vnet_peering_create
-  name: az network vnet peering create
+  uid: az_network_route-filter_rule_create
+  name: az network route-filter rule create
   description: ''
-  summary: Create a peering.
+  summary: Create a rule in a route filter.
   Metadata: {}
 - commandList: []
   htmlId: delete
   examples: []
   parameters:
+  - name: --filter-name
+    isRequired: True
+    summary: Name of the route filter.
+    description: ''
   - name: --name -n
     isRequired: True
-    summary: The name of the VNet peering.
+    summary: Name of the route filter rule.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --vnet-name
-    isRequired: True
-    summary: The virtual network (VNet) name.
     description: ''
   - name: --debug
     isRequired: False
@@ -135,22 +136,22 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_vnet_peering_delete
-  name: az network vnet peering delete
+  uid: az_network_route-filter_rule_delete
+  name: az network route-filter rule delete
   description: ''
-  summary: Delete a peering.
+  summary: Delete a rule from a route filter.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
+  - name: --filter-name
+    isRequired: True
+    summary: Name of the route filter.
+    description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --vnet-name
-    isRequired: True
-    summary: The virtual network (VNet) name.
     description: ''
   - name: --debug
     isRequired: False
@@ -180,26 +181,63 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_vnet_peering_list
-  name: az network vnet peering list
+  uid: az_network_route-filter_rule_list
+  name: az network route-filter rule list
   description: ''
-  summary: List peerings.
+  summary: List rules in a route filter.
+  Metadata: {}
+- commandList: []
+  htmlId: list-service-communities
+  examples: []
+  parameters:
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_network_route-filter_rule_list-service-communities
+  name: az network route-filter rule list-service-communities
+  description: ''
+  summary: Gets all the available bgp service communities.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
+  - name: --filter-name
+    isRequired: True
+    summary: Name of the route filter.
+    description: ''
   - name: --name -n
     isRequired: True
-    summary: The name of the VNet peering.
+    summary: Name of the route filter rule.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --vnet-name
-    isRequired: True
-    summary: The virtual network (VNet) name.
     description: ''
   - name: --debug
     isRequired: False
@@ -229,26 +267,30 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_vnet_peering_show
-  name: az network vnet peering show
+  uid: az_network_route-filter_rule_show
+  name: az network route-filter rule show
   description: ''
-  summary: Show details of a peering.
+  summary: Show details of a rule in a route filter.
   Metadata: {}
 - commandList: []
   htmlId: update
   examples: []
   parameters:
+  - name: --filter-name
+    isRequired: True
+    summary: Name of the route filter.
+    description: ''
   - name: --name -n
     isRequired: True
-    summary: The name of the VNet peering.
+    summary: Name of the route filter rule.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --vnet-name
+  - name: --route-filter-rule-parameters
     isRequired: True
-    summary: The virtual network (VNet) name.
+    summary: Parameters supplied to the create or update route filter rule operation.
     description: ''
   - name: --add
     isRequired: False
@@ -290,15 +332,15 @@ children:
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
-  uid: az_network_vnet_peering_update
-  name: az network vnet peering update
+  uid: az_network_route-filter_rule_update
+  name: az network route-filter rule update
   description: ''
-  summary: Update a peering.
+  summary: Update a rule in a route filter.
   Metadata: {}
-uid: az_network_vnet_peering
-name: 'Peering connections - az network vnet peering'
+uid: az_network_route-filter_rule
+name: az network route-filter rule
 description: ''
-summary: Manage peering connections between Azure Virtual Networks.
+summary: (PREVIEW) Manage rules in a route filter.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
