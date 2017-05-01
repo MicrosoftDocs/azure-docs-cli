@@ -57,6 +57,18 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 
 2. Open the Bash shell.
 
+2. If you don't have Python, install it.
+
+   ```bash
+   sudo apt-get install python
+   ```
+
+   Or...
+
+   ```bash
+   sudo apt-get install python-dev
+   ```
+
 3. Modify your sources list.
 
    ```bash
