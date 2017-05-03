@@ -40,6 +40,9 @@ If so, you can configure Azure CLI 2.0 to execute commands against a particular 
    az account set --subscription "My Demos"
    ```
 
+   > [!NOTE]
+   > The `--subscription` parameter takes either the subscription name or the subscription ID.
+
 You can verify the change by running the `az account list --output table` command again.
 
 Once you set your default subscription, all subsequent Azure CLI commands run against this subscription.
