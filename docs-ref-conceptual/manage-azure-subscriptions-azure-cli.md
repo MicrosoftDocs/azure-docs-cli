@@ -41,7 +41,7 @@ If so, you can configure Azure CLI 2.0 to execute commands against a particular 
    ```
 
    > [!NOTE]
-   > The --subscription parameter takes either the subscription name or the subscription ID.
+   > The `--subscription` parameter takes either the subscription name or the subscription ID.
 
 You can verify the change by running the `az account list --output table` command again.
 
