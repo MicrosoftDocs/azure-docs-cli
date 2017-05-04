@@ -1007,6 +1007,7 @@
 #### [Show-Next-Hop](network\watcher.pycliyml#show-next-hop "az network watcher show-next-hop")
 #### [Show-Security-Group-View](network\watcher.pycliyml#show-security-group-view "az network watcher show-security-group-view")
 #### [Show-Topology](network\watcher.pycliyml#show-topology "az network watcher show-topology")
+#### [Test-Connectivity](network\watcher.pycliyml#test-connectivity "az network watcher test-connectivity")
 #### [Test-Ip-Flow](network\watcher.pycliyml#test-ip-flow "az network watcher test-ip-flow")
 #### [Flow-Log](network\watcher\flow-log.pycliyml "az network watcher flow-log")
 ##### [Configure](network\watcher\flow-log.pycliyml#configure "az network watcher flow-log configure")

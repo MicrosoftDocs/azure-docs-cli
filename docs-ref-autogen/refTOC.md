@@ -1035,6 +1035,7 @@
 #### [az network watcher show-next-hop](network\watcher.pycliyml#show-next-hop)
 #### [az network watcher show-security-group-view](network\watcher.pycliyml#show-security-group-view)
 #### [az network watcher show-topology](network\watcher.pycliyml#show-topology)
+#### [az network watcher test-connectivity](network\watcher.pycliyml#test-connectivity)
 #### [az network watcher test-ip-flow](network\watcher.pycliyml#test-ip-flow)
 #### [az network watcher troubleshooting](network\watcher\troubleshooting.pycliyml)
 ##### [az network watcher troubleshooting show](network\watcher\troubleshooting.pycliyml#show)
