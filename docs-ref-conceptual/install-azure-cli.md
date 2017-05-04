@@ -64,7 +64,7 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
    ```
 
    > [!NOTE]
-   > To see if you have python installed, run `python --version`.
+   > To see if you have python installed, run `python3 --version`.
 
 4. Modify your sources list.
 
