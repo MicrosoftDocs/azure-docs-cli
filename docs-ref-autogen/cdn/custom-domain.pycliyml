@@ -1,94 +1,52 @@
 commandList:
-- name: az webapp deployment slot auto-swap
-  description: Configure slot auto swap.
-  href: slot#auto-swap
-- name: az webapp deployment slot create
-  description: Create a slot.
-  href: slot#create
-- name: az webapp deployment slot delete
-  description: Delete a slot.
-  href: slot#delete
-- name: az webapp deployment slot list
-  description: List all slots.
-  href: slot#list
-- name: az webapp deployment slot swap
-  description: Swap slots.
-  href: slot#swap
-htmlId: slot
+- name: az cdn custom-domain create
+  description: Creates a new custom domain which provides a custom hostname for an endpoint origin.
+  href: custom-domain#create
+- name: az cdn custom-domain delete
+  description: Deletes an existing custom domain within an endpoint.
+  href: custom-domain#delete
+- name: az cdn custom-domain list
+  description: Lists all of the existing custom domains within an endpoint.
+  href: custom-domain#list
+- name: az cdn custom-domain show
+  description: Gets an exisitng custom domain within an endpoint.
+  href: custom-domain#show
+htmlId: custom-domain
 examples: []
 children:
 - commandList: []
-  htmlId: auto-swap
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: True
-    summary: Name of the webapp.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --auto-swap-slot
-    isRequired: False
-    summary: Target slot to auto swap.
-    description: ''
-    defaultValue: production
-  - name: --disable
-    isRequired: False
-    summary: Disable auto swap.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  children: []
-  uid: az_webapp_deployment_slot_auto-swap
-  name: az webapp deployment slot auto-swap
-  description: ''
-  summary: Configure slot auto swap.
-  Metadata: {}
-- commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create a custom domain within an endpoint and profile
+    code: az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile     -n domain-name --host-name www.example.com
   parameters:
+  - name: --endpoint-name
+    isRequired: True
+    summary: Name of the endpoint under the profile which is unique globally.
+    description: ''
+  - name: --hostname
+    isRequired: True
+    summary: The host name of the custom domain. Must be a domain name.
+    description: ''
   - name: --name -n
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the custom domain.
+    description: ''
+  - name: --profile-name
+    isRequired: True
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --configuration-source
+  - name: --location -l
     isRequired: False
-    summary: Source slot to clone configurations from. Use webapp's name to refer to the production slot.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --debug
     isRequired: False
@@ -113,26 +71,32 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_create
-  name: az webapp deployment slot create
-  description: ''
-  summary: Create a slot.
+  uid: az_cdn_custom-domain_create
+  name: az cdn custom-domain create
+  description: Creates a new custom domain which must point to the hostname of the endpoint. For example, the custom domain hostname cdn.contoso.com would need to have a CNAME record pointing to the hostname of the endpoint related to this custom domain.
+  summary: Creates a new custom domain which provides a custom hostname for an endpoint origin.
   Metadata: {}
 - commandList: []
   htmlId: delete
-  examples: []
+  examples:
+  - title: Delete a custom domain
+    code: az cdn custom-domain delete -g group --endpoint-name endpoint --profile-name profile     -n domain-name
   parameters:
-  - name: --name -n
+  - name: --custom-domain-name
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the custom domain within an endpoint.
+    description: ''
+  - name: --endpoint-name
+    isRequired: True
+    summary: Name of the endpoint under the profile which is unique globally.
+    description: ''
+  - name: --profile-name
+    isRequired: True
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
     description: ''
   - name: --debug
     isRequired: False
@@ -157,18 +121,22 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_delete
-  name: az webapp deployment slot delete
+  uid: az_cdn_custom-domain_delete
+  name: az cdn custom-domain delete
   description: ''
-  summary: Delete a slot.
+  summary: Deletes an existing custom domain within an endpoint.
   Metadata: {}
 - commandList: []
   htmlId: list
   examples: []
   parameters:
-  - name: --name -n
+  - name: --endpoint-name
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the endpoint under the profile which is unique globally.
+    description: ''
+  - name: --profile-name
+    isRequired: True
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
@@ -197,38 +165,32 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_list
-  name: az webapp deployment slot list
+  uid: az_cdn_custom-domain_list
+  name: az cdn custom-domain list
   description: ''
-  summary: List all slots.
+  summary: Lists all of the existing custom domains within an endpoint.
   Metadata: {}
 - commandList: []
-  htmlId: swap
+  htmlId: show
   examples:
-  - title: Swap a staging slot into production for the specified web app.
-    code: az webapp deployment slot swap -g MyResourceGroup -n MyUniqueApp --slot staging --target-slot production
+  - title: Show details of a custom domain
+    code: az cdn custom-domain show -g group --endpoint-name endpoint --profile-name profile     -n domain-name
   parameters:
-  - name: --name -n
+  - name: --custom-domain-name
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the custom domain within an endpoint.
+    description: ''
+  - name: --endpoint-name
+    isRequired: True
+    summary: Name of the endpoint under the profile which is unique globally.
+    description: ''
+  - name: --profile-name
+    isRequired: True
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --action
-    isRequired: False
-    summary: Swap types. use 'preview' to apply target slot's settings on the source slot first; use 'swap' to complete it; use 'reset' to reset the swap.
-    description: ''
-    defaultValue: swap
-    parameterValueGroup: preview, reset, swap
-  - name: --target-slot
-    isRequired: False
-    summary: Target slot to swap, default to 'production'.
     description: ''
   - name: --debug
     isRequired: False
@@ -253,13 +215,13 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_swap
-  name: az webapp deployment slot swap
+  uid: az_cdn_custom-domain_show
+  name: az cdn custom-domain show
   description: ''
-  summary: Swap slots.
+  summary: Gets an exisitng custom domain within an endpoint.
   Metadata: {}
-uid: az_webapp_deployment_slot
-name: az webapp deployment slot
+uid: az_cdn_custom-domain
+name: az cdn custom-domain
 description: ''
-summary: Manage deployment slots.
+summary: Manage Azure CDN Custom Domains to provide custom host names for Endpoints.
 Metadata: {}

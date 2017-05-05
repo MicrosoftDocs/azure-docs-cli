@@ -1,94 +1,52 @@
 commandList:
-- name: az webapp deployment slot auto-swap
-  description: Configure slot auto swap.
-  href: slot#auto-swap
-- name: az webapp deployment slot create
-  description: Create a slot.
-  href: slot#create
-- name: az webapp deployment slot delete
-  description: Delete a slot.
-  href: slot#delete
-- name: az webapp deployment slot list
-  description: List all slots.
-  href: slot#list
-- name: az webapp deployment slot swap
-  description: Swap slots.
-  href: slot#swap
-htmlId: slot
+- name: az cdn profile create
+  description: Creates a new CDN profile.
+  href: profile#create
+- name: az cdn profile delete
+  description: Deletes an existing CDN profile with the specified parameters.
+  href: profile#delete
+- name: az cdn profile list
+  description: List your Azure Content Delivery Network (CDN) profiles.
+  href: profile#list
+- name: az cdn profile show
+  description: Gets a CDN profile with the specified profile name under the specified subscription and resource group.
+  href: profile#show
+- name: az cdn profile update
+  description: Update a CDN profile.
+  href: profile#update
+- name: az cdn profile usage
+  description: Checks the quota and actual usage of endpoints under the given CDN profile.
+  href: profile#usage
+htmlId: profile
 examples: []
 children:
 - commandList: []
-  htmlId: auto-swap
-  examples: []
-  parameters:
-  - name: --name -n
-    isRequired: True
-    summary: Name of the webapp.
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --auto-swap-slot
-    isRequired: False
-    summary: Target slot to auto swap.
-    description: ''
-    defaultValue: production
-  - name: --disable
-    isRequired: False
-    summary: Disable auto swap.
-    description: ''
-  - name: --debug
-    isRequired: False
-    summary: Increase logging verbosity to show all debug logs.
-    description: ''
-  - name: --help -h
-    isRequired: False
-    summary: Show this help message and exit.
-    description: ''
-  - name: --output -o
-    isRequired: False
-    summary: Output format.
-    description: ''
-    defaultValue: json
-    parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
-    isRequired: False
-    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
-    description: ''
-  - name: --verbose
-    isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
-    description: ''
-  children: []
-  uid: az_webapp_deployment_slot_auto-swap
-  name: az webapp deployment slot auto-swap
-  description: ''
-  summary: Configure slot auto swap.
-  Metadata: {}
-- commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create a CDN profile using Verizon premium CDN
+    code: az cdn profile create -g group -n profile --sku Premium_Verizon
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --configuration-source
+  - name: --location -l
     isRequired: False
-    summary: Source slot to clone configurations from. Use webapp's name to refer to the production slot.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --sku
+    isRequired: False
+    summary: The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. Defaults to Standard_Akamai.
+    description: ''
+    defaultValue: Standard_Akamai
+    parameterValueGroup: Custom_Verizon, Premium_Verizon, Standard_Akamai, Standard_ChinaCdn, Standard_Verizon
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --debug
     isRequired: False
@@ -113,26 +71,24 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_create
-  name: az webapp deployment slot create
+  uid: az_cdn_profile_create
+  name: az cdn profile create
   description: ''
-  summary: Create a slot.
+  summary: Creates a new CDN profile.
   Metadata: {}
 - commandList: []
   htmlId: delete
-  examples: []
+  examples:
+  - title: Delete a CDN profile
+    code: az cdn profile create -g group -n profile
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
-    description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
     description: ''
   - name: --debug
     isRequired: False
@@ -157,18 +113,56 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_delete
-  name: az webapp deployment slot delete
+  uid: az_cdn_profile_delete
+  name: az cdn profile delete
   description: ''
-  summary: Delete a slot.
+  summary: Deletes an existing CDN profile with the specified parameters.
   Metadata: {}
 - commandList: []
   htmlId: list
+  examples:
+  - title: List CDN profiles in a resource group
+    code: az cdn profile list -g group
+  parameters:
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_cdn_profile_list
+  name: az cdn profile list
+  description: ''
+  summary: List your Azure Content Delivery Network (CDN) profiles.
+  Metadata: {}
+- commandList: []
+  htmlId: show
   examples: []
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
@@ -197,38 +191,38 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_list
-  name: az webapp deployment slot list
+  uid: az_cdn_profile_show
+  name: az cdn profile show
   description: ''
-  summary: List all slots.
+  summary: Gets a CDN profile with the specified profile name under the specified subscription and resource group.
   Metadata: {}
 - commandList: []
-  htmlId: swap
-  examples:
-  - title: Swap a staging slot into production for the specified web app.
-    code: az webapp deployment slot swap -g MyResourceGroup -n MyUniqueApp --slot staging --target-slot production
+  htmlId: update
+  examples: []
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Name of the webapp.
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
     isRequired: True
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
-  - name: --slot -s
-    isRequired: True
-    summary: The name of the slot.
-    description: ''
-  - name: --action
+  - name: --tags
     isRequired: False
-    summary: Swap types. use 'preview' to apply target slot's settings on the source slot first; use 'swap' to complete it; use 'reset' to reset the swap.
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-    defaultValue: swap
-    parameterValueGroup: preview, reset, swap
-  - name: --target-slot
+  - name: --add
     isRequired: False
-    summary: Target slot to swap, default to 'production'.
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --remove
+    isRequired: False
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    isRequired: False
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --debug
     isRequired: False
@@ -253,13 +247,53 @@ children:
     summary: Increase logging verbosity. Use --debug for full debug logs.
     description: ''
   children: []
-  uid: az_webapp_deployment_slot_swap
-  name: az webapp deployment slot swap
+  uid: az_cdn_profile_update
+  name: az cdn profile update
   description: ''
-  summary: Swap slots.
+  summary: Update a CDN profile.
   Metadata: {}
-uid: az_webapp_deployment_slot
-name: az webapp deployment slot
+- commandList: []
+  htmlId: usage
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_cdn_profile_usage
+  name: az cdn profile usage
+  description: ''
+  summary: Checks the quota and actual usage of endpoints under the given CDN profile.
+  Metadata: {}
+uid: az_cdn_profile
+name: az cdn profile
 description: ''
-summary: Manage deployment slots.
+summary: Manage Azure CDN Profiles which define which CDN provider for your edge network.
 Metadata: {}
