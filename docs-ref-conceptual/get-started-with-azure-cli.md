@@ -217,8 +217,8 @@ For example, you can use the Azure CLI to create an Azure AppService.  Azure App
 az appservice plan create -n MyAppServicePlan -g MyResourceGroup
 
 # Create Two Web Apps within the AppService (note: name param must be a unique DNS entry)
-az appservice web create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan 
-az appservice web create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan 
+az webapp create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan 
+az webapp create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan 
 ```
 
 Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are 
