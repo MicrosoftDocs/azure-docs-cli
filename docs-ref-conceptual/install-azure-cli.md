@@ -51,6 +51,15 @@ For information about the latest release, see the [release notes](release-notes-
 Azure CLI 2.0 supports Bash command syntax, making Bash on Ubuntu on Windows a great way to use the CLI.
 If you don't use Bash, you can install and use the CLI in the Windows command-line.
 
+### Windows command-line 
+
+To install the CLI on Windows and use it in the Windows command-line, download and run the [MSI](broken-link).
+
+> [!NOTE]
+> To update to the latest CLI, run `az component update`.
+> 
+> To uninstall the CLI, run the [MSI](broken-link) again.
+
 ### Bash on Ubuntu on Windows
 
 1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/commandline/wsl/install_guide).
@@ -77,41 +86,6 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 > To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
 > 
 > To uninstall, run `sudo apt-get remove azure-cli`.
-
-### Windows command-line 
-
-1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
-   Be sure to install the Pip component when you install Python.
-   After the install completes, add Python to your PATH environment variable (the installer will prompt you).
-
-2. Check your Python installation from a command prompt.
-
-   ```bash
-   python --version
-   ```
-
-3. Install Azure CLI 2.0 using `pip`.
-
-   ```bash
-   pip install --user azure-cli
-   ```
-
-4. Add the folder that contains az.bat to your path.
-   The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
-   or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
-   where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
-   Add the folder that contains `az.bat` to your path.
-   
-4. Run Azure CLI 2.0 from the command prompt with the `az` command.
-
-> [!NOTE]
-> If you already have Azure CLI 2.0 installed and you want to see whether you have the latest version,
-> use `az --version` to see what version you have.
-> Compare that to the latest version available at [https://pypi.python.org/pypi/azure-cli](https://pypi.python.org/pypi/azure-cli).
-> 
-> To update to the latest CLI, run `az component update`.
-> 
-> To uninstall the CLI, run `pip uninstall azure-cli`.
 
 ## Linux
 
