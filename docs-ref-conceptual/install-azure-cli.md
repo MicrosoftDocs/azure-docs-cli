@@ -53,12 +53,12 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 
 ### Windows command-line 
 
-To install the CLI on Windows and use it in the Windows command-line, download and run the [MSI](broken-link).
+To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](broken-link).
 
 > [!NOTE]
 > To update to the latest CLI, run `az component update`.
 > 
-> To uninstall the CLI, run the [MSI](broken-link) again.
+> To uninstall the CLI, run the [msi](broken-link) again and choose uninstall.
 
 ### Bash on Ubuntu on Windows
 
@@ -188,7 +188,6 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
    ```
 
 ## Troubleshooting
--------------------------------
 
 ### Errors with curl redirection
 
@@ -207,71 +206,6 @@ bash: line 1: syntax error near unexpected token `<'
 curl https://azurecliprod.blob.core.windows.net/install | bash
 ```
 
-
-### Errors on install with `cffi` or cryptography
-
-If you get errors on install on OS X, upgrade `pip`.
-
-```bash
-pip install --upgrade --force-reinstall pip
-```
-
-If you get errors on install on **Debian** or **Ubuntu**, like these examples,
-install `libssl-dev` and `libffi-dev`.
-
-```bash
-sudo apt-get update
-sudo apt-get install -y libssl-dev libffi-dev
-```
-
-Also install Python Dev for your version of Python.
-
-Python 2:
-
-```bash
-sudo apt-get install -y python-dev
-```
-
-Python 3:
-
-```bash
-sudo apt-get install -y python3-dev
-```
-
-Ubuntu 15 may require `build-essential` also:
-
-```bash
-sudo apt-get install -y build-essential
-```
-
-### Example Errors
-
-```
-Downloading cffi-1.5.2.tar.gz (388kB)
-    100% |################################| 389kB 3.9MB/s
-    Complete output from command python setup.py egg_info:
-
-        No working compiler found, or bogus compiler options
-        passed to the compiler from Python's distutils module.
-        See the error messages above.
-        (If they are about -mno-fused-madd and you are on OS/X 10.8,
-        see http://stackoverflow.com/questions/22313407/ .)
-
-    ----------------------------------------
-Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-77i2fido/cffi/
-```
-
-```
-#include <openssl/e_os2.h>
-                            ^
-compilation terminated.
-error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
-
-Failed building wheel for cryptography
-```
-
-See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
-
 ## Uninstall
 
 If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
@@ -288,7 +222,7 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
 > [!Note]
 > The default install location is `/Users/<username>`.
 
-If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
+If you used apt-get, Docker, or the msi to install the CLI, use the same tool to uninstall it.
 
 ## Reporting issues and feedback
 
