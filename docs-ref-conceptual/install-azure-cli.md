@@ -56,7 +56,8 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](broken-link).
 
 > [!NOTE]
-> To update to the latest CLI, run `az component update`.
+> When you install with the msi, `az component` isn't supported.
+> To update to the latest CLI, runthe [msi](broken-link) again.
 > 
 > To uninstall the CLI, run the [msi](broken-link) again and choose uninstall.
 
