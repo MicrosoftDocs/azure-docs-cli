@@ -57,7 +57,7 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 
 > [!NOTE]
 > When you install with the msi, `az component` isn't supported.
-> To update to the latest CLI, runthe [msi](broken-link) again.
+> To update to the latest CLI, run the [msi](broken-link) again.
 > 
 > To uninstall the CLI, run the [msi](broken-link) again and choose uninstall.
 
