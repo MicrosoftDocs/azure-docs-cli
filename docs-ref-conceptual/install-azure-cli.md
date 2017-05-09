@@ -53,13 +53,13 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 
 ### Windows command-line 
 
-To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](broken-link).
+To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](https://aka.ms/InstallAzureCliWindows).
 
 > [!NOTE]
 > When you install with the msi, `az component` isn't supported.
-> To update to the latest CLI, run the [msi](broken-link) again.
+> To update to the latest CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again.
 > 
-> To uninstall the CLI, run the [msi](broken-link) again and choose uninstall.
+> To uninstall the CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
 
 ### Bash on Ubuntu on Windows
 
