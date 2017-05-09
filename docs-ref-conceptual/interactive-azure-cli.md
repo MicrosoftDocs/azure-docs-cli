@@ -17,17 +17,17 @@ ms.assetid:
 # Interactive Azure CLI 2.0
 
 You can use Azure CLI 2.0 in interactive mode by running the `az interactive` command.
-That places you in an interactive shell where your commands are auto-compelted
-and you have access to descriptions of commands and their paramaters and command examples.
+That places you in an interactive shell where your commands are auto-completed
+and you have access to descriptions of commands and their parameters and command examples.
 
-![interacive mode][interactive mode]
+![interactive mode][interactive mode]
 
 If you're not already logged in to your account, use the `login` command to do that.
 
 ## Configure
 
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
-You can turn each of these on or off using `F1`.
+You can turn descriptions and examples on or off using `F1`.
 
 ![descriptions and examples][descriptions and examples]
 
@@ -35,7 +35,7 @@ You can turn the display of parameter defaults on or off using `F2`.
 
 ![defaults][defaults]
 
-`F3` will toggle the display of some key gestures.
+`F3` toggles the display of some key gestures.
 
 ![gestures][gestures]
 
@@ -43,7 +43,7 @@ You can turn the display of parameter defaults on or off using `F2`.
 
 You can scope your interactive mode to a specific command group like `vm` or `vm image`.
 When you do, all commands are interpreted in that scope.
-It's a great shorthand if you're doing all of your work in that command group.
+It's a great shorthand if you're doing all your work in that command group.
 
 Instead of typing these commands:
 
@@ -60,7 +60,7 @@ az vm>> create -n myVM -g myRG --image UbuntuLTS
 az vm>>list -o table
 ```
 
-You can scope to lower level command groups as well.
+You can scope to lower-level command groups as well.
 You could scope to `vm image` using `%%vm image`.
 In this case, since we're already scoped to `vm`, we would use `%%image`.
 
