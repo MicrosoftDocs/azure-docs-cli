@@ -3,7 +3,6 @@
 ## [Get started](get-started-with-azure-cli.md)
 ## [Log in](authenticate-azure-cli.md)
 ### [Create a service principal](create-an-azure-service-principal-azure-cli.md)
-## [Interactive mode](interactive-azure-cli.md)
 ## [Output formats](format-output-azure-cli.md)
 ## [Query](query-azure-cli.md)
 ## [Subscriptions](manage-azure-subscriptions-azure-cli.md)
