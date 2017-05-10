@@ -82,17 +82,17 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 
 1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
    Be sure to install the Pip component when you install Python.
-   After the install completes, add Python to your PATH environment variable (the installer will prompt you).
+   When the installer prompts then make the selection to add Python to your PATH environment variable.
 
 2. Check your Python installation from a command prompt.
 
-   ```bash
+   ```cmd
    python --version
    ```
 
 3. Install Azure CLI 2.0 using `pip`.
 
-   ```bash
+   ```cmd
    pip install --user azure-cli
    ```
 
