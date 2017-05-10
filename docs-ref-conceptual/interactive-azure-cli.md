@@ -22,6 +22,9 @@ and you have access to descriptions of commands and their parameters and command
 
 ![interactive mode](./media/interactive-azure-cli/webapp-create.png)
 
+> [!NOTE]
+> We're not using the default style here, which doesn't read as well on a black background.
+
 If you're not already logged in to your account, use the `login` command to do that.
 
 ## Configure
@@ -95,3 +98,24 @@ az>> ? [*].provisioningState
 
 To learn more about querying the results of your commands,
 see [Query command results with Azure 2.0](query-azure-cli.md).
+
+## Bash commands
+
+You can run shell commands without leaving interactive mode using `#[cmd]`.
+
+```azure-cli
+az>> #dir
+```
+
+## Examples
+
+Some commands have lots of examples.
+You can scroll to the next page of examples using `CTRL-N` and the previous page using `CTRL-Y`.
+
+![examples](./media/interactive-azure-cli/examples.png)
+
+You can also look at a specific example using `::#`.
+
+```azure-cli
+az>> vm create ::8
+```
