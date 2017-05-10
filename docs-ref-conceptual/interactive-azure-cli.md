@@ -79,7 +79,22 @@ az>>
 
 ## Query
 
-You can query the results of the last command
+You can execute a JMESPath query on the results of the last command that you executed.
+For example, after you create a VM, you can make sure it has fully provisioned.
+
+```azure-cli
+az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait
+az>> ? [*].provisioningState
+```
+
+```
+[
+  "Creating"
+]
+```
+
+To learn more about querying the results of your commands,
+see [Query command results with Azure 2.0](query-azure-cli.md).
 
 <!-- IMG List -->
 
