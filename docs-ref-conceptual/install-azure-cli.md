@@ -113,6 +113,24 @@ If you don't use Bash, you can install and use the CLI in the Windows command-li
 > 
 > To uninstall the CLI, run `pip uninstall azure-cli`.
 
+## Linux Prerequisites
+
+1. If you don't have it, install [Python](https://www.python.org/downloads).
+
+2. Depending on your Linux distribution, install the prerequisites.
+
+   ```
+   Platform              | Prerequisites
+   ----------------------|---------------------------------------------
+   Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+   Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+   Debian 8              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
+   Debian 7              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
+   CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+   RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
+   SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
+   ```
+
 ## Linux
 
 1. On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
@@ -194,24 +212,6 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 > To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
 > 
 > To uninstall, run `sudo apt-get remove azure-cli`.
-
-## Linux Prerequisites
-
-1. If you don't have it, install [Python](https://www.python.org/downloads).
-
-2. Depending on your Linux distribution, install the prerequisites.
-
-   ```
-   Platform              | Prerequisites
-   ----------------------|---------------------------------------------
-   Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-   Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-   Debian 8              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-   Debian 7              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-   CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-   RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-   SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
-   ```
 
 ## Troubleshooting
 -------------------------------
