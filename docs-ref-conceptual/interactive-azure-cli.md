@@ -20,7 +20,7 @@ You can use Azure CLI 2.0 in interactive mode by running the `az interactive` co
 That places you in an interactive shell where your commands are auto-completed
 and you have access to descriptions of commands and their parameters and command examples.
 
-![interactive mode][interactive mode]
+![interactive mode](./media/interactive-azure-cli/webapp-create.png)
 
 If you're not already logged in to your account, use the `login` command to do that.
 
@@ -29,15 +29,15 @@ If you're not already logged in to your account, use the `login` command to do t
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
 You can turn descriptions and examples on or off using `F1`.
 
-![descriptions and examples][descriptions and examples]
+![descriptions and examples](./media/interactive-azure-cli/descriptions-and-examples.png)
 
 You can turn the display of parameter defaults on or off using `F2`.
 
-![defaults][defaults]
+![defaults](./media/interactive-azure-cli/defaults.png)
 
 `F3` toggles the display of some key gestures.
 
-![gestures][gestures]
+![gestures](./media/interactive-azure-cli/gestures.png)
 
 ## Scope
 
@@ -95,10 +95,3 @@ az>> ? [*].provisioningState
 
 To learn more about querying the results of your commands,
 see [Query command results with Azure 2.0](query-azure-cli.md).
-
-<!-- IMG List -->
-
-[interactive mode]: ./media/interactive-azure-cli/webapp-create.png
-[descriptions and examples]: ./media/interactive-azure-cli/descriptions-and-examples.png
-[defaults]: ./media/interactive-azure-cli/defaults.png
-[gestures]: ./media/interactive-azure-cli/gestures.png
