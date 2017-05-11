@@ -20,6 +20,17 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 Version 2.0.6
 
+* documentdb renamed to cosmosdb
+* Add rdbms (mysql, postgres)
+* Include Data Lake Analytics and Data Lake Store modules.
+* Include Cognitive Services module.
+* Include Service Fabric module.
+* Include Interactive module (rename of az-shell).
+* Add support for CDN commands.
+* Remove Container module.
+* Add 'az -v' as shortcut for 'az --version' ([#2926](https://github.com/Azure/azure-cli/issues/2926))
+* Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
+
 ```
 azure-cli (2.0.6)
 
@@ -59,16 +70,6 @@ vm (2.0.6)
 
 ### Core
 
-* documentdb renamed to cosmosdb
-* Add rdbms (mysql, postgres)
-* Include Data Lake Analytics and Data Lake Store modules.
-* Include Cognitive Services module.
-* Include Service Fabric module.
-* Include Interactive module (rename of az-shell).
-* Add support for CDN commands.
-* Remove Container module.
-* Add 'az -v' as shortcut for 'az --version' ([#2926](https://github.com/Azure/azure-cli/issues/2926))
-* Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
 * core: capture exceptions caused by unregistered provider and auto-register it   
 * perf: persist adal token cache in memory till process exits ([#2603](https://github.com/Azure/azure-cli/issues/2603))
 * Fix bytes returned from hex fingerprint -o tsv ([#3053](https://github.com/Azure/azure-cli/issues/3053))
