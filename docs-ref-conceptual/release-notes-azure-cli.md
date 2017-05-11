@@ -67,27 +67,27 @@ vm (2.0.6)
 * Include Interactive module (rename of az-shell).
 * Add support for CDN commands.
 * Remove Container module.
-* Add 'az -v' as shortcut for 'az --version' ([#2926]([https://github.com/Azure/azure-cli/issues/2926))
-* Improve performance of package load and command execution ([#2819]([https://github.com/Azure/azure-cli/issues/2819))
+* Add 'az -v' as shortcut for 'az --version' ([#2926](https://github.com/Azure/azure-cli/issues/2926))
+* Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
 * core: capture exceptions caused by unregistered provider and auto-register it   
-* perf: persist adal token cache in memory till process exits ([#2603]([https://github.com/Azure/azure-cli/issues/2603))
-* Fix bytes returned from hex fingerprint -o tsv ([#3053]([https://github.com/Azure/azure-cli/issues/3053))
-* Enhanced Key Vault Certificate Download and AAD SP Integration ([#3003]([https://github.com/Azure/azure-cli/issues/3003))
-* Add Python location to ‘az —version’ ([#2986]([https://github.com/Azure/azure-cli/issues/2986))
-* login: support login when there are no subscriptions ([#2929]([https://github.com/Azure/azure-cli/issues/2929))
-*core: fix a failure when login using a service principal twice ([#2800]([https://github.com/Azure/azure-cli/issues/2800))
-*core: Allow file path of accessTokens.json to be configurable through an env var ([#2605]([https://github.com/Azure/azure-cli/issues/2605))
-*core: Allow configured defaults to apply on optional args ([#2703]([https://github.com/Azure/azure-cli/issues/2703))
-*core: Improved performance
-*core: Custom CA Certs - Support setting REQUESTS_CA_BUNDLE environment variable
-*core: Cloud configuration - use 'resource manager' endpoint if 'management' endpoint not set
+* perf: persist adal token cache in memory till process exits ([#2603](https://github.com/Azure/azure-cli/issues/2603))
+* Fix bytes returned from hex fingerprint -o tsv ([#3053](https://github.com/Azure/azure-cli/issues/3053))
+* Enhanced Key Vault Certificate Download and AAD SP Integration ([#3003](https://github.com/Azure/azure-cli/issues/3003))
+* Add Python location to ‘az —version’ ([#2986](https://github.com/Azure/azure-cli/issues/2986))
+* login: support login when there are no subscriptions ([#2929](https://github.com/Azure/azure-cli/issues/2929))
+* core: fix a failure when login using a service principal twice ([#2800](https://github.com/Azure/azure-cli/issues/2800))
+* core: Allow file path of accessTokens.json to be configurable through an env var ([#2605](https://github.com/Azure/azure-cli/issues/2605))
+* core: Allow configured defaults to apply on optional args ([#2703](https://github.com/Azure/azure-cli/issues/2703))
+* core: Improved performance
+* core: Custom CA Certs - Support setting REQUESTS_CA_BUNDLE environment variable
+* core: Cloud configuration - use 'resource manager' endpoint if 'management' endpoint not set
 
 ### ACS
 
 * fix the master and agent count to be integer instead of string
 * expose 'az acs create --no-wait' and 'az acs wait' for async creation
 * expose 'az acs create --validate' for dry-run validations
-* remove windows profile before PUT call for scale command ([#2755]([https://github.com/Azure/azure-cli/issues/2755))
+* remove windows profile before PUT call for scale command ([#2755](https://github.com/Azure/azure-cli/issues/2755))
 
 ## AppService
 
@@ -96,10 +96,10 @@ vm (2.0.6)
 * Create "az webapp" to replace "az appservice web" (for backward compat, "az appservice web" will stay for 2 releases)
 * Expose arguments to configure deployment and "runtime stacks" on webapp create
 * Expose "webapp list-runtimes"
-* support configure connection strings ([#2647]([https://github.com/Azure/azure-cli/issues/2647))
+* support configure connection strings ([#2647](https://github.com/Azure/azure-cli/issues/2647))
 * support slot swap with preview
-* Polish errors from appservice commands ([#2948]([https://github.com/Azure/azure-cli/issues/2948))
-* Use the app service plan's resource group for cert operations ([#2750]([https://github.com/Azure/azure-cli/issues/2750))
+* Polish errors from appservice commands ([#2948](https://github.com/Azure/azure-cli/issues/2948))
+* Use the app service plan's resource group for cert operations ([#2750](https://github.com/Azure/azure-cli/issues/2750))
 
 ### CosmosDB
 
@@ -123,8 +123,8 @@ vm (2.0.6)
 ### Data Lake Store
 
 * Update the version of the underlying filesystem SDK, which gives better support for handling server side throttling scenarios.
-* Improve performance of package load and command execution ([#2819]([https://github.com/Azure/azure-cli/issues/2819))
-* missed help for access show. adding it. ([#2743]([https://github.com/Azure/azure-cli/issues/2743))
+* Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
+* missed help for access show. adding it. ([#2743](https://github.com/Azure/azure-cli/issues/2743))
 
 ### Find
 
@@ -136,7 +136,7 @@ vm (2.0.6)
 * BC: Remove --expires and --not-before from `keyvault certificate create` as these parameters are not supported by the service.
 * Adds the --validity parameter to `keyvault certificate create` to selectively override the value in --policy
 * Fixes issue in `keyvault certificate get-default-policy` where 'expires' and 'not_before' were exposed but 'validity_in_months' was not.
-* keyvault fix for import of pem and pfx ([#2754]([https://github.com/Azure/azure-cli/issues/2754))
+* keyvault fix for import of pem and pfx ([#2754](https://github.com/Azure/azure-cli/issues/2754))
 
 ### Lab
 
@@ -148,8 +148,8 @@ vm (2.0.6)
 
 ### Monitor
 
-* Bug Fix: Modeling `--actions` of `az alert-rules create` to consume JSON string ([#3009]([https://github.com/Azure/azure-cli/issues/3009))
-* Bug fix - diagnostic settings create does not accept logs/metrics from show commands ([#2913]([https://github.com/Azure/azure-cli/issues/2913))
+* Bug Fix: Modeling `--actions` of `az alert-rules create` to consume JSON string ([#3009](https://github.com/Azure/azure-cli/issues/3009))
+* Bug fix - diagnostic settings create does not accept logs/metrics from show commands ([#2913](https://github.com/Azure/azure-cli/issues/2913))
 
 ### Network
 
@@ -172,8 +172,8 @@ vm (2.0.6)
 
 ### Profile
 
-* Support login when there are no subscriptions found ([#2560]([https://github.com/Azure/azure-cli/issues/2560))
-* Support short param name in az account set --subscription ([#2980]([https://github.com/Azure/azure-cli/issues/2980))
+* Support login when there are no subscriptions found ([#2560](https://github.com/Azure/azure-cli/issues/2560))
+* Support short param name in az account set --subscription ([#2980](https://github.com/Azure/azure-cli/issues/2980))
 
 ### Redis
 
@@ -182,26 +182,26 @@ vm (2.0.6)
 
 ### Resource
 
-* Add managedapp and managedapp definition commands ([#2985]([https://github.com/Azure/azure-cli/issues/2985))
-* Support 'provider operation' commands ([#2908]([https://github.com/Azure/azure-cli/issues/2908))
-* Support generic resource create ([#2606]([https://github.com/Azure/azure-cli/issues/2606))
-* Fix resource parsing and api version lookup. ([#2781]([https://github.com/Azure/azure-cli/issues/2781))
-* Add docs for az lock update. ([#2702]([https://github.com/Azure/azure-cli/issues/2702))
-* Error out if you try to list resources for a group that doesn't exist. ([#2769]([https://github.com/Azure/azure-cli/issues/2769))
-* [Compute] Fix issues with VMSS and VM availability set update. ([#2773]([https://github.com/Azure/azure-cli/issues/2773))
-* Fix lock create and delete if parent-resource-path is None ([#2742]([https://github.com/Azure/azure-cli/issues/2742))
+* Add managedapp and managedapp definition commands ([#2985](https://github.com/Azure/azure-cli/issues/2985))
+* Support 'provider operation' commands ([#2908](https://github.com/Azure/azure-cli/issues/2908))
+* Support generic resource create ([#2606](https://github.com/Azure/azure-cli/issues/2606))
+* Fix resource parsing and api version lookup. ([#2781](https://github.com/Azure/azure-cli/issues/2781))
+* Add docs for az lock update. ([#2702](https://github.com/Azure/azure-cli/issues/2702))
+* Error out if you try to list resources for a group that doesn't exist. ([#2769](https://github.com/Azure/azure-cli/issues/2769))
+* [Compute] Fix issues with VMSS and VM availability set update. ([#2773](https://github.com/Azure/azure-cli/issues/2773))
+* Fix lock create and delete if parent-resource-path is None ([#2742](https://github.com/Azure/azure-cli/issues/2742))
 
 ### Role
 
-* create-for-rbac: ensure SP's end date will not exceed certificate's expiration date ([#2989]([https://github.com/Azure/azure-cli/issues/2989))
-* RBAC: add full support for 'ad group' ([#2016]([https://github.com/Azure/azure-cli/issues/2016))
-* role: fix issues on role definition update ([#2745]([https://github.com/Azure/azure-cli/issues/2745))
+* create-for-rbac: ensure SP's end date will not exceed certificate's expiration date ([#2989](https://github.com/Azure/azure-cli/issues/2989))
+* RBAC: add full support for 'ad group' ([#2016](https://github.com/Azure/azure-cli/issues/2016))
+* role: fix issues on role definition update ([#2745](https://github.com/Azure/azure-cli/issues/2745))
 * create-for-rbac: ensure user provided password is picked up
 
 ### SQL
 
 * Added az sql server list-usages and az sql db list-usages commands.
-* SQL - ability to connect directly to resource provider ([#2832]([https://github.com/Azure/azure-cli/issues/2832))
+* SQL - ability to connect directly to resource provider ([#2832](https://github.com/Azure/azure-cli/issues/2832))
 
 ### Storage
 
@@ -221,7 +221,7 @@ vm (2.0.6)
   3. Inside "az vm/vmss create", use "—use-unmanaged-disk" to avoid managed disk
   Other commands should work
 * vm/vmss: improve the warning text when generates ssh key pairs
-* vm/vmss: support create from a market place image which requires plan info ([#1209]([https://github.com/Azure/azure-cli/issues/1209))
+* vm/vmss: support create from a market place image which requires plan info ([#1209](https://github.com/Azure/azure-cli/issues/1209))
 
 
 ## April 3, 2017
