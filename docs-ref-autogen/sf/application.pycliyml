@@ -42,17 +42,17 @@ children:
   htmlId: create
   examples: []
   parameters:
+  - name: --app-name
+    isRequired: True
+    summary: The name of the application, including the 'fabric:' URI scheme.
+    description: ''
   - name: --app-type
     isRequired: True
-    summary: Application type.
+    summary: The application type name found in the application manifest.
     description: ''
-  - name: --name
+  - name: --app-version
     isRequired: True
-    summary: Application name.
-    description: ''
-  - name: --version
-    isRequired: True
-    summary: Application version.
+    summary: The version of the application type as defined in the application manifest.
     description: ''
   - name: --max-node-count
     isRequired: False
@@ -60,7 +60,7 @@ children:
     description: ''
   - name: --metrics
     isRequired: False
-    summary: JSON encoded list of application metrics and their                descriptions.
+    summary: A JSON encoded list of application capacity metric descriptions. A metric is defined as a name, associated with a set of capacities for each node that the application exists on.
     description: ''
   - name: --min-node-count
     isRequired: False
@@ -68,11 +68,11 @@ children:
     description: ''
   - name: --parameters
     isRequired: False
-    summary: JSON encoded list of application parameters.
+    summary: A JSON encoded list of application parameter overrides to be applied when creating the application.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -115,9 +115,9 @@ children:
     isRequired: False
     summary: Remove a Service Fabric application or service forcefully without going through the graceful shutdown sequence. This parameter can be used to forcefully delete an application or service for which delete is timing out due to issues in the service code that prevents graceful close of replicas.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -168,9 +168,9 @@ children:
     isRequired: False
     summary: Allows filtering of the services health state objects returned in the result of services health query based on their health state. The possible values for this parameter include integer value of one of the following health states. Only services that match the filter are returned. All services are used to evaluate the aggregated health state. If not specified, all entries are returned. The state values are flag based enumeration, so the value could be a combination of these value obtained using bitwise 'OR' operator. For example, if the provided value is 6 then health state of services with HealthState value of OK (2) and Warning (4) will be returned. - Default - Default value. Matches any HealthState. The value is zero. - None - Filter that doesn�t match any HealthState value. Used in order to return no results on a given collection of states. The value is 1. - Ok - Filter that matches input with HealthState value Ok. The value is 2. - Warning - Filter that matches input with HealthState value Warning. The value is 4. - Error - Filter that matches input with HealthState value Error. The value is 8. - All - Filter that matches input with any HealthState value. The value is 65535.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -217,9 +217,9 @@ children:
     isRequired: False
     summary: The flag that specifies whether application parameters will be excluded from the result.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -262,9 +262,9 @@ children:
     isRequired: True
     summary: The version of the application type.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -303,9 +303,9 @@ children:
     isRequired: True
     summary: Relative path to file or folder in the image store from its root.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -344,9 +344,9 @@ children:
     isRequired: True
     summary: The relative image store path to the application package.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -409,9 +409,9 @@ children:
     isRequired: False
     summary: The sequence number for this health report as a numeric string. The report sequence number is used by the health store to detect stale reports. If not specified, a sequence number is auto-generated by the health client when a report is added.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --ttl
@@ -443,7 +443,7 @@ children:
   children: []
   uid: az_sf_application_report-health
   name: az sf application report-health
-  description: Reports health state of the specified Service Fabric application. The report must contain the information about the source of the health report and property on which it is reported. The report is sent to a Service Fabric gateway Application, which forwards to the health store. The report may be accepted by the gateway, but rejected by the health store after extra validation. For example, the health store may reject the report because of an invalid parameter, like a stale sequence number. To see whether the report was applied in the health store, check that the report appears in the HealthEvents section.
+  description: Reports health state of the specified Service Fabric application. The report must contain the information about the source of the health report and property on which it is reported. The report is sent to a Service Fabric gateway Application, which forwards to the health store. The report may be accepted by the gateway, but rejected by the health store after extra validation. For example, the health store may reject the report because of an invalid parameter, like a stale sequence number. To see whether the report was applied in the health store, check that the report appears in the events section.
   summary: Sends a health report on the Service Fabric application.
   Metadata: {}
 - commandList: []
@@ -462,9 +462,9 @@ children:
     isRequired: False
     summary: The maximum number of results to be returned as part of the paged queries. This parameter defines the upper bound on the number of results returned. The results returned can be less than the specified maximum results if they do not fit in the message as per the max message size restrictions defined in the configuration. If this parameter is zero or not specified, the paged queries includes as much results as possible that fit in the return message.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -507,9 +507,9 @@ children:
     isRequired: True
     summary: The application type version.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --debug
@@ -544,21 +544,21 @@ children:
   htmlId: upgrade
   examples: []
   parameters:
-  - name: --name
+  - name: --app-id
     isRequired: True
-    summary: Application name. The name of the target application, including the 'fabric' URI scheme.
+    summary: The identity of the application. This is typically the full name of the application without the 'fabric:' URI scheme.
     description: ''
-  - name: --parameters
-    isRequired: True
-    summary: JSON encoded list of application parameter overrides to                be applied when upgrading an application. Note, when starting                an upgrade, be sure to include the existing application                parameters, if any.
-    description: ''
-  - name: --version
+  - name: --app-version
     isRequired: True
     summary: The target application type version (found in the application manifest) for the application upgrade.
     description: ''
-  - name: --default_service_health_policy
+  - name: --parameters
+    isRequired: True
+    summary: A JSON encoded list of application parameter overrides to be applied when upgrading the application.
+    description: ''
+  - name: --default-service-health-policy
     isRequired: False
-    summary: JSON encoded specification of the health policy used by                default to evaluate the health of a service type.
+    summary: JSON encoded specification of the health policy used by default to evaluate the health of a service type.
     description: ''
   - name: --failure-action
     isRequired: False
@@ -572,14 +572,17 @@ children:
     isRequired: False
     summary: The amount of time to retry health evaluations when the application or cluster is unhealthy before the failure action is executed. Measured in milliseconds.
     description: ''
+    defaultValue: PT0H10M0S
   - name: --health-check-stable-duration
     isRequired: False
     summary: The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. Measured in milliseconds.
     description: ''
+    defaultValue: PT0H2M0S
   - name: --health-check-wait-duration
     isRequired: False
     summary: The amount of time to wait after completing an upgrade domain before applying health policies. Measured in milliseconds.
     description: ''
+    defaultValue: 0
   - name: --max-unhealthy-apps
     isRequired: False
     summary: The maximum allowed percentage of unhealthy deployed applications. Represented as a number between 0 and 100.
@@ -593,23 +596,26 @@ children:
     isRequired: False
     summary: The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. Measured in seconds.
     description: ''
-  - name: --service_health_policy
+    defaultValue: 42949672925
+  - name: --service-health-policy
     isRequired: False
-    summary: JSON encoded map with service type health policy per                service type name. The map is empty be default.
+    summary: JSON encoded map with service type health policy per service type name. The map is empty be default.
     description: ''
-  - name: --timeout
+  - name: --timeout -t
     isRequired: False
-    summary: The server timeout for performing the operation in seconds. This specifies the time duration that the client is willing to wait for the requested operation to complete. The default value for this parameter is 60 seconds.
+    summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
     description: ''
     defaultValue: 60
   - name: --upgrade-domain-timeout
     isRequired: False
     summary: The amount of time each upgrade domain has to complete before FailureAction is executed. Measured in milliseconds.
     description: ''
+    defaultValue: P10675199DT02H48M05.4775807S
   - name: --upgrade-timeout
     isRequired: False
     summary: The amount of time the overall upgrade has to complete before FailureAction is executed. Measured in milliseconds.
     description: ''
+    defaultValue: P10675199DT02H48M05.4775807S
   - name: --warning-as-error
     isRequired: False
     summary: Treat health evaluation warnings with the same severity as errors.
@@ -639,7 +645,7 @@ children:
   children: []
   uid: az_sf_application_upgrade
   name: az sf application upgrade
-  description: Validates the supplied application upgrade parameters and starts upgrading the application if the parameters are valid.
+  description: Validates the supplied application upgrade parameters and starts upgrading the application if the parameters are valid. Please note that upgrade description replaces the existing application description. This means that if the parameters are not specified, the existing parameters on the applications will be overwritten with the empty parameters list. This would results in application using the default value of the parameters from the application manifest.
   summary: Starts upgrading an application in the Service Fabric cluster.
   Metadata: {}
 - commandList: []
