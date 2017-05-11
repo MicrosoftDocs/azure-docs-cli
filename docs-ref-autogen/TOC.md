@@ -3,6 +3,7 @@
 ## [Get started](../docs-ref-conceptual/get-started-with-azure-cli.md)
 ## [Log in](../docs-ref-conceptual/authenticate-azure-cli.md)
 ### [Create a service principal](../docs-ref-conceptual/create-an-azure-service-principal-azure-cli.md)
+## [Interactive mode](../docs-ref-conceptual/interactive-azure-cli.md)
 ## [Output formats](../docs-ref-conceptual/format-output-azure-cli.md)
 ## [Query](../docs-ref-conceptual/query-azure-cli.md)
 ## [Subscriptions](../docs-ref-conceptual/manage-azure-subscriptions-azure-cli.md)
