@@ -89,7 +89,7 @@ vm (2.0.6)
 * expose 'az acs create --validate' for dry-run validations
 * remove windows profile before PUT call for scale command ([#2755](https://github.com/Azure/azure-cli/issues/2755))
 
-## AppService
+### AppService
 
 * functionapp: add full functionapp supports, including create, show, list, delete, hostname, ssl, etc
 * Adding Team Services (vsts) as a continuous delivery option to "appservice web source-control config"
