@@ -50,14 +50,14 @@ It's a great shorthand if you're doing all your work in that command group.
 
 Instead of typing these commands:
 
-```azure-cli
+```azurecli-interactive
 az>> vm create -n myVM -g myRG --image UbuntuLTS
 az>> vm list -o table
 ```
 
 You can scope to the vm command group and type these commands:
 
-```azure-cli
+```azurecli-interactive
 az>> %%vm
 az vm>> create -n myVM -g myRG --image UbuntuLTS
 az vm>>list -o table
@@ -67,7 +67,7 @@ You can scope to lower-level command groups as well.
 You could scope to `vm image` using `%%vm image`.
 In this case, since we're already scoped to `vm`, we would use `%%image`.
 
-```azure-cli
+```azurecli-interactive
 az vm>> %%image
 az vm image>>
 ```
@@ -75,7 +75,7 @@ az vm image>>
 At that point, we can pop the scope back up to `vm` using `%%..`,
 or we can scope to the root with just `%%`.
 
-```azure-cli
+```azurecli-interactive
 az vm image>> %%
 az>>
 ```
@@ -85,7 +85,7 @@ az>>
 You can execute a JMESPath query on the results of the last command that you executed.
 For example, after you create a VM, you can make sure it has fully provisioned.
 
-```azure-cli
+```azurecli-interactive
 az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait
 az>> ? [*].provisioningState
 ```
@@ -103,7 +103,7 @@ see [Query command results with Azure 2.0](query-azure-cli.md).
 
 You can run shell commands without leaving interactive mode using `#[cmd]`.
 
-```azure-cli
+```azurecli-interactive
 az>> #dir
 ```
 
@@ -116,6 +116,6 @@ You can scroll to the next page of examples using `CTRL-N` and the previous page
 
 You can also look at a specific example using `::#`.
 
-```azure-cli
+```azurecli-interactive
 az>> vm create ::8
 ```
