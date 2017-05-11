@@ -217,8 +217,8 @@ For example, you can use the Azure CLI to create an Azure AppService.  Azure App
 az appservice plan create -n MyAppServicePlan -g MyResourceGroup
 
 # Create Two Web Apps within the AppService (note: name param must be a unique DNS entry)
-az appservice web create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan 
-az appservice web create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan 
+az webapp create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan 
+az webapp create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan 
 ```
 
 Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are 
@@ -235,7 +235,7 @@ Managed Disk                az disk create
 Storage account             az storage account create
 Virtual Machine Scale Set   az vmss create
 Azure Container Service     az acs create
-Web App                     az appservice web create
+Web App                     az webapp create
 SQL Database Server         az sql server create
 Document DB                 az documentdb create
 ```
@@ -337,8 +337,9 @@ The `list` command has built-in support
 that makes it easy to filter resources by Resource Group name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
 to a `list` command to only retrieve those resources within a specific resource group:
 
-```azurecli-interactive
-az vm list -g MyResouceGroup --output table
+
+```azurecli
+az vm list -g MyResourceGroup --output table
 ```
 
 ```Output
