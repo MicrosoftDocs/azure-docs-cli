@@ -48,10 +48,10 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## Windows
 
-Azure CLI 2.0 supports Bash command syntax, making Bash on Ubuntu on Windows a great way to use the CLI.
-If you don't use Bash, you can install and use the CLI in the Windows command-line.
+You can install the CLI with the MSI and use it in the Windows command-line,
+or you can install the CLI with apt-get on Bash on Ubuntu on Windows.
 
-### Windows command-line 
+### MSI for the Windows command-line 
 
 To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](https://aka.ms/InstallAzureCliWindows).
 
@@ -61,7 +61,7 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 > 
 > To uninstall the CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
 
-### Bash on Ubuntu on Windows
+### apt-get for Bash on Ubuntu on Windows
 
 1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/commandline/wsl/install_guide).
 
