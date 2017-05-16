@@ -493,6 +493,7 @@
 #### [List](lab\vnet.pycliyml#list "az lab vnet list")
 ### [Virutal machines](lab\vm.pycliyml "az lab vm")
 #### [Apply-Artifacts](lab\vm.pycliyml#apply-artifacts "az lab vm apply-artifacts")
+#### [Claim](lab\vm.pycliyml#claim "az lab vm claim")
 #### [Create](lab\vm.pycliyml#create "az lab vm create")
 #### [Delete](lab\vm.pycliyml#delete "az lab vm delete")
 #### [List](lab\vm.pycliyml#list "az lab vm list")

@@ -647,6 +647,7 @@
 #### [az lab secret show](lab\secret.pycliyml#show)
 ### [az lab vm](lab\vm.pycliyml)
 #### [az lab vm apply-artifacts](lab\vm.pycliyml#apply-artifacts)
+#### [az lab vm claim](lab\vm.pycliyml#claim)
 #### [az lab vm create](lab\vm.pycliyml#create)
 #### [az lab vm delete](lab\vm.pycliyml#delete)
 #### [az lab vm list](lab\vm.pycliyml#list)
