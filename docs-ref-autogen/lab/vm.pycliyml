@@ -2,6 +2,9 @@ commandList:
 - name: az lab vm apply-artifacts
   description: Command to apply artifacts to virtual machine in Azure DevTest Lab.
   href: vm#apply-artifacts
+- name: az lab vm claim
+  description: Take ownership of an existing virtual machine in Azure DevTest Lab.
+  href: vm#claim
 - name: az lab vm create
   description: Command to create VM in a DevTest Lab.
   href: vm#create
@@ -27,43 +30,43 @@ children:
   htmlId: apply-artifacts
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: Name of the Lab.
     description: ''
-  - name: --name -n
+  - name: –name -n
     isRequired: True
     summary: Name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of lab's resource group.
+    summary: Name of lab’s resource group.
     description: ''
-  - name: --artifacts
+  - name: –artifacts
     isRequired: False
     summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_apply-artifacts
@@ -72,134 +75,178 @@ children:
   summary: Command to apply artifacts to virtual machine in Azure DevTest Lab.
   Metadata: {}
 - commandList: []
-  htmlId: create
-  examples:
-  - title: Create a Virtual Machine in the lab from gallery image.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
-  - title: Create a Virtual Machine in the lab from gallery image with ssh authentication.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
-  - title: Create a claimable Virtual Machine in the lab from gallery image with password authentication.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
-  - title: Create a windows Virtual Machine in the lab from gallery image with password authentication.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
-  - title: Create a Virtual Machine in the lab from custom image.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
-  - title: Create a Virtual Machine in the lab with public ip configuration.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
-  - title: Create a Virtual Machine from a formula.
-    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --formula MyFormula --artifacts @/artifacts.json
+  htmlId: claim
+  examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: Name of the Lab.
     description: ''
-  - name: --name -n
+  - name: –name -n
     isRequired: True
     summary: Name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of lab’s resource group.
     description: ''
-  - name: --allow-claim
-    isRequired: False
-    summary: Flag indicating whether the VM will be created as a claimable VM in the lab.
-    description: ''
-  - name: --artifacts
-    isRequired: False
-    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
-    description: ''
-  - name: --disk-type
-    isRequired: False
-    summary: Storage type to use for virtual machine (i.e. Standard, Premium).
-    description: ''
-  - name: --expiration-date
-    isRequired: False
-    summary: The expiration date in UTC(YYYY-mm-dd) for VM. Ex. 2017-03-25.
-    description: ''
-  - name: --formula
-    isRequired: False
-    summary: Name of the formula. Use az lab formula list for available formulas. Use az lab formula with --export-artifacts flag to export & update artifacts then supply it via --artifacts argument.
-    description: ''
-  - name: --image
-    isRequired: False
-    summary: The name of the operating system image (Gallery Image Name and Custom Image Name/ID). Use az lab gallery-image list for available Gallery Images or Use az lab custom-image list for available Custom Images.
-    description: ''
-  - name: --image-type
-    isRequired: False
-    summary: Type of the image. Allowed values are gallery, custom.
-    description: ''
-  - name: --notes
-    isRequired: False
-    summary: Notes for the virtual machine.
-    description: ''
-  - name: --size
-    isRequired: False
-    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info. Required when creating VM from gallery or custom image.
-    description: ''
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --admin-password
-    isRequired: False
-    summary: Password for the VM.
-    description: ''
-  - name: --admin-username
-    isRequired: False
-    summary: Username for the VM.
-    description: ''
-    defaultValue: appveyor
-  - name: --authentication-type
-    isRequired: False
-    summary: Type of authentication to use with the VM. Allowed values are password, ssh.
-    description: ''
-    defaultValue: password
-  - name: --generate-ssh-keys
-    isRequired: False
-    summary: Generate SSH public and private key files if missing.
-    description: ''
-  - name: --saved-secret
-    isRequired: False
-    summary: Name of the saved secret to be used for authentication. When provided, we'll use it inplace of --admin-password for password based authentication or inplace of --ssh-key for ssh based authentication.
-    description: ''
-  - name: --ssh-key
-    isRequired: False
-    summary: The SSH public key or public key file path. Use --generate-ssh-keys to regen ssh keys.
-    description: ''
-  - name: --ip-configuration
-    isRequired: False
-    summary: Type of ip configuration to use with the VM. Allowed values are shared, public, private. If omitted, will be selected based on selected vnet.
-    description: ''
-  - name: --subnet
-    isRequired: False
-    summary: Name of the subnet to reference an existing one in lab. If omitted, lab's existing one subnet will be selected automatically.
-    description: ''
-  - name: --vnet-name
-    isRequired: False
-    summary: Name of the virtual network to reference an existing one in lab. If omitted, lab's existing one VNet and subnet will be selected automatically.
-    description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
+    description: ''
+  children: []
+  uid: az_lab_vm_claim
+  name: az lab vm claim
+  description: ''
+  summary: Take ownership of an existing virtual machine in Azure DevTest Lab.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples:
+  - title: Create a Virtual Machine in the lab from gallery image.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “Ubuntu Server 16.04 LTS” –image-type gallery –size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from gallery image with ssh authentication.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “Ubuntu Server 16.04 LTS” –image-type gallery –size Standard_DS1_v2 –authentication-type ssh
+  - title: Create a claimable Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “Ubuntu Server 16.04 LTS” –image-type gallery –size Standard_DS1_v2 –allow-claim
+  - title: Create a windows Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “Windows Server 2008 R2 SP1” –image-type gallery –size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from custom image.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “jenkins_custom” –image-type custom –size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab with public ip configuration.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –image “Ubuntu Server 16.04 LTS” –image-type gallery –size Standard_DS1_v2 –ip-configuration public
+  - title: Create a Virtual Machine from a formula.
+    code: az lab vm create –lab-name MyLab -g MyRG –name MyVM –formula MyFormula –artifacts @/artifacts.json
+  parameters:
+  - name: –lab-name
+    isRequired: True
+    summary: Name of the Lab.
+    description: ''
+  - name: –name -n
+    isRequired: True
+    summary: Name of the virtual machine.
+    description: ''
+  - name: –resource-group -g
+    isRequired: True
+    summary: Name of lab’s resource group. You can configure the default group using ‘az configure –defaults group=<name>’.
+    description: ''
+  - name: –allow-claim
+    isRequired: False
+    summary: Flag indicating whether the VM will be created as a claimable VM in the lab.
+    description: ''
+  - name: –artifacts
+    isRequired: False
+    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+    description: ''
+  - name: –disk-type
+    isRequired: False
+    summary: Storage type to use for virtual machine (i.e. Standard, Premium).
+    description: ''
+  - name: –expiration-date
+    isRequired: False
+    summary: The expiration date in UTC(YYYY-mm-dd) for VM. Ex. 2017-03-25.
+    description: ''
+  - name: –formula
+    isRequired: False
+    summary: Name of the formula. Use az lab formula list for available formulas. Use az lab formula with –export-artifacts flag to export & update artifacts then supply it via –artifacts argument.
+    description: ''
+  - name: –image
+    isRequired: False
+    summary: The name of the operating system image (Gallery Image Name and Custom Image Name/ID). Use az lab gallery-image list for available Gallery Images or Use az lab custom-image list for available Custom Images.
+    description: ''
+  - name: –image-type
+    isRequired: False
+    summary: Type of the image. Allowed values are gallery, custom.
+    description: ''
+  - name: –notes
+    isRequired: False
+    summary: Notes for the virtual machine.
+    description: ''
+  - name: –size
+    isRequired: False
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info. Required when creating VM from gallery or custom image.
+    description: ''
+  - name: –tags
+    isRequired: False
+    summary: Space separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
+    description: ''
+  - name: –admin-password
+    isRequired: False
+    summary: Password for the VM.
+    description: ''
+  - name: –admin-username
+    isRequired: False
+    summary: Username for the VM.
+    description: ''
+    defaultValue: appveyor
+  - name: –authentication-type
+    isRequired: False
+    summary: Type of authentication to use with the VM. Allowed values are password, ssh.
+    description: ''
+    defaultValue: password
+  - name: –generate-ssh-keys
+    isRequired: False
+    summary: Generate SSH public and private key files if missing.
+    description: ''
+  - name: –saved-secret
+    isRequired: False
+    summary: Name of the saved secret to be used for authentication. When provided, we’ll use it inplace of –admin-password for password based authentication or inplace of –ssh-key for ssh based authentication.
+    description: ''
+  - name: –ssh-key
+    isRequired: False
+    summary: The SSH public key or public key file path. Use –generate-ssh-keys to regen ssh keys.
+    description: ''
+  - name: –ip-configuration
+    isRequired: False
+    summary: Type of ip configuration to use with the VM. Allowed values are shared, public, private. If omitted, will be selected based on selected vnet.
+    description: ''
+  - name: –subnet
+    isRequired: False
+    summary: Name of the subnet to reference an existing one in lab. If omitted, lab’s existing one subnet will be selected automatically.
+    description: ''
+  - name: –vnet-name
+    isRequired: False
+    summary: Name of the virtual network to reference an existing one in lab. If omitted, lab’s existing one VNet and subnet will be selected automatically.
+    description: ''
+  - name: –debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: –help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: –output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: –query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: –verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_create
@@ -211,39 +258,39 @@ children:
   htmlId: delete
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: The name of the lab.
     description: ''
-  - name: --name
+  - name: –name
     isRequired: True
     summary: The name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_delete
@@ -255,67 +302,67 @@ children:
   htmlId: list
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: Name of the Lab.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of lab’s resource group. You can configure the default group using ‘az configure –defaults group=<name>’.
     description: ''
-  - name: --expand
+  - name: –expand
     isRequired: False
     summary: Specify the expand query.
     description: ''
-  - name: --object-id
+  - name: –object-id
     isRequired: False
-    summary: Owner's object id. If omitted, we'll pick one if available.
+    summary: Owner’s object id. If omitted, we’ll pick one if available.
     description: ''
-  - name: --order-by
+  - name: –order-by
     isRequired: False
     summary: The ordering expression for the results using OData notation.
     description: ''
-  - name: --top
+  - name: –top
     isRequired: False
     summary: The maximum number of resources to return from the operation.
     description: ''
-  - name: --all
+  - name: –all
     isRequired: False
-    summary: List all virtual machines in the lab. Cannot be used with --filters.
+    summary: List all virtual machines in the lab. Cannot be used with –filters.
     description: ''
-  - name: --claimable
+  - name: –claimable
     isRequired: False
-    summary: List of claimable virtual machines in the lab. Cannot be used with --filters.
+    summary: List of claimable virtual machines in the lab. Cannot be used with –filters.
     description: ''
-  - name: --environment
+  - name: –environment
     isRequired: False
-    summary: Name or ID of the environment to list all virtual machines in the environment. Cannot be used with --filters.
+    summary: Name or ID of the environment to list all virtual machines in the environment. Cannot be used with –filters.
     description: ''
-  - name: --filters
+  - name: –filters
     isRequired: False
     summary: The filter to apply on the operation.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_list
@@ -327,43 +374,43 @@ children:
   htmlId: show
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: The name of the lab.
     description: ''
-  - name: --name
+  - name: –name
     isRequired: True
     summary: The name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --expand
+  - name: –expand
     isRequired: False
-    summary: 'Specify the $expand query. Example: ''properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)''.'
+    summary: 'Specify the $expand query. Example: ‘properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)’.'
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_show
@@ -375,39 +422,39 @@ children:
   htmlId: start
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: The name of the lab.
     description: ''
-  - name: --name
+  - name: –name
     isRequired: True
     summary: The name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_start
@@ -419,39 +466,39 @@ children:
   htmlId: stop
   examples: []
   parameters:
-  - name: --lab-name
+  - name: –lab-name
     isRequired: True
     summary: The name of the lab.
     description: ''
-  - name: --name
+  - name: –name
     isRequired: True
     summary: The name of the virtual machine.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   children: []
   uid: az_lab_vm_stop

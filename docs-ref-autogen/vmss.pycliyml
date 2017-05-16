@@ -130,17 +130,17 @@ children:
   htmlId: create
   examples:
   - title: Create a Windows VM scale set with 5 instances, a load balancer, a public IP address, and a 2GB data disk.
-    code: az vmss create -n MyVmss -g MyResourceGroup --instance-count 5 --image Win2012R2Datacenter --data-disk-sizes-gb 2
+    code: az vmss create -n MyVmss -g MyResourceGroup –instance-count 5 –image Win2012R2Datacenter –data-disk-sizes-gb 2
   - title: Create a Linux VM scale set with an auto-generated ssh key pair under ~/.ssh, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
-    code: az vmss create -n MyVmss -g MyResourceGroup --dns-name-for-public-ip MyGloballyUniqueDnsName --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS --generate-ssh-keys
+    code: az vmss create -n MyVmss -g MyResourceGroup –dns-name-for-public-ip MyGloballyUniqueDnsName –load-balancer MyLoadBalancer –vnet-name MyVnet –subnet MySubnet –image UbuntuLTS –generate-ssh-keys
   - title: Create a Linux VM scale set from a custom image using an existing ssh public key of ~/.ssh/id_rsa.pub.
-    code: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
+    code: az vmss create -n MyVmss -g MyResourceGroup –image MyImage
   - title: Create a Linux VM scale set with a cloud-init script (https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init).
-    code: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom_data MyCloudInitScript.yml
+    code: az vmss create -g MyResourceGroup -n MyVmss –image debian –custom_data MyCloudInitScript.yml
   - title: Create an Debian VM scaleset and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
-    code: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+    code: "az keyvault certificate create –vault-name vaultname -n cert1   -p “$(az keyvault certificate get-default-policy)”\n                        \n                        secrets=$(az keyvault secret list-versions –vault-name vaultname   -n cert1 –query “[?attributes.enabled].id” -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s “$secrets”) \n                        \n                        az vmss create -g group-name -n vm-name –admin-username deploy    –image debian –secrets “$vm_secrets”"
   parameters:
-  - name: --image
+  - name: –image
     isRequired: True
     summary: The name of the operating system image (URN alias, URN, or URI).
     description: >-
@@ -148,201 +148,201 @@ children:
                                           Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
                                           Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/images/MyImage
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
-  - name: --name -n
+  - name: –name -n
     isRequired: True
     summary: Name of the virtual machine scale set.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --custom-data
+  - name: –custom-data
     isRequired: False
     summary: Custom init script file or text (cloud-init, cloud-config, etc..).
     description: ''
-  - name: --disable-overprovision
+  - name: –disable-overprovision
     isRequired: False
     summary: Overprovision option (see <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/</a> for details).
     description: ''
-  - name: --instance-count
+  - name: –instance-count
     isRequired: False
     summary: Number of VMs in the scale set.
     description: ''
     defaultValue: 2
-  - name: --location -l
+  - name: –location -l
     isRequired: False
-    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
+    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group’s location.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --secrets
+  - name: –secrets
     isRequired: False
-    summary: 'One or many Key Vault secrets as JSON strings or files via @<file path> containing [{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }].'
+    summary: 'One or many Key Vault secrets as JSON strings or files via @<file path> containing [{ “sourceVault”: { “id”: “value” }, “vaultCertificates”: [{ “certificateUrl”: “value”, “certificateStore”: “cert store name (only on windows)”}] }].'
     description: ''
-  - name: --single-placement-group
+  - name: –single-placement-group
     isRequired: False
     summary: Enable single placement group. This flag will default to True if instance count <=100, and default to False for instance count >100.
     description: ''
     parameterValueGroup: false, true
-  - name: --tags
+  - name: –tags
     isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: Space separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
     description: ''
-  - name: --upgrade-policy-mode
+  - name: –upgrade-policy-mode
     isRequired: False
     summary: ''
     description: ''
     defaultValue: manual
     parameterValueGroup: Automatic, Manual
-  - name: --validate
+  - name: –validate
     isRequired: False
     summary: Generate and validate the ARM template without creating any resources.
     description: ''
-  - name: --vm-sku
+  - name: –vm-sku
     isRequired: False
     summary: Size of VMs in the scale set.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
     description: ''
     defaultValue: Standard_D1_v2
-  - name: --admin-password
+  - name: –admin-password
     isRequired: False
-    summary: Password for the VM if authentication type is 'Password'.
+    summary: Password for the VM if authentication type is ‘Password’.
     description: ''
-  - name: --admin-username
+  - name: –admin-username
     isRequired: False
     summary: Username for the VM.
     description: ''
     defaultValue: appveyor
-  - name: --authentication-type
+  - name: –authentication-type
     isRequired: False
     summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux.
     description: ''
     parameterValueGroup: password, ssh
-  - name: --generate-ssh-keys
+  - name: –generate-ssh-keys
     isRequired: False
     summary: Generate SSH public and private key files if missing.
     description: ''
-  - name: --ssh-dest-key-path
+  - name: –ssh-dest-key-path
     isRequired: False
     summary: Destination file path on the VM for the SSH key.
     description: ''
-  - name: --ssh-key-value
+  - name: –ssh-key-value
     isRequired: False
     summary: SSH public key or public key file path.
     description: ''
-  - name: --public-ip-address
+  - name: –public-ip-address
     isRequired: False
-    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
+    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify “” for None.
     description: ''
-  - name: --public-ip-address-allocation
+  - name: –public-ip-address-allocation
     isRequired: False
     summary: ''
     description: ''
     defaultValue: dynamic
     parameterValueGroup: dynamic, static
-  - name: --public-ip-address-dns-name
+  - name: –public-ip-address-dns-name
     isRequired: False
     summary: Globally unique DNS name for a newly created Public IP.
     description: ''
-  - name: --subnet
+  - name: –subnet
     isRequired: False
     summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
     description: ''
-  - name: --subnet-address-prefix
+  - name: –subnet-address-prefix
     isRequired: False
     summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
-  - name: --vnet-address-prefix
+  - name: –vnet-address-prefix
     isRequired: False
     summary: The IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
     defaultValue: 10.0.0.0/16
-  - name: --vnet-name
+  - name: –vnet-name
     isRequired: False
     summary: Name of the virtual network when creating a new one or referencing an existing one.
     description: ''
-  - name: --app-gateway
+  - name: –app-gateway
     isRequired: False
-    summary: Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
+    summary: Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify “” for none.
     description: ''
-  - name: --app-gateway-subnet-address-prefix
+  - name: –app-gateway-subnet-address-prefix
     isRequired: False
     summary: The subnet IP address prefix to use when creating a new application gateway in CIDR format.
     description: ''
-  - name: --backend-pool-name
+  - name: –backend-pool-name
     isRequired: False
     summary: Name to use for the backend pool when creating a new load balancer or application gateway.
     description: ''
-  - name: --backend-port
+  - name: –backend-port
     isRequired: False
     summary: When creating a new load balancer, backend port to open with NAT rules (Defaults to 22 on Linux and 3389 on Windows). When creating an application gateway, the backend port to use for the backend HTTP settings.
     description: ''
-  - name: --lb --load-balancer
+  - name: –lb –load-balancer
     isRequired: False
-    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
+    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify “” for none.
     description: ''
-  - name: --lb-nat-pool-name --nat-pool-name
+  - name: –lb-nat-pool-name –nat-pool-name
     isRequired: False
     summary: Name to use for the NAT pool when creating a new load balancer.
     description: ''
-  - name: --data-disk-caching
+  - name: –data-disk-caching
     isRequired: False
     summary: Storage caching type for the VM data disk(s).
     description: ''
     parameterValueGroup: None, ReadOnly, ReadWrite
-  - name: --data-disk-sizes-gb
+  - name: –data-disk-sizes-gb
     isRequired: False
     summary: Space separated empty managed data disk sizes in GB to create.
     description: ''
-  - name: --os-disk-caching --storage-caching
+  - name: –os-disk-caching –storage-caching
     isRequired: False
     summary: Storage caching type for the VM OS disk.
     description: ''
     parameterValueGroup: ReadOnly, ReadWrite
-  - name: --os-disk-name
+  - name: –os-disk-name
     isRequired: False
     summary: The name of the new VM OS disk.
     description: ''
-  - name: --os-type
+  - name: –os-type
     isRequired: False
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
     description: ''
     parameterValueGroup: linux, windows
-  - name: --storage-container-name
+  - name: –storage-container-name
     isRequired: False
-    summary: 'Only applicable when use with ''--use-unmanaged-disk''. Name of the storage container for the VM OS disk. Default: vhds.'
+    summary: 'Only applicable when use with ‘–use-unmanaged-disk’. Name of the storage container for the VM OS disk. Default: vhds.'
     description: ''
-  - name: --storage-sku
+  - name: –storage-sku
     isRequired: False
-    summary: The sku of storage account to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. Using with --use-unmanaged-disk, all are available.
+    summary: The sku of storage account to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. Using with –use-unmanaged-disk, all are available.
     description: ''
     parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
-  - name: --use-unmanaged-disk
+  - name: –use-unmanaged-disk
     isRequired: False
     summary: Do not use managed disk to persist VM.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -359,43 +359,43 @@ children:
   htmlId: deallocate
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: False
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -412,39 +412,39 @@ children:
   htmlId: delete
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -461,43 +461,43 @@ children:
   htmlId: delete-instances
   examples: []
   parameters:
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: True
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -514,39 +514,39 @@ children:
   htmlId: get-instance-view
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-id
+  - name: –instance-id
     isRequired: False
-    summary: An VM instance id, or use "*" to list instance view for all VMs in a scale set.
+    summary: An VM instance id, or use “*” to list instance view for all VMs in a scale set.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -563,31 +563,31 @@ children:
   htmlId: list
   examples: []
   parameters:
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -604,35 +604,35 @@ children:
   htmlId: list-instance-connection-info
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -649,47 +649,47 @@ children:
   htmlId: list-instances
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --expand
+  - name: –expand
     isRequired: False
     summary: The expand expression to apply to the operation.
     description: ''
-  - name: --filter
+  - name: –filter
     isRequired: False
     summary: The filter to apply to the operation.
     description: ''
-  - name: --select
+  - name: –select
     isRequired: False
     summary: The list parameters.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -706,35 +706,35 @@ children:
   htmlId: list-skus
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -751,43 +751,43 @@ children:
   htmlId: reimage
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-id
+  - name: –instance-id
     isRequired: False
     summary: VM instance id. If missing, reimage all instances.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -804,43 +804,43 @@ children:
   htmlId: restart
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: False
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -857,43 +857,43 @@ children:
   htmlId: scale
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --new-capacity
+  - name: –new-capacity
     isRequired: True
     summary: Number of virtual machines in a scale set.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -910,39 +910,39 @@ children:
   htmlId: show
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-id
+  - name: –instance-id
     isRequired: False
     summary: VM instance id. If missing, show scale set.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -959,43 +959,43 @@ children:
   htmlId: start
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: False
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -1012,43 +1012,43 @@ children:
   htmlId: stop
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: False
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -1065,51 +1065,51 @@ children:
   htmlId: update
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --add
+  - name: –add
     isRequired: False
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: –add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --remove
+  - name: –remove
     isRequired: False
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    summary: 'Remove a property or an element from a list.  Example: –remove property.list <indexToRemove> OR –remove propertyToRemove.'
     description: ''
-  - name: --set
+  - name: –set
     isRequired: False
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    summary: 'Update an object by specifying a property path and value to set.  Example: –set property1.property2=<value>.'
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -1126,43 +1126,43 @@ children:
   htmlId: update-instances
   examples: []
   parameters:
-  - name: --instance-ids
+  - name: –instance-ids
     isRequired: True
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 …) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --no-wait
+  - name: –no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
@@ -1179,65 +1179,65 @@ children:
   htmlId: wait
   examples: []
   parameters:
-  - name: --name -n
+  - name: –name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    summary: Scale set name. You can configure the default using az configure –defaults vmss=<name>.
     description: ''
-  - name: --resource-group -g
+  - name: –resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    summary: Name of resource group. You can configure the default group using az configure –defaults group=<name>.
     description: ''
-  - name: --created
+  - name: –created
     isRequired: False
-    summary: Wait till created with 'provisioningState' at 'Succeeded'.
+    summary: Wait till created with ‘provisioningState’ at ‘Succeeded’.
     description: ''
-  - name: --custom
+  - name: –custom
     isRequired: False
-    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!=’InProgress’, instanceView.statuses[?code==’PowerState/running’].
     description: ''
-  - name: --deleted
+  - name: –deleted
     isRequired: False
     summary: Wait till deleted.
     description: ''
-  - name: --exists
+  - name: –exists
     isRequired: False
     summary: Wait till the resource exists.
     description: ''
-  - name: --interval
+  - name: –interval
     isRequired: False
     summary: Polling interval in seconds.
     description: ''
     defaultValue: 30
-  - name: --timeout
+  - name: –timeout
     isRequired: False
     summary: Maximum wait in seconds.
     description: ''
     defaultValue: 3600
-  - name: --updated
+  - name: –updated
     isRequired: False
-    summary: Wait till updated with provisioningState at 'Succeeded'.
+    summary: Wait till updated with provisioningState at ‘Succeeded’.
     description: ''
-  - name: --debug
+  - name: –debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
     description: ''
-  - name: --help -h
+  - name: –help -h
     isRequired: False
     summary: Show this help message and exit.
     description: ''
-  - name: --output -o
+  - name: –output -o
     isRequired: False
     summary: Output format.
     description: ''
     defaultValue: json
     parameterValueGroup: json, jsonc, table, tsv
-  - name: --query
+  - name: –query
     isRequired: False
     summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
     description: ''
-  - name: --verbose
+  - name: –verbose
     isRequired: False
-    summary: Increase logging verbosity. Use --debug for full debug logs.
+    summary: Increase logging verbosity. Use –debug for full debug logs.
     description: ''
   source:
     remote:
