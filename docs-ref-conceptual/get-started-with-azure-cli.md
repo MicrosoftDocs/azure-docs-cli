@@ -39,6 +39,9 @@ You should see the version number of Azure CLI and other dependent libraries ins
 If you get an error, there was likely a problem installing the CLI. Review the "Installation Troubleshooting" section of [Azure CLI 2.0 installation article](install-azure-cli.md#troubleshooting) 
 for guidance, or post a comment in the discussion at the bottom of that page for help.
 
+> [!Note]
+> If you don't want to install Azure CLI 2.0, you can use the [Cloud Shell](/azure/cloud-shell/overview) to run it in your browser.
+
 ## Log in to Azure
 
 Now that you have the Azure CLI 2.0 installed, your next step will be to securely connect it with your Azure account. Use the `az login` command to do this.
@@ -62,7 +65,7 @@ Now you can run commands from the Azure CLI 2.0 on the Azure resources and servi
 Now that we've got everything set up, let's use the Azure CLI to create resources within Azure.
 
 First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you 
-want to logically group together.  For example, you might create a Resource Group for an application or project
+want to logically group.  For example, you might create a Resource Group for an application or project
 and add a virtual machine, a database and a CDN service within it.
 
 Let's create a resource group named "MyResourceGroup" in the *westus2* region of Azure.  To do so type the following command:
@@ -90,7 +93,7 @@ Once the resource group has been created, the `az group create` command outputs 
 
 Now that we have our resource group, let's create a Linux VM within it.
 
-You can create a Linux VM using the popular UbuntuTLS image, with two attached storage disks of 10GB and 20GB, with the following command:
+You can create a Linux VM using the popular UbuntuTLS image, with two attached storage disks of 10 GB and 20 GB, with the following command:
 
 ```azurecli-interactive
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes-gb 10 20
@@ -156,7 +159,7 @@ my-login@MyLinuxVM:~$
 
 ## Create a Windows Server Virtual Machine
 
-Let's now create a Windows Server 2016 Datacenter based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.  Like the Linux VM example we'll also attach two storage disks using the `--data-disk-sizes-gb` parameter.
+Let's now create a Windows Server 2016 Datacenter-based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.  Like the Linux VM example, we'll also attach two storage disks using the `--data-disk-sizes-gb` parameter.
 
 Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
 
