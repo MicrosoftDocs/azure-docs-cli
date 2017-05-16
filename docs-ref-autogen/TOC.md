@@ -1,6 +1,7 @@
 # [Azure CLI 2.0](../docs-ref-conceptual/overview.md)
 ## [Install](../docs-ref-conceptual/install-azure-cli.md)
 ## [Get started](../docs-ref-conceptual/get-started-with-azure-cli.md)
+## [Cloud shell](/azure/cloud-shell/overview)
 ## [Log in](../docs-ref-conceptual/authenticate-azure-cli.md)
 ### [Create a service principal](../docs-ref-conceptual/create-an-azure-service-principal-azure-cli.md)
 ## [Interactive mode](../docs-ref-conceptual/interactive-azure-cli.md)
