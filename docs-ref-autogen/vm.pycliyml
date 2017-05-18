@@ -63,7 +63,7 @@ commandList:
   description: Configure the Azure VM diagnostics extension.
   href: vm/diagnostics#set
 - name: az vm disk
-  description: Manage the data disks attached to a VM.
+  description: Manage the managed data disks attached to a VM.
   href: vm/disk
   isGroup: true
 - name: az vm disk attach
@@ -73,7 +73,7 @@ commandList:
   description: ''
   href: vm/disk#detach
 - name: az vm encryption
-  description: ''
+  description: Manage encryption of VM disks.
   href: vm/encryption
   isGroup: true
 - name: az vm encryption disable
@@ -186,13 +186,13 @@ commandList:
   description: The operation to redeploy a virtual machine.
   href: vm#redeploy
 - name: az vm resize
-  description: Update vm size.
+  description: Update VM size.
   href: vm#resize
 - name: az vm restart
   description: The operation to restart a virtual machine.
   href: vm#restart
 - name: az vm show
-  description: ''
+  description: Show details of a VM.
   href: vm#show
 - name: az vm start
   description: The operation to start a virtual machine.
@@ -255,6 +255,14 @@ children:
                               az vm generalize --ids ${vms_ids}
                               az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --vhd-name-prefix
     isRequired: True
     summary: The VHD name prefix specify for the VM disks.
@@ -269,18 +277,6 @@ children:
     summary: The storage account container name to save the disks.
     description: ''
     defaultValue: vhds
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
-    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -322,17 +318,13 @@ children:
   - title: Convert VM with unmanaged disks to managed by Ids
     code: az vm convert --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -395,7 +387,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --attach-os-disk
     isRequired: False
@@ -418,9 +410,14 @@ children:
                                           Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/images/MyImage
                                           Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
     valueFrom: az vm image list, az vm image show
+  - name: --license-type
+    isRequired: False
+    summary: License type if the Windows image or disk used was licensed on-premises.
+    description: ''
+    parameterValueGroup: Windows_Client, Windows_Server
   - name: --location -l
     isRequired: False
-    summary: Location in which to create VM and related resources. Defaults to the resource group's location.
+    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
     description: ''
   - name: --no-wait
     isRequired: False
@@ -428,7 +425,7 @@ children:
     description: ''
   - name: --secrets
     isRequired: False
-    summary: 'One or many Key Vault secrets as JSON strings or files via ''@<file path>'' containing ''[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]''.'
+    summary: 'One or many Key Vault secrets as JSON strings or files via @<file path> containing [{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }].'
     description: ''
   - name: --size
     isRequired: False
@@ -518,10 +515,20 @@ children:
     isRequired: False
     summary: Name of the virtual network when creating a new one or referencing an existing one.
     description: ''
+  - name: --data-disk-caching
+    isRequired: False
+    summary: Storage caching type for the VM data disk(s).
+    description: ''
+    parameterValueGroup: None, ReadOnly, ReadWrite
   - name: --data-disk-sizes-gb
     isRequired: False
     summary: Space separated empty managed data disk sizes in GB to create.
     description: ''
+  - name: --os-disk-caching --storage-caching
+    isRequired: False
+    summary: Storage caching type for the VM OS disk.
+    description: ''
+    parameterValueGroup: ReadOnly, ReadWrite
   - name: --os-disk-name
     isRequired: False
     summary: The name of the new VM OS disk.
@@ -535,11 +542,6 @@ children:
     isRequired: False
     summary: Only applicable when use with '--use-unmanaged-disk'. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
     description: ''
-  - name: --storage-caching
-    isRequired: False
-    summary: 'Storage caching type for the VM OS disk. Default: ReadWrite.'
-    description: ''
-    parameterValueGroup: ReadOnly, ReadWrite
   - name: --storage-container-name
     isRequired: False
     summary: 'Only applicable when use with ''--use-unmanaged-disk''. Name of the storage container for the VM OS disk. Default: vhds.'
@@ -601,17 +603,17 @@ children:
                               az vm generalize --ids ${vms_ids}
                               az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -650,25 +652,25 @@ children:
   htmlId: delete
   examples:
   - title: Delete a VM without a prompt for confirmation.
-    code: az vm delete -g MyResourceGroup -n MyVm --force
+    code: az vm delete -g MyResourceGroup -n MyVm --yes
   - title: Delete a virtual machine by Ids
     code: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
+    description: ''
   - name: --yes -y
     isRequired: False
     summary: Do not prompt for confirmation.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -765,17 +767,17 @@ children:
                               az vm generalize --ids ${vms_ids}
                               az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -818,17 +820,13 @@ children:
   - title: Get instance view by Ids
     code: az vm get-instance-view --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -875,7 +873,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --show-details -d
     isRequired: False
@@ -922,17 +920,13 @@ children:
   - title: Get IP addresses for VMs by Ids
     code: az vm list-ip-addresses --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
     isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -975,7 +969,7 @@ children:
   parameters:
   - name: --location -l
     isRequired: True
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
     description: ''
   - name: --debug
     isRequired: False
@@ -1018,7 +1012,7 @@ children:
   parameters:
   - name: --location -l
     isRequired: True
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
     description: ''
   - name: --debug
     isRequired: False
@@ -1061,17 +1055,13 @@ children:
   - title: List all available VM sizes for resizing by VM Ids
     code: az vm list-vm-resize-options --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -1116,9 +1106,17 @@ children:
   - title: Open all ports for multiple VMs by Ids
     code: az vm open-port --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the virtual machine to open inbound traffic on.
+    description: ''
   - name: --port
     isRequired: True
     summary: 'The port or port range (ex: 80-100) to open inbound traffic to. Use ''*'' to allow traffic to all ports.'
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --apply-to-subnet
     isRequired: False
@@ -1133,18 +1131,6 @@ children:
     summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
     description: ''
     defaultValue: 900
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the virtual machine to open inbound traffic on.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
-    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -1186,17 +1172,17 @@ children:
   - title: Redeploy VMs by VM Ids
     code: az vm redeploy --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1239,21 +1225,21 @@ children:
   - title: Resize VMs by VM Ids
     code: az vm redeploy --size Standard_DS3_v2 --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --size
     isRequired: True
     summary: Sizes such as Standard_A4, Standard_F4s, etc.
     description: ''
-  - name: --ids
+  - name: --no-wait
     isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1286,7 +1272,7 @@ children:
   uid: az_vm_resize
   name: az vm resize
   description: ''
-  summary: Update vm size.
+  summary: Update VM size.
   Metadata: {}
 - commandList: []
   htmlId: restart
@@ -1296,17 +1282,17 @@ children:
   - title: Restart VM by by VM Ids
     code: az vm restart --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1349,21 +1335,17 @@ children:
   - title: Show VM details by by VM Ids
     code: az vm show -d --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --show-details -d
     isRequired: False
     summary: Show public ip address, FQDN, and power states. command will run slow.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -1396,7 +1378,7 @@ children:
   uid: az_vm_show
   name: az vm show
   description: ''
-  summary: ''
+  summary: Show details of a VM.
   Metadata: {}
 - commandList: []
   htmlId: start
@@ -1406,17 +1388,17 @@ children:
   - title: Start stopped VMs by by VM Ids
     code: az vm start --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1459,17 +1441,17 @@ children:
   - title: Stop running VMs by by VM Ids
     code: az vm stop --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1518,21 +1500,17 @@ children:
   - title: Remove the fourth NIC from a VM.
     code: az <command> -n name -g group --remove networkProfile.networkInterfaces 3
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --no-wait
     isRequired: False
     summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --add
     isRequired: False
@@ -1587,17 +1565,13 @@ children:
   - title: Wait until VMs are deleted by Ids
     code: az vm wait --deleted --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --created
     isRequired: False
@@ -1670,6 +1644,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 3/6/2017 9:06:56 PM
-  ms.date: 3/6/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/0fa7ba5ef9b8cfa6f23348de4d341361bad89534/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 5/10/2017 8:06:46 PM
+  ms.date: 5/10/2017

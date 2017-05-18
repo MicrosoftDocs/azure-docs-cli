@@ -22,7 +22,7 @@ commandList:
   description: Enable diagnostics on a virtual machine scale set.
   href: vmss/diagnostics#set
 - name: az vmss disk
-  description: ''
+  description: Manage the managed data disks associated with a virtual machine scale set.
   href: vmss/disk
   isGroup: true
 - name: az vmss disk attach
@@ -79,17 +79,17 @@ commandList:
   description: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
   href: vmss#list-skus
 - name: az vmss nic
-  description: ''
+  description: Manage the network interfaces associated with a virtual machine scale set.
   href: vmss/nic
   isGroup: true
 - name: az vmss nic list
-  description: The list network interface operation retrieves information about all network interfaces in a virtual machine scale set.
+  description: Gets all network interfaces in a virtual machine scale set.
   href: vmss/nic#list
 - name: az vmss nic list-vm-nics
-  description: The list network interface operation retrieves information about all network interfaces in a virtual machine from a virtual machine scale set.
+  description: Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
   href: vmss/nic#list-vm-nics
 - name: az vmss nic show
-  description: The Get network interface operation retrieves information about the specified network interface in a virtual machine scale set.
+  description: Get the specified network interface in a virtual machine scale set.
   href: vmss/nic#show
 - name: az vmss reimage
   description: Reimage virtual machines in a virtual machine scale set.
@@ -110,11 +110,14 @@ commandList:
   description: Power off (stop) virtual machines in a virtual machine scale set.
   href: vmss#stop
 - name: az vmss update
-  description: ''
+  description: Update a virtual machine scale set.
   href: vmss#update
 - name: az vmss update-instances
   description: Upgrade virtual machines in a virtual machine scale set.
   href: vmss#update-instances
+- name: az vmss wait
+  description: Place the CLI in a waiting state until a condition of the scale set is met.
+  href: vmss#wait
 htmlId: vmss
 examples: []
 source:
@@ -151,7 +154,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --custom-data
     isRequired: False
@@ -168,7 +171,7 @@ children:
     defaultValue: 2
   - name: --location -l
     isRequired: False
-    summary: Location in which to create VM and related resources. Defaults to the resource group's location.
+    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
     description: ''
   - name: --no-wait
     isRequired: False
@@ -176,7 +179,7 @@ children:
     description: ''
   - name: --secrets
     isRequired: False
-    summary: 'One or many Key Vault secrets as JSON strings or files via ''@<file path>'' containing ''[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]''.'
+    summary: 'One or many Key Vault secrets as JSON strings or files via @<file path> containing [{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }].'
     description: ''
   - name: --single-placement-group
     isRequired: False
@@ -228,22 +231,6 @@ children:
     isRequired: False
     summary: SSH public key or public key file path.
     description: ''
-  - name: --backend-pool-name
-    isRequired: False
-    summary: Name to use for the backend pool when creating a new load balancer.
-    description: ''
-  - name: --backend-port
-    isRequired: False
-    summary: Backend port to open with NAT rules. Defaults to 22 on Linux and 3389 on Windows.
-    description: ''
-  - name: --load-balancer
-    isRequired: False
-    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
-    description: ''
-  - name: --nat-pool-name
-    isRequired: False
-    summary: Name to use for the NAT pool when creating a new load balancer.
-    description: ''
   - name: --public-ip-address
     isRequired: False
     summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
@@ -275,10 +262,44 @@ children:
     isRequired: False
     summary: Name of the virtual network when creating a new one or referencing an existing one.
     description: ''
+  - name: --app-gateway
+    isRequired: False
+    summary: Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
+    description: ''
+  - name: --app-gateway-subnet-address-prefix
+    isRequired: False
+    summary: The subnet IP address prefix to use when creating a new application gateway in CIDR format.
+    description: ''
+  - name: --backend-pool-name
+    isRequired: False
+    summary: Name to use for the backend pool when creating a new load balancer or application gateway.
+    description: ''
+  - name: --backend-port
+    isRequired: False
+    summary: When creating a new load balancer, backend port to open with NAT rules (Defaults to 22 on Linux and 3389 on Windows). When creating an application gateway, the backend port to use for the backend HTTP settings.
+    description: ''
+  - name: --lb --load-balancer
+    isRequired: False
+    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
+    description: ''
+  - name: --lb-nat-pool-name --nat-pool-name
+    isRequired: False
+    summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --data-disk-caching
+    isRequired: False
+    summary: Storage caching type for the VM data disk(s).
+    description: ''
+    parameterValueGroup: None, ReadOnly, ReadWrite
   - name: --data-disk-sizes-gb
     isRequired: False
     summary: Space separated empty managed data disk sizes in GB to create.
     description: ''
+  - name: --os-disk-caching --storage-caching
+    isRequired: False
+    summary: Storage caching type for the VM OS disk.
+    description: ''
+    parameterValueGroup: ReadOnly, ReadWrite
   - name: --os-disk-name
     isRequired: False
     summary: The name of the new VM OS disk.
@@ -288,11 +309,6 @@ children:
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
     description: ''
     parameterValueGroup: linux, windows
-  - name: --storage-caching
-    isRequired: False
-    summary: 'Storage caching type for the VM OS disk. Default: ReadOnly.'
-    description: ''
-    parameterValueGroup: ReadOnly, ReadWrite
   - name: --storage-container-name
     isRequired: False
     summary: 'Only applicable when use with ''--use-unmanaged-disk''. Name of the storage container for the VM OS disk. Default: vhds.'
@@ -345,15 +361,19 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-ids
     isRequired: False
     summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -392,17 +412,17 @@ children:
   htmlId: delete
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -447,11 +467,15 @@ children:
     description: ''
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -490,21 +514,17 @@ children:
   htmlId: get-instance-view
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more VM scale sets or specific VM instance IDs. If provided, no other 'Resource Id' arguments should be specified.
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-id
     isRequired: False
     summary: An VM instance id, or use "*" to list instance view for all VMs in a scale set.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -545,7 +565,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -584,17 +604,13 @@ children:
   htmlId: list-instance-connection-info
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -633,6 +649,14 @@ children:
   htmlId: list-instances
   examples: []
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --expand
     isRequired: False
     summary: The expand expression to apply to the operation.
@@ -644,18 +668,6 @@ children:
   - name: --select
     isRequired: False
     summary: The list parameters.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -694,17 +706,13 @@ children:
   htmlId: list-skus
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -743,21 +751,21 @@ children:
   htmlId: reimage
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more VM scale sets or specific VM instance IDs. If provided, no other 'Resource Id' arguments should be specified.
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-id
     isRequired: False
     summary: VM instance id. If missing, reimage all instances.
     description: ''
-  - name: --name -n
+  - name: --no-wait
     isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -798,15 +806,19 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-ids
     isRequired: False
     summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -845,21 +857,21 @@ children:
   htmlId: scale
   examples: []
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
   - name: --new-capacity
     isRequired: True
     summary: Number of virtual machines in a scale set.
     description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
-    description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -898,21 +910,17 @@ children:
   htmlId: show
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more VM scale sets or specific VM instance IDs. If provided, no other 'Resource Id' arguments should be specified.
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-id
     isRequired: False
     summary: VM instance id. If missing, show scale set.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -953,15 +961,19 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-ids
     isRequired: False
     summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1002,15 +1014,19 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --instance-ids
     isRequired: False
     summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1049,17 +1065,17 @@ children:
   htmlId: update
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --add
     isRequired: False
@@ -1104,7 +1120,7 @@ children:
   uid: az_vmss_update
   name: az vmss update
   description: ''
-  summary: ''
+  summary: Update a virtual machine scale set.
   Metadata: {}
 - commandList: []
   htmlId: update-instances
@@ -1112,15 +1128,19 @@ children:
   parameters:
   - name: --instance-ids
     isRequired: True
-    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space separated list of IDs (ex: 1 2 3 ...) or * for all instances.'
     description: ''
   - name: --name -n
     isRequired: True
-    summary: Scale set name. You can configure the default using 'az configure --defaults vmss=<name>'.
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -1155,6 +1175,81 @@ children:
   description: ''
   summary: Upgrade virtual machines in a virtual machine scale set.
   Metadata: {}
+- commandList: []
+  htmlId: wait
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --created
+    isRequired: False
+    summary: Wait till created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    isRequired: False
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    isRequired: False
+    summary: Wait till deleted.
+    description: ''
+  - name: --exists
+    isRequired: False
+    summary: Wait till the resource exists.
+    description: ''
+  - name: --interval
+    isRequired: False
+    summary: Polling interval in seconds.
+    description: ''
+    defaultValue: 30
+  - name: --timeout
+    isRequired: False
+    summary: Maximum wait in seconds.
+    description: ''
+    defaultValue: 3600
+  - name: --updated
+    isRequired: False
+    summary: Wait till updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_vmss_wait
+  name: az vmss wait
+  description: ''
+  summary: Place the CLI in a waiting state until a condition of the scale set is met.
+  Metadata: {}
 uid: az_vmss
 name: 'VM scale Sets (VMSS) - az vmss'
 description: ''
@@ -1163,6 +1258,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 3/6/2017 9:06:56 PM
-  ms.date: 3/6/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/0fa7ba5ef9b8cfa6f23348de4d341361bad89534/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 5/10/2017 8:06:46 PM
+  ms.date: 5/10/2017

@@ -1,4 +1,7 @@
 commandList:
+- name: az resource create
+  description: Create a resource.
+  href: resource#create
 - name: az resource delete
   description: Delete a resource. Reference the examples for help with arguments.
   href: resource#delete
@@ -10,13 +13,13 @@ commandList:
   description: ''
   href: resource/link#create
 - name: az resource link delete
-  description: Deletes a resource link.
+  description: Deletes a resource link with the specified ID.
   href: resource/link#delete
 - name: az resource link list
   description: ''
   href: resource/link#list
 - name: az resource link show
-  description: Gets a resource link.
+  description: Gets a resource link with the specified ID.
   href: resource/link#show
 - name: az resource link update
   description: ''
@@ -44,6 +47,87 @@ source:
     branch: master
     repo: https://github.com/Azure/azure-cli.git
 children:
+- commandList: []
+  htmlId: create
+  examples:
+  - title: Create a resource by providing a full resource object json. Note, you can also use `@<file>` to load from a json file.
+    code: az resource create -g myRG -n myPlan --resource-type Microsoft.web/serverFarms --is-full-object --properties "{ "location":"westus","sku":{"name":"B1","tier":"BASIC"}}"
+  - title: Create a resource by only providing resource properties
+    code: az resource create -g myRG -n myWeb --resource-type Microsoft.web/sites --properties "{"serverFarmId":"myPlan"}"
+  parameters:
+  - name: --properties -p
+    isRequired: True
+    summary: A JSON-formatted string containing resource properties.
+    description: ''
+  - name: --api-version
+    isRequired: False
+    summary: The api version of the resource (omit for latest).
+    description: ''
+  - name: --id
+    isRequired: False
+    summary: Resource ID.
+    description: ''
+  - name: --is-full-object
+    isRequired: False
+    summary: Indicates that the properties object includes other options such as location, tags, sku, and/or plan.
+    description: ''
+  - name: --location -l
+    isRequired: False
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    isRequired: False
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
+    description: ''
+  - name: --parent
+    isRequired: False
+    summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --resource-type
+    isRequired: False
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_resource_create
+  name: az resource create
+  description: ''
+  summary: Create a resource.
+  Metadata: {}
 - commandList: []
   htmlId: delete
   examples:
@@ -76,7 +160,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --resource-type
     isRequired: False
@@ -131,7 +215,7 @@ children:
   parameters:
   - name: --location -l
     isRequired: False
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
     description: ''
   - name: --name -n
     isRequired: False
@@ -143,7 +227,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --resource-type
     isRequired: False
@@ -271,7 +355,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --resource-type
     isRequired: False
@@ -344,7 +428,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --resource-type
     isRequired: False
@@ -387,29 +471,33 @@ children:
   htmlId: update
   examples: []
   parameters:
-  - name: --name -n
-    isRequired: True
-    summary: 'The resource name. (Ex: myC).'
-    description: ''
-  - name: --namespace
-    isRequired: True
-    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
-    description: ''
-  - name: --resource-group -g
-    isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
-    description: ''
-  - name: --resource-type
-    isRequired: True
-    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
-    description: ''
   - name: --api-version
     isRequired: False
     summary: The api version of the resource (omit for latest).
     description: ''
+  - name: --id
+    isRequired: False
+    summary: Resource ID.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    isRequired: False
+    summary: 'Provider namespace (Ex: ''Microsoft.Provider'').'
+    description: ''
   - name: --parent
     isRequired: False
     summary: 'The parent path (Ex: ''resA/myA/resB/myB'').'
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --resource-type
+    isRequired: False
+    summary: 'The resource type (Ex: ''resC''). Can also accept namespace/type format (Ex: ''Microsoft.Provider/resC'').'
     description: ''
   - name: --add
     isRequired: False
@@ -464,6 +552,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/0a6a6a7e9e57dec267ab896c7a7cdcb7af85071b/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  updated_at: 3/13/2017 2:46:54 PM
-  ms.date: 3/13/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/01aa8df57e43d6cd70954d521ee816df36e35e38/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+  updated_at: 5/9/2017 2:17:18 AM
+  ms.date: 5/9/2017

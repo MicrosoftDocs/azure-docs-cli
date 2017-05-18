@@ -1,18 +1,18 @@
 commandList:
 - name: az appservice web source-control config
-  description: Associate to Git or Mercurial repositories.
+  description: ''
   href: source-control#config
 - name: az appservice web source-control config-local-git
-  description: Enable local git.
+  description: ''
   href: source-control#config-local-git
 - name: az appservice web source-control delete
-  description: Delete source control configurations.
+  description: ''
   href: source-control#delete
 - name: az appservice web source-control show
-  description: Show source control configurations.
+  description: ''
   href: source-control#show
 - name: az appservice web source-control sync
-  description: Synchronize from the source repository, only needed under maunal integration mode.
+  description: ''
   href: source-control#sync
 - name: az appservice web source-control update-token
   description: Update source control token cached in Azure app service.
@@ -29,14 +29,28 @@ children:
   htmlId: config
   examples: []
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
   - name: --repo-url
     isRequired: True
     summary: Repository url to pull the latest source from, e.g. <a href="https://github.com/foo/foo-web">https://github.com/foo/foo-web</a>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --branch
     isRequired: False
     summary: The branch name of the repository.
     description: ''
+  - name: --cd-provider
+    isRequired: False
+    summary: Type of CI/CD provider.
+    description: ''
+    defaultValue: kudu
+    parameterValueGroup: kudu, vsts
   - name: --git-token
     isRequired: False
     summary: Git access token required for auto sync.
@@ -55,18 +69,20 @@ children:
     isRequired: False
     summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
-  - name: --ids
+  - name: --cd-account
     isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: Name of the Team Services account to create/use for continuous delivery.
     description: ''
-  - name: --name -n
+  - name: --cd-account-must-exist
     isRequired: False
-    summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
+    summary: Specifies that the account must already exist. If not specified, the account will be created if it does not already exist (existing accounts are updated).
     description: ''
-  - name: --resource-group -g
+  - name: --cd-app-type
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Web application framework you used to develop your app.
     description: ''
+    defaultValue: AspNetWap
+    parameterValueGroup: AspNetCore, AspNetWap, NodeJSWithGrunt, NodeJSWithGulp
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -98,29 +114,23 @@ children:
   uid: az_appservice_web_source-control_config
   name: az appservice web source-control config
   description: ''
-  summary: Associate to Git or Mercurial repositories.
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: config-local-git
-  examples:
-  - title: Get a git endpoint for a web app and add it as a remote.
-    code: "az appservice web source-control config-local-git     -g MyResourceGroup -n MyUniqueApp\n                        \n                        git remote add azure     https://<deploy_user_name>@MyUniqueApp.scm.azurewebsites.net/MyUniqueApp.git"
+  examples: []
   parameters:
-  - name: --slot -s
-    isRequired: False
-    summary: The name of the slot. Default to the productions slot if not specified.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --slot -s
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -152,28 +162,24 @@ children:
   children: []
   uid: az_appservice_web_source-control_config-local-git
   name: az appservice web source-control config-local-git
-  description: Get an endpoint to clone and later push to the web app.
-  summary: Enable local git.
+  description: ''
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: delete
   examples: []
   parameters:
-  - name: --slot -s
-    isRequired: False
-    summary: The name of the slot. Default to the productions slot if not specified.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --slot -s
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -206,27 +212,23 @@ children:
   uid: az_appservice_web_source-control_delete
   name: az appservice web source-control delete
   description: ''
-  summary: Delete source control configurations.
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: show
   examples: []
   parameters:
-  - name: --slot -s
-    isRequired: False
-    summary: The name of the slot. Default to the productions slot if not specified.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --slot -s
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -259,27 +261,23 @@ children:
   uid: az_appservice_web_source-control_show
   name: az appservice web source-control show
   description: ''
-  summary: Show source control configurations.
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: sync
   examples: []
   parameters:
-  - name: --slot -s
-    isRequired: False
-    summary: The name of the slot. Default to the productions slot if not specified.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --slot -s
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --debug
     isRequired: False
@@ -312,7 +310,7 @@ children:
   uid: az_appservice_web_source-control_sync
   name: az appservice web source-control sync
   description: ''
-  summary: Synchronize from the source repository, only needed under maunal integration mode.
+  summary: ''
   Metadata: {}
 - commandList: []
   htmlId: update-token
@@ -356,13 +354,13 @@ children:
   summary: Update source control token cached in Azure app service.
   Metadata: {}
 uid: az_appservice_web_source-control
-name: 'Web Apps source control (Preview) - az appservice web source-control'
+name: 'Web Apps source control - az appservice web source-control'
 description: ''
-summary: Manage source control systems.
+summary: ''
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/e51302d9669c327f7c595d477e7456397c23f5fc/src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
-  updated_at: 3/10/2017 10:49:45 PM
-  ms.date: 3/10/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/81419735fdc9087005ed4204b995707ff3892c49/src/command_modules/azure-cli-appservice/azure/cli/command_modules/appservice/_help.py
+  updated_at: 5/8/2017 9:09:41 PM
+  ms.date: 5/8/2017

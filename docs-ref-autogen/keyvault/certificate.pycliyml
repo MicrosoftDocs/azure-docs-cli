@@ -10,13 +10,13 @@ commandList:
   description: Remove a certificate contact from the specified vault.
   href: certificate/contact#delete
 - name: az keyvault certificate contact list
-  description: Gets the certificate contacts for the specified vault.
+  description: Lists the certificate contacts for a specified key vault.
   href: certificate/contact#list
 - name: az keyvault certificate create
-  description: Creates a new certificate version.
+  description: Creates a new certificate.
   href: certificate#create
 - name: az keyvault certificate delete
-  description: Deletes a certificate from the specified vault.
+  description: Deletes a certificate from a specified key vault.
   href: certificate#delete
 - name: az keyvault certificate download
   description: Download a certificate from a KeyVault.
@@ -25,7 +25,7 @@ commandList:
   description: Get a default policy for a self-signed certificate.
   href: certificate#get-default-policy
 - name: az keyvault certificate import
-  description: Imports a certificate into the specified vault.
+  description: Import a certificate into KeyVault.
   href: certificate#import
 - name: az keyvault certificate issuer
   description: Manage certificate issuer information.
@@ -51,16 +51,16 @@ commandList:
   description: Deletes the specified certificate issuer.
   href: certificate/issuer#delete
 - name: az keyvault certificate issuer list
-  description: List certificate issuers for the specified vault.
+  description: List certificate issuers for a specified key vault.
   href: certificate/issuer#list
 - name: az keyvault certificate issuer show
-  description: Gets the specified certificate issuer.
+  description: Lists the specified certificate issuer.
   href: certificate/issuer#show
 - name: az keyvault certificate issuer update
   description: Update a certificate issuer record.
   href: certificate/issuer#update
 - name: az keyvault certificate list
-  description: List certificates in the specified vault.
+  description: List certificates in a specified key vault.
   href: certificate#list
 - name: az keyvault certificate list-versions
   description: List the versions of a certificate.
@@ -70,19 +70,19 @@ commandList:
   href: certificate/pending
   isGroup: true
 - name: az keyvault certificate pending delete
-  description: Deletes the certificate operation.
+  description: Deletes the operation for a specified certificate.
   href: certificate/pending#delete
 - name: az keyvault certificate pending merge
   description: Merges a certificate or a certificate chain with a key pair existing on the server.
   href: certificate/pending#merge
 - name: az keyvault certificate pending show
-  description: Gets the certificate operation response.
+  description: Gets the operation associated with a specified certificate.
   href: certificate/pending#show
 - name: az keyvault certificate set-attributes
-  description: Updates the attributes associated with the specified certificate.
+  description: Updates the specified attributes associated with the given certificate.
   href: certificate#set-attributes
 - name: az keyvault certificate show
-  description: Gets a Certificate.
+  description: Gets information about a specified certificate.
   href: certificate#show
 htmlId: certificate
 examples: []
@@ -114,17 +114,14 @@ children:
     isRequired: False
     summary: Create certificate in disabled state.
     description: ''
-  - name: --expires
-    isRequired: False
-    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
-  - name: --not-before
-    isRequired: False
-    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
+    parameterValueGroup: false, true
   - name: --tags
     isRequired: False
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validity
+    isRequired: False
+    summary: Number of months the certificate is valid for. Overrides the value specified with --policy/-p.
     description: ''
   - name: --debug
     isRequired: False
@@ -157,7 +154,7 @@ children:
   uid: az_keyvault_certificate_create
   name: az keyvault certificate create
   description: Create a Key Vault certificate. Certificates can also be used as a secrets in provisioned virtual machines.
-  summary: Creates a new certificate version.
+  summary: Creates a new certificate.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -202,11 +199,15 @@ children:
   uid: az_keyvault_certificate_delete
   name: az keyvault certificate delete
   description: ''
-  summary: Deletes a certificate from the specified vault.
+  summary: Deletes a certificate from a specified key vault.
   Metadata: {}
 - commandList: []
   htmlId: download
-  examples: []
+  examples:
+  - title: Download a PEM and check it's fingerprint in openssl
+    code: "az keyvault certificate download --vault-name vault -n cert-name -f cert.pem \n                        openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint"
+  - title: Download a DER and check it's fingerprint in openssl
+    code: "az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER \n                        openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint"
   parameters:
   - name: --file -f
     isRequired: True
@@ -222,10 +223,10 @@ children:
     description: ''
   - name: --encoding -e
     isRequired: False
-    summary: How to store base64 certificate contents in file.
+    summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
     description: ''
-    defaultValue: binary
-    parameterValueGroup: binary, string
+    defaultValue: PEM
+    parameterValueGroup: DER, PEM
   - name: --version -v
     isRequired: False
     summary: The certificate version. If omitted, uses the latest version.
@@ -260,7 +261,7 @@ children:
   children: []
   uid: az_keyvault_certificate_download
   name: az keyvault certificate download
-  description: ''
+  description: Download the public portion of a Key Vault certificate formatted as either PEM or DER. PEM formatting is the default.
   summary: Download a certificate from a KeyVault.
   Metadata: {}
 - commandList: []
@@ -308,7 +309,9 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: import
-  examples: []
+  examples:
+  - title: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
+    code: "az group create -g my-group -l westus \n                        \n                        service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - name: --file -f
     isRequired: True
@@ -324,19 +327,12 @@ children:
     description: ''
   - name: --disabled
     isRequired: False
-    summary: Create certificate in disabled state.
+    summary: Import the certificate in disabled state.
     description: ''
-  - name: --expires
-    isRequired: False
-    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
-  - name: --not-before
-    isRequired: False
-    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
+    parameterValueGroup: false, true
   - name: --password
     isRequired: False
-    summary: If the private key in base64EncodedCertificate is encrypted, the password used for encryption.
+    summary: If the private key in certificate is encrypted, the password used for encryption.
     description: ''
   - name: --policy -p
     isRequired: False
@@ -376,8 +372,8 @@ children:
   children: []
   uid: az_keyvault_certificate_import
   name: az keyvault certificate import
-  description: ''
-  summary: Imports a certificate into the specified vault.
+  description: Certificates can also be used as a secrets in provisioned virtual machines.
+  summary: Import a certificate into KeyVault.
   Metadata: {}
 - commandList: []
   htmlId: list
@@ -422,7 +418,7 @@ children:
   uid: az_keyvault_certificate_list
   name: az keyvault certificate list
   description: ''
-  summary: List certificates in the specified vault.
+  summary: List certificates in a specified key vault.
   Metadata: {}
 - commandList: []
   htmlId: list-versions
@@ -490,14 +486,6 @@ children:
     summary: Enable the certificate.
     description: ''
     parameterValueGroup: false, true
-  - name: --expires
-    isRequired: False
-    summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
-  - name: --not-before
-    isRequired: False
-    summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
-    description: ''
   - name: --policy -p
     isRequired: False
     summary: JSON encoded policy defintion. Use @{file} to load from a file.
@@ -541,7 +529,7 @@ children:
   uid: az_keyvault_certificate_set-attributes
   name: az keyvault certificate set-attributes
   description: ''
-  summary: Updates the attributes associated with the specified certificate.
+  summary: Updates the specified attributes associated with the given certificate.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -590,16 +578,16 @@ children:
   uid: az_keyvault_certificate_show
   name: az keyvault certificate show
   description: ''
-  summary: Gets a Certificate.
+  summary: Gets information about a specified certificate.
   Metadata: {}
 uid: az_keyvault_certificate
-name: 'Key Vault certificates (Preview) - az keyvault certificate'
+name: 'Key Vault certificates - az keyvault certificate'
 description: ''
 summary: Manage certificates.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 3/6/2017 9:06:56 PM
-  ms.date: 3/6/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/14f552202754ea57068af5cd440dd6f1d7207150/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 5/1/2017 3:56:05 PM
+  ms.date: 5/1/2017

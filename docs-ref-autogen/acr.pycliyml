@@ -6,20 +6,20 @@ commandList:
   description: Creates a container registry.
   href: acr#create
 - name: az acr credential
-  description: Manage administrator login credentials for Azure container registries.
+  description: Manage login credentials for Azure container registries.
   href: acr/credential
   isGroup: true
 - name: az acr credential renew
-  description: Regenerates the administrator login credentials for the specified container registry.
+  description: Regenerates one of the login credentials for the specified container registry.
   href: acr/credential#renew
 - name: az acr credential show
-  description: Gets the administrator login credentials for the specified container registry.
+  description: Gets the login credentials for the specified container registry.
   href: acr/credential#show
 - name: az acr delete
   description: Deletes a container registry.
   href: acr#delete
 - name: az acr list
-  description: Lists all the available container registries under the current subscription.
+  description: Lists all the container registries under the current subscription.
   href: acr#list
 - name: az acr repository
   description: Manage repositories for Azure container registries.
@@ -35,7 +35,7 @@ commandList:
   description: Gets the properties of the specified container registry.
   href: acr#show
 - name: az acr update
-  description: Update a Azure container registry.
+  description: Updates a container registry.
   href: acr#update
 htmlId: acr
 examples: []
@@ -92,30 +92,33 @@ children:
   htmlId: create
   examples:
   - title: Create a container registry with a new storage account.
-    code: az acr create -n MyRegistry -g MyResourceGroup -l southcentralus
-  - title: Create a container registry with an existing storage account.
-    code: az acr create -n MyRegistry -g MyResourceGroup -l southcentralus --storage-account-name MyStorageAccount
+    code: az acr create -n MyRegistry -g MyResourceGroup -l southcentralus --sku Basic
   parameters:
-  - name: --location -l
-    isRequired: True
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
-    description: ''
   - name: --name -n
     isRequired: True
     summary: The name of the container registry.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
+  - name: --sku
+    isRequired: True
+    summary: The SKU of the container registry.
+    description: ''
+    parameterValueGroup: Basic
   - name: --admin-enabled
     isRequired: False
     summary: Indicates whether the admin user is enabled.
     description: ''
     parameterValueGroup: false, true
+  - name: --location -l
+    isRequired: False
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
   - name: --storage-account-name
     isRequired: False
-    summary: The name of an existing storage account.
+    summary: 'Default: A new storage account will be created. Provide the name of an existing storage account if you''re recreating a container registry over a previous registry created storage account.'
     description: ''
   - name: --debug
     isRequired: False
@@ -153,8 +156,8 @@ children:
 - commandList: []
   htmlId: delete
   examples:
-  - title: Delete a registry
-    code: az acr delete -g MyResourceGroup -n MyRegistry
+  - title: Delete a container registry
+    code: az acr delete -n MyRegistry
   parameters:
   - name: --name -n
     isRequired: True
@@ -162,7 +165,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -202,12 +205,12 @@ children:
   examples:
   - title: List container registries and show the results in a table.
     code: az acr list -o table
-  - title: List container registries in a resource group and the show results in a table.
+  - title: List container registries in a resource group and show the results in a table.
     code: az acr list -g MyResourceGroup -o table
   parameters:
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -240,13 +243,13 @@ children:
   uid: az_acr_list
   name: az acr list
   description: ''
-  summary: Lists all the available container registries under the current subscription.
+  summary: Lists all the container registries under the current subscription.
   Metadata: {}
 - commandList: []
   htmlId: show
   examples:
-  - title: Get the login server for a registry.
-    code: az acr show -n MyRegistry --query "loginServer"
+  - title: Get the login server for a container registry.
+    code: az acr show -n MyRegistry --query loginServer
   parameters:
   - name: --name -n
     isRequired: True
@@ -254,7 +257,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -310,11 +313,11 @@ children:
     parameterValueGroup: false, true
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --storage-account-name
     isRequired: False
-    summary: The name of an existing storage account.
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account.
     description: ''
   - name: --tags
     isRequired: False
@@ -363,16 +366,16 @@ children:
   uid: az_acr_update
   name: az acr update
   description: ''
-  summary: Update a Azure container registry.
+  summary: Updates a container registry.
   Metadata: {}
 uid: az_acr
-name: 'Container Registry (Preview) - az acr'
+name: 'Container Registry - az acr'
 description: ''
 summary: Manage Azure container registries.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-  updated_at: 2/21/2017 11:13:36 PM
-  ms.date: 2/21/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/14f552202754ea57068af5cd440dd6f1d7207150/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+  updated_at: 5/1/2017 3:56:05 PM
+  ms.date: 5/1/2017

@@ -237,6 +237,9 @@ commandList:
   description: Configure the settings of a web application firewall.
   href: application-gateway/waf-config
   isGroup: true
+- name: az network application-gateway waf-config list-rule-sets
+  description: (PREVIEW) Lookup information on available WAF rule sets, rule groups, and rule IDs.
+  href: application-gateway/waf-config#list-rule-sets
 - name: az network application-gateway waf-config set
   description: Update the firewall configuration of a web application.
   href: application-gateway/waf-config#set
@@ -264,7 +267,23 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --location -l
+    isRequired: False
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --no-wait
+    isRequired: False
+    summary: Do not wait for the long running operation to finish.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validate
+    isRequired: False
+    summary: Generate and validate the ARM template without creating any resources.
     description: ''
   - name: --capacity
     isRequired: False
@@ -279,13 +298,17 @@ children:
     isRequired: False
     summary: The certificate password.
     description: ''
+  - name: --connection-draining-timeout
+    isRequired: False
+    summary: 'The time in seconds after a backend server is removed during which on open connection remains active. Range: 0 (disabled) to 3600.'
+    description: ''
   - name: --frontend-port
     isRequired: False
     summary: The front end port number.
     description: ''
   - name: --http-settings-cookie-based-affinity
     isRequired: False
-    summary: Enable or disable HTTP settings cookie based affinity.
+    summary: Enable or disable HTTP settings cookie-based affinity.
     description: ''
     defaultValue: disabled
     parameterValueGroup: Disabled, Enabled
@@ -298,29 +321,8 @@ children:
     isRequired: False
     summary: The HTTP settings protocol.
     description: ''
-    defaultValue: http
+    defaultValue: Http
     parameterValueGroup: Http, Https
-  - name: --location -l
-    isRequired: False
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
-    description: ''
-  - name: --no-wait
-    isRequired: False
-    summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --private-ip-address
-    isRequired: False
-    summary: Static private IP address to use.
-    description: ''
-  - name: --public-ip-address
-    isRequired: False
-    summary: Name or ID of a public IP address. Uses existing resource or creates new if specified, or none if omitted.
-    description: ''
-  - name: --public-ip-address-allocation
-    isRequired: False
-    summary: Specify the kind of public IP allocation for new public IPs.
-    description: ''
-    defaultValue: dynamic
   - name: --routing-rule-type
     isRequired: False
     summary: The request routing rule type.
@@ -333,10 +335,23 @@ children:
     description: ''
   - name: --sku
     isRequired: False
-    summary: The name of the SKU. (Standard_Small, Standard_Medium, Standard_Large).
+    summary: The name of the SKU.
     description: ''
     defaultValue: Standard_Medium
     parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, WAF_Large, WAF_Medium
+  - name: --private-ip-address
+    isRequired: False
+    summary: Static private IP address to use.
+    description: ''
+  - name: --public-ip-address
+    isRequired: False
+    summary: Name or ID of a public IP address. Uses existing resource or creates new if specified, or none if omitted.
+    description: ''
+  - name: --public-ip-address-allocation
+    isRequired: False
+    summary: The kind of IP allocation to use when creating a new public IP.
+    description: ''
+    defaultValue: Dynamic
   - name: --subnet
     isRequired: False
     summary: Name or ID of the subnet. Will create resource if it does not exist. If name specified, also specify --vnet-name.
@@ -344,16 +359,12 @@ children:
     defaultValue: default
   - name: --subnet-address-prefix
     isRequired: False
-    summary: The subnet prefix in CIDR format.
+    summary: The CIDR prefix to use when creating a new subnet.
     description: ''
     defaultValue: 10.0.0.0/24
-  - name: --tags
-    isRequired: False
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
   - name: --vnet-address-prefix
     isRequired: False
-    summary: The virtual network address range in CIDR format.
+    summary: The CIDR prefix to use when creating a new VNet.
     description: ''
     defaultValue: 10.0.0.0/16
   - name: --vnet-name
@@ -397,21 +408,17 @@ children:
   htmlId: delete
   examples: []
   parameters:
-  - name: --no-wait
-    isRequired: False
-    summary: Do not wait for the long running operation to finish.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --no-wait
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Do not wait for the long running operation to finish.
     description: ''
   - name: --debug
     isRequired: False
@@ -452,7 +459,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -491,17 +498,13 @@ children:
   htmlId: show
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -540,21 +543,17 @@ children:
   htmlId: show-backend-health
   examples: []
   parameters:
-  - name: --expand
-    isRequired: False
-    summary: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --expand
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
     description: ''
   - name: --debug
     isRequired: False
@@ -593,17 +592,13 @@ children:
   htmlId: start
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -642,17 +637,13 @@ children:
   htmlId: stop
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -691,9 +682,17 @@ children:
   htmlId: update
   examples: []
   parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the application gateway.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --capacity
     isRequired: False
-    summary: The number of instances to use with the application gateway.
+    summary: ''
     description: ''
   - name: --no-wait
     isRequired: False
@@ -701,24 +700,12 @@ children:
     description: ''
   - name: --sku
     isRequired: False
-    summary: The name of the SKU. (Standard_Small, Standard_Medium, Standard_Large).
+    summary: The name of the SKU.
     description: ''
     parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, WAF_Large, WAF_Medium
   - name: --tags
     isRequired: False
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
-    isRequired: False
-    summary: The name of the application gateway.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
     description: ''
   - name: --add
     isRequired: False
@@ -769,17 +756,13 @@ children:
   htmlId: wait
   examples: []
   parameters:
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
   - name: --name -n
-    isRequired: False
+    isRequired: True
     summary: The name of the application gateway.
     description: ''
   - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --created
     isRequired: False
@@ -852,6 +835,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/fc3d09dc977a3f1d9cfac57a2aa912d5d68078e8/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-  updated_at: 2/21/2017 11:13:36 PM
-  ms.date: 2/21/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/b80a9d5fb0fe558570a365de43ef083cca40212a/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+  updated_at: 5/4/2017 4:12:39 AM
+  ms.date: 5/4/2017
