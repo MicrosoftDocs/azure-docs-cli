@@ -5,6 +5,10 @@
 ## [Log in](../docs-ref-conceptual/authenticate-azure-cli.md)
 ### [Create a service principal](../docs-ref-conceptual/create-an-azure-service-principal-azure-cli.md)
 ## [Interactive mode](../docs-ref-conceptual/interactive-azure-cli.md)
+## Deploy
+### [With templates](/azure/azure-resource-manager/resource-group-template-deploy-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+### [Export templates](/azure/azure-resource-manager/resource-manager-export-template-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+### [With private templates](/azure-resource-manager/resource-manager-cli-sas-token?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 ## [Output formats](../docs-ref-conceptual/format-output-azure-cli.md)
 ## [Query](../docs-ref-conceptual/query-azure-cli.md)
 ## [Subscriptions](../docs-ref-conceptual/manage-azure-subscriptions-azure-cli.md)
