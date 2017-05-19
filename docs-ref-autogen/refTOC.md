@@ -336,6 +336,7 @@
 ### [az disk revoke-access](disk.pycliyml#revoke-access)
 ### [az disk show](disk.pycliyml#show)
 ### [az disk update](disk.pycliyml#update)
+### [az disk wait](disk.pycliyml#wait)
 ## [az dla](dla.pycliyml)
 ### [az dla account](dla\account.pycliyml)
 #### [az dla account blob-storage](dla\account\blob-storage.pycliyml)

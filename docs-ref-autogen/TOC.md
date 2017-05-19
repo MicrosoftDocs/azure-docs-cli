@@ -662,6 +662,7 @@
 ### [Revoke-Access](disk.pycliyml#revoke-access "az disk revoke-access")
 ### [Show](disk.pycliyml#show "az disk show")
 ### [Update](disk.pycliyml#update "az disk update")
+### [Wait](disk.pycliyml#wait "az disk wait")
 ## [Monitoring](monitor.pycliyml "az monitor")
 ### [Activity log](monitor\activity-log.pycliyml "az monitor activity-log")
 #### [List](monitor\activity-log.pycliyml#list "az monitor activity-log list")
