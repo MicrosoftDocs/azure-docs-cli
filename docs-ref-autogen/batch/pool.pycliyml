@@ -89,6 +89,10 @@ children:
     isRequired: False
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
     description: ''
+  - name: --application-licenses
+    isRequired: False
+    summary: The list of application licenses the Batch service will make available on each compute node in the pool. The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, pool creation will fail. Space separated values.
+    description: ''
   - name: --application-package-references
     isRequired: False
     summary: The list of application packages to be installed on each compute node in the pool. This property is currently not supported on pools created using the virtualMachineConfiguration (IaaS) property. Space separated application IDs with optional version in 'id[#version]' format.
@@ -117,13 +121,17 @@ children:
     isRequired: False
     summary: The timeout for allocation of compute nodes to the pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
     description: ''
-  - name: --target-dedicated
+  - name: --target-dedicated-nodes
     isRequired: False
-    summary: The desired number of compute nodes in the pool. This property must have the default value if enableAutoScale is true. It is required if enableAutoScale is false.
+    summary: The desired number of dedicated compute nodes in the pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both.
+    description: ''
+  - name: --target-low-priority-nodes
+    isRequired: False
+    summary: The desired number of low-priority compute nodes in the pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both.
     description: ''
   - name: --vm-size
     isRequired: False
-    summary: The size of virtual machines in the pool. All virtual machines in a pool are the same size. For information about available sizes of virtual machines for Cloud Services pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (<a href="http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/">http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/</a>). Batch supports all Cloud Services VM sizes except ExtraSmall. For information about available VM sizes for pools using images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/</a>) or Sizes for Virtual Machines (Windows) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/</a>). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
+    summary: The size of virtual machines in the pool. All virtual machines in a pool are the same size. For information about available sizes of virtual machines for Cloud Services pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (<a href="http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/">http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/</a>). Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and A2V2. For information about available VM sizes for pools using images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/</a>) or Sizes for Virtual Machines (Windows) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/</a>). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
     description: ''
   - name: --os-family
     isRequired: False
@@ -426,9 +434,13 @@ children:
     isRequired: False
     summary: The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request).
     description: ''
-  - name: --target-dedicated
+  - name: --target-dedicated-nodes
     isRequired: False
-    summary: The desired number of compute nodes in the pool.
+    summary: The desired number of dedicated compute nodes in the pool.
+    description: ''
+  - name: --target-low-priority-nodes
+    isRequired: False
+    summary: The desired number of low-priority compute nodes in the pool.
     description: ''
   - name: --account-endpoint
     isRequired: False
