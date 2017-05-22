@@ -1,6 +1,7 @@
 # [Reference](index.pycliyml)
 ## [az account](account.pycliyml)
 ### [az account clear](account.pycliyml#clear)
+### [az account get-access-token](account.pycliyml#get-access-token)
 ### [az account list](account.pycliyml#list)
 ### [az account list-locations](account.pycliyml#list-locations)
 ### [az account set](account.pycliyml#set)

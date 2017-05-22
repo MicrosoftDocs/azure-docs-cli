@@ -1488,6 +1488,7 @@
 ##### [Update](storage\table\policy.pycliyml#update "az storage table policy update")
 ## [Subscriptions](account.pycliyml "az account")
 ### [Clear](account.pycliyml#clear "az account clear")
+### [Get-Access-Token](account.pycliyml#get-access-token "az account get-access-token")
 ### [List](account.pycliyml#list "az account list")
 ### [List-Locations](account.pycliyml#list-locations "az account list-locations")
 ### [Set](account.pycliyml#set "az account set")
