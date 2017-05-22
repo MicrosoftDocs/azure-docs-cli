@@ -1,7 +1,7 @@
 # [Azure CLI 2.0](overview.md)
 ## [Install](install-azure-cli.md)
 ## [Get started](get-started-with-azure-cli.md)
-## [Cloud Shell Overview](/azure/cloud-shell/overview)
+## [Cloud Shell overview](/azure/cloud-shell/overview)
 ## [Log in](authenticate-azure-cli.md)
 ### [Create a service principal](create-an-azure-service-principal-azure-cli.md)
 ## [Interactive mode](interactive-azure-cli.md)
