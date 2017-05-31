@@ -425,6 +425,7 @@
 ### [az dls account](dls\account.pycliyml)
 #### [az dls account create](dls\account.pycliyml#create)
 #### [az dls account delete](dls\account.pycliyml#delete)
+#### [az dls account enable-key-vault](dls\account.pycliyml#enable-key-vault)
 #### [az dls account firewall](dls\account\firewall.pycliyml)
 ##### [az dls account firewall create](dls\account\firewall.pycliyml#create)
 ##### [az dls account firewall delete](dls\account\firewall.pycliyml#delete)
