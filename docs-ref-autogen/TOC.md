@@ -434,6 +434,7 @@
 ### [Accounts](dls\account.pycliyml "az dls account")
 #### [Create](dls\account.pycliyml#create "az dls account create")
 #### [Delete](dls\account.pycliyml#delete "az dls account delete")
+#### [Enable-Key-Vault](dls\account.pycliyml#enable-key-vault "az dls account enable-key-vault")
 #### [List](dls\account.pycliyml#list "az dls account list")
 #### [Show](dls\account.pycliyml#show "az dls account show")
 #### [Update](dls\account.pycliyml#update "az dls account update")
