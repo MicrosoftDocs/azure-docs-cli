@@ -20,11 +20,13 @@ The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](htt
 
 `Query` parameter is supported by every resource type (Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for various different purposes.  We have listed several examples below.
 
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
+
 ## Selecting simple properties
 
 The simple `list` command with `table` output format returns a curated set of most common, simple properties for each resource type in an easy-to-read tabular format.
 
-```azurecli
+```azurecli-interactive
 az vm list --out table
 ```
 
@@ -40,7 +42,7 @@ KBDemo020    RGDEMO001        westus
 
 You can use the `--query` parameter to show just the Resource Group name and VM name for all virtual machines in your subscription.
 
-```azurecli
+```azurecli-interactive
 az vm list \
   --query [*].[name,resourceGroup] --out table
 ```
@@ -62,7 +64,7 @@ KBDemo020   RGDEMO001
 In the previous example, you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
 
 
-```azurecli
+```azurecli-interactive
 az vm list \
   --query "[].{RGName:resourceGroup, VMName:name}" --out table
 ```
@@ -85,7 +87,7 @@ RGDEMO001  KBDemo020
 
 If the property you want to select is nested deep in the JSON output you need to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
 
-```azurecli
+```azurecli-interactive
 az vm list \
   --query "[].{VMName:name,OSType:storageProfile.osDisk.osType}" --out table
 ```
@@ -109,7 +111,7 @@ KBDemo020    Linux
 You can use the JMESPath `contains` function to refine your results returned in the query.
 In the following example, the command selects only VMs that have the text "RGD" in their name.  
 
-```azurecli
+```azurecli-interactive
 az vm list \
   --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }" --out table
 ```
@@ -123,7 +125,7 @@ RGDEMO001   KBDemo020
 
 With the next example, the results will return the VMs that have the vmSize 'Standard_DS1'.
 
-```azurecli
+```azurecli-interactive
 az vm list \
   --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]" --out table
 ```
@@ -144,7 +146,7 @@ DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Su
 
 The `tsv` output format is a tab-separated text with no headers. It can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. In the following example, the `grep` command selects only VMs that have text "RGD" in their name.  The `cut` command selects only the 8th field (separated by tabs) value to show in the output.
 
-```azurecli
+```azurecli-interactive
 az vm list --out tsv | grep RGD | cut -f8
 ```
 
