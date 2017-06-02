@@ -20,8 +20,6 @@ The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](htt
 
 `Query` parameter is supported by every resource type (Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for various different purposes.  We have listed several examples below.
 
-[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
-
 ## Selecting simple properties
 
 The simple `list` command with `table` output format returns a curated set of most common, simple properties for each resource type in an easy-to-read tabular format.

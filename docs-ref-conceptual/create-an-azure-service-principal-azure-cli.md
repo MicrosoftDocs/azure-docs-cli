@@ -24,8 +24,6 @@ This topic steps you through creating a security principal with Azure CLI 2.0.
 > You can also create a service principal through the Azure portal.
 > Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
 
-[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
-
 ## What is a 'service principal'?
 
 An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a specific role, and tightly controlled permissions to access your resources. It only needs to be able to do specific things, unlike a general user identity. It improves security if you only grant it the minimum permissions level needed to perform its management tasks. 
@@ -50,6 +48,8 @@ These values identify your application when creating a service principal.
 ### Get information about your application
 
 Get identity information about your application with the `az ad app list`.
+
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
 
 ```azurecli-interactive
 az ad app list --display-name MyDemoWebApp
