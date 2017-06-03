@@ -20,9 +20,11 @@ If you are brand new to Azure, you probably only have a single subscription.
 But if you have been using Azure for a while, you may have created multiple Azure subscriptions.
 If so, you can configure Azure CLI 2.0 to execute commands against a particular subscription.
 
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
+
 1. Get a list of all subscriptions in your account.
 
-   ```azurecli
+   ```azurecli-interactive
    az account list --output table
    ```
 
@@ -36,7 +38,7 @@ If so, you can configure Azure CLI 2.0 to execute commands against a particular 
 
 1. Set the default.
  
-   ```azurecli
+   ```azurecli-interactive
    az account set --subscription "My Demos"
    ```
 

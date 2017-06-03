@@ -28,7 +28,7 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## Connect
 
-The simplest way to get started is to [launch  Cloud Shell](/azure.cloud-shell/quickstart).
+The simplest way to get started is to [launch Cloud Shell](/azure.cloud-shell/quickstart).
 
 1. Launch Cloud Shell from the top navigation of the Azure portal.
 
@@ -321,7 +321,7 @@ that makes it easy to filter resources by Resource Group name.  For example, you
 to a `list` command to only retrieve those resources within a specific resource group:
 
 
-```azurecli
+```azurecli-interactive
 az vm list -g MyResourceGroup --output table
 ```
 

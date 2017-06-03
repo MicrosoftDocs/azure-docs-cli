@@ -22,7 +22,7 @@ or you can [install](install-azure-cli.md) it on macOS, Linux, and Windows and r
 
 Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. Using the Azure CLI 2.0, you can create VMs within Azure as easily as typing the following command:
 
-```azurecli
+```azurecli-interactive
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
