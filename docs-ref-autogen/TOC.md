@@ -1697,3 +1697,7 @@
 #### [Config](webapp\log.pycliyml#config "az webapp log config")
 #### [Download](webapp\log.pycliyml#download "az webapp log download")
 #### [Tail](webapp\log.pycliyml#tail "az webapp log tail")
+### [Traffic-Routing](webapp\traffic-routing.pycliyml "az webapp traffic-routing")
+#### [Clear](webapp\traffic-routing.pycliyml#clear "az webapp traffic-routing clear")
+#### [Set](webapp\traffic-routing.pycliyml#set "az webapp traffic-routing set")
+#### [Show](webapp\traffic-routing.pycliyml#show "az webapp traffic-routing show")

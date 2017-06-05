@@ -1677,3 +1677,7 @@
 ### [az webapp show](webapp.pycliyml#show)
 ### [az webapp start](webapp.pycliyml#start)
 ### [az webapp stop](webapp.pycliyml#stop)
+### [az webapp traffic-routing](webapp\traffic-routing.pycliyml)
+#### [az webapp traffic-routing clear](webapp\traffic-routing.pycliyml#clear)
+#### [az webapp traffic-routing set](webapp\traffic-routing.pycliyml#set)
+#### [az webapp traffic-routing show](webapp\traffic-routing.pycliyml#show)
