@@ -25,11 +25,13 @@ Azure CLI 2.0 uses json as its default output option, but offers various ways fo
 `table`  | table with column headings.
 `tsv`    | tab-separated values.
 
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
+
 ## Using the json option
 
 The following example displays the list of virtual machines in your subscriptions in the default json format.
 
-```azurecli
+```azurecli-interactive
 az vm list --output json
 ```
 
@@ -67,7 +69,7 @@ The results are in this form (only showing partial output for sake of brevity).
 
 The table option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table`, unlike the preceding .json example.  Using the same example with 'table' output format provides a curated list of most common property values.
 
-```azurecli
+```azurecli-interactive
 az vm list --out table
 ```
 
@@ -83,7 +85,7 @@ KBDemo020    RGDEMO001        westus
 
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
-```azurecli
+```azurecli-interactive
 az vm list --query "[].{ resource: resourceGroup, name: name }" -o table
 ```
 
@@ -101,7 +103,7 @@ RGDEMO001   KBDemo020
 
 'tsv' output format returns a simple text-based and tab-separated output with no headings and dashes. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Using the preceding example with the `tsv` option outputs the tab-separated result.
 
-```azurecli
+```azurecli-interactive
 az vm list --out tsv
 ```
 

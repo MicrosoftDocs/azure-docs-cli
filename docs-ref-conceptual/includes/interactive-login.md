@@ -4,7 +4,7 @@ ms.assetid: 16dae88b-a4b8-4bfd-aa3c-25245a9ad975
 
 1. Run the login command.
 
-    ```azurecli
+    ```azurecli-interactive
     az login
     ```
 
