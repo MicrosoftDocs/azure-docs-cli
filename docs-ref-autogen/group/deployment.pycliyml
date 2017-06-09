@@ -45,6 +45,8 @@ children:
     code: az group deployment create -g MyResourceGroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
   - title: Create a deployment from a local template file and use parameter values in a string.
     code: 'az group deployment create -g MyResourceGroup --template-file azuredeploy.json --parameters "{"location": {"value": "westus"}}"'
+  - title: Create a deployment from a local template, use a parameter file and selectively override parameters.
+    code: az group deployment create -g MyResourceGroup --template-file azuredeploy.json --parameters params.json --parameters MyValue=This MyArray=@array.json
   parameters:
   - name: --resource-group -g
     isRequired: True
@@ -66,8 +68,8 @@ children:
     description: ''
   - name: --parameters
     isRequired: False
-    summary: Provide deployment parameter values, either json string, or use @<file path> to load from a file. Can be repeated. If a the same parameter is present in multiple arguments, the last value wins.
-    description: ''
+    summary: Supply deployment parameter values.
+    description: 'Parameters may be supplied from a parameters file, raw JSON (which can be loaded using @<file path> syntax, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax (example: --parameters params.json --parameters location=westus).'
   - name: --template-file
     isRequired: False
     summary: A template file path in the file system.
@@ -309,8 +311,8 @@ children:
     parameterValueGroup: Complete, Incremental
   - name: --parameters
     isRequired: False
-    summary: Provide deployment parameter values, either json string, or use @<file path> to load from a file. Can be repeated. If a the same parameter is present in multiple arguments, the last value wins.
-    description: ''
+    summary: Supply deployment parameter values.
+    description: 'Parameters may be supplied from a parameters file, raw JSON (which can be loaded using @<file path> syntax, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax (example: --parameters params.json --parameters location=westus).'
   - name: --template-file
     isRequired: False
     summary: A template file path in the file system.
@@ -435,6 +437,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/c3df3ab40c83daee819ee6e4b2b4e1b5b621fec5/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  updated_at: 6/3/2017 5:13:44 AM
-  ms.date: 6/3/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/3753b503aa8f9d21a28ca8fbeccd5d1623eafdda/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+  updated_at: 6/9/2017 5:41:00 PM
+  ms.date: 6/9/2017
