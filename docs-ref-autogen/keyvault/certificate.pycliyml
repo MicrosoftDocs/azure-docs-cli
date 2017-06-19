@@ -62,6 +62,9 @@ commandList:
 - name: az keyvault certificate list
   description: List certificates in a specified key vault.
   href: certificate#list
+- name: az keyvault certificate list-deleted
+  description: Lists the deleted certificates in the specified vault, currently available for recovery.
+  href: certificate#list-deleted
 - name: az keyvault certificate list-versions
   description: List the versions of a certificate.
   href: certificate#list-versions
@@ -78,12 +81,21 @@ commandList:
 - name: az keyvault certificate pending show
   description: Gets the operation associated with a specified certificate.
   href: certificate/pending#show
+- name: az keyvault certificate purge
+  description: Permanently deletes the specified deleted certificate.
+  href: certificate#purge
+- name: az keyvault certificate recover
+  description: Recovers the deleted certificate back to its current version under /certificates.
+  href: certificate#recover
 - name: az keyvault certificate set-attributes
   description: Updates the specified attributes associated with the given certificate.
   href: certificate#set-attributes
 - name: az keyvault certificate show
   description: Gets information about a specified certificate.
   href: certificate#show
+- name: az keyvault certificate show-deleted
+  description: Retrieves information about the specified deleted certificate.
+  href: certificate#show-deleted
 htmlId: certificate
 examples: []
 source:
@@ -198,7 +210,7 @@ children:
   children: []
   uid: az_keyvault_certificate_delete
   name: az keyvault certificate delete
-  description: ''
+  description: Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object.
   summary: Deletes a certificate from a specified key vault.
   Metadata: {}
 - commandList: []
@@ -417,8 +429,53 @@ children:
   children: []
   uid: az_keyvault_certificate_list
   name: az keyvault certificate list
-  description: ''
+  description: The GetCertificates operation returns the set of certificates resources in the specified key vault.
   summary: List certificates in a specified key vault.
+  Metadata: {}
+- commandList: []
+  htmlId: list-deleted
+  examples: []
+  parameters:
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --maxresults
+    isRequired: False
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_list-deleted
+  name: az keyvault certificate list-deleted
+  description: The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging.
+  summary: Lists the deleted certificates in the specified vault, currently available for recovery.
   Metadata: {}
 - commandList: []
   htmlId: list-versions
@@ -466,8 +523,98 @@ children:
   children: []
   uid: az_keyvault_certificate_list-versions
   name: az keyvault certificate list-versions
-  description: ''
+  description: The GetCertificateVersions operation returns the versions of a certificate in the specified key vault.
   summary: List the versions of a certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: purge
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_purge
+  name: az keyvault certificate purge
+  description: The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify 'Purgeable'. Requires the explicit granting of the 'purge' permission.
+  summary: Permanently deletes the specified deleted certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: recover
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_recover
+  name: az keyvault certificate recover
+  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate's attributes).
+  summary: Recovers the deleted certificate back to its current version under /certificates.
   Metadata: {}
 - commandList: []
   htmlId: set-attributes
@@ -528,7 +675,7 @@ children:
   children: []
   uid: az_keyvault_certificate_set-attributes
   name: az keyvault certificate set-attributes
-  description: ''
+  description: The UpdateCertificate operation applies the specified update on the given certificate; note the only elements being updated are the certificate's attributes.
   summary: Updates the specified attributes associated with the given certificate.
   Metadata: {}
 - commandList: []
@@ -577,8 +724,53 @@ children:
   children: []
   uid: az_keyvault_certificate_show
   name: az keyvault certificate show
-  description: ''
+  description: 'Authorization: requires the certificates/get permission.'
   summary: Gets information about a specified certificate.
+  Metadata: {}
+- commandList: []
+  htmlId: show-deleted
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the certificate.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_certificate_show-deleted
+  name: az keyvault certificate show-deleted
+  description: The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level.
+  summary: Retrieves information about the specified deleted certificate.
   Metadata: {}
 uid: az_keyvault_certificate
 name: 'Key Vault certificates - az keyvault certificate'
@@ -588,6 +780,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/71c76c65a64e7dd4788a51d85644b01012f80356/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 6/8/2017 4:07:47 PM
-  ms.date: 6/8/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/e0ee922a1f9da2b2bc29c7eed72872eca26df7e5/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 6/16/2017 10:50:05 PM
+  ms.date: 6/16/2017
