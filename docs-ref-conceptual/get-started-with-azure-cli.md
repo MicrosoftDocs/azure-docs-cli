@@ -223,7 +223,7 @@ SQL Database Server         az sql server create
 Document DB                 az documentdb create
 ```
 
-Visit the [Reference documentation](/azure/doc-ref-autogen) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create. 
+Visit the [Reference documentation](/cli/azure) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create. 
 
 ## Useful tip: Optimizing create operations using --no-wait
 
