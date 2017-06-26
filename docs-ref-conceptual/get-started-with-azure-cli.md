@@ -38,7 +38,7 @@ The simplest way to get started is to [launch Cloud Shell](/azure/cloud-shell/qu
 
    ![Create a storage account](media/get-started-with-azure-cli/storage-prompt.png)
 
-You can also [install](install-azure-cli.md) the CLI and run it locally form the command line.
+You can also [install](install-azure-cli.md) the CLI and run it locally from the command line.
 
 ## Create a Resource Group
 
@@ -82,7 +82,7 @@ az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes
 When you run the preceding command, the Azure CLI 2.0 looks for an SSH key pair stored under your ~/.ssh directory.  If you don't already have an SSH key pair stored there, you can ask the Azure CLI to automatically create one for you by passing the --generate-ssh-keys parameter:
 
 ```azurecli-interactive
-az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --generate-ssh-keys
+az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes-gb 10 20 --generate-ssh-keys
 ```
 
 The `az vm create` command returns output once the VM has been fully created and is ready to be accessed and used. The output includes several properties of the newly created VM including its public IP address:
