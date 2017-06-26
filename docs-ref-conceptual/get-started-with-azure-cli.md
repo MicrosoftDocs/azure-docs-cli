@@ -28,7 +28,7 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## Connect
 
-The simplest way to get started is to [launch Cloud Shell](/azure.cloud-shell/quickstart).
+The simplest way to get started is to [launch Cloud Shell](/azure/cloud-shell/quickstart).
 
 1. Launch Cloud Shell from the top navigation of the Azure portal.
 
