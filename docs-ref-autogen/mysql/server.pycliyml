@@ -38,10 +38,10 @@ commandList:
   description: Update a firewall rule for an Azure Database for MySQL server.
   href: server/firewall-rule#update
 - name: az mysql server list
-  description: List all the Azure Database for MySQL servers belong to given resource group.
+  description: List all the Azure Database for MySQL servers belong to given resource group or subscription.
   href: server#list
 - name: az mysql server restore
-  description: Create a new server by restoring from a server backup.
+  description: Create a new Azure Database for MySQL server by restoring from a server backup.
   href: server#restore
 - name: az mysql server show
   description: Show the details of an Azure Database for MySQL server.
@@ -54,7 +54,13 @@ examples: []
 children:
 - commandList: []
   htmlId: create
-  examples: []
+  examples:
+  - title: Create server testsvr with only required paramaters in North Europe.
+    code: az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password
+  - title: Create server testsvr with specified performance tier and compute units in North Europe.
+    code: az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password --performance-tier Standard --compute-units 100
+  - title: Create server testsvr with all paramaters
+    code: az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password --performance-tier Basic --compute-units 100 --ssl-enforcement Disabled --storage-size 51200 --tags "key=value" --version <server_version>
   parameters:
   - name: --name -n
     isRequired: True
@@ -176,7 +182,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: list
-  examples: []
+  examples:
+  - title: List all servers in resource group.
+    code: az mysql server list -g testgroup
+  - title: List all servers in subscription.
+    code: az mysql server list
   parameters:
   - name: --resource-group -g
     isRequired: False
@@ -208,11 +218,15 @@ children:
   uid: az_mysql_server_list
   name: az mysql server list
   description: ''
-  summary: List all the Azure Database for MySQL servers belong to given resource group.
+  summary: List all the Azure Database for MySQL servers belong to given resource group or subscription.
   Metadata: {}
 - commandList: []
   htmlId: restore
-  examples: []
+  examples:
+  - title: Restore to server testsvrnew from server testsvr.
+    code: az mysql server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
+  - title: Restore to server testsvrnew from server testsvr2 which is in a different resource group.
+    code: az mysql server restore -g testgroup -n testsvrnew -s "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/othergroup/providers/Microsoft.DBforMySQL/servers/testsvr2" --restore-point-in-time "2017-06-15T13:10:00Z"
   parameters:
   - name: --name -n
     isRequired: True
@@ -256,7 +270,7 @@ children:
   uid: az_mysql_server_restore
   name: az mysql server restore
   description: ''
-  summary: Create a new server by restoring from a server backup.
+  summary: Create a new Azure Database for MySQL server by restoring from a server backup.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -300,7 +314,11 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: update
-  examples: []
+  examples:
+  - title: Update server's compute-units to 100.
+    code: az mysql server update -g testgroup -n testsvrnew --compute-units 100
+  - title: Update server's tags.
+    code: az mysql server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
   parameters:
   - name: --name -n
     isRequired: True
