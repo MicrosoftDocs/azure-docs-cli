@@ -4,7 +4,7 @@ commandList:
   href: db/audit-policy
   isGroup: true
 - name: az sql db audit-policy show
-  description: Gets a blob auditing policy associated with a database.
+  description: Gets a database's blob auditing policy.
   href: db/audit-policy#show
 - name: az sql db audit-policy update
   description: Updates a database's auditing policy.
@@ -27,6 +27,12 @@ commandList:
 - name: az sql db list
   description: Lists all databases and data warehouses in a server, or all databases in an elastic pool.
   href: db#list
+- name: az sql db list-editions
+  description: Shows database editions that are available for your subscription.
+  href: db#list-editions
+- name: az sql db list-usages
+  description: Returns database usages.
+  href: db#list-usages
 - name: az sql db replica
   description: Manage replication between databases.
   href: db/replica
@@ -54,7 +60,7 @@ commandList:
   href: db/threat-policy
   isGroup: true
 - name: az sql db threat-policy show
-  description: Gets a Threat Detection policy associated with a database.
+  description: Gets a database's threat detection policy.
   href: db/threat-policy#show
 - name: az sql db threat-policy update
   description: Updates a database's threat detection policy.
@@ -66,7 +72,7 @@ htmlId: db
 examples: []
 source:
   remote:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
     branch: master
     repo: https://github.com/Azure/azure-cli.git
 children:
@@ -84,7 +90,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -134,7 +140,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -153,7 +159,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -181,7 +187,7 @@ children:
     description: ''
   - name: --service-objective
     isRequired: False
-    summary: The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property.
+    summary: 'The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.".'
     description: ''
   - name: --tags
     isRequired: False
@@ -211,7 +217,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -230,7 +236,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -264,7 +270,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -275,7 +281,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: export
-  examples: []
+  examples:
+  - title: Get SAS key for use in export operation
+    code: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions w --expiry 2018-01-01T00:00:00Z
+  - title: Export bacpac using SAS key
+    code: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - title: Export bacpac using storage account Key
+    code: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
   parameters:
   - name: --admin-password -p
     isRequired: True
@@ -291,7 +303,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -299,21 +311,22 @@ children:
     description: ''
   - name: --storage-key
     isRequired: True
-    summary: The storage key to use.
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - name: --storage-key-type
     isRequired: True
-    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    summary: The type of the storage key to use.
     description: ''
     parameterValueGroup: SharedAccessKey, StorageAccessKey
   - name: --storage-uri
     isRequired: True
     summary: The storage uri to use.
     description: ''
-  - name: --auth_type
+  - name: --auth-type
     isRequired: False
-    summary: The authentication type - if not specified, will default to SQL.
+    summary: The authentication type.
     description: ''
+    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
   - name: --debug
     isRequired: False
@@ -339,7 +352,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -350,7 +363,13 @@ children:
   Metadata: {}
 - commandList: []
   htmlId: import
-  examples: []
+  examples:
+  - title: Get SAS key for use in import operation
+    code: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions r --expiry 2018-01-01T00:00:00Z
+  - title: Import bacpac into an existing database using SAS key
+    code: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - title: Import bacpac into an existing database using storage account key
+    code: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
   parameters:
   - name: --admin-password -p
     isRequired: True
@@ -366,7 +385,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -374,26 +393,23 @@ children:
     description: ''
   - name: --storage-key
     isRequired: True
-    summary: The storage key to use.
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - name: --storage-key-type
     isRequired: True
-    summary: The type of the storage key to use. Valid values are StorageAccessKey and SharedAccessKey.
+    summary: The type of the storage key to use.
     description: ''
     parameterValueGroup: SharedAccessKey, StorageAccessKey
   - name: --storage-uri
     isRequired: True
     summary: The storage uri to use.
     description: ''
-  - name: --auth_type
+  - name: --auth-type
     isRequired: False
-    summary: The authentication type - if not specified, will default to SQL.
+    summary: The authentication type.
     description: ''
+    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
-  - name: --type
-    isRequired: False
-    summary: The type of the extension.
-    description: ''
   - name: --debug
     isRequired: False
     summary: Increase logging verbosity to show all debug logs.
@@ -418,7 +434,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -433,7 +449,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -467,7 +483,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -475,6 +491,115 @@ children:
   name: az sql db list
   description: ''
   summary: Lists all databases and data warehouses in a server, or all databases in an elastic pool.
+  Metadata: {}
+- commandList: []
+  htmlId: list-editions
+  examples:
+  - title: Show all database editions in a location.
+    code: az sql db list-editions -l westus
+  - title: Show all available database service objectives for Standard edition.
+    code: az sql db list-editions -l westus --edition Standard
+  - title: Show available max database sizes for P1 service objective
+    code: az sql db list-editions -l westus --service-objective P1 --show-details max-size
+  parameters:
+  - name: --location -l
+    isRequired: True
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --show-details -d
+    isRequired: False
+    summary: List of additional details to include in output.
+    description: ''
+    parameterValueGroup: max-size
+  - name: --edition
+    isRequired: False
+    summary: Edition to search for. If unspecified, all editions are shown.
+    description: ''
+  - name: --service-objective
+    isRequired: False
+    summary: Service objective to search for. If unspecified, all editions are shown.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_list-editions
+  name: az sql db list-editions
+  description: Also includes available service objectives and storage limits. In order to reduce verbosity, settings to intentionally reduce storage limits are hidden by default.
+  summary: Shows database editions that are available for your subscription.
+  Metadata: {}
+- commandList: []
+  htmlId: list-usages
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --server -s
+    isRequired: True
+    summary: Name of the Azure SQL server.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_db_list-usages
+  name: az sql db list-usages
+  description: ''
+  summary: Returns database usages.
   Metadata: {}
 - commandList: []
   htmlId: restore
@@ -490,7 +615,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -540,7 +665,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -559,7 +684,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -589,7 +714,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -608,7 +733,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -662,7 +787,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -677,8 +802,8 @@ description: ''
 summary: Manage databases.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7c9c68600e520e98f4bfa1b778382d34d963f09/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 3/22/2017 3:07:20 AM
-  ms.date: 3/22/2017
+  doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/71c76c65a64e7dd4788a51d85644b01012f80356/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  updated_at: 6/8/2017 4:07:47 PM
+  ms.date: 6/8/2017

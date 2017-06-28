@@ -16,8 +16,8 @@ children:
 - commandList: []
   htmlId: get-default-config
   examples:
-  - title: Get the default diagnostics on a Linux VM and override the storage account key.
-    code: 'az vm diagnostics get-default-config     --query "merge(@, {storageAccount: ''MyStorageAccount''})"'
+  - title: Get the default diagnostics on a Linux VM and override the storage account name and the VM resource ID.
+    code: az vm diagnostics get-default-config     | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#MyStorageAccount#g"     | sed "s#__VM_OR_VMSS_RESOURCE_ID__#MyVmResourceId#g"
   - title: Get the default diagnostics on a Windows VM.
     code: az vm diagnostics get-default-config --is-windows-os
   parameters:
@@ -61,12 +61,20 @@ children:
 - commandList: []
   htmlId: set
   examples:
-  - title: Set up default diagnostics on a Linux VM.
-    code: "default_config=$(az vm diagnostics get-default-config     --query \"merge(@, {storageAccount: 'MyStorageAccount'})\")\n                        \n                        storage_key=$(az storage account keys list -g MyResourceGroup -n MyStorageAccount     --query \"[?keyName=='key1'] | [0].value\" -o tsv)\n                        \n                        settings=\"{'storageAccountName': 'MyStorageAccount', 'storageAccountKey':     '${storage_key}'}\"\n                        \n                        az vm diagnostics set --settings \"${default_config}\" --protected-settings \"${settings}\"     -n setting_name -g MyResourceGroup"
+  - title: Set up default diagnostics on a Linux VM for Azure Portal VM metrics graphs and syslog collection.
+    code: "# Set the following 3 parameters correctly first.\n                        my_resource_group=<Resource group name containing your Linux VM and the storage account>\n                        my_linux_vm=<Your Azure Linux VM name>\n                        my_diagnostic_storage_account=<Your Azure storage account for storing VM diagnostic data>\n                        \n                        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query \"id\" -o tsv)\n                        \n                        default_config=$(az vm diagnostics get-default-config     | sed \"s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g\"     | sed \"s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g\")\n                        \n                        storage_sastoken=$(az storage account generate-sas     --account-name $my_diagnostic_storage_account --expiry 9999-12-31T23:59Z     --permissions wlacu --resource-types co --services bt -o tsv)\n                        \n                        protected_settings=\"{'storageAccountName': '${my_diagnostic_storage_account}',     'storageAccountSasToken': '${storage_sastoken}'}\"\n                        \n                        az vm diagnostics set --settings \"${default_config}\"     --protected-settings \"${protected_settings}\"     --resource-group $my_resource_group --vm-name $my_linux_vm"
   parameters:
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
   - name: --settings
     isRequired: True
     summary: Json string or a file path, which defines data to be collected.
+    description: ''
+  - name: --vm-name
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
     description: ''
   - name: --no-auto-upgrade
     isRequired: False
@@ -79,18 +87,6 @@ children:
   - name: --version
     isRequired: False
     summary: Version of the diagnostics extension. Will use the latest if not specfied.
-    description: ''
-  - name: --ids
-    isRequired: False
-    summary: One or more resource IDs (space delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --resource-group -g
-    isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
-    description: ''
-  - name: --vm-name
-    isRequired: False
-    summary: The name of the Virtual Machine. You can configure the default using 'az configure --defaults vm=<name>'.
     description: ''
   - name: --debug
     isRequired: False
@@ -133,6 +129,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/a7505c57e1fbc155e8e6ce5bdce6a4e25e5b0a4d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 3/6/2017 9:06:56 PM
-  ms.date: 3/6/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/fb93b8a8519c9ee7bb325b77d43229fc413973b8/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 6/26/2017 3:18:35 PM
+  ms.date: 6/26/2017

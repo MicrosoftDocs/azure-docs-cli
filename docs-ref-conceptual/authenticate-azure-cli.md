@@ -2,12 +2,15 @@
 title: Log in with Azure CLI 2.0
 description: Log in with Azure 2.0 CLI on Linux, Mac, or Windows.
 keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
-author: allclark
+author: rloutlaw
+ms.author: routlaw
 manager: douge
 ms.date: 02/27/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
+ms.devlang: azurecli
+ms.service: multiple
 ms.assetid: 65becd3a-9d69-4415-8a30-777d13a0e7aa
 ---
 
@@ -27,9 +30,10 @@ Log in interactively from your web browser.
 
 Provide your credentials on the command line.
 
+> [!Note]
 > This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
-```azurecli
+```azurecli-interactive
 az login -u <username> -p <password>
 ```
 
@@ -45,29 +49,27 @@ You can learn more and see examples of service principal roles in our [az role r
 
 1. Log in with the service principal.
 
-    ```azurecli
-    az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
-    ```
+   ```azurecli-interactive
+   az login --service-principal -u "http://my-app" -p <password> --tenant <tenant>
+   ```
 
-    To get your tenant, log in interactively and then get the tenantId from your subscription.
+   To get your tenant, log in interactively and then get the tenantId from your subscription.
 
-    ```azurecli
-    az login
-    az account show
-    ```
+   ```azurecli
+   az account show
+   ```
 
-    ```json
-    {
-        "environmentName": "AzureCloud",
-        "id": "********-****-****-****-************",
-        "isDefault": true,
-        "name": "Pay-As-You-Go",
-        "state": "Enabled",
-        "tenantId": "********-****-****-****-************",
-        "user": {
-        "name": "********",
-        "type": "user"
-        }
-    }
-    ```
-    
+   ```json
+   {
+       "environmentName": "AzureCloud",
+       "id": "********-****-****-****-************",
+       "isDefault": true,
+       "name": "Pay-As-You-Go",
+       "state": "Enabled",
+       "tenantId": "********-****-****-****-************",
+       "user": {
+       "name": "********",
+       "type": "user"
+       }
+   }
+   ```

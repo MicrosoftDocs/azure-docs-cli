@@ -21,13 +21,22 @@ commandList:
 - name: az acr list
   description: Lists all the container registries under the current subscription.
   href: acr#list
+- name: az acr login
+  description: Login to a container registry through Docker.
+  href: acr#login
 - name: az acr repository
   description: Manage repositories for Azure container registries.
   href: acr/repository
   isGroup: true
+- name: az acr repository delete
+  description: Deletes a repository or a manifest/tag from the given repository in the specified container registry.
+  href: acr/repository#delete
 - name: az acr repository list
   description: Lists repositories in the specified container registry.
   href: acr/repository#list
+- name: az acr repository show-manifests
+  description: Shows manifests of a given repository in the specified container registry.
+  href: acr/repository#show-manifests
 - name: az acr repository show-tags
   description: Shows tags of a given repository in the specified container registry.
   href: acr/repository#show-tags
@@ -37,6 +46,34 @@ commandList:
 - name: az acr update
   description: Updates a container registry.
   href: acr#update
+- name: az acr webhook
+  description: Manage webhooks for Azure container registries.
+  href: acr/webhook
+  isGroup: true
+- name: az acr webhook create
+  description: Creates a webhook for a container registry.
+  href: acr/webhook#create
+- name: az acr webhook delete
+  description: Deletes a webhook from a container registry.
+  href: acr/webhook#delete
+- name: az acr webhook get-config
+  description: Gets the configuration of service URI and custom headers for the webhook.
+  href: acr/webhook#get-config
+- name: az acr webhook list
+  description: Lists all the webhooks for the specified container registry.
+  href: acr/webhook#list
+- name: az acr webhook list-events
+  description: Lists recent events for the specified webhook.
+  href: acr/webhook#list-events
+- name: az acr webhook ping
+  description: Triggers a ping event to be sent to the webhook.
+  href: acr/webhook#ping
+- name: az acr webhook show
+  description: Gets the properties of the specified webhook.
+  href: acr/webhook#show
+- name: az acr webhook update
+  description: Updates a webhook.
+  href: acr/webhook#update
 htmlId: acr
 examples: []
 source:
@@ -53,7 +90,7 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the container registry.
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -91,34 +128,37 @@ children:
 - commandList: []
   htmlId: create
   examples:
-  - title: Create a container registry with a new storage account.
-    code: az acr create -n MyRegistry -g MyResourceGroup -l southcentralus --sku Basic
+  - title: Create a managed container registry. Applicable to Managed SKU.
+    code: az acr create -n MyRegistry -g MyResourceGroup --sku Managed_Standard
+  - title: Create a container registry with a new storage account. Applicable to Basic SKU.
+    code: az acr create -n MyRegistry -g MyResourceGroup --sku Basic
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the container registry.
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --sku
     isRequired: True
     summary: The SKU of the container registry.
     description: ''
-    parameterValueGroup: Basic
+    parameterValueGroup: Basic, Managed_Basic, Managed_Premium, Managed_Standard
   - name: --admin-enabled
     isRequired: False
     summary: Indicates whether the admin user is enabled.
     description: ''
+    defaultValue: false
     parameterValueGroup: false, true
   - name: --location -l
     isRequired: False
-    summary: Location. You can configure the default location using 'az configure --defaults location=<location>'.
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
     description: ''
   - name: --storage-account-name
     isRequired: False
-    summary: 'Default: A new storage account will be created. Provide the name of an existing storage account if you''re recreating a container registry over a previous registry created storage account.'
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Basic SKU.
     description: ''
   - name: --debug
     isRequired: False
@@ -156,16 +196,16 @@ children:
 - commandList: []
   htmlId: delete
   examples:
-  - title: Delete a container registry
+  - title: Delete a container registry.
     code: az acr delete -n MyRegistry
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the container registry.
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -210,7 +250,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -246,6 +286,61 @@ children:
   summary: Lists all the container registries under the current subscription.
   Metadata: {}
 - commandList: []
+  htmlId: login
+  examples:
+  - title: Login to a container registry
+    code: az acr login -n MyRegistry
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
+    description: ''
+  - name: --password -p
+    isRequired: False
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --username -u
+    isRequired: False
+    summary: The username used to log into a container registry.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_acr_login
+  name: az acr login
+  description: ''
+  summary: Login to a container registry through Docker.
+  Metadata: {}
+- commandList: []
   htmlId: show
   examples:
   - title: Get the login server for a container registry.
@@ -253,11 +348,11 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the container registry.
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
     description: ''
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -304,7 +399,7 @@ children:
   parameters:
   - name: --name -n
     isRequired: True
-    summary: The name of the container registry.
+    summary: The name of the container registry. You can configure the default registry name using az configure --defaults acr=<registry name>.
     description: ''
   - name: --admin-enabled
     isRequired: False
@@ -313,11 +408,11 @@ children:
     parameterValueGroup: false, true
   - name: --resource-group -g
     isRequired: False
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --storage-account-name
     isRequired: False
-    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account.
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Basic SKU.
     description: ''
   - name: --tags
     isRequired: False
@@ -371,11 +466,11 @@ children:
 uid: az_acr
 name: 'Container Registry - az acr'
 description: ''
-summary: Manage Azure container registries.
+summary: Manage Azure Container Registries.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/3b6324d00353405e547723056bb324fe3667731c/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-  updated_at: 3/21/2017 5:07:14 PM
-  ms.date: 3/21/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/855f1233a4211c99cb7708833b5c85d5a47b36bf/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+  updated_at: 6/20/2017 11:05:56 PM
+  ms.date: 6/20/2017
