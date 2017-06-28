@@ -12,7 +12,7 @@
 ## [Output formats](../docs-ref-conceptual/format-output-azure-cli.md)
 ## [Query](../docs-ref-conceptual/query-azure-cli.md)
 ## [Subscriptions](../docs-ref-conceptual/manage-azure-subscriptions-azure-cli.md)
-## [Cloud Sets](../docs-ref-conceptual/manage-cloud-sets-azure-cli.md)
+## [Clouds](../docs-ref-conceptual/manage-cloud-sets-azure-cli.md)
 ## [Release notes](../docs-ref-conceptual/release-notes-azure-cli.md)
 # Sample Scripts
 ## [Linux VMs](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)

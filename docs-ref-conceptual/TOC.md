@@ -12,7 +12,7 @@
 ## [Output formats](format-output-azure-cli.md)
 ## [Query](query-azure-cli.md)
 ## [Subscriptions](manage-azure-subscriptions-azure-cli.md)
-## [Cloud Sets](manage-cloud-sets-azure-cli.md)
+## [Clouds](manage-cloud-sets-azure-cli.md)
 ## [Release notes](release-notes-azure-cli.md)
 # Sample Scripts
 ## [Linux VMs](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
