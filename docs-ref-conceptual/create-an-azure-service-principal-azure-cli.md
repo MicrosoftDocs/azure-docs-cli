@@ -49,7 +49,9 @@ These values identify your application when creating a service principal.
 
 Get identity information about your application with the `az ad app list`.
 
-```azurecli
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
+
+```azurecli-interactive
 az ad app list --display-name MyDemoWebApp
 ```
 
@@ -75,7 +77,7 @@ The `--display-name` option filters the returned list of apps to show those with
 
 Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
 
-```azurecli
+```azurecli-interactive
 az ad sp create-for-rbac --name {appId} --password "{strong password}" 
 ``` 
 
@@ -95,7 +97,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
 
 ### Get information about the service principal
 
-```azurecli
+```azurecli-interactive
 az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 ```
 
@@ -116,7 +118,7 @@ az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 
 You can now log in as the new service principal for your app using the *appId* and *password* from `az ad sp show`.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
 
-```azurecli
+```azurecli-interactive
 az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password} --tenant {tenant}
 ``` 
 
@@ -146,7 +148,7 @@ Use the `id`, `password`, and `tenant` values as the credentials for running you
 > Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals.
 > Roles have sets of permissions associated with them,
 > which determine the resources a principal can read, access, write, or manage.
-> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles.md).
+> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
 The Azure CLI 2.0 provides the following commands to manage role assignments:
 
@@ -159,14 +161,14 @@ The default role for a service principal is **Contributor**. It may not be the b
 In this example, add the **Reader** role to our prior example, and delete the **Contributor**
 one:
 
-```azurecli
+```azurecli-interactive
 az role assignment create --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d --role Reader
 az role assignment delete --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d --role Contributor
 ```
 
 Verify the changes by listing the currently assigned roles:
 
-```azurecli
+```azurecli-interactive
 az role assignment list --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d
 ```
 
@@ -198,7 +200,7 @@ It's a good security practice to review permissions and update passwords regular
 
 Use `az ad sp reset-credentials` to reset the current password for the service principal.
 
-```azurecli
+```azurecli-interactive
 az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --password {new-password}
 ```
 

@@ -11,6 +11,9 @@ commandList:
 - name: az sql elastic-pool list-dbs
   description: Returns a list of databases in an elastic pool.
   href: elastic-pool#list-dbs
+- name: az sql elastic-pool list-editions
+  description: Shows elastic pool editions that are available for your subscription.
+  href: elastic-pool#list-editions
 - name: az sql elastic-pool show
   description: Gets an elastic pool.
   href: elastic-pool#show
@@ -21,7 +24,7 @@ htmlId: elastic-pool
 examples: []
 source:
   remote:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
     branch: master
     repo: https://github.com/Azure/azure-cli.git
 children:
@@ -35,17 +38,17 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --db-dtu-max
+  - name: --db-dtu-max --db-max-dtu
     isRequired: False
     summary: The maximum DTU any one database can consume.
     description: ''
-  - name: --db-dtu-min
+  - name: --db-dtu-min --db-min-dtu
     isRequired: False
     summary: The minimum DTU all databases are guaranteed.
     description: ''
@@ -57,7 +60,7 @@ children:
     isRequired: False
     summary: The edition of the elastic pool.
     description: ''
-  - name: --storage
+  - name: --max-size --storage
     isRequired: False
     summary: The max storage size of the elastic pool. If no unit is specified, defaults to megabytes (MB).
     description: ''
@@ -89,7 +92,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -108,7 +111,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -138,7 +141,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -153,7 +156,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -183,7 +186,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -202,7 +205,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -232,7 +235,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -240,6 +243,68 @@ children:
   name: az sql elastic-pool list-dbs
   description: ''
   summary: Returns a list of databases in an elastic pool.
+  Metadata: {}
+- commandList: []
+  htmlId: list-editions
+  examples:
+  - title: Show all elastic pool editions and pool DTU limits in a location.
+    code: az sql elastic-pool list-editions -l westus
+  - title: Show all pool DTU limits for Standard edition.
+    code: az sql elastic-pool list-editions -l westus --edition Standard
+  - title: Show available max sizes for elastic pools with 100 DTUs
+    code: az sql elastic-pool list-editions -l westus --dtu 100 --show-details max-size
+  - title: Show available per database settings for Standard 100 DTU elastic pools
+    code: az sql elastic-pool list-editions -l westus --edition Standard --dtu 100 --show-details db-min-dtu db-max-dtu db-max-size
+  parameters:
+  - name: --location -l
+    isRequired: True
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+    description: ''
+  - name: --show-details -d
+    isRequired: False
+    summary: List of additional details to include in output.
+    description: ''
+    parameterValueGroup: db-max-dtu, db-max-size, db-min-dtu, max-size
+  - name: --dtu
+    isRequired: False
+    summary: Elastic pool DTU limit to search for. If unspecified, all DTU limits are shown.
+    description: ''
+  - name: --edition
+    isRequired: False
+    summary: Edition to search for. If unspecified, all editions are shown.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_sql_elastic-pool_list-editions
+  name: az sql elastic-pool list-editions
+  description: Also includes available pool DTU settings, storage limits, and per database settings. In order to reduce verbosity, additional storage limits and per database settings are hidden by default.
+  summary: Shows elastic pool editions that are available for your subscription.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -251,7 +316,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
@@ -281,7 +346,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -300,17 +365,17 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --server -s
     isRequired: True
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --db-dtu-max
+  - name: --db-dtu-max --db-max-dtu
     isRequired: False
     summary: The maximum DTU any one database can consume.
     description: ''
-  - name: --db-dtu-min
+  - name: --db-dtu-min --db-min-dtu
     isRequired: False
     summary: The minimum DTU all databases are guaranteed.
     description: ''
@@ -318,7 +383,7 @@ children:
     isRequired: False
     summary: TThe total shared DTU for the elastic eool.
     description: ''
-  - name: --storage
+  - name: --max-size --storage
     isRequired: False
     summary: Storage limit for the elastic pool in MB.
     description: ''
@@ -358,7 +423,7 @@ children:
     description: ''
   source:
     remote:
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
       branch: master
       repo: https://github.com/Azure/azure-cli.git
   children: []
@@ -373,8 +438,8 @@ description: ''
 summary: Manage elastic pools. An elastic pool is an allocation of CPU, IO, and memory resources. Databases inside the pool share these resources.
 Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
-  doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/afee409b3374de98fb868cd0e5bcbb3161899b92/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/help.py
-  updated_at: 3/25/2017 3:36:46 PM
-  ms.date: 3/25/2017
+  doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/71c76c65a64e7dd4788a51d85644b01012f80356/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+  updated_at: 6/8/2017 4:07:47 PM
+  ms.date: 6/8/2017

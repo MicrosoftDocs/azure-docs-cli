@@ -3,10 +3,10 @@ commandList:
   description: Requests that a backup of the specified key be downloaded to the client.
   href: key#backup
 - name: az keyvault key create
-  description: Creates a new, named, key in the specified vault.
+  description: Creates a new key, stores it, then returns key parameters and attributes to the client.
   href: key#create
 - name: az keyvault key delete
-  description: Deletes the specified key.
+  description: Deletes a key of any type from storage in Azure Key Vault.
   href: key#delete
 - name: az keyvault key import
   description: Import a private key.
@@ -14,18 +14,30 @@ commandList:
 - name: az keyvault key list
   description: List keys in the specified vault.
   href: key#list
+- name: az keyvault key list-deleted
+  description: List deleted keys in the specified vault.
+  href: key#list-deleted
 - name: az keyvault key list-versions
-  description: List the versions of the specified key.
+  description: Retrieves a list of individual key versions with the same key name.
   href: key#list-versions
+- name: az keyvault key purge
+  description: Permanently deletes the specified key.
+  href: key#purge
+- name: az keyvault key recover
+  description: Recovers the deleted key back to its current version under /keys.
+  href: key#recover
 - name: az keyvault key restore
-  description: Restores the backup key in to a vault.
+  description: Restores a backed up key to a vault.
   href: key#restore
 - name: az keyvault key set-attributes
-  description: Updates the Key Attributes associated with the specified key.
+  description: The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Azure Key Vault.
   href: key#set-attributes
 - name: az keyvault key show
-  description: Retrieves the public portion of a key plus its attributes.
+  description: Gets the public part of a stored key.
   href: key#show
+- name: az keyvault key show-deleted
+  description: Retrieves the deleted key information plus its attributes.
+  href: key#show-deleted
 htmlId: key
 examples: []
 source:
@@ -80,7 +92,7 @@ children:
   children: []
   uid: az_keyvault_key_backup
   name: az keyvault key backup
-  description: ''
+  description: The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does NOT return key material in a form that can be used outside the Azure Key Vault system, the returned key material is either protected to a Azure Key Vault HSM or to Azure Key Vault itself. The intent of this operation is to allow a client to GENERATE a key in one Azure Key Vault instance, BACKUP the key, and then RESTORE it into another Azure Key Vault instance. The BACKUP operation may be used to export, in protected form, any key type from Azure Key Vault. Individual versions of a key cannot be backed up. BACKUP / RESTORE can be performed within geographical boundaries only; meaning that a BACKUP from one geographical area cannot be restored to another geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area.
   summary: Requests that a backup of the specified key be downloaded to the client.
   Metadata: {}
 - commandList: []
@@ -118,7 +130,7 @@ children:
     description: ''
   - name: --size
     isRequired: False
-    summary: The key size in bytes. e.g. 1024 or 2048.
+    summary: The key size in bytes. For example, 1024 or 2048.
     description: ''
   - name: --tags
     isRequired: False
@@ -154,8 +166,8 @@ children:
   children: []
   uid: az_keyvault_key_create
   name: az keyvault key create
-  description: ''
-  summary: Creates a new, named, key in the specified vault.
+  description: The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists, Azure Key Vault creates a new version of the key.
+  summary: Creates a new key, stores it, then returns key parameters and attributes to the client.
   Metadata: {}
 - commandList: []
   htmlId: delete
@@ -199,8 +211,8 @@ children:
   children: []
   uid: az_keyvault_key_delete
   name: az keyvault key delete
-  description: ''
-  summary: Deletes the specified key.
+  description: The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic material associated with the key, which means the key is not usable for Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations.
+  summary: Deletes a key of any type from storage in Azure Key Vault.
   Metadata: {}
 - commandList: []
   htmlId: import
@@ -326,8 +338,53 @@ children:
   children: []
   uid: az_keyvault_key_list
   name: az keyvault key list
-  description: ''
+  description: 'Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored key. The LIST operation is applicable to all key types, however only the base key identifier,attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. Authorization: Requires the keys/list permission.'
   summary: List keys in the specified vault.
+  Metadata: {}
+- commandList: []
+  htmlId: list-deleted
+  examples: []
+  parameters:
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --maxresults
+    isRequired: False
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_key_list-deleted
+  name: az keyvault key list-deleted
+  description: 'Authorization: Requires the keys/list permission.'
+  summary: List deleted keys in the specified vault.
   Metadata: {}
 - commandList: []
   htmlId: list-versions
@@ -375,8 +432,98 @@ children:
   children: []
   uid: az_keyvault_key_list-versions
   name: az keyvault key list-versions
-  description: ''
-  summary: List the versions of the specified key.
+  description: The full key identifier, attributes, and tags are provided in the response.
+  summary: Retrieves a list of individual key versions with the same key name.
+  Metadata: {}
+- commandList: []
+  htmlId: purge
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the key.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_key_purge
+  name: az keyvault key purge
+  description: 'Aka purges the key. Authorization: Requires the keys/purge permission.'
+  summary: Permanently deletes the specified key.
+  Metadata: {}
+- commandList: []
+  htmlId: recover
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the key.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_key_recover
+  name: az keyvault key recover
+  description: 'Authorization: Requires the keys/recover permission.'
+  summary: Recovers the deleted key back to its current version under /keys.
   Metadata: {}
 - commandList: []
   htmlId: restore
@@ -420,8 +567,8 @@ children:
   children: []
   uid: az_keyvault_key_restore
   name: az keyvault key restore
-  description: ''
-  summary: Restores the backup key in to a vault.
+  description: 'Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes and access control policies. The RESTORE operation may be used to import a previously backed up key. Individual versions of a key cannot be restored. The key is restored in its entirety with the same key name as it had when it was backed up. If the key name is not available in the target Key Vault, the RESTORE operation will be rejected. While the key name is retained during restore, the final key identifier will change if the key is restored to a different vault. Restore will restore all versions and preserve version identifiers. The RESTORE operation is subject to security constraints: The target Key Vault must be owned by the same Microsoft Azure Subscription as the source Key Vault The user must have RESTORE permission in the target Key Vault.'
+  summary: Restores a backed up key to a vault.
   Metadata: {}
 - commandList: []
   htmlId: set-attributes
@@ -490,8 +637,8 @@ children:
   children: []
   uid: az_keyvault_key_set-attributes
   name: az keyvault key set-attributes
-  description: ''
-  summary: Updates the Key Attributes associated with the specified key.
+  description: 'In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot be changed.'
+  summary: The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Azure Key Vault.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -539,8 +686,53 @@ children:
   children: []
   uid: az_keyvault_key_show
   name: az keyvault key show
-  description: ''
-  summary: Retrieves the public portion of a key plus its attributes.
+  description: The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response.
+  summary: Gets the public part of a stored key.
+  Metadata: {}
+- commandList: []
+  htmlId: show-deleted
+  examples: []
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: Name of the key.
+    description: ''
+  - name: --vault-name
+    isRequired: True
+    summary: Name of the key vault.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_keyvault_key_show-deleted
+  name: az keyvault key show-deleted
+  description: 'Authorization: Requires the keys/get permission.'
+  summary: Retrieves the deleted key information plus its attributes.
   Metadata: {}
 uid: az_keyvault_key
 name: 'Key Vault keys - az keyvault key'
@@ -550,6 +742,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/e0ca649f8ec8b4f460edf829cb067ea1f00afb5f/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-  updated_at: 4/6/2017 7:49:04 PM
-  ms.date: 4/6/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/e0ee922a1f9da2b2bc29c7eed72872eca26df7e5/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 6/16/2017 10:50:05 PM
+  ms.date: 6/16/2017

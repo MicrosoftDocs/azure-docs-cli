@@ -26,6 +26,9 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## macOS
 
+> [!WARNING]
+> The Homebrew formula for the Azure CLI, `azure-cli`, is currently out of date and will install a previous version.
+
 1. Install Azure CLI 2.0 with one `curl` command.
 
    ```bash
@@ -38,89 +41,63 @@ For information about the latest release, see the [release notes](release-notes-
    exec -l $SHELL
    ```
    
-3. Run Azure CLI 2.0 from the command prompt with the `az` command.
+3. Run the CLI from the command prompt with the `az` command.
 
 > [!Note]
+> When you install with InstallAzureCli, [`az component update`](/cli/azure/component#update) isn't supported.
+> To update to the latest CLI, run `curl -L https://aka.ms/InstallAzureCli | bash` again.
+> 
 > To uninstall, see the [manual uninstall instructions](#uninstall).
 
 ## Windows
 
-Get Azure CLI 2.0 on Windows using `pip`. 
+You can install Azure CLI 2.0 with the MSI and use it in the Windows command-line, or you can install the CLI with apt-get on Bash on Ubuntu on Windows.
 
-1. Visit the Python site and [download Python](https://www.python.org/downloads/) for Windows.
-   Be sure to install the Pip component when you install Python.
-   After the install completes, add Python to your PATH environment variable (the installer will prompt you).
+### MSI for the Windows command-line 
 
-2. Check your Python installation from a command prompt.
-
-   ```bash
-   python --version
-   ```
-
-3. Install Azure CLI 2.0 using `pip`.
-
-   ```bash
-   pip install --user azure-cli
-   ```
-
-   > [!NOTE]
-   > The CLI `az.bat` may be installed in `%USERPROFILE%\AppData\Roaming\Python\Scripts`
-   > or `%USERPROFILE%\AppData\Roaming\Python\PythonXY\Scripts`
-   > where `XY` is your Python version (for example, `%USERPROFILE%\AppData\Roaming\Python\Python27\Scripts`).
-   > Add the folder that contains `az.bat` to your path.
-   
-4. Run Azure CLI 2.0 from the command prompt with the 'az' command.
-
-## Linux
-
-1. On Linux, you may need to install specific [prerequisites](#linux-prerequisites).
-
-2. Install Azure CLI 2.0 with one `curl` command.
-
-   ```bash
-   curl -L https://aka.ms/InstallAzureCli | bash
-   ```
-
-3. You may have to restart your command shell for some changes to take effect.
-
-   ```bash
-   exec -l $SHELL
-   ```
-
-4. Run Azure CLI 2.0 from the command prompt with the `az` command.
-
-> [!Note]
-> To uninstall, see the [manual uninstall instructions](#uninstall).
-
-## Docker
-
-We maintain a Docker image preconfigured with the Azure CLI.
-
-Install the Azure CLI using `docker run`.
-
-```bash
-docker run azuresdk/azure-cli-python:<version>
-```
-
-See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](https://aka.ms/InstallAzureCliWindows).
 
 > [!NOTE]
-> If you want to pick up the SSH keys from your user environment,
-> you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
->
-> ```bash
-> docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
-> ```
+> When you install with the msi, [`az component`](/cli/azure/component) isn't supported.
+> To update to the latest CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again.
+> 
+> To uninstall the CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
 
-The Docker image does not support the [`component` feature](/cli/azure/component).
-To update the Azure CLI 2.0, use `docker run` to install the latest image, or the specific image that you want.
+### apt-get for Bash on Ubuntu on Windows
 
-## apt-get
+1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/commandline/wsl/install_guide).
+
+2. Open the Bash shell.
+
+3. Modify your sources list.
+
+   ```bash
+   echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
+   ```
+
+4. Run the following sudo commands:
+
+   ```bash
+   sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
+   sudo apt-get install apt-transport-https
+   sudo apt-get update && sudo apt-get install azure-cli
+   ```
+
+5.  Run the CLI from the command prompt with the `az` command.
+
+> [!NOTE]
+> When you install with apt-get, [`az component`](/cli/azure/component) isn't supported.
+> To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
+> 
+> To uninstall, run `sudo apt-get remove azure-cli`.
+
+## apt-get for Debian/Ubuntu
 
 For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 1. Modify your sources list.
-
+ 
    - 32-bit system
 
      ```bash
@@ -143,14 +120,41 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
    sudo apt-get update && sudo apt-get install azure-cli
    ```
 
-When you install with apt-get, `az component` isn't supported.
-To update the CLI, use the following commands:
+3.  Run the CLI from the command prompt with the `az` command.
+
+> [!NOTE]
+> When you install with apt-get, [`az component`](/cli/azure/component) isn't supported.
+> To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
+> 
+> To uninstall, run `sudo apt-get remove azure-cli`.
+
+## Docker
+
+We maintain a Docker image preconfigured with the Azure CLI 2.0.
+
+Install the CLI using `docker run`.
 
 ```bash
-sudo apt-get update && sudo apt-get install azure-cli
+docker run azuresdk/azure-cli-python:<version>
 ```
 
-## Linux Prerequisites
+See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+
+> [!NOTE]
+> If you want to pick up the SSH keys from your user environment,
+> you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
+
+>> ```bash
+> docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
+> ```
+
+The CLI is installed on the image as the `az` command in `/usr/local/bin`.
+
+> [!NOTE]
+> The Docker image does not support the [`az component`](/cli/azure/component) feature.
+> To update the Azure CLI 2.0, use `docker run` to install the latest image, or the specific image that you want.
+
+## Linux
 
 1. If you don't have it, install [Python](https://www.python.org/downloads).
 
@@ -168,8 +172,27 @@ sudo apt-get update && sudo apt-get install azure-cli
    SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
    ```
 
+3. Install the CLI with one `curl` command.
+
+   ```bash
+   curl -L https://aka.ms/InstallAzureCli | bash
+   ```
+
+4. You may have to restart your command shell for some changes to take effect.
+
+   ```bash
+   exec -l $SHELL
+   ```
+
+5. Run the CLI from the command prompt with the `az` command.
+
+> [!Note]
+> When you install with InstallAzureCli, [`az component update`](/cli/azure/component#update) isn't supported.
+> To update to the latest CLI, run `curl -L https://aka.ms/InstallAzureCli | bash` again.
+> 
+> To uninstall, see the [manual uninstall instructions](#uninstall).
+
 ## Troubleshooting
--------------------------------
 
 ### Errors with curl redirection
 
@@ -188,71 +211,6 @@ bash: line 1: syntax error near unexpected token `<'
 curl https://azurecliprod.blob.core.windows.net/install | bash
 ```
 
-
-### Errors on install with `cffi` or cryptography
-
-If you get errors on install on OS X, upgrade `pip`.
-
-```bash
-pip install --upgrade --force-reinstall pip
-```
-
-If you get errors on install on **Debian** or **Ubuntu**, like these examples,
-install `libssl-dev` and `libffi-dev`.
-
-```bash
-sudo apt-get update
-sudo apt-get install -y libssl-dev libffi-dev
-```
-
-Also install Python Dev for your version of Python.
-
-Python 2:
-
-```bash
-sudo apt-get install -y python-dev
-```
-
-Python 3:
-
-```bash
-sudo apt-get install -y python3-dev
-```
-
-Ubuntu 15 may require `build-essential` also:
-
-```bash
-sudo apt-get install -y build-essential
-```
-
-### Example Errors
-
-```
-Downloading cffi-1.5.2.tar.gz (388kB)
-    100% |################################| 389kB 3.9MB/s
-    Complete output from command python setup.py egg_info:
-
-        No working compiler found, or bogus compiler options
-        passed to the compiler from Python's distutils module.
-        See the error messages above.
-        (If they are about -mno-fused-madd and you are on OS/X 10.8,
-        see http://stackoverflow.com/questions/22313407/ .)
-
-    ----------------------------------------
-Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-77i2fido/cffi/
-```
-
-```
-#include <openssl/e_os2.h>
-                            ^
-compilation terminated.
-error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
-
-Failed building wheel for cryptography
-```
-
-See Stack Overflow question - [Failed to install Python Cryptography package with PIP and setup.py](http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py)
-
 ## Uninstall
 
 If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
@@ -264,12 +222,12 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
    rm <install location>/bin/az
    ```
 
-2. Delete the line `<install location>/lib/azure-cli/az.completion` from <install location>/.bash_profile.
+2. Delete the line `<install location>/lib/azure-cli/az.completion` from `<install location>/.bash_profile`.
 
 > [!Note]
-> The default install location is /Users/<username>.
+> The default install location is `/Users/<username>`.
 
-If you used pip, apt-get, or Docker to install the CLI, use the same tool to uninstall it.
+If you used apt-get, Docker, or the msi to install the CLI, use the same tool to uninstall it.
 
 ## Reporting issues and feedback
 

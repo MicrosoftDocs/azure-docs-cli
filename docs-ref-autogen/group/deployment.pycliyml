@@ -3,26 +3,26 @@ commandList:
   description: Start a deployment.
   href: deployment#create
 - name: az group deployment delete
-  description: Delete deployment.
+  description: Deletes a deployment from the deployment history.
   href: deployment#delete
 - name: az group deployment export
   description: Export the template used for the specified deployment.
   href: deployment#export
 - name: az group deployment list
-  description: Get a list of deployments.
+  description: Get all the deployments for a resource group.
   href: deployment#list
 - name: az group deployment operation
   description: Manage deployment operations.
   href: deployment/operation
   isGroup: true
 - name: az group deployment operation list
-  description: Gets a list of deployments operations.
+  description: Gets all deployments operations for a deployment.
   href: deployment/operation#list
 - name: az group deployment operation show
   description: Get a deployment's operation.
   href: deployment/operation#show
 - name: az group deployment show
-  description: Get a deployment.
+  description: Gets a deployment.
   href: deployment#show
 - name: az group deployment validate
   description: Validate whether the specified template is syntactically correct and will be accepted by Azure Resource Manager.
@@ -45,10 +45,12 @@ children:
     code: az group deployment create -g MyResourceGroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
   - title: Create a deployment from a local template file and use parameter values in a string.
     code: 'az group deployment create -g MyResourceGroup --template-file azuredeploy.json --parameters "{"location": {"value": "westus"}}"'
+  - title: Create a deployment from a local template, use a parameter file and selectively override parameters.
+    code: az group deployment create -g MyResourceGroup --template-file azuredeploy.json --parameters params.json --parameters MyValue=This MyArray=@array.json
   parameters:
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --mode
     isRequired: False
@@ -66,8 +68,8 @@ children:
     description: ''
   - name: --parameters
     isRequired: False
-    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file. Can be repeated. If a the same parameter is present in multiple arguments, the last value wins.
-    description: ''
+    summary: Supply deployment parameter values.
+    description: 'Parameters may be supplied from a parameters file, raw JSON (which can be loaded using @<file path> syntax, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax (example: --parameters params.json --parameters location=westus).'
   - name: --template-file
     isRequired: False
     summary: A template file path in the file system.
@@ -119,7 +121,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -151,8 +153,8 @@ children:
   children: []
   uid: az_group_deployment_delete
   name: az group deployment delete
-  description: ''
-  summary: Delete deployment.
+  description: A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. Deleting a template deployment does not affect the state of the resource group. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
+  summary: Deletes a deployment from the deployment history.
   Metadata: {}
 - commandList: []
   htmlId: export
@@ -164,7 +166,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -205,15 +207,15 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --filter
     isRequired: False
-    summary: The filter to apply on the operation.
+    summary: The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'.
     description: ''
   - name: --top
     isRequired: False
-    summary: Query parameters. If null is passed returns all deployments.
+    summary: The number of results to get. If null is passed, returns all deployments.
     description: ''
   - name: --debug
     isRequired: False
@@ -246,7 +248,7 @@ children:
   uid: az_group_deployment_list
   name: az group deployment list
   description: ''
-  summary: Get a list of deployments.
+  summary: Get all the deployments for a resource group.
   Metadata: {}
 - commandList: []
   htmlId: show
@@ -258,7 +260,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --debug
     isRequired: False
@@ -291,7 +293,7 @@ children:
   uid: az_group_deployment_show
   name: az group deployment show
   description: ''
-  summary: Get a deployment.
+  summary: Gets a deployment.
   Metadata: {}
 - commandList: []
   htmlId: validate
@@ -299,7 +301,7 @@ children:
   parameters:
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --mode
     isRequired: False
@@ -309,8 +311,8 @@ children:
     parameterValueGroup: Complete, Incremental
   - name: --parameters
     isRequired: False
-    summary: Provide deployment parameter values, either json string, or use '@<file path>' to load from a file. Can be repeated. If a the same parameter is present in multiple arguments, the last value wins.
-    description: ''
+    summary: Supply deployment parameter values.
+    description: 'Parameters may be supplied from a parameters file, raw JSON (which can be loaded using @<file path> syntax, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax (example: --parameters params.json --parameters location=westus).'
   - name: --template-file
     isRequired: False
     summary: A template file path in the file system.
@@ -362,7 +364,7 @@ children:
     description: ''
   - name: --resource-group -g
     isRequired: True
-    summary: Name of resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
     description: ''
   - name: --created
     isRequired: False
@@ -435,6 +437,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/95f33fff1d13589a362d2d0e15f5b77a83bcaff8/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-  updated_at: 4/5/2017 11:44:17 PM
-  ms.date: 4/5/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/4ba0a0b770b991517875c82df2f334734133285a/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+  updated_at: 6/26/2017 6:01:42 PM
+  ms.date: 6/26/2017
