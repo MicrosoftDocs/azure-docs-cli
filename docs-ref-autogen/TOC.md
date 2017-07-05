@@ -1590,6 +1590,7 @@
 ### [Get-Instance-View](vmss.pycliyml#get-instance-view "az vmss get-instance-view")
 ### [List](vmss.pycliyml#list "az vmss list")
 ### [List-Instance-Connection-Info](vmss.pycliyml#list-instance-connection-info "az vmss list-instance-connection-info")
+### [List-Instance-Public-Ips](vmss.pycliyml#list-instance-public-ips "az vmss list-instance-public-ips")
 ### [List-Instances](vmss.pycliyml#list-instances "az vmss list-instances")
 ### [List-Skus](vmss.pycliyml#list-skus "az vmss list-skus")
 ### [Reimage](vmss.pycliyml#reimage "az vmss reimage")
