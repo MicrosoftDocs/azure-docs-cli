@@ -16,110 +16,59 @@ ms.assetid: fab89cb8-dac1-4e21-9d34-5eadd5213c05
 
 # Create an Azure service principal with Azure CLI 2.0
 
-If you plan to manage your app or service with Azure CLI 2.0,
-you should run it under an Azure Active Directory (AAD) service principal rather than your own credentials.
-This topic steps you through creating a security principal with Azure CLI 2.0.
+If you want to manage permissions for your app or service, you can do so through creating a service principal under Azure Active Directory. A service principal will allow you to set per-app permissions restrictions. This topic will run you through the steps for creating a service principal and setting its permissions.
 
 > [!NOTE]
-> You can also create a service principal through the Azure portal.
-> Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
-
-## What is a 'service principal'?
-
-An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a specific role, and tightly controlled permissions to access your resources. It only needs to be able to do specific things, unlike a general user identity. It improves security if you only grant it the minimum permissions level needed to perform its management tasks. 
-
-Right now, Azure CLI 2.0 only supports the creation of password-based authentication credentials. In this topic, we cover creating a service principal with a specific password, and optionally assigning specific roles to it.
+> Right now, Azure CLI 2.0 only supports the creation of password-based authentication credentials. If you need to create certificate-based credentials, create the service principal through the Azure portal. Read [Use portal to create Active Directory application and service principal that can access resources](/azure/azure-resource-manager/resource-group-create-service-principal-portal) for more details.
 
 ## Verify your own permission level
 
-First, you must have sufficient permissions in both your Azure Active Directory and your Azure subscription. Specifically, you must be able to create an app in the Active Directory, and assign a role to the service principal. 
+To create a service principal, you must have the appropriate permissions on your user account. You must be able to create an app in the Active Directory, and assign a role to the service principal. 
 
 The easiest way to check whether your account has adequate permissions is through the portal. See [Check required permission in portal](/azure/azure-resource-manager/resource-group-create-service-principal-portal.md#required-permissions).
 
-## Create a service principal for your application
+## Get required product identifier
 
-You must have one of the following to identify the app you want to create a service principal for:
+You must have one of the following to identify the product you want to create a service principal for:
 
-  * The unique name or URI of your deployed app (such as "MyDemoWebApp" in the examples), or
-  * the Application ID, the unique GUID associated with your deployed app, service, or object
+  * The unique name or URI of your deployed app
+  * The Application ID, the unique GUID associated with your deployed app, service, or object
 
-These values identify your application when creating a service principal.
+If you don't have this information, you can use the [az webapp list](/cli/azure/webapp#list) command:
 
-### Get information about your application
-
-Get identity information about your application with the `az ad app list`.
-
-[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
-
-```azurecli-interactive
-az ad app list --display-name MyDemoWebApp
+```azurecli
+az webapp list --output table --query [].{name:name,URI:defaultHostName}
 ```
-
-```json
-{
-    "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
-    "appPermissions": null,
-    "availableToOtherTenants": false,
-    "displayName": "MyDemoWebApp",
-    "homepage": "http://MyDemoWebApp.azurewebsites.net",
-    "identifierUris": [
-      "http://MyDemoWebApp"
-    ],
-    "objectId": "bd07205b-629f-4a2e-945e-1ee5dadf610b9",
-    "objectType": "Application",
-    "replyUrls": []
-  }
-```
-
-The `--display-name` option filters the returned list of apps to show those with `displayName` starting with MyDemoWebApp.
 
 ### Create the service principal
 
-Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
+Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) to create the service principal. For example, if you have the application name:
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name {appId} --password "{strong password}" 
+az ad sp create-for-rbac --name APP_NAME --password ... 
 ``` 
 
 ```json
 {
-  "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
-  "displayName": "MyDemoWebApp",
-  "name": "http://MyDemoWebApp",
-  "password": {strong password},
+  "appId": "d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d",
+  "displayName": "APP_NAME",
+  "name": "http://APP_NAME",
+  "password": ...,
   "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 }
 ```
 
+Record the `appId` and `tenant` values, which will be used to authenticate.
+
  > [!WARNING] 
- > Don't create an insecure password.  Follow the
- > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
-
-### Get information about the service principal
-
-```azurecli-interactive
-az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
-```
-
-```json
-{
-  "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
-  "displayName": "MyDemoWebApp",
-  "objectId": "0ceae62e-1a1a-446f-aa56-2300d176659bde",
-  "objectType": "ServicePrincipal",
-  "servicePrincipalNames": [
-    "http://MyDemoWebApp",
-    "a487e0c1-82af-47d9-9a0b-af184eb87646d"
-  ]
-}
-```
+ > Don't create an insecure password.  Follow the [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance. If you omit the `--password` argument, a secure password will be created for you.
 
 ### Sign in using the service principal
 
-You can now log in as the new service principal for your app using the *appId* and *password* from `az ad sp show`.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
+You can now log in as the new service principal for your app using the `appId` and `password` from the output of the previous command, or from [az sp app show](/cli/azure/ad/sp#show).  Supply the `tenant` value from the results of `az ad sp create-for-rbac`:
 
 ```azurecli-interactive
-az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password} --tenant {tenant}
+az login --service-principal -u d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d --password {password} --tenant {tenant}
 ``` 
 
 You will see this output after a successful sign-on:
@@ -128,7 +77,7 @@ You will see this output after a successful sign-on:
 [
   {
     "cloudName": "AzureCloud",
-    "id": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
+    "id": "d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d",
     "isDefault": true,
     "state": "Enabled",
     "tenantId": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
@@ -144,32 +93,25 @@ Use the `id`, `password`, and `tenant` values as the credentials for running you
 
 ## Managing roles 
 
-> [!NOTE]
-> Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals.
-> Roles have sets of permissions associated with them,
-> which determine the resources a principal can read, access, write, or manage.
-> For more information on RBAC and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
-
 The Azure CLI 2.0 provides the following commands to manage role assignments:
 
 * [az role assignment list](/cli/azure/role/assignment#list)
 * [az role assignment create](/cli/azure/role/assignment#create)
 * [az role assignment delete](/cli/azure/role/assignment#delete)
 
-The default role for a service principal is **Contributor**. It may not be the best choice for an app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and is a good choice for read-only access. You can view details on role-specific permissions or create custom ones through the Azure portal.
+The default role for a service principal is **Contributor**. It may not be the best choice for an app's interactions with Azure services, given its broad permissions. The **Reader** role is more restrictive and is a good choice for read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
-In this example, add the **Reader** role to our prior example, and delete the **Contributor**
-one:
+In this example, add the **Reader** role to our prior example, and delete the **Contributor** one:
 
 ```azurecli-interactive
-az role assignment create --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d --role Reader
-az role assignment delete --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d --role Contributor
+az role assignment create --assignee d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d --role Reader
+az role assignment delete --assignee d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d --role Contributor
 ```
 
 Verify the changes by listing the currently assigned roles:
 
 ```azurecli-interactive
-az role assignment list --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d
+az role assignment list --assignee d7d167ca-ad2a-4b31-ab64-7d5b714b7d8d
 ```
 
 ```json
@@ -188,29 +130,4 @@ az role assignment list --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d
 ```
 
 > [!NOTE] 
-> If your account does not have sufficient permissions to assign a role, you see an error message.
-> The message states your account "does not have authorization to perform action
-> 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
-   
-## Change the credentials of a security principal
-
-It's a good security practice to review permissions and update passwords regularly. You may also want to manage and modify the security credentials as your app changes.
-
-### Reset a service principal password
-
-Use `az ad sp reset-credentials` to reset the current password for the service principal.
-
-```azurecli-interactive
-az ad sp reset-credentials --name 20bce7de-3cd7-49f4-ab64-bb5b443838c3 --password {new-password}
-```
-
-```json
-{
-  "appId": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
-  "name": "a487e0c1-82af-47d9-9a0b-af184eb87646d",
-  "password": {new-password},
-  "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-}
-```
-
-The CLI generates a secure password if you leave out the `--password` option.
+> If your account does not have sufficient permissions to assign a role, you will see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
