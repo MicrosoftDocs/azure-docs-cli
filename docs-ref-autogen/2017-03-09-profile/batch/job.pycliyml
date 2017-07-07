@@ -1,0 +1,785 @@
+commandList:
+- name: az batch job all-statistics
+  description: View statistics of all the jobs under your Batch account.
+  href: job/all-statistics
+  isGroup: true
+- name: az batch job all-statistics show
+  description: Get lifetime summary statistics for all of the jobs in the specified account. Statistics are aggregated across all jobs that have ever existed in the account, from account creation to the last update time of the statistics.
+  href: job/all-statistics#show
+- name: az batch job create
+  description: Add a job to the specified account.
+  href: job#create
+- name: az batch job delete
+  description: Deletes a job.
+  href: job#delete
+- name: az batch job disable
+  description: Disables the specified job, preventing new tasks from running.
+  href: job#disable
+- name: az batch job enable
+  description: Enables the specified job, allowing new tasks to run.
+  href: job#enable
+- name: az batch job list
+  description: List all of the jobs in the specified account or the specified job schedule.
+  href: job#list
+- name: az batch job prep-release-status
+  description: View the status of your job preparation and release tasks.
+  href: job/prep-release-status
+  isGroup: true
+- name: az batch job prep-release-status list
+  description: Lists the execution status of the Job Preparation and Job Release task for the specified job across the compute nodes where the job has run.
+  href: job/prep-release-status#list
+- name: az batch job reset
+  description: Update the properties of a job. All updatable properties are replaced with the values specified or reset to default vaules if unspecified.
+  href: job#reset
+- name: az batch job set
+  description: Update the properties of a job. Properties can be updated independently, but when a property is updated in a sub-group, for example 'constraints' or 'pool info', all properties of that group are reset.
+  href: job#set
+- name: az batch job show
+  description: Gets information about the specified job.
+  href: job#show
+- name: az batch job stop
+  description: Terminates the specified job, marking it as completed.
+  href: job#stop
+htmlId: job
+examples: []
+source:
+  remote:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    branch: chaochen
+    repo: https://github.com/azure/azure-cli/.git
+children:
+- commandList: []
+  htmlId: create
+  examples: []
+  parameters:
+  - name: --json-file
+    isRequired: False
+    summary: A file containing the job specification in JSON format. If this parameter is specified, all 'Job Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --id
+    isRequired: False
+    summary: A string that uniquely identifies the job within the account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. It is common to use a GUID for the id.
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space separated values in 'key=value' format.
+    description: ''
+  - name: --priority
+    isRequired: False
+    summary: The priority of the job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0.
+    description: ''
+  - name: --uses-task-dependencies
+    isRequired: False
+    summary: The flag that determines if this job will use tasks with dependencies. True if flag present.
+    description: ''
+  - name: --job-max-task-retry-count
+    isRequired: False
+    summary: The maximum number of times each task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry tasks. If the maximum retry count is -1, the Batch service retries tasks without limit. The default value is 0 (no retries).
+    description: ''
+  - name: --job-max-wall-clock-time
+    isRequired: False
+    summary: The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
+    description: ''
+  - name: --job-manager-task-command-line
+    isRequired: False
+    summary: The command line of the Job Manager task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    description: ''
+  - name: --job-manager-task-environment-settings
+    isRequired: False
+    summary: A list of environment variable settings for the Job Manager task. Space separated values in 'key=value' format.
+    description: ''
+  - name: --job-manager-task-id
+    isRequired: False
+    summary: A string that uniquely identifies the Job Manager taskwithin the job. The id can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters.
+    description: ''
+  - name: --job-manager-task-resource-files
+    isRequired: False
+    summary: A list of files that the Batch service will download to the compute node before running the command line. Files listed under this element are located in the task's working directory. Space separated resource references in filename=blobsource format.
+    description: ''
+  - name: --pool-id
+    isRequired: False
+    summary: The id of an existing pool. All the tasks of the job will run on the specified pool.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_create
+  name: az batch job create
+  description: ''
+  summary: Add a job to the specified account.
+  Metadata: {}
+- commandList: []
+  htmlId: delete
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job to delete.
+    description: ''
+  - name: --yes -y
+    isRequired: False
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_delete
+  name: az batch job delete
+  description: Deleting a job also deletes all tasks that are part of that job, and all job statistics. This also overrides the retention period for task data; that is, if the job contains tasks which are still retained on compute nodes, the Batch services deletes those tasks' working directories and all their contents.
+  summary: Deletes a job.
+  Metadata: {}
+- commandList: []
+  htmlId: disable
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job to disable.
+    description: ''
+  - name: --disable-tasks
+    isRequired: False
+    summary: What to do with active tasks associated with the job. requeue - Terminate running tasks and requeue them. The tasks will run again when the job is enabled. terminate - Terminate running tasks. The tasks will not run again. wait - Allow currently running tasks to complete.
+    description: ''
+    parameterValueGroup: '''requeue'', ''terminate'', ''wait'''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_disable
+  name: az batch job disable
+  description: The Batch Service immediately moves the job to the disabling state. Batch then uses the disableTasks parameter to determine what to do with the currently running tasks of the job. The job remains in the disabling state until the disable operation is completed and all tasks have been dealt with according to the disableTasks option; the job then moves to the disabled state. No new tasks are started under the job until it moves back to active state. If you try to disable a job that is in any state other than active, disabling, or disabled, the request fails with status code 409.
+  summary: Disables the specified job, preventing new tasks from running.
+  Metadata: {}
+- commandList: []
+  htmlId: enable
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job to enable.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_enable
+  name: az batch job enable
+  description: When you call this API, the Batch service sets a disabled job to the enabling state. After the this operation is completed, the job moves to the active state, and scheduling of new tasks under the job resumes. The Batch service does not allow a task to remain in the active state for more than 7 days. Therefore, if you enable a job containing active tasks which were added more than 7 days ago, those tasks will not run.
+  summary: Enables the specified job, allowing new tasks to run.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --job-schedule-id
+    isRequired: False
+    summary: The ID of the job schedule from which you want to get a list of jobs. If omitted, lists all jobs in the account.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: An OData $expand clause.
+    description: ''
+  - name: --filter
+    isRequired: False
+    summary: An OData $filter clause.
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_list
+  name: az batch job list
+  description: ''
+  summary: List all of the jobs in the specified account or the specified job schedule.
+  Metadata: {}
+- commandList: []
+  htmlId: reset
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job whose properties you want to update.
+    description: ''
+  - name: --json-file
+    isRequired: False
+    summary: A file containing the job update parameter specification in JSON format. If this parameter is specified, all 'Job Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the job as metadata. If omitted, it takes the default value of an empty list; in effect, any existing metadata is deleted. Space separated values in 'key=value' format.
+    description: ''
+  - name: --on-all-tasks-complete
+    isRequired: False
+    summary: The action the Batch service should take when all tasks in the job are in the completed state. If omitted, the completion behavior is set to noAction. If the current value is terminateJob, this is an error because a job's completion behavior may not be changed from terminateJob to noAction.
+    description: ''
+    parameterValueGroup: noAction, terminateJob
+  - name: --priority
+    isRequired: False
+    summary: The priority of the job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, it is set to the default value 0.
+    description: ''
+  - name: --job-max-task-retry-count
+    isRequired: False
+    summary: The maximum number of times each task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry tasks. If the maximum retry count is -1, the Batch service retries tasks without limit. The default value is 0 (no retries).
+    description: ''
+  - name: --job-max-wall-clock-time
+    isRequired: False
+    summary: The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
+    description: ''
+  - name: --pool-id
+    isRequired: False
+    summary: The id of an existing pool. All the tasks of the job will run on the specified pool.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_reset
+  name: az batch job reset
+  description: ''
+  summary: Update the properties of a job. All updatable properties are replaced with the values specified or reset to default vaules if unspecified.
+  Metadata: {}
+- commandList: []
+  htmlId: set
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job whose properties you want to update.
+    description: ''
+  - name: --json-file
+    isRequired: False
+    summary: A file containing the job patch parameter specification in JSON format. If this parameter is specified, all 'Job Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --metadata
+    isRequired: False
+    summary: A list of name-value pairs associated with the job as metadata. If omitted, the existing job metadata is left unchanged. Space separated values in 'key=value' format.
+    description: ''
+  - name: --on-all-tasks-complete
+    isRequired: False
+    summary: The action the Batch service should take when all tasks in the job are in the completed state. If omitted, the completion behavior is left unchanged. You may not change the value from terminateJob to noAction - that is, once you have engaged automatic job termination, you cannot turn it off again. If you try to do this, the request fails with an 'invalid property value' error response; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request).
+    description: ''
+    parameterValueGroup: noAction, terminateJob
+  - name: --priority
+    isRequired: False
+    summary: The priority of the job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, the priority of the job is left unchanged.
+    description: ''
+  - name: --job-max-task-retry-count
+    isRequired: False
+    summary: The maximum number of times each task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try each task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries a task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry tasks. If the maximum retry count is -1, the Batch service retries tasks without limit. The default value is 0 (no retries).
+    description: ''
+  - name: --job-max-wall-clock-time
+    isRequired: False
+    summary: The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
+    description: ''
+  - name: --pool-id
+    isRequired: False
+    summary: The id of an existing pool. All the tasks of the job will run on the specified pool.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_set
+  name: az batch job set
+  description: ''
+  summary: Update the properties of a job. Properties can be updated independently, but when a property is updated in a sub-group, for example 'constraints' or 'pool info', all properties of that group are reset.
+  Metadata: {}
+- commandList: []
+  htmlId: show
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: An OData $expand clause.
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --select
+    isRequired: False
+    summary: An OData $select clause.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_show
+  name: az batch job show
+  description: ''
+  summary: Gets information about the specified job.
+  Metadata: {}
+- commandList: []
+  htmlId: stop
+  examples: []
+  parameters:
+  - name: --job-id
+    isRequired: True
+    summary: The ID of the job to terminate.
+    description: ''
+  - name: --terminate-reason
+    isRequired: False
+    summary: The text you want to appear as the job's TerminateReason. The default is 'UserTerminate'.
+    description: ''
+  - name: --account-endpoint
+    isRequired: False
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    isRequired: False
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    isRequired: False
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    isRequired: False
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    isRequired: False
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_batch_job_stop
+  name: az batch job stop
+  description: When a Terminate Job request is received, the Batch service sets the job to the terminating state. The Batch service then terminates any active or running tasks associated with the job, and runs any required Job Release tasks. The job then moves into the completed state.
+  summary: Terminates the specified job, marking it as completed.
+  Metadata: {}
+uid: az_batch_job
+name: az batch job
+description: ''
+summary: Manage your Batch jobs.
+Metadata:
+  doc_source_url_repo: https://github.com/azure/azure-cli//blob/chaochen/
+  doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  original_content_git_url: https://github.com/azure/azure-cli//blob/chaochen/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  gitcommit: https://github.com/azure/azure-cli//blob/71c76c65a64e7dd4788a51d85644b01012f80356/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+  updated_at: 6/8/2017 4:07:47 PM
+  ms.date: 6/8/2017
