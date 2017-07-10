@@ -255,6 +255,7 @@
 ### [List](acr.pycliyml#list "az acr list")
 ### [Login](acr.pycliyml#login "az acr login")
 ### [Show](acr.pycliyml#show "az acr show")
+### [Show-Usage](acr.pycliyml#show-usage "az acr show-usage")
 ### [Update](acr.pycliyml#update "az acr update")
 ### [Credentials](acr\credential.pycliyml "az acr credential")
 #### [Renew](acr\credential.pycliyml#renew "az acr credential renew")
