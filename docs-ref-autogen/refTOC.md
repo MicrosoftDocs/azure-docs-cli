@@ -21,6 +21,7 @@
 #### [az acr repository show-manifests](acr\repository.pycliyml#show-manifests)
 #### [az acr repository show-tags](acr\repository.pycliyml#show-tags)
 ### [az acr show](acr.pycliyml#show)
+### [az acr show-usage](acr.pycliyml#show-usage)
 ### [az acr update](acr.pycliyml#update)
 ### [az acr webhook](acr\webhook.pycliyml)
 #### [az acr webhook create](acr\webhook.pycliyml#create)
