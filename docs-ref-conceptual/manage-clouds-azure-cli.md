@@ -47,7 +47,7 @@ az cloud set --name AzureChinaCloud
 ```
 
 > [!IMPORTANT]
-> After changing the active cloud, you will need to authenticate if you haven't done so for the new cloud before. For instructions on authenticating, see [Log in with Azure CLI 2.0](/cli/azure/authenticate-azure-cli).
+> If you have never authenticated for the active cloud, you will need to do so before performing any other CLI operations. For instructions on authenticating, see [Log in with Azure CLI 2.0](/cli/azure/authenticate-azure-cli).
 
 ## Register or unregister a cloud
 
@@ -59,7 +59,7 @@ To create a cloud with a specialized endpoint for the resource manager, with a s
 az cloud register --name MyCloud --endpoint-resource-manager "https://my.endpoint.manager" --profile 2017-03-09-profile
 ```
 
-This creates the cloud, but does _not_ automatically select it. You will still need to switch cloud sets.
+This creates the cloud, but does _not_ automatically select it.
 
 If you no longer require the created cloud, it can be unregistered with the [cloud unregister](/cli/azure/cloud#unregister) command:
 
