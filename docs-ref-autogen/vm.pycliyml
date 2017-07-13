@@ -1,4 +1,7 @@
 commandList:
+- name: az vm assign-identity
+  description: Enable managed service identity on a VM.
+  href: vm#assign-identity
 - name: az vm availability-set
   description: Group resources into availability sets for high-availability requirements.
   href: vm/availability-set
@@ -241,6 +244,66 @@ source:
     repo: https://github.com/Azure/azure-cli.git
 children:
 - commandList: []
+  htmlId: assign-identity
+  examples:
+  - title: Enable identity on a VM. It will have a role of 'Reader' to the VM's resource group
+    code: az vm assign-identity -g MyResourceGroup -n MyVm --role Reader
+  parameters:
+  - name: --name -n
+    isRequired: True
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --port
+    isRequired: False
+    summary: 'The port to fetch AAD token. Default: 50342.'
+    description: ''
+  - name: --role
+    isRequired: False
+    summary: Role name or id the managed identity will be assigned.
+    description: ''
+    defaultValue: Contributor
+  - name: --scope
+    isRequired: False
+    summary: 'The scope the managed identity has access to. Default: VM/VMSS''s resource group.'
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      branch: master
+      repo: https://github.com/Azure/azure-cli.git
+  children: []
+  uid: az_vm_assign-identity
+  name: az vm assign-identity
+  description: Required to authenticate and interact with other Azure services using bearer tokens.
+  summary: Enable managed service identity on a VM.
+  Metadata: {}
+- commandList: []
   htmlId: capture
   examples:
   - title: Process to deallocate, generalize, and capture a stopped virtual machine
@@ -380,6 +443,8 @@ children:
     code: az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 --generate-ssh-keys
   - title: Create an Debian VM and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
     code: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+  - title: Create a VM with Managed Service Identity. The VM will have a 'Contributor' Role with access to the current resource group
+    code: az vm create -n MyVm -g MyResourceGroup --assign-identity --image centos
   parameters:
   - name: --name -n
     isRequired: True
@@ -469,6 +534,19 @@ children:
   - name: --ssh-key-value
     isRequired: False
     summary: The SSH public key or public key file path.
+    description: ''
+  - name: --assign-identity
+    isRequired: False
+    summary: Enables the VM/VMSS to autonomously, using its own managed identity, to directly authenticate and interact with other Azure services using bearer tokens.
+    description: ''
+  - name: --role
+    isRequired: False
+    summary: Role name or id the managed identity will be assigned.
+    description: ''
+    defaultValue: Contributor
+  - name: --scope
+    isRequired: False
+    summary: 'The scope the managed identity has access to. Default: VM/VMSS''s resource group.'
     description: ''
   - name: --nics
     isRequired: False
@@ -1648,6 +1726,6 @@ Metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
   doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
   original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/c240fe659da592de28f03e841300b85178aba0f9/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-  updated_at: 7/5/2017 9:00:40 PM
-  ms.date: 7/5/2017
+  gitcommit: https://github.com/Azure/azure-cli/blob/2b6a49180f52618c2718eeca44563561cdfede0a/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+  updated_at: 7/13/2017 7:24:10 PM
+  ms.date: 7/13/2017
