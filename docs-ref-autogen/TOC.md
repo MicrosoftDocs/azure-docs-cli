@@ -717,6 +717,7 @@
 ##### [Show](mysql\server\firewall-rule.pycliyml#show "az mysql server firewall-rule show")
 ##### [Update](mysql\server\firewall-rule.pycliyml#update "az mysql server firewall-rule update")
 ## [Networking](network.pycliyml "az network")
+### [List-Private-Access-Services](network.pycliyml#list-private-access-services "az network list-private-access-services")
 ### [List-Usages](network.pycliyml#list-usages "az network list-usages")
 ### [Application Gateway](network\application-gateway.pycliyml "az network application-gateway")
 #### [Create](network\application-gateway.pycliyml#create "az network application-gateway create")

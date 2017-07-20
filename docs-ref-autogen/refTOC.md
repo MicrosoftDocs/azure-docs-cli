@@ -956,6 +956,7 @@
 ##### [az network lb rule update](network\lb\rule.pycliyml#update)
 #### [az network lb show](network\lb.pycliyml#show)
 #### [az network lb update](network\lb.pycliyml#update)
+### [az network list-private-access-services](network.pycliyml#list-private-access-services)
 ### [az network list-usages](network.pycliyml#list-usages)
 ### [az network local-gateway](network\local-gateway.pycliyml)
 #### [az network local-gateway create](network\local-gateway.pycliyml#create)
