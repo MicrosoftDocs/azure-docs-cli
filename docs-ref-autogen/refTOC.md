@@ -619,6 +619,7 @@
 #### [az lab artifact-source list](lab\artifact-source.pycliyml#list)
 #### [az lab artifact-source show](lab\artifact-source.pycliyml#show)
 ### [az lab custom-image](lab\custom-image.pycliyml)
+#### [az lab custom-image create](lab\custom-image.pycliyml#create)
 #### [az lab custom-image delete](lab\custom-image.pycliyml#delete)
 #### [az lab custom-image list](lab\custom-image.pycliyml#list)
 #### [az lab custom-image show](lab\custom-image.pycliyml#show)

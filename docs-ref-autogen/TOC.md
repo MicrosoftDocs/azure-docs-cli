@@ -455,6 +455,7 @@
 ### [Artifacts](lab\artifact.pycliyml "az lab artifact")
 #### [List](lab\artifact.pycliyml#list "az lab artifact list")
 ### [Custom images](lab\custom-image.pycliyml "az lab custom-image")
+#### [Create](lab\custom-image.pycliyml#create "az lab custom-image create")
 #### [Delete](lab\custom-image.pycliyml#delete "az lab custom-image delete")
 #### [List](lab\custom-image.pycliyml#list "az lab custom-image list")
 #### [Show](lab\custom-image.pycliyml#show "az lab custom-image show")
