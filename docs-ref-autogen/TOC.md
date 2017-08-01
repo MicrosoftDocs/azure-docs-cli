@@ -124,6 +124,8 @@
 ##### [Show](batch\job\all-statistics.pycliyml#show "az batch job all-statistics show")
 #### [Status](batch\job\prep-release-status.pycliyml "az batch job prep-release-status")
 ##### [List](batch\job\prep-release-status.pycliyml#list "az batch job prep-release-status list")
+#### [Task-Counts](batch\job\task-counts.pycliyml "az batch job task-counts")
+##### [Show](batch\job\task-counts.pycliyml#show "az batch job task-counts show")
 ### [Locations](batch\location.pycliyml "az batch location")
 #### [Quotas](batch\location\quotas.pycliyml "az batch location quotas")
 ##### [Show](batch\location\quotas.pycliyml#show "az batch location quotas show")

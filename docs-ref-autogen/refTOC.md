@@ -132,6 +132,8 @@
 #### [az batch job set](batch\job.pycliyml#set)
 #### [az batch job show](batch\job.pycliyml#show)
 #### [az batch job stop](batch\job.pycliyml#stop)
+#### [az batch job task-counts](batch\job\task-counts.pycliyml)
+##### [az batch job task-counts show](batch\job\task-counts.pycliyml#show)
 ### [az batch job-schedule](batch\job-schedule.pycliyml)
 #### [az batch job-schedule create](batch\job-schedule.pycliyml#create)
 #### [az batch job-schedule delete](batch\job-schedule.pycliyml#delete)
