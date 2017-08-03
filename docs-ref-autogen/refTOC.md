@@ -1558,6 +1558,7 @@
 ### [az vm list](vm.pycliyml#list)
 ### [az vm list-ip-addresses](vm.pycliyml#list-ip-addresses)
 ### [az vm list-sizes](vm.pycliyml#list-sizes)
+### [az vm list-skus](vm.pycliyml#list-skus)
 ### [az vm list-usage](vm.pycliyml#list-usage)
 ### [az vm list-vm-resize-options](vm.pycliyml#list-vm-resize-options)
 ### [az vm nic](vm\nic.pycliyml)

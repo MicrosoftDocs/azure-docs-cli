@@ -1532,6 +1532,7 @@
 ### [List](vm.pycliyml#list "az vm list")
 ### [List-Ip-Addresses](vm.pycliyml#list-ip-addresses "az vm list-ip-addresses")
 ### [List-Sizes](vm.pycliyml#list-sizes "az vm list-sizes")
+### [List-Skus](vm.pycliyml#list-skus "az vm list-skus")
 ### [List-Usage](vm.pycliyml#list-usage "az vm list-usage")
 ### [List-Vm-Resize-Options](vm.pycliyml#list-vm-resize-options "az vm list-vm-resize-options")
 ### [Open-Port](vm.pycliyml#open-port "az vm open-port")
