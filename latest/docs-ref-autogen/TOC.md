@@ -322,7 +322,7 @@
 ##### [Show](dla/account/firewall.yml#az_dla_account_firewall_show "az dla account firewall show")
 ##### [Update](dla/account/firewall.yml#az_dla_account_firewall_update "az dla account firewall update")
 ### [Catalogs](dla/catalog.yml "az dla catalog")
-#### [](dla/catalog/assembly.yml "az dla catalog assembly")
+#### [Assembly](dla/catalog/assembly.yml "az dla catalog assembly")
 ##### [List](dla/catalog/assembly.yml#az_dla_catalog_assembly_list "az dla catalog assembly list")
 ##### [Show](dla/catalog/assembly.yml#az_dla_catalog_assembly_show "az dla catalog assembly show")
 #### [Credentials](dla/catalog/credential.yml "az dla catalog credential")
