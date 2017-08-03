@@ -1,0 +1,308 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_lab_vm
+  name: az lab vm
+  summary: Commands to manage VM in a DevTest Lab.
+  langs:
+  - azurecli
+  children:
+  - az_lab_vm_apply_artifacts
+  - az_lab_vm_claim
+  - az_lab_vm_create
+  - az_lab_vm_delete
+  - az_lab_vm_list
+  - az_lab_vm_show
+  - az_lab_vm_start
+  - az_lab_vm_stop
+- uid: az_lab_vm_apply_artifacts
+  name: az lab vm apply-artifacts
+  summary: Command to apply artifacts to virtual machine in Azure DevTest Lab.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: Name of the Lab.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of lab's resource group.
+  - name: --artifacts
+    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_claim
+  name: az lab vm claim
+  summary: Claim a specific virtual machine or any available from the Lab.
+  langs:
+  - azurecli
+  examples:
+  - summary: Claim any available virtual machine in the lab.
+    syntax:
+      content: az lab vm claim -g MyRG --lab-name MyLab
+  - summary: Claim a specific virtual machine in the lab.
+    syntax:
+      content: az lab vm claim -g MyRG --lab-name MyLab --name MyVM
+  - summary: Claim multiple virtual machines in the lab using --ids.
+    syntax:
+      content: az lab vm claim --ids /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM1} /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM2}
+  parameters:
+  - name: --lab-name
+    summary: Name of the Lab.
+  - name: --name -n
+    summary: Name of the virtual machine.
+  - name: --resource-group -g
+    summary: Name of lab's resource group.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_create
+  name: az lab vm create
+  summary: Command to create VM in a DevTest Lab.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a Virtual Machine in the lab from gallery image.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
+  - summary: Create a Virtual Machine in the lab from gallery image with ssh authentication.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
+  - summary: Create a claimable Virtual Machine in the lab from gallery image with password authentication.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
+  - summary: Create a windows Virtual Machine in the lab from gallery image with password authentication.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
+  - summary: Create a Virtual Machine in the lab from custom image.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
+  - summary: Create a Virtual Machine in the lab with public ip configuration.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
+  - summary: Create a Virtual Machine from a formula.
+    syntax:
+      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --formula MyFormula --artifacts @/artifacts.json
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: Name of the Lab.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+  - name: --allow-claim
+    summary: Flag indicating whether the VM will be created as a claimable VM in the lab.
+  - name: --artifacts
+    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+  - name: --disk-type
+    summary: Storage type to use for virtual machine (i.e. Standard, Premium).
+  - name: --expiration-date
+    summary: The expiration date in UTC(YYYY-mm-dd) for VM. Ex. 2017-03-25.
+  - name: --formula
+    summary: Name of the formula. Use az lab formula list for available formulas. Use az lab formula with --export-artifacts flag to export & update artifacts then supply it via --artifacts argument.
+  - name: --image
+    summary: The name of the operating system image (Gallery Image Name and Custom Image Name/ID). Use az lab gallery-image list for available Gallery Images or Use az lab custom-image list for available Custom Images.
+  - name: --image-type
+    summary: Type of the image. Allowed values are gallery, custom.
+  - name: --notes
+    summary: Notes for the virtual machine.
+  - name: --size
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info. Required when creating VM from gallery or custom image.
+  - name: --tags
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+  - name: --admin-password
+    summary: Password for the VM.
+  - name: --admin-username
+    defaultValue: chaochen
+    summary: Username for the VM.
+  - name: --authentication-type
+    defaultValue: password
+    summary: Type of authentication to use with the VM. Allowed values are password, ssh.
+  - name: --generate-ssh-keys
+    summary: Generate SSH public and private key files if missing.
+  - name: --saved-secret
+    summary: Name of the saved secret to be used for authentication. When provided, we'll use it inplace of --admin-password for password based authentication or inplace of --ssh-key for ssh based authentication.
+  - name: --ssh-key
+    summary: The SSH public key or public key file path. Use --generate-ssh-keys to regen ssh keys.
+  - name: --ip-configuration
+    summary: Type of ip configuration to use with the VM. Allowed values are shared, public, private. If omitted, will be selected based on selected vnet.
+  - name: --subnet
+    summary: Name of the subnet to reference an existing one in lab. If omitted, lab's existing one subnet will be selected automatically.
+  - name: --vnet-name
+    summary: Name of the virtual network to reference an existing one in lab. If omitted, lab's existing one VNet and subnet will be selected automatically.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_delete
+  name: az lab vm delete
+  summary: Delete virtual machine.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: The name of the lab.
+  - isRequired: true
+    name: --name
+    summary: The name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_list
+  name: az lab vm list
+  summary: Command to retrieve my vms from the Azure DevTest Lab.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: Name of the Lab.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+  - name: --expand
+    summary: Specify the expand query.
+  - name: --object-id
+    summary: Owner's object id. If omitted, we'll pick one if available.
+  - name: --order-by
+    summary: The ordering expression for the results using OData notation.
+  - name: --top
+    summary: The maximum number of resources to return from the operation.
+  - name: --all
+    summary: List all virtual machines in the lab. Cannot be used with --filters.
+  - name: --claimable
+    summary: List of claimable virtual machines in the lab. Cannot be used with --filters.
+  - name: --environment
+    summary: Name or ID of the environment to list all virtual machines in the environment. Cannot be used with --filters.
+  - name: --filters
+    summary: The filter to apply on the operation.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_show
+  name: az lab vm show
+  summary: Get virtual machine.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: The name of the lab.
+  - isRequired: true
+    name: --name
+    summary: The name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - name: --expand
+    summary: "Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'."
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_start
+  name: az lab vm start
+  summary: Start a virtual machine.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: The name of the lab.
+  - isRequired: true
+    name: --name
+    summary: The name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+- uid: az_lab_vm_stop
+  name: az lab vm stop
+  summary: Stop a virtual machine This operation can take a while to complete.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --lab-name
+    summary: The name of the lab.
+  - isRequired: true
+    name: --name
+    summary: The name of the virtual machine.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  source:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      repo: https://github.com/azure/azure-cli/.git
+commands:
+- uid: az_lab_vm_apply_artifacts
+  name: az lab vm apply-artifacts
+  summary: Command to apply artifacts to virtual machine in Azure DevTest Lab.
+- uid: az_lab_vm_claim
+  name: az lab vm claim
+  summary: Claim a specific virtual machine or any available from the Lab.
+- uid: az_lab_vm_create
+  name: az lab vm create
+  summary: Command to create VM in a DevTest Lab.
+- uid: az_lab_vm_delete
+  name: az lab vm delete
+  summary: Delete virtual machine.
+- uid: az_lab_vm_list
+  name: az lab vm list
+  summary: Command to retrieve my vms from the Azure DevTest Lab.
+- uid: az_lab_vm_show
+  name: az lab vm show
+  summary: Get virtual machine.
+- uid: az_lab_vm_start
+  name: az lab vm start
+  summary: Start a virtual machine.
+- uid: az_lab_vm_stop
+  name: az lab vm stop
+  summary: Stop a virtual machine This operation can take a while to complete.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
