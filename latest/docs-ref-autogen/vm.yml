@@ -6,6 +6,7 @@ items:
   langs:
   - azurecli
   children:
+  - az_vm_assign_identity
   - az_vm_capture
   - az_vm_convert
   - az_vm_create
@@ -28,6 +29,35 @@ items:
   - az_vm_stop
   - az_vm_update
   - az_vm_wait
+- uid: az_vm_assign_identity
+  name: az vm assign-identity
+  summary: Enable managed service identity on a VM.
+  langs:
+  - azurecli
+  examples:
+  - summary: Enable identity on a VM. It will have a role of 'Reader' to the VM's resource group
+    syntax:
+      content: az vm assign-identity -g MyResourceGroup -n MyVm --role Reader
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using az configure --defaults vm=<name>.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - name: --port
+    summary: 'The port to fetch AAD token. Default: 50342.'
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the managed identity will be assigned.
+  - name: --scope
+    summary: "The scope the managed identity has access to. Default: VM/VMSS's resource group."
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_capture
   name: az vm capture
   summary: Captures the VM by copying virtual hard disks of the VM and outputs a template that can be used to create similar VMs.
@@ -66,7 +96,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_convert
@@ -91,7 +121,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_create
@@ -126,6 +156,9 @@ items:
   - summary: Create an Debian VM and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
     syntax:
       content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+  - summary: Create a VM with Managed Service Identity. The VM will have a 'Contributor' Role with access to the current resource group
+    syntax:
+      content: az vm create -n MyVm -g MyResourceGroup --assign-identity --image centos
   parameters:
   - isRequired: true
     name: --name -n
@@ -174,6 +207,13 @@ items:
     summary: Destination file path on the VM for the SSH key.
   - name: --ssh-key-value
     summary: The SSH public key or public key file path.
+  - name: --assign-identity
+    summary: Enables the VM/VMSS to autonomously, using its own managed identity, to directly authenticate and interact with other Azure services using bearer tokens.
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the managed identity will be assigned.
+  - name: --scope
+    summary: "The scope the managed identity has access to. Default: VM/VMSS's resource group."
   - name: --nics
     summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, vnet, public IP or NSG.
   - name: --nsg
@@ -226,7 +266,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_deallocate
@@ -260,7 +300,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_delete
@@ -289,7 +329,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_format_secret
@@ -310,7 +350,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_generalize
@@ -344,7 +384,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_get_instance_view
@@ -369,7 +409,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_list
@@ -395,7 +435,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_list_ip_addresses
@@ -418,7 +458,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_list_sizes
@@ -437,7 +477,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_list_usage
@@ -456,7 +496,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_list_vm_resize_options
@@ -481,7 +521,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_open_port
@@ -519,7 +559,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_redeploy
@@ -546,7 +586,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_resize
@@ -576,7 +616,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_restart
@@ -603,7 +643,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_show
@@ -630,7 +670,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_start
@@ -657,7 +697,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_stop
@@ -684,7 +724,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_update
@@ -726,7 +766,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vm_wait
@@ -767,10 +807,13 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 commands:
+- uid: az_vm_assign_identity
+  name: az vm assign-identity
+  summary: Enable managed service identity on a VM.
 - uid: az_vm_availability_set
   name: az vm availability-set
   summary: Group resources into availability sets for high-availability requirements.

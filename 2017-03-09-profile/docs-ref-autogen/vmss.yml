@@ -6,6 +6,7 @@ items:
   langs:
   - azurecli
   children:
+  - az_vmss_assign_identity
   - az_vmss_create
   - az_vmss_deallocate
   - az_vmss_delete
@@ -24,6 +25,35 @@ items:
   - az_vmss_update
   - az_vmss_update_instances
   - az_vmss_wait
+- uid: az_vmss_assign_identity
+  name: az vmss assign-identity
+  summary: Enable managed service identity on a VMSS.
+  langs:
+  - azurecli
+  examples:
+  - summary: Enable identity on a VMSS. It will have a role of 'Owner' to the VMSS's resource group.
+    syntax:
+      content: az vmss assign-identity -g MyResourceGroup -n MyVmss --role Owner
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using az configure --defaults vmss=<name>.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - name: --port
+    summary: 'The port to fetch AAD token. Default: 50342.'
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the managed identity will be assigned.
+  - name: --scope
+    summary: "The scope the managed identity has access to. Default: VM/VMSS's resource group."
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_create
   name: az vmss create
   summary: Create an Azure Virtual Machine Scale Set.
@@ -99,6 +129,15 @@ items:
     summary: Destination file path on the VM for the SSH key.
   - name: --ssh-key-value
     summary: SSH public key or public key file path.
+  - name: --assign-identity
+    summary: Enables the VM/VMSS to autonomously, using its own managed identity, to directly authenticate and interact with other Azure services using bearer tokens.
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the managed identity will be assigned.
+  - name: --scope
+    summary: "The scope the managed identity has access to. Default: VM/VMSS's resource group."
+  - name: --nsg
+    summary: Reference to an existing Network Security Group by ID, or name if in the same resource group.
   - name: --public-ip-address
     summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
   - name: --public-ip-address-allocation
@@ -159,7 +198,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_deallocate
@@ -181,7 +220,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_delete
@@ -201,7 +240,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_delete_instances
@@ -224,7 +263,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_get_instance_view
@@ -244,7 +283,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_list
@@ -258,7 +297,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_list_instance_connection_info
@@ -276,7 +315,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_list_instances
@@ -300,7 +339,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_list_skus
@@ -318,7 +357,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_reimage
@@ -340,7 +379,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_restart
@@ -362,7 +401,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_scale
@@ -385,7 +424,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_show
@@ -405,7 +444,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_start
@@ -427,7 +466,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_stop
@@ -449,7 +488,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_update
@@ -475,7 +514,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_update_instances
@@ -498,7 +537,7 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 - uid: az_vmss_wait
@@ -532,10 +571,13 @@ items:
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
     remote:
-      branch: chaochen
+      branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/azure/azure-cli/.git
 commands:
+- uid: az_vmss_assign_identity
+  name: az vmss assign-identity
+  summary: Enable managed service identity on a VMSS.
 - uid: az_vmss_create
   name: az vmss create
   summary: Create an Azure Virtual Machine Scale Set.
