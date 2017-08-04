@@ -26,9 +26,6 @@ For information about the latest release, see the [release notes](release-notes-
 
 ## macOS
 
-> [!WARNING]
-> The Homebrew formula for the Azure CLI, `azure-cli`, is currently out of date and will install a previous version.
-
 1. Install Azure CLI 2.0 with one `curl` command.
 
    ```bash
@@ -43,11 +40,8 @@ For information about the latest release, see the [release notes](release-notes-
    
 3. Run the CLI from the command prompt with the `az` command.
 
-> [!Note]
-> When you install with InstallAzureCli, [`az component update`](/cli/azure/component#update) isn't supported.
-> To update to the latest CLI, run `curl -L https://aka.ms/InstallAzureCli | bash` again.
-> 
-> To uninstall, see the [manual uninstall instructions](#uninstall).
+> [!WARNING]
+> The Homebrew formula for the Azure CLI, `azure-cli`, is currently out of date and will install a previous version.
 
 ## Windows
 
@@ -56,12 +50,6 @@ You can install Azure CLI 2.0 with the MSI and use it in the Windows command-lin
 ### MSI for the Windows command-line 
 
 To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](https://aka.ms/InstallAzureCliWindows).
-
-> [!NOTE]
-> When you install with the msi, [`az component`](/cli/azure/component) isn't supported.
-> To update to the latest CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again.
-> 
-> To uninstall the CLI, run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
 
 ### apt-get for Bash on Ubuntu on Windows
 
@@ -85,12 +73,6 @@ To install the CLI on Windows and use it in the Windows command-line, download a
    ```
 
 5.  Run the CLI from the command prompt with the `az` command.
-
-> [!NOTE]
-> When you install with apt-get, [`az component`](/cli/azure/component) isn't supported.
-> To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
-> 
-> To uninstall, run `sudo apt-get remove azure-cli`.
 
 ## apt-get for Debian/Ubuntu
 
@@ -122,37 +104,27 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 3.  Run the CLI from the command prompt with the `az` command.
 
-> [!NOTE]
-> When you install with apt-get, [`az component`](/cli/azure/component) isn't supported.
-> To update the CLI, run `sudo apt-get update && sudo apt-get install azure-cli` again.
-> 
-> To uninstall, run `sudo apt-get remove azure-cli`.
-
 ## Docker
 
 We maintain a Docker image preconfigured with the Azure CLI 2.0.
 
 Install the CLI using `docker run`.
 
-```bash
-docker run azuresdk/azure-cli-python:<version>
-```
+  ```bash
+  docker run azuresdk/azure-cli-python:<version>
+  ```
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+
+The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
 > you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
 
->> ```bash
+> ```bash
 > docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
 > ```
-
-The CLI is installed on the image as the `az` command in `/usr/local/bin`.
-
-> [!NOTE]
-> The Docker image does not support the [`az component`](/cli/azure/component) feature.
-> To update the Azure CLI 2.0, use `docker run` to install the latest image, or the specific image that you want.
 
 ## Linux
 
@@ -186,11 +158,30 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 5. Run the CLI from the command prompt with the `az` command.
 
-> [!Note]
-> When you install with InstallAzureCli, [`az component update`](/cli/azure/component#update) isn't supported.
-> To update to the latest CLI, run `curl -L https://aka.ms/InstallAzureCli | bash` again.
-> 
-> To uninstall, see the [manual uninstall instructions](#uninstall).
+## Uninstalling previous CLI 1.x versions
+
+If you have an earlier CLI 1.x version available on your system, you can uninstall it based upon the type of install used.
+
+### Installed via npm
+
+Remove the older CLI with `npm uninstall`.
+
+  ```bash
+  npm uninstall -g azure-cli
+  ```
+
+### Installed via distributable
+
+If you installed via [MSI](http://aka.ms/webpi-azure-cli) or a [macOS package](http://aka.ms/mac-azure-cli), use the same tool to remove your install.
+
+### Installed via Docker
+
+If you installed a Docker image to use the earlier CLI version, remove that image and any associated containers. You can then re-create the containers
+after installing the new Docker image as described in the install instructions.
+
+  ```bash
+  docker rmi -f microsoft/azure-cli
+  ```
 
 ## Troubleshooting
 
@@ -198,20 +189,114 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 If you get an error from the `curl` command regarding the `-L` parameter, or an error saying "Object Moved", try using the full url instead of the aka.ms url:
 
-```
-# If you see this:
-curl -L https://aka.ms/InstallAzureCli | bash
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   175  100   175    0     0    562      0 --:--:-- --:--:-- --:--:--   560
-bash: line 1: syntax error near unexpected token `<'
-'ash: line 1: `<html><head><title>Object moved</title></head><body>
+  ```bash
+  curl https://azurecliprod.blob.core.windows.net/install | bash
+  ```
 
-#### Try this instead:
-curl https://azurecliprod.blob.core.windows.net/install | bash
-```
+## Updating
+
+To update the Azure CLI, you'll need to use the same method that you used to install it.
+
+### Updating via MSI
+
+Run the [msi](https://aka.ms/InstallAzureCliWindows) again.
+
+### Installed via apt-get
+
+Use `apt-get upgrade` to update the CLI package.
+
+   ```bash
+   sudo apt-get update && sudo apt-get upgrade
+   ```
+
+> [!NOTE]
+> This will upgrade all of the installed packages on your system which have not had a dependency change.
+> To upgrade only the CLI, use `apt-get install`.
+> ```bash
+> sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
+> ```
+
+### Installed via Docker
+
+1. Update your local image with `docker pull`.
+
+   ```bash
+   docker pull azuresdk/azure-cli-python
+   ```
+
+2. Get the containers currently using the CLI image.
+
+   ```bash
+   docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
+   ```
+
+   ```output
+   CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
+   34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
+   ```
+
+> [!NOTE]
+> If you installed a specific version of the image, you will need to add `:<version>` to the end of the image name.
+
+3. Halt and recreate the containers.
+
+   ```bash
+   docker stop inspiring_benz
+   docker rm inspiring_benz
+   docker run azuresdk/azure-cli-python
+   ```
+
+### Installed manually
+
+Follow the manual installation instructions for [macOS](#macOS) or [Linux](#Linux) to update.
 
 ## Uninstall
+
+If you need to uninstall the CLI, we're sorry to see you go. How you uninstall depends on what tool you used to install the CLI.
+
+### Installed via MSI
+
+Run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
+
+### Installed via apt-get
+
+Uninstall via `apt-get remove`:
+
+  ```bash
+  sudo apt-get remove -y azure-cli
+  ```
+
+### Installed via Docker
+
+If you installed a docker image, you will need to remove any containers running it, and then delete the local image.
+
+1. Get the containers which are running the azure-cli image.
+
+  ```bash
+  docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
+  ```
+
+  ```output
+  CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
+  34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
+  ```
+
+2. Delete any containers with the CLI image.
+
+  ```bash
+  docker rm 34a868beb2ab
+  ```
+
+3. Remove the locally installed CLI image.
+
+  ```bash
+  docker rmi azuresdk/azure-cli-python
+  ```
+
+> [!NOTE]
+> If you installed a specific version of the image, you will need to add `:<version>` to the end of the image name.
+
+### Manually installed
 
 If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
 
@@ -226,8 +311,6 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
 
 > [!Note]
 > The default install location is `/Users/<username>`.
-
-If you used apt-get, Docker, or the msi to install the CLI, use the same tool to uninstall it.
 
 ## Reporting issues and feedback
 
