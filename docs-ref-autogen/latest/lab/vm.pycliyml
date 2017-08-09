@@ -1,0 +1,570 @@
+commandList:
+- name: az lab vm apply-artifacts
+  description: Command to apply artifacts to virtual machine in Azure DevTest Lab.
+  href: vm#apply-artifacts
+- name: az lab vm claim
+  description: Claim a specific virtual machine or any available from the Lab.
+  href: vm#claim
+- name: az lab vm create
+  description: Command to create VM in a DevTest Lab.
+  href: vm#create
+- name: az lab vm delete
+  description: Delete virtual machine.
+  href: vm#delete
+- name: az lab vm list
+  description: Command to retrieve my vms from the Azure DevTest Lab.
+  href: vm#list
+- name: az lab vm show
+  description: Get virtual machine.
+  href: vm#show
+- name: az lab vm start
+  description: Start a virtual machine.
+  href: vm#start
+- name: az lab vm stop
+  description: Stop a virtual machine This operation can take a while to complete.
+  href: vm#stop
+htmlId: vm
+examples: []
+source:
+  remote:
+    path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+    branch: chaochen
+    repo: https://github.com/azure/azure-cli/.git
+children:
+- commandList: []
+  htmlId: apply-artifacts
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: Name of the Lab.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of lab's resource group.
+    description: ''
+  - name: --artifacts
+    isRequired: False
+    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_apply-artifacts
+  name: az lab vm apply-artifacts
+  description: ''
+  summary: Command to apply artifacts to virtual machine in Azure DevTest Lab.
+  Metadata: {}
+- commandList: []
+  htmlId: claim
+  examples:
+  - title: Claim any available virtual machine in the lab.
+    code: az lab vm claim -g MyRG --lab-name MyLab
+  - title: Claim a specific virtual machine in the lab.
+    code: az lab vm claim -g MyRG --lab-name MyLab --name MyVM
+  - title: Claim multiple virtual machines in the lab using --ids.
+    code: az lab vm claim --ids /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM1} /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM2}
+  parameters:
+  - name: --lab-name
+    isRequired: False
+    summary: Name of the Lab.
+    description: ''
+  - name: --name -n
+    isRequired: False
+    summary: Name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: False
+    summary: Name of lab's resource group.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_claim
+  name: az lab vm claim
+  description: ''
+  summary: Claim a specific virtual machine or any available from the Lab.
+  Metadata: {}
+- commandList: []
+  htmlId: create
+  examples:
+  - title: Create a Virtual Machine in the lab from gallery image.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from gallery image with ssh authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
+  - title: Create a claimable Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
+  - title: Create a windows Virtual Machine in the lab from gallery image with password authentication.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab from custom image.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
+  - title: Create a Virtual Machine in the lab with public ip configuration.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
+  - title: Create a Virtual Machine from a formula.
+    code: az lab vm create --lab-name MyLab -g MyRG --name MyVM --formula MyFormula --artifacts @/artifacts.json
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: Name of the Lab.
+    description: ''
+  - name: --name -n
+    isRequired: True
+    summary: Name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    description: ''
+  - name: --allow-claim
+    isRequired: False
+    summary: Flag indicating whether the VM will be created as a claimable VM in the lab.
+    description: ''
+  - name: --artifacts
+    isRequired: False
+    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+    description: ''
+  - name: --disk-type
+    isRequired: False
+    summary: Storage type to use for virtual machine (i.e. Standard, Premium).
+    description: ''
+  - name: --expiration-date
+    isRequired: False
+    summary: The expiration date in UTC(YYYY-mm-dd) for VM. Ex. 2017-03-25.
+    description: ''
+  - name: --formula
+    isRequired: False
+    summary: Name of the formula. Use az lab formula list for available formulas. Use az lab formula with --export-artifacts flag to export & update artifacts then supply it via --artifacts argument.
+    description: ''
+  - name: --image
+    isRequired: False
+    summary: The name of the operating system image (Gallery Image Name and Custom Image Name/ID). Use az lab gallery-image list for available Gallery Images or Use az lab custom-image list for available Custom Images.
+    description: ''
+  - name: --image-type
+    isRequired: False
+    summary: Type of the image. Allowed values are gallery, custom.
+    description: ''
+  - name: --notes
+    isRequired: False
+    summary: Notes for the virtual machine.
+    description: ''
+  - name: --size
+    isRequired: False
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info. Required when creating VM from gallery or custom image.
+    description: ''
+  - name: --tags
+    isRequired: False
+    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --admin-password
+    isRequired: False
+    summary: Password for the VM.
+    description: ''
+  - name: --admin-username
+    isRequired: False
+    summary: Username for the VM.
+    description: ''
+    defaultValue: chaochen
+  - name: --authentication-type
+    isRequired: False
+    summary: Type of authentication to use with the VM. Allowed values are password, ssh.
+    description: ''
+    defaultValue: password
+  - name: --generate-ssh-keys
+    isRequired: False
+    summary: Generate SSH public and private key files if missing.
+    description: ''
+  - name: --saved-secret
+    isRequired: False
+    summary: Name of the saved secret to be used for authentication. When provided, we'll use it inplace of --admin-password for password based authentication or inplace of --ssh-key for ssh based authentication.
+    description: ''
+  - name: --ssh-key
+    isRequired: False
+    summary: The SSH public key or public key file path. Use --generate-ssh-keys to regen ssh keys.
+    description: ''
+  - name: --ip-configuration
+    isRequired: False
+    summary: Type of ip configuration to use with the VM. Allowed values are shared, public, private. If omitted, will be selected based on selected vnet.
+    description: ''
+  - name: --subnet
+    isRequired: False
+    summary: Name of the subnet to reference an existing one in lab. If omitted, lab's existing one subnet will be selected automatically.
+    description: ''
+  - name: --vnet-name
+    isRequired: False
+    summary: Name of the virtual network to reference an existing one in lab. If omitted, lab's existing one VNet and subnet will be selected automatically.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_create
+  name: az lab vm create
+  description: ''
+  summary: Command to create VM in a DevTest Lab.
+  Metadata: {}
+- commandList: []
+  htmlId: delete
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: The name of the lab.
+    description: ''
+  - name: --name
+    isRequired: True
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_delete
+  name: az lab vm delete
+  description: This operation can take a while to complete.
+  summary: Delete virtual machine.
+  Metadata: {}
+- commandList: []
+  htmlId: list
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: Name of the Lab.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: Specify the expand query.
+    description: ''
+  - name: --object-id
+    isRequired: False
+    summary: Owner's object id. If omitted, we'll pick one if available.
+    description: ''
+  - name: --order-by
+    isRequired: False
+    summary: The ordering expression for the results using OData notation.
+    description: ''
+  - name: --top
+    isRequired: False
+    summary: The maximum number of resources to return from the operation.
+    description: ''
+  - name: --all
+    isRequired: False
+    summary: List all virtual machines in the lab. Cannot be used with --filters.
+    description: ''
+  - name: --claimable
+    isRequired: False
+    summary: List of claimable virtual machines in the lab. Cannot be used with --filters.
+    description: ''
+  - name: --environment
+    isRequired: False
+    summary: Name or ID of the environment to list all virtual machines in the environment. Cannot be used with --filters.
+    description: ''
+  - name: --filters
+    isRequired: False
+    summary: The filter to apply on the operation.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_list
+  name: az lab vm list
+  description: ''
+  summary: Command to retrieve my vms from the Azure DevTest Lab.
+  Metadata: {}
+- commandList: []
+  htmlId: show
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: The name of the lab.
+    description: ''
+  - name: --name
+    isRequired: True
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --expand
+    isRequired: False
+    summary: 'Specify the $expand query. Example: ''properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)''.'
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_show
+  name: az lab vm show
+  description: ''
+  summary: Get virtual machine.
+  Metadata: {}
+- commandList: []
+  htmlId: start
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: The name of the lab.
+    description: ''
+  - name: --name
+    isRequired: True
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_start
+  name: az lab vm start
+  description: This operation can take a while to complete.
+  summary: Start a virtual machine.
+  Metadata: {}
+- commandList: []
+  htmlId: stop
+  examples: []
+  parameters:
+  - name: --lab-name
+    isRequired: True
+    summary: The name of the lab.
+    description: ''
+  - name: --name
+    isRequired: True
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --resource-group -g
+    isRequired: True
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+    description: ''
+  - name: --debug
+    isRequired: False
+    summary: Increase logging verbosity to show all debug logs.
+    description: ''
+  - name: --help -h
+    isRequired: False
+    summary: Show this help message and exit.
+    description: ''
+  - name: --output -o
+    isRequired: False
+    summary: Output format.
+    description: ''
+    defaultValue: json
+    parameterValueGroup: json, jsonc, table, tsv
+  - name: --query
+    isRequired: False
+    summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+    description: ''
+  - name: --verbose
+    isRequired: False
+    summary: Increase logging verbosity. Use --debug for full debug logs.
+    description: ''
+  source:
+    remote:
+      path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+      branch: chaochen
+      repo: https://github.com/azure/azure-cli/.git
+  children: []
+  uid: az_lab_vm_stop
+  name: az lab vm stop
+  description: ''
+  summary: Stop a virtual machine This operation can take a while to complete.
+  Metadata: {}
+uid: az_lab_vm
+name: az lab vm
+description: ''
+summary: Commands to manage VM in a DevTest Lab.
+Metadata:
+  doc_source_url_repo: https://github.com/azure/azure-cli//blob/chaochen/
+  doc_source_url_path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+  original_content_git_url: https://github.com/azure/azure-cli//blob/chaochen/src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+  gitcommit: https://github.com/azure/azure-cli//blob/71c76c65a64e7dd4788a51d85644b01012f80356/src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+  updated_at: 6/8/2017 4:07:47 PM
+  ms.date: 6/8/2017
