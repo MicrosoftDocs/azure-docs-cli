@@ -16,6 +16,64 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## August 11, 2017
+
+Version 2.0.13
+
+### ACS
+
+* add more preview regions
+
+### Batch
+
+* Updated to Batch SDK 3.1.0 and Batch Management SDK 4.1.0.
+* Added a new command show the task counts of a job.
+* Fixed bug in resource file SAS URL processing
+* Batch account endpoint now supports optional 'https://' prefix.
+* Support for adding lists of more than 100 tasks to a job.
+* Added debug logging for loading Extensions command module.
+
+### Component
+
+* Add deprecation warning to 'az component' commands.
+
+### Container
+
+* container create: Fixes issue where equals sign was not allowed inside an environment variable.
+
+
+### Data Lake Store
+
+* Enable progress control
+
+### Event Grid
+
+* Initial release.
+
+### Network
+
+* `lb`: fixed issue where the certain child resource names did not resolve correctly when omitted
+* `application-gateway {subresource} delete`: Fixed issue where `--no-wait` was not honored.
+* `application-gateway http-settings update`: Fix issue where `--connection-draining-timeout` could not be turned off.
+* `[Network] Fix error - unexpected keyword argument 'sa_data_size_kilobyes'` : Fix where `az network vpn-connection ipsec-policy add` unexpected keyword argument 'sa_data_size_kilobyes'
+
+### Profile
+
+* account list: add `--refresh` to sycn up the latest subscriptions from server
+
+### Storage
+
+* Enable update storage account with system assigned identity
+
+### VM
+
+* availability-set: expose fault domain count on convert
+* vm: expose 'az vm list-skus' command
+* vm/vmss: support to assign identity w/o creating role assignments
+* vm: apply storage sku on attaching data disks
+* vm: remove default os-disk name and storage SKU when using managed disks.
+
+
 ## July 28, 2017
 
 Version 2.0.12
