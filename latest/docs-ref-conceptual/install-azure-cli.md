@@ -1,7 +1,7 @@
 ---
 title: Install the Azure CLI 2.0
 description: Reference docs for Azure CLI 2.0
-keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI, Uninstall Azure CLI 2.0
+keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI, Uninstall Azure CLI 2.0, Azure CLI, Install Azure CLI, Azure CLI Reference
 author: rloutlaw
 ms.author: routlaw
 manager: douge
@@ -24,15 +24,15 @@ For information about the latest release, see the [release notes](release-notes-
 > [!NOTE]
 > If you need the previous version of the Azure CLI, here's how to [install Azure CLI 1.0](/azure/cli-install-nodejs).
 
-## macOS
+## <a name="macOS"/>Install on macOS
 
-1. Install Azure CLI 2.0 with one `curl` command.
+1. Install Azure CLI 2.0 with `curl`.
 
    ```bash
    curl -L https://aka.ms/InstallAzureCli | bash
    ```
 
-2. You may have to restart your command shell for some changes to take effect.
+2. You may have to restart your shell for some changes to take effect.
 
    ```bash
    exec -l $SHELL
@@ -43,15 +43,15 @@ For information about the latest release, see the [release notes](release-notes-
 > [!WARNING]
 > The Homebrew formula for the Azure CLI, `azure-cli`, is currently out of date and will install a previous version.
 
-## Windows
+## Install on Windows
 
-You can install Azure CLI 2.0 with the MSI and use it in the Windows command-line, or you can install the CLI with apt-get on Bash on Ubuntu on Windows.
+You can install Azure CLI 2.0 with the MSI and use it in the Windows command-line, or you can install the CLI with `apt-get` on Bash on Ubuntu on Windows.
 
-### MSI for the Windows command-line 
+### Install with MSI for the Windows command-line 
 
-To install the CLI on Windows and use it in the Windows command-line, download and run the [msi](https://aka.ms/InstallAzureCliWindows).
+To install the CLI on Windows and use it in the Windows command-line, download and run the [MSI](https://aka.ms/InstallAzureCliWindows).
 
-### apt-get for Bash on Ubuntu on Windows
+### Install with apt-get for Bash on Ubuntu on Windows
 
 1. If you don't have Bash on Windows, [install it](https://msdn.microsoft.com/commandline/wsl/install_guide).
 
@@ -74,7 +74,7 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 
 5.  Run the CLI from the command prompt with the `az` command.
 
-## apt-get for Debian/Ubuntu
+## Install on Debian/Ubuntu with apt-get
 
 For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
@@ -104,7 +104,7 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 3.  Run the CLI from the command prompt with the `az` command.
 
-## Docker
+## Install with Docker
 
 We maintain a Docker image preconfigured with the Azure CLI 2.0.
 
@@ -126,43 +126,52 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 > docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
 > ```
 
-## Linux
+## <a name="Linux"/>Install on Linux without apt-get
 
-1. If you don't have it, install [Python](https://www.python.org/downloads).
+It is recommended that you install the CLI with `apt-get` if you are able to. For distributions which do not use the `apt` package manager, you can manually install.
 
-2. Depending on your Linux distribution, install the prerequisites.
+1. Install the prerequisites based on your Linux distribution.
 
    ```
    Platform              | Prerequisites
    ----------------------|---------------------------------------------
-   Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-   Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-   Debian 8              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential
-   Debian 7              | sudo apt-get update && sudo apt-get install -y libssl-dev libffi-dev python-dev
-   CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-   RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc libffi-devel python-devel openssl-devel
-   SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install gcc libffi-devel python-devel openssl-devel
+   Ubuntu 15.10 or 16.04 | sudo apt-get update && sudo apt-get install -y python libssl-dev libffi-dev python-dev build-essential
+   Ubuntu 12.04 or 14.04 | sudo apt-get update && sudo apt-get install -y python libssl-dev libffi-dev python-dev
+   Debian 8              | sudo apt-get update && sudo apt-get install -y python libssl-dev libffi-dev python-dev build-essential
+   Debian 7              | sudo apt-get update && sudo apt-get install -y python libssl-dev libffi-dev python-dev
+   CentOS 7.1 or 7.2     | sudo yum check-update; sudo yum install -y gcc python libffi-devel python-devel openssl-devel
+   RedHat 7.2            | sudo yum check-update; sudo yum install -y gcc python libffi-devel python-devel openssl-devel
+   SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install curl gcc python python-xml libffi-devel python-devel openssl-devel
    ```
 
-3. Install the CLI with one `curl` command.
+If your distribution is not listed above, you will need to install [Python](https://www.python.org/downloads/), [libffi](https://sourceware.org/libffi/), and [OpenSSL](https://www.openssl.org/source/).
+
+2. Install the CLI with  `curl`.
 
    ```bash
    curl -L https://aka.ms/InstallAzureCli | bash
    ```
 
-4. You may have to restart your command shell for some changes to take effect.
+> [!NOTE]
+> If you get an error from `curl`  regarding the `-L` parameter, or an error saying "Object Moved", try using the full url instead of the aka.ms url:
+>
+>  ```bash
+>  curl https://azurecliprod.blob.core.windows.net/install | bash
+>  ```
+
+3. You may have to restart your shell for some changes to take effect.
 
    ```bash
    exec -l $SHELL
    ```
 
-5. Run the CLI from the command prompt with the `az` command.
+4. Run the CLI from the command prompt with the `az` command.
 
-## Uninstalling previous CLI 1.x versions
+## Uninstall CLI 1.x versions
 
 If you have an earlier CLI 1.x version available on your system, you can uninstall it based upon the type of install used.
 
-### Installed via npm
+### Uninstall with npm
 
 Remove the older CLI with `npm uninstall`.
 
@@ -170,11 +179,11 @@ Remove the older CLI with `npm uninstall`.
   npm uninstall -g azure-cli
   ```
 
-### Installed via distributable
+### Uninstall with distributable
 
 If you installed via [MSI](http://aka.ms/webpi-azure-cli) or a [macOS package](http://aka.ms/mac-azure-cli), use the same tool to remove your install.
 
-### Installed via Docker
+### Uninstall with Docker
 
 If you installed a Docker image to use the earlier CLI version, remove that image and any associated containers. You can then re-create the containers
 after installing the new Docker image as described in the install instructions.
@@ -183,25 +192,15 @@ after installing the new Docker image as described in the install instructions.
   docker rmi -f microsoft/azure-cli
   ```
 
-## Troubleshooting
+## Update the CLI
 
-### Errors with curl redirection
+To update the Azure CLI, use the same method that you used to install it.
 
-If you get an error from the `curl` command regarding the `-L` parameter, or an error saying "Object Moved", try using the full url instead of the aka.ms url:
+### Update with MSI
 
-  ```bash
-  curl https://azurecliprod.blob.core.windows.net/install | bash
-  ```
+Run the [MSI](https://aka.ms/InstallAzureCliWindows) again.
 
-## Updating
-
-To update the Azure CLI, you'll need to use the same method that you used to install it.
-
-### Updating via MSI
-
-Run the [msi](https://aka.ms/InstallAzureCliWindows) again.
-
-### Installed via apt-get
+### Update with apt-get
 
 Use `apt-get upgrade` to update the CLI package.
 
@@ -216,7 +215,7 @@ Use `apt-get upgrade` to update the CLI package.
 > sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
 > ```
 
-### Installed via Docker
+### Update with Docker
 
 1. Update your local image with `docker pull`.
 
@@ -246,19 +245,19 @@ Use `apt-get upgrade` to update the CLI package.
    docker run azuresdk/azure-cli-python
    ```
 
-### Installed manually
+### Update manually
 
 Follow the manual installation instructions for [macOS](#macOS) or [Linux](#Linux) to update.
 
 ## Uninstall
 
-If you need to uninstall the CLI, we're sorry to see you go. How you uninstall depends on what tool you used to install the CLI.
+If you decide to uninstall the CLI, we're sorry to see you go. You should uninstall using the same method that you used to install the CLI.
 
-### Installed via MSI
+### Uninstall with MSI
 
-Run the [msi](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
+Run the [MSI](https://aka.ms/InstallAzureCliWindows) again and choose uninstall.
 
-### Installed via apt-get
+### Uninstall with apt-get
 
 Uninstall via `apt-get remove`:
 
@@ -266,7 +265,7 @@ Uninstall via `apt-get remove`:
   sudo apt-get remove -y azure-cli
   ```
 
-### Installed via Docker
+### Uninstall with Docker
 
 If you installed a docker image, you will need to remove any containers running it, and then delete the local image.
 
@@ -296,7 +295,7 @@ If you installed a docker image, you will need to remove any containers running 
 > [!NOTE]
 > If you installed a specific version of the image, you will need to add `:<version>` to the end of the image name.
 
-### Manually installed
+### Uninstall manually
 
 If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you can uninstall it with these steps.
 
@@ -312,8 +311,8 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
 > [!Note]
 > The default install location is `/Users/<username>`.
 
-## Reporting issues and feedback
+## Report CLI issues and feedback
 
 If you encounter any bugs with the tool,
-file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repo.
-To provide feedback from the command line, try the `az feedback` command.
+file an issue in the [Issues](https://github.com/Azure/azure-cli/issues) section of our GitHub repository.
+To provide feedback from the command line, use the `az feedback` command.
