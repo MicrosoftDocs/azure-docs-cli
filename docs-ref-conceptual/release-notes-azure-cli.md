@@ -16,6 +16,335 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## August 11, 2017
+
+Version 2.0.13
+
+### ACS
+
+* Added more preview regions
+
+### Batch
+
+* Updated to Batch SDK 3.1.0 and Batch Management SDK 4.1.0
+* Added a new command show the task counts of a job
+* Fixed bug in resource file SAS URL processing
+* Batch account endpoint now supports optional 'https://' prefix
+* Support for adding lists of more than 100 tasks to a job
+* Added debug logging for loading Extensions command module
+
+### Component
+
+* Added deprecation warning to 'az component' commands
+
+### Container
+
+* `create`: Fixed issue where equals sign was not allowed inside an environment variable
+
+
+### Data Lake Store
+
+* Enabled progress control
+
+### Event Grid
+
+* Initial release
+
+### Network
+
+* `lb`: Fixed issue where the certain child resource names did not resolve correctly when omitted
+* `application-gateway {subresource} delete`: Fixed issue where `--no-wait` was not honored
+* `application-gateway http-settings update`: Fixed issue where `--connection-draining-timeout` could not be turned off
+* Fixed error unexpected keyword argument `sa_data_size_kilobyes` with `az network vpn-connection ipsec-policy add`
+
+### Profile
+
+* `account list`: Added `--refresh` to sync up the latest subscriptions from server
+
+### Storage
+
+* Enable update storage account with system assigned identity
+
+### VM
+
+* `availability-set`: Exposed fault domain count on convert
+* Exposed `list-skus` command
+* Support to assign identity w/o creating role assignments
+* Apply storage sku on attaching data disks
+* Removed default os-disk name and storage SKU when using managed disks
+
+
+## July 28, 2017
+
+Version 2.0.12
+
+* Added container commands
+* Added billing and consumption modules
+
+```
+azure-cli (2.0.12)  
+
+acr (2.0.9)  
+acs (2.0.11)  
+appservice (0.1.11)  
+batch (3.0.3)  
+billing (0.1.3)  
+cdn (0.0.6)  
+cloud (2.0.7)  
+cognitiveservices (0.1.6)  
+command-modules-nspkg (2.0.1)  
+component (2.0.6)  
+configure (2.0.10)  
+consumption (0.1.3)  
+container (0.1.7)  
+core (2.0.12)  
+cosmosdb (0.1.11)  
+dla (0.0.10)  
+dls (0.0.11)  
+feedback (2.0.6)  
+find (0.2.6)  
+interactive (0.3.7)  
+iot (0.1.10)  
+keyvault (2.0.8)  
+lab (0.0.9)  
+monitor (0.0.8)  
+network (2.0.11)  
+nspkg (3.0.1)  
+profile (2.0.9)  
+rdbms (0.0.5)  
+redis (0.2.7)  
+resource (2.0.11)  
+role (2.0.9)  
+sf (1.0.5)  
+sql (2.0.8)  
+storage (2.0.11)  
+vm (2.0.11) 
+```
+
+### Core
+
+* Output sdk auth info for service principals with certificates
+* Fixed deployment progress exceptions
+* Use arm endpoint from the current cloud to create subscription client
+* Improved concurrent handling of clouds.config file (#3636)
+* Refresh client request id for each command execution
+* Create subscription clients with right SDK profile (#3635)
+* Progress Reporting for template deployments (#3510)
+* Added support for picking table output fields through jmespath query  (#3581)
+* Improved the muting of parse args and append history with gestures (#3434)
+* Create subscription clients with right SDK profile
+* Move all existing recording files to latest folder
+* Fixed idempotency for VM/VMSS create (#3586)
+* Command paths are no longer case sensitive
+* Certain boolean-type parameters are no longer case sensitive
+* Support login to ADFS on prem server like Azure Stack
+* Fixed concurrent writes to clouds.config (#3255)
+
+### ACR
+
+* Added `show-usage` command for managed registries
+* Support SKU update for managed registries
+* Added managed registries with managed SKU
+* Added webhooks for managed registries with acr webhook command module
+* Added AAD authentication with acr login command
+* Added delete command for docker repositories, manifests, and tags
+
+### ACS
+
+* Support for API version 2017-07-01
+
+### Appservice
+
+* Fixed bug where listing Linux webapp would return nothing
+* Support to retrieve creds from acr
+* Remove all commands under `appservice web`
+* Mask docker registry passwords from command output (#3656)
+* Ensure default browser is used on macOS without errors (#3623)
+* Improve the help of `webapp log tail` and `webapp log download` (#3624)
+* Exposed `traffic-routing` command to configure static routing (#3566)
+* Added reliability fixes in configuring source control (#3245)
+* Removed unsupported `--node-version` argument from `webapp config update` for Windows webapps. Instead use `webapp config appsettings set --settings WEBSITE_NODE_DEFAULT_VERSION=...`
+
+### Batch
+
+* Updated to Batch SDK 3.0.0 with support for low-priority VMs in pools
+* Renamed `pool create` option `--target-dedicated` to `--target-dedicated-nodes`
+* Added `pool create` options `--target-low-priority-nodes` and `--application-licenses`
+
+### CDN
+
+* Provided a better error message for `cdn endpoint list` when the profile specified by `--profile-name` does not exist.
+
+### Cloud
+
+* Changed API version of cloud metadata endpoint to YYYY-MM-DD format
+* Gallery endpoint isn't required
+* Support for registering cloud just with ARM resource manager endpoint
+* Provided an option for `cloud set` to choose the profile while selecting current cloud
+* Exposed `endpoint_vm_image_alias_doc`
+
+### CosmosDB
+
+* Fixed allowing creation of collection with custom partition key
+* Added support for collection default TTL.
+
+### Data Lake Analytics
+
+* Added commands for compute policy management under the `dla account compute-policy` heading
+* Added `dla job pipeline show`
+* Added `dla job recurrence list`
+
+### Data Lake Store
+
+* Added support for user managed key vault key rotation in `dls account update`
+* Updated underlying Data Lake Store filesystem SDK version, addressing a performance issue
+* Added command `dls enable-key-vault`. This command attempts to enable a user provided Key Vault for use encrypting the data ina Data Lake Store account
+
+### Interactive
+
+* Improved the start up time by using cached commands
+* Increased test coverage
+* Enhanced the '?' gesture to also inject into the next command
+* Fixed interactive errors with the profile 2017-03-09-profile-preview (#3587)
+* Allowed `--version` as a parameter for interactive mode (#3645)
+* Stop interactive mode throwing errors from validation completions (#3570)
+* Progress reporting for template deployments (#3510)
+* Added `--progress` flag
+* Removed `--debug` and `--verbose` from completions
+* Removed `interactive` from completions (#3324)
+
+### IoT
+
+* Fixed policy creation no longer clears existing policies. (#3934)
+
+### Key vault
+
+* Added commands for key vault recovery features:
+  * `keyvault` subcommands `purge`, `recover`, `keyvault list-deleted`
+  * `keyvault secret` subcommands `backup`, `restore`, `purge`, `recover`, `list-deleted`
+  * `keyvault certificate` subcommands `purge`, `recover`, `list-deleted`
+  * `keyvault key` subcommands `purge`, `recover`, `list-deleted`
+* Added service principal key vault integration (#3133)
+* Updated key vault dataplane to 0.3.2. (#3307)
+
+### Lab
+
+* Added support for claiming any vm in the lab through `az lab vm claim`
+* Added table output formatter for `az lab vm list` and `az lab vm show`
+
+### Monitor
+
+* Fix for template file with `monitor autoscale-settings get-parameters-template` command (#3349)
+* Renamed `monitor alert-rule-incidents list` to `monitor alert list-incidents`
+* Renamed `monitor alert-rule-incidents show` to `monitor alert show-incident`
+* Renamed `monitor metric-defintions list` to `monitor metrics list-definitions`
+* Renamed `monitor alert-rules` to `monitor alert`
+* Changed `monitor alert create`:
+  * `condition` and `action` subcommands no longer accept JSON
+  * Add numerous parameters to simplify the rule creation process
+  * `location` no longer required
+  * Add name and ID support for target
+  * Remove `--alert-rule-resource-name`
+  * Rename `is-enabled` to `enabled`, no longer required
+  * `description` defaults now based on the supplied condition
+  *  Add examples to help clarifiy the new format
+* Support names or IDs for `monitor metric` commands
+* Added convenience arguments and examples to `monitor alert rule update`
+
+### Network
+
+* Added `list-private-access-services` command
+* Added `--private-access-services` argument to `vnet subnet create` and `vnet subnet update`
+* Fixed issue where `application-gateway redirect-config create` would fail
+* Fixed issue where `application-gateway redirect-config update` with `--no-wait` would not work
+* Fixed bug when using `--servers` argument with `application-gateway address-pool create` and `application-gateway address-pool update`
+* Added `application-gateway redirect-config` commands
+* Added commands to `application-gateway ssl-policy`: `list-options`, `predefined list`, `predefined show`
+* Added arguments to `application-gateway ssl-policy set`: `--name`, `--cipher-suites`, `--min-protocol-version`
+* Added arguments to `application-gateway http-settings create` and `application-gateway http-settings update`: `--host-name-from-backend-pool`, `--affinity-cookie-name`,
+  `--enable-probe`, `--path`
+* Added arguments to `application-gateway url-path-map create` and `application-gateway url-path-map update`: `--default-redirect-config`, `--redirect-config`
+* Added argument `--redirect-config` to `application-gateway url-path-map rule create`
+* Added support for `--no-wait` to `application-gateway url-path-map rule delete`
+* Added arguments to `application-gateway probe create` and `application-gateway probe update`: `--host-name-from-http-settings`, `--min-servers`, `--match-body`, `--match-status-codes`
+* Added argument `--redirect-config` to `application-gateway rule create` and `application-gateway rule update`
+* Added support for `--accelerated-networking` to `nic create` and `nic update`
+* Removed `--internal-dns-name-suffix` argument from `nic create`
+* Added support for `--dns-servers` to `nic update` and `nic create`: Add support for --dns-servers
+* Fixed bug where `local-gateway create` ignored `--local-address-prefixes`
+* Added support for `--dns-servers` to `vnet update`
+* Fixed bug when creating a peering without route filtering with `express-route peering create`
+* Fixed bug where `--provider` and `--bandwidth` arguments did not work with `express-route update`
+* Fixed bug with `network watcher show-topology` defaulting logic
+* Improved output formatting for `network list-usages`
+* Use default frontend IP for `application-gateway http-listener create` if only one exists
+* Use default address pool, HTTP settings, and HTTP listener for `application-gateway rule create` if only one exists
+* Use default frontend IP and backend pool for `lb rule create` if only one exists
+* Use default frontend IP for `lb inbound-nat-rule create` if only one exists
+
+### Profile
+
+* Support login inside a VM with a managed identity
+* Support output for `account show` in SDK auth file format
+* Show deprecation warnings when using '--expanded-view'
+* Added `get-access-token` command to provide raw AAD token
+* Support login with a user account with no associated subscriptions
+
+### RDBMS
+
+* Support listing servers across a subscription (#3417)
+* Fixed `%s` not processed becasue of missing `% server_type` (#3393)
+* Fixed doc source map and added CI task to verify (#3361)
+* Fixed MySQL and PostgreSQL help (#3369)
+
+### Resource
+
+* Improved prompts for missing parameters for `group deployment create`
+* Improved parsing of `--parameters KEY=VALUE` syntax
+* Fixed issues where `group deployment create` parameter files were no longer recognized using `@<file>` syntax
+* Support `--ids` argument for `resource` and `managedapp` commands
+* Fixed up some parsing and error messages (#3584)
+* Fixed `--resource-type` parsing for the `lock` command to accept `<resource-namespace>` and `<resource-type>`
+* Added parameter checking for template link templates (#3629)
+* Added support for specifying deployment parameters using `KEY=VALUE` syntax
+
+### Role
+
+* Support output in SDK auth file format for `create-for-rbac`
+* Cleaned up role assignments and related AAD application when deleting a service principal (#3610)
+* Include time format in `app create` args `--start-date` and `--end-date` descriptions
+* Show deprecation warnings when using `--expanded-view`
+* Added key vault integration to the `create-for-rbac` and `reset-credentials` commands
+
+### Service Fabric
+* Fixed an issue with large files in applications being truncated on upload (#3666)
+* Added tests for Service Fabric commands (#3424)
+* Fixed numerous Service Fabric commands (#3234)
+
+### SQL
+
+* Removed broken `sql server create` `--identity` parameter
+* Removed password values from `sql server create` and `sql server update` command output
+* Added commands `sql db list-editions` and `sql elastic-pool list-editions`
+
+### Storage
+
+* Removed `--marker` option from `storage blob list`, `storage container list`, and `storage share list` commands (#3745)
+* Enabled creating an https-only storage account
+* Updated storage metrics, logging and cors commands (#3495)
+* Rephrased exception message from CORS add (#3638) (#3362)  
+* Converted generator to a list in download batch command dry run mode (#3592) 
+* Fixed blob download batch dryrun issue (#3640) (#3592)
+
+### VM
+
+* Support configuring nsg
+* Fixed a bug where the DNS server would not be configured correctly
+* Support managed service identities
+* Fixed issue where `cmss create` with an existing load balancer required `--backend-pool-name`.
+* Make datadisks created with `vm image create` lun start with 0
+
+
 ## May 10, 2017
 
 Version 2.0.6
