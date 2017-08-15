@@ -16,6 +16,23 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## August 15, 2017
+
+Version 2.0.14
+
+### ACS
+
+* correct sshMaster0 port number for kubernetes
+
+### Appservice
+
+* fix an exception when create a new git based linux webapp
+
+### Event Grid
+
+* Bug fix: Added SDK dependencies
+
+
 ## August 11, 2017
 
 Version 2.0.13
