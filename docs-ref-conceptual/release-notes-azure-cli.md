@@ -2,8 +2,8 @@
 title: Azure CLI 2.0 release notes
 description: Learn about the latest updates to Azure CLI 2.0
 keywords: Azure CLI 2.0, release notes
-author: rloutlaw
-ms.author: routlaw
+author: sptramer
+ms.author: sttramer
 manager: douge
 ms.date: 04/03/2017
 ms.topic: article
@@ -22,16 +22,15 @@ Version 2.0.14
 
 ### ACS
 
-* correct sshMaster0 port number for kubernetes
+* Corrected sshMaster0 port number for kubernetes
 
 ### Appservice
 
-* fix an exception when create a new git based linux webapp
+* Fixed an exception when creatng a new git based Linux webapp
 
 ### Event Grid
 
-* Bug fix: Added SDK dependencies
-
+* Added SDK dependencies
 
 ## August 11, 2017
 
