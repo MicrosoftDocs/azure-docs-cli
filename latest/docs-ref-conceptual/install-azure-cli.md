@@ -40,9 +40,6 @@ For information about the latest release, see the [release notes](release-notes-
    
 3. Run the CLI from the command prompt with the `az` command.
 
-> [!WARNING]
-> The Homebrew formula for the Azure CLI, `azure-cli`, is currently out of date and will install a previous version.
-
 ## Install on Windows
 
 You can install Azure CLI 2.0 with the MSI and use it in the Windows command-line, or you can install the CLI with `apt-get` on Bash on Ubuntu on Windows.
@@ -152,13 +149,6 @@ If your distribution is not listed above, you will need to install [Python](http
    curl -L https://aka.ms/InstallAzureCli | bash
    ```
 
-> [!NOTE]
-> If you get an error from `curl`  regarding the `-L` parameter, or an error saying "Object Moved", try using the full url instead of the aka.ms url:
->
->  ```bash
->  curl https://azurecliprod.blob.core.windows.net/install | bash
->  ```
-
 3. You may have to restart your shell for some changes to take effect.
 
    ```bash
@@ -166,6 +156,24 @@ If your distribution is not listed above, you will need to install [Python](http
    ```
 
 4. Run the CLI from the command prompt with the `az` command.
+
+## Troubleshooting
+
+If you encounter an issue during CLI install, check this section to see if your particular case is covered. If your issue is not here, please [file a Github issue](https://github.com/Azure/azure-cli/issues).
+
+### curl "Object Moved" error
+
+If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using the full URL instead of the `aka.ms` redirect:
+
+```bash
+curl https://azurecliprod.blob.core.windows.net/install | bash
+```
+
+### Homebrew on macOS installing older version
+
+The Homebrew `azure-cli` formula available for macOS is currently out of date, and will install a 1.x version of the CLI. You can see when it is updated by checking `brew info azure-cli`.
+
+Until then, [uninstall the older version](#uninstall_brew) and follow the [macOS install instructions](#macOS).
 
 ## Uninstall CLI 1.x versions
 
@@ -178,6 +186,14 @@ Remove the older CLI with `npm uninstall`.
   ```bash
   npm uninstall -g azure-cli
   ```
+
+### <a name="uninstall_brew"/>Uninstall with Homebrew on macOS
+
+Remove the older CLI with `brew uninstall`.
+
+```bash
+brew uninstall azure-cli
+```
 
 ### Uninstall with distributable
 
