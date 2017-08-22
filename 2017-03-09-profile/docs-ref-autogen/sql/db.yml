@@ -1,0 +1,455 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_sql_db
+  name: az sql db
+  summary: Manage databases.
+  langs:
+  - azurecli
+  children:
+  - az_sql_db_copy
+  - az_sql_db_create
+  - az_sql_db_delete
+  - az_sql_db_export
+  - az_sql_db_import
+  - az_sql_db_list
+  - az_sql_db_list_editions
+  - az_sql_db_list_usages
+  - az_sql_db_restore
+  - az_sql_db_show
+  - az_sql_db_update
+- uid: az_sql_db_copy
+  name: az sql db copy
+  summary: Creates a copy of an existing database.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --dest-name
+    summary: Name of the database that will be created as the copy destination.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - name: --dest-resource-group
+    summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
+  - name: --dest-server
+    summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
+  - name: --elastic-pool
+    summary: Name of the elastic pool to create the new database in.
+  - name: --service-objective
+    summary: Name of the service objective for the new database.
+  - name: --tags
+    summary: Resource tags.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_create
+  name: az sql db create
+  summary: Creates a database.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - name: --collation
+    summary: The collation of the database. If createMode is not Default, this value is ignored.
+  - name: --edition
+    summary: The edition of the database.
+  - name: --elastic-pool
+    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored. Not supported for DataWarehouse edition.
+  - name: --max-size
+    summary: 'The max storage size of the database. Only the following sizes are supported (in addition to limitations being placed on each edition): 100MB, 500MB, 1GB, 5GB, 10GB, 20GB, 30GB, 150GB, 200GB, 500GB. If no unit is specified, defaults to bytes (B).'
+  - name: --sample-name
+    summary: Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored. Not supported for DataWarehouse edition.
+  - name: --service-objective
+    summary: 'The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation.".'
+  - name: --tags
+    summary: Resource tags.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_delete
+  name: az sql db delete
+  summary: Deletes a database or data warehouse.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_export
+  name: az sql db export
+  summary: Exports a database to a bacpac.
+  langs:
+  - azurecli
+  examples:
+  - summary: Get SAS key for use in export operation
+    syntax:
+      content: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions w --expiry 2018-01-01T00:00:00Z
+  - summary: Export bacpac using SAS key
+    syntax:
+      content: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - summary: Export bacpac using storage account Key
+    syntax:
+      content: az sql db export -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  parameters:
+  - isRequired: true
+    name: --admin-password -p
+    summary: The password of the SQL administrator.
+  - isRequired: true
+    name: --admin-user -u
+    summary: The name of the SQL administrator.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - isRequired: true
+    name: --storage-key
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
+  - isRequired: true
+    name: --storage-key-type
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+    summary: The type of the storage key to use.
+  - isRequired: true
+    name: --storage-uri
+    summary: The storage uri to use.
+  - name: --auth-type
+    defaultValue: SQL
+    parameterValueGroup: ADPassword, SQL
+    summary: The authentication type.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_import
+  name: az sql db import
+  summary: Imports a bacpac into an existing database.
+  langs:
+  - azurecli
+  examples:
+  - summary: Get SAS key for use in import operation
+    syntax:
+      content: az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac --permissions r --expiry 2018-01-01T00:00:00Z
+  - summary: Import bacpac into an existing database using SAS key
+    syntax:
+      content: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" --storage-key-type SharedAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  - summary: Import bacpac into an existing database using storage account key
+    syntax:
+      content: az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== --storage-key-type StorageAccessKey --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/mybacpac.bacpac
+  parameters:
+  - isRequired: true
+    name: --admin-password -p
+    summary: The password of the SQL administrator.
+  - isRequired: true
+    name: --admin-user -u
+    summary: The name of the SQL administrator.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - isRequired: true
+    name: --storage-key
+    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
+  - isRequired: true
+    name: --storage-key-type
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+    summary: The type of the storage key to use.
+  - isRequired: true
+    name: --storage-uri
+    summary: The storage uri to use.
+  - name: --auth-type
+    defaultValue: SQL
+    parameterValueGroup: ADPassword, SQL
+    summary: The authentication type.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_list
+  name: az sql db list
+  summary: Lists all databases and data warehouses in a server, or all databases in an elastic pool.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - name: --elastic-pool
+    summary: If specified, lists only the databases in this elastic pool.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_list_editions
+  name: az sql db list-editions
+  summary: Shows database editions that are available for your subscription.
+  langs:
+  - azurecli
+  examples:
+  - summary: Show all database editions in a location.
+    syntax:
+      content: az sql db list-editions -l westus
+  - summary: Show all available database service objectives for Standard edition.
+    syntax:
+      content: az sql db list-editions -l westus --edition Standard
+  - summary: Show available max database sizes for P1 service objective
+    syntax:
+      content: az sql db list-editions -l westus --service-objective P1 --show-details max-size
+  parameters:
+  - isRequired: true
+    name: --location -l
+    summary: Location. You can configure the default location using az configure --defaults location=<location>.
+  - name: --show-details -d
+    parameterValueGroup: max-size
+    summary: List of additional details to include in output.
+  - name: --edition
+    summary: Edition to search for. If unspecified, all editions are shown.
+  - name: --service-objective
+    summary: Service objective to search for. If unspecified, all editions are shown.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_list_usages
+  name: az sql db list-usages
+  summary: Returns database usages.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_restore
+  name: az sql db restore
+  summary: Creates a new database by restoring from a database backup.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --dest-name
+    summary: Name of the database that will be created as the restore destination.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - isRequired: true
+    name: --time -t
+    summary: The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value.
+  - name: --edition
+    summary: The edition for the new database.
+  - name: --elastic-pool
+    summary: Name of the elastic pool to create the new database in.
+  - name: --service-objective
+    summary: Name of service objective for the new database.
+  - name: --tags
+    summary: Resource tags.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_show
+  name: az sql db show
+  summary: Gets a database or data warehouse.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+- uid: az_sql_db_update
+  name: az sql db update
+  summary: Updates a database.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure SQL Database.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+  - isRequired: true
+    name: --server -s
+    summary: Name of the Azure SQL server.
+  - name: --elastic-pool
+    summary: The name of the elastic pool to move the database into.
+  - name: --max-size
+    summary: The new maximum size of the database expressed in bytes.
+  - name: --service-objective
+    summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  source:
+    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      repo: https://github.com/georgechenchao/azure-cli.git
+commands:
+- uid: az_sql_db_audit_policy
+  name: az sql db audit-policy
+  summary: Manage a database's auditing policy.
+- uid: az_sql_db_audit_policy_show
+  name: az sql db audit-policy show
+  summary: Gets a database's blob auditing policy.
+- uid: az_sql_db_audit_policy_update
+  name: az sql db audit-policy update
+  summary: Updates a database's auditing policy.
+- uid: az_sql_db_copy
+  name: az sql db copy
+  summary: Creates a copy of an existing database.
+- uid: az_sql_db_create
+  name: az sql db create
+  summary: Creates a database.
+- uid: az_sql_db_delete
+  name: az sql db delete
+  summary: Deletes a database or data warehouse.
+- uid: az_sql_db_export
+  name: az sql db export
+  summary: Exports a database to a bacpac.
+- uid: az_sql_db_import
+  name: az sql db import
+  summary: Imports a bacpac into an existing database.
+- uid: az_sql_db_list
+  name: az sql db list
+  summary: Lists all databases and data warehouses in a server, or all databases in an elastic pool.
+- uid: az_sql_db_list_editions
+  name: az sql db list-editions
+  summary: Shows database editions that are available for your subscription.
+- uid: az_sql_db_list_usages
+  name: az sql db list-usages
+  summary: Returns database usages.
+- uid: az_sql_db_replica
+  name: az sql db replica
+  summary: Manage replication between databases.
+- uid: az_sql_db_replica_create
+  name: az sql db replica create
+  summary: Creates a database as a readable secondary replica of an existing database.
+- uid: az_sql_db_replica_delete_link
+  name: az sql db replica delete-link
+  summary: Permanently stops data replication between two database replicas.
+- uid: az_sql_db_replica_list_links
+  name: az sql db replica list-links
+  summary: Lists the replicas of a database and corresponding replication status.
+- uid: az_sql_db_replica_set_primary
+  name: az sql db replica set-primary
+  summary: Sets which replica database is primary by failing over from the current primary replica database.
+- uid: az_sql_db_restore
+  name: az sql db restore
+  summary: Creates a new database by restoring from a database backup.
+- uid: az_sql_db_show
+  name: az sql db show
+  summary: Gets a database or data warehouse.
+- uid: az_sql_db_threat_policy
+  name: az sql db threat-policy
+  summary: Manage a database's threat detection policy.
+- uid: az_sql_db_threat_policy_show
+  name: az sql db threat-policy show
+  summary: Gets a database's threat detection policy.
+- uid: az_sql_db_threat_policy_update
+  name: az sql db threat-policy update
+  summary: Updates a database's threat detection policy.
+- uid: az_sql_db_update
+  name: az sql db update
+  summary: Updates a database.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
