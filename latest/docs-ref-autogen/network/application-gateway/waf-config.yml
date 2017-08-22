@@ -42,6 +42,10 @@ items:
   summary: Update the firewall configuration of a web application.
   langs:
   - azurecli
+  examples:
+  - summary: Disable two rules for validation of request body parsing and SQL Injection
+    syntax:
+      content: az network application-gateway waf-config set -g MyResourceGroup -n MyGatewayName --enabled true --rule-set-type OWASP --rule-set-version 3.0 --disabled-rules 920130 920140 --disabled-rule-groups REQUEST-942-APPLICATION-ATTACK-SQLI
   parameters:
   - isRequired: true
     name: --enabled
@@ -54,11 +58,11 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
   - name: --disabled-rule-groups
-    summary: Space separated list of rule groups to disable. This disables the entire group. To disable specifc rules, use '--disabled-rule-ids'.
-    valueFrom: az application-gateway waf-config list-rule-sets
+    summary: Space separated list of rule groups to disable. This disables the entire group. To disable specifc rules, use '--disabled-rules'.
+    valueFrom: az network application-gateway waf-config list-rule-sets
   - name: --disabled-rules
     summary: Space separated list of rule IDs to disable.
-    valueFrom: az application-gateway waf-config list-rule-sets
+    valueFrom: az network application-gateway waf-config list-rule-sets
   - name: --firewall-mode
     defaultValue: Detection
     parameterValueGroup: Detection, Prevention
@@ -68,10 +72,10 @@ items:
   - name: --rule-set-type
     defaultValue: OWASP
     summary: Rule set type.
-    valueFrom: az application-gateway waf-config list-rule-sets
+    valueFrom: az network application-gateway waf-config list-rule-sets
   - name: --rule-set-version
     summary: Rule set version.
-    valueFrom: az application-gateway waf-config list-rule-sets
+    valueFrom: az network application-gateway waf-config list-rule-sets
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
