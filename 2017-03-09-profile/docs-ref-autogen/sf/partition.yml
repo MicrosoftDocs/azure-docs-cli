@@ -3,7 +3,6 @@ items:
 - uid: az_sf_partition
   name: az sf partition
   summary: Manage the partitions of a Service Fabric service.
-  description: ''
   langs:
   - azurecli
   children:
@@ -14,117 +13,96 @@ items:
 - uid: az_sf_partition_health
   name: az sf partition health
   summary: Gets the health of the specified Service Fabric partition.
-  description: Gets the health information of the specified partition. Use EventsHealthStateFilter to filter the collection of health events reported on the service based on the health state. Use ReplicasHealthStateFilter to filter the collection of ReplicaHealthState objects on the partition. If you specify a partition that does not exist in the health store, this cmdlet returns an error. .
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --partition-id
     summary: The identity of the partition.
-    description: ''
   - name: --events-health-state-filter
     summary: Allows filtering the collection of HealthEvent objects returned based on health state. The possible values for this parameter include integer value of one of the following health states. Only events that match the filter are returned. All events are used to evaluate the aggregated health state. If not specified, all entries are returned. The state values are flag based enumeration, so the value could be a combination of these value obtained using bitwise 'OR' operator. For example, If the provided value is 6 then all of the events with HealthState value of OK (2) and Warning (4) are returned. - Default - Default value. Matches any HealthState. The value is zero. - None - Filter that doesn’t match any HealthState value. Used in order to return no results on a given collection of states. The value is 1. - Ok - Filter that matches input with HealthState value Ok. The value is 2. - Warning - Filter that matches input with HealthState value Warning. The value is 4. - Error - Filter that matches input with HealthState value Error. The value is 8. - All - Filter that matches input with any HealthState value. The value is 65535.
-    description: ''
   - name: --replicas-health-state-filter
     summary: Allows filtering the collection of ReplicaHealthState objects on the partition. The value can be obtained from members or bitwise operations on members of HealthStateFilter. Only replicas that match the filter will be returned. All replicas will be used to evaluate the aggregated health state. If not specified, all entries will be returned.The state values are flag based enumeration, so the value could be a combination of these value obtained using bitwise 'OR' operator. For example, If the provided value is 6 then all of the events with HealthState value of OK (2) and Warning (4) will be returned. The possible values for this parameter include integer value of one of the following health states. - Default - Default value. Matches any HealthState. The value is zero. - None - Filter that doesn’t match any HealthState value. Used in order to return no results on a given collection of states. The value is 1. - Ok - Filter that matches input with HealthState value Ok. The value is 2. - Warning - Filter that matches input with HealthState value Warning. The value is 4. - Error - Filter that matches input with HealthState value Error. The value is 8. - All - Filter that matches input with any HealthState value. The value is 65535.
-    description: ''
   - name: --timeout -t
     defaultValue: "60"
     summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
-    description: ''
   source:
     path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
     remote:
       branch: master
       path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_sf_partition_info
   name: az sf partition info
   summary: Gets the information about a Service Fabric partition.
-  description: The Partitions endpoint returns information about the specified partition. The response include the partition id, partitioning scheme information, keys supported by the partition, status, health and other details about the partition.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --partition-id
     summary: The identity of the partition.
-    description: ''
   - name: --timeout -t
     defaultValue: "60"
     summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
-    description: ''
   source:
     path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
     remote:
       branch: master
       path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_sf_partition_report_health
   name: az sf partition report-health
   summary: Sends a health report on the Service Fabric partition.
-  description: Reports health state of the specified Service Fabric partition. The report must contain the information about the source of the health report and property on which it is reported. The report is sent to a Service Fabric gateway Partition, which forwards to the health store. The report may be accepted by the gateway, but rejected by the health store after extra validation. For example, the health store may reject the report because of an invalid parameter, like a stale sequence number. To see whether the report was applied in the health store, check that the report appears in the events section.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --health-property
     summary: The property of the health information. An entity can have health reports for different properties. The property is a string and not a fixed enumeration to allow the reporter flexibility to categorize the state condition that triggers the report. For example, a reporter with SourceId "LocalWatchdog" can monitor the state of the available disk on a node, so it can report "AvailableDisk" property on that node. The same reporter can monitor the node connectivity, so it can report a property "Connectivity" on the same node. In the health store, these reports are treated as separate health events for the specified node. Together with the SourceId, the property uniquely identifies the health information.
-    description: ''
   - isRequired: true
     name: --health-state
     summary: "Possible values include: 'Invalid', 'Ok', 'Warning', 'Error', 'Unknown'."
-    description: ''
   - isRequired: true
     name: --partition-id
     summary: The identity of the partition.
-    description: ''
   - isRequired: true
     name: --source-id
     summary: The source name which identifies the client/watchdog/system component which generated the health information.
-    description: ''
   - name: --description
     summary: The description of the health information. It represents free text used to add human readable information about the report. The maximum string length for the description is 4096 characters. If the provided string is longer, it will be automatically truncated. When truncated, the last characters of the description contain a marker "[Truncated]", and total string size is 4096 characters. The presence of the marker indicates to users that truncation occurred. Note that when truncated, the description has less than 4096 characters from the original string.
-    description: ''
   - name: --remove-when-expired
     summary: Value that indicates whether the report is removed from health store when it expires. If set to true, the report is removed from the health store after it expires. If set to false, the report is treated as an error when expired. The value of this property is false by default. When clients report periodically, they should set this value to false (default). This way, is the reporter has issues (eg. deadlock) and can't report, the entity is evaluated at error when the health report expires. This flags the entity as being in Error health state.
-    description: ''
   - name: --sequence-number
     summary: The sequence number for this health report as a numeric string. The report sequence number is used by the health store to detect stale reports. If not specified, a sequence number is auto-generated by the health client when a report is added.
-    description: ''
   - name: --timeout -t
     defaultValue: "60"
     summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
-    description: ''
   - name: --ttl
     summary: The duration, in milliseconds, for which this health report is valid. When clients report periodically, they should send reports with higher frequency than time to live. If not specified, time to live defaults to infinite value.
-    description: ''
   source:
     path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
     remote:
       branch: master
       path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_sf_partition_service_name
   name: az sf partition service-name
   summary: Gets the name of the Service Fabric service for a partition.
-  description: The GetServiceName endpoint returns the name of the service for the specified partition.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --partition-id
     summary: The identity of the partition.
-    description: ''
   - name: --timeout -t
     defaultValue: "60"
     summary: The server timeout for performing the operation, specified in seconds. This is the maximum time a client can wait.
-    description: ''
   source:
     path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
     remote:
       branch: master
       path: src/command_modules/azure-cli-sf/azure/cli/command_modules/sf/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 commands:
 - uid: az_sf_partition_health
   name: az sf partition health
