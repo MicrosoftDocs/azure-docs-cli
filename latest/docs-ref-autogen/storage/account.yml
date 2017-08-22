@@ -23,13 +23,13 @@ items:
   parameters:
   - isRequired: true
     name: --name
-    summary: ''
+    summary: The storage account name.
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_create
   name: az storage account create
   summary: Creates a storage account.
@@ -52,11 +52,13 @@ items:
     summary: The storage account SKU.
   - name: --access-tier
     parameterValueGroup: Cool, Hot
-    summary: Required for StandardBlob accounts. The access tier used for billing. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types.
+    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+  - name: --assign-identity
+    summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
   - name: --custom-domain
     summary: User domain assigned to the storage account. Name is the CNAME source.
-  - name: --encryption
-    parameterValueGroup: blob, file, queue, table
+  - name: --encryption-services
+    parameterValueGroup: blob, file
     summary: Specifies which service(s) to encrypt.
   - name: --https-only
     parameterValueGroup: false, true
@@ -74,7 +76,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_delete
   name: az storage account delete
   summary: Deletes a storage account.
@@ -101,7 +103,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_generate_sas
   name: az storage account generate-sas
   summary: Generates a shared access signature for the account.
@@ -137,7 +139,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_list
   name: az storage account list
   summary: Lists storage accounts.
@@ -158,7 +160,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_show
   name: az storage account show
   summary: Returns storage account properties.
@@ -183,7 +185,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_show_connection_string
   name: az storage account show-connection-string
   summary: Returns the properties for the specified storage account.
@@ -221,7 +223,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_show_usage
   name: az storage account show-usage
   summary: Show the current count and limit of the storage accounts under the subscription.
@@ -233,7 +235,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 - uid: az_storage_account_update
   name: az storage account update
   summary: Update the properties of a storage account.
@@ -248,11 +250,16 @@ items:
     summary: Name of resource group. You can configure the default group using az configure --defaults group=<name>.
   - name: --access-tier
     parameterValueGroup: Cool, Hot
-    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types.
+    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+  - name: --assign-identity
+    summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
   - name: --custom-domain
     summary: User domain assigned to the storage account. Name is the CNAME source. Use "" to clear existing value.
-  - name: --encryption
-    parameterValueGroup: blob, file, queue, table
+  - name: --encryption-key-source
+    parameterValueGroup: Microsoft.Keyvault, Microsoft.Storage
+    summary: 'The encryption keySource (provider). Default: Microsoft.Storage.'
+  - name: --encryption-services
+    parameterValueGroup: blob, file
     summary: Specifies which service(s) to encrypt.
   - name: --https-only
     parameterValueGroup: false, true
@@ -265,6 +272,12 @@ items:
   - name: --use-subdomain
     parameterValueGroup: false, true
     summary: Specify whether to use indirect CNAME validation.
+  - name: --encryption-key-name
+    summary: The name of the KeyVault key.
+  - name: --encryption-key-vault
+    summary: The Uri of the KeyVault.
+  - name: --encryption-key-version
+    summary: The version of the KeyVault key.
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
   - name: --remove
@@ -276,7 +289,7 @@ items:
     remote:
       branch: master
       path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/azure/azure-cli/.git
+      repo: https://github.com/georgechenchao/azure-cli.git
 commands:
 - uid: az_storage_account_check_name
   name: az storage account check-name
