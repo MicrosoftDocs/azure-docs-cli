@@ -16,6 +16,70 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## August 28, 2017
+
+Version 2.0.15
+
+### CLI
+
+* Added legal note to `--version`.
+
+### ACS
+
+* Corrected preview regions.
+* Formatted default `dns_name_prefix` properly.
+* Optimized acs command output.
+
+### Appservice
+
+* [BREAKING CHANGE] Fixed inconsistencies in the output of `az webapp config appsettings [delete|set]`
+* Added a new alias of `-i` for `az webapp config container set --docker-custom-image-name`
+* Exposed `az webapp log show`
+* Exposed new arguments from `az webapp delete` to retain app service plan, metrics or dns registration
+* Fixed: Detect slot settings correctly
+
+### IoT
+
+* Fixed #3934: Policy creation no longer clears existing policies
+
+### Network
+
+* [BREAKING CHANGE] Renamed `vnet list-private-access-services` to `vnet list-endpoint-services`
+* [BREAKING CHANGE] Renamed option `--private-access-services` to `--service-endpoints` for `vnet subnet [create|update]`
+* Added support for multiple IP and port ranges to `nsg rule [create|update]`
+* Added support for SKU to `lb create`
+* Added support for SKU to `public-ip create`
+
+### Profile
+
+* Exposed `--msi` and `--msi-port` to login using a virtual machine's identity
+
+### Service Fabric
+
+* Preview release
+* Simplified registry user/password rules for command
+* Fixed password prompt for user even after passing in the param
+* Added support for empty `registry_cred`
+
+### Storage
+
+* Enabled setting blob tier
+* Added `--bypass` and `--default-action` arguments to `storage account [create|update]` to support service tunneling
+* Added commands to add VNET rules and IP based rules to `storage account network-rule`  
+* Enabled service encryption by customer managed key
+* [BREAKING CHANGE] Renamed `--encryption` option to `--encryption-services` for `az storage account create and az storage account update` command
+* Fixed #4220: `az storage account update encryption` - syntax mismatch
+
+### VM
+
+* Fixed issue where extra, erroneous information was displayed for `vmss get-instance-view` when using `--instance-id *`
+* Added support for `--lb-sku` to `vmss create`: 
+* Removed human names from the admin name blacklist for `[vm|vmss] create` 
+* Fixed issue where `[vm|vmss] create` would throw an error if unable to extract plan information from an image
+* Fixed a crash when creating a vmms scaleset with an internal LB
+* Fixed issue where `--no-wait` argument did not work wth `vm availability-set create`
+
+
 ## August 15, 2017
 
 Version 2.0.14
