@@ -22,62 +22,62 @@ Version 2.0.15
 
 ### CLI
 
-* Add legal note to --version
+* Added legal note to `--version`.
 
 ### ACS
 
-* correct preview regions
-* format default dns_name_prefix properly
-* optimize acs command output
+* Corrected preview regions.
+* Formatted default `dns_name_prefix` properly.
+* Optimized acs command output.
 
 ### Appservice
 
-Breaking Change:webapp: fix inconsistencies in the output of "az webapp config appsettings delete/set"
-webapp: add a new alias of '-i' for "az webapp config container set --docker-custom-image-name"
-webapp: expose 'az webapp log show'
-webapp: expose new arguments from 'az webapp delete' to retain app service plan, metrics or dns registration.
-webapp: detect a slot setting correctly
+* [BREAKING CHANGE] Fixed inconsistencies in the output of `az webapp config appsettings [delete|set]`
+* Added a new alias of `-i` for `az webapp config container set --docker-custom-image-name`
+* Exposed `az webapp log show`
+* Exposed new arguments from `az webapp delete` to retain app service plan, metrics or dns registration
+* Fixed: Detect slot settings correctly
 
 ### IoT
 
-* revisit of bug 3934 -- policy creation no longer clears existing policies.
+* Fixed #3934: Policy creation no longer clears existing policies
 
 ### Network
 
-* Breaking Change `vnet list-private-access-services`: renamed to `vnet list-endpoint-services`
-* Breaking Change `vnet subnet create/update`: renamed `--private-access-services` to `--service-endpoints`
-* `nsg rule create/update`: Add support for multiple IP ranges and port ranges.
-* `lb create`: Added support for SKU.
-* `public-ip create`: Added support for SKU.
+* [BREAKING CHANGE] Renamed `vnet list-private-access-services` to `vnet list-endpoint-services`
+* [BREAKING CHANGE] Renamed option `--private-access-services` to `--service-endpoints` for `vnet subnet [create|update]`
+* Added support for multiple IP and port ranges to `nsg rule [create|update]`
+* Added support for SKU to `lb create`
+* Added support for SKU to `public-ip create`
 
 ### Profile
 
-* login: expose `--msi` and `--msi-port` to login using Virtual machine's identity
+* Exposed `--msi` and `--msi-port` to login using a virtual machine's identity
 
 ### Service Fabric
 
-* Preview release.
-* Simplified registry user/pass rules for command.
-* Fixed password prompt for user even after passing in the param.
-* Supports None registry_cred.
+* Preview release
+* Simplified registry user/password rules for command
+* Fixed password prompt for user even after passing in the param
+* Added support for empty `registry_cred`
 
 ### Storage
 
-* Enable set blob tier
-* `storage account create/update`: Add `--bypass` and `--default-action` arguments to support service tunneling.
-* `storage account network-rule`: Added commands to add VNET rules and IP based rules.
-* Enable service encryption by customer managed key
-* Breaking change: rename --encryption option to --encryption-services for az storage account create and az storage account update command.
-* Fix #4220: az storage account update encryption - syntax mismatch
+* Enabled setting blob tier
+* Added `--bypass` and `--default-action` arguments to `storage account [create|update]` to support service tunneling
+* Added commands to add VNET rules and IP based rules to `storage account network-rule`  
+* Enabled service encryption by customer managed key
+* [BREAKING CHANGE] Renamed `--encryption` option to `--encryption-services` for `az storage account create and az storage account update` command
+* Fixed #4220: `az storage account update encryption` - syntax mismatch
 
 ### VM
 
-* `vmss get-instance-view`: Fix issue where extra, erroneous information was displayed when using `--instance-id *`
-* `vmss create`: Added support for `--lb-sku`
-* `vm/vmss create`: remove human names from the admin name blacklist
-* `vm/vmss create`: fix issue where the command would throw an error if unable to extract plan information from an image.
-* `vmss create`: fix a crash when create a scaleset with an internal LB
-* `vm availability-set create`: Fix issue where --no-wait argument did not work.
+* Fixed issue where extra, erroneous information was displayed for `vmss get-instance-view` when using `--instance-id *`
+* Added support for `--lb-sku` to `vmss create`: 
+* Removed human names from the admin name blacklist for `[vm|vmss] create` 
+* Fixed issue where `[vm|vmss] create` would throw an error if unable to extract plan information from an image
+* Fixed a crash when creating a vmms scaleset with an internal LB
+* Fixed issue where `--no-wait` argument did not work wth `vm availability-set create`
 
 
 ## August 15, 2017
