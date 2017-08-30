@@ -46,5 +46,6 @@ If so, you can configure Azure CLI 2.0 to execute commands against a particular 
    > The `--subscription` parameter takes either the subscription name or the subscription ID.
 
 You can verify the change by running the `az account list --output table` command again.
+Note : You can also use SubscriptionId instead of Subscription Name to set default account.
 
 Once you set your default subscription, all subsequent Azure CLI commands run against this subscription.
