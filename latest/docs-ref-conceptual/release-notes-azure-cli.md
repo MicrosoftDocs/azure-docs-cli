@@ -16,6 +16,24 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## August 31, 2017
+
+Version 2.0.16
+
+### Keyvault
+
+* `keyvault secret download`: Fix bug when trying to automatically resolve secret encoding.
+
+### Sf
+
+* Deprecating all commands in favor of Service Fabric CLI (sfctl)
+
+### Storage
+
+* `storage account create`: Fix issue where storage accounts could not be created in regions that don't
+  support the NetworkACLs feature.
+* Deduce content type and content encoding during blob and file upload if neither content type and content encoding are specified.
+
 ## August 28, 2017
 
 Version 2.0.15
