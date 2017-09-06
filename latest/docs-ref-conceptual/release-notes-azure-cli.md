@@ -22,7 +22,7 @@ Version 2.0.16
 
 ### Keyvault
 
-* `keyvault secret download`: Fix bug when trying to automatically resolve secret encoding.
+* Fixed bug when trying to automatically resolve secret encoding with `secret download`
 
 ### Sf
 
@@ -30,9 +30,8 @@ Version 2.0.16
 
 ### Storage
 
-* `storage account create`: Fix issue where storage accounts could not be created in regions that don't
-  support the NetworkACLs feature.
-* Deduce content type and content encoding during blob and file upload if neither content type and content encoding are specified.
+* Fixed issue where storage accounts could not be created in regions that don't support the NetworkACLs feature
+* Determine content type and content encoding during blob and file upload if neither content type and content encoding are specified
 
 ## August 28, 2017
 
