@@ -54,7 +54,7 @@ items:
     summary: Role name or id the managed identity will be assigned.
     description: ''
   - name: --scope
-    summary: "The scope the managed identity has access to, or specify \"\" for None. Default: VM/VMSS's resource group."
+    summary: The scope the managed identity has access to.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -87,6 +87,9 @@ items:
   - summary: Create an Debian VM scaleset and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
     syntax:
       content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+  - summary: Create a VM scaleset with Managed Service Identity. The VM will have a 'Contributor' Role with access to a storage account
+    syntax:
+      content: az vm create -n MyVm -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
   parameters:
   - isRequired: true
     name: --image
@@ -170,7 +173,7 @@ items:
     summary: Role name or id the managed identity will be assigned.
     description: ''
   - name: --scope
-    summary: "The scope the managed identity has access to, or specify \"\" for None. Default: VM/VMSS's resource group."
+    summary: The scope the managed identity has access to.
     description: ''
   - name: --dns-servers
     summary: Space separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
@@ -887,6 +890,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/56a9a39e513247816a368d0deb8441e436f961e4/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 9/5/2017 4:30:33 PM
-ms.date: 9/5/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/008eb384ea1596acf5be7ec399c7710367a9c855/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 9/7/2017 11:23:05 PM
+ms.date: 9/7/2017
