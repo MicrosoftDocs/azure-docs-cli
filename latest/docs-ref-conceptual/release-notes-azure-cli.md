@@ -16,6 +16,68 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## September 11, 2017
+
+Version 2.0.17
+
+### Core
+
+* Enable command module to set its own correlation ID in telemetry
+* Fix json dump issue when telemetry is set to diagnostics mode
+
+### Acs
+
+* add acs list-locations command
+* make ssh-key-file come with expected default value
+
+### Appservice
+
+* webapp: able to create a webapp in a resource group other than the service plan's
+
+### Batch
+
+* minor fixes
+
+### Cdn
+
+* `cdn custom-domain create`: Fixed 'CustomDomain is not interable' bug.
+
+### Extension
+
+* Initial Release.
+
+### Keyvault
+
+* `keyvault set-policy`: Fix issue where permissions were case sensitive.
+
+### Network
+
+* BC `vnet list-private-access-services`: renamed to `vnet list-endpoint-services`
+* BC `vnet subnet create/update`: renamed `--private-access-services` to `--service-endpoints`
+* `nsg rule create/update`: Add support for multiple IP ranges and port ranges.
+* `lb create`: Added support for SKU.
+* `public-ip create`: Added support for SKU.
+
+### Resource
+
+* Allows passing in resource policy parameter definitions in 'policy definition create', and 'policy definition update'.
+* Allows passing in parameter values for 'policy assignment create'.
+* In all cases params can be provided either via json or file.
+* Incremented API version.
+
+### Sql
+
+* Added az sql server vnet-rule commands.
+
+### Vm
+
+* msi: don't assign access unless `--scope` is provided
+* msi: use the same extension naming as portal does
+* msi: remove the useless `subscription` from the `vm/vmss create` commands output
+* `vm/vmss create`: fix a bug that the storage sku is not applied on data disks coming with an image
+* `vm format-secret`: Fix issue where `--secrets` would not accept newline separated IDs.
+
+
 ## August 31, 2017
 
 Version 2.0.16
