@@ -1,7 +1,7 @@
 ---
 title: Install the Azure CLI 2.0
 description: Reference docs for the installation of Azure CLI 2.0
-keywords: Azure CLI 2.0, Azure CLI 2.0 Reference, Install Azure CLI 2.0, Azure Python CLI, Uninstall Azure CLI 2.0, Azure CLI, Install Azure CLI, Azure CLI Reference
+keywords: Azure CLI,Install Azure CLI,Azure Python CLI,Azure CLI Reference
 author: sptramer
 ms.author: sttramer
 manager: routlaw
@@ -75,7 +75,7 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 
 For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
-1. Modify your sources list.
+1. Modify your sources list:
  
    - 32-bit system
 
@@ -101,15 +101,63 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 3.  Run the CLI from the command prompt with the `az` command.
 
+## Install on RHEL, Fedora, and CentOS with yum
+
+For any distribution which is based off of RedHat and contains the `yum` package manager, you can install Azure CLI 2.0 via `yum`.
+
+1. Import the Microsoft repository key:
+
+   ```bash
+   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+   ```
+
+2. Create local `azure-cli` repository information:
+
+   ```bash
+   sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
+   ```
+
+3. Update the `yum` package index and install:
+
+   ```bash
+   yum check-update
+   sudo yum install azure-cli
+   ```
+
+4. Run the CLI from the command prompt with the `az` command.
+
+## Install on openSUSE and SLE with zypper
+
+1. Import the Microsoft repository key:
+
+   ```bash
+   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+   ```
+
+2. Create local `azure-cli` repository information:
+
+   ```bash
+   sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/azure-cli.repo'
+   ```
+
+3. Update the `zypper` package index and install:
+
+   ```bash
+   sudo zypper refresh
+   sudo zypper install azure-cli
+   ```
+
+4. Run the CLI from the command prompt with the `az` command.
+
 ## Install with Docker
 
 We maintain a Docker image preconfigured with the Azure CLI 2.0.
 
 Install the CLI using `docker run`.
 
-  ```bash
-  docker run azuresdk/azure-cli-python:<version>
-  ```
+   ```bash
+   docker run azuresdk/azure-cli-python:<version>
+   ```
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
 
@@ -125,7 +173,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 ## <a name="Linux"/>Install on Linux without apt-get
 
-It is recommended that you install the CLI with `apt-get` if you are able to. For distributions which do not use the `apt` package manager, you can manually install.
+It is recommended that you install the CLI with a package manager if you are able to. For distributions which do not have a package provided for them, you can manually install.
 
 1. Install the prerequisites based on your Linux distribution.
 
@@ -287,26 +335,26 @@ If you installed a docker image, you will need to remove any containers running 
 
 1. Get the containers which are running the azure-cli image.
 
-  ```bash
-  docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
-  ```
+   ```bash
+   docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
+   ```
 
-  ```output
-  CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
-  34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
-  ```
+   ```output
+   CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
+   34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
+   ```
 
 2. Delete any containers with the CLI image.
 
-  ```bash
-  docker rm 34a868beb2ab
-  ```
+   ```bash
+   docker rm 34a868beb2ab
+   ```
 
 3. Remove the locally installed CLI image.
 
-  ```bash
-  docker rmi azuresdk/azure-cli-python
-  ```
+   ```bash
+   docker rmi azuresdk/azure-cli-python
+   ```
 
 > [!NOTE]
 > If you installed a specific version of the image, you will need to add `:<version>` to the end of the image name.
