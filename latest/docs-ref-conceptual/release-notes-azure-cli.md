@@ -22,25 +22,21 @@ Version 2.0.17
 
 ### Core
 
-* Enable command module to set its own correlation ID in telemetry
-* Fix json dump issue when telemetry is set to diagnostics mode
+* Enabled command module to set its own correlation ID in telemetry
+* Fixed JSON dump issue when telemetry is set to diagnostics mode
 
 ### Acs
 
-* add acs list-locations command
-* make ssh-key-file come with expected default value
+* Added `acs list-locations` command
+* Made `ssh-key-file` come with expected default value
 
 ### Appservice
 
-* webapp: able to create a webapp in a resource group other than the service plan's
+* Added ability to create a webapp in a resource group other than the active service plan's
 
-### Batch
+### CDN
 
-* minor fixes
-
-### Cdn
-
-* `cdn custom-domain create`: Fixed 'CustomDomain is not interable' bug.
+* Fixed 'CustomDomain is not interable' bug for `cdn custom-domain create`.
 
 ### Extension
 
@@ -48,35 +44,34 @@ Version 2.0.17
 
 ### Keyvault
 
-* `keyvault set-policy`: Fix issue where permissions were case sensitive.
+* Fixed issue where permissions were case sensitive for `keyvault set-policy`.
 
 ### Network
 
-* BC `vnet list-private-access-services`: renamed to `vnet list-endpoint-services`
-* BC `vnet subnet create/update`: renamed `--private-access-services` to `--service-endpoints`
-* `nsg rule create/update`: Add support for multiple IP ranges and port ranges.
-* `lb create`: Added support for SKU.
-* `public-ip create`: Added support for SKU.
+* Renamed `vnet list-private-access-services` to `vnet list-endpoint-services`
+* Renamed `--private-access-services` argument to `--service-endpoints` for `vnet subnet create/update`
+* Added support for multiple IP ranges and port ranges to `nsg rule create/update`
+* Added support for SKU to `lb create`
+* Added support for SKU to `public-ip create`
 
 ### Resource
 
-* Allows passing in resource policy parameter definitions in 'policy definition create', and 'policy definition update'.
-* Allows passing in parameter values for 'policy assignment create'.
-* In all cases params can be provided either via json or file.
-* Incremented API version.
+* Allow passing in resource policy parameter definitions in `policy definition create`, and `policy definition update`
+* Allow passing in parameter values for `policy assignment create`
+* Allow for passing JSON or file for all params
+* Incremented API version
 
-### Sql
+### SQL
 
-* Added az sql server vnet-rule commands.
+* Added `sql server vnet-rule` commands
 
-### Vm
+### VM
 
-* msi: don't assign access unless `--scope` is provided
-* msi: use the same extension naming as portal does
-* msi: remove the useless `subscription` from the `vm/vmss create` commands output
-* `vm/vmss create`: fix a bug that the storage sku is not applied on data disks coming with an image
-* `vm format-secret`: Fix issue where `--secrets` would not accept newline separated IDs.
-
+* Fixed: Don't assign access unless `--scope` is provided
+* Fixed: Use the same extension naming as portal does
+* Removed `subscription` from the `[vm|vmss] create` output
+* Fixed: `[vm|vmss] create` storage SKU is not applied on data disks with an image
+* Fixed: `vm format-secret --secrets` would not accept newline separated IDs
 
 ## August 31, 2017
 
