@@ -25,7 +25,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the lock.
+    summary: ''
     description: ''
   - name: --lock-type -t
     parameterValueGroup: CanNotDelete, NotSpecified, ReadOnly
@@ -51,14 +51,20 @@ items:
     description: ''
 - uid: az_lock_delete
   name: az lock delete
-  summary: ''
+  summary: Delete a lock.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a resource-group-level lock
+    syntax:
+      content: az lock delete --name lockName --resource-group group
   parameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the lock.
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ''
     description: ''
   - name: --namespace
     summary: "Provider namespace (Ex: 'Microsoft.Provider')."
@@ -77,10 +83,17 @@ items:
     description: ''
 - uid: az_lock_list
   name: az lock list
-  summary: ''
+  summary: List lock information.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List out the locks on a vnet resource. Includes locks in the associated group and subscription.
+    syntax:
+      content: az lock list --resource-name myvnet --resource-type Microsoft.Network/virtualNetworks -g group
+  - summary: List out all locks on the subscription level
+    syntax:
+      content: az lock list
   parameters:
   - name: --filter-string
     summary: A query filter to use to restrict the results.
@@ -102,14 +115,20 @@ items:
     description: ''
 - uid: az_lock_show
   name: az lock show
-  summary: ''
+  summary: Show the properties of a lock.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Show a subscription level lock
+    syntax:
+      content: az lock show -n lockname
   parameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the lock.
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ''
     description: ''
   - name: --namespace
     summary: "Provider namespace (Ex: 'Microsoft.Provider')."
@@ -133,23 +152,37 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Update a resource-group level lock with new notes
+  - summary: Update a resource-group level lock with new notes and type
     syntax:
-      content: az lock update --name lockName --resource-group group --notes newNotesHere
+      content: az lock update --name lockName --resource-group group --notes newNotesHere --lock-type CanNotDelete
   parameters:
-  - isRequired: true
-    name: --name -n
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
   - name: --lock-type -t
     parameterValueGroup: CanNotDelete, NotSpecified, ReadOnly
     summary: ''
     description: ''
+  - name: --name -n
+    summary: ''
+    description: ''
+  - name: --namespace
+    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+    description: ''
   - name: --notes
     summary: Notes about this lock.
     description: ''
+  - name: --parent
+    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --resource-name
+    summary: ''
+    description: ''
+  - name: --resource-type
+    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
     description: ''
 commands:
 - uid: az_lock_create
@@ -157,13 +190,13 @@ commands:
   summary: Create a lock.
 - uid: az_lock_delete
   name: az lock delete
-  summary: ''
+  summary: Delete a lock.
 - uid: az_lock_list
   name: az lock list
-  summary: ''
+  summary: List lock information.
 - uid: az_lock_show
   name: az lock show
-  summary: ''
+  summary: Show the properties of a lock.
 - uid: az_lock_update
   name: az lock update
   summary: Update the properties of a lock.
