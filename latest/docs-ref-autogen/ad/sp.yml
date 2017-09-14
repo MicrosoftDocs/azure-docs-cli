@@ -42,44 +42,29 @@ items:
       content: az ad sp create-for-rbac
   - summary: Create using a custom name, and with a default assignment.
     syntax:
-      content: az ad sp create-for-rbac -n "http://MyApp"
+      content: az ad sp create-for-rbac -n "MyApp"
   - summary: Create without a default assignment.
     syntax:
       content: az ad sp create-for-rbac --skip-assignment
-  - summary: Create with customized assignments
+  - summary: Create with customized contributor assignments.
     syntax:
-      content: az ad sp create-for-rbac -n "http://MyApp" --role contributor --scopes /subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/MyResourceGroup /subscriptions/11111111-2222-3333-4444-666666666666/resourceGroups/MyAnotherResourceGroup
-  - summary: Create using self-signed certificte
+      content: az ad sp create-for-rbac -n "MyApp" --role contributor     --scopes /subscriptions/{SubID}/resourceGroups/{MyRG1}     /subscriptions/{SubID}/resourceGroups/{MyRG2}
+  - summary: Create using a self-signed certificte.
     syntax:
       content: az ad sp create-for-rbac --create-cert
-  - summary: Create self-signed certificate within KeyVault
+  - summary: Create using a self-signed certificate, and store it within KeyVault.
     syntax:
-      content: az ad sp create-for-rbac --keyvault <vault name> --cert <name> --create-cert
-  - summary: Create using existing certificate in KeyVault
+      content: az ad sp create-for-rbac --keyvault MyVault --cert CertName --create-cert
+  - summary: Create using existing certificate in KeyVault.
     syntax:
-      content: az ad sp create-for-rbac --keyvault <vault name> --cert <name>
-  - summary: Login with a service principal.
-    syntax:
-      content: az login --service-principal -u <name> -p <password> --tenant <tenant>
-  - summary: Login with self-signed certificate
-    syntax:
-      content: az login --service-principal -u <name> -p <certificate file path> --tenant <tenant>
-  - summary: Reset credentials on expiration.
-    syntax:
-      content: az ad sp reset-credentials --name <name>
-  - summary: Create extra role assignments in future.
-    syntax:
-      content: az role assignment create --assignee <name> --role Contributor
-  - summary: Revoke the service principal when done with it.
-    syntax:
-      content: az ad app delete --id <name>
+      content: az ad sp create-for-rbac --keyvault MyVault --cert CertName
   parameters:
   - name: --name -n
-    summary: Display name or an app ID URI. Command will generate one if missing.
+    summary: Name or app URI to associate the RBAC with. If not present, a name will be generated.
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role the service principal has in regard to resources.
+    summary: Role of the service principal.
     description: ''
   - name: --scopes
     summary: Space-separated list of scopes the service principal's role assignment applies to. Defaults to the root of the current subscription.
@@ -91,17 +76,17 @@ items:
     summary: Do not create default assignment.
     description: ''
   - name: --cert
-    summary: Certificate to use for credentials in lieu of password.
-    description: When using --keyvault, indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@&lt;file path&gt;` to load from a file. Do not include private key info.
+    summary: Certificate to use for credentials.
+    description: When used with `--keyvault,` indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{file}` to load from a file. Do not include private key info.
   - name: --create-cert
     summary: Create a self-signed certificate to use for the credential.
-    description: Use with --keyvault to create the certificate in Key Vault. Otherwise, a certificate will be created locally.
+    description: Use with `--keyvault` to create the certificate in Key Vault. Otherwise, a certificate will be created locally.
   - name: --keyvault
     summary: Name or ID of a KeyVault to use for creating or retrieving certificates.
     description: ''
   - name: --password -p
-    summary: The password used to login. If missing, command will generate one.
-    description: ''
+    summary: The password used to log in.
+    description: If not present and `--cert` is not specified, a random password will be generated.
   - name: --years
     summary: 'Number of years for which the credentials will be valid. Default: 1 year.'
     description: ''
@@ -130,7 +115,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_ad_sp_list
   name: az ad sp list
-  summary: List service principals, with optional filtering.
+  summary: List service principals.
   description: ''
   langs:
   - azurecli
@@ -152,27 +137,27 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_ad_sp_reset_credentials
   name: az ad sp reset-credentials
-  summary: Reset service principal credentials.
-  description: Use upon expiration of the existing credentials or in the even that you forget them.
+  summary: Reset a service principal credential.
+  description: Use upon expiration of the service principal's credentials, or in the event that login credentials are lost.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Display name or an app ID URI.
+    summary: Name or app URI for the credential.
     description: ''
   - name: --cert
-    summary: Certificate to use for credentials in lieu of password.
-    description: When using --keyvault, indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@&lt;file path&gt;` to load from a file. Do not include private key info.
+    summary: Certificate to use for credentials.
+    description: When using `--keyvault,` indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{file}` to load from a file. Do not include private key info.
   - name: --create-cert
     summary: Create a self-signed certificate to use for the credential.
-    description: Use with --keyvault to create the certificate in Key Vault. Otherwise, a certificate will be created locally.
+    description: Use with `--keyvault` to create the certificate in Key Vault. Otherwise, a certificate will be created locally.
   - name: --keyvault
     summary: Name or ID of a KeyVault to use for creating or retrieving certificates.
     description: ''
   - name: --password -p
-    summary: The password used to login. If missing, command will generate one.
-    description: ''
+    summary: The password used to log in.
+    description: If not present and `--cert` is not specified, a random password will be generated.
   - name: --years
     summary: 'Number of years for which the credentials will be valid. Default: 1 year.'
     description: ''
@@ -184,7 +169,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_ad_sp_show
   name: az ad sp show
-  summary: Get a service principal.
+  summary: Get the details of a service principal.
   description: ''
   langs:
   - azurecli
@@ -211,13 +196,13 @@ commands:
   summary: Delete a service principal and its role assignments.
 - uid: az_ad_sp_list
   name: az ad sp list
-  summary: List service principals, with optional filtering.
+  summary: List service principals.
 - uid: az_ad_sp_reset_credentials
   name: az ad sp reset-credentials
-  summary: Reset service principal credentials.
+  summary: Reset a service principal credential.
 - uid: az_ad_sp_show
   name: az ad sp show
-  summary: Get a service principal.
+  summary: Get the details of a service principal.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -234,6 +219,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/dd91433b36f95e9c849cbbcecccb0f610a8f0a3c/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-updated_at: 7/18/2017 11:56:55 PM
-ms.date: 7/18/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+updated_at: 9/14/2017 9:54:13 PM
+ms.date: 9/14/2017

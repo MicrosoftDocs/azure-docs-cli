@@ -21,12 +21,15 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Create a resource, such as an API App, by providing a full resource object json. Note, you can also use `@<file>` to load from a json file.
+  - summary: Create an API app by providing a full JSON configuration.
     syntax:
-      content: az resource create -g myRG -n myApiApp --resource-type Microsoft.web/sites --is-full-object --properties "{"kind":"api", "location":"West US", "properties":{"serverFarmId":"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/myRG/providers/Microsoft.Web/serverfarms/appServicePlan1"}}"
-  - summary: Create a resource, such as a Web App, by only providing resource properties
+      content: "az resource create -g myRG -n myApiApp --resource-type Microsoft.web/sites --is-full-object --properties         '{            \"kind\": \"api\",            \"location\": \"West US\",            \"properties\": {                \"serverFarmId\": \"/subscriptions/{SubID}/resourcegroups/{MyRG}/providers/Microsoft.Web/serverfarms/{MyServicePlan}\"            }        }'"
+  - summary: Create a resource by loading JSON configuration from a file.
     syntax:
-      content: az resource create -g myRG -n myWeb --resource-type Microsoft.web/sites --properties "{"serverFarmId":"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/myRG/providers/Microsoft.Web/serverfarms/appServicePlan1"}"
+      content: az resource create -g myRG -n myApiApp --resource-type Microsoft.web/sites --is-full-object --properties @jsonConfigFile
+  - summary: Create a web app with the minimum required configuration information.
+    syntax:
+      content: az resource create -g myRG -n myWeb --resource-type Microsoft.web/sites --properties     {         "serverFarmId":"/subscriptions/{SubID}/resourcegroups/{MyRG}/providers/Microsoft.Web/serverfarms/{MyServicePlan}"     }
   parameters:
   - isRequired: true
     name: --properties -p
@@ -67,20 +70,20 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_resource_delete
   name: az resource delete
-  summary: Delete a resource. Reference the examples for help with arguments.
-  description: For example, /subscriptions/0000/resourceGroups/MyResourceGroup/providers/Microsoft.Provider/ResA/MyA/ResB/MyB/ResC/MyC.
+  summary: Delete a resource.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a virtual machine.
+  - summary: Delete a virtual machine named 'MyVm'.
     syntax:
       content: az vm delete -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines"
   - summary: Delete a web app using a resource identifier.
     syntax:
-      content: az resource delete --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Web/sites/MyWebapp
+      content: az resource delete --id /subscriptions/{SubID}/resourceGroups/{MyRG}/providers/Microsoft.Web/sites/{MyWebApp}
   - summary: Delete a subnet using a resource identifier.
     syntax:
-      content: az resource delete --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet
+      content: az resource delete --id /subscriptions/{SubID}/resourceGroups/{MyRG}/providers/Microsoft.Network/virtualNetworks/{MyVNET}/subnets/{MySubnet}
   parameters:
   - name: --api-version
     summary: The api version of the resource (omit for latest).
@@ -113,21 +116,21 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: List all resource in a region.
+  - summary: List all resources in the West US region.
     syntax:
       content: az resource list --location westus
-  - summary: List resource using a name.
+  - summary: List all resources with the name 'resourceName'.
     syntax:
-      content: az resource list --name thename
-  - summary: List resources using a tag.
+      content: az resource list --name 'resourceName'
+  - summary: List all resources with the tag 'test'.
     syntax:
-      content: az resource list --tag something
-  - summary: List resources using a tag with a particular prefix.
+      content: az resource list --tag test
+  - summary: List all resources with a tag that starts with 'test'.
     syntax:
-      content: az resource list --tag some*
-  - summary: List resources using a tag value.
+      content: az resource list --tag test*
+  - summary: List all resources with the tag 'test' that have the value 'example'.
     syntax:
-      content: az resource list --tag something=else
+      content: az resource list --tag test=example
   parameters:
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -179,23 +182,23 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_resource_show
   name: az resource show
-  summary: Get information about a resource.
-  description: For example /subscriptions/0000/resourceGroups/MyResourceGroup/providers/Microsoft.Provider/ResA/MyA/ResB/MyB/resC/MyC.
+  summary: Get the details of a resource.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Show a virtual machine.
+  - summary: Show a virtual machine resource named 'MyVm'.
     syntax:
       content: az vm show -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines"
   - summary: Show a web app using a resource identifier.
     syntax:
-      content: az resource show --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Web/sites/MyWebapp
-  - summary: Show a subnet.
+      content: az resource show --id /subscriptions/{SubID}/resourceGroups/{MyRG}/providers/Microsoft.Web/sites/{MyWebapp}
+  - summary: Show a subnet in the 'Microsoft.Network' namespace which belongs to the virtual network 'MyVnet'.
     syntax:
-      content: az resource show -g MyResourceGroup -n MySubnet --namespace microsoft.network --parent virtualnetworks/MyVnet --resource-type subnets
+      content: az resource show -g MyResourceGroup -n MySubnet --namespace Microsoft.Network --parent virtualnetworks/MyVnet --resource-type subnets
   - summary: Show a subnet using a resource identifier.
     syntax:
-      content: az resource show --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet
+      content: az resource show --id /subscriptions/{SubID}/resourceGroups/{MyRG}/providers/Microsoft.Network/virtualNetworks/{MyVnet}/subnets/{MySubnet}
   - summary: Show an application gateway path rule.
     syntax:
       content: az resource show -g MyResourceGroup --namespace Microsoft.Network --parent applicationGateways/ag1/urlPathMaps/map1 --resource-type pathRules -n rule1
@@ -226,17 +229,17 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_resource_tag
   name: az resource tag
-  summary: Tag a resource. Reference the examples for help with arguments.
-  description: For example, /subscriptions/0000/resourceGroups/MyResourceGroup/providers/Microsoft.Provider/ResA/MyA/ResB/MyB/resC/MyC.
+  summary: Tag a resource.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Tag a virtual machine.
+  - summary: Tag the virtual machine 'MyVm' with the key 'vmlist' and value 'vm1'.
     syntax:
       content: az resource tag --tags vmlist=vm1 -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines"
-  - summary: Tag a web app using a resource identifier.
+  - summary: Tag a web app with the key 'vmlist' and value 'vm1', using a resource identifier.
     syntax:
-      content: az resource tag --tags vmlist=vm1 --id /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Web/sites/MyWebapp
+      content: az resource tag --tags vmlist=vm1 --id /subscriptions/{SubID}/resourceGroups/{MyRG}/providers/Microsoft.Web/sites/{MyWebApp}
   parameters:
   - isRequired: true
     name: --tags
@@ -312,7 +315,7 @@ commands:
   summary: Create a resource.
 - uid: az_resource_delete
   name: az resource delete
-  summary: Delete a resource. Reference the examples for help with arguments.
+  summary: Delete a resource.
 - uid: az_resource_link
   name: az resource link
   summary: Manage links between resources.
@@ -324,10 +327,10 @@ commands:
   summary: Delete a link between resources.
 - uid: az_resource_link_list
   name: az resource link list
-  summary: List all resource links.
+  summary: List resource links.
 - uid: az_resource_link_show
   name: az resource link show
-  summary: Show a specific link.
+  summary: Get details for a resource link.
 - uid: az_resource_link_update
   name: az resource link update
   summary: Update link between resources.
@@ -339,10 +342,10 @@ commands:
   summary: Moves resources from one resource group to another(can be under different subscription).
 - uid: az_resource_show
   name: az resource show
-  summary: Get information about a resource.
+  summary: Get the details of a resource.
 - uid: az_resource_tag
   name: az resource tag
-  summary: Tag a resource. Reference the examples for help with arguments.
+  summary: Tag a resource.
 - uid: az_resource_update
   name: az resource update
   summary: Update a resource.
@@ -362,6 +365,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/10c3658599ba973c449d182bb3df32e4634fb287/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-updated_at: 9/12/2017 10:11:14 PM
-ms.date: 9/12/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+updated_at: 9/14/2017 9:54:13 PM
+ms.date: 9/14/2017
