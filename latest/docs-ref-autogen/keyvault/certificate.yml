@@ -22,12 +22,12 @@ items:
   - az_keyvault_certificate_show_deleted
 - uid: az_keyvault_certificate_create
   name: az keyvault certificate create
-  summary: Creates a new certificate.
-  description: Create a Key Vault certificate. Certificates can also be used as a secrets in provisioned virtual machines.
+  summary: Create a Key Vault certificate.
+  description: Certificates can be used as a secrets for provisioned virtual machines.
   langs:
   - azurecli
   examples:
-  - summary: Create a self-signed certificate with a the default policy and add to a virtual machine
+  - summary: Create a self-signed certificate with the default policy and add it to a virtual machine.
     syntax:
       content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
@@ -82,17 +82,17 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_keyvault_certificate_download
   name: az keyvault certificate download
-  summary: Download a certificate from a KeyVault.
-  description: Download the public portion of a Key Vault certificate formatted as either PEM or DER. PEM formatting is the default.
+  summary: Download the public portion of a Key Vault certificate.
+  description: The certificate formatted as either PEM or DER. PEM is the default.
   langs:
   - azurecli
   examples:
-  - summary: Download a PEM and check it's fingerprint in openssl
+  - summary: Download a certificate as PEM and check its fingerprint in openssl.
     syntax:
-      content: "az keyvault certificate download --vault-name vault -n cert-name -f cert.pem \n                        openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint"
-  - summary: Download a DER and check it's fingerprint in openssl
+      content: az keyvault certificate download --vault-name vault -n cert-name -f cert.pem && openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
+  - summary: Download a certificate as DER and check its fingerprint in openssl.
     syntax:
-      content: "az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER \n                        openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint"
+      content: az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
   parameters:
   - isRequired: true
     name: --file -f
@@ -122,14 +122,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_keyvault_certificate_get_default_policy
   name: az keyvault certificate get-default-policy
-  summary: Get a default policy for a self-signed certificate.
-  description: "This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate. The default policy can also be used as a starting point to create derivative policies. \r\n                            \r\n                            Also see: <a href=\"https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>."
+  summary: Get the default policy for self-signed certificates.
+  description: "This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate. The default policy can also be used as a starting point to create derivative policies.\r\n                            \r\n                            For more details, see: <a href=\"https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>."
   langs:
   - azurecli
   examples:
-  - summary: Create a self-signed certificate with a the default policy
+  - summary: Create a self-signed certificate with the default policy
     syntax:
-      content: "az keyvault create -g group-name -n vaultname -l westus --enabled-for-deployment true   --enabled-for-template-deployment true\n                        \n                        az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\""
+      content: az keyvault certificate create --vault-name vaultname -n cert1   -p "$(az keyvault certificate get-default-policy)"
   parameters:
   - name: --scaffold
     summary: Create a fully formed policy structure with default values.
@@ -149,7 +149,7 @@ items:
   examples:
   - summary: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
     syntax:
-      content: "az group create -g my-group -l westus \n                        \n                        service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+      content: "service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
     name: --file -f
@@ -382,16 +382,16 @@ commands:
   summary: Lists the certificate contacts for a specified key vault.
 - uid: az_keyvault_certificate_create
   name: az keyvault certificate create
-  summary: Creates a new certificate.
+  summary: Create a Key Vault certificate.
 - uid: az_keyvault_certificate_delete
   name: az keyvault certificate delete
   summary: Deletes a certificate from a specified key vault.
 - uid: az_keyvault_certificate_download
   name: az keyvault certificate download
-  summary: Download a certificate from a KeyVault.
+  summary: Download the public portion of a Key Vault certificate.
 - uid: az_keyvault_certificate_get_default_policy
   name: az keyvault certificate get-default-policy
-  summary: Get a default policy for a self-signed certificate.
+  summary: Get the default policy for self-signed certificates.
 - uid: az_keyvault_certificate_import
   name: az keyvault certificate import
   summary: Import a certificate into KeyVault.
@@ -477,6 +477,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e0ee922a1f9da2b2bc29c7eed72872eca26df7e5/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-updated_at: 6/16/2017 10:50:05 PM
-ms.date: 6/16/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+updated_at: 9/14/2017 9:54:13 PM
+ms.date: 9/14/2017

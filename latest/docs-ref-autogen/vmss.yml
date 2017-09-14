@@ -2,7 +2,7 @@
 items:
 - uid: az_vmss
   name: az vmss
-  summary: Create highly available, auto-scalable Linux or Windows virtual machines.
+  summary: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
   description: ''
   langs:
   - azurecli
@@ -30,11 +30,11 @@ items:
 - uid: az_vmss_assign_identity
   name: az vmss assign-identity
   summary: Enable managed service identity on a VMSS.
-  description: Required to authenticate and interact with other Azure services using bearer tokens.
+  description: This is required to authenticate and interact with other Azure services using bearer tokens.
   langs:
   - azurecli
   examples:
-  - summary: Enable identity on a VMSS. It will have a role of 'Owner' to the VMSS's resource group.
+  - summary: Enable identity on a VMSS with the 'Owner' role.
     syntax:
       content: az vmss assign-identity -g MyResourceGroup -n MyVmss --role Owner
   parameters:
@@ -72,33 +72,29 @@ items:
   - summary: Create a Windows VM scale set with 5 instances, a load balancer, a public IP address, and a 2GB data disk.
     syntax:
       content: az vmss create -n MyVmss -g MyResourceGroup --instance-count 5 --image Win2012R2Datacenter --data-disk-sizes-gb 2
-  - summary: Create a Linux VM scale set with an auto-generated ssh key pair under ~/.ssh, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
+  - summary: Create a Linux VM scale set with an auto-generated ssh key pair, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
     syntax:
-      content: az vmss create -n MyVmss -g MyResourceGroup --dns-name-for-public-ip MyGloballyUniqueDnsName --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS --generate-ssh-keys
-  - summary: Create a Linux VM scale set from a custom image using an existing ssh public key of ~/.ssh/id_rsa.pub.
+      content: az vmss create -n MyVmss -g MyResourceGroup --dns-name-for-public-ip MyGloballyUniqueDnsName     --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS     --generate-ssh-keys
+  - summary: Create a Linux VM scale set from a custom image using the default existing public SSH key.
     syntax:
       content: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
-  - summary: Create a Linux VM scale set, a load balancer, each VM has a public-ip address, a custom domain name, own dns servers
+  - summary: Create a Linux VM scale set with a load balancer and custom DNS servers. Each VM has a public-ip address and a custom domain name.
     syntax:
-      content: az vmss create -n MyVmss -g MyResourceGroup --image centos --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
-  - summary: Create a Linux VM scale set with a cloud-init script (https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init).
+      content: az vmss create -n MyVmss -g MyResourceGroup --image centos     --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
+  - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init'
     syntax:
       content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom_data MyCloudInitScript.yml
-  - summary: Create an Debian VM scaleset and with Key Vault secrets. The secrets are placed in /var/lib/waagent and each certificate file is named with the hex thumbprint.
+  - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax:
       content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
-  - summary: Create a VM scaleset with Managed Service Identity. The VM will have a 'Contributor' Role with access to a storage account
+  - summary: Create a VM scaleset with Managed Service Identity. The VM will have a 'Contributor' Role with access to a storage account.
     syntax:
       content: az vm create -n MyVm -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
   parameters:
   - isRequired: true
     name: --image
-    summary: The name of the operating system image (URN alias, URN, or URI).
-    description: >-
-      URN aliases: CentOS, CoreOS, Debian, openSUSE, RHEL, SLES, UbuntuLTS, Win2008R2SP1, Win2012Datacenter, Win2012R2Datacenter.
-                                          Example URN: MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest
-                                          Example Custom Image Resource ID or Name: /subscriptions/subscription-id/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/images/MyImage
-                                          Example URI: http://<storageAccount>.blob.core.windows.net/vhds/osdiskimage.vhd.
+    summary: The name of the operating system image as a URN alias, URN, or URI.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the virtual machine scale set.
@@ -357,7 +353,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_get_instance_view
   name: az vmss get-instance-view
-  summary: Get instance view for a scale set or its VM instances.
+  summary: View an instance of a VMSS.
   description: ''
   langs:
   - azurecli
@@ -397,7 +393,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_list_instance_connection_info
   name: az vmss list-instance-connection-info
-  summary: Get the IP address and port number used to connect to individual instances.
+  summary: Get the IP address and port number used to connect to individual VM instances within a set.
   description: ''
   langs:
   - azurecli
@@ -418,7 +414,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_list_instance_public_ips
   name: az vmss list-instance-public-ips
-  summary: List public IP addresses of VM instances.
+  summary: List public IP addresses of VM instances within a set.
   description: ''
   langs:
   - azurecli
@@ -490,7 +486,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_reimage
   name: az vmss reimage
-  summary: Reimage virtual machines in a virtual machine scale set.
+  summary: Reimage VMs within a VMSS.
   description: ''
   langs:
   - azurecli
@@ -572,7 +568,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_show
   name: az vmss show
-  summary: Show scale set or its VM instance.
+  summary: Get details on VMs within a VMSS.
   description: ''
   langs:
   - azurecli
@@ -711,7 +707,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_wait
   name: az vmss wait
-  summary: Place the CLI in a waiting state until a condition of the scale set is met.
+  summary: Place the CLI in a waiting state until a condition of a scale set is met.
   description: ''
   langs:
   - azurecli
@@ -780,7 +776,7 @@ commands:
   summary: Enable diagnostics on a virtual machine scale set.
 - uid: az_vmss_disk
   name: az vmss disk
-  summary: Manage the managed data disks associated with a virtual machine scale set.
+  summary: Manage data disks of a VMSS.
 - uid: az_vmss_disk_attach
   name: az vmss disk attach
   summary: ''
@@ -789,13 +785,13 @@ commands:
   summary: ''
 - uid: az_vmss_extension
   name: az vmss extension
-  summary: Extend the functionality of your VM scale set with extensions.
+  summary: Manage extensions on a VM scale set.
 - uid: az_vmss_extension_delete
   name: az vmss extension delete
   summary: ''
 - uid: az_vmss_extension_image
   name: az vmss extension image
-  summary: Find VM scale set extension available for your subscription and region.
+  summary: Find the available VM extensions for a subscription and region.
 - uid: az_vmss_extension_image_list
   name: az vmss extension image list
   summary: Vm extension image list.
@@ -819,16 +815,16 @@ commands:
   summary: ''
 - uid: az_vmss_get_instance_view
   name: az vmss get-instance-view
-  summary: Get instance view for a scale set or its VM instances.
+  summary: View an instance of a VMSS.
 - uid: az_vmss_list
   name: az vmss list
   summary: List scale sets.
 - uid: az_vmss_list_instance_connection_info
   name: az vmss list-instance-connection-info
-  summary: Get the IP address and port number used to connect to individual instances.
+  summary: Get the IP address and port number used to connect to individual VM instances within a set.
 - uid: az_vmss_list_instance_public_ips
   name: az vmss list-instance-public-ips
-  summary: List public IP addresses of VM instances.
+  summary: List public IP addresses of VM instances within a set.
 - uid: az_vmss_list_instances
   name: az vmss list-instances
   summary: Gets a list of all virtual machines in a VM scale sets.
@@ -837,7 +833,7 @@ commands:
   summary: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
 - uid: az_vmss_nic
   name: az vmss nic
-  summary: Manage the network interfaces associated with a virtual machine scale set.
+  summary: Manage network interfaces of a VMSS.
 - uid: az_vmss_nic_list
   name: az vmss nic list
   summary: Gets all network interfaces in a virtual machine scale set.
@@ -849,7 +845,7 @@ commands:
   summary: Get the specified network interface in a virtual machine scale set.
 - uid: az_vmss_reimage
   name: az vmss reimage
-  summary: Reimage virtual machines in a virtual machine scale set.
+  summary: Reimage VMs within a VMSS.
 - uid: az_vmss_restart
   name: az vmss restart
   summary: Restart virtual machines in a scale set.
@@ -858,7 +854,7 @@ commands:
   summary: Change the number of VMs in an virtual machine scale set.
 - uid: az_vmss_show
   name: az vmss show
-  summary: Show scale set or its VM instance.
+  summary: Get details on VMs within a VMSS.
 - uid: az_vmss_start
   name: az vmss start
   summary: Start virtual machines in a virtual machine scale set.
@@ -873,7 +869,7 @@ commands:
   summary: Upgrade virtual machines in a virtual machine scale set.
 - uid: az_vmss_wait
   name: az vmss wait
-  summary: Place the CLI in a waiting state until a condition of the scale set is met.
+  summary: Place the CLI in a waiting state until a condition of a scale set is met.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -890,6 +886,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/008eb384ea1596acf5be7ec399c7710367a9c855/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 9/7/2017 11:23:05 PM
-ms.date: 9/7/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 9/14/2017 9:54:13 PM
+ms.date: 9/14/2017
