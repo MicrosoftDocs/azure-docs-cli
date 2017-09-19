@@ -1,29 +1,40 @@
 ### YamlMime:UniversalReference
 items:
-- uid: az_vmss_nic
-  name: az vmss nic
-  summary: Manage network interfaces of a VMSS.
+- uid: az_vmss_encryption
+  name: az vmss encryption
+  summary: (PREVIEW) Manage encryption of VM scale sets.
   description: ''
   langs:
   - azurecli
   children:
-  - az_vmss_nic_list
-  - az_vmss_nic_list_vm_nics
-  - az_vmss_nic_show
-- uid: az_vmss_nic_list
-  name: az vmss nic list
-  summary: Gets all network interfaces in a virtual machine scale set.
+  - az_vmss_encryption_disable
+  - az_vmss_encryption_enable
+  - az_vmss_encryption_show
+- uid: az_vmss_encryption_disable
+  name: az vmss encryption disable
+  summary: Disable the encryption on a VM scale set with managed disks.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: disable encryption a VM scale set
+    syntax:
+      content: az vmss encryption disable -g MyResourceGroup -n MyVm
   parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --vmss-name
-    summary: Scale set name.
+  - name: --force
+    summary: Continue by ignoring client side validation errors.
+    description: ''
+  - name: --volume-type
+    parameterValueGroup: ALL, DATA, OS
+    summary: Type of volume that the encryption operation is performed on.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -31,56 +42,66 @@ items:
       branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_vmss_nic_list_vm_nics
-  name: az vmss nic list-vm-nics
-  summary: Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
+- uid: az_vmss_encryption_enable
+  name: az vmss encryption enable
+  summary: Encrypt a VM scale set with managed disks.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: encrypte a VM scale set using a key vault in the same resource group
+    syntax:
+      content: az vmss encryption enable -g MyResourceGroup -n MyVm --disk-encryption-keyvault myvault
   parameters:
   - isRequired: true
-    name: --instance-id
-    summary: The virtual machine index.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --vmss-name
-    summary: Scale set name.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_vmss_nic_show
-  name: az vmss nic show
-  summary: Get the specified network interface in a virtual machine scale set.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --instance-id
-    summary: The virtual machine index.
+    name: --disk-encryption-keyvault
+    summary: The KeyVault where generated encryption key will be placed.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: The network interface (NIC).
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --vmss-name
-    summary: Scale set name.
+  - name: --force
+    summary: Continue by ignoring client side validation errors.
     description: ''
-  - name: --expand
-    summary: Expands referenced resources.
+  - name: --key-encryption-algorithm
+    defaultValue: RSA-OAEP
+    summary: ''
+    description: ''
+  - name: --key-encryption-key
+    summary: KeyVault key name or URL used to encrypt the disk encryption key.
+    description: ''
+  - name: --key-encryption-keyvault
+    summary: The KeyVault containing the key encryption key used to encrypt the disk encryption key. If missing, CLI will use --disk-encryption-keyvault.
+    description: ''
+  - name: --volume-type
+    parameterValueGroup: ALL, DATA, OS
+    summary: Type of volume that the encryption operation is performed on.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_encryption_show
+  name: az vmss encryption show
+  summary: Show the encryption status.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -89,15 +110,15 @@ items:
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
-- uid: az_vmss_nic_list
-  name: az vmss nic list
-  summary: Gets all network interfaces in a virtual machine scale set.
-- uid: az_vmss_nic_list_vm_nics
-  name: az vmss nic list-vm-nics
-  summary: Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
-- uid: az_vmss_nic_show
-  name: az vmss nic show
-  summary: Get the specified network interface in a virtual machine scale set.
+- uid: az_vmss_encryption_disable
+  name: az vmss encryption disable
+  summary: Disable the encryption on a VM scale set with managed disks.
+- uid: az_vmss_encryption_enable
+  name: az vmss encryption enable
+  summary: Encrypt a VM scale set with managed disks.
+- uid: az_vmss_encryption_show
+  name: az vmss encryption show
+  summary: Show the encryption status.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
