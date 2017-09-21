@@ -70,11 +70,9 @@ On macOS, you are able to install either with [Homebrew](https://brew.sh/) or ma
 
 ## Install on Windows
 
-You can install Azure CLI 2.0 with the MSI and use it in the Windows command-line, or you can install the CLI with `apt-get` on Bash on Ubuntu on Windows.
-
 ### Install with MSI for the Windows command-line 
 
-To install the CLI on Windows and use it in the Windows command-line, download and run the [MSI](https://aka.ms/InstallAzureCliWindows).
+To install the CLI on Windows and use it in the Windows command-line, download and run the [Azure CLI Installer (MSI)](https://aka.ms/InstallAzureCliWindows).
 
 ### Install with apt-get for Bash on Ubuntu on Windows
 
