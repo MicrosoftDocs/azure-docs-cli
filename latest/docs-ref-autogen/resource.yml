@@ -9,6 +9,7 @@ items:
   children:
   - az_resource_create
   - az_resource_delete
+  - az_resource_invoke_action
   - az_resource_list
   - az_resource_move
   - az_resource_show
@@ -96,6 +97,51 @@ items:
     description: ''
   - name: --parent
     summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --resource-type
+    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_resource_invoke_action
+  name: az resource invoke-action
+  summary: Invoke an action on the resource.
+  description: A list of possible actions corresponding to a resource can be found at <a href="https://docs.microsoft.com/en-us/rest/api/">https://docs.microsoft.com/en-us/rest/api/</a>. All POST requests are actions that can be invoked and are specified at the end of the URI path. For instance, to stop a VM, the request URI is <a href="https://management.azure.com/subscriptions">https://management.azure.com/subscriptions</a>/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vm}/powerOff?api-version={apiVersion} and the corresponding action is `powerOff`. This can be found at <a href="https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/virtualmachines-stop">https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/virtualmachines-stop</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Power-off a vm, specified by Id.
+    syntax:
+      content: az resource invoke-action --action powerOff --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM
+  - summary: Capture information for a stopped vm.
+    syntax:
+      content: az resource invoke-action --action capture --ids /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM --request-body {"vhdPrefix":"myPrefix","destinationContainerName":"myContainer","overwriteVhds":"true"}
+  parameters:
+  - isRequired: true
+    name: --action
+    summary: The action that will be invoked on the specified resource.
+    description: ''
+  - name: --api-version
+    summary: The api version of the resource (omit for latest).
+    description: ''
+  - name: --name -n
+    summary: 'The resource name. (Ex: myC).'
+    description: ''
+  - name: --namespace
+    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+    description: ''
+  - name: --parent
+    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+    description: ''
+  - name: --request-body
+    summary: JSON encoded parameter arguments for the action that will be passed along in the post request body. Use @{file} to load from a file.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -316,6 +362,9 @@ commands:
 - uid: az_resource_delete
   name: az resource delete
   summary: Delete a resource.
+- uid: az_resource_invoke_action
+  name: az resource invoke-action
+  summary: Invoke an action on the resource.
 - uid: az_resource_link
   name: az resource link
   summary: Manage links between resources.
@@ -365,6 +414,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/4d384380f55e8c9e934584edacdd05625e13d4bf/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-updated_at: 9/19/2017 10:29:49 PM
-ms.date: 9/19/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/fb267c2040e444719226fc89f4d2830690ffd79f/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+updated_at: 9/25/2017 6:20:34 PM
+ms.date: 9/25/2017
