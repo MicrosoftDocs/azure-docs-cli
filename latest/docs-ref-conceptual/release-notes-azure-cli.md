@@ -16,6 +16,66 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## September 22, 2017
+
+Version 2.0.18
+
+### Resource
+
+* Added support for showing built-in policy definitions
+* Added support mode parameter for creating policy definitions
+* Added support for UI definitions and templates to `managedapp definition create`
+* [BREAKING CHANGE] Changed `managedapp` resource type from `appliances` to `applications` and `applianceDefinitions` to `applicationDefinitions`
+
+### Network
+
+* Added support for availability zone to `network lb` and `network public-ip` subcommands
+* Added support for IPv6 Microsoft Peering to `express-route`
+* Added `asg` application security group commands
+* Added `--application-security-groups` argument to `nic [create|ip-config create|ip-config update]`
+* Added `--source-asgs` and `--destination-asgs` arguments to `nsg rule [create|update]`
+* Added `--ddos-protection` and `--vm-protection` arguments to `vnet [create|update]`
+* Added `network [vnet-gateway|vpn-client|show-url]` commands
+
+### Storage
+
+* Fixed issue where `storage account network-rule` commands may fail after updating the SDK
+
+### Eventgrid
+
+* Updated Azure Event Grid Python SDK to use newer API version "2017-09-15-preview"
+
+### SQL
+
+* Changed `sql server list` argument `--resource-group` to be optional. If not specified, all sql servers in the subscription will be returned
+* Added `--no-wait` param to `db [create|copy|restore|update|replica create|create|update]` and `dw [create|update]`
+
+### Keyvault
+
+* Added support for Keyvault commands from behind a proxy
+
+### VM
+
+* Added for support to availability zone to `[vm|vmss|disk] create`
+* Fixed issue where using`--app-gateway ID` with `vmss create` would cause a failure
+* Added `--asgs` argument to `vm create`
+* Added support for running commands on VMs with `vm run-command`
+* [PREVIEW] Added support for VMSS disk encryption with `vmss encryption`
+* Added support for performing maintenance on VMs with `vm perform-maintenance`
+
+### ACS
+
+* [PREVIEW] Added `--orchestrator-release` argument to `acs create` for ACS preview regions
+
+### Appservice
+
+* Added ability to update and show authentication settings with `webapp auth [update|show]`
+
+### Backup
+
+* Preview release
+
+
 ## September 11, 2017
 
 Version 2.0.17
