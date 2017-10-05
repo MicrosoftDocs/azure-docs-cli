@@ -1,92 +1,39 @@
 ### YamlMime:UniversalReference
 items:
-- uid: az_account
-  name: az account
-  summary: Manage Azure subscription information.
+- uid: az_account_lock
+  name: az account lock
+  summary: Manage Azure subscription level locks.
   description: ''
   langs:
   - azurecli
   children:
-  - az_account_clear
-  - az_account_get_access_token
-  - az_account_list
-  - az_account_list_locations
-  - az_account_set
-  - az_account_show
-- uid: az_account_clear
-  name: az account clear
-  summary: Clear all subscriptions from the CLI's local cache.
-  description: To clear the current subscription, use 'az logout'.
-  langs:
-  - azurecli
-  parameters: []
-  source:
-    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_account_get_access_token
-  name: az account get-access-token
-  summary: Get a token for utlilities to access Azure.
-  description: The token will be valid for at least 5 minutes with the maximum at 60 minutes. If the subscription argument isn't specified, the current account is used.
-  langs:
-  - azurecli
-  parameters:
-  - name: --resource
-    summary: Azure resource endpoints. Default to Azure Resource Manager Use 'az cloud show' command for other Azure resources.
-    description: ''
-  - name: --subscription -s
-    summary: Name or ID of subscription.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_account_list
-  name: az account list
-  summary: Get a list of subscriptions for the logged in account.
+  - az_account_lock_create
+  - az_account_lock_delete
+  - az_account_lock_list
+  - az_account_lock_show
+  - az_account_lock_update
+- uid: az_account_lock_create
+  name: az account lock create
+  summary: Create a subscription lock.
   description: ''
   langs:
   - azurecli
-  parameters:
-  - name: --all
-    summary: List all subscriptions, rather just 'Enabled' ones.
-    description: ''
-  - name: --refresh
-    summary: Retrieve up to date subscriptions from server.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_account_list_locations
-  name: az account list-locations
-  summary: List supported regions for the current subscription.
-  description: ''
-  langs:
-  - azurecli
-  parameters: []
-  source:
-    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_account_set
-  name: az account set
-  summary: Set a subscription to be the current active subscription.
-  description: ''
-  langs:
-  - azurecli
+  examples:
+  - summary: Create a read-only subscription level lock.
+    syntax:
+      content: az account lock create --lock-type ReadOnly -n lockName
   parameters:
   - isRequired: true
-    name: --subscription -s
-    summary: Name or ID of subscription.
+    name: --lock-type -t
+    parameterValueGroup: CanNotDelete, ReadOnly
+    summary: ''
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the lock.
+    description: ''
+  - name: --notes
+    summary: Notes about this lock.
     description: ''
   source:
     path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
@@ -94,18 +41,95 @@ items:
       branch: master
       path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_account_show
-  name: az account show
-  summary: Get the details of a subscription.
-  description: If the subscription isn't specified, shows the details of the default subscription.
+- uid: az_account_lock_delete
+  name: az account lock delete
+  summary: Delete a subscription lock.
+  description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a subscription lock
+    syntax:
+      content: az account lock delete --name lockName
   parameters:
-  - name: --sdk-auth
-    summary: Output result in compatible with Azure SDK auth file.
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
-  - name: --subscription -s
-    summary: Name or ID of subscription.
+  - name: --name -n
+    summary: Name of the lock.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_account_lock_list
+  name: az account lock list
+  summary: List lock information in the subscription.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List out all locks on the subscription level
+    syntax:
+      content: az account lock list
+  parameters:
+  - name: --filter-string
+    summary: A query filter to use to restrict the results.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_account_lock_show
+  name: az account lock show
+  summary: Show the details of a subscription lock.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Show a subscription level lock
+    syntax:
+      content: az account lock show -n lockname
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the lock.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_account_lock_update
+  name: az account lock update
+  summary: Update a subscription lock.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update a subscription lock with new notes and type
+    syntax:
+      content: az account lock update --name lockName --notes newNotesHere --lock-type CanNotDelete
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --lock-type -t
+    parameterValueGroup: CanNotDelete, ReadOnly
+    summary: ''
+    description: ''
+  - name: --name -n
+    summary: Name of the lock.
+    description: ''
+  - name: --notes
+    summary: Notes about this lock.
     description: ''
   source:
     path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
@@ -114,21 +138,6 @@ items:
       path: src/command_modules/azure-cli-profile/azure/cli/command_modules/profile/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
-- uid: az_account_clear
-  name: az account clear
-  summary: Clear all subscriptions from the CLI's local cache.
-- uid: az_account_get_access_token
-  name: az account get-access-token
-  summary: Get a token for utlilities to access Azure.
-- uid: az_account_list
-  name: az account list
-  summary: Get a list of subscriptions for the logged in account.
-- uid: az_account_list_locations
-  name: az account list-locations
-  summary: List supported regions for the current subscription.
-- uid: az_account_lock
-  name: az account lock
-  summary: Manage Azure subscription level locks.
 - uid: az_account_lock_create
   name: az account lock create
   summary: Create a subscription lock.
@@ -144,12 +153,6 @@ commands:
 - uid: az_account_lock_update
   name: az account lock update
   summary: Update a subscription lock.
-- uid: az_account_set
-  name: az account set
-  summary: Set a subscription to be the current active subscription.
-- uid: az_account_show
-  name: az account show
-  summary: Get the details of a subscription.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
