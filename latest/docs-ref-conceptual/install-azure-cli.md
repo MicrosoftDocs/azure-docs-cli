@@ -101,7 +101,10 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 
 ## Install on Debian/Ubuntu with apt-get
 
-For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
+For distributions using the `apt` package manager, you can install Azure CLI 2.0 via `apt-get`.
+
+> [!NOTE]
+> Your distribution must have support for Python 2.7.x or Python 3.x in order to use the CLI.
 
 1. Modify your sources list:
  
@@ -131,7 +134,10 @@ For Debian/Ubuntu based systems, you can install Azure CLI 2.0 via `apt-get`.
 
 ## Install on RHEL, Fedora, and CentOS with yum
 
-For any distribution which is based off of RedHat and contains the `yum` package manager, you can install Azure CLI 2.0 via `yum`.
+For distributions which use the `yum` package manager, you can install Azure CLI 2.0 via `yum`.
+
+> [!NOTE]
+> Your distribution must have support for Python 2.7.x or Python 3.x in order to use the CLI.
 
 1. Import the Microsoft repository key:
 
@@ -155,6 +161,11 @@ For any distribution which is based off of RedHat and contains the `yum` package
 4. Run the CLI from the command prompt with the `az` command.
 
 ## Install on openSUSE and SLE with zypper
+
+For distributions which use the `zypper` package manager, you can install Azure CLI 2.0 via `zypper`.
+
+> [!NOTE]
+> Your distribution must have support for Python 2.7.x or Python 3.x in order to use the CLI.
 
 1. Import the Microsoft repository key:
 
@@ -199,9 +210,10 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 > docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
 > ```
 
-## <a name="Linux"/>Install on Linux without apt-get
+## <a name="Linux"/>Install on Linux without a package manager
 
-It is recommended that you install the CLI with a package manager if you are able to. For distributions which do not have a package provided for them, you can manually install.
+It is recommended that you install the CLI with a package manager if you are able to. If you do not want to add Microsoft's repositories, or are working with
+a distribution which does not have a provided package, you can manually install the CLI.
 
 1. Install the prerequisites based on your Linux distribution.
 
@@ -217,7 +229,7 @@ It is recommended that you install the CLI with a package manager if you are abl
    SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install curl gcc python python-xml libffi-devel python-devel openssl-devel
    ```
 
-If your distribution is not listed above, you will need to install [Python](https://www.python.org/downloads/), [libffi](https://sourceware.org/libffi/), and [OpenSSL](https://www.openssl.org/source/).
+If your distribution is not listed above, you will need to install [Python 2.7 or later](https://www.python.org/downloads/), [libffi](https://sourceware.org/libffi/), and [OpenSSL](https://www.openssl.org/source/).
 
 2. Install the CLI with  `curl`.
 
