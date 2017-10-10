@@ -62,7 +62,7 @@ Version 2.0.19
 
 ### Storage
 
-* File share snapshot
+* Support file share snapshot
 
 ### Vm
 
