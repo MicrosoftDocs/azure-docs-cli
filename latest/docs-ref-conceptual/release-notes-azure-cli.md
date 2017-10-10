@@ -22,55 +22,56 @@ Version 2.0.19
 
 ### Core
 
-* Azure Stack: handle adfs authority url with a trailing slash
+* Added handling of ADFS authority URLs with a trailing slash to Azure Stack
 
 ### Appservice
 
-* webapp: added generic update with new command: 'az webapp update'
+* Added generic update with new command `webapp update`
 
 ### Batch
 
-* Updated to Batch SDK 4.0.0.
-* Updated --image option of VirtualMachineConfiguration to support ARM image references in addition to publish:offer:sku:version.
-* Now supports the new CLI extension model for Batch Extensions commands - support for old component model has been removed.
+* Updated to Batch SDK 4.0.0
+* Updated `--image` option of VirtualMachineConfiguration to support ARM image references in addition to publish:offer:sku:version
+* Added support for the new CLI extension model for Batch Extensions commands
+* Removed Batch support from the component model
 
 ### Batchai
 
-* Initial release of Batch AI module.
+* Initial release of Batch AI module
 
 ### Keyvault
 
-* Fixed Key Vault authentication issue when using ADFS on Azure Stack. https://github.com/Azure/azure-cli/issues/4448
+* Fixed Key Vault authentication issue when using ADFS on Azure Stack. [(#4448)](https://github.com/Azure/azure-cli/issues/4448)
 
 ### Network
 
-* `application-gateway address-pool create`: `--server` argument is not optional to allow creation of empty address pools.
-* `traffic-manager`: Updates to support latest features.
+* Changed `--server` argument of `application-gateway address-pool create` to be optional, allowing for empty address pools
+* Updated `traffic-manager` to support latest features
 
 ### Resource
 
-* group: permit --resource-group/-g options for resource group name.
-* `account lock`: lock commands to work specifically with subscription level locks
-* `group lock`: lock commands to work specifically with group level locks
-* `resource lock`: lock command to work specifically with resource level locks
+* Added support for `--resource-group/-g` options for resource group name to `group`
+* Added commands for `account lock` to work with subscription-level locks
+* Added commands for `group lock` to work with group-level locks
+* Added commands for `resource lock` to work with resource-level locks
 
 ### Sql
 
-* Adding support for SQL Transparent Data Encryption (TDE) and TDE with Bring Your Own Key
-* Added az sql db list-deleted command and az sql db restore --deleted-time parameter, allowing the ability to find and restore deleted databases.
-* Added az sql db op list and az sql db op cancel, allowing the ability to list and cancel in-progress operations on database.
+* Added support for SQL Transparent Data Encryption (TDE) and TDE with Bring Your Own Key
+* Added `db list-deleted` command and `db restore --deleted-time` parameter, allowing the ability to find and restore deleted databases
+* Added `db op list` and `db op cancel`, allowing the ability to list and cancel in-progress operations on database
 
 ### Storage
 
-* Support file share snapshot
+* Added support for file share snapshot
 
 ### Vm
 
-* `vm show`: fix a bug when using '-d' crashes on missing private ip addresses
-* `vmss create`: (PREVIEW) support rolling upgrade
-* `vm encryption enable`: allow updating encryption settings by rerunning the command
-* `vm create`: expose --os-disk-size-gb
-* `vmss create`: expose --license-type for windows os
+* Fixed a bug in `vm show` where using `-d` caused a crash on missing private ip addresses
+* [PREVIEW] Added support for rolling upgrade to `vmss create`
+* Added support for updating encryption settings with `vm encryption enable`
+* Added `--os-disk-size-gb` parameter to `vm create`
+* Added `--license-type` parameter for Windows to `vmss create`
 
 
 ## September 22, 2017
