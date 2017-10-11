@@ -16,6 +16,64 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## October 9, 2017
+
+Version 2.0.19
+
+### Core
+
+* Added handling of ADFS authority URLs with a trailing slash to Azure Stack
+
+### Appservice
+
+* Added generic update with new command `webapp update`
+
+### Batch
+
+* Updated to Batch SDK 4.0.0
+* Updated `--image` option of VirtualMachineConfiguration to support ARM image references in addition to publish:offer:sku:version
+* Added support for the new CLI extension model for Batch Extensions commands
+* Removed Batch support from the component model
+
+### Batchai
+
+* Initial release of Batch AI module
+
+### Keyvault
+
+* Fixed Key Vault authentication issue when using ADFS on Azure Stack. [(#4448)](https://github.com/Azure/azure-cli/issues/4448)
+
+### Network
+
+* Changed `--server` argument of `application-gateway address-pool create` to be optional, allowing for empty address pools
+* Updated `traffic-manager` to support latest features
+
+### Resource
+
+* Added support for `--resource-group/-g` options for resource group name to `group`
+* Added commands for `account lock` to work with subscription-level locks
+* Added commands for `group lock` to work with group-level locks
+* Added commands for `resource lock` to work with resource-level locks
+
+### Sql
+
+* Added support for SQL Transparent Data Encryption (TDE) and TDE with Bring Your Own Key
+* Added `db list-deleted` command and `db restore --deleted-time` parameter, allowing the ability to find and restore deleted databases
+* Added `db op list` and `db op cancel`, allowing the ability to list and cancel in-progress operations on database
+
+### Storage
+
+* Added support for file share snapshot
+
+### Vm
+
+* Fixed a bug in `vm show` where using `-d` caused a crash on missing private ip addresses
+* [PREVIEW] Added support for rolling upgrade to `vmss create`
+* Added support for updating encryption settings with `vm encryption enable`
+* Added `--os-disk-size-gb` parameter to `vm create`
+* Added `--license-type` parameter for Windows to `vmss create`
+
+
 ## September 22, 2017
 
 Version 2.0.18
