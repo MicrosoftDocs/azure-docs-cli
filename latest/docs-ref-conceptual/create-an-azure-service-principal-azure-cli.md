@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0, Azure Active Directory, Azure Active directory, AD, RBA
 author: rloutlaw
 ms.author: routlaw
 manager: douge
-ms.date: 02/27/2017
+ms.date: 10/12/2017
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -28,7 +28,7 @@ This topic steps you through creating a security principal with Azure CLI 2.0.
 
 An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a specific role, and tightly controlled permissions to access your resources. It only needs to be able to do specific things, unlike a general user identity. It improves security if you only grant it the minimum permissions level needed to perform its management tasks. 
 
-Right now, Azure CLI 2.0 only supports the creation of password-based authentication credentials. In this topic, we cover creating a service principal with a specific password, and optionally assigning specific roles to it.
+Azure CLI 2.0 supports the creation of password-based authentication credentials and certificate credentials. In this topic, we cover both types of credentials.
 
 ## Verify your own permission level
 
@@ -73,9 +73,9 @@ az ad app list --display-name MyDemoWebApp
 
 The `--display-name` option filters the returned list of apps to show those with `displayName` starting with MyDemoWebApp.
 
-### Create the service principal
+### Create a service principal with a password
 
-Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) to create the service principal. 
+Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--password` parameter to create the service principal with a password. When you do not provide a role or scope, it defaults to the **Contributor** role for the current subcription. If you create a service principal without using either the `--password` or `--cert` parameter, password authentication is used and a password is generated for you.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name {appId} --password "{strong password}" 
@@ -94,6 +94,29 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
  > [!WARNING] 
  > Don't create an insecure password.  Follow the
  > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
+
+### Create a service principal with a self-signed certificate
+
+Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--create-cert` parameter to create a self-signed certificate.
+
+```azurecli-interactive
+az ad sp create-for-rbac --name {appId} --create-cert
+```
+
+```json
+{
+  "appId": "c495db57-82e0-4e2e-9369-069dff176858",
+  "displayName": "azure-cli-2017-10-12-22-15-38",
+  "fileWithCertAndPrivateKey": "<path>/<file-name>.pem",
+  "name": "http://MyDemoWebApp",
+  "password": null,
+  "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+}
+```
+
+Copy the value of the `fileWithCertAndPrivateKey` response. This is the certificate file which will be used for authentication.
+
+For more options when using certificates, see [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac).
 
 ### Get information about the service principal
 
@@ -116,10 +139,10 @@ az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 
 ### Sign in using the service principal
 
-You can now log in as the new service principal for your app using the *appId* and *password* from `az ad sp show`.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
+You can now log in as the new service principal for your app using the *appId* from `az ad sp show`, and either the *password* or the path to the created certificate.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
-az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password} --tenant {tenant}
+az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password-or-path-to-cert} --tenant {tenant}
 ``` 
 
 You will see this output after a successful sign-on:
