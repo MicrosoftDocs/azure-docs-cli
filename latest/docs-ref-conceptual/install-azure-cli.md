@@ -195,7 +195,7 @@ We maintain a Docker image preconfigured with the Azure CLI 2.0.
 Install the CLI using `docker run`.
 
    ```bash
-   docker run azuresdk/azure-cli-python:<version>
+   docker run -it azuresdk/azure-cli-python:<version>
    ```
 
 See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
@@ -207,7 +207,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 > you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
 
 > ```bash
-> docker run -v ${HOME}:/root azuresdk/azure-cli-python:<version>
+> docker run -it -v ${HOME}:/root azuresdk/azure-cli-python:<version>
 > ```
 
 ## <a name="Linux"/>Install on Linux without a package manager
