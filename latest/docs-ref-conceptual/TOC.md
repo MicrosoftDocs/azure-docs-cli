@@ -4,6 +4,9 @@
 ## [Cloud shell](/azure/cloud-shell/overview)
 ## [Log in](authenticate-azure-cli.md)
 ### [Create a service principal](create-an-azure-service-principal-azure-cli.md)
+### Using Managed Service Identities
+#### [Configure MSI for an Azure VM](/azure/active-directory/msi-qs-configure-cli-windows-vm)
+#### [Sign in on an Azure VM using MSI](/azure/active-directory/msi-how-to-get-access-token-using-msi)
 ## [Interactive mode](interactive-azure-cli.md)
 ## Deployment templates
 ### [Use deployment templates](/azure/azure-resource-manager/resource-group-template-deploy-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
