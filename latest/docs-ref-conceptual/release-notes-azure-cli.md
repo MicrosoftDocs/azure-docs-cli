@@ -16,6 +16,47 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## October 24, 2017
+
+Version 2.0.20
+
+### Core
+
+* Updated `2017-03-09-profile` to consume `MGMT_STORAGE` API version `2016-01-01`
+
+### ACR
+
+* Updated resource management to point to `2017-10-01` API version
+* Changed 'bring your own storage' SKU to Classic
+* Renamed registry SKUs to Basic, Standard, and Premium
+
+### ACS
+
+* [PREVIEW] Added `az aks` commands
+* Fixed kubernetes `get-credentials`
+
+### Appservice
+
+* Fixed issue where downloaded `webapp` logs may be invalid
+
+### Component
+
+* Added clearer deprecation message for all installers and confirmation prompt
+
+### Monitor
+
+* Added `action-group` commands
+
+### Resource
+
+* Fixed incompatibility with most recent version of msrest dependency in `group export`
+* Fixed `policy assignment create` to work with built in policy definitions and policy set definitions
+
+### VM
+
+* Added `--accelerated-networking` argument to `vmss create`
+
+
 ## October 9, 2017
 
 Version 2.0.19
