@@ -22,39 +22,39 @@ Version 2.0.20
 
 ### Core
 
-* 2017-03-09-profile is updated to consume MGMT_STORAGE API version '2016-01-01'
+* Updated `2017-03-09-profile` to consume `MGMT_STORAGE` API version `2016-01-01`
 
 ### ACR
 
-* All resource management now points to 2017-10-01 api-version.
-* Bring your own storage SKU is now Classic.
-* Managed registry SKUs are now Basic, Standard, and Premium.
+* Updated resource management to point to `2017-10-01` API version
+* Changed 'bring your own storage' SKU to Classic
+* Renamed registry SKUs to Basic, Standard, and Premium
 
 ### ACS
 
-* Add `az aks` preview commands
-* Fix kubernetes get-credentials
+* [PREVIEW] Added `az aks` commands
+* Fixed kubernetes `get-credentials`
 
 ### Appservice
 
-* webapp: fix a bug that downloaded log file might be invalid
+* Fixed issue where downloaded `webapp` logs may be invalid
 
 ### Component
 
-* Add clearer deprecation message for all installers and confirmation prompt.
+* Added clearer deprecation message for all installers and confirmation prompt
 
 ### Monitor
 
-* Add action-group commands
+* Added `action-group` commands
 
 ### Resource
 
-* `group export`: Fixed incompatibility with most recent version of msrest dependency.
-* `az policy assignment create`: policy assignment create command to work with built in policy definitions and policy set definitions.
+* Fixed incompatibility with most recent version of msrest dependency in `group export`
+* Fixed `policy assignment create` to work with built in policy definitions and policy set definitions
 
 ### VM
 
-* `vmss create`: expose '--accelerated-networking'
+* Added `--accelerated-networking` argument to `vmss create`
 
 
 ## October 9, 2017
