@@ -75,7 +75,7 @@ The `--display-name` option filters the returned list of apps to show those with
 
 ### Create a service principal with a password
 
-Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--password` parameter to create the service principal with a password. When you do not provide a role or scope, it defaults to the **Contributor** role for the current subcription. If you create a service principal without using either the `--password` or `--cert` parameter, password authentication is used and a password is generated for you.
+Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--password` parameter to create the service principal with a password. When you do not provide a role or scope, it defaults to the **Contributor** role for the current subscription. If you create a service principal without using either the `--password` or `--cert` parameter, password authentication is used and a password is generated for you.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name {appId} --password "{strong password}" 
