@@ -12,6 +12,8 @@ ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
+experiment_id: 83e72847-fad8-4c
+experimental: true
 ---
 
 # Install Azure CLI 2.0
@@ -502,7 +504,7 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
    ```
 
 > [!Note]
-> The default install location is `/Users/<username>`.
+> The default install location is `/Users/<username>` for macOS and `/home/<username>` for Linux.
 
 ## Report CLI issues and feedback
 
