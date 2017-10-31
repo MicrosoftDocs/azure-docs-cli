@@ -33,7 +33,6 @@ az extension add --name <extension-name>
 ```
 
 If the extension is from an external resource or you have a direct link to it, you can provide the source URL or local path. This _must_ be a compiled Python wheel file.
-download.
 
 ```azurecli
 az extension add --source <URL-or-path>
@@ -49,7 +48,9 @@ Extensions can only be updated by name:
 az extension update --name <extension-name>
 ```
 
-If an extension name cannot be resolved by the CLI for whatever reason, reinstall the extension to update it. There is also the possibility that the extension was moved out of preview and became a built-in command for the CLI. You should always update the CLI before updating extensions, although there is not a guarantee extensions will continue to work with later CLI versions.
+If an extension name cannot be resolved by the CLI for whatever reason, reinstall the extension to
+update it. There is also the possibility that the extension was moved out of preview and became a
+built-in command for the CLI. In that case, update the CLI and uninstall the extension.
 
 ## Uninstalling extensions
 
