@@ -39,7 +39,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -55,8 +55,8 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_storage_blob_copy_start
   name: az storage blob copy start
-  summary: Copies a blob to a destination within the storage account.
-  description: The source for a Copy Blob operation can be a committed blob  or an Azure file in any Azure storage account.
+  summary: Copies a blob asynchronously.
+  description: This operation returns a copy operation  properties object, including a copy ID you can use to check or abort the  copy operation. The Blob service copies blobs on a best-effort basis.  The source blob for a copy operation may be a block blob, an append blob,  or a page blob. If the destination blob already exists, it must be of the  same blob type as the source blob. Any existing destination blob will be  overwritten. The destination blob cannot be modified while a copy operation  is in progress.  When copying from a page blob, the Blob service creates a destination page  blob of the source blob's length, initially containing all zeroes. Then  the source page ranges are enumerated, and non-empty ranges are copied.   For a block blob or an append blob, the Blob service creates a committed  blob of zero length before returning from this operation. When copying  from a block blob, all committed blocks and their block IDs are copied.  Uncommitted blocks are not copied. At the end of the copy operation, the  destination blob will have the same committed block count as the source.  When copying from an append blob, all committed blocks are copied. At the  end of the copy operation, the destination blob will have the same committed  block count as the source.  For all blob types, you can call get_blob_properties on the destination  blob to check the status of the copy operation. The final blob will be  committed when the copy completes.
   langs:
   - azurecli
   parameters:
@@ -105,7 +105,7 @@ items:
     summary: The blob snapshot for the source storage account.
     description: ''
   - name: --source-uri -u
-    summary: 'URL up to 2 KB in length that specifies a blob. A source blob in the same account can be private, but a blob in another account must be public or accept credentials included in this URL, such as a Shared Access Signature. Examples: <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a> <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a>?snapshot=&lt;DateTime&gt;.'
+    summary: 'A URL of up to 2 KB in length that specifies an Azure file or blob. The value should be URL-encoded as it would appear in a request URI. If the source is in another account, the source must either be public or must be authenticated via a shared access signature. If the source is public, no authentication is required. Examples: <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a> <a href="https://myaccount.blob.core.windows.net/mycontainer/myblob">https://myaccount.blob.core.windows.net/mycontainer/myblob</a>?snapshot=&lt;DateTime&gt; <a href="https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken">https://otheraccount.blob.core.windows.net/mycontainer/myblob?sastoken</a>.'
     description: ''
   - name: --destination-if-match
     summary: An ETag value, or the wildcard character (*). Specify an ETag value for this conditional header to copy the blob only if the specified ETag value matches the ETag value for an existing destination blob. If the ETag for the destination blob does not match the ETag specified for If-Match, the Blob service returns status code 412 (Precondition Failed).
@@ -135,7 +135,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -187,7 +187,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -207,7 +207,7 @@ commands:
   summary: Aborts a pending copy_blob operation, and leaves a destination blob with zero length and full metadata.
 - uid: az_storage_blob_copy_start
   name: az storage blob copy start
-  summary: Copies a blob to a destination within the storage account.
+  summary: Copies a blob asynchronously.
 - uid: az_storage_blob_copy_start_batch
   name: az storage blob copy start-batch
   summary: Copy multiple blobs or files to a blob container.
@@ -227,6 +227,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 9/14/2017 9:54:13 PM
-ms.date: 9/14/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/3c635141b04f5ccc42b77f8641896bb205a2e950/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 10/30/2017 7:14:20 PM
+ms.date: 10/30/2017

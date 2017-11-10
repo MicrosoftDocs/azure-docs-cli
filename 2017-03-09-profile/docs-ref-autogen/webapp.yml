@@ -7,6 +7,7 @@ items:
   langs:
   - azurecli
   children:
+  - az_webapp_assign_identity
   - az_webapp_browse
   - az_webapp_create
   - az_webapp_delete
@@ -17,6 +18,38 @@ items:
   - az_webapp_start
   - az_webapp_stop
   - az_webapp_update
+- uid: az_webapp_assign_identity
+  name: az webapp assign-identity
+  summary: (PREVIEW) assign managed service identity to the webapp.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: assign local identity and assign a reader role to the current resource group.
+    syntax:
+      content: az webapp assign-identity -g MyResourceGroup -n MyUniqueApp --role reader --scope /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/MyResourceGroup
+  - summary: disable the identity when there is need.
+    syntax:
+      content: az webapp config appsettings set -g MyResourceGroup -n MyUniqueApp --settings WEBSITE_DISABLE_MSI=true
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the web. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --disable-msi
+    summary: Disable the identity.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the managed identity will be assigned.
+    description: ''
+  - name: --scope
+    summary: The scope the managed identity has access to.
+    description: ''
 - uid: az_webapp_browse
   name: az webapp browse
   summary: Open a web app in a browser.
@@ -254,6 +287,9 @@ items:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
 commands:
+- uid: az_webapp_assign_identity
+  name: az webapp assign-identity
+  summary: (PREVIEW) assign managed service identity to the webapp.
 - uid: az_webapp_auth
   name: az webapp auth
   summary: Manage webapp authentication and authorization.
@@ -410,6 +446,9 @@ commands:
 - uid: az_webapp_deployment_source_config_local_git
   name: az webapp deployment source config-local-git
   summary: Get a URL for a git repository endpoint to clone and push to for web app deployment.
+- uid: az_webapp_deployment_source_config_zip
+  name: az webapp deployment source config-zip
+  summary: Perform deployment using the kudu zip push deployment for a webapp.
 - uid: az_webapp_deployment_source_delete
   name: az webapp deployment source delete
   summary: Delete a source control deployment configuration.

@@ -9,6 +9,7 @@ items:
   children:
   - az_vm_assign_identity
   - az_vm_capture
+  - az_vm_convert
   - az_vm_create
   - az_vm_deallocate
   - az_vm_delete
@@ -18,9 +19,11 @@ items:
   - az_vm_list
   - az_vm_list_ip_addresses
   - az_vm_list_sizes
+  - az_vm_list_skus
   - az_vm_list_usage
   - az_vm_list_vm_resize_options
   - az_vm_open_port
+  - az_vm_perform_maintenance
   - az_vm_redeploy
   - az_vm_resize
   - az_vm_restart
@@ -111,6 +114,34 @@ items:
       branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_convert
+  name: az vm convert
+  summary: Convert a VM with unmanaged disks to use managed disks.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Convert a VM with unmanaged disks to use managed disks.
+    syntax:
+      content: az vm convert -g MyResourceGroup -n MyVm
+  - summary: Convert all VMs with unmanaged disks in a resource group to use managed disks.
+    syntax:
+      content: az vm convert --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_create
   name: az vm create
   summary: Create an Azure Virtual Machine.
@@ -141,7 +172,7 @@ items:
       content: az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName     --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2_v2     --generate-ssh-keys
   - summary: Create a Debian VM using Key Vault secrets.
     syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   - summary: Create a CentOS VM with Managed Service Identity. The VM will have a 'Contributor' role with access to a storage account.
     syntax:
       content: az vm create -n MyVm -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
@@ -196,6 +227,10 @@ items:
   - name: --validate
     summary: Generate and validate the ARM template without creating any resources.
     description: ''
+  - name: --zone -z
+    parameterValueGroup: 1, 2, 3
+    summary: Availability zone into which to provision the resource.
+    description: ''
   - name: --admin-password
     summary: Password for the VM if authentication type is 'Password'.
     description: ''
@@ -225,6 +260,21 @@ items:
     description: ''
   - name: --scope
     summary: The scope the managed identity has access to.
+    description: ''
+  - name: --plan-name
+    summary: Plan name.
+    description: ''
+  - name: --plan-product
+    summary: Plan product.
+    description: ''
+  - name: --plan-promotion-code
+    summary: Plan promotion code.
+    description: ''
+  - name: --plan-publisher
+    summary: Plan publisher.
+    description: ''
+  - name: --asgs
+    summary: Space separated list of existing application security groups to associate with the VM.
     description: ''
   - name: --nics
     summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, vnet, public IP or NSG.
@@ -378,14 +428,10 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_format_secret
   name: az vm format-secret
-  summary: Transform secrets into a form that can be used by VMs and VMSSes.
+  summary: Format secrets to be used in `az vm create --secrets`.
   description: ''
   langs:
   - azurecli
-  examples:
-  - summary: Create a self-signed certificate with the default policy, and add it to a virtual machine.
-    syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\")\n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
     name: --secrets -s
@@ -542,6 +588,26 @@ items:
       branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list_skus
+  name: az vm list-skus
+  summary: Get details for compute-related resource SKUs.
+  description: This command incorporates subscription level restriction, offering the most accurate information.
+  langs:
+  - azurecli
+  examples:
+  - summary: List all SKUs in the West US region.
+    syntax:
+      content: az vm list-skus -l westus
+  parameters:
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_list_usage
   name: az vm list-usage
   summary: List available usage resources for VMs.
@@ -629,6 +695,27 @@ items:
   - name: --priority
     defaultValue: "900"
     summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_perform_maintenance
+  name: az vm perform-maintenance
+  summary: The operation to perform maintenance on a virtual machine.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -933,6 +1020,9 @@ commands:
 - uid: az_vm_availability_set
   name: az vm availability-set
   summary: Group resources into availability sets.
+- uid: az_vm_availability_set_convert
+  name: az vm availability-set convert
+  summary: Convert an Azure Availability Set to contain VMs with managed disks.
 - uid: az_vm_availability_set_create
   name: az vm availability-set create
   summary: Create an Azure Availability Set.
@@ -966,6 +1056,9 @@ commands:
 - uid: az_vm_capture
   name: az vm capture
   summary: Capture information for a stopped VM.
+- uid: az_vm_convert
+  name: az vm convert
+  summary: Convert a VM with unmanaged disks to use managed disks.
 - uid: az_vm_create
   name: az vm create
   summary: Create an Azure Virtual Machine.
@@ -984,6 +1077,15 @@ commands:
 - uid: az_vm_diagnostics_set
   name: az vm diagnostics set
   summary: Configure the Azure VM diagnostics extension.
+- uid: az_vm_disk
+  name: az vm disk
+  summary: Manage the managed data disks attached to a VM.
+- uid: az_vm_disk_attach
+  name: az vm disk attach
+  summary: Attach a managed persistent disk to a VM.
+- uid: az_vm_disk_detach
+  name: az vm disk detach
+  summary: Detatch a managed disk from a VM.
 - uid: az_vm_encryption
   name: az vm encryption
   summary: Manage encryption of VM disks.
@@ -1028,7 +1130,7 @@ commands:
   summary: Display information about extensions attached to a VM.
 - uid: az_vm_format_secret
   name: az vm format-secret
-  summary: Transform secrets into a form that can be used by VMs and VMSSes.
+  summary: Format secrets to be used in `az vm create --secrets`.
 - uid: az_vm_generalize
   name: az vm generalize
   summary: Mark a VM as generalized, allowing it to be imaged for multiple deployments.
@@ -1062,6 +1164,9 @@ commands:
 - uid: az_vm_list_sizes
   name: az vm list-sizes
   summary: List available sizes for VMs.
+- uid: az_vm_list_skus
+  name: az vm list-skus
+  summary: Get details for compute-related resource SKUs.
 - uid: az_vm_list_usage
   name: az vm list-usage
   summary: List available usage resources for VMs.
@@ -1089,6 +1194,9 @@ commands:
 - uid: az_vm_open_port
   name: az vm open-port
   summary: Manage open ports on a VM.
+- uid: az_vm_perform_maintenance
+  name: az vm perform-maintenance
+  summary: The operation to perform maintenance on a virtual machine.
 - uid: az_vm_redeploy
   name: az vm redeploy
   summary: Redeploy an existing VM.
@@ -1098,6 +1206,33 @@ commands:
 - uid: az_vm_restart
   name: az vm restart
   summary: Restart VMs.
+- uid: az_vm_run_command
+  name: az vm run-command
+  summary: (PREVIEW) Manage run commands on a Virtual Machine.
+- uid: az_vm_run_command_invoke
+  name: az vm run-command invoke
+  summary: Run command on a vm.
+- uid: az_vm_run_command_list
+  name: az vm run-command list
+  summary: Lists all available run commands for a subscription in a location.
+- uid: az_vm_run_command_show
+  name: az vm run-command show
+  summary: Gets specific run command for a subscription in a location.
+- uid: az_vm_secret
+  name: az vm secret
+  summary: ''
+- uid: az_vm_secret_add
+  name: az vm secret add
+  summary: ''
+- uid: az_vm_secret_format
+  name: az vm secret format
+  summary: Transform secrets into a form that can be used by VMs and VMSSes.
+- uid: az_vm_secret_list
+  name: az vm secret list
+  summary: ''
+- uid: az_vm_secret_remove
+  name: az vm secret remove
+  summary: ''
 - uid: az_vm_show
   name: az vm show
   summary: Get the details of a VM.
@@ -1153,6 +1288,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/549b679962e82944b69e196d3865e84d9d2a87de/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 10/3/2017 6:09:06 PM
-ms.date: 10/3/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/03636bdbc4fb0e134610a4ea84f32c22766a3f73/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 11/1/2017 5:42:29 PM
+ms.date: 11/1/2017
