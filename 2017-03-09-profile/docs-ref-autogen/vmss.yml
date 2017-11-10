@@ -18,6 +18,7 @@ items:
   - az_vmss_list_instance_public_ips
   - az_vmss_list_instances
   - az_vmss_list_skus
+  - az_vmss_reimage
   - az_vmss_restart
   - az_vmss_scale
   - az_vmss_show
@@ -85,7 +86,7 @@ items:
       content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom_data MyCloudInitScript.yml
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm format-secret -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
   - summary: Create a VM scaleset with Managed Service Identity. The VM will have a 'Contributor' Role with access to a storage account.
     syntax:
       content: az vm create -n MyVm -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
@@ -150,6 +151,10 @@ items:
     defaultValue: Standard_D1_v2
     summary: Size of VMs in the scale set.  See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
     description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space separated list of availability zones into which to provision the resource.
+    description: ''
   - name: --admin-password
     summary: Password for the VM if authentication type is 'Password'.
     description: ''
@@ -180,6 +185,24 @@ items:
   - name: --scope
     summary: The scope the managed identity has access to.
     description: ''
+  - name: --plan-name
+    summary: Plan name.
+    description: ''
+  - name: --plan-product
+    summary: Plan product.
+    description: ''
+  - name: --plan-promotion-code
+    summary: Plan promotion code.
+    description: ''
+  - name: --plan-publisher
+    summary: Plan publisher.
+    description: ''
+  - name: --accelerated-networking
+    summary: Enable accelerated networking.
+    description: ''
+  - name: --dns-servers
+    summary: Space separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
+    description: ''
   - name: --nsg
     summary: Reference to an existing Network Security Group by ID, or name if in the same resource group.
     description: ''
@@ -193,11 +216,17 @@ items:
   - name: --public-ip-address-dns-name
     summary: Globally unique DNS name for a newly created Public IP.
     description: ''
+  - name: --public-ip-per-vm
+    summary: Each VM instance will have a public ip. For security, you can use '--nsg' to apply appropriate rules.
+    description: ''
   - name: --subnet
     summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
     description: ''
   - name: --subnet-address-prefix
     summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+  - name: --vm-domain-name
+    summary: Domain name of VM instances, once configured, the FQDN is 'vm<vm-index>.<vm-domain-name>.<..rest..>'.
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
@@ -231,6 +260,10 @@ items:
     description: ''
   - name: --lb-nat-pool-name --nat-pool-name
     summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --lb-sku
+    defaultValue: Basic
+    summary: SKU when creating a new Load Balancer.
     description: ''
   - name: --data-disk-caching
     parameterValueGroup: None, ReadOnly, ReadWrite
@@ -473,6 +506,33 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_reimage
+  name: az vmss reimage
+  summary: Reimage VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-id
+    summary: VM instance id. If missing, reimage all instances.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -743,6 +803,27 @@ commands:
 - uid: az_vmss_diagnostics_set
   name: az vmss diagnostics set
   summary: Enable diagnostics on a virtual machine scale set.
+- uid: az_vmss_disk
+  name: az vmss disk
+  summary: Manage data disks of a VMSS.
+- uid: az_vmss_disk_attach
+  name: az vmss disk attach
+  summary: ''
+- uid: az_vmss_disk_detach
+  name: az vmss disk detach
+  summary: ''
+- uid: az_vmss_encryption
+  name: az vmss encryption
+  summary: (PREVIEW) Manage encryption of VM scale sets.
+- uid: az_vmss_encryption_disable
+  name: az vmss encryption disable
+  summary: Disable the encryption on a VM scale set with managed disks.
+- uid: az_vmss_encryption_enable
+  name: az vmss encryption enable
+  summary: Encrypt a VM scale set with managed disks.
+- uid: az_vmss_encryption_show
+  name: az vmss encryption show
+  summary: Show the encryption status.
 - uid: az_vmss_extension
   name: az vmss extension
   summary: Manage extensions on a VM scale set.
@@ -803,9 +884,24 @@ commands:
 - uid: az_vmss_nic_show
   name: az vmss nic show
   summary: Get the specified network interface in a virtual machine scale set.
+- uid: az_vmss_reimage
+  name: az vmss reimage
+  summary: Reimage VMs within a VMSS.
 - uid: az_vmss_restart
   name: az vmss restart
   summary: Restart virtual machines in a scale set.
+- uid: az_vmss_rolling_upgrade
+  name: az vmss rolling-upgrade
+  summary: ''
+- uid: az_vmss_rolling_upgrade_cancel
+  name: az vmss rolling-upgrade cancel
+  summary: Cancels the current virtual machine scale set rolling upgrade.
+- uid: az_vmss_rolling_upgrade_get_latest
+  name: az vmss rolling-upgrade get-latest
+  summary: Gets the status of the latest virtual machine scale set rolling upgrade.
+- uid: az_vmss_rolling_upgrade_start
+  name: az vmss rolling-upgrade start
+  summary: Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version.
 - uid: az_vmss_scale
   name: az vmss scale
   summary: Change the number of VMs in an virtual machine scale set.
@@ -843,6 +939,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/549b679962e82944b69e196d3865e84d9d2a87de/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 10/3/2017 6:09:06 PM
-ms.date: 10/3/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/03636bdbc4fb0e134610a4ea84f32c22766a3f73/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 11/1/2017 5:42:29 PM
+ms.date: 11/1/2017

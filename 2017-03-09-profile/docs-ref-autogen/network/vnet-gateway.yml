@@ -10,6 +10,9 @@ items:
   - az_network_vnet_gateway_create
   - az_network_vnet_gateway_delete
   - az_network_vnet_gateway_list
+  - az_network_vnet_gateway_list_advertised_routes
+  - az_network_vnet_gateway_list_bgp_peer_status
+  - az_network_vnet_gateway_list_learned_routes
   - az_network_vnet_gateway_reset
   - az_network_vnet_gateway_show
   - az_network_vnet_gateway_update
@@ -54,7 +57,7 @@ items:
     description: ''
   - name: --sku
     defaultValue: Basic
-    parameterValueGroup: Basic, HighPerformance, Standard
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw2, VpnGw3
     summary: VNet gateway SKU.
     description: ''
   - name: --tags
@@ -76,6 +79,16 @@ items:
     description: ''
   - name: --address-prefixes
     summary: Space separated list of CIDR prefixes representing the address space for the P2S client.
+    description: ''
+  - name: --client-protocol
+    parameterValueGroup: IkeV2, SSTP
+    summary: Protocols to use for connecting.
+    description: ''
+  - name: --radius-secret
+    summary: Radius secret to use for authentication.
+    description: ''
+  - name: --radius-server
+    summary: Radius server address to connect to.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -124,6 +137,76 @@ items:
       branch: master
       path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_network_vnet_gateway_list_advertised_routes
+  name: az network vnet-gateway list-advertised-routes
+  summary: This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - isRequired: true
+    name: --peer
+    summary: The IP address of the peer.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_network_vnet_gateway_list_bgp_peer_status
+  name: az network vnet-gateway list-bgp-peer-status
+  summary: The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --peer
+    summary: The IP address of the peer to retrieve the status of.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_network_vnet_gateway_list_learned_routes
+  name: az network vnet-gateway list-learned-routes
+  summary: This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vnet_gateway_reset
   name: az network vnet-gateway reset
   summary: Reset a virtual network gateway.
@@ -136,12 +219,11 @@ items:
     summary: Name of the VNet gateway.
     description: ''
   - isRequired: true
-    name: --parameters
-    summary: Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --gateway-vip
+    summary: Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -196,7 +278,7 @@ items:
     summary: Specify a single public IP (name or ID) for an active-standby gateway. Specify two space-separated public IPs for an active-active gateway.
     description: ''
   - name: --sku
-    parameterValueGroup: Basic, HighPerformance, Standard
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw2, VpnGw3
     summary: VNet gateway SKU.
     description: ''
   - name: --tags
@@ -224,6 +306,16 @@ items:
     description: ''
   - name: --address-prefixes
     summary: Space separated list of CIDR prefixes representing the address space for the P2S client.
+    description: ''
+  - name: --client-protocol
+    parameterValueGroup: IkeV2, SSTP
+    summary: Protocols to use for connecting.
+    description: ''
+  - name: --radius-secret
+    summary: Radius secret to use for authentication.
+    description: ''
+  - name: --radius-server
+    summary: Radius server address to connect to.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -294,6 +386,15 @@ commands:
 - uid: az_network_vnet_gateway_list
   name: az network vnet-gateway list
   summary: List virtual network gateways.
+- uid: az_network_vnet_gateway_list_advertised_routes
+  name: az network vnet-gateway list-advertised-routes
+  summary: This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+- uid: az_network_vnet_gateway_list_bgp_peer_status
+  name: az network vnet-gateway list-bgp-peer-status
+  summary: The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+- uid: az_network_vnet_gateway_list_learned_routes
+  name: az network vnet-gateway list-learned-routes
+  summary: This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
 - uid: az_network_vnet_gateway_reset
   name: az network vnet-gateway reset
   summary: Reset a virtual network gateway.
@@ -327,6 +428,9 @@ commands:
 - uid: az_network_vnet_gateway_vpn_client_generate
   name: az network vnet-gateway vpn-client generate
   summary: Generates a binary client file that can be used to connect to a VPN.
+- uid: az_network_vnet_gateway_vpn_client_show_url
+  name: az network vnet-gateway vpn-client show-url
+  summary: Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group.
 - uid: az_network_vnet_gateway_wait
   name: az network vnet-gateway wait
   summary: Place the CLI in a waiting state until a condition of the virtual network gateway is met.
@@ -346,6 +450,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/eb9a2f48ee2f6e0db2fca60f695a7303f25989aa/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 9/22/2017 11:00:49 PM
-ms.date: 9/22/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/2ae8950ab0babd5a1f814cf5fddebf40d951d85d/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 10/27/2017 5:44:13 PM
+ms.date: 10/27/2017

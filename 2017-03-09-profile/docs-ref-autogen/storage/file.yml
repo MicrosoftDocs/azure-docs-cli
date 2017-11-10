@@ -8,6 +8,7 @@ items:
   - azurecli
   children:
   - az_storage_file_delete
+  - az_storage_file_delete_batch
   - az_storage_file_download
   - az_storage_file_download_batch
   - az_storage_file_exists
@@ -41,7 +42,45 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_file_delete_batch
+  name: az storage file delete-batch
+  summary: Delete files from an Azure Storage File Share.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --source -s
+    summary: The source of the file delete operation. The source can be the file share URL or the share name.
+    description: ''
+  - name: --dryrun
+    summary: List the files and blobs to be deleted. No actual data deletion will occur.
+    description: ''
+  - name: --pattern
+    summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -77,23 +116,15 @@ items:
     summary: 'End of byte range to use for downloading a section of the file. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
     description: ''
   - name: --max-connections
-    defaultValue: "1"
-    summary: Set to 1 to download the file sequentially. Set to 2 or greater if you want to download a file larger than 64MB in chunks. If the file size does not exceed 64MB it will be downloaded in one chunk.
-    description: ''
-  - name: --max-retries
-    defaultValue: "5"
-    summary: Number of times to retry download of file chunk if an error occurs.
+    defaultValue: "2"
+    summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the file. If this is the entire file, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be valuable if the file is being concurrently modified to enforce atomicity or if many files are expected to be empty as an extra request is required for empty files if max_connections is greater than 1.
     description: ''
   - name: --open-mode
     defaultValue: wb
-    summary: Mode to use when opening the file.
+    summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
     description: ''
-  - name: --range-get-content-md5
-    summary: When this header is set to True and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.
-    description: ''
-  - name: --retry-interval
-    defaultValue: "1.0"
-    summary: Sleep time in secs between retries.
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
     description: ''
   - name: --start-range
     summary: 'Start of byte range to use for downloading a section of the file. If no end_range is given, all bytes after the start_range will be downloaded. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
@@ -101,11 +132,14 @@ items:
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
+  - name: --validate-content
+    summary: If set to true, validates an MD5 hash for each retrieved portion of the file. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that the service will only return transactional MD5s for chunks 4MB or less so the first get request will be of size self.MAX_CHUNK_GET_SIZE instead of self.MAX_SINGLE_GET_SIZE. If self.MAX_CHUNK_GET_SIZE was set to greater than 4MB an error will be thrown. As computing the MD5 takes processing time and more requests will need to be done due to the reduced chunk size there may be some increase in latency.
+    description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -138,8 +172,11 @@ items:
     summary: List the files and blobs to be downloaded. No actual data transfer will occur.
     description: ''
   - name: --pattern
-    summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq', and '[!seq]'.
+    summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
     description: ''
+  - name: --validate-content
+    summary: If set, calculates an MD5 hash for each range of the file for validation.
+    description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
   - name: --max-connections
     defaultValue: "1"
     summary: The maximum number of parallel connections to use. Default value is 1.
@@ -148,7 +185,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -177,6 +214,9 @@ items:
     name: --share-name -s
     summary: The file share name.
     description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
@@ -184,7 +224,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -250,7 +290,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -282,7 +322,7 @@ items:
     summary: The directory path within the file share.
     description: ''
   - name: --snapshot
-    summary: ''
+    summary: A string that represents the snapshot version, if applicable.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -291,7 +331,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -331,7 +371,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -360,6 +400,9 @@ items:
     name: --share-name -s
     summary: The file share name.
     description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
@@ -367,7 +410,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -421,7 +464,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -473,12 +516,8 @@ items:
     summary: The content MIME type.
     description: ''
   - name: --max-connections
-    defaultValue: "1"
-    summary: Maximum number of parallel connections to use when the file size exceeds 64MB. Set to 1 to upload the file chunks sequentially. Set to 2 or more to upload the file chunks in parallel. This uses more system resources but will upload faster.
-    description: ''
-  - name: --max-retries
-    defaultValue: "5"
-    summary: Number of times to retry upload of file chunk if an error occurs.
+    defaultValue: "2"
+    summary: Maximum number of parallel connections to use.
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
@@ -486,18 +525,17 @@ items:
   - name: --path -p
     summary: The path to the file within the file share. If the file name is omitted, the source file name will be used.
     description: ''
-  - name: --retry-interval
-    defaultValue: "1.0"
-    summary: Sleep time in secs between retries.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --validate-content
+    summary: If true, calculates an MD5 hash for each range of the file. The storage service checks the hash of the content that has arrived with the hash that was sent. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that this MD5 hash is not stored with the file.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -535,6 +573,9 @@ items:
   - name: --pattern
     summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq', and '[!seq]'.
     description: ''
+  - name: --validate-content
+    summary: If set, calculates an MD5 hash for each range of the file for validation.
+    description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
   - name: --content-cache-control
     summary: The cache control string.
     description: ''
@@ -561,7 +602,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -602,7 +643,7 @@ items:
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
-    summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment variable: AZURE_STORAGE_ACCOUNT.'
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -622,13 +663,16 @@ commands:
   summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
 - uid: az_storage_file_copy_start
   name: az storage file copy start
-  summary: Copies a blob or file to a destination file within the storage account.
+  summary: Copies a file asynchronously.
 - uid: az_storage_file_copy_start_batch
   name: az storage file copy start-batch
   summary: Copy multiple files or blobs to a file share.
 - uid: az_storage_file_delete
   name: az storage file delete
   summary: Marks the specified file for deletion.
+- uid: az_storage_file_delete_batch
+  name: az storage file delete-batch
+  summary: Delete files from an Azure Storage File Share.
 - uid: az_storage_file_download
   name: az storage file download
   summary: Downloads a file to a file path, with automatic chunking and progress notifications.
@@ -687,6 +731,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 9/14/2017 9:54:13 PM
-ms.date: 9/14/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/3c635141b04f5ccc42b77f8641896bb205a2e950/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 10/30/2017 7:14:20 PM
+ms.date: 10/30/2017
