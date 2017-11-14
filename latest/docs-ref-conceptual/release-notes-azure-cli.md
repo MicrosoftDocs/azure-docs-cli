@@ -22,41 +22,40 @@ Version 2.0.21
 
 ### ACR
 
-* Add support for creating webhooks in replication regions.
+* Added support for creating webhooks in replication regions
 
 
 ### ACS
 
-* call "agent" a "node" in AKS to match documentation
-* deprecate --orchestrator-release option in acs create
-* change default VM size for AKS to Standard_D1_v2
-* fix "az aks browse" on Windows
-* fix "az aks get-credentials" on Windows
+* Changed all wording of "agent" to "node" in AKS
+* Deprecated `--orchestrator-release` option for `acs create`
+* Changed default VM size for AKS to `Standard_D1_v2`
+* Fixed `az aks browse` on Windows
+* Fixed `az aks get-credentials` on Windows
 
 ### Appservice
 
-* webapp: add deployment source config-zip support for webapps and functions apps
-* webapp: use azure-mgmt-web 0.34.1
-* webapp: add --docker-container-logging
-* webapp: removing the 'storage' option from --web-server-logging since this is not working
-* `deployment user set`: logged more informative error messages
-* functionapp: add support for creating Linux function apps
-* appservice: fix list-locations
+* Added deployment source `config-zip` for webapps and function apps
+* Added `--docker-container-logging` option [1]
+* Removed the `--storage` option from `--web-server-logging` [2]
+* Improved error messages for `deployment user set`
+* Added support for creating Linux function apps
+* Fixed `list-locations`
 
 ### Batch
 
-* Fixed bug in pool create command when a resource ID was used with the --image flag
+* Fixed bug in pool create command when a resource ID was used with the `--image` flag
 
-### Batchai
+### Batchai [3]
 
-* Added short option for providing VM size in file-server create command
-* Added storage account name and key arguments into cluster create parameters
-* Fixed documentation for job list-files and stream-file
-* Added short option for providing cluster name in job create command
+* Added short option for providing VM size in `file-server create` command
+* Added storage account name and key arguments to `cluster create` parameters
+* Fixed documentation for `job list-files` and `job stream-file`
+* Added short option for providing cluster name in `job create` command
 
 ### Cloud
 
-* `az cloud register` & `az cloud update`: Prevent users from registering clouds that have missing required endpoints
+* Changed `cloud [register|update]` to prevent registering clouds that have missing required endpoints
 
 ### Container
 
@@ -65,42 +64,33 @@ Version 2.0.21
 * Added support to mount Azure File share as a volume
 * Updated helper docs
 
-### Cosmos DB
-
-* Use latest azure-mgmt-cosmosdb pypi package (0.2.1)
-
 ### Data Lake Analytics
 
-* Change the return type of the job list command: a list of JobInformation to a list of JobInformationBasic
-* Change the return type of the account list command: a list of DataLakeAnalyticsAccount to a list of DataLakeAnalyticsAccountBasic
-* The properties of a Basic type is a strict subset of the properties of a regular type
+* Changed `[job|account] list` to return more concise information
 
 ### Data Lake Store
 
-* Change the return type of the account list command: a list of DataLakeStoreAccount to a list of DataLakeStoreAccountBasic
-* The properties of a Basic type is a strict subset of the properties of a regular type
-
+* Changed `account list` to return more concise information
 
 ### Extension
 
-* `az extension add --name NAME` - Allows users to add an extension by name
-* `az extension list-available` - Allows users to list the available extensions in the index
-* `az extension update --name NAME` - Allows users to update an extension
+* Added `extension list-available` to allow listing official Microsoft extensions
+* Added `--name` to `extension [add|update]` to allow installing extensions by name
 
 ### IoT
 
-* Adds support for certificate authorities (CA) and certificate chains
+* Added support for certificate authorities (CA) and certificate chains
 
 ### Monitor
 
-* Add activity-log alert commands
+* Added `activity-log alert` commands
 
 ### Network
 
-* `dns`: Add support for CAA records
-* `traffic-manager profile update`: Fix issue where profiles with endpoints could not be updated
-* `vnet update`: Fix issue where `--dns-servers` didn't work depending on how the VNET was created (ARM deployment)
-* `dns zone import`: Fix issue where relative names were incorrectly imported
+* Added support for CAA DNS records
+* Fixed issue where endpoints could not be updated with `traffic-manager profile update`
+* Fixed issue where `vnet update --dns-servers` didn't work depending on how the VNET was created
+* Fixed issue where relative DNS names were incorrectly imported by `dns zone import`
 
 ### Reservations
 
@@ -108,30 +98,29 @@ Version 2.0.21
 
 ### Resource
 
-* --resource parameter, resource-level locks now support resource-ids
+* Added support for resource IDs to `--resource` parameter and resource-level locks
 
 ### SQL
 
-* Added --ignore-missing-vnet-service-endpoint param to az sql server vnet-rule create and update commands
+* Added `--ignore-missing-vnet-service-endpoint` parameter to `sql server vnet-rule [create|update]`
 
 ### Storage
 
-* `storage account create`: defaults --sku to 'Standard_RAGRS'
-* Fixed bugs when dealing with file/blob names that include non-ascii chars.
-* `storage blob/file copy start-batch`: Fixed bug that prevented using --source-uri.
-* `storage blob/file delete-batch`: Added commands to glob and delete multiple blobs/files.
-* `storage metrics update`: fixed bug with enabling metrics.
-* `storage blob upload-batch`: Increase block size when target file is over 200GB.
-* `storage account create/update`: Fix issue where --bypass and --default-action arguments were ignored.
+* Changed `storage account create` to use SKU `Standard_RAGRS` as default
+* Fixed bugs when dealing with file/blob names that include non-ascii chars
+* Fixed bug that prevented using `--source-uri` with `storage [blob|file] copy start-batch`
+* Added commands to glob and delete multiple objects with `storage [blob|file] delete-batch`
+* Fixed issue when enabling metrics with `storage metrics update`
+* Fixed issue with files over 200GB when using `storage blob upload-batch`
+* Fixed issue where `--bypass` and `--default-action` were ignored by `storage account [create|update]`
 
 ### VM
 
-* `vmss create`: fix a bug that blocks using Basic tier of VM sizes
-* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations
-* vm : support `vm secret add/remove/list`
-* vm : `vm format-secret` is copied to `vm secret format`. The old one will be removed in future
-* `vm encryption enable`: expose '--encrypt-format'
-
+* Fixed a bug with `vmss create` that prevented using the `Basic` size tier
+* Added `--plan` arguments to `[vm|vmss] create` for custom images with billing information
+* Added `vm secret `[add|remove|list]` commands
+* Renamed `vm format-secret` to `vm secret format`
+* Added `--encrypt format` argument to `vm encryption enable`
 
 ## October 24, 2017
 
