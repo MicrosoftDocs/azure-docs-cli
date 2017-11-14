@@ -16,6 +16,123 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## November 14, 2017
+
+Version 2.0.21
+
+### ACR
+
+* Add support for creating webhooks in replication regions.
+
+
+### ACS
+
+* call "agent" a "node" in AKS to match documentation
+* deprecate --orchestrator-release option in acs create
+* change default VM size for AKS to Standard_D1_v2
+* fix "az aks browse" on Windows
+* fix "az aks get-credentials" on Windows
+
+### Appservice
+
+* webapp: add deployment source config-zip support for webapps and functions apps
+* webapp: use azure-mgmt-web 0.34.1
+* webapp: add --docker-container-logging
+* webapp: removing the 'storage' option from --web-server-logging since this is not working
+* `deployment user set`: logged more informative error messages
+* functionapp: add support for creating Linux function apps
+* appservice: fix list-locations
+
+### Batch
+
+* Fixed bug in pool create command when a resource ID was used with the --image flag
+
+### Batchai
+
+* Added short option for providing VM size in file-server create command
+* Added storage account name and key arguments into cluster create parameters
+* Fixed documentation for job list-files and stream-file
+* Added short option for providing cluster name in job create command
+
+### Cloud
+
+* `az cloud register` & `az cloud update`: Prevent users from registering clouds that have missing required endpoints
+
+### Container
+
+* Added support to open multiple ports
+* Added container group restart policy
+* Added support to mount Azure File share as a volume
+* Updated helper docs
+
+### Cosmos DB
+
+* Use latest azure-mgmt-cosmosdb pypi package (0.2.1)
+
+### Data Lake Analytics
+
+* Change the return type of the job list command: a list of JobInformation to a list of JobInformationBasic
+* Change the return type of the account list command: a list of DataLakeAnalyticsAccount to a list of DataLakeAnalyticsAccountBasic
+* The properties of a Basic type is a strict subset of the properties of a regular type
+
+### Data Lake Store
+
+* Change the return type of the account list command: a list of DataLakeStoreAccount to a list of DataLakeStoreAccountBasic
+* The properties of a Basic type is a strict subset of the properties of a regular type
+
+
+### Extension
+
+* `az extension add --name NAME` - Allows users to add an extension by name
+* `az extension list-available` - Allows users to list the available extensions in the index
+* `az extension update --name NAME` - Allows users to update an extension
+
+### IoT
+
+* Adds support for certificate authorities (CA) and certificate chains
+
+### Monitor
+
+* Add activity-log alert commands
+
+### Network
+
+* `dns`: Add support for CAA records
+* `traffic-manager profile update`: Fix issue where profiles with endpoints could not be updated
+* `vnet update`: Fix issue where `--dns-servers` didn't work depending on how the VNET was created (ARM deployment)
+* `dns zone import`: Fix issue where relative names were incorrectly imported
+
+### Reservations
+
+* Initial preview release
+
+### Resource
+
+* --resource parameter, resource-level locks now support resource-ids
+
+### SQL
+
+* Added --ignore-missing-vnet-service-endpoint param to az sql server vnet-rule create and update commands
+
+### Storage
+
+* `storage account create`: defaults --sku to 'Standard_RAGRS'
+* Fixed bugs when dealing with file/blob names that include non-ascii chars.
+* `storage blob/file copy start-batch`: Fixed bug that prevented using --source-uri.
+* `storage blob/file delete-batch`: Added commands to glob and delete multiple blobs/files.
+* `storage metrics update`: fixed bug with enabling metrics.
+* `storage blob upload-batch`: Increase block size when target file is over 200GB.
+* `storage account create/update`: Fix issue where --bypass and --default-action arguments were ignored.
+
+### VM
+
+* `vmss create`: fix a bug that blocks using Basic tier of VM sizes
+* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations
+* vm : support `vm secret add/remove/list`
+* vm : `vm format-secret` is copied to `vm secret format`. The old one will be removed in future
+* `vm encryption enable`: expose '--encrypt-format'
+
+
 ## October 24, 2017
 
 Version 2.0.20
