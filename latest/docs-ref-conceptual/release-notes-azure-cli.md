@@ -36,8 +36,8 @@ Version 2.0.21
 ### Appservice
 
 * Added deployment source `config-zip` for webapps and function apps
-* Added `--docker-container-logging` option [1]
-* Removed the `--storage` option from `--web-server-logging` [2]
+* Added `--docker-container-logging` option to `az webapp log config`
+* Removed the `storage` option from the parameter `--web-server-logging` of `az webapp log config`
 * Improved error messages for `deployment user set`
 * Added support for creating Linux function apps
 * Fixed `list-locations`
@@ -46,12 +46,12 @@ Version 2.0.21
 
 * Fixed bug in pool create command when a resource ID was used with the `--image` flag
 
-### Batchai [3]
+### Batchai
 
-* Added short option for providing VM size in `file-server create` command
+* Added short option, `-s`, for `--vm-size` when providing VM size in `file-server create` command
 * Added storage account name and key arguments to `cluster create` parameters
 * Fixed documentation for `job list-files` and `job stream-file`
-* Added short option for providing cluster name in `job create` command
+* Added short option, `-r`, for `--cluster-name` when providing cluster name in `job create` command
 
 ### Cloud
 
