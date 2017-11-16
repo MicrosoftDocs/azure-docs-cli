@@ -38,7 +38,8 @@ The simplest way to get started is to [launch Cloud Shell](/azure/cloud-shell/qu
 
    ![Create a storage account](media/get-started-with-azure-cli/storage-prompt.png)
 
-You can also [install](install-azure-cli.md) the CLI and run it locally from the command line.
+You can also [install](install-azure-cli.md) the CLI and run it locally from the command line. Once you have installed the CLI,
+run `az login` to log in with your default subscription.
 
 ## Create a Resource Group
 
