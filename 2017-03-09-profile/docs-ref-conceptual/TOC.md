@@ -4,11 +4,14 @@
 ## [Cloud shell](/azure/cloud-shell/overview)
 ## [Log in](authenticate-azure-cli.md)
 ### [Create a service principal](create-an-azure-service-principal-azure-cli.md)
+### Using Managed Service Identities
+#### [Configure MSI for an Azure VM](/azure/active-directory/msi-qs-configure-cli-windows-vm?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+#### [Sign in on an Azure VM using MSI](/azure/active-directory/msi-how-to-get-access-token-using-msi?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 ## [Interactive mode](interactive-azure-cli.md)
-## Deploy
-### [With templates](/azure/azure-resource-manager/resource-group-template-deploy-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
-### [Export templates](/azure/azure-resource-manager/resource-manager-export-template-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
-### [With private templates](/azure-resource-manager/resource-manager-cli-sas-token?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+## Deployment templates
+### [Use deployment templates](/azure/azure-resource-manager/resource-group-template-deploy-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+### [Export deployment templates](/azure/azure-resource-manager/resource-manager-export-template-cli?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+### [Deploy private templates](/azure/azure-resource-manager/resource-manager-cli-sas-token?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 ## [Output formats](format-output-azure-cli.md)
 ## [Query](query-azure-cli.md)
 ## [Subscriptions](manage-azure-subscriptions-azure-cli.md)

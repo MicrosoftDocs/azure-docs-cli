@@ -16,6 +16,239 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## October 24, 2017
+
+Version 2.0.20
+
+### Core
+
+* Updated `2017-03-09-profile` to consume `MGMT_STORAGE` API version `2016-01-01`
+
+### ACR
+
+* Updated resource management to point to `2017-10-01` API version
+* Changed 'bring your own storage' SKU to Classic
+* Renamed registry SKUs to Basic, Standard, and Premium
+
+### ACS
+
+* [PREVIEW] Added `az aks` commands
+* Fixed kubernetes `get-credentials`
+
+### Appservice
+
+* Fixed issue where downloaded `webapp` logs may be invalid
+
+### Component
+
+* Added clearer deprecation message for all installers and confirmation prompt
+
+### Monitor
+
+* Added `action-group` commands
+
+### Resource
+
+* Fixed incompatibility with most recent version of msrest dependency in `group export`
+* Fixed `policy assignment create` to work with built in policy definitions and policy set definitions
+
+### VM
+
+* Added `--accelerated-networking` argument to `vmss create`
+
+
+## October 9, 2017
+
+Version 2.0.19
+
+### Core
+
+* Added handling of ADFS authority URLs with a trailing slash to Azure Stack
+
+### Appservice
+
+* Added generic update with new command `webapp update`
+
+### Batch
+
+* Updated to Batch SDK 4.0.0
+* Updated `--image` option of VirtualMachineConfiguration to support ARM image references in addition to publish:offer:sku:version
+* Added support for the new CLI extension model for Batch Extensions commands
+* Removed Batch support from the component model
+
+### Batchai
+
+* Initial release of Batch AI module
+
+### Keyvault
+
+* Fixed Key Vault authentication issue when using ADFS on Azure Stack. [(#4448)](https://github.com/Azure/azure-cli/issues/4448)
+
+### Network
+
+* Changed `--server` argument of `application-gateway address-pool create` to be optional, allowing for empty address pools
+* Updated `traffic-manager` to support latest features
+
+### Resource
+
+* Added support for `--resource-group/-g` options for resource group name to `group`
+* Added commands for `account lock` to work with subscription-level locks
+* Added commands for `group lock` to work with group-level locks
+* Added commands for `resource lock` to work with resource-level locks
+
+### Sql
+
+* Added support for SQL Transparent Data Encryption (TDE) and TDE with Bring Your Own Key
+* Added `db list-deleted` command and `db restore --deleted-time` parameter, allowing the ability to find and restore deleted databases
+* Added `db op list` and `db op cancel`, allowing the ability to list and cancel in-progress operations on database
+
+### Storage
+
+* Added support for file share snapshot
+
+### Vm
+
+* Fixed a bug in `vm show` where using `-d` caused a crash on missing private ip addresses
+* [PREVIEW] Added support for rolling upgrade to `vmss create`
+* Added support for updating encryption settings with `vm encryption enable`
+* Added `--os-disk-size-gb` parameter to `vm create`
+* Added `--license-type` parameter for Windows to `vmss create`
+
+
+## September 22, 2017
+
+Version 2.0.18
+
+### Resource
+
+* Added support for showing built-in policy definitions
+* Added support mode parameter for creating policy definitions
+* Added support for UI definitions and templates to `managedapp definition create`
+* [BREAKING CHANGE] Changed `managedapp` resource type from `appliances` to `applications` and `applianceDefinitions` to `applicationDefinitions`
+
+### Network
+
+* Added support for availability zone to `network lb` and `network public-ip` subcommands
+* Added support for IPv6 Microsoft Peering to `express-route`
+* Added `asg` application security group commands
+* Added `--application-security-groups` argument to `nic [create|ip-config create|ip-config update]`
+* Added `--source-asgs` and `--destination-asgs` arguments to `nsg rule [create|update]`
+* Added `--ddos-protection` and `--vm-protection` arguments to `vnet [create|update]`
+* Added `network [vnet-gateway|vpn-client|show-url]` commands
+
+### Storage
+
+* Fixed issue where `storage account network-rule` commands may fail after updating the SDK
+
+### Eventgrid
+
+* Updated Azure Event Grid Python SDK to use newer API version "2017-09-15-preview"
+
+### SQL
+
+* Changed `sql server list` argument `--resource-group` to be optional. If not specified, all sql servers in the subscription will be returned
+* Added `--no-wait` param to `db [create|copy|restore|update|replica create|create|update]` and `dw [create|update]`
+
+### Keyvault
+
+* Added support for Keyvault commands from behind a proxy
+
+### VM
+
+* Added for support to availability zone to `[vm|vmss|disk] create`
+* Fixed issue where using`--app-gateway ID` with `vmss create` would cause a failure
+* Added `--asgs` argument to `vm create`
+* Added support for running commands on VMs with `vm run-command`
+* [PREVIEW] Added support for VMSS disk encryption with `vmss encryption`
+* Added support for performing maintenance on VMs with `vm perform-maintenance`
+
+### ACS
+
+* [PREVIEW] Added `--orchestrator-release` argument to `acs create` for ACS preview regions
+
+### Appservice
+
+* Added ability to update and show authentication settings with `webapp auth [update|show]`
+
+### Backup
+
+* Preview release
+
+
+## September 11, 2017
+
+Version 2.0.17
+
+### Core
+
+* Enabled command module to set its own correlation ID in telemetry
+* Fixed JSON dump issue when telemetry is set to diagnostics mode
+
+### Acs
+
+* Added `acs list-locations` command
+* Made `ssh-key-file` come with expected default value
+
+### Appservice
+
+* Added ability to create a webapp in a resource group other than the active service plan's
+
+### CDN
+
+* Fixed 'CustomDomain is not interable' bug for `cdn custom-domain create`.
+
+### Extension
+
+* Initial Release.
+
+### Keyvault
+
+* Fixed issue where permissions were case sensitive for `keyvault set-policy`.
+
+### Network
+
+* Renamed `vnet list-private-access-services` to `vnet list-endpoint-services`
+* Renamed `--private-access-services` argument to `--service-endpoints` for `vnet subnet create/update`
+* Added support for multiple IP ranges and port ranges to `nsg rule create/update`
+* Added support for SKU to `lb create`
+* Added support for SKU to `public-ip create`
+
+### Resource
+
+* Allow passing in resource policy parameter definitions in `policy definition create`, and `policy definition update`
+* Allow passing in parameter values for `policy assignment create`
+* Allow for passing JSON or file for all params
+* Incremented API version
+
+### SQL
+
+* Added `sql server vnet-rule` commands
+
+### VM
+
+* Fixed: Don't assign access unless `--scope` is provided
+* Fixed: Use the same extension naming as portal does
+* Removed `subscription` from the `[vm|vmss] create` output
+* Fixed: `[vm|vmss] create` storage SKU is not applied on data disks with an image
+* Fixed: `vm format-secret --secrets` would not accept newline separated IDs
+
+## August 31, 2017
+
+Version 2.0.16
+
+### Keyvault
+
+* Fixed bug when trying to automatically resolve secret encoding with `secret download`
+
+### Sf
+
+* Deprecating all commands in favor of Service Fabric CLI (sfctl)
+
+### Storage
+
+* Fixed issue where storage accounts could not be created in regions that don't support the NetworkACLs feature
+* Determine content type and content encoding during blob and file upload if neither content type and content encoding are specified
+
 ## August 28, 2017
 
 Version 2.0.15
