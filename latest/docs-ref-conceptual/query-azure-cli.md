@@ -42,7 +42,7 @@ You can use the `--query` parameter to show just the Resource Group name and VM 
 
 ```azurecli-interactive
 az vm list \
-  --query [*].[name,resourceGroup] --out table
+  --query [*].[name, resourceGroup] --out table
 ```
 
 ```
@@ -87,7 +87,7 @@ If the property you want to select is nested deep in the JSON output you need to
 
 ```azurecli-interactive
 az vm list \
-  --query "[].{VMName:name,OSType:storageProfile.osDisk.osType}" --out table
+  --query "[].{VMName:name, OSType:storageProfile.osDisk.osType}" --out table
 ```
 
 ```
@@ -111,7 +111,7 @@ In the following example, the command selects only VMs that have the text "RGD" 
 
 ```azurecli-interactive
 az vm list \
-  --query "[?contains(resourceGroup,'RGD')].{ resource: resourceGroup, name: name }" --out table
+  --query "[?contains(resourceGroup, 'RGD')].{ resource: resourceGroup, name: name }" --out table
 ```
 
 ```
