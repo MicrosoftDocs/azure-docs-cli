@@ -502,7 +502,7 @@ If you used the script at https://aka.ms/InstallAzureCli to install the CLI, you
    ```
 
 > [!Note]
-> The default install location is `/Users/<username>`.
+> The default install location is `/Users/<username>` for macOS and `/home/<username>` for Linux.
 
 ## Report CLI issues and feedback
 
