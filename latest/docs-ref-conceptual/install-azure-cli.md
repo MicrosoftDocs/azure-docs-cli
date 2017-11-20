@@ -12,6 +12,8 @@ ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
 ms.assetid: ea5c0ee1-c530-4a1e-a83f-e1be71f6d416
+experiment_id: 83e72847-fad8-4c
+experimental: true
 ---
 
 # Install Azure CLI 2.0

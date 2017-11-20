@@ -16,6 +16,112 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## November 14, 2017
+
+Version 2.0.21
+
+### ACR
+
+* Added support for creating webhooks in replication regions
+
+
+### ACS
+
+* Changed all wording of "agent" to "node" in AKS
+* Deprecated `--orchestrator-release` option for `acs create`
+* Changed default VM size for AKS to `Standard_D1_v2`
+* Fixed `az aks browse` on Windows
+* Fixed `az aks get-credentials` on Windows
+
+### Appservice
+
+* Added deployment source `config-zip` for webapps and function apps
+* Added `--docker-container-logging` option to `az webapp log config`
+* Removed the `storage` option from the parameter `--web-server-logging` of `az webapp log config`
+* Improved error messages for `deployment user set`
+* Added support for creating Linux function apps
+* Fixed `list-locations`
+
+### Batch
+
+* Fixed bug in pool create command when a resource ID was used with the `--image` flag
+
+### Batchai
+
+* Added short option, `-s`, for `--vm-size` when providing VM size in `file-server create` command
+* Added storage account name and key arguments to `cluster create` parameters
+* Fixed documentation for `job list-files` and `job stream-file`
+* Added short option, `-r`, for `--cluster-name` when providing cluster name in `job create` command
+
+### Cloud
+
+* Changed `cloud [register|update]` to prevent registering clouds that have missing required endpoints
+
+### Container
+
+* Added support to open multiple ports
+* Added container group restart policy
+* Added support to mount Azure File share as a volume
+* Updated helper docs
+
+### Data Lake Analytics
+
+* Changed `[job|account] list` to return more concise information
+
+### Data Lake Store
+
+* Changed `account list` to return more concise information
+
+### Extension
+
+* Added `extension list-available` to allow listing official Microsoft extensions
+* Added `--name` to `extension [add|update]` to allow installing extensions by name
+
+### IoT
+
+* Added support for certificate authorities (CA) and certificate chains
+
+### Monitor
+
+* Added `activity-log alert` commands
+
+### Network
+
+* Added support for CAA DNS records
+* Fixed issue where endpoints could not be updated with `traffic-manager profile update`
+* Fixed issue where `vnet update --dns-servers` didn't work depending on how the VNET was created
+* Fixed issue where relative DNS names were incorrectly imported by `dns zone import`
+
+### Reservations
+
+* Initial preview release
+
+### Resource
+
+* Added support for resource IDs to `--resource` parameter and resource-level locks
+
+### SQL
+
+* Added `--ignore-missing-vnet-service-endpoint` parameter to `sql server vnet-rule [create|update]`
+
+### Storage
+
+* Changed `storage account create` to use SKU `Standard_RAGRS` as default
+* Fixed bugs when dealing with file/blob names that include non-ascii chars
+* Fixed bug that prevented using `--source-uri` with `storage [blob|file] copy start-batch`
+* Added commands to glob and delete multiple objects with `storage [blob|file] delete-batch`
+* Fixed issue when enabling metrics with `storage metrics update`
+* Fixed issue with files over 200GB when using `storage blob upload-batch`
+* Fixed issue where `--bypass` and `--default-action` were ignored by `storage account [create|update]`
+
+### VM
+
+* Fixed a bug with `vmss create` that prevented using the `Basic` size tier
+* Added `--plan` arguments to `[vm|vmss] create` for custom images with billing information
+* Added `vm secret `[add|remove|list]` commands
+* Renamed `vm format-secret` to `vm secret format`
+* Added `--encrypt format` argument to `vm encryption enable`
+
 ## October 24, 2017
 
 Version 2.0.20

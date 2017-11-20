@@ -340,7 +340,7 @@ as shape the output of any returned result.
 For example, execute the following command to query for any VM resource within any resource group that contains the letters "My":
 
 ```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup,'MY')]" 
+az vm list --output table --query "[?contains(resourceGroup, 'MY')]" 
 ```
 
 ```Output
@@ -354,7 +354,7 @@ We could then choose to further refine the output by using the shaping capabilit
 as well.  For example, the following command retrieves the type of OS disk the VM is using to determine whether the OS is Linux or Windows based:
 
 ```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup,'MY')].{ VMName:name,OSType:storageProfile.osDisk.osType }" 
+az vm list --output table --query "[?contains(resourceGroup, 'MY')].{ VMName:name, OSType:storageProfile.osDisk.osType }" 
 ```
 
 ```Output
