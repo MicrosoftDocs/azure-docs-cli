@@ -1,0 +1,93 @@
+### YamlMime:YamlDocument
+documentType: Tutorial
+title: Getting Started with the Azure CLI
+metadata:
+  title: Get Started with the Azure CLI
+  description: Get started with resource management from the Azure CLI
+  audience: IT Pro
+  level: Beginner
+  displayType: two-column
+  interactive: azurecli
+items:
+- durationInMinutes: 1
+  content: >
+    In this getting started tutorial for the Azure CLI, you will learn how to create a Linux
+    virtual machine, get connection information from it, deploy web applications, and
+    query and manage resources. You will do all of these tasks through the Azure CLI,
+    which can be used in-browser as part of this tutorial. Or you can [install the Azure CLI](install-azure-cli.md)
+    and follow along in your own terminal.
+
+- title: Create a Virtual Machine
+  durationInMinutes: 4  
+  content: |
+      First, log in with your Azure subscription information. Follow any on-screen commands to get
+      your shell configured and authenticate with Azure.
+
+      ```azurecli
+      az login
+      ```
+
+      The first step to creating resources with Azure is to have a resource group which will
+      contain and associate them. For this tutorial, we will want a dedicated resource group
+      in a region which has availability for all resources you will create. You do this with
+      the [az group create]() command.
+
+      ```azurecli
+      az group create --name TutorialResources --location westeurope
+      ```
+
+      You can now create a VM and its associated resources with [az vm create]().
+
+      ```azurecli
+      az vm create --resource-group TutorialResources --name TutorialVM --image UbuntuLTS --generate-ssh-keys
+      ```
+
+      This creates a VM for you with the standard configuration and security policies. There are many configuration options for VMs, which are usually associated with resources that you would like to share between them, such as data disk space or virtual networking components.
+
+      You should see output similar to the following.
+
+      ```output
+      {
+          "fqdns": "",
+          "id": "/subscriptions/0b186e08-ea4c-4dcf-a82e-da80567adc1c/resourceGroups/TutorialResources/providers/Microsoft.Compute/virtualMachines/TutorialVM",
+          "location": "westeurope",
+          "macAddress": "00-0D-3A-20-63-23",
+          "powerState": "VM running",
+          "privateIpAddress": "10.0.0.4",
+          "publicIpAddress": "52.232.70.227",
+          "resourceGroup": "TutorialResources",
+          "zones": ""
+      }
+      ```
+
+      This gives you some information about the network and power state of the newly created VM. At this point you should write down the value of `publicIpAddress`, so that you can connect to the VM and confirm that it is running and authenticates correctly over SSH.
+
+      ```bash
+      ssh <IP ADDRESS>
+      ```
+
+      If everything is working correctly, you should see Ubuntu's welcome message.
+     Log out, and now you're ready for the next step of preparing to deploy an
+     application.
+
+- title: Deploy software with extensions
+  durationInMinutes: 4
+  content: |
+    Now that the VM is up and running, it's time to install software. You'll use Azure VM Extensions to do so.
+    Extensions are a way to automate post-deployment configuration,
+    so learning to use them is more efficient than going through manual steps with
+    SSH.
+
+    ```azurecli
+    todo here
+    ```
+ 
+- title: Deploy a webapp
+  durationInMinutes: 4
+  content: |
+    Description of how to deploy a webapp here... probably node.js?
+
+- title: Get resource information
+  durationInMinutes: 4
+  content: |
+    How to get a bunch of information...
