@@ -43,11 +43,20 @@ you have configured the appropriate Azure resources:
 
 ## Common operations with Azure
 
-To help with getting started quickly, here is a list of the most common operations used with the CLI. Any of these can have their help information printed with the `---help` option. There is also the online [Azure CLI reference documentation](/cli/azure/).
+To help with getting started quickly, here is a list of some common operations performed with the CLI. Any of these can have their help information printed with the `---help` option. There is also the online [Azure CLI reference documentation](/cli/azure/).
 
-| TABLE | GOES HERE |
-|-------|-----------|
-| wtf | who knows |
+| Action | Command   |
+|--------|-----------|
+| Create a resource group | [az group create](/cli/azure/group#az_group_create) |
+| Create a virtual machine | [az vm create](/cli/azure/vm#az_vm_create) |
+| Create a managed disk | [az disk create](/cli/azure/disk#az_disk_create) |
+| Create a storage account | [az storage account create](/cli/azure/storage/account#az_storage_account_create) |
+| Create a storage container | [az storage container create](/cli/azure/storage/container#az_storage_container_create) |
+| Upload a blob to storage | [az storage blob upload](/cli/azure/storage/blob#az_storage_blob_upload) | 
+| Create an Azure Container Service | [az acs create](/cli/azure/acs#az_acs_create) |
+| Create a MySQL server | [az mysql server create](/cli/azure/mysql/server#az_mysql_server_create) |
+| Create a web app | [az webapp create](/cli/azure/webapp#az_webapp_create) | 
+| Create a service principal for role-based authentication | [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) |
 
 ## Queries and output formats
 
@@ -69,13 +78,11 @@ samples are for
 [Linux VMs](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
 [Windows VMs](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
 [Web apps](/azure/app-service-web/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json), and
-[SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json).f
+[SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json).
 
-## Tutorials
+## Tutorial
 
-There are also a variety of tutorials designed to help users get started with common CLI tasks. These tutorials offer an in-browser experience integrated
-with the Azure Cloud Shell to make them easy to run and understand.
+There is also a tutorial designed to help users get started with a simple CLI task. This tutorial offers an in-browser experience integrated
+with the Azure Cloud Shell to make it easy to run and understand.
 
-* [Deploying an application with microservices](azure-cli-tutorial-microservices.yml): Using the CLI, deploy existing components that fit into a simplified [microservices architecture](/azure/architecture/guide/architecture-styles/microservices).
-* [Inspect existing services](azure-cli-tutorial-inspection.yml): Using the CLI, query existing Azure resources to get information on their state and make changes to large numbers of resources all at once.
-* [Deploying load balancing](azure-cli-tutorial-balance.yml): Inspect running services and use [Azure Load Balancing](/azure/load-balancer/) to get better performance without needing to create additional VMs or applications.
+Go ahead and get started with the [Deploy a web server in Azure](tutorial-azure-cli-server.yml) tutorial.
