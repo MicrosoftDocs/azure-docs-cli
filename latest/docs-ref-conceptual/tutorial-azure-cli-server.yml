@@ -78,21 +78,169 @@ items:
 - title: Create and attach a data disk
   durationInMinutes: 4
   content: |
-    Now that the VM is up and running, it's time to install software. You'll use Azure VM Extensions to do so.
-    Extensions are a way to automate post-deployment configuration,
-    so learning to use them is more efficient than going through manual steps with
-    SSH.
+    Now that the VM is up and running, it's time to attach a data disk to it, and then mount the disk as a local volume. Normally you would do this in order to
+    create a data resource that can be shared between multiple VMs, but for this tutorial, you will only create and mount it without writing any data.
+
+    In order to create and attach the data disk to the VM, use the [az vm disk attach](/cli/azure/vm/disk#attach) command.
 
     ```azurecli
-    todo here
+    az vm disk attach --resource-group TutorialResources --vm-name TutorialVM --disk TutorialData --new --size-gb 10
     ```
- 
-- title: Deploy a webapp
-  durationInMinutes: 4
-  content: |
-    Description of how to deploy a webapp here... probably node.js?
 
-- title: Get resource information
+    This creates a new managed disk 10Gb in size. The disk is associated with the tutorial VM, and the disk is stored as a blob in the storage account which
+    is associated with the virutal machine when it was created. To learn more about managed and unmanaged disks, see [Azure Managed Disks Overview](/azure/virtual-machines/windows/managed-disks-overview).
+
+    Using the IP address recorded from the previous section, you will now want to SSH into the VM to confirm that the disk was properly attached, then partition, format, and mount it as a local
+    filesystem.
+
+    ```bash
+    ssh <IP ADDRESS>
+    ```
+
+    Once you are logged in, you will want to use the `su` command to switch into superuser mode. This will allow you to make changes as `root` to the system without having to use the
+    `sudo` command when running an operation.
+
+    ```bash
+    sudo su -
+    ```
+
+    At this point, you are ready to start working with the attached disk. The first step is to list the available block devices. The newly created disk will be 10Gb in size and not partitioned,
+    making it easy to spot in the block device list.
+
+    ```bash
+    lsblk
+    ```
+
+    ```output
+    NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+    sdb      8:16   0    7G  0 disk
+    └─sdb1   8:17   0    7G  0 part /mnt
+    sr0     11:0    1  628K  0 rom
+    sdc      8:32   0   10G  0 disk
+    sda      8:0    0   30G  0 disk
+    └─sda1   8:1    0   30G  0 part /
+    ```
+
+    In this example output, the unpartitioned device that is 10G in size is sdc. It may be different for your system.
+
+    Using `parted` and `fdisk`, this disk can now be partitioned and formatted.
+
+    ```bash
+    parted -s /dev/sdc mklabel msdos
+    parted -s /dev/sdc mkpart primary 2048s 100%
+    mkfs -t ext4 /dev/sdc1
+    ```
+
+    This writes an `msdos` partition table to the new disk, then creates a partition starting at sector 2048 which uses 100% of the available space afterwards. The reason for starting at
+    a non-zero sector is both to avoid overwriting the partition table information, and to create a partition with optimal space alignment. For different disks and sizes, the optimal alignment
+    may be difficult to determine. You can always use the `parted align-check opt` command to see if a partition is properly aligned, although this does not give alignment hints.
+
+    Now that the disk is partitioned and formatted, it can be mounted locally.
+
+    ```bash
+    mkdir /data && mount /dev/sdc1 /data
+    ```
+
+    This mounts the data disk at the `/data` directory, giving you read and write access to it. You can confirm that the drive has been partitioned and correctly mounted by running the `lsblk` command
+    again.
+
+    ```bash
+    lsblk
+    ```
+
+    ```output
+    NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+    sdb      8:16   0    7G  0 disk
+    └─sdb1   8:17   0    7G  0 part /mnt
+    sr0     11:0    1  628K  0 rom
+    sdc      8:32   0   10G  0 disk
+    └─sdc1   8:33   0   10G  0 part /data
+    sda      8:0    0   30G  0 disk
+    └─sda1   8:1    0   30G  0 part /
+    ```
+
+    The data disk now has one partition, which is mounted at `/data`. If you would like this device to be mounted every time the VM is rebooted, you can edit the `/etc/fstab` file.
+
+    ```bash
+    echo "/dev/sdc1     /data   ext4   defaults,noatime 0       2" >> /etc/fstab
+    ```
+
+    Creating and mounting the data disk is now complete! Go ahead and exit superuser mode, and log out of the VM.
+
+    ```bash
+    exit
+    exit
+    ```
+
+    In the next step, you will use Azure Virtual Machine Extensions to quickly deploy software to the VM without needing to log in.
+
+- title: Install NGINX via Virtual Machine Extensions
   durationInMinutes: 4
   content: |
-    How to get a bunch of information...
+    Azure Virtual Machine Extensions are a way to quickly automate certain tasks. In this part of the tutorial you will learn how to write a custom script as an extension, and execute it on a VM.
+
+    Extensions are not created. Whether they are one-time or recurring automated tasks, they are 'set' on a VM to be executed. You use the [az vm extension set](/cli/azure/vm/extension#az_vm_extension_set) command
+    to set an extension on a VM. Custom scripts can also be run as extensions, making them useful for being able to manage software installation or other configuration on a VM without needing to
+    manually SSH in. For this step, we will set and run a script which updates the tutorial VM and then installs NGINX.
+
+    ```azurecli
+    az vm extension set \
+      --publisher Microsoft.Azure.Extensions \
+      --version 2.0 \
+      --name CustomScript \
+      --vm-name TutorialVM \
+      --resource-group TutorialResources \
+      --settings '{ \
+        "commandToExecute": "apt-get -y update && apt-get -y upgrade && apt-get -y install nginx" \
+      }'
+    ```
+
+    After this command completes, try entering the IP address of the virtual machine into a browser address bar. The site will not yet be
+    accessible, since port 80 is blocked by the default Network Security Group (NSG).
+
+    In the next step, we will reconfigure the virtual machine's NSG in order to allow connections over HTTP on port 80, and HTTPS on port 443.
+
+- title: Configure the Network Security Group
+  durationInMinutes: 4
+  content: |
+    Azure Network Security Groups (NSGs) are a feature that serves as a firewall. They have rules for which inbound and outbound traffic are allowed, and which are blocked.
+    The default NSG rules are intentionally very restrictive, to provide the maximum amount of security. This leaves only port 22 open for SSH from any non-Azure
+    resource.
+
+    Rather than operate directly on the NSG, instead use the [az vm open-port](/cli/azure/vm#az_vm_open_port) command to explicitly open ports on this VM only and
+    sets them as the highest priority rules so they cannot be blocked.
+
+    ```azurecli
+    az vm open-port --resource-group TutorialResources --name TutorialVM --port 80 --priority 100
+    az vm open-port --resource-group TutorialResources --name TutorialVM --port 443 --priority 101
+    ```
+
+    For situations where you only want to allow inbound traffic through a specific port on one VM, this is the ideal way to work with NSG rules. If you require
+    more complicated configurations, see [Manage network security groups using the Azure CLI](/azure/virtual-network/virtual-network-manage-nsg-arm-cli).
+
+    Now it's time to test accessing the NGINX web server again. Enter the IP address of the virtual machine into a browser address bar. The default NGINX site
+    should load.
+
+    ![Default nginx page](./media/tutorial-azure-cli-server/nginx-success.png)
+
+    Congratulations! You've set up a VM in Azure to serve static web content, with a data store that can be shared between multiple VMs. Next we'll cover cleaning up
+    the created resources, and the next steps for getting started with the Azure CLI.
+
+- title: Cleanup and Next Steps
+  durationInMinutes: 4
+  content: |
+    At this point you've successfully created an Azure virtual machine, created and mounted a data disk, deployed software with Azure Virtual Machine Extensions, and configured
+    the network security group to allow incoming HTTP traffic. These are the general steps that you'll want to take for setting up your first VM to serve a static web page. There
+    are more advanced strategies like VM imaging, replication, and load balancing that are often used for real large-scale deployment, but now you understand the basics of how to
+    work with virtual machines and their resources in Azure.
+
+    When you are ready to clean up everything created as part of this tutorial, you can use the [az group delete](/cli/azure/group#az_group_delete) command. If you leave
+    these resources running, they will incur a charge on your account.
+
+    ```azurecli
+    az group delete --yes --no-wait --name TutorialResources
+    ```
+
+    The `--no-wait` option will keep the operation from blocking until it's completed, and the `--yes` will autoconfirm the delete.
+
+  As part of the next steps for getting familiar with the CLI, it is recommended to take a look at some of our samples. [Azure CLI Samples for Linux virtual machines](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json) will help dive into more detail on how to configure virtual machines, manage storage, monitor, and network them. If you will be working with SQL, take a look at [Azure CLI samples for Azure SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json). If you plan on creating and deploying web applications, go through the [Azure CLI Samples for Web Apps](/azure/app-service/app-service-cli-samples?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json) to learn how to create, deploy, configure and scale your web apps.
