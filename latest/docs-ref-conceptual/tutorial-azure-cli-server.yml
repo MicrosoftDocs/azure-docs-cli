@@ -17,32 +17,34 @@ items:
     which can be used in-browser as part of this tutorial. Or you can [install the Azure CLI](install-azure-cli.md)
     and follow along in your own terminal.
 
-- title: Create a Virtual Machine
-  durationInMinutes: 4
+- title: Log in with the CLI
+  durationInMinutes: 1
   content: |
-      First, log in with your Azure subscription information. Follow any on-screen commands to get
-      your shell configured and authenticate with Azure.
+      Before starting the tutorial, you need to make sure that you are logged in from the CLI. If you are using the
+      in-browser experience with Cloud Shell, you can skip this step. If you are using your own CLI installation,
+      run the `az login` command and follow the on-screen instructions to authenticate with Azure.
 
       ```azurecli
       az login
       ```
-
-      The first step to creating resources with Azure is to have a resource group which will
-      contain and associate them. For this tutorial, we will want a dedicated resource group
-      in a region which has availability for all resources you will create. You do this with
-      the [az group create](/cli/azure/group#az_group_create) command.
+- title: Create a Virtual Machine
+  durationInMinutes: 4
+  content: |
+      The first step to creating resources with Azure is to have a resource group which 
+      contains and associates them. For this tutorial, create a dedicated resource group
+      with the [az group create](/cli/azure/group#az_group_create) command.
 
       ```azurecli
       az group create --name TutorialResources --location westeurope
       ```
 
-      You can now create a VM and its associated resources in this resource group with [az vm create](/en-us/cli/azure/vm#az_vm_create).
+      Now create a VM and its associated resources in this resource group with [az vm create](/en-us/cli/azure/vm#az_vm_create).
 
       ```azurecli
       az vm create --resource-group TutorialResources --name TutorialVM --image UbuntuLTS --generate-ssh-keys
       ```
 
-      This creates a VM for you with the standard configuration and security policies. Behind the scenes it also creates all of the required resources
+      This creates a VM with the standard configuration and security policies. Behind the scenes it also creates all of the required resources
       that a VM needs: A storage account, a storage disk to hold the OS image, a virtual network (VNET), a subnet, a virtual network interface (NIC),
       a reserved public IP address, and a network security group (NSG). Later in this tutorial you will work with some of these resources. This also
       generates a new `.ssh/id_rsa` SSH key, for logging into the VM.
@@ -66,19 +68,19 @@ items:
       }
       ```
 
-      The output gives you some information about the network and power state of the newly created VM. At this point you should record the value of `publicIpAddress` so that you can
+      The contains information about the network and power state of the newly created VM. At this point you should record the value of `publicIpAddress` so that you can
       connect to the VM and confirm that it is running and authenticates correctly over SSH.
 
       ```bash
       ssh <IP ADDRESS>
       ```
 
-      If everything is working correctly, you should see Ubuntu's welcome message.  Log out, and now you're ready for the next step of creating and attaching a data disk.
+      If everything is working, you should see Ubuntu's welcome message.  Log out, and now you're ready for the next step of creating and attaching a data disk.
 
 - title: Create and attach a data disk
   durationInMinutes: 4
   content: |
-    Now that the VM is up and running, it's time to attach a data disk to it, and then mount the disk as a local volume. Normally you would do this in order to
+    Now that the VM is up and running, it's time to attach a data disk to it and then mount the disk as a local volume. Normally you would do this in order to
     create a data resource that can be shared between multiple VMs, but for this tutorial, you will only create and mount it without writing any data.
 
     In order to create and attach the data disk to the VM, use the [az vm disk attach](/cli/azure/vm/disk#attach) command.
@@ -181,7 +183,7 @@ items:
 
     Extensions are not created. Whether they are one-time or recurring automated tasks, they are 'set' on a VM to be executed. You use the [az vm extension set](/cli/azure/vm/extension#az_vm_extension_set) command
     to set an extension on a VM. Custom scripts can also be run as extensions, making them useful for being able to manage software installation or other configuration on a VM without needing to
-    manually SSH in. For this step, we will set and run a script which updates the tutorial VM and then installs NGINX.
+    manually SSH in. For this step, set and run a script which updates the tutorial VM and then installs NGINX.
 
     ```azurecli
     az vm extension set \
@@ -198,7 +200,7 @@ items:
     After this command completes, try entering the IP address of the virtual machine into a browser address bar. The site will not yet be
     accessible, since port 80 is blocked by the default Network Security Group (NSG).
 
-    In the next step, we will reconfigure the virtual machine's NSG in order to allow connections over HTTP on port 80, and HTTPS on port 443.
+    In the next step, you will reconfigure the virtual machine's NSG in order to allow connections over HTTP on port 80, and HTTPS on port 443.
 
 - title: Configure the Network Security Group
   durationInMinutes: 4
@@ -207,8 +209,7 @@ items:
     The default NSG rules are intentionally very restrictive, to provide the maximum amount of security. This leaves only port 22 open for SSH from any non-Azure
     resource.
 
-    Rather than operate directly on the NSG, instead use the [az vm open-port](/cli/azure/vm#az_vm_open_port) command to explicitly open ports on this VM only and
-    sets them as the highest priority rules so they cannot be blocked.
+    Rather than operate directly on the NSG, instead use the [az vm open-port](/cli/azure/vm#az_vm_open_port) command to explicitly open ports on this VM only.
 
     ```azurecli
     az vm open-port --resource-group TutorialResources --name TutorialVM --port 80 --priority 100

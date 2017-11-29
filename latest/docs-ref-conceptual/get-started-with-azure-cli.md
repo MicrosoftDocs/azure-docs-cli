@@ -17,18 +17,17 @@ ms.service: multiple
 
 Azure CLI 2.0 is a command line tool for managing Azure resources. You can use it through your browser
 with [Azure Cloud Shell](/azure/cloud-shell/overview), or you can [install the CLI](install-azure-cli.md) and
-run it from your local machine.
-
+run it from your local machine. There is also a [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli)
+for the Azure CLI.
 
 The CLI is designed to make administration of Azure resources easy to understand and easy to automate. This article
-will heklp you get started by discussing some of the most common tasks performed with the CLI, introduce querying and
-output formats for getting information from the CLI outputs, and provide links to tutorials that will help understanding
-of how to do certain types of deployment and querying in the Azure ecosystem.
+helps you get started with common CLI tasks, introduces querying and output formats for getting information from the CLI outputs, 
+and provides links to tutorials.
 
 ## Authenticating with Azure CLI
 
-If you are using [Azure Cloud Shell](/azure/cloud-shell/overview), authentication is automatically performed for you. Otherwise, you need
-to use the `az login` command, and log in interactively with the service:
+If you are using [Azure Cloud Shell](/azure/cloud-shell/overview), authentication is automatically performed for you. When you use a local
+installation, run the `az login` command to interactively authenticate.
 
 ```azurecli
 az login
@@ -38,12 +37,13 @@ This provides a link to the Azure CLI authentication portal, and a one-time code
 if it is not used for a period of 14 days. There are other advanced authentication methods that can be used once
 you have configured the appropriate Azure resources:
 
-* For logging in with Managed Service Identities (MSI) see [Configure MSI for an Azure VM](/azure/active-directory/msi-qs-configure-cli-windows-vm?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json) and [Sign in on an Azure VM using MSI](/azure/active-directory/msi-how-to-get-access-token-using-msi?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
+* For logging in with Managed Service Identities (MSI), see [Configure MSI for an Azure VM](/azure/active-directory/msi-qs-configure-cli-windows-vm?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json) and [Sign in on an Azure VM using MSI](/azure/active-directory/msi-how-to-get-access-token-using-msi?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 * For logging in with an Active Directory service principal, see [Create a service principal](create-an-azure-service-principal-azure-cli.md)
 
 ## Common operations with Azure
 
-To help with getting started quickly, here is a list of some common operations performed with the CLI. Any of these can have their help information printed with the `---help` option. There is also the online [Azure CLI reference documentation](/cli/azure/).
+To help with getting started quickly, this table lists some common CLI commands. Documentation is available through the `--help` argument and the 
+online [Azure CLI reference documentation](/cli/azure/).
 
 | Action | Command   |
 |--------|-----------|
