@@ -36,5 +36,5 @@ instructions also apply if you are running a distribution on Windows Subsystem f
 * [Install manually on Linux](install-azure-cli-linux.md)
 
 > [!NOTE]
-> If you need the previous version of the Azure CLI, here's how to [install Azure CLI 1.0](/azure/cli-install-nodejs).
+> If you are using the Azure Service Management (ASM) model, [install Azure CLI 1.0](/azure/cli-install-nodejs).
 
