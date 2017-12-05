@@ -13,7 +13,9 @@ items:
   - az_aks_get_credentials
   - az_aks_get_versions
   - az_aks_install_cli
+  - az_aks_install_connector
   - az_aks_list
+  - az_aks_remove_connector
   - az_aks_scale
   - az_aks_show
   - az_aks_upgrade
@@ -181,6 +183,59 @@ items:
     defaultValue: C:Program Files (x86)kubectl.exe
     summary: ''
     description: ''
+- uid: az_aks_install_connector
+  name: az aks install-connector
+  summary: Deploy the ACI-Connector to a AKS cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Install the ACI-Connector to an AKS Cluster.
+    syntax:
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector
+  - summary: Install the ACI-Connector for Windows to an AKS Cluster.
+    syntax:
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector --os-type Windows
+  - summary: Install the ACI-Connector for Windows and Linux to an AKS Cluster.
+    syntax:
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector --os-type Both
+  - summary: Install the ACI-Connector using specific SPN.
+    syntax:
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector --service-principal <SPN_ID> --client-secret <SPN_SECRET>
+  - summary: Install the ACI-Connector from a specific custom chart.
+    syntax:
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector --chart-url <CustomURL>
+  parameters:
+  - isRequired: true
+    name: --connector-name
+    summary: The name for the ACI Connector.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Resource name for the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --chart-url
+    defaultValue: <a href="https://github.com/Azure/aci-connector-k8s/raw/master/charts/aci-connector.tgz">https://github.com/Azure/aci-connector-k8s/raw/master/charts/aci-connector.tgz</a>
+    summary: URL to the chart.
+    description: ''
+  - name: --client-secret
+    summary: Client secret to use with the service principal for making calls to Azure APIs.
+    description: ''
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --os-type
+    defaultValue: Linux
+    parameterValueGroup: Both, Linux, Windows
+    summary: The OS type of the connector.
+    description: ''
+  - name: --service-principal
+    summary: Service principal for making calls into Azure APIs. If not set, auto generate a new service principal of Contributor role, and save it locally for reusing.
+    description: ''
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
@@ -190,6 +245,40 @@ items:
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+- uid: az_aks_remove_connector
+  name: az aks remove-connector
+  summary: Undeploy the ACI-Connector from an AKS cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Undeploy the ACI-Connector on an AKS cluster.
+    syntax:
+      content: az aks remove-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector
+  - summary: Undeploy the ACI-Connector on an AKS cluster using the graceful mode
+    syntax:
+      content: az aks remove-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name MyConnector --graceful
+  parameters:
+  - isRequired: true
+    name: --connector-name
+    summary: The name for the ACI Connector.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Resource name for the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: The name of the resource group where the AKS cluster is deployed.
+    description: ''
+  - name: --graceful
+    summary: Mention if you want to drain/uncordon your aci-connector to move your applications.
+    description: ''
+  - name: --os-type
+    defaultValue: Linux
+    parameterValueGroup: Both, Linux, Windows
+    summary: The OS type of the connector.
     description: ''
 - uid: az_aks_scale
   name: az aks scale
@@ -310,9 +399,15 @@ commands:
 - uid: az_aks_install_cli
   name: az aks install-cli
   summary: Download and install kubectl, the Kubernetes command line tool.
+- uid: az_aks_install_connector
+  name: az aks install-connector
+  summary: Deploy the ACI-Connector to a AKS cluster.
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
+- uid: az_aks_remove_connector
+  name: az aks remove-connector
+  summary: Undeploy the ACI-Connector from an AKS cluster.
 - uid: az_aks_scale
   name: az aks scale
   summary: Scale the node pool in a managed Kubernetes cluster.
