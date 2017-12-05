@@ -16,6 +16,69 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## December 5, 2017
+
+Version 2.0.22
+
+* Remove `az component` commands. Use `az extension` instead.
+
+### Core
+* Modified the AZURE_US_GOV_CLOUD's AAD authority endpoint from login.microsoftonline.com to login.microsoftonline.us.
+* Introduce SDKProfile to support azure-mgmt-compute 3.1.0rc1 and integrated profile support.
+* Improve telemetry: remove infinity retry loop from SynchronousSender.
+
+### ACS
+
+* add `az aks install-connector` and `az aks remove-connector` commands
+* `acs create`: emit out an actionable error if provisioning application failed for lack of permissions
+* fix `aks get-credentials -f` without fully-qualified path
+
+### Advisor
+
+* Initial release of module.
+
+### Appservice
+
+* `webapp config ssl upload`: fix a bug in the cert name generation
+* `webapp/functionapp`: ensure list/show display correct set of apps
+* webapp: set WEBSITE_NODE_DEFAULT_VERSION in case where runtime is not set
+
+### Consumption
+
+* Release of new GA api version 2017-11-30.
+
+### Container
+
+* Fixed default ports regression
+
+### Monitor
+
+* Add multi-dimension support to metrics command
+
+### Resource
+
+* `resource show`: expose `--include-response-body` to show the response body in the output
+
+### Role
+
+* `role assignment list`: show default assignments for classic administrators
+* `ad sp reset-credentials`: support to add credentials instead of overwriting
+* `create-for-rbac`: emit out an actionable error if provisioning application failed for lack of permissions
+
+### SQL
+
+* Added az sql db list-usages and az sql db show-usage commands.
+* Added sql server conn-policy show/update commands.
+
+### Storage
+
+* Update multiapi storage package dependency to 0.1.7
+
+### VM
+
+* Show zone information on `az vm list-skus`
+
+
 ## November 14, 2017
 
 Version 2.0.21
