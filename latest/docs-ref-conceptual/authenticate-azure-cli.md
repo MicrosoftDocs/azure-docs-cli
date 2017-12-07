@@ -56,6 +56,6 @@ The tenant value is the Azure Active Directory tenant associated with the servic
 You can get the tenant object ID for your current login by using the following command:
 
 ```azurecli
-az account show --query 'tenanatId' -o tsv
+az account show --query 'tenantId' -o tsv
 ```
 
