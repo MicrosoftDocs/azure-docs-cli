@@ -1,6 +1,6 @@
 ---
 title: Install the Azure CLI 2.0 with apt
-description: How to install the Azure CLI 2.0 with the apt package manager 
+description: How to install the Azure CLI 2.0 with the apt package manager
 keywords: Azure CLI,Install Azure CLI,azure apt, azure debian, azure ubuntu
 author: sptramer
 ms.author: sttramer
@@ -21,14 +21,12 @@ experimental: false
 If you are running a distirbution that comes with `apt`, such as Ubuntu or Debian, there is an available package
 for the Azure CLI that you can install on your system.
 
-> [!NOTE]
-> You must have Python 2.7.x or Python 3.x in order to use the CLI. If your distribution does not have a package
-> for either, [install Python](https://www.python.org/downloads/).
+[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
 ## Install
 
 1. Modify your sources list:
- 
+
    - 32-bit system
 
      ```bash

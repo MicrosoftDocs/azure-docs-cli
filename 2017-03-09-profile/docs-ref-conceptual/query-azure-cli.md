@@ -107,7 +107,7 @@ KBDemo020    Linux
 ## Filter with the contains function
 
 You can use the JMESPath `contains` function to refine your results returned in the query.
-In the following example, the command selects only VMs that have the text "RGD" in their name.  
+In the following example, the command selects only VMs that have the text "RGD" in their name.
 
 ```azurecli-interactive
 az vm list \
