@@ -69,12 +69,12 @@ On macOS, you are able to install either with [Homebrew](https://brew.sh/) or ma
    ```bash
    exec -l $SHELL
    ```
-   
+
 3. Run the CLI from the command prompt with the `az` command.
 
 ## Install on Windows
 
-### Install with MSI for the Windows command-line 
+### Install with MSI for the Windows command-line
 
 To install the CLI on Windows and use it in the Windows command-line, download and run the [Azure CLI Installer (MSI)](https://aka.ms/InstallAzureCliWindows).
 
@@ -101,16 +101,14 @@ To install the CLI on Windows and use it in the Windows command-line, download a
 
 5.  Run the CLI from the command prompt with the `az` command.
 
-## Install with apt package manager 
+## Install with apt package manager
 
 For distributions using the `apt` package manager such as Ubuntu or Debian, you can install Azure CLI 2.0 via `apt-get`.
 
-> [!NOTE]
-> You must have Python 2.7.x or Python 3.x in order to use the CLI. If your distribution does not have a package
-> for either, [install Python](https://www.python.org/downloads/).
+[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
 1. Modify your sources list:
- 
+
    - 32-bit system
 
      ```bash
@@ -139,9 +137,7 @@ For distributions using the `apt` package manager such as Ubuntu or Debian, you 
 
 For distributions which use the `yum` package manager such as Red Hat Enterprise Linux (RHEL), Fedora, or CentOS, you can install Azure CLI 2.0 via `yum`.
 
-> [!NOTE]
-> You must have Python 2.7.x or Python 3.x in order to use the CLI. If your distribution does not have a package
-> for either, [install Python](https://www.python.org/downloads/).
+[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
 1. Import the Microsoft repository key:
 
@@ -168,9 +164,7 @@ For distributions which use the `yum` package manager such as Red Hat Enterprise
 
 For distributions which use the `zypper` package manager such as OpenSUSE or SLE, you can install Azure CLI 2.0 via `zypper`.
 
-> [!NOTE]
-> You must have Python 2.7.x or Python 3.x in order to use the CLI. If your distribution does not have a package
-> for either, [install Python](https://www.python.org/downloads/).
+[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
 1. Import the Microsoft repository key:
 
@@ -234,7 +228,7 @@ a distribution which does not have a provided package, you can manually install 
    SUSE OpenSUSE 13.2    | sudo zypper refresh && sudo zypper --non-interactive install curl gcc python python-xml libffi-devel python-devel openssl-devel
    ```
 
-If your distribution is not listed above, you will need to install [Python 2.7 or later](https://www.python.org/downloads/), [libffi](https://sourceware.org/libffi/), and [OpenSSL](https://www.openssl.org/source/).
+If your distribution is not listed above, you will need to install [Python 2.7 or later](https://www.python.org/downloads/), [libffi](https://sourceware.org/libffi/), and [OpenSSL 1.0.2](https://www.openssl.org/source/).
 
 2. Install the CLI with  `curl`.
 

@@ -21,11 +21,9 @@ experimental: false
 If you are running a distirbution that comes with `yum`, such as RHEL, Fedora, or CentOS, there is an available package
 for the Azure CLI that you can install on your system.
 
-> [!NOTE]
-> You must have Python 2.7.x or Python 3.x in order to use the CLI. If your distribution does not have a package
-> for either, [install Python](https://www.python.org/downloads/).
+[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
-## Install 
+## Install
 
 1. Import the Microsoft repository key:
 

@@ -26,13 +26,13 @@ This topic steps you through creating a security principal with Azure CLI 2.0.
 
 ## What is a 'service principal'?
 
-An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a specific role, and tightly controlled permissions to access your resources. It only needs to be able to do specific things, unlike a general user identity. It improves security if you only grant it the minimum permissions level needed to perform its management tasks. 
+An Azure service principal is a security identity used by user-created apps, services, and automation tools to access specific Azure resources. Think of it as a 'user identity' (login and password or certificate) with a specific role, and tightly controlled permissions to access your resources. It only needs to be able to do specific things, unlike a general user identity. It improves security if you only grant it the minimum permissions level needed to perform its management tasks.
 
 Azure CLI 2.0 supports the creation of password-based authentication credentials and certificate credentials. In this topic, we cover both types of credentials.
 
 ## Verify your own permission level
 
-First, you must have sufficient permissions in both your Azure Active Directory and your Azure subscription. Specifically, you must be able to create an app in the Active Directory, and assign a role to the service principal. 
+First, you must have sufficient permissions in both your Azure Active Directory and your Azure subscription. Specifically, you must be able to create an app in the Active Directory, and assign a role to the service principal.
 
 The easiest way to check whether your account has adequate permissions is through the portal. See [Check required permission in portal](/azure/azure-resource-manager/resource-group-create-service-principal-portal#required-permissions).
 
@@ -78,8 +78,8 @@ The `--display-name` option filters the returned list of apps to show those with
 Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--password` parameter to create the service principal with a password. When you do not provide a role or scope, it defaults to the **Contributor** role for the current subscription. If you create a service principal without using either the `--password` or `--cert` parameter, password authentication is used and a password is generated for you.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name {appId} --password "{strong password}" 
-``` 
+az ad sp create-for-rbac --name {appId} --password "{strong password}"
+```
 
 ```json
 {
@@ -91,7 +91,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
 }
 ```
 
- > [!WARNING] 
+ > [!WARNING]
  > Don't create an insecure password.  Follow the
  > [Azure AD password rules and restrictions](/azure/active-directory/active-directory-passwords-policy) guidance.
 
@@ -143,7 +143,7 @@ You can now log in as the new service principal for your app using the *appId* f
 
 ```azurecli-interactive
 az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password-or-path-to-cert} --tenant {tenant}
-``` 
+```
 
 You will see this output after a successful sign-on:
 
@@ -163,9 +163,9 @@ You will see this output after a successful sign-on:
 ]
 ```
 
-Use the `id`, `password`, and `tenant` values as the credentials for running your app. 
+Use the `id`, `password`, and `tenant` values as the credentials for running your app.
 
-## Managing roles 
+## Managing roles
 
 > [!NOTE]
 > Azure Role-Based Access Control (RBAC) is a model for defining and managing roles for user and service principals.
@@ -210,11 +210,11 @@ az role assignment list --assignee a487e0c1-82af-47d9-9a0b-af184eb87646d
 }
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > If your account does not have sufficient permissions to assign a role, you see an error message.
 > The message states your account "does not have authorization to perform action
 > 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
-   
+
 ## Change the credentials of a security principal
 
 It's a good security practice to review permissions and update passwords regularly. You may also want to manage and modify the security credentials as your app changes.

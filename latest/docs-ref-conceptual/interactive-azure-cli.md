@@ -11,7 +11,7 @@ ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ms.assetid: 
+ms.assetid:
 ---
 
 # Interactive Azure CLI 2.0
