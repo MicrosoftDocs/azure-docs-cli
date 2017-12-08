@@ -27,7 +27,7 @@ In order to install the CLI, you will need the following software available on y
 
 * [Python 2.7 or Python 3.x](https://www.python.org/downloads/)
 * [libffi](https://sourceware.org/libffi/)
-* [OpenSSL](https://www.openssl.org/source/)
+* [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
 ## Install or update manually
 
@@ -45,7 +45,7 @@ your shell in order for changes to take effect. After installation, run the CLI 
 
 ### curl "Object Moved" error
 
-If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using 
+If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using
 the full URL instead of the `aka.ms` redirect:
 
 ```bash
@@ -60,7 +60,7 @@ After installation if you can't run the command, you may need to clear your shel
 hash -r
 ```
 
-and see if the problem is resolved. 
+and see if the problem is resolved.
 
 This can also occur if you did not restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`.
 
@@ -76,7 +76,7 @@ If you ever decide to uninstall the Azure CLI, we're sorry to see you go. Before
 some reasons why you chose to uninstall and how we could improve the CLI experience. We want to make sure that the Azure
 CLI is as bug-free and user-friendly as we can make it. You can also [file a github issue](https://github.com/Azure/azure-cli/issues).
 
-You can uninstall the CLI by directly deleting the files from the install location. Your install location should have been chosen at the 
+You can uninstall the CLI by directly deleting the files from the install location. Your install location should have been chosen at the
 time of install, if you installed via the `https://aka.ms/InstallAzureCLI` script. The default installation location is `$HOME`.
 
 First, remove the installed CLI files:

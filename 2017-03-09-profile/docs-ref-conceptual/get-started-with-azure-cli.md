@@ -45,14 +45,14 @@ run `az login` to log in with your default subscription.
 
 Now that we've got everything set up, let's use the Azure CLI to create resources within Azure.
 
-First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you 
+First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you
 want to logically group.  For example, you might create a Resource Group for an application or project
 and add a virtual machine, a database and a CDN service within it.
 
 Let's create a resource group named "MyResourceGroup" in the *westus2* region of Azure.  To do so type the following command:
 
 ```azurecli-interactive
-az group create -n MyResourceGroup -l westus2 
+az group create -n MyResourceGroup -l westus2
 ```
 
 Once the resource group has been created, the `az group create` command outputs several properties of the newly created resource:
@@ -142,7 +142,7 @@ my-login@MyLinuxVM:~$
 
 Let's now create a Windows Server 2016 Datacenter-based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.  Like the Linux VM example, we'll also attach two storage disks using the `--data-disk-sizes-gb` parameter.
 
-Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.  
+Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.
 
 > [!NOTE]
 > You will be prompted to enter your username and password when running this command.
@@ -166,7 +166,7 @@ The `az vm create` command output results once the VM has been fully created and
 }
 ```
 
-Now log on to your newly created Windows Server VM using Remote Desktop and the public IP address of the VM (which is returned in the output from `az vm create`).  
+Now log on to your newly created Windows Server VM using Remote Desktop and the public IP address of the VM (which is returned in the output from `az vm create`).
 If you are on a Windows-based system, you can do this from the command line using the `mstsc` command:
 
 ```azurecli-interactive
@@ -177,7 +177,7 @@ Supply the same username/password combination you used when creating the VM to l
 
 ## Creating other resources in Azure
 
-We've now walked through how to create a Resource Group, a Linux VM, and a Windows Server VM. You can create many other types of Azure resources as well.  
+We've now walked through how to create a Resource Group, a Linux VM, and a Windows Server VM. You can create many other types of Azure resources as well.
 
 All new resources are created using a consistent `az <resource type name> create` naming pattern.  For example, to create an Azure Network Load Balancer that we could then associate with our newly created VMs, we can use the following create command:
 
@@ -201,11 +201,11 @@ For example, you can use the Azure CLI to create an Azure AppService.  Azure App
 az appservice plan create -n MyAppServicePlan -g MyResourceGroup
 
 # Create Two Web Apps within the AppService (note: name param must be a unique DNS entry)
-az webapp create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan 
-az webapp create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan 
+az webapp create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan
+az webapp create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan
 ```
 
-Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are 
+Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are
 some popular Azure resource types and the corresponding Azure CLI create commands to create them:
 
 ```
@@ -224,17 +224,17 @@ SQL Database Server         az sql server create
 Document DB                 az documentdb create
 ```
 
-Visit the [Reference documentation](/cli/azure) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create. 
+Visit the [Reference documentation](/cli/azure) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create.
 
 ## Useful tip: Optimizing create operations using --no-wait
 
-By default when you create resources using the Azure CLI 2.0, the `az <resource type name> create` command waits until the 
+By default when you create resources using the Azure CLI 2.0, the `az <resource type name> create` command waits until the
 resource has been created and is ready for you to use.  For example, if you create a VM, the `az vm create` command will, by default,
 not return until the VM is created and is ready for you to SSH or RDP into it.
 
 We use this approach because it makes it easier to write automation scripts that contain multiple steps with dependencies (and need a prior task to have completed successfully before continuing).
 
-If you do not need to wait on creation of a resource before continuing, you can use the `no-wait` option to start 
+If you do not need to wait on creation of a resource before continuing, you can use the `no-wait` option to start
 a create action in the background. You can continue using the CLI for other commands.
 
 For example, the following usage of the `az vm create` starts a VM deployment and then return much more quickly (and before the VM
@@ -248,14 +248,14 @@ Using the `--no-wait` approach can help you optimize the performance of your aut
 
 ## Listing resources and formatting output
 
-You can use the `list` command within the Azure CLI to find and list the resources running in Azure. 
+You can use the `list` command within the Azure CLI to find and list the resources running in Azure.
 
 Like with the create command, you can list resources using the Azure CLI 2.0 using a common `az <resource type name> list` naming pattern that is consistent across all resource types.  There are various output formats and query options available to filter and sort the list of resources in the way you prefer to see them.
 
-For example, `az vm list` shows the list of all VMs you have.   
+For example, `az vm list` shows the list of all VMs you have.
 
 ```azurecli-interactive
-az vm list 
+az vm list
 ```
 The values returned are by default in JSON (only showing partial output for sake of brevity).
 
@@ -283,7 +283,7 @@ The values returned are by default in JSON (only showing partial output for sake
     },
           ...
           ...
-          ...   
+          ...
 ]
 ```
 
@@ -300,8 +300,8 @@ MyLinuxVM  MyResourceGroup  westus2
 MyWinVM    MyResourceGroup  westus2
 ```
 
-The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This format is useful when you 
-want to pipe the output into another text-based tool like grep. 
+The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This format is useful when you
+want to pipe the output into another text-based tool like grep.
 
 ```azurecli-interactive
 az vm list --output tsv
@@ -315,7 +315,7 @@ Visit the [output formats](format-output-azure-cli.md) article to learn more abo
 
 ## Querying resources and shaping outputs
 
-Often you want to be able to query for only those resources that meet a specific condition.  
+Often you want to be able to query for only those resources that meet a specific condition.
 
 The `list` command has built-in support
 that makes it easy to filter resources by Resource Group name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
@@ -333,14 +333,14 @@ MyLinuxVM  MyResourceGroup  westus2
 MyWinVM    MyResourceGroup  westus2
 ```
 
-For even more powerful querying support, you can use the `--query` parameter to execute 
+For even more powerful querying support, you can use the `--query` parameter to execute
 a JMESPath query on the results of *any* `az` command.  JMESPath queries can be used both to filter as well
 as shape the output of any returned result.
 
 For example, execute the following command to query for any VM resource within any resource group that contains the letters "My":
 
 ```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup, 'MY')]" 
+az vm list --output table --query "[?contains(resourceGroup, 'MY')]"
 ```
 
 ```Output
@@ -354,7 +354,7 @@ We could then choose to further refine the output by using the shaping capabilit
 as well.  For example, the following command retrieves the type of OS disk the VM is using to determine whether the OS is Linux or Windows based:
 
 ```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup, 'MY')].{ VMName:name, OSType:storageProfile.osDisk.osType }" 
+az vm list --output table --query "[?contains(resourceGroup, 'MY')].{ VMName:name, OSType:storageProfile.osDisk.osType }"
 ```
 
 ```Output
@@ -368,7 +368,7 @@ The JMESPath support in Azure CLI is powerful.  Learn more about how to use it i
 
 ## Deleting resources
 
-You can use the `delete` command within Azure CLI to delete the resources you no longer need. You can use the `delete` command with 
+You can use the `delete` command within Azure CLI to delete the resources you no longer need. You can use the `delete` command with
 any resource just like you can with the `create` command.
 
 ```azurecli-interactive
@@ -384,7 +384,7 @@ EndTime                           Name                                  StartTim
 2017-02-19T02:35:56.678905+00:00  5b74ab80-9b29-4329-b483-52b406583e2f  2017-02-19T02:33:35.372769+00:00  Succeeded
 ```
 
-You can also use the `delete` command to delete many resources at a time. For example, the following command deletes all the 
+You can also use the `delete` command to delete many resources at a time. For example, the following command deletes all the
 resources in the "MyResourceGroup" resource group that we've used for all the samples in this Get Started tutorial.
 
 ```azurecli-interactive
@@ -399,7 +399,7 @@ Are you sure you want to perform this operation? (y/n): y
 
 To learn more about ways to use the Azure CLI, check out our most common scripts for
 [Linux VMs](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
-[Windows VMs](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json), 
+[Windows VMs](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
 [Web apps](/azure/app-service-web/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
 and [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json).
 

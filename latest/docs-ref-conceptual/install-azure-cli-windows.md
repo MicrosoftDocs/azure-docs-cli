@@ -24,7 +24,7 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update with MSI
 
-The MSI distributable is used for installing, updating, and uninstalling the `az` command on Windows. You can 
+The MSI distributable is used for installing, updating, and uninstalling the `az` command on Windows. You can
 [download the MSI installer](https://aka.ms/InstallAzureCliWindows) and then run it to install or update.
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
@@ -37,5 +37,5 @@ If you ever decide to uninstall the Azure CLI, we're sorry to see you go. Before
 some reasons why you chose to uninstall and how we could improve the CLI experience. We want to make sure that the Azure
 CLI is as bug-free and user-friendly as we can make it. You can also [file a github issue](https://github.com/Azure/azure-cli/issues).
 
-Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option. You can 
+Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option. You can
 [download the MSI installer](https://aka.ms/InstallAzureCliWindows) if you no longer have it available.

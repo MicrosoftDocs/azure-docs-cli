@@ -1,5 +1,5 @@
 ---
-title: Output formats for Azure CLI 2.0 
+title: Output formats for Azure CLI 2.0
 description: Use --output to format the output of Azure CLI 2.0 commands to tables, lists or json.
 keywords: Azure CLI 2.0, output, format, table, list, json, Linux, Mac, Windows, OS X
 author: rloutlaw
@@ -16,7 +16,7 @@ ms.assetid: 74bdb727-481d-45f7-a44e-15d18dc55483
 
 # Output formats for Azure CLI 2.0 commands
 
-Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the following table. 
+Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the following table.
 
 --output | Description
 ---------|-------------------------------
@@ -61,10 +61,10 @@ The results are in this form (only showing partial output for sake of brevity).
     },
           ...
           ...
-          ...   
+          ...
 ]
 ```
- 
+
 ## Using the table option
 
 The table option provides an easy to read set of output, but note that nested objects are not included in the output with the simple `--output table`, unlike the preceding .json example.  Using the same example with 'table' output format provides a curated list of most common property values.
@@ -128,7 +128,7 @@ KBDemo020
 
 ## Setting the default output format
 
-You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices. 
+You can use the `az configure` command to set up your environment or establish preferences such as default settings for output formats. For common use, the easiest output format default is the "table" format - select **3** when prompted for output format choices.
 
 ```
 What default output format would you like?
@@ -136,5 +136,5 @@ What default output format would you like?
  [2] jsonc - Colored JSON formatted output that most closely matches API responses
  [3] table - Human-readable output format
  [4] tsv - Tab and Newline delimited, great for GREP, AWK, etc.
-Please enter a choice [3]: 
+Please enter a choice [3]:
 ```

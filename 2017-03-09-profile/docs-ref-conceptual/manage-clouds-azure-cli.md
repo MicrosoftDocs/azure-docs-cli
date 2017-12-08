@@ -3,7 +3,7 @@ title: Managing multiple clouds with Azure CLI 2.0
 description: Create, log in, and manage different clouds with the Azure CLI 2.0.
 keywords: Azure CLI 2.0, Azure, clouds, datacenters, government, region, china, germany
 author: sptramer
-manager: routlaw 
+manager: routlaw
 
 ms.author: sttramer
 ms.date: 10/20/2017
@@ -83,7 +83,7 @@ az cloud set --name AzureChinaCloud
 
 ## Register a cloud
 
-Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [cloud register](/cli/azure/cloud#register) command. This command requires a name and a set of capabilities with associated endpoints. To learn how to register a cloud for use with Azure Stack, see [Install and configure CLI for use with Azure Stack](/azure/azure-stack/user/azure-stack-connect-cli#connect-to-azure-stack).  
+Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [cloud register](/cli/azure/cloud#register) command. This command requires a name and a set of capabilities with associated endpoints. To learn how to register a cloud for use with Azure Stack, see [Install and configure CLI for use with Azure Stack](/azure/azure-stack/user/azure-stack-connect-cli#connect-to-azure-stack).
 
 You do not need to register your own cloud for China, US Government, or German regions. These are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud?view=azure-cli-latest#az_cloud_register).
 
