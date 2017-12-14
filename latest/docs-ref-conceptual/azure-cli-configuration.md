@@ -16,25 +16,45 @@ ms.service: multiple
 # Azure CLI 2.0 configuration
 
 The Azure CLI 2.0 allows for user configuration to override internal settings such as logging and data collection, and provide default options for
-some required parameters. This is done through a configuration file or environment variables that are recognized by the CLI.
+some required parameters. The CLI offers a convenience command for managing some of these values, `az configure`, and other values can be set in a
+configuration file or with environment variables.
+
+## Configuration with `az configure`
+
+The easiest way to set defaults for all commands across the CLI is by using the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
+This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI to replace some
+required arguments for commands when they are not present.
+
+The following is a table of the available keys that you can pass to az configure to set a default.
+
+| Name | Description |
+|------|-------------|
+| group | The default resource group to use for all commands. |
+| location | The default location to use for all commands. |
+| web | The default app name to use for `az webapp` commands. |
+| vm | The default VM name to use for `az vm` commands. |
+| vmss | The default VMSS name to use for  `az vmss` commands. |
+| acr | The default container registry name to use for `az acr` commands. |
+| acs | The default container service name to use for `az acs` commands. |
+
+As an example, here's how you would set the default resource group and location for all commands.
+
+```azurecli
+az configure --defaults location=westus2 group=MyResourceGroup
+```
 
 ## Configuration file format
 
-Configuration files are written in the INI file format. These files are separated into sections with a `[section]` header, with each 
-section containing a list of key/value entries written as `key=value` . Section names are case-sensitive, while key names are not. 
+Configuration files are written in the INI file format. These files are separated into sections with a `[section]` header, with each
+section containing a list of key/value entries written as `key=value` . Section names are case-sensitive, while key names are not.
 Comments are any line that begins with a `#` or `;`, inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
 
 * __True__: 1, yes, true, on
 * __False__: 0, no, false, off
 
-Here's an example of a CLI configuration file, which defaults all `--location` arguments to use `westus2`, disables any confirmation prompts,
-and turns on logging to the `/var/log/azure` directory.
+Here's an example of a CLI configuration file which disables any confirmation prompts and turns on logging to the `/var/log/azure` directory.
 
 ```
-; Global defaults
-[defaults]
-location=westus2
-
 [core]
 disable_confirm_prompt=Yes
 
@@ -46,9 +66,9 @@ log_dir=/var/log/azure
 See the next section for details on all of the available configuration values and what they mean. For the full details on the INI file format,
 see the [Python documentation on INI](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure).
 
-## Configuration values
+## Configuration file values
 
-Configuration values are set in the configuration file, through environment variables, or as command-line options. These are evaluated in the following order, 
+Configuration values are set in the configuration file, through environment variables, or as command-line options. These are evaluated in the following order,
 with items higher on the list taking precedence.
 
 1. Command-line parameters
@@ -59,22 +79,14 @@ The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The defa
 and `%USERPROFILE%\.azure\config` on Windows.
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
-environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, the `location` value would be stored in the
-environment variable `AZURE_DEFAULT_LOCATION`.
+environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, you can set the `batchai` section's `storage_account` default
+in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
 
-Any value that has a default available does not have to be present in the command line arguments, even if it is required. For example,
-if a value for `location` is provided in the configuration or by an environment variable, the `--location` argument is no longer required
-for any command.
+Any value that has a default available does not have to be present in the command line arguments, even if it is required. This parameter name may
+be different for different commands, but its description will line up with the setting's.
 
 | Section | Name      | Type | Description|
 |---------|-----------|------|------------|
-| __defaults__ | group | string | The default resource group to use for all commands. |
-| | location | string | The default location to use for all commands. |
-| | web | string | The default app name to use for `az webapp` commands. |
-| | vm | string | The default VM name to use for `az vm` commands. |
-| | vmss | string | The default VMSS name to use for  `az vmss` commands. |
-| | acr | string | The default container registry name to use for `az acr` commands. |
-| | acs | string | The default container service name to use for `az acs` commands. |  
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI 2.0 Terms of Use](http://aka.ms/AzureCliLegal). |
@@ -82,7 +94,7 @@ for any command.
 | | log\_dir | string | The directory to write logs to. By default this is `$AZURE\_CONFIG\_DIR/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
 | | account | string | The default account name to use for `az storage` commands. |
-| | key | string | The default account key to use for `az storage` commands. | 
+| | key | string | The default account key to use for `az storage` commands. |
 | | sas\_token | string | The default SAS token to use for `az storage` commands. |
 | __batchai__ | storage\_account | string | The default storage account to use for `az batchai` commands. |
 | | storage\_key | string | The default storage key to use for `az batchai` commands. |
@@ -91,4 +103,6 @@ for any command.
 | | endpoint | string | The default endpoint to connect to for `az batch` commands. |
 | | auth\_mode | string | The authorization mode to use for `az batch` commands. Can be `shared_key` or `aad`. |
 
-
+> [!NOTE]
+> You may see other values in your configuration file, but these are managed directly through CLI commands,
+> including `az configure`. The ones listed in the table above are the only values you should change yourself.
