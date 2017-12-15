@@ -19,14 +19,19 @@ The Azure CLI 2.0 allows for user configuration to override internal settings su
 some required parameters. The CLI offers a convenience command for managing some of these values, `az configure`, and other values can be set in a
 configuration file or with environment variables.
 
-## Configuration with `az configure`
+Configuration values used by the CLI are evaluted in the following precedence, with items higher on the list taking priority.
 
-The easiest way to set defaults for the CLI is with the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI to replace 
-required arguments for commands when they are not present. Values passed as arguments always take precedence over values
-set as defaults.
+1. Command-line parameters
+2. Environment variables
+3. Values in the configuration file or set with `az configure`
 
-The following is a list of available keys that you can pass to az configure to set a default.
+## CLI configuration with az configure
+
+You set defaults for the CLI with the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
+This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI in place of 
+required arguments. 
+
+The following is a list of available keys that you can use.
 
 | Name | Description |
 |------|-------------|
@@ -44,7 +49,11 @@ As an example, here's how you would set the default resource group and location 
 az configure --defaults "location=westus2 group=MyResourceGroup"
 ```
 
-## Configuration file format
+## CLI configuration file
+
+The CLI configuration file contains other settings that are used for managing CLI behavior. The configuration file itself is located 
+at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure/config` on Linux and macOS,
+and `%USERPROFILE%\.azure\config` on Windows. 
 
 Configuration files are written in the INI file format. These files are separated into sections with a `[section]` header, with each
 section containing a list of key/value entries written as `key=value` . Section names are case-sensitive and key names are not.
@@ -67,21 +76,11 @@ log_dir=/var/log/azure
 See the next section for details on all of the available configuration values and what they mean. For the full details on the INI file format,
 see the [Python documentation on INI](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure).
 
-## Configuration file values
-
-Configuration values are set in the configuration file, through environment variables, or as command-line options. These are evaluated in the following order,
-with items higher on the list taking precedence.
-
-1. Command-line parameters
-2. Environment variables
-3. Values in the configuration file
-
-The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure/config` on Linux and macOS,
-and `%USERPROFILE%\.azure\config` on Windows.
+## CLI configuration values and environment variables
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
 environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, you can set the `batchai` section's `storage_account` default
-in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
+in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable. No values set through `az configure` have a corresponding environment variable.
 
 Any value that has a default available does not have to be present in the command line arguments, even if it is required.
 
