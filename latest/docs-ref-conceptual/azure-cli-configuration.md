@@ -21,11 +21,12 @@ configuration file or with environment variables.
 
 ## Configuration with `az configure`
 
-The easiest way to set defaults for all commands across the CLI is by using the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI to replace some
-required arguments for commands when they are not present.
+The easiest way to set defaults for the CLI is with the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
+This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI to replace 
+required arguments for commands when they are not present. Values passed as arguments always take precedence over values
+set as defaults.
 
-The following is a table of the available keys that you can pass to az configure to set a default.
+The following is a list of available keys that you can pass to az configure to set a default.
 
 | Name | Description |
 |------|-------------|
@@ -40,19 +41,19 @@ The following is a table of the available keys that you can pass to az configure
 As an example, here's how you would set the default resource group and location for all commands.
 
 ```azurecli
-az configure --defaults location=westus2 group=MyResourceGroup
+az configure --defaults "location=westus2 group=MyResourceGroup"
 ```
 
 ## Configuration file format
 
 Configuration files are written in the INI file format. These files are separated into sections with a `[section]` header, with each
-section containing a list of key/value entries written as `key=value` . Section names are case-sensitive, while key names are not.
-Comments are any line that begins with a `#` or `;`, inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
+section containing a list of key/value entries written as `key=value` . Section names are case-sensitive and key names are not.
+Comments are any line that begins with a `#` or `;`. Inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
 
 * __True__: 1, yes, true, on
 * __False__: 0, no, false, off
 
-Here's an example of a CLI configuration file which disables any confirmation prompts and turns on logging to the `/var/log/azure` directory.
+Here's an example of a CLI configuration file which disables any confirmation prompts and sets up logging to the `/var/log/azure` directory.
 
 ```
 [core]
@@ -82,8 +83,7 @@ The following table contains all of the sections and option names that can be pl
 environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, you can set the `batchai` section's `storage_account` default
 in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
 
-Any value that has a default available does not have to be present in the command line arguments, even if it is required. This parameter name may
-be different for different commands, but its description will line up with the setting's.
+Any value that has a default available does not have to be present in the command line arguments, even if it is required.
 
 | Section | Name      | Type | Description|
 |---------|-----------|------|------------|
@@ -91,7 +91,7 @@ be different for different commands, but its description will line up with the s
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI 2.0 Terms of Use](http://aka.ms/AzureCliLegal). |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
-| | log\_dir | string | The directory to write logs to. By default this is `$AZURE\_CONFIG\_DIR/logs`. |
+| | log\_dir | string | The directory to write logs to. By default this is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
 | | account | string | The default account name to use for `az storage` commands. |
 | | key | string | The default account key to use for `az storage` commands. |
