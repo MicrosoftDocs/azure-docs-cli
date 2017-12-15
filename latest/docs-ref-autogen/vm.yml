@@ -25,6 +25,7 @@ items:
   - az_vm_open_port
   - az_vm_perform_maintenance
   - az_vm_redeploy
+  - az_vm_remove_identity
   - az_vm_resize
   - az_vm_restart
   - az_vm_show
@@ -51,15 +52,18 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --identities
+    summary: The identities to assign.
+    description: ''
   - name: --port
     summary: 'The port to fetch AAD token. Default: 50342.'
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role name or id the managed identity will be assigned.
+    summary: Role name or id the system assigned identity will have.
     description: ''
   - name: --scope
-    summary: The scope the managed identity has access to.
+    summary: Scope that the system assigned identity can access.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -173,9 +177,15 @@ items:
   - summary: Create a Debian VM using Key Vault secrets.
     syntax:
       content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
-  - summary: Create a CentOS VM with Managed Service Identity. The VM will have a 'Contributor' role with access to a storage account.
+  - summary: Create a CentOS VM with a system assigned identity. The VM will have a 'Contributor' role with access to a storage account.
     syntax:
-      content: az vm create -n MyVm -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+      content: az vm create -n MyVm -g rg1 --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+  - summary: Create a debian VM with a user assigned identity.
+    syntax:
+      content: az vm create -n MyVm -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a debian VM with both system and user assigned identity.
+    syntax:
+      content: az vm create -n MyVm -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a VM in an availability zone in the current resource group's region
     syntax:
       content: az vm create -n MyVm -g MyResourceGroup --image Centos --zone 1
@@ -212,7 +222,7 @@ items:
     summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --secrets
     summary: 'One or many Key Vault secrets as JSON strings or files via `@&lt;file path&gt;` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
@@ -252,14 +262,14 @@ items:
     summary: The SSH public key or public key file path.
     description: ''
   - name: --assign-identity
-    summary: Enables the VM/VMSS to autonomously, using its own managed identity, to directly authenticate and interact with other Azure services using bearer tokens.
+    summary: Accept system or user assigned identities with space separated. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role name or id the managed identity will be assigned.
+    summary: Role name or id the system assigned identity will have.
     description: ''
   - name: --scope
-    summary: The scope the managed identity has access to.
+    summary: Scope that the system assigned identity can access.
     description: ''
   - name: --plan-name
     summary: Plan name.
@@ -384,7 +394,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -415,7 +425,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -476,7 +486,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -746,7 +756,36 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_remove_identity
+  name: az vm remove-identity
+  summary: (PREVIEW) Remove user assigned identities from a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Remove 2 identities which are in the same resource group with the VM
+    syntax:
+      content: az vm remove-identity -g MyResourceGroup -n MyVm --identities readerId writerId
+  parameters:
+  - isRequired: true
+    name: --identities
+    summary: Space separated user assigned identities to remove.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -781,7 +820,7 @@ items:
     summary: Sizes such as Standard_A4, Standard_F4s, etc.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -812,7 +851,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -874,7 +913,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -905,7 +944,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -945,7 +984,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long running operation to finish.
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -985,16 +1024,16 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --created
-    summary: Wait till created with 'provisioningState' at 'Succeeded'.
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
-    summary: Wait till deleted.
+    summary: Wait until deleted.
     description: ''
   - name: --exists
-    summary: Wait till the resource exists.
+    summary: Wait until the resource exists.
     description: ''
   - name: --interval
     defaultValue: "30"
@@ -1005,7 +1044,7 @@ items:
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
-    summary: Wait till updated with provisioningState at 'Succeeded'.
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -1200,6 +1239,9 @@ commands:
 - uid: az_vm_redeploy
   name: az vm redeploy
   summary: Redeploy an existing VM.
+- uid: az_vm_remove_identity
+  name: az vm remove-identity
+  summary: (PREVIEW) Remove user assigned identities from a VM.
 - uid: az_vm_resize
   name: az vm resize
   summary: Update a VM's size.
@@ -1288,6 +1330,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/03636bdbc4fb0e134610a4ea84f32c22766a3f73/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 11/1/2017 5:42:29 PM
-ms.date: 11/1/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/ff2511e798208f39df6318a80ca048943d1ab5cd/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 12/15/2017 12:37:05 AM
+ms.date: 12/15/2017
