@@ -28,7 +28,7 @@ Configuration values used by the CLI are evaluted in the following precedence, w
 ## CLI configuration with az configure
 
 You set defaults for the CLI with the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of default values. These values are used by the CLI in place of 
+This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provded values are used by the CLI in place of 
 required arguments. 
 
 The following is a list of available keys that you can use.
@@ -55,8 +55,8 @@ The CLI configuration file contains other settings that are used for managing CL
 at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure/config` on Linux and macOS,
 and `%USERPROFILE%\.azure\config` on Windows. 
 
-Configuration files are written in the INI file format. These files are separated into sections with a `[section]` header, with each
-section containing a list of key/value entries written as `key=value` . Section names are case-sensitive and key names are not.
+Configuration files are written in the INI file format. These files are made up of sections which start with a `[section-name]` header, followed by 
+a list of `key=value` entries. Section names are case-sensitive and key names are not.
 Comments are any line that begins with a `#` or `;`. Inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
 
 * __True__: 1, yes, true, on
@@ -80,9 +80,9 @@ see the [Python documentation on INI](https://docs.python.org/3/library/configpa
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
 environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, you can set the `batchai` section's `storage_account` default
-in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable. No values set through `az configure` have a corresponding environment variable.
+in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
 
-Any value that has a default available does not have to be present in the command line arguments, even if it is required.
+Any value with a default available does not have to be present in the command line arguments, even if it is required.
 
 | Section | Name      | Type | Description|
 |---------|-----------|------|------------|
