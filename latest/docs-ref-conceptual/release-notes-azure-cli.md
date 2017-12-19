@@ -16,6 +16,30 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## December 19, 2017
+
+Version 2.0.23
+
+* Support login with user assigned idenities
+
+### Container
+
+* Fix incorrect order of parameters for container logs
+
+### Network
+
+* `route-table create/update`: Add support for `--disable-bgp-route-propagation`.
+* `public-ip create/update`: Add support for `--ip-tags`
+
+### Storage
+
+* Support storage v2
+
+### VM
+
+* VM/VMSS: (Preview) support user assigned identity
+
+
 ## December 5, 2017
 
 Version 2.0.22
