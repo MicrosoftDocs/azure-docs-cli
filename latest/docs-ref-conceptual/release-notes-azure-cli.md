@@ -20,24 +20,24 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 Version 2.0.23
 
-* Support login with user assigned idenities
+* Added support for login with user assigned idenities
 
 ### Container
 
-* Fix incorrect order of parameters for container logs
+* Fixed incorrect order of parameters for container logs
 
 ### Network
 
-* `route-table create/update`: Add support for `--disable-bgp-route-propagation`.
-* `public-ip create/update`: Add support for `--ip-tags`
+* Added `--disable-bgp-route-propagation` argument to `route-table [create|update]`
+* Added `--ip-tags` argument to `public-ip [create|update]`
 
 ### Storage
 
-* Support storage v2
+* Added support for storage V2
 
 ### VM
 
-* VM/VMSS: (Preview) support user assigned identity
+* [PREVIEW] Added support for user-assigned identities for VMs and VMSSes
 
 
 ## December 5, 2017
