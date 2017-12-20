@@ -28,7 +28,7 @@ one tenant, the organization that they belong to. Users are those accounts which
 which are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
 
 To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
-To learn how to add a new subscription to your Azure Active Directory tenant, see [How to add an Azure subscription to Azure Active Directory](/en-us/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+To learn how to add a new subscription to your Azure Active Directory tenant, see [How to add an Azure subscription to Azure Active Directory](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
 ## Working with multiple subscriptions
 
