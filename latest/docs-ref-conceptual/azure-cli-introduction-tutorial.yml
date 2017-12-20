@@ -15,3 +15,201 @@ items:
         to storage, and using the query and output features of the CLI to filter information you need
         out of responses.
 
+        You can use the interactive experience offered as part of this tutorial, or [install the CLI]()
+        locally.
+
+    durationInMinutes: 1
+    title: Log in
+    content: >-
+        If you're using a local install of the CLI, you will need to log in before perofrming
+        any other steps. If you're using the interactive experience through cloud shell,
+        you've already been logged in.
+
+        ```azurecli
+        az login
+        ```
+
+        Follow the steps displayed in your terminal to complete the log in process.
+
+    durationInMinutes: 1
+    title: Create a resource group
+    content: >-
+        In Azure, resources are tied together in a resource management group to allow them
+        to link together. For this tutorial all of the created resources will go into a
+        single group.
+
+        ```azurecli
+        az group create --name CLITutorial --location eastus
+        ```
+
+        > [!NOTE]
+        > If you change the location of this resource group, some resources in this
+        > tutorial may not be able to be created due to datacenter availability.
+
+    durationInMinutes: 1
+    title: Create a virtual machine
+    content: >-
+        Virtual machines in Azure are complicated resources which have a large number of
+        dependencies. Fortunately, the CLI creates these intermediary resources for you
+        based on the command line arguments you specify. In this step we're going to
+        create a virtual machine, and then get information on some of those created
+        resources with `--query` so that they can be used in the creation of additional
+        virtual machines.
+
+        ## Create your first virtual machine
+
+        Start by creating a single new virtual machine running Ubuntu which uses SSH authentication for login.
+
+        ```azurecli
+        az vm create --resource-group CLITutorial --name TutorialVM1 --image 'UbuntuLTS' --generate-ssh-keys
+        ```
+
+        > [!NOTE]
+        > If you have an SSH key named `id_rsa` already available, this key is used for authentication rather than having a new
+        > key generated.
+
+        Once the VM is created, you will get a small amount of information in your terminal, including the public IP address.
+        Try connecting to the VM over SSH to make sure that it is up and running.
+
+        ```bash
+        ssh <PUBLIC_IP_ADDRESS>
+        ```
+
+        Go ahead and log out from the new VM. There are better ways to get this IP address, and other information about the VM itself -
+        what virtual network it's on, if it has assigned FQDNs, and whether or not it is powered on. You'll now learn how to use the
+        `--query` command to get that information, and combine it with UNIX command-line tools to extract and save values.
+
+        ## Show and query virtual machine information
+
+        The common command for getting information from a resource is `show`. Go ahead and try it now for the VM that was just created.
+
+        ```azurecli
+        az vm show --name TutorialVM1 --resource-group CLITutorial
+        ```
+
+        You'll see an overwhelming amount of information, which can be difficult to parse or even scroll through. The information returned
+        contains details on authentication with the VM, the network interface it connects to, and the storage that it uses. Most importantly,
+        it contains the Azure Object IDs for reosurces that the VM is directly connected to. Since we want to save the public IP address,
+        start by getting the NIC object ID so that we can query that.
+
+        ```azurecli
+        az vm show --name TutorialVM1 --resource-group CLITutorial --query 'networkProfile.networkInterfaces[].id' --output tsv
+        ```
+
+        There's a lot new going on here, just by adding the query.
+
+        * Breaking down the query, it references fields of the JSON output that can be found with visual inspection and
+          subsequent queries. `networkProfile` is a key of the toplevel JSON, which has `networkInterfaces` as a subkey.
+          Because the value here is an array, it is "flattened" with the `[]` operator, which runs the query strings
+          following it on each array element. This extracts the `id` field from each `networkInterfaces` element,
+          giving us the object ID that we are looking for.
+        * The output format `tsv` is guaranteed to only include the data queried, and whitespace. Since we know there will be
+          at most one value returned, this will print _only_ the data.
+
+        Now that we know how to get this value, this command can be executed to store it in a shell variable.
+
+        ```bash
+        NIC_ID=`az vm show -n TutorialVM1 -g CLITutorial -q 'networkProfile.networkInterfaces[].id' -o tsv`
+        ```
+
+        This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
+        the CLI.
+
+        Now that we have the NIC ID, we can run `az network nic show` to get the information on the NIC itself.
+
+        ```azurecli
+        az network nic show --ids $NIC_ID -g CLITutorial
+        ```
+
+        Again, this displays a lot of information - DNS settings, IP information, security settings, MAC address, and so on. Right now
+        we're interested in two things: The public IP address and the name of the subnet. Go ahead and pull that information with a query.
+
+        ```azurecli
+        az network nic show --ids $NIC_ID -g CLITutorial -q '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}'
+        ```
+
+
+    durationInMinutes: 1
+    title: Deploy webapps
+    content: >-
+        In this section you'll learn how to both deploy a webapp from a git repository,
+        and as a Docker container.
+
+    durationInMinutes: 1
+    title: Work with Storage
+    content: >-
+        In this section you'll create a new storage account, and then learn how to upload
+        files and blobs to it. You'll also learn how to set up blobs as virtual disks
+        to share between VMs.
+
+    durationInMinutes: 1
+    title: Use databases
+    content: >-
+        In this section you'll learn the basics of working with Azure SQL by creating and
+        working with tables through the CLI, and then see how to query them with your
+        locally available SQL tools.
+
+        
+
+    durationInMinutes: 1
+    title: Cleanup
+    content: >-
+        Now that you've completed the tutorial, it's time to clean up the created resources. While you
+        can delete individual resources with the `delete` command from each command group (i.e.
+        `storage account delete`, `vm delete`, etc.) the fastest way to remove all resources
+        that have been put together into the same resource group is with `group delete`.
+
+        ```azurecli
+        az group delete --name CLITutorial --no-wait
+        ```
+
+        This command deletes the resources created during the tutorial, and is guaranteed to deallocate
+        them in the correct order. The `--no-wait` parameter keeps the CLI from blocking while the
+        deletion takes place -- this can take quite a while! If you decide that you want to wait
+        until the deletion is complete, or watch it progress, you can always use the `group wait`
+        command.
+        
+        ```azurecli
+        az group wait --name CLITutorial --deleted
+        ```
+
+        With cleanup completed, the tutorial is completed. Continue on for a summary of everything
+        you've learned and links to resources that will help you with your next steps.
+
+    durationInMinutes: 1
+    title: Summary
+    content: >-
+        Congratluations, you've learned the basics of using the Azure CLI to work with Azure
+        resources and services! Along the way you've learned the basics of working with
+        virtual machines, webapps, and storage. You've also learned some basics of
+        the `--output` and `--query` arguments.
+
+        Where you go from here depends on what you plan to use the CLI for. We offer
+        a variety of materials that go further in depth on the fatures covered in
+        this tutorial.
+
+        ## Samples
+
+        If you want to get started right away with samples that show how to achieve specific
+        tasks with the CLI, we offer a number of sample scripts.
+
+        * Working with [Linux VMs]() and [Windows VMs]()
+        * Working with [webapps]() and [Azure Functions]()
+        * Working with databases - [Azure SQL databases](), [PostgreSQL](), [MySQL](), and [CosmosDB]().
+
+        ## In-depth CLI documentation
+
+        There are also topics that go deeper into the CLI features that were shown
+        in the tutorial.
+        
+        * Learn more about [output formats]()
+        * Learn more about [output queries]()
+        * Learn more about [login and authorization]()
+
+        ## Other useful documentation
+        
+        You might also want to take time to explore some more advanced features of
+        the CLI, like [configuring defaults]() or [extensions]().
+
+        We hope that you have an enjoyable and useful experience with the Azure CLI!
+

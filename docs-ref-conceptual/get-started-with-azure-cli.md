@@ -16,18 +16,15 @@ ms.service: multiple
 # Get started with Azure CLI 2.0
 
 Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services
-and products, and is geared towards making tasks efficient and easy to automate it. This article is meant to help
-give a basic understanding of how to interact with the CLI, and is a companion to the [Learn how to use the Azure CLI 2.0](azure-cli-introduction-tutorial.yml) tutorial.
-
-This article helps walk you through ways to quickly find what you're looking for when it comes to running the CLI,
-introduces some features that give a guided experience, and discusses arguments that are available to every
-command.
+and products, and is geared towards making tasks efficient and easy to automate it. This article is meant to introduce
+you to the features of the CLI and is a companion to the [Learn how to use the Azure CLI 2.0](azure-cli-introduction-tutorial.yml)
+tutorial.
 
 ## Install and log in
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-Before performing any operations with the CLI, you will need to log in with the [az login](/cli/azure/index?view=azure-cli-latest#az_login) command.
+Before performing any operations with the CLI, you will need to log in with the [az login](/cli/azure/index#az_login) command.
 
 ```azurecli
 az login
@@ -52,9 +49,9 @@ For example, when working with virtual machine scale sets (VMSS), you run the fo
 az find -q vmss
 ```
 
-Since the `find` command can be rather slow, if you have some more specific information about what you're looking for, `--help`
-may be the better choice. For example, if you know you will be working with Network Security Groups (NSGs), you use the following
-command to find out what commands are available to work with them.
+Since the `find` command can be rather slow, if you want to find commands within a specific group, the `--help` argument
+may be the better choice. For example, if you will be working with Network Security Groups (NSGs), you can find the supported
+NSG operations with the following command.
 
 ```azurecli
 az network nsg --help
@@ -62,9 +59,9 @@ az network nsg --help
 
 ## Common commands
 
-There are a few command grops that are used frequently with the CLI. This table lists many of
+There are a few command grops that are used frequently with the CLI. This table lists 
 them and links out to their documentation pages in the reference. All subcommands of
-these groups, and their documenation, can be looked up with the `--help` argument as described above.
+these groups, and their documenation, can be looked up in online reference or with the `--help` argument.
  
 
 | Resource type | Azure CLI command group |
@@ -72,6 +69,7 @@ these groups, and their documenation, can be looked up with the `--help` argumen
 | [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
 | [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
 | [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
 | [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
 | [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
 | [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
@@ -82,6 +80,9 @@ these groups, and their documenation, can be looked up with the `--help` argumen
 The CLI also offers an interactive mode which automatically displays help information and makes it easier to
 select subcommands. You can enter this mode with the `az interactive` command. For more information on interactive mode
 and how it can help you get familiar with the CLI experience, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
+
+There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
+offers a similar interactive experience, including autocomplete and mouse-over documentation.
 
 ## Globally available arguments
 
