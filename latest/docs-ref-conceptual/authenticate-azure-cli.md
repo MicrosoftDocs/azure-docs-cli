@@ -36,7 +36,7 @@ Provide your credentials on the command line.
 > This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
 ```azurecli-interactive
-az login -u <username> -p <password>
+az login -u <username> 
 ```
 
 ## Logging in with a service principal
