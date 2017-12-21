@@ -61,7 +61,7 @@ items:
         Start by creating a single new virtual machine running Ubuntu which uses SSH authentication for login.
 
         ```azurecli
-        az vm create --resource-group CLITutorial --name TutorialVM1 --image 'UbuntuLTS' --generate-ssh-keys
+        az vm create --resource-group CLITutorial --name TutorialVM1 --image UbuntuLTS --generate-ssh-keys
         ```
 
         > [!NOTE]
@@ -109,7 +109,7 @@ items:
         Now that we know how to get this value, this command can be executed to store it in a shell variable.
 
         ```bash
-        NIC_ID=`az vm show -n TutorialVM1 -g CLITutorial -q 'networkProfile.networkInterfaces[].id' -o tsv`
+        NIC_ID=`az vm show -n TutorialVM1 -g CLITutorial --query 'networkProfile.networkInterfaces[].id' -o tsv`
         ```
 
         This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
@@ -125,15 +125,100 @@ items:
         we're interested in two things: The public IP address and the name of the subnet. Go ahead and pull that information with a query.
 
         ```azurecli
-        az network nic show --ids $NIC_ID -g CLITutorial -q '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}'
+        az network nic show --ids $NIC_ID -g CLITutorial --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}'
         ```
 
+        This displays a JSON object which has custom identifiers ('IP' and 'Subnet') for the extracted values. While this might not be useful
+        for command-line tools, it helps with human readability and you can take this JSON and pipe it to our own custom scripts or software.
+
+        What we can do, though, is take this output and rather than re-tag it, output it as tab-separated values (TSV). This can be processed by
+        the shell `read` command to load results into multiple variables.
+
+        ```bash
+        read -d '' IP_ID SUBNET_ID <<< $(az network nic show --ids $NIC_ID -g CLITutorial --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' -o tsv)
+        ```
+
+        We won't use the subnet ID right away, but because it can be obtained in this single query, it's useful to store it for later. Instead what we will
+        now do is use the IP ID to look up the public IP address object in Azure, and store the IP address in a shell variable.
+
+        ```bash
+        read VM1_IP_ADDR <<< $(az network public-ip show --ids $IP_ID -g CLITutorial --query ipAddress -o tsv)
+        ```
+
+        Now we've got the IP address of our VM that can easily be connected to. The next step is to create a second VM, on the same subnet, so that
+        these VMs can be easily connected and later grouped together.
+
+        ## Creating a VM on the same subnet
+
+    Our second VM is going to be created in a similar way, just with one important difference: We already have a subnet available, and
+        want the new VM to reuse it. We can also skip a few steps to get the public IP address of the new VM stored into an environment
+        variable right away, since it's returned in the VM creation information.
+
+        ```bash
+        VM2_IP_ADDR=$(az vm create --resource-group CLITutorial --name TutorialVM2 --image UbuntuLTS --generate-ssh-keys --subnet $SUBNET_ID --query publicIpAddress -o tsv)
+        ```
+
+        You can now SSH into this new VM easily.
+
+        ```bash
+        ssh $VM2_IP_ADDR
+        ```
+
+        ## Finishing up
+
+        Congratluations! You've learned how to create VMs, use the `--query` and `--output` arguments to capture data to be stored in shell variables, and
+        looked into some of the resources that get created as part of the VM construction process. In the next portion of the tutorial, you'll learn
+        about webapp deployment and hosting.
 
     durationInMinutes: 1
     title: Deploy webapps
     content: >-
         In this section you'll learn how to both deploy a webapp from a git repository,
         and as a Docker container.
+
+        ## Deploy a docker container
+        
+    There are only two things that you need to be able to deploy a Docker container as a web application in Azure: An App Service plan, and 
+        your image to deploy. An App Service plan describes what level and type of resources to allocate for running your application. Containers
+        are only available for Linux deployment plans.
+        
+        ```azurecli
+        az appservice plan create -g CLITutorial -n TutorialPlan --is-linux
+        ```
+
+        For this example, you will deploy a "hello world" application written in Node.js. The most difficult part of deploying a webapp
+        is coming up with a unique name. This must resolve to a unique FQDN within the `*.azurewebsites.net` domain, so your application name
+        cannot conflict with any existing application names. As a result, you need to provide your own application name by filling in the missing
+        value for the `--name` argument.
+
+        ```azurecli
+        az webapp create -n ${YOUR_APP_NAME} -g CLITutorial --plan TutorialPlan -i microsoft/aci-helloworld
+        ```
+
+        If your name is not unique, you will get an error of "Website with given name ${YOUR_APP_NAME} already exists." Choose a new application
+        name and try again. You can also go to `${YOUR_APP_NAME}.azurewebsites.net` and see if it is already registered. Unfortunately,
+        there is no way to check through the CLI if a site is already registered - you must use trial and error.
+
+        Once the command succeeds, go to `${YOUR_APP_NAME}.azurewebsites.net`, and you should see the following page displayed.
+
+        [!IMAGE helloworld-image.png](...)
+
+        This FQDN also routes to the possible outbound IP addresses of the web app. If you want to direct your own FQDN to them, you can
+        get the outbound IP addresses from `az webapp show`.
+
+        ```azurecli
+        FILL IN THE COMMAND HERE LATER, BRO
+        ```
+
+        ## Deploy from git repository
+        
+        Rather than publishing a Docker image, you can also publish directly from a git repository, whether it is local, served off
+        github, or maintained on your own git server. The deployment strategy used in this part of the tutorial is _manual deployment_ -
+        you choose when to re-deploy from the repository. Web apps also offer automatic deployment, which pushes a branch to the web app
+        worker whenever there is an update to it.
+
+
+
 
     durationInMinutes: 1
     title: Work with Storage
