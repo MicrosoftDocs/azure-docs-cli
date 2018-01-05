@@ -20,7 +20,7 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 Version 2.0.23
 
-* Added support for login with user assigned idenities
+* Added support for login with user assigned identities
 
 ### Container
 
