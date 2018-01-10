@@ -16,42 +16,37 @@ ms.service: multiple
 # Get started with Azure CLI 2.0
 
 Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services
-and products, and is geared towards making tasks efficient and easy to automate it. This article is meant to introduce
-you to the features of the CLI and is a companion to the [Learn how to use the Azure CLI 2.0](azure-cli-introduction-tutorial.yml)
-tutorial.
-
+and products, and is geared towards making tasks efficient and easy to automate. This article introduces
+the features of the CLI and links out to resources that will help you be productive.
+ 
 ## Install and log in
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-Before performing any operations with the CLI, you will need to log in with the [az login](/cli/azure/index#az_login) command.
+Before using any CLI commands, you will need to log in with [az login](/cli/azure/index#az_login).
 
 ```azurecli
 az login
 ```
 
-This will prompt you to log in with an authentication code and a URL to submit it to. There are ways to log in non-interactively,
+This prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
 which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md). 
 
 ## Finding commands
 
-Commands in the CLI are provided as _subcommands_ of _groups_, in a manner similar to how many other modern CLIs work.
-Each group represents a particular type of service or product provided by Azure, and the subcommands and subgroups of it
+Commands in the CLI are provided as _subcommands_ of _groups_.
+Each group represents a service provided by Azure, and the subcommands and subgroups of it
 break up the way you interact with those resources.
 
-For finding specific commands, there is the [az find](cli/azure/?view=azure-cli-latest#az_find) command which searches the
-CLI command index for your search term. If you know the group containing the command you're looking for, the `--help` argument
-also prints out the subgroups and commands contained within that group.
-
-For example, when working with virtual machine scale sets (VMSS), you run the following command to find out what commands are available.
+To search for commands, use [az find](cli/azure/?view=azure-cli-latest#az_find). For example, to search for all commands containing `lock`: 
 
 ```azurecli
-az find -q vmss
+az find -q lock
 ```
 
-Since the `find` command can be rather slow, if you want to find commands within a specific group, the `--help` argument
-may be the better choice. For example, if you will be working with Network Security Groups (NSGs), you can find the supported
-NSG operations with the following command.
+The `find` command can be slow, so to find commands within a specific group, the `--help` argument
+may be the better choice. For example, when working with Network Security Groups (NSGs), you can find the available
+NSG commands.
 
 ```azurecli
 az network nsg --help
@@ -59,10 +54,8 @@ az network nsg --help
 
 ## Common commands
 
-There are a few command grops that are used frequently with the CLI. This table lists 
-them and links out to their documentation pages in the reference. All subcommands of
-these groups, and their documenation, can be looked up in online reference or with the `--help` argument.
- 
+This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference. 
+All subcommands of these groups and their documenation can be looked up in online reference or with the `--help` argument.  
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
@@ -77,39 +70,46 @@ these groups, and their documenation, can be looked up in online reference or wi
 
 ## Interactive mode
 
-The CLI also offers an interactive mode which automatically displays help information and makes it easier to
-select subcommands. You can enter this mode with the `az interactive` command. For more information on interactive mode
-and how it can help you get familiar with the CLI experience, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
+The CLI offers an interactive mode which automatically displays help information and makes it easier to
+select subcommands. You enter this mode with the `az interactive` command. For more information on interactive mode
+and how it helps you get familiar with the CLI experience, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
-offers a similar interactive experience, including autocomplete and mouse-over documentation.
+offers an interactive experience, including autocomplete and mouse-over documentation.
 
 ## Globally available arguments
 
 There are some arguments that are available for every command.
 
-* `--debug` prints verbose information for debugging purposes when running a comamnd. If you encounter a bug, you should
+* `--debug` prints verbose information for debugging purposes when running a comamnd. If you encounter a bug, 
   always try and provide output generated with the `--debug` flag on when submitting a bug report.
-* `--verbose` prints more information than usual, but not at the level of debug information.
-* `--help` gives you access to the CLI reference information from the command line, and lists available subgroups and
+* `--verbose` prints information about every resource created in Azure during a CLI operation, and local environment settings used.
+* `--help` prints CLI reference information about commands and their arguments, and lists available subgroups and
   commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
-* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services
-  _before_ displaying it to the user in the chosen output format. To learn how to effectively use queries, see
-  [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html). 
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services . To learn
+  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html). 
 
-## Learn CLI basics with samples and tutorials
+## Learn CLI basics with quickstarts and tutorials
 
-We also offer a short tutorial for you to learn the basics of the CLI, and help you get started with performing
-both common day-to-day tasks as well as setting up one-time configurations for you to get going. If you're
-interested, go ahead and check out [Learn how to use the Azure CLI 2.0](azure-cli-introduction-tutorial.yml).
-There are also a large number of CLI samples to check out. We recommend starting with [Azure CLI Samples for Linux virtual macines](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json).
+To to get started with Azure services while using the CLI, we offer a variety of quickstarts.
+
+* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
+* [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
+* [Create a single Azure SQL database using the Azure CLI](/azure/sql-database/sql-database-get-started-cli)
+* [Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli)
+* [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
+* [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
+* [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
+
+There is also an in-depth tutorial for setting up and running a VM, which includes information on using queries and output formats to effectively get information from the CLI for your local environment. See the [Set up an Azure Virtual Machine and associated resources](azure-cli-intrioduction-tutorial.yml) tutorial for more information.
 
 ## Give feedback
 
-We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on Github](https://github.com/azure/azure-cli/issues) or use the built-in features of the CLI to leave general feedback with the `az feedback` command.
+We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on Github](https://github.com/azure/azure-cli/issues) or use the built-in
+features of the CLI to leave general feedback with the `az feedback` command.
 
 ```azurecli
 az feedback
