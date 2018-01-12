@@ -58,15 +58,16 @@ items:
         Start by creating a single new virtual machine running Ubuntu which uses SSH authentication for login.
 
         ```azurecli
-        az vm create --resource-group CLITutorial --name TutorialVM1 --image UbuntuLTS --generate-ssh-keys
+        az vm create --verbose --resource-group CLITutorial --name TutorialVM1 --image UbuntuLTS --generate-ssh-keys
         ```
 
         > [!NOTE]
         > If you have an SSH key named `id_rsa` already available, this key is used for authentication rather than having a new
         > key generated.
 
-        Once the VM is created, you will get a small amount of information in your terminal, including the public IP address.
-        Try connecting to the VM over SSH to make sure that it is up and running.
+        As the VM is created, you see the local values used and Azure resources being created to set everything up due to the `--verbose` option.
+        Once the VM is ready, JSON is returned from the Azure service including the public IP address.  Try connecting to the VM over SSH
+        to make sure that it is up and running.
 
         ```bash
         ssh <PUBLIC_IP_ADDRESS>
@@ -79,32 +80,36 @@ items:
     durationInMinutes: 1
     title: Show and query VM information
     content: >-
-        The common command for getting information from a resource is `show`. Go ahead and try it now for the VM that was just created.
+        Now that a VM has been created, detailed information about it can be retrieved. The common command for getting information from a resource is 
+        `show`.
 
         ```azurecli
         az vm show --name TutorialVM1 --resource-group CLITutorial
         ```
 
-        You'll see an overwhelming amount of information, which can be difficult to parse or even scroll through. The information returned
-        contains details on authentication with the VM, the network interface it connects to, and the storage that it uses. Most importantly,
-        it contains the Azure Object IDs for reosurces that the VM is directly connected to. Since we want to save the public IP address,
-        start by getting the NIC object ID so that we can query that.
+        You'll see a lot of information, which can be difficult to parse. The data returned
+        contains details on how to authenticate with the VM, network interfaces it connects to, and the storage that it uses. Most importantly,
+        it contains the Azure object IDs for resources that the VM is connected to. 
+        
+        Since it can be used to get information about how to connect to the VM, start with getting the NIC object ID.
 
         ```azurecli
         az vm show --name TutorialVM1 --resource-group CLITutorial --query 'networkProfile.networkInterfaces[].id' --output tsv
         ```
 
-        There's a lot new going on here, just by adding the query.
+        There's a lot going on here, just by adding the query. Each part of it references keys in the returned JSON,
+        and operations used to process the data.
 
-        * Breaking down the query, it references fields of the JSON output that can be found with visual inspection and
-          subsequent queries. `networkProfile` is a key of the toplevel JSON, which has `networkInterfaces` as a subkey.
-          Because the value here is an array, it is "flattened" with the `[]` operator, which runs the query strings
-          following it on each array element. This extracts the `id` field from each `networkInterfaces` element,
-          giving us the object ID that we are looking for.
-        * The output format `tsv` is guaranteed to only include the data queried, and whitespace. Since we know there will be
-          at most one value returned, this will print _only_ the data.
+        * `networkProfile` is a key of the toplevel JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
+          its keys are refernced from the parent key with the `.` seperator.
+        * The `networkInterfaces` value is an array, so it is "flattened" with the `[]` operator. This operator runs the remainder
+          of the query on each array element. In this case, it gets the `id` value of every array element. 
+         
+        The output format `tsv` (tab-separated values) is guaranteed to only include the data queried, and whitespace consisting of tabs and newlines.
+        In this case, since we are requesting only one value, there is one value per line in the output. Since no NICs were named during creation of the VM,
+        only a single one was provided and it is safe to assign this value directly to an environment variable.
 
-        Now that we know how to get this value, this command can be executed to store it in a shell variable.
+        Go ahead and assign the NIC object ID to an environment variable now.
 
         ```bash
         NIC_ID=`az vm show -n TutorialVM1 -g CLITutorial --query 'networkProfile.networkInterfaces[].id' -o tsv`
@@ -113,6 +118,9 @@ items:
         This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
         the CLI.
 
+    durationInMinutes: 1
+    title: Set environment variables from CLI output
+    content: >-
         Now that we have the NIC ID, we can run `az network nic show` to get the information on the NIC itself.
 
         ```azurecli
@@ -129,7 +137,7 @@ items:
         This displays a JSON object which has custom identifiers ('IP' and 'Subnet') for the extracted values. While this might not be useful
         for command-line tools, it helps with human readability and you can take this JSON and pipe it to our own custom scripts or software.
 
-        What we can do, though, is take this output and rather than re-tag it, output it as tab-separated values (TSV). This can be processed by
+        What we can do, though, is take this output and rather than re-tag it, output it as `tsv`. This can be processed by
         the shell `read` command to load results into multiple variables.
 
         ```bash
@@ -150,8 +158,7 @@ items:
     title: Creating a VM on the same subnet
     content: >-
 
-        Our second VM is going to be created in a similar way, with one important difference. We already have a subnet available, and
-        want the new VM to reuse it. We can also skip a few steps to get the public IP address of the new VM stored into an environment
+        Our second VM is going to be created to use the existing subnet. We can also skip a few steps to get the public IP address of the new VM stored into an environment
         variable right away, since it's returned in the VM creation information.
 
         ```bash
@@ -163,13 +170,14 @@ items:
         ```bash
         ssh $VM2_IP_ADDR
         ```
+
+        Go ahead and log out from the VM.
     
     durationInMinutes: 1
     title: Cleanup
     content: >-
         Now that you've completed the tutorial, it's time to clean up the created resources. While you
-        can delete individual resources with the `delete` command from each command group (i.e.
-        `storage account delete`, `vm delete`, etc.) the fastest way to remove all resources
+        can delete individual resources with the `delete` command in their group, the fastest way to remove all resources
         that have been put together into the same resource group is with `group delete`.
 
         ```azurecli
@@ -178,22 +186,22 @@ items:
 
         This command deletes the resources created during the tutorial, and is guaranteed to deallocate
         them in the correct order. The `--no-wait` parameter keeps the CLI from blocking while the
-        deletion takes place -- this can take quite a while! If you decide that you want to wait
-        until the deletion is complete, or watch it progress, you can always use the `group wait`
+        deletion takes place. If you decide that to wait
+        until the deletion is complete, or want to watch it progress, you use the `group wait`
         command.
         
         ```azurecli
         az group wait --name CLITutorial --deleted
         ```
 
-        With cleanup completed, the tutorial is completed. Continue on for a summary of everything
+        With cleanup completed, the tutorial is finished. Continue on for a summary of everything
         you've learned and links to resources that will help you with your next steps.
 
     durationInMinutes: 1
     title: Summary
     content: >-
         Congratluations! You've learned how to create VMs, use the `--query` and `--output` arguments to capture data to be stored in shell variables, and
-        looked into some of the resources that get created as part of the VM construction process.
+        looked at some of the resources that get created for VMs.
 
         Where you go from here depends on what you plan to use the CLI for. We offer
         a variety of materials that go further in depth on the fatures covered in
