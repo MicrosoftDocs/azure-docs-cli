@@ -2,7 +2,7 @@
 items:
 - uid: az_aks
   name: az aks
-  summary: Manage Kubernetes clusters.
+  summary: Manage Azure Kubernetes Services.
   description: ''
   langs:
   - azurecli
@@ -22,45 +22,42 @@ items:
   - az_aks_wait
 - uid: az_aks_browse
   name: az aks browse
-  summary: Open a web browser to the dashboard for a managed Kubernetes cluster.
+  summary: Show the dashboard for a Kubernetes cluster in a web browser.
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --disable-browser
-    summary: If true, don't launch a web browser after establishing the kubectl port-forward.
+    summary: Don't launch a web browser after establishing port-forwarding.
     description: ''
 - uid: az_aks_create
   name: az aks create
-  summary: Create a new Azure managed Kubernetes cluster.
+  summary: Create a new managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create a Kubernetes cluster.
-    syntax:
-      content: az aks create -g MyResourceGroup -n MyManagedCluster
-  - summary: Create a Kubernetes cluster with a an existing SSH key.
+  - summary: Create a Kubernetes cluster with an existing SSH public key.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
-  - summary: Create a Kubernetes cluster with a specific version
+  - summary: Create a Kubernetes cluster with a specific version.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.8.1
-  - summary: Create a Kubernetes cluster with a larger node pool count
+  - summary: Create a Kubernetes cluster with a larger node pool.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --node-count 7
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -68,20 +65,20 @@ items:
     description: ''
   - name: --admin-username -u
     defaultValue: azureuser
-    summary: User name for the Linux Virtual Machines.
+    summary: User account to create on node VMs for SSH access.
     description: ''
   - name: --client-secret
-    summary: The secret associated with the service principal. If --service-principal is specified, then secret should also be specified. If --service-principal is not specified, the secret is auto-generated for you and stored in ${HOME}/.azure/ directory.
+    summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
   - name: --dns-name-prefix -p
-    summary: ''
+    summary: Prefix for hostnames that are created. If not specified, gemerate a hostname using the managed cluster and resource group names.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
     description: ''
   - name: --kubernetes-version -k
     defaultValue: 1.7.7
-    summary: The version of Kubernetes to use for creating the cluster, such as '1.7.9' or '1.8.2'.
+    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.7" or "1.8.2".
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -91,21 +88,21 @@ items:
     description: ''
   - name: --node-count -c
     defaultValue: "3"
-    summary: The default number of nodes for the node pools.
+    summary: Number of nodes in the Kubernetes node pool. After creating a cluster, you can change the size of its node pool with `az aks scale`.
     description: ''
   - name: --node-osdisk-size
-    summary: The osDisk size in GB of node pool Virtual Machine.
+    summary: Size in GB of the OS disk for each node in the node pool.
     description: ''
   - name: --node-vm-size -s
     defaultValue: Standard_D1_v2
-    summary: The size of the Virtual Machine.
+    summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --service-principal
-    summary: The service principal used for cluster authentication to Azure APIs. If not specified, it is created for you and stored in the ${HOME}/.azure directory.
-    description: ''
+    summary: Service principal used for authentication to Azure APIs.
+    description: If not specified, a new service principal with the contributor role is created and cached at $HOME.azureacsServicePrincipal.json to be used by subsequent `az aks` commands.
   - name: --ssh-key-value
     defaultValue: ~.sshid_rsa.pub
-    summary: SSH key file value or key file path.
+    summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
     description: ''
   - name: --tags
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -119,7 +116,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -133,25 +130,25 @@ items:
     description: ''
 - uid: az_aks_get_credentials
   name: az aks get-credentials
-  summary: Get credentials to access a managed Kubernetes cluster.
+  summary: Get access credentials for a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --admin -a
-    summary: Get the "clusterAdmin" kubectl config instead of the default "clusterUser".
+    summary: 'Get cluster administrator credentials.  Default: cluster user credentials.'
     description: ''
   - name: --file -f
     defaultValue: C:Usersappveyor.kubeconfig
-    summary: A kubectl config file to create or update. Use "-" to print YAML to stdout instead.
+    summary: Kubernetes configuration file to update. Use "-" to print YAML to stdout instead.
     description: ''
 - uid: az_aks_get_versions
   name: az aks get-versions
@@ -162,7 +159,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -170,7 +167,7 @@ items:
     description: ''
 - uid: az_aks_install_cli
   name: az aks install-cli
-  summary: Download and install kubectl, the Kubernetes command line tool.
+  summary: Download and install kubectl, the Kubernetes command-line tool.
   description: ''
   langs:
   - azurecli
@@ -185,34 +182,34 @@ items:
     description: ''
 - uid: az_aks_install_connector
   name: az aks install-connector
-  summary: Deploy the ACI-Connector to a AKS cluster.
+  summary: Install the Azure Container Instances (ACI) Connector on a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Install the ACI-Connector to an AKS Cluster.
+  - summary: Install the ACI Connector for Linux to a managed Kubernetes cluster.
     syntax:
-      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector
-  - summary: Install the ACI-Connector for Windows to an AKS Cluster.
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup   --connector-name MyConnector
+  - summary: Install the ACI Connector for Windows to a managed Kubernetes cluster.
     syntax:
-      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector --os-type Windows
-  - summary: Install the ACI-Connector for Windows and Linux to an AKS Cluster.
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup    --connector-name MyConnector --os-type Windows
+  - summary: Install the ACI Connector for both Windows and Linux to a managed Kubernetes cluster.
     syntax:
-      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector --os-type Both
-  - summary: Install the ACI-Connector using specific SPN.
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup   --connector-name MyConnector --os-type Both
+  - summary: Install the ACI Connector using a specific service principal.
     syntax:
-      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector --service-principal <SPN_ID> --client-secret <SPN_SECRET>
-  - summary: Install the ACI-Connector from a specific custom chart.
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup   --connector-name MyConnector --service-principal <SPN_ID> --client-secret <SPN_SECRET>
+  - summary: Install the ACI Connector from a custom Helm chart.
     syntax:
-      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector --chart-url <CustomURL>
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup   --connector-name MyConnector --chart-url <CustomURL>
   parameters:
   - isRequired: true
     name: --connector-name
-    summary: The name for the ACI Connector.
+    summary: Name of the ACI Connector.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -220,10 +217,10 @@ items:
     description: ''
   - name: --chart-url
     defaultValue: <a href="https://github.com/virtual-kubelet/virtual-kubelet/raw/master/charts/virtual-kubelet-0.1.0.tgz">https://github.com/virtual-kubelet/virtual-kubelet/raw/master/charts/virtual-kubelet-0.1.0.tgz</a>
-    summary: URL to the chart.
+    summary: URL of a Helm chart that installs ACI Connector.
     description: ''
   - name: --client-secret
-    summary: Client secret to use with the service principal for making calls to Azure APIs.
+    summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -231,11 +228,11 @@ items:
   - name: --os-type
     defaultValue: Linux
     parameterValueGroup: Both, Linux, Windows
-    summary: The OS type of the connector.
+    summary: Install support for deploying ACIs of this operating system type.
     description: ''
   - name: --service-principal
-    summary: Service principal for making calls into Azure APIs. If not set, auto generate a new service principal of Contributor role, and save it locally for reusing.
-    description: ''
+    summary: Service principal used for authentication to Azure APIs.
+    description: If not specified, a new service principal with the contributor role is created and cached at $HOME.azureacsServicePrincipal.json to be used by subsequent `az aks` commands.
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
@@ -248,37 +245,34 @@ items:
     description: ''
 - uid: az_aks_remove_connector
   name: az aks remove-connector
-  summary: Undeploy the ACI-Connector from an AKS cluster.
+  summary: Remove the ACI Connector from a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Undeploy the ACI-Connector on an AKS cluster.
+  - summary: Remove the ACI Connector from a cluster using the graceful mode.
     syntax:
-      content: az aks remove-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector
-  - summary: Undeploy the ACI-Connector on an AKS cluster using the graceful mode
-    syntax:
-      content: az aks remove-connector --name MyManagedCluster --resource-group MyResourceGroup --connector-name aci-connector --graceful
+      content: az aks remove-connector --name MyManagedCluster --resource-group MyResourceGroup   --connector-name MyConnector --graceful
   parameters:
   - isRequired: true
     name: --connector-name
-    summary: The name for the ACI Connector.
+    summary: Name of the ACI Connector.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The name of the resource group where the AKS cluster is deployed.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --graceful
-    summary: Mention if you want to drain/uncordon your aci-connector to move your applications.
+    summary: Use a "cordon and drain" strategy to evict pods safely before removing the ACI node.
     description: ''
   - name: --os-type
     defaultValue: Linux
     parameterValueGroup: Both, Linux, Windows
-    summary: The OS type of the connector.
+    summary: Remove support for deploying ACIs of this operating system type.
     description: ''
 - uid: az_aks_scale
   name: az aks scale
@@ -289,11 +283,11 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --node-count -c
-    summary: The desired number of nodes.
+    summary: Number of nodes in the Kubernetes node pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -304,14 +298,14 @@ items:
     description: ''
 - uid: az_aks_show
   name: az aks show
-  summary: Show a managed Kubernetes cluster.
+  summary: Show the details for a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -320,17 +314,18 @@ items:
 - uid: az_aks_upgrade
   name: az aks upgrade
   summary: Upgrade a managed Kubernetes cluster to a newer version.
-  description: ''
+  description: Kubernetes will be unavailable during cluster upgrades.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --kubernetes-version -k
-    summary: The version of Kubernetes to upgrade the cluster to, such as '1.7.9' or '1.8.2'.
+    summary: Version of Kubernetes to upgrade the cluster to, such as "1.7.7" or "1.8.2".
     description: ''
+    valueFrom: '`az aks get-versions`'
   - isRequired: true
     name: --name -n
-    summary: Resource name for the managed cluster.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -344,14 +339,18 @@ items:
     description: ''
 - uid: az_aks_wait
   name: az aks wait
-  summary: Wait for a Kubernetes cluster to reach a desired state.
-  description: ''
+  summary: Wait for a managed Kubernetes cluster to reach a desired state.
+  description: If an operation on a cluster was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
   langs:
   - azurecli
+  examples:
+  - summary: Wait for a cluster to be upgraded, polling every minute for up to thirty minutes.
+    syntax:
+      content: az aks wait -g MyResourceGroup -n MyManagedCluster --updated --interval 60 --timeout 1800
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the managed cluster resource.
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -383,43 +382,43 @@ items:
 commands:
 - uid: az_aks_browse
   name: az aks browse
-  summary: Open a web browser to the dashboard for a managed Kubernetes cluster.
+  summary: Show the dashboard for a Kubernetes cluster in a web browser.
 - uid: az_aks_create
   name: az aks create
-  summary: Create a new Azure managed Kubernetes cluster.
+  summary: Create a new managed Kubernetes cluster.
 - uid: az_aks_delete
   name: az aks delete
   summary: Delete a managed Kubernetes cluster.
 - uid: az_aks_get_credentials
   name: az aks get-credentials
-  summary: Get credentials to access a managed Kubernetes cluster.
+  summary: Get access credentials for a managed Kubernetes cluster.
 - uid: az_aks_get_versions
   name: az aks get-versions
   summary: Get versions available to upgrade a managed Kubernetes cluster.
 - uid: az_aks_install_cli
   name: az aks install-cli
-  summary: Download and install kubectl, the Kubernetes command line tool.
+  summary: Download and install kubectl, the Kubernetes command-line tool.
 - uid: az_aks_install_connector
   name: az aks install-connector
-  summary: Deploy the ACI-Connector to a AKS cluster.
+  summary: Install the Azure Container Instances (ACI) Connector on a managed Kubernetes cluster.
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
 - uid: az_aks_remove_connector
   name: az aks remove-connector
-  summary: Undeploy the ACI-Connector from an AKS cluster.
+  summary: Remove the ACI Connector from a managed Kubernetes cluster.
 - uid: az_aks_scale
   name: az aks scale
   summary: Scale the node pool in a managed Kubernetes cluster.
 - uid: az_aks_show
   name: az aks show
-  summary: Show a managed Kubernetes cluster.
+  summary: Show the details for a managed Kubernetes cluster.
 - uid: az_aks_upgrade
   name: az aks upgrade
   summary: Upgrade a managed Kubernetes cluster to a newer version.
 - uid: az_aks_wait
   name: az aks wait
-  summary: Wait for a Kubernetes cluster to reach a desired state.
+  summary: Wait for a managed Kubernetes cluster to reach a desired state.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

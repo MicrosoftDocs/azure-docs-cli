@@ -13,19 +13,29 @@ items:
   - az_vmss_extension_image_show
 - uid: az_vmss_extension_image_list
   name: az vmss extension image list
-  summary: Vm extension image list.
+  summary: List the information on available extensions.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List the unique publishers for extensions.
+    syntax:
+      content: az vmss extension image list --query "[].publisher" -o tsv | sort -u
+  - summary: Find extensions with "Docker" in the name.
+    syntax:
+      content: az vmss extension image list --query "[].name" -o tsv | sort -u | grep Docker
+  - summary: List extension names where the publisher name starts with "Microsoft.Azure.App".
+    syntax:
+      content: az vmss extension image list --query     "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher"     -o tsv | sort -u | xargs -I{} az vmss extension image list-names --publisher {} -l westus
   parameters:
-  - name: --image-location
-    summary: Image location.
-    description: ''
   - name: --latest
     summary: Show the latest version only.
     description: ''
+  - name: --location -l
+    summary: Image location.
+    description: ''
   - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    summary: Image name.
     description: ''
   - name: --publisher -p
     summary: Image publisher name.
@@ -73,7 +83,7 @@ items:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Extension name.
+    summary: Name of the extension.
     description: ''
   - isRequired: true
     name: --publisher -p
@@ -83,10 +93,10 @@ items:
     summary: The filter to apply on the operation.
     description: ''
   - name: --orderby
-    summary: The sort to apply on the operation.
+    summary: ''
     description: ''
   - name: --top
-    summary: Return top number of records.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -107,7 +117,7 @@ items:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Extension name.
+    summary: Name of the extension.
     description: ''
   - isRequired: true
     name: --publisher -p
@@ -126,7 +136,7 @@ items:
 commands:
 - uid: az_vmss_extension_image_list
   name: az vmss extension image list
-  summary: Vm extension image list.
+  summary: List the information on available extensions.
 - uid: az_vmss_extension_image_list_names
   name: az vmss extension image list-names
   summary: Gets a list of virtual machine extension image types.
@@ -152,6 +162,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ff2511e798208f39df6318a80ca048943d1ab5cd/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 12/15/2017 12:37:05 AM
-ms.date: 12/15/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/d93f0afa5922deaa8be615de05e3963a37d84dec/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 1/11/2018 10:49:29 PM
+ms.date: 1/11/2018

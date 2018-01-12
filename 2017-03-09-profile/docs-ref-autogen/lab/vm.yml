@@ -35,7 +35,7 @@ items:
     summary: Name of lab's resource group.
     description: ''
   - name: --artifacts
-    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+    summary: JSON encoded array of artifacts to be applied. Use '@{file}' to load from a file.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -52,13 +52,13 @@ items:
   examples:
   - summary: Claim any available virtual machine in the lab.
     syntax:
-      content: az lab vm claim -g MyRG --lab-name MyLab
+      content: az lab vm claim -g {ResourceGroup} --lab-name {LabName}
   - summary: Claim a specific virtual machine in the lab.
     syntax:
-      content: az lab vm claim -g MyRG --lab-name MyLab --name MyVM
-  - summary: Claim multiple virtual machines in the lab using `--ids`.
+      content: az lab vm claim -g {ResourceGroup} --lab-name {LabName} --name {VMName}
+  - summary: Claim multiple virtual machines in the lab by IDs.
     syntax:
-      content: az lab vm claim --ids     /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM1}     /subscriptions/{SubID}/resourcegroups/{MyRG}/providers/microsoft.devtestlab/labs/{MyLab}/virtualmachines/{MyVM2}
+      content: az lab vm claim --ids     /subscriptions/{SubID}/resourcegroups/{ResourceGroup}/providers/microsoft.devtestlab/labs/{LabName}/virtualmachines/{VMName1}     /subscriptions/{SubID}/resourcegroups/{ResourceGroup}/providers/microsoft.devtestlab/labs/{LabName}/virtualmachines/{VMName2}
   parameters:
   - name: --lab-name
     summary: Name of the lab.
@@ -84,25 +84,25 @@ items:
   examples:
   - summary: Create a VM in the lab from a gallery image.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2
   - summary: Create a VM in the lab from a gallery image with SSH authentication.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --authentication-type ssh
   - summary: Create a claimable VM in the lab from a gallery image with password authentication.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --allow-claim
   - summary: Create a windows VM in the lab from a gallery image with password authentication.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "Windows Server 2008 R2 SP1" --image-type gallery --size Standard_DS1_v2
   - summary: Create a VM in the lab from a custom image.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "jenkins_custom" --image-type custom --size Standard_DS1_v2
   - summary: Create a VM in the lab with a public IP.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --image "Ubuntu Server 16.04 LTS" --image-type gallery --size Standard_DS1_v2 --ip-configuration public
   - summary: Create a VM from a formula.
     syntax:
-      content: az lab vm create --lab-name MyLab -g MyRG --name MyVM --formula MyFormula --artifacts @/artifacts.json
+      content: az lab vm create --lab-name {LabName} -g {ResourceGroup} --name {VMName} --formula MyFormula --artifacts '@artifacts.json'
   parameters:
   - isRequired: true
     name: --lab-name
@@ -114,13 +114,13 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --allow-claim
     summary: Flag indicating if the VM should be created as claimable.
     description: ''
   - name: --artifacts
-    summary: JSON encoded array of artifacts to be applied. Use @{file} to load from a file.
+    summary: JSON encoded array of artifacts to be applied. Use '@{file}' to load from a file.
     description: ''
   - name: --disk-type
     summary: Storage type to use for virtual machine.
@@ -131,6 +131,9 @@ items:
   - name: --formula
     summary: Name of the formula. Use `az lab formula list` for available formulas.
     description: Use `az lab formula` with the `--export-artifacts` flag to export and update artifacts, then pass the results via the `--artifacts` argument.
+  - name: --generate-ssh-keys
+    summary: Generate SSH public and private key files if missing.
+    description: ''
   - name: --image
     summary: The name of the operating system image (gallery image name or custom image name/ID).
     description: Use `az lab gallery-image list` for available gallery images or `az lab custom-image list` for available custom images.
@@ -145,7 +148,7 @@ items:
     description: ''
   - name: --tags
     summary: Space separated tags in `key[=value]` format.
-    description: Tags may be cleared by assigning the empty value `""` to them.
+    description: Tags may be cleared by assigning the empty value "" to them.
   - name: --admin-password
     summary: Password for the VM admin.
     description: ''
@@ -156,9 +159,6 @@ items:
   - name: --authentication-type
     defaultValue: password
     summary: 'Type of authentication allowed for the VM. Allowed values are: password, ssh.'
-    description: ''
-  - name: --generate-ssh-keys
-    summary: Generate SSH public and private key files if missing.
     description: ''
   - name: --saved-secret
     summary: Name of the saved secret to be used for authentication.
@@ -219,7 +219,13 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of lab's resource group. You can configure the default group using 'az configure --defaults group=<name>'.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --all
+    summary: List all virtual machines in the lab. Cannot be used with `--filters`.
+    description: ''
+  - name: --claimable
+    summary: List only claimable virtual machines in the lab. Cannot be used with `--filters`.
     description: ''
   - name: --expand
     summary: The expand query.
@@ -232,12 +238,6 @@ items:
     description: ''
   - name: --top
     summary: The maximum number of resources to return.
-    description: ''
-  - name: --all
-    summary: List all virtual machines in the lab. Cannot be used with `--filters`.
-    description: ''
-  - name: --claimable
-    summary: List only claimable virtual machines in the lab. Cannot be used with `--filters`.
     description: ''
   - name: --environment
     summary: Name or ID of the environment to list virtual machines in. Cannot be used with `--filters`.
@@ -370,6 +370,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c85bdbe4002a5e52a2402bf5add66bdaf84d000d/src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
-updated_at: 9/14/2017 9:54:13 PM
-ms.date: 9/14/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/d93f0afa5922deaa8be615de05e3963a37d84dec/src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
+updated_at: 1/11/2018 10:49:29 PM
+ms.date: 1/11/2018
