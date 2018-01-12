@@ -35,10 +35,10 @@ which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cl
 ## Finding commands
 
 Commands in the CLI are provided as _subcommands_ of _groups_.
-Each group represents a service provided by Azure, and the subcommands and subgroups of it
-break up the way you interact with those resources.
-
-To search for commands, use [az find](cli/azure/?view=azure-cli-latest#az_find). For example, to search for all commands containing `lock`: 
+Each group represents a service provided by Azure, and the subgroups divide commands for these services
+into logical groupings.
+ 
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for all commands containing `lock`: 
 
 ```azurecli
 az find -q lock
@@ -46,7 +46,7 @@ az find -q lock
 
 The `find` command can be slow, so to find commands within a specific group, the `--help` argument
 may be the better choice. For example, when working with Network Security Groups (NSGs), you can find the available
-NSG commands.
+NSG subgroups and commands.
 
 ```azurecli
 az network nsg --help
@@ -55,7 +55,7 @@ az network nsg --help
 ## Common commands
 
 This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference. 
-All subcommands of these groups and their documenation can be looked up in online reference or with the `--help` argument.  
+All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.  
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
@@ -81,9 +81,9 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 There are some arguments that are available for every command.
 
-* `--debug` prints verbose information for debugging purposes when running a comamnd. If you encounter a bug, 
+* `--debug` prints verbose information for debugging purposes when running a command. If you encounter a bug, 
   always try and provide output generated with the `--debug` flag on when submitting a bug report.
-* `--verbose` prints more information than usual, but not at the level of debug information.
+* `--verbose` prints information about every resource created in Azure during a CLI operation, and local environment settings used.
 * `--help` prints CLI reference information about commands and their arguments, and lists available subgroups and
   commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
@@ -104,7 +104,8 @@ To to get started with Azure services while using the CLI, we offer a variety of
 * [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
 * [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
-There is also an in-depth tutorial for setting up and running a VM, which includes information on using queries and output formats to effectively get information from the CLI for your local environment. See the [Set up an Azure Virtual Machine and associated resources](azure-cli-intrioduction-tutorial.yml) tutorial for more information.
+There is also an in-depth tutorial for setting up and running a VM, which includes information on using queries and output formats to get information from the CLI
+for your local environment. Go ahead and get started with the [Set up an Azure Virtual Machine and associated resources](azure-cli-intrioduction-tutorial.yml) tutorial.
 
 ## Give feedback
 

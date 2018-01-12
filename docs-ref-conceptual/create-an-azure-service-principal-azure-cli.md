@@ -78,7 +78,7 @@ The `--display-name` option filters the returned list of apps to show those with
 Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--password` parameter to create the service principal with a password. When you do not provide a role or scope, it defaults to the **Contributor** role for the current subscription. If you create a service principal without using either the `--password` or `--cert` parameter, password authentication is used and a password is generated for you.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name {appId} --password "{strong password}"
+az ad sp create-for-rbac --name {appName} --password "{strong password}"
 ```
 
 ```json
@@ -100,7 +100,7 @@ az ad sp create-for-rbac --name {appId} --password "{strong password}"
 Use [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) and the `--create-cert` parameter to create a self-signed certificate.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name {appId} --create-cert
+az ad sp create-for-rbac --name {appName} --create-cert
 ```
 
 ```json
@@ -121,7 +121,7 @@ For more options when using certificates, see [az ad sp create-for-rbac](/cli/az
 ### Get information about the service principal
 
 ```azurecli-interactive
-az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
+az ad sp show --id {appID}
 ```
 
 ```json
@@ -142,7 +142,7 @@ az ad sp show --id a487e0c1-82af-47d9-9a0b-af184eb87646d
 You can now log in as the new service principal for your app using the *appId* from `az ad sp show`, and either the *password* or the path to the created certificate.  Supply the *tenant* value from the results of `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
-az login --service-principal -u a487e0c1-82af-47d9-9a0b-af184eb87646d --password {password-or-path-to-cert} --tenant {tenant}
+az login --service-principal -u {appID} --password {password-or-path-to-cert} --tenant {tenant}
 ```
 
 You will see this output after a successful sign-on:
