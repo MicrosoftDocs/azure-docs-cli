@@ -10,7 +10,6 @@ items:
   - az_acs_browse
   - az_acs_create
   - az_acs_delete
-  - az_acs_install_cli
   - az_acs_list
   - az_acs_list_locations
   - az_acs_scale
@@ -18,18 +17,18 @@ items:
   - az_acs_wait
 - uid: az_acs_browse
   name: az acs browse
-  summary: Opens a browser to the web interface for the cluster orchestrator.
+  summary: Show the dashboard for a service container's orchestrator in a web browser.
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: ACS cluster name. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --resource-group
+    summary: ''
     description: ''
   - name: --disable-browser
     summary: Do not open browser after opening a proxy to the cluster web user interface.
@@ -56,7 +55,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: ACS cluster name. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -65,42 +64,42 @@ items:
   - name: --admin-password
     summary: The adminstration password for Windows nodes. Only available if --windows=true.
     description: ''
-  - name: --admin-username
+  - name: --admin-username -u
     defaultValue: azureuser
     summary: User name for the Linux Virtual Machines.
     description: ''
   - name: --agent-count
     defaultValue: "3"
-    summary: Set default number of agents for the agent pools.  Note, for DC/OS clusters you will also get 1 or 2 public agents in addition to these selected masters.
+    summary: ''
     description: ''
   - name: --agent-osdisk-size
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Set the default disk size for agent pools vms. Unit in GB. Default: corresponding vmsize disk size.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Set the default disk size for agent pools vms. Unit in GB. Default: corresponding vmsize disk size.'
     description: ''
   - name: --agent-ports
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Set the default ports exposed on the agent pools. Only usable for non-Kubernetes. Default: 8080,4000,80.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Set the default ports exposed on the agent pools. Only usable for non-Kubernetes. Default: 8080,4000,80.'
     description: ''
   - name: --agent-profiles -a
-    summary: Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. The file or dictionary representation of the agent profiles. Note it will override any agent settings once set.
+    summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. The file or dictionary representation of the agent profiles. Note it will override any agent settings once set.
     description: ''
   - name: --agent-storage-profile
     parameterValueGroup: ManagedDisks, StorageAccount
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Set default storage profile for agent pools. Default: varies based on Orchestrator.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Set default storage profile for agent pools. Default: varies based on Orchestrator.'
     description: ''
   - name: --agent-vm-size
     defaultValue: Standard_D2_v2
     summary: Set the default size for agent pools vms.
     description: ''
   - name: --agent-vnet-subnet-id
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Set the default custom vnet subnet id for agent pools. Note agent need to used the same vnet if master set. Default: "".'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Set the default custom vnet subnet id for agent pools. Note agent need to used the same vnet if master set. Default: "".'
     description: ''
   - name: --api-version
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Use API version of ACS to perform az acs operations. Available options: 2017-01-31, 2017-07-01. Default: the latest version for the location.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Use API version of ACS to perform az acs operations. Available options: 2017-01-31, 2017-07-01. Default: the latest version for the location.'
     description: ''
   - name: --client-secret
-    summary: Client secret to use with the service principal for making calls to Azure APIs.
+    summary: ''
     description: ''
   - name: --dns-prefix -d
-    summary: Default use the format of <clustername>-<resourcegroupname>-<subid>, will trim the length and replace sensitive characters if needed.
+    summary: Sets the Domain name prefix for the cluster. The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
@@ -114,24 +113,24 @@ items:
     description: ''
   - name: --master-first-consecutive-static-ip
     defaultValue: 10.240.255.5
-    summary: Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. The first consecutive ip used to specify static ip block.
+    summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. The first consecutive ip used to specify static ip block.
     description: ''
   - name: --master-osdisk-size
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. The disk size for master pool vms. Unit in GB. Default: corresponding vmsize disk size.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. The disk size for master pool vms. Unit in GB. Default: corresponding vmsize disk size.'
     description: ''
   - name: --master-profile -m
-    summary: Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. The file or dictionary representation of the master profile. Note it will override any master settings once set.
+    summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. The file or dictionary representation of the master profile. Note it will override any master settings once set.
     description: ''
   - name: --master-storage-profile
     parameterValueGroup: ManagedDisks, StorageAccount
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Default: varies based on Orchestrator.'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Default: varies based on Orchestrator.'
     description: ''
   - name: --master-vm-size
     defaultValue: Standard_D2_v2
-    summary: Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral.
+    summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2.
     description: ''
   - name: --master-vnet-subnet-id
-    summary: 'Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. The custom vnet subnet id. Note agent need to used the same vnet if master set. Default: "".'
+    summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. The custom vnet subnet id. Note agent need to used the same vnet if master set. Default: "".'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -139,17 +138,17 @@ items:
   - name: --orchestrator-type -t
     defaultValue: DCOS
     parameterValueGroup: Custom, DCOS, DockerCE, Kubernetes, Swarm
-    summary: DockerCE - Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral.
+    summary: The type of orchestrator used to manage the applications on the cluster.
     description: ''
   - name: --orchestrator-version
-    summary: Feature in preview, only in ukwest, uksouth, westcentralus, westus2, canadaeast, canadacentral, westindia, southindia, centralindia, koreasouth, koreacentral. Use Orchestrator Version to specify the semantic version for your choice of orchestrator.
+    summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Use Orchestrator Version to specify the semantic version for your choice of orchestrator.
     description: ''
   - name: --service-principal
-    summary: Service principal for making calls into Azure APIs. If not set, auto generate a new service principal of Contributor role, and save it locally for reusing.
+    summary: ''
     description: ''
   - name: --ssh-key-value
     defaultValue: ~.sshid_rsa.pub
-    summary: SSH key file value or key file path.
+    summary: Configure all linux machines with the SSH RSA public key string.  Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm.
     description: ''
   - name: --tags
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -175,38 +174,14 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the container service.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  source:
-    path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_acs_install_cli
-  name: az acs install-cli
-  summary: Download and install the DC/OS and Kubernetes command line for a cluster.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: ACS cluster name. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --client-version
-    summary: ''
-    description: ''
-  - name: --install-location
-    summary: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   source:
     path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
@@ -232,7 +207,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acs_list_locations
   name: az acs list-locations
-  summary: ''
+  summary: List locations where Azure Container Service is in preview and in production.
   description: ''
   langs:
   - azurecli
@@ -252,11 +227,11 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the container service.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --new-agent-count
-    summary: The number of agents for the cluster.
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -277,7 +252,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the container service.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -291,14 +266,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acs_wait
   name: az acs wait
-  summary: ''
-  description: ''
+  summary: Wait for a container service to reach a desired state.
+  description: If an operation on a container service was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the container service.
+    summary: Name of the container service. You can configure the default using `az configure --defaults acs=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -336,13 +311,13 @@ items:
 commands:
 - uid: az_acs_browse
   name: az acs browse
-  summary: Opens a browser to the web interface for the cluster orchestrator.
+  summary: Show the dashboard for a service container's orchestrator in a web browser.
 - uid: az_acs_create
   name: az acs create
   summary: Create a container service.
 - uid: az_acs_dcos
   name: az acs dcos
-  summary: Manage a DC/OS orchestrated Azure Container Service.
+  summary: Commands to manage a DC/OS-orchestrated Azure Container Service.
 - uid: az_acs_dcos_browse
   name: az acs dcos browse
   summary: Creates an SSH tunnel to the Azure container service, and opens the Mesosphere DC/OS dashboard in the browser.
@@ -352,12 +327,9 @@ commands:
 - uid: az_acs_delete
   name: az acs delete
   summary: Delete a container service.
-- uid: az_acs_install_cli
-  name: az acs install-cli
-  summary: Download and install the DC/OS and Kubernetes command line for a cluster.
 - uid: az_acs_kubernetes
   name: az acs kubernetes
-  summary: Manage a Kubernetes orchestrated Azure Container Service.
+  summary: Commands to manage a Kubernetes-orchestrated Azure Container Service.
 - uid: az_acs_kubernetes_browse
   name: az acs kubernetes browse
   summary: Launch a proxy and browse the Kubernetes web UI.
@@ -372,7 +344,7 @@ commands:
   summary: List container services.
 - uid: az_acs_list_locations
   name: az acs list-locations
-  summary: ''
+  summary: List locations where Azure Container Service is in preview and in production.
 - uid: az_acs_scale
   name: az acs scale
   summary: Change the private agent count of a container service.
@@ -381,7 +353,7 @@ commands:
   summary: Get the details for a container service.
 - uid: az_acs_wait
   name: az acs wait
-  summary: ''
+  summary: Wait for a container service to reach a desired state.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -398,6 +370,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/433894a55fc32d72844250adeae467a937cab555/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-updated_at: 12/13/2017 9:05:44 PM
-ms.date: 12/13/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/23728f4e35ea97d95c0da7aae41b8d90c7bd4855/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
+updated_at: 12/19/2017 11:44:43 PM
+ms.date: 12/19/2017

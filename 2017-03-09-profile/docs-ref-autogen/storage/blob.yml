@@ -93,7 +93,7 @@ items:
   - isRequired: true
     name: --source -s
     summary: The blob container from where the files will be deleted.
-    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will parsed from the URL.
+    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
   - name: --delete-snapshots
     parameterValueGroup: include, only
     summary: ''
@@ -143,7 +143,7 @@ items:
 - uid: az_storage_blob_download
   name: az storage blob download
   summary: Downloads a blob to a file path, with automatic chunking and progress notifications.
-  description: Returns an instance of Blob with properties and metadata.
+  description: Returns an instance of Blob with  properties and metadata.
   langs:
   - azurecli
   parameters:
@@ -166,12 +166,23 @@ items:
     summary: Required if the blob has an active lease.
     description: ''
   - name: --max-connections
-    defaultValue: "2"
-    summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the blob. If this is the entire blob, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be useful if many blobs are expected to be empty as an extra request is required for empty blobs if max_connections is greater than 1.
+    defaultValue: "1"
+    summary: Set to 1 to download the blob sequentially. Set to 2 or greater if you want to download a blob larger than 64MB in chunks. If the blob size does not exceed 64MB it will be downloaded in one chunk.
+    description: ''
+  - name: --max-retries
+    defaultValue: "5"
+    summary: Number of times to retry download of blob chunk if an error occurs.
     description: ''
   - name: --open-mode
     defaultValue: wb
-    summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
+    summary: Mode to use when opening the file.
+    description: ''
+  - name: --range-get-content-md5
+    summary: When this header is set to True and specified together with the Range header, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size.
+    description: ''
+  - name: --retry-interval
+    defaultValue: "1.0"
+    summary: Sleep time in secs between retries.
     description: ''
   - name: --snapshot
     summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve.
@@ -181,9 +192,6 @@ items:
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
-    description: ''
-  - name: --validate-content
-    summary: If set to true, validates an MD5 hash for each retrieved portion of the blob. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that the service will only return transactional MD5s for chunks 4MB or less so the first get request will be of size self.MAX_CHUNK_GET_SIZE instead of self.MAX_SINGLE_GET_SIZE. If self.MAX_CHUNK_GET_SIZE was set to greater than 4MB an error will be thrown. As computing the MD5 takes processing time and more requests will need to be done due to the reduced chunk size there may be some increase in latency.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -229,7 +237,7 @@ items:
   - isRequired: true
     name: --source -s
     summary: The blob container from where the files will be downloaded.
-    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will parsed from the URL.
+    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
   - name: --dryrun
     summary: Show the summary of the operations to be taken instead of actually downloading the file(s).
     description: ''
@@ -428,7 +436,7 @@ items:
   - name: --type -t
     defaultValue: block
     parameterValueGroup: block, page
-    summary: The blob's type.
+    summary: The blob type.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -675,7 +683,7 @@ items:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
+    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB. Set to 1 to upload the blob chunks sequentially. Set to 2 or more to upload the blob chunks in parallel. This uses more system resources but will upload faster.
     description: ''
   - name: --maxsize-condition
     summary: The max length in bytes permitted for an append blob.
@@ -683,19 +691,12 @@ items:
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
-  - name: --tier
-    parameterValueGroup: P10, P20, P30, P4, P40, P50, P6, P60
-    summary: A page blob tier value to set the blob to. The tier correlates to the size of the blob and number of allowed IOPS. This is only applicable to page blobs on premium storage accounts.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   - name: --type -t
     parameterValueGroup: append, block, page
     summary: Defaults to 'page' for *.vhd files, or 'block' otherwise.
-    description: ''
-  - name: --validate-content
-    summary: Specifies that an MD5 hash shall be calculated for each chunk of the blob and verified by the service when the chunk has arrived.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -786,9 +787,6 @@ items:
   - name: --maxsize-condition
     summary: The max length in bytes permitted for an append blob.
     description: ''
-  - name: --validate-content
-    summary: Specifies that an MD5 hash shall be calculated for each chunk of the blob and verified by the service when the chunk has arrived.
-    description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
@@ -842,9 +840,6 @@ items:
   - name: --sas-token
     summary: Shared access signature token created with generate_shared_access_signature.
     description: ''
-  - name: --snapshot
-    summary: An string value that uniquely identifies the snapshot. The value of this query parameter indicates the snapshot version.
-    description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -869,7 +864,7 @@ commands:
   summary: Aborts a pending copy_blob operation, and leaves a destination blob with zero length and full metadata.
 - uid: az_storage_blob_copy_start
   name: az storage blob copy start
-  summary: Copies a blob asynchronously.
+  summary: Copies a blob to a destination within the storage account.
 - uid: az_storage_blob_copy_start_batch
   name: az storage blob copy start-batch
   summary: Copy multiple blobs or files to a blob container.
@@ -891,33 +886,24 @@ commands:
 - uid: az_storage_blob_generate_sas
   name: az storage blob generate-sas
   summary: Generates a shared access signature for the blob.
-- uid: az_storage_blob_incremental_copy
-  name: az storage blob incremental-copy
-  summary: Manage blob incremental copy operations.
-- uid: az_storage_blob_incremental_copy_cancel
-  name: az storage blob incremental-copy cancel
-  summary: Aborts a pending copy_blob operation, and leaves a destination blob with zero length and full metadata.
-- uid: az_storage_blob_incremental_copy_start
-  name: az storage blob incremental-copy start
-  summary: Copies an incremental copy of a blob asynchronously.
 - uid: az_storage_blob_lease
   name: az storage blob lease
   summary: Manage storage blob leases.
 - uid: az_storage_blob_lease_acquire
   name: az storage blob lease acquire
-  summary: Requests a new lease.
+  summary: Acquires a lock on a blob for write and delete operations.
 - uid: az_storage_blob_lease_break
   name: az storage blob lease break
-  summary: Breaks the lease, if the blob has an active lease.
+  summary: Breaks a lock on a blob for write and delete operations.
 - uid: az_storage_blob_lease_change
   name: az storage blob lease change
-  summary: Changes the lease ID of an active lease.
+  summary: Changes a lock on a blob for write and delete operations.
 - uid: az_storage_blob_lease_release
   name: az storage blob lease release
-  summary: Releases the lease.
+  summary: Releases a lock on a blob for write and delete operations.
 - uid: az_storage_blob_lease_renew
   name: az storage blob lease renew
-  summary: Renews the lease.
+  summary: Renews a lock on a blob for write and delete operations.
 - uid: az_storage_blob_list
   name: az storage blob list
   summary: List blobs in a given container.
@@ -973,6 +959,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/3c635141b04f5ccc42b77f8641896bb205a2e950/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 10/30/2017 7:14:20 PM
-ms.date: 10/30/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/d93f0afa5922deaa8be615de05e3963a37d84dec/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 1/11/2018 10:49:29 PM
+ms.date: 1/11/2018

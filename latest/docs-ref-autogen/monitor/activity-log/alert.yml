@@ -21,18 +21,16 @@ items:
   examples:
   - summary: Create an alert with default settings.
     syntax:
-      content: az monitor activity-log alert create -n {ALERT_NAME} -g {RG}
+      content: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup}
   - summary: Create an alert with condition about error level service health log.
     syntax:
-      content: az monitor activity-log alert create -n {ALERT_NAME} -g {RG}   --condition category=ServiceHealth and level=Error
+      content: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup}   --condition category=ServiceHealth and level=Error
   - summary: Create an alert with an action group and specify webhook properties.
     syntax:
-      content: >-
-        az monitor activity-log alert create -n {ALERT_NAME} -g {RG}   -a /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/microsoft.insights/actionGroups/example_action_group
-                                  -w usage=test owner=jane
-  - summary: Create an alert is disabled initially.
+      content: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup}   -a /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/microsoft.insights/actionGroups/{ActionGroup}   -w usage=test owner=jane
+  - summary: Create an alert which is initially disabled.
     syntax:
-      content: az monitor activity-log alert create -n {ALERT_NAME} -g {RG} --disable
+      content: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup} --disable
   parameters:
   - isRequired: true
     name: --name -n
@@ -43,11 +41,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --action-group -a
-    summary: Add action group. Accept space separated action groups identifiers. The identify can be the action group's name or its resource id.
+    summary: Add an action group. Accepts space separated action group identifiers. The identifier can be the action group's name or its resource ID.
     description: ''
   - name: --condition -c
-    summary: A condition expression represents the condition that will cause the alert to activate. The format is FIELD=VALUE[ and FILED=VALUE...]. The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
-    description: ''
+    summary: The condition that will cause the alert to activate. The format is FIELD=VALUE[ and FIELD=VALUE...].
+    description: The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
   - name: --description
     summary: A description of this activity log alert.
     description: ''
@@ -55,14 +53,14 @@ items:
     summary: Disable the activity log alert after it is created.
     description: ''
   - name: --scope -s
-    summary: A list of string that will be used as prefixes. The alert will only apply to activityLogs with resourceIds that fall under one of these prefixes. If not provided, the path to this resource group will be used.
-    description: ''
+    summary: A list of strings that will be used as prefixes.
+    description: The alert will only apply to activity logs with resourceIDs that fall under one of these prefixes. If not provided, the path to the resource group will be used.
   - name: --tags
     summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --webhook-properties -w
-    summary: Space separated web hook properties in 'key[=value]' format. These properties will be associated with the action groups added in this command. For any webhook receiver in these action group, these data are appended to the webhook payload. To attach different webhook properties to different action groups, add the action groups in separate update-action commands.
-    description: ''
+    summary: Space separated webhook properties in 'key[=value]' format. These properties are associated with the action groups added in this command.
+    description: For any webhook receiver in these action group, this data is appended to the webhook payload. To attach different webhook properties to different action groups, add the action groups in separate update-action commands.
   source:
     path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
     remote:
@@ -136,10 +134,10 @@ items:
   examples:
   - summary: Update the condition
     syntax:
-      content: az monitor activity-log alert update -n {ALERT_NAME} -g {RG}   --condition category=ServiceHealth and level=Error
+      content: az monitor activity-log alert update -n {AlertName} -g {ResourceGroup}   --condition category=ServiceHealth and level=Error
   - summary: Disable an alert
     syntax:
-      content: az monitor activity-log alert update -n {ALERT_NAME} -g {RG} --enable false
+      content: az monitor activity-log alert update -n {AlertName} -g {ResourceGroup} --enable false
   parameters:
   - isRequired: true
     name: --name -n
@@ -150,8 +148,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --condition -c
-    summary: A condition expression represents the condition that will cause the alert to activate. The format is FIELD=VALUE[ and FILED=VALUE...]. The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
-    description: ''
+    summary: The conditional expression that will cause the alert to activate. The format is FIELD=VALUE[ and FIELD=VALUE...].
+    description: The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
   - name: --description
     summary: A description of this activity log alert.
     description: ''
@@ -227,6 +225,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/518f08f0c51382675ac10c0f3681d3e21dea88f1/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
-updated_at: 11/28/2017 2:03:35 AM
-ms.date: 11/28/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/d93f0afa5922deaa8be615de05e3963a37d84dec/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+updated_at: 1/11/2018 10:49:29 PM
+ms.date: 1/11/2018

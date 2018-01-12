@@ -9,7 +9,6 @@ items:
   children:
   - az_vm_assign_identity
   - az_vm_capture
-  - az_vm_convert
   - az_vm_create
   - az_vm_deallocate
   - az_vm_delete
@@ -19,13 +18,10 @@ items:
   - az_vm_list
   - az_vm_list_ip_addresses
   - az_vm_list_sizes
-  - az_vm_list_skus
   - az_vm_list_usage
   - az_vm_list_vm_resize_options
   - az_vm_open_port
-  - az_vm_perform_maintenance
   - az_vm_redeploy
-  - az_vm_remove_identity
   - az_vm_resize
   - az_vm_restart
   - az_vm_show
@@ -88,9 +84,9 @@ items:
     syntax:
       content: >-
         vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
-                                az vm deallocate --ids ${vms_ids}
-                                az vm generalize --ids ${vms_ids}
-                                az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
     name: --name -n
@@ -105,40 +101,12 @@ items:
     summary: The VHD name prefix specify for the VM disks.
     description: ''
   - name: --overwrite
-    defaultValue: "True"
+    defaultValue: "1"
     summary: Overwrite the existing disk file.
     description: ''
   - name: --storage-container
     defaultValue: vhds
-    summary: The storage account container name to save the disks.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_vm_convert
-  name: az vm convert
-  summary: Convert a VM with unmanaged disks to use managed disks.
-  description: ''
-  langs:
-  - azurecli
-  examples:
-  - summary: Convert a VM with unmanaged disks to use managed disks.
-    syntax:
-      content: az vm convert -g MyResourceGroup -n MyVm
-  - summary: Convert all VMs with unmanaged disks in a resource group to use managed disks.
-    syntax:
-      content: az vm convert --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: The storage account container name in which to save the disks.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -167,7 +135,7 @@ items:
       content: az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux
   - summary: 'Create an Ubuntu Linux VM using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init.'
     syntax:
-      content: az vm create -g MyResourceGroup -n MyVm --image debian --custom_data MyCloudInitScript.yml
+      content: az vm create -g MyResourceGroup -n MyVm --image debian --custom-data MyCloudInitScript.yml
   - summary: Create a Debian VM with SSH key authentication and a public DNS entry, located on an existing virtual network and availability set.
     syntax:
       content: az vm create -n MyVm -g MyResourceGroup --image debian --vnet-name MyVnet --subnet subnet1     --availability-set MyAvailabilitySet --public-ip-address-dns-name MyUniqueDnsName     --ssh-key-value @key-file
@@ -186,9 +154,6 @@ items:
   - summary: Create a debian VM with both system and user assigned identity.
     syntax:
       content: az vm create -n MyVm -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
-  - summary: Create a VM in an availability zone in the current resource group's region
-    syntax:
-      content: az vm create -n MyVm -g MyResourceGroup --image Centos --zone 1
   parameters:
   - isRequired: true
     name: --name -n
@@ -237,10 +202,6 @@ items:
   - name: --validate
     summary: Generate and validate the ARM template without creating any resources.
     description: ''
-  - name: --zone -z
-    parameterValueGroup: 1, 2, 3
-    summary: Availability zone into which to provision the resource.
-    description: ''
   - name: --admin-password
     summary: Password for the VM if authentication type is 'Password'.
     description: ''
@@ -283,11 +244,8 @@ items:
   - name: --plan-publisher
     summary: Plan publisher.
     description: ''
-  - name: --asgs
-    summary: Space separated list of existing application security groups to associate with the VM.
-    description: ''
   - name: --nics
-    summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, vnet, public IP or NSG.
+    summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.
     description: ''
   - name: --nsg
     summary: The name to use when creating a new Network Security Group (default) or referencing an existing one. Can also reference an existing NSG by ID or specify "" for none.
@@ -308,7 +266,7 @@ items:
     summary: ''
     description: ''
   - name: --public-ip-address-dns-name
-    summary: Globally unique DNS name for a newly created Public IP.
+    summary: Globally unique DNS name for a newly created public IP.
     description: ''
   - name: --subnet
     summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
@@ -332,6 +290,7 @@ items:
     summary: Space separated empty managed data disk sizes in GB to create.
     description: ''
   - name: --os-disk-caching --storage-caching
+    defaultValue: ReadWrite
     parameterValueGroup: ReadOnly, ReadWrite
     summary: Storage caching type for the VM OS disk.
     description: ''
@@ -346,14 +305,14 @@ items:
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
     description: ''
   - name: --storage-account
-    summary: Only applicable when use with '--use-unmanaged-disk'. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
+    summary: Only applicable when used with `--use-unmanaged-disk`. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
     description: ''
   - name: --storage-container-name
-    summary: "Only applicable when use with '--use-unmanaged-disk'. Name of the storage container for the VM OS disk. Default: vhds."
+    summary: 'Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.'
     description: ''
   - name: --storage-sku
     parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
-    summary: The sku of storage account to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. Using with --use-unmanaged-disk, all are available.
+    summary: The SKU of the storage account with which to persist VM. By default, only Standard_LRS and Premium_LRS are allowed. With `--use-unmanaged-disk`, all are available.
     description: ''
   - name: --use-unmanaged-disk
     summary: Do not use managed disk to persist VM.
@@ -381,9 +340,9 @@ items:
     syntax:
       content: >-
         vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
-                                az vm deallocate --ids ${vms_ids}
-                                az vm generalize --ids ${vms_ids}
-                                az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
     name: --name -n
@@ -438,17 +397,17 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_format_secret
   name: az vm format-secret
-  summary: Format secrets to be used in `az vm create --secrets`.
+  summary: ''
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
     name: --secrets -s
-    summary: Space separated list of Key Vault secret URIs. Perhaps, produced by 'az keyvault secret list-versions --vault-name vaultname -n cert1 --query "[?attributes.enabled].id" -o tsv'.
+    summary: Space separated list of key vault secret URIs. Perhaps, produced by 'az keyvault secret list-versions --vault-name vaultname -n cert1 --query "[?attributes.enabled].id" -o tsv'.
     description: ''
   - name: --certificate-store
-    summary: Certificate store the secret will be applied (Windows only).
+    summary: 'Windows certificate store names. Default: My.'
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -473,9 +432,9 @@ items:
     syntax:
       content: >-
         vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
-                                az vm deallocate --ids ${vms_ids}
-                                az vm generalize --ids ${vms_ids}
-                                az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
     name: --name -n
@@ -598,26 +557,6 @@ items:
       branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_vm_list_skus
-  name: az vm list-skus
-  summary: Get details for compute-related resource SKUs.
-  description: This command incorporates subscription level restriction, offering the most accurate information.
-  langs:
-  - azurecli
-  examples:
-  - summary: List all SKUs in the West US region.
-    syntax:
-      content: az vm list-skus -l westus
-  parameters:
-  - name: --location -l
-    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_list_usage
   name: az vm list-usage
   summary: List available usage resources for VMs.
@@ -669,14 +608,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_open_port
   name: az vm open-port
-  summary: Manage open ports on a VM.
-  description: ''
+  summary: Opens a VM to inbound traffic on specified ports.
+  description: Adds a security rule to the network security group (NSG) that is attached to the VM's network interface (NIC) or subnet. The existing NSG will be used or a new one will be created. The rule name is 'open-port-{port}' and will overwrite an existing rule with this name. For multi-NIC VMs, or for more fine-grained control, use the appropriate network commands directly (nsg rule create, etc).
   langs:
   - azurecli
   examples:
   - summary: Open all ports on a VM to inbound traffic.
     syntax:
-      content: az vm open-port -g MyResourceGroup -n MyVm --port *
+      content: az vm open-port -g MyResourceGroup -n MyVm --port '*'
   - summary: Open a range of ports on a VM to inbound traffic with the highest priority.
     syntax:
       content: az vm open-port -g MyResourceGroup -n MyVm --port 80-100 --priority 100
@@ -705,27 +644,6 @@ items:
   - name: --priority
     defaultValue: "900"
     summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_vm_perform_maintenance
-  name: az vm perform-maintenance
-  summary: The operation to perform maintenance on a virtual machine.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -764,35 +682,6 @@ items:
       branch: master
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_vm_remove_identity
-  name: az vm remove-identity
-  summary: (PREVIEW) Remove user assigned identities from a VM.
-  description: ''
-  langs:
-  - azurecli
-  examples:
-  - summary: Remove 2 identities which are in the same resource group with the VM
-    syntax:
-      content: az vm remove-identity -g MyResourceGroup -n MyVm --identities readerId writerId
-  parameters:
-  - isRequired: true
-    name: --identities
-    summary: Space separated user assigned identities to remove.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
 - uid: az_vm_resize
   name: az vm resize
   summary: Update a VM's size.
@@ -817,8 +706,9 @@ items:
     description: ''
   - isRequired: true
     name: --size
-    summary: Sizes such as Standard_A4, Standard_F4s, etc.
+    summary: The VM size.
     description: ''
+    valueFrom: az vm list-vm-resize-options
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -1059,9 +949,6 @@ commands:
 - uid: az_vm_availability_set
   name: az vm availability-set
   summary: Group resources into availability sets.
-- uid: az_vm_availability_set_convert
-  name: az vm availability-set convert
-  summary: Convert an Azure Availability Set to contain VMs with managed disks.
 - uid: az_vm_availability_set_create
   name: az vm availability-set create
   summary: Create an Azure Availability Set.
@@ -1095,9 +982,6 @@ commands:
 - uid: az_vm_capture
   name: az vm capture
   summary: Capture information for a stopped VM.
-- uid: az_vm_convert
-  name: az vm convert
-  summary: Convert a VM with unmanaged disks to use managed disks.
 - uid: az_vm_create
   name: az vm create
   summary: Create an Azure Virtual Machine.
@@ -1116,27 +1000,18 @@ commands:
 - uid: az_vm_diagnostics_set
   name: az vm diagnostics set
   summary: Configure the Azure VM diagnostics extension.
-- uid: az_vm_disk
-  name: az vm disk
-  summary: Manage the managed data disks attached to a VM.
-- uid: az_vm_disk_attach
-  name: az vm disk attach
-  summary: Attach a managed persistent disk to a VM.
-- uid: az_vm_disk_detach
-  name: az vm disk detach
-  summary: Detatch a managed disk from a VM.
 - uid: az_vm_encryption
   name: az vm encryption
   summary: Manage encryption of VM disks.
 - uid: az_vm_encryption_disable
   name: az vm encryption disable
-  summary: Disable disk encryption on OS disk, Data disks, or both.
+  summary: Disable disk encryption on the OS disk and/or data disks.
 - uid: az_vm_encryption_enable
   name: az vm encryption enable
-  summary: Enable disk encryption on OS disk, Data disks, or both.
+  summary: Enable disk encryption on the OS disk and/or data disks.
 - uid: az_vm_encryption_show
   name: az vm encryption show
-  summary: Show the encryption status.
+  summary: Show encryption status.
 - uid: az_vm_extension
   name: az vm extension
   summary: Manage extensions on VMs.
@@ -1169,7 +1044,7 @@ commands:
   summary: Display information about extensions attached to a VM.
 - uid: az_vm_format_secret
   name: az vm format-secret
-  summary: Format secrets to be used in `az vm create --secrets`.
+  summary: ''
 - uid: az_vm_generalize
   name: az vm generalize
   summary: Mark a VM as generalized, allowing it to be imaged for multiple deployments.
@@ -1203,9 +1078,6 @@ commands:
 - uid: az_vm_list_sizes
   name: az vm list-sizes
   summary: List available sizes for VMs.
-- uid: az_vm_list_skus
-  name: az vm list-skus
-  summary: Get details for compute-related resource SKUs.
 - uid: az_vm_list_usage
   name: az vm list-usage
   summary: List available usage resources for VMs.
@@ -1232,16 +1104,10 @@ commands:
   summary: Display information for a NIC attached to a VM.
 - uid: az_vm_open_port
   name: az vm open-port
-  summary: Manage open ports on a VM.
-- uid: az_vm_perform_maintenance
-  name: az vm perform-maintenance
-  summary: The operation to perform maintenance on a virtual machine.
+  summary: Opens a VM to inbound traffic on specified ports.
 - uid: az_vm_redeploy
   name: az vm redeploy
   summary: Redeploy an existing VM.
-- uid: az_vm_remove_identity
-  name: az vm remove-identity
-  summary: (PREVIEW) Remove user assigned identities from a VM.
 - uid: az_vm_resize
   name: az vm resize
   summary: Update a VM's size.
@@ -1254,12 +1120,6 @@ commands:
 - uid: az_vm_run_command_invoke
   name: az vm run-command invoke
   summary: Run command on a vm.
-- uid: az_vm_run_command_list
-  name: az vm run-command list
-  summary: Lists all available run commands for a subscription in a location.
-- uid: az_vm_run_command_show
-  name: az vm run-command show
-  summary: Gets specific run command for a subscription in a location.
 - uid: az_vm_secret
   name: az vm secret
   summary: ''
@@ -1310,7 +1170,7 @@ commands:
   summary: Reset the SSH configuration on a VM.
 - uid: az_vm_user_update
   name: az vm user update
-  summary: Update or Add(only on Linux VM) users.
+  summary: Update a user account.
 - uid: az_vm_wait
   name: az vm wait
   summary: Place the CLI in a waiting state until a condition of the VM is met.
@@ -1330,6 +1190,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ff2511e798208f39df6318a80ca048943d1ab5cd/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 12/15/2017 12:37:05 AM
-ms.date: 12/15/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/d93f0afa5922deaa8be615de05e3963a37d84dec/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 1/11/2018 10:49:29 PM
+ms.date: 1/11/2018
