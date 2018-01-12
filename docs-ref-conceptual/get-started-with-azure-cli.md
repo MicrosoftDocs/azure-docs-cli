@@ -38,7 +38,7 @@ Commands in the CLI are provided as _subcommands_ of _groups_.
 Each group represents a service provided by Azure, and the subgroups divide commands for these services
 into logical groupings.
  
-To search for commands, use [az find](cli/azure/#az_find). For example, to search for all commands containing `lock`: 
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for all commands containing `lock`: 
 
 ```azurecli
 az find -q lock
