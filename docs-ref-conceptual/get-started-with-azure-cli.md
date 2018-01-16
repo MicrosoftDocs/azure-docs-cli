@@ -1,7 +1,7 @@
 ---
 title: Get started with Azure CLI 2.0
 description: Get started with Azure CLI 2.0
-keywords: Azure CLI, CLI help, Azure help, query, automation,  
+keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
 manager: routlaw
@@ -18,7 +18,7 @@ ms.service: multiple
 Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services
 and products, and is geared towards making tasks efficient and easy to automate. This article introduces
 the features of the CLI and links out to resources that will help you be productive.
- 
+
 ## Install and log in
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
@@ -30,15 +30,15 @@ az login
 ```
 
 This prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
-which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md). 
+which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Finding commands
 
 Commands in the CLI are provided as _subcommands_ of _groups_.
 Each group represents a service provided by Azure, and the subgroups divide commands for these services
 into logical groupings.
- 
-To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for all commands containing `lock`: 
+
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for all commands containing `lock`:
 
 ```azurecli
 az find -q lock
@@ -54,8 +54,8 @@ az network nsg --help
 
 ## Common commands
 
-This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference. 
-All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.  
+This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference.
+All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
@@ -81,7 +81,7 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 There are some arguments that are available for every command.
 
-* `--debug` prints verbose information for debugging purposes when running a command. If you encounter a bug, 
+* `--debug` prints verbose information for debugging purposes when running a command. If you encounter a bug,
   always try and provide output generated with the `--debug` flag on when submitting a bug report.
 * `--verbose` prints information about every resource created in Azure during a CLI operation, and local environment settings used.
 * `--help` prints CLI reference information about commands and their arguments, and lists available subgroups and
@@ -90,7 +90,7 @@ There are some arguments that are available for every command.
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services . To learn
-  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html). 
+  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 
 ## Learn CLI basics with quickstarts and tutorials
 
