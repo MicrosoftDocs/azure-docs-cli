@@ -16,6 +16,104 @@ ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 
 # Azure CLI 2.0 release notes
 
+## January 17, 2017
+
+Version 2.0.25
+
+### ACR
+
+* Add acr login fallback on Windows credential errors
+* Enable registry logs
+
+### ACS
+
+* aks fix for get-credentials command
+* aks doesn't need to add role for SPN now
+
+### Appservice
+
+* `webapp config ssl upload`: fix a bug where the hosting_environment_profile was null
+* `webapp browse`: adding support for browse to handle custom domain URL
+* `webapp log tail`: fixing a bug where support for slots was not working
+* `webapp config ssl upload`: fix a bug where the hosting_environment_profile was null
+
+### Backup
+
+* New feature: 'az backup item list' command now has '--container-name' parameter as optional instead of mandatory and output contains item health details.
+* New feature: Added original storage account option in 'az backup restore restore-disks' command.
+* Bugs fixed: VM and vault location check must be case insensitive in 'az backup protection enable-for-vm' command.
+* When a non-existent name is supplied for a container, commands will not fail with a stack trace.
+* az backup item list update: 'Health Status' of an item is now visible in the default table view.
+
+### Batch
+
+* `az batch login` command now returns authentication details.
+
+### Cloud
+
+* Bug fix: Do not require endpoints to be specified when setting --profile for a cloud.
+
+### Consumption
+
+* Added two new commands for reservations. Reservation Summaries and Reservation Details
+
+### Event Grid
+
+* Breaking Change: Removed the `az eventgrid topic event-subscription` commands. The corresponding `az eventgrid event-subscription` commands can now be used to manage event subscriptions for topics.
+* Breaking Change: Removed the `az eventgrid resource event-subscription` commands. The corresponding `az eventgrid event-subscription` commands can now be used to manage event subscriptions for Azure resources.
+* Breaking Change: Removed the `az eventgrid event-subscription show-endpoint-url` command. This can now be achieved using `az eventgrid event-subscription show` command with the --include-full-endpoint-url parameter.
+* Added a new command `az eventgrid topic update`.
+* Added a new command `az eventgrid event-subscription update`.
+* Added --ids parameter for `az eventgrid topic` commands.
+* Added tab completion support for topic names.
+
+### Interactive
+
+* Fix issue where interactive would not start on Python 2
+* Fix errors on start up and some commands not running in interactive mode
+
+### IoT
+
+* Added support for device provisioning service
+* Added deprecation messages in commands and command help.
+* Added IoT run once check to warn users about the availability of the IoT Extension.
+
+### Monitor
+
+* Breaking Change: Add multi-diagnostic settings support. `--name` is required in `monitor diagnostic-settings create`.
+* Add command to get diagnostic settings category.
+
+### Network
+
+* `vnet-gateway update`: Fix issue when trying to change to/from active-standby mode.
+* `application-gateway create/update`: Add support for HTTP2.
+
+### Profile
+
+* support login with user assigned identities
+
+### Role
+
+* role assignment: expose --assignee-object-id to bypass graph query
+
+### Service Fabric
+
+* Added detailed errors to validation response when creating cluster.
+* Fix missing client issue with several commands.
+
+### VM
+
+* vmss:(PREVIEW) cross zone support
+* vmss:(BREAKING CHANGE)single zone scale-set will default to "Standard" load balancer instead of "Basic"
+* vm/vmss: use right term of "userAssignedIdentity" for EMSI
+* vm: (PREVIEW) support os disk swap
+* vm: support use image from other subscriptions
+* vmss: ensure app-gateway has a name when defaults to it for large scalesets
+* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations
+* `vm/vmss create`: fix issue where the command would throw an error if unable to extract plan information from an image.
+* vm/vmss: lower thread number used for 'vm image list --all' to avoid exceeding the OS opened file limits
+
+
 ## December 19, 2017
 
 Version 2.0.23
