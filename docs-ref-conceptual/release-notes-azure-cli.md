@@ -4,14 +4,13 @@ description: Learn about the latest updates to Azure CLI 2.0
 keywords: Azure CLI 2.0, release notes
 author: sptramer
 ms.author: sttramer
-manager: douge
-ms.date: 04/03/2017
+manager: routlaw
+ms.date: 01/17/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 ---
 
 # Azure CLI 2.0 release notes
@@ -22,97 +21,96 @@ Version 2.0.25
 
 ### ACR
 
-* Add acr login fallback on Windows credential errors
-* Enable registry logs
+* Added acr login fallback on Windows credential errors
+* Enabled registry logs
 
 ### ACS
 
-* aks fix for get-credentials command
-* aks doesn't need to add role for SPN now
+* Fixed `get-credentials` command
+* Removed SPN role requirement
 
 ### Appservice
 
-* `webapp config ssl upload`: fix a bug where the hosting_environment_profile was null
-* `webapp browse`: adding support for browse to handle custom domain URL
-* `webapp log tail`: fixing a bug where support for slots was not working
-* `webapp config ssl upload`: fix a bug where the hosting_environment_profile was null
+* Fixed bug with `config ssl upload` where `hosting_environment_profile` was null
+* Added support for custom URLs to `browse`
+* Fixed slot support for `log tail`
 
 ### Backup
 
-* New feature: 'az backup item list' command now has '--container-name' parameter as optional instead of mandatory and output contains item health details.
-* New feature: Added original storage account option in 'az backup restore restore-disks' command.
-* Bugs fixed: VM and vault location check must be case insensitive in 'az backup protection enable-for-vm' command.
-* When a non-existent name is supplied for a container, commands will not fail with a stack trace.
-* az backup item list update: 'Health Status' of an item is now visible in the default table view.
+* Changed `--container-name` option of `backup item list` to be optional
+* Added storage account options to `backup restore restore-disks`
+* Fixed location check in `backup protection enable-for-vm` to be case insensitive
+* Fixed issue where commands failed with an invalid container name
+* Changed `backup item list` to include 'Health Status' by default
 
 ### Batch
 
-* `az batch login` command now returns authentication details.
+* Changed `batch login` to return authentication details
 
 ### Cloud
 
-* Bug fix: Do not require endpoints to be specified when setting --profile for a cloud.
+* Changed to not require endpoints when setting `--profile` on a cloud
 
 ### Consumption
 
-* Added two new commands for reservations. Reservation Summaries and Reservation Details
+* Added new commands for reservations [X]
 
 ### Event Grid
 
-* Breaking Change: Removed the `az eventgrid topic event-subscription` commands. The corresponding `az eventgrid event-subscription` commands can now be used to manage event subscriptions for topics.
-* Breaking Change: Removed the `az eventgrid resource event-subscription` commands. The corresponding `az eventgrid event-subscription` commands can now be used to manage event subscriptions for Azure resources.
-* Breaking Change: Removed the `az eventgrid event-subscription show-endpoint-url` command. This can now be achieved using `az eventgrid event-subscription show` command with the --include-full-endpoint-url parameter.
-* Added a new command `az eventgrid topic update`.
-* Added a new command `az eventgrid event-subscription update`.
-* Added --ids parameter for `az eventgrid topic` commands.
-* Added tab completion support for topic names.
+* [BREAKING CHANGE] Moved the `eventgrid topic event-subscription` commands to `eventgrid event-subscription`
+* [BREAKING CHANGE] Moved the `az eventgrid resource event-subscription` commands to `eventgrid event-subscription`
+* [BREAKING CHANGE] Removed the `eventgrid event-subscription show-endpoint-url` command. Use `eventgrid event-subscription show --include-full-endpoint-url` instead
+* Added command `eventgrid topic update`
+* Added command `eventgrid event-subscription update`
+* Added `--ids` parameter for `eventgrid topic` commands
+* Added tab completion support for topic names
 
 ### Interactive
 
-* Fix issue where interactive would not start on Python 2
-* Fix errors on start up and some commands not running in interactive mode
+* Fixed issue where interactive mode did not work with Python 2.x
+* Fixed errors on startup
+* Fixed issue with some commands not running in interactive mode
 
 ### IoT
 
 * Added support for device provisioning service
-* Added deprecation messages in commands and command help.
-* Added IoT run once check to warn users about the availability of the IoT Extension.
+* Added deprecation messages in commands and command help
+* Added IoT check to inform users of the IoT Extension
 
 ### Monitor
 
-* Breaking Change: Add multi-diagnostic settings support. `--name` is required in `monitor diagnostic-settings create`.
-* Add command to get diagnostic settings category.
+* Added multi-diagnostic setting support. The `--name` parameter is now required for `monitor diagnostic-settings create`
+* Added command to get diagnostic settings category [X]
 
 ### Network
 
-* `vnet-gateway update`: Fix issue when trying to change to/from active-standby mode.
-* `application-gateway create/update`: Add support for HTTP2.
+* Fixed issue when trying to change to/from active-standby mode with `vnet-gateway update`
+* Added support for HTTP2 to `application-gateway [create|update]`
 
 ### Profile
 
-* support login with user assigned identities
+* Added support for login with user assigned identities
 
 ### Role
 
-* role assignment: expose --assignee-object-id to bypass graph query
+* Added `--assignee-object-id` argument [X]
 
 ### Service Fabric
 
-* Added detailed errors to validation response when creating cluster.
-* Fix missing client issue with several commands.
+* Added detailed errors to validation response when creating cluster
+* Fixed missing client issue with several commands
 
 ### VM
 
-* vmss:(PREVIEW) cross zone support
-* vmss:(BREAKING CHANGE)single zone scale-set will default to "Standard" load balancer instead of "Basic"
-* vm/vmss: use right term of "userAssignedIdentity" for EMSI
-* vm: (PREVIEW) support os disk swap
-* vm: support use image from other subscriptions
-* vmss: ensure app-gateway has a name when defaults to it for large scalesets
-* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations
-* `vm/vmss create`: fix issue where the command would throw an error if unable to extract plan information from an image.
-* vm/vmss: lower thread number used for 'vm image list --all' to avoid exceeding the OS opened file limits
-
+* [PREVIEW] Cross-zone support for `vmss`
+* [BREAKING CHANGE] Changed single-zone `vmss` default to "Standard" load balancer
+* vm/vmss: use right term of "userAssignedIdentity" for EMSI [X]
+* [PREVIEW] Added support for OS disk swap
+* Added support for using VM images from other subscriptions
+* vmss: ensure app-gateway has a name when defaults to it for large scalesets [X]
+* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations [X]
+* Fixed error issues with `[vm|vmss] create`
+* Fixed excessive resource usage caused by 'vm image list --all'
 
 ## December 19, 2017
 
