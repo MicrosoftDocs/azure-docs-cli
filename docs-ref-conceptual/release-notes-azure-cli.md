@@ -53,7 +53,7 @@ Version 2.0.25
 
 ### Consumption
 
-* Added new commands for reservations: `az consumption reservations summaries` and `az consumption reservations details`
+* Added new commands for reservations: `consumption reservations summaries` and `consumption reservations details`
 
 ### Event Grid
 
@@ -80,7 +80,7 @@ Version 2.0.25
 ### Monitor
 
 * Added multi-diagnostic setting support. The `--name` parameter is now required for `az monitor diagnostic-settings create`
-* Added command to get diagnostic settings category `az monitor diagnostic-settings categories`
+* Added command `monitor diagnostic-settings categories` to get diagnostic settings category 
 
 ### Network
 
@@ -93,7 +93,7 @@ Version 2.0.25
 
 ### Role
 
-* Added `--assignee-object-id` argument to `az role assignment create` to bypass graph query
+* Added `--assignee-object-id` argument to `role assignment create` to bypass graph query
 
 ### Service Fabric
 
@@ -104,12 +104,12 @@ Version 2.0.25
 
 * [PREVIEW] Cross-zone support for `vmss`
 * [BREAKING CHANGE] Changed single-zone `vmss` default to "Standard" load balancer
-* vm/vmss: use right term of "userAssignedIdentity" for EMSI
+* [BREAKING CHANGE] Changed `externalIdentities` to `userAssignedIdentities` for EMSI
 * [PREVIEW] Added support for OS disk swap
 * Added support for using VM images from other subscriptions
-* `vm/vmss create`: expose `plan` arguments for using custom images with billing information for `az vm create` and `az vmss create`
+* Added `--plan-name`, `--plan-product`, `--plan-promotion-code` and `--plan-publisher` arguments to `[vm|vmss] create`
 * Fixed error issues with `[vm|vmss] create`
-* Fixed excessive resource usage caused by 'vm image list --all'
+* Fixed excessive resource usage caused by `vm image list --all`
 
 ## December 19, 2017
 
