@@ -53,11 +53,11 @@ Version 2.0.25
 
 ### Consumption
 
-* Added new commands for reservations [X]
+* Added new commands for reservations: `az consumption reservations summaries` and `az consumption reservations details`
 
 ### Event Grid
 
-* [BREAKING CHANGE] Moved the `eventgrid topic event-subscription` commands to `eventgrid event-subscription`
+* [BREAKING CHANGE] Moved the `az eventgrid topic event-subscription` commands to `eventgrid event-subscription`
 * [BREAKING CHANGE] Moved the `az eventgrid resource event-subscription` commands to `eventgrid event-subscription`
 * [BREAKING CHANGE] Removed the `eventgrid event-subscription show-endpoint-url` command. Use `eventgrid event-subscription show --include-full-endpoint-url` instead
 * Added command `eventgrid topic update`
@@ -79,8 +79,8 @@ Version 2.0.25
 
 ### Monitor
 
-* Added multi-diagnostic setting support. The `--name` parameter is now required for `monitor diagnostic-settings create`
-* Added command to get diagnostic settings category [X]
+* Added multi-diagnostic setting support. The `--name` parameter is now required for `az monitor diagnostic-settings create`
+* Added command to get diagnostic settings category `az monitor diagnostic-settings categories`
 
 ### Network
 
@@ -93,7 +93,7 @@ Version 2.0.25
 
 ### Role
 
-* Added `--assignee-object-id` argument [X]
+* Added `--assignee-object-id` argument to `az role assignment create` to bypass graph query
 
 ### Service Fabric
 
@@ -104,11 +104,10 @@ Version 2.0.25
 
 * [PREVIEW] Cross-zone support for `vmss`
 * [BREAKING CHANGE] Changed single-zone `vmss` default to "Standard" load balancer
-* vm/vmss: use right term of "userAssignedIdentity" for EMSI [X]
+* vm/vmss: use right term of "userAssignedIdentity" for EMSI
 * [PREVIEW] Added support for OS disk swap
 * Added support for using VM images from other subscriptions
-* vmss: ensure app-gateway has a name when defaults to it for large scalesets [X]
-* `vm/vmss create`: expose `plan` arguments for using custom images with billing informations [X]
+* `vm/vmss create`: expose `plan` arguments for using custom images with billing information for `az vm create` and `az vmss create`
 * Fixed error issues with `[vm|vmss] create`
 * Fixed excessive resource usage caused by 'vm image list --all'
 
