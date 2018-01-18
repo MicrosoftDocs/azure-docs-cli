@@ -4,17 +4,112 @@ description: Learn about the latest updates to Azure CLI 2.0
 keywords: Azure CLI 2.0, release notes
 author: sptramer
 ms.author: sttramer
-manager: douge
-ms.date: 04/03/2017
+manager: routlaw
+ms.date: 01/17/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ms.assetid: ce0428f7-0a59-4e72-9237-d907b171af51
 ---
 
 # Azure CLI 2.0 release notes
+
+## January 17, 2017
+
+Version 2.0.25
+
+### ACR
+
+* Added acr login fallback on Windows credential errors
+* Enabled registry logs
+
+### ACS
+
+* Fixed `get-credentials` command
+* Removed SPN role requirement
+
+### Appservice
+
+* Fixed bug with `config ssl upload` where `hosting_environment_profile` was null
+* Added support for custom URLs to `browse`
+* Fixed slot support for `log tail`
+
+### Backup
+
+* Changed `--container-name` option of `backup item list` to be optional
+* Added storage account options to `backup restore restore-disks`
+* Fixed location check in `backup protection enable-for-vm` to be case insensitive
+* Fixed issue where commands failed with an invalid container name
+* Changed `backup item list` to include 'Health Status' by default
+
+### Batch
+
+* Changed `batch login` to return authentication details
+
+### Cloud
+
+* Changed to not require endpoints when setting `--profile` on a cloud
+
+### Consumption
+
+* Added new commands for reservations: `consumption reservations summaries` and `consumption reservations details`
+
+### Event Grid
+
+* [BREAKING CHANGE] Moved the `az eventgrid topic event-subscription` commands to `eventgrid event-subscription`
+* [BREAKING CHANGE] Moved the `az eventgrid resource event-subscription` commands to `eventgrid event-subscription`
+* [BREAKING CHANGE] Removed the `eventgrid event-subscription show-endpoint-url` command. Use `eventgrid event-subscription show --include-full-endpoint-url` instead
+* Added command `eventgrid topic update`
+* Added command `eventgrid event-subscription update`
+* Added `--ids` parameter for `eventgrid topic` commands
+* Added tab completion support for topic names
+
+### Interactive
+
+* Fixed issue where interactive mode did not work with Python 2.x
+* Fixed errors on startup
+* Fixed issue with some commands not running in interactive mode
+
+### IoT
+
+* Added support for device provisioning service
+* Added deprecation messages in commands and command help
+* Added IoT check to inform users of the IoT Extension
+
+### Monitor
+
+* Added multi-diagnostic setting support. The `--name` parameter is now required for `az monitor diagnostic-settings create`
+* Added command `monitor diagnostic-settings categories` to get diagnostic settings category 
+
+### Network
+
+* Fixed issue when trying to change to/from active-standby mode with `vnet-gateway update`
+* Added support for HTTP2 to `application-gateway [create|update]`
+
+### Profile
+
+* Added support for login with user assigned identities
+
+### Role
+
+* Added `--assignee-object-id` argument to `role assignment create` to bypass graph query
+
+### Service Fabric
+
+* Added detailed errors to validation response when creating cluster
+* Fixed missing client issue with several commands
+
+### VM
+
+* [PREVIEW] Cross-zone support for `vmss`
+* [BREAKING CHANGE] Changed single-zone `vmss` default to "Standard" load balancer
+* [BREAKING CHANGE] Changed `externalIdentities` to `userAssignedIdentities` for EMSI
+* [PREVIEW] Added support for OS disk swap
+* Added support for using VM images from other subscriptions
+* Added `--plan-name`, `--plan-product`, `--plan-promotion-code` and `--plan-publisher` arguments to `[vm|vmss] create`
+* Fixed error issues with `[vm|vmss] create`
+* Fixed excessive resource usage caused by `vm image list --all`
 
 ## December 19, 2017
 
