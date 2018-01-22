@@ -23,7 +23,9 @@ the features of the CLI and links out to resources that will help you be product
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-Before using any CLI commands, you will need to log in with [az login](/cli/azure/index#az_login).
+![INCLUDE [cloud-shell-try-it](cloud-shell-try-it.md)]
+
+Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/index#az_login).
 
 ```azurecli
 az login
@@ -38,13 +40,13 @@ Commands in the CLI are provided as _subcommands_ of _groups_.
 Each group represents a service provided by Azure, and the subgroups divide commands for these services
 into logical groupings.
 
-To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for all commands containing `lock`:
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command name containing `secret`:
 
 ```azurecli
-az find -q lock
+az find -q secret
 ```
 
-The `find` command can be slow, so to find commands within a specific group, the `--help` argument
+The `find` command can be slow, so to list commands within a specific group, the `--help` argument
 may be the better choice. For example, when working with Network Security Groups (NSGs), you can find the available
 NSG subgroups and commands.
 
@@ -83,8 +85,8 @@ There are some arguments that are available for every command.
 
 * `--debug` prints verbose information for debugging purposes when running a command. If you encounter a bug,
   always try and provide output generated with the `--debug` flag on when submitting a bug report.
-* `--verbose` prints information about every resource created in Azure during a CLI operation, and local environment settings used.
-* `--help` prints CLI reference information about commands and their arguments, and lists available subgroups and
+* `--verbose` prints information about every resource created in Azure during a CLI operation and the local environment settings used.
+* `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
   commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
@@ -104,8 +106,8 @@ To to get started with Azure services while using the CLI, we offer a variety of
 * [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
 * [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
-There is also an in-depth tutorial for setting up and running a VM, which includes information on using queries and output formats to get information from the CLI
-for your local environment. Go ahead and get started with the [Set up an Azure Virtual Machine and associated resources](azure-cli-intrioduction-tutorial.yml) tutorial.
+We also offer an in-depth tutorial about using the CLI to set up a virtual machine from a deployment profile. Go ahead and get started
+with the [Set up an Azure Virtual Machine and associated resources](./azure-cli-intrioduction-tutorial) tutorial.
 
 ## Give feedback
 
