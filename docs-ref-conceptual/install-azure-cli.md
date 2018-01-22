@@ -194,10 +194,10 @@ We maintain a Docker image preconfigured with the Azure CLI 2.0.
 Install the CLI using `docker run`.
 
    ```bash
-   docker run -it azuresdk/azure-cli-python:<version>
+   docker run -it microsoft/azure-cli:<version>
    ```
 
-See our [Docker tags](https://hub.docker.com/r/azuresdk/azure-cli-python/tags/) for available versions.
+See our [Docker tags](https://hub.docker.com/r/microsoft/azure-cli/tags/) for available versions.
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
@@ -206,7 +206,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 > you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
 
 > ```bash
-> docker run -it -v ${HOME}:/root azuresdk/azure-cli-python:<version>
+> docker run -it -v ${HOME}:/root microsoft/azure-cli:<version>
 > ```
 
 ## <a name="Linux"/>Install on Linux without a package manager
@@ -353,18 +353,18 @@ sudo zypper update azure-cli
 1. Update your local image with `docker pull`.
 
    ```bash
-   docker pull azuresdk/azure-cli-python
+   docker pull microsoft/azure-cli
    ```
 
 2. Get the containers currently using the CLI image.
 
    ```bash
-   docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
+   docker container ls -a --filter 'ancestor=microsoft/azure-cli'
    ```
 
    ```output
    CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
-   34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
+   34a868beb2ab        microsoft/azure-cli:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
    ```
 
 > [!NOTE]
@@ -375,7 +375,7 @@ sudo zypper update azure-cli
    ```bash
    docker stop inspiring_benz
    docker rm inspiring_benz
-   docker run azuresdk/azure-cli-python
+   docker run microsoft/azure-cli
    ```
 
 ### Update manually
@@ -455,12 +455,12 @@ If you installed a docker image, you will need to remove any containers running 
 1. Get the containers which are running the azure-cli image.
 
    ```bash
-   docker container ls -a --filter 'ancestor=azuresdk/azure-cli-python'
+   docker container ls -a --filter 'ancestor=microsoft/azure-cli'
    ```
 
    ```output
    CONTAINER ID        IMAGE                              COMMAND             CREATED             STATUS                        PORTS               NAMES
-   34a868beb2ab        azuresdk/azure-cli-python:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
+   34a868beb2ab        microsoft/azure-cli:latest      "/bin/sh -c bash"   8 minutes ago       Exited (0) 8 minutes ago                       inspiring_benz
    ```
 
 2. Delete any containers with the CLI image.
@@ -472,7 +472,7 @@ If you installed a docker image, you will need to remove any containers running 
 3. Remove the locally installed CLI image.
 
    ```bash
-   docker rmi azuresdk/azure-cli-python
+   docker rmi microsoft/azure-cli
    ```
 
 > [!NOTE]
