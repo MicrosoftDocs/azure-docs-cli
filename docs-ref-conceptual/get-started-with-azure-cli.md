@@ -23,7 +23,7 @@ the features of the CLI and links out to resources that will help you be product
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-![INCLUDE [cloud-shell-try-it](cloud-shell-try-it.md)]
+[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
 
 Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/index#az_login).
 
@@ -107,7 +107,7 @@ To to get started with Azure services while using the CLI, we offer a variety of
 * [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
 We also offer an in-depth tutorial about using the CLI to set up a virtual machine from a deployment profile. Go ahead and get started
-with the [Set up an Azure Virtual Machine and associated resources](./azure-cli-intrioduction-tutorial) tutorial.
+with the [Create virtual machines with the Azure CLI 2.0](azure-cli-vm-tutorial.yml) tutorial.
 
 ## Give feedback
 
