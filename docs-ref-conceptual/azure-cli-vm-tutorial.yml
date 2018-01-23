@@ -10,19 +10,18 @@ metadata:
 items:
     - durationInMinutes: 1
       content: |-
-        In this tutorial, you learn all of the steps involved in setting up a virtual machine with the Azure CLI 2.0.
-        This tutorial also covers querying CLI outputs to extract information, and how to re-use secondary resources
-        created as part of this initial VM setup.
+        In this tutorial, you learn all of the steps involved in setting up a virtual machine with the Azure CLI 2.0. You'll
+        also learn how to query CLI outputs to get information, re-use created resources when making new VMs, and quickly
+        and safely clean up Azure resources.
 
-        You can use the interactive experience offered as part of this tutorial, or [install the CLI](install-azure-cli.md)
+        This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
         locally.
 
     - durationInMinutes: 1
       title: Log in
       content: |-
         If you're using a local install of the CLI, you need to log in before performing
-        any other steps. If you're using the interactive experience through cloud shell,
-        you've already been logged in.
+        any other steps. If you're using Azure Cloud Shell, you've already been logged in.
 
         ```azurecli
         az login
@@ -33,7 +32,8 @@ items:
     - durationInMinutes: 1
       title: Create a resource group
       content: |-
-        In Azure, all resources are allocated in a resource management group. For this tutorial all of the created resources will go into a
+        In Azure, all resources are allocated in a resource management group. Resource groups are used for logical
+        groupings and to provide a mechanism for tying resources togther. For this tutorial all of the created resources will go into a
         single group.
 
         ```azurecli
@@ -47,13 +47,11 @@ items:
     - durationInMinutes: 4
       title: Create a virtual machine
       content: |-
-        Virtual machines in Azure have a large number of
-        dependencies. The CLI creates these resources for you
-        based on the command line arguments you specify. In this step you'll 
-        create a virtual machine, and then get information on created
-        resources with `--query`.
+        Virtual machines in Azure have a large number of dependencies. The CLI creates these resources for you based on
+        the command line arguments you specify. In this step you'll create a virtual machine, and then get information
+        on the created resources with `--query`.
 
-        Start by creating a single new virtual machine running Ubuntu which uses SSH authentication for login.
+        Start by creating a new virtual machine which is running Ubuntu LTS and uses SSH authentication for login.
 
         ```azurecli
         az vm create --verbose --resource-group CLITutorial --name TutorialVM1 --image UbuntuLTS --generate-ssh-keys
@@ -79,7 +77,7 @@ items:
           "zones": ""
         }
         ```
-       
+
         Try connecting to the VM over SSH to make sure that it is up and running.
 
         ```bash
@@ -87,9 +85,9 @@ items:
         ```
 
         Go ahead and log out from the VM.
-       
+
         There are other ways to get this IP address after the VM has started. You can also get other information about the VM itself such as
-        what virtual network it's on, if it has assigned FQDNs, and whether or not it is powered on. 
+        what virtual network it's on, if it has assigned FQDNs, and whether or not it is powered on.
 
     - durationInMinutes: 3
       title: Get VM information with queries
@@ -120,8 +118,7 @@ items:
           of the query on each array element. In this case, it gets the `id` value of every array element.
 
         The output format `tsv` (tab-separated values) is guaranteed to only include the result data and whitespace consisting of tabs and newlines.
-        In this case, since we are requesting only one value, there is one value per line in the output. Since no NICs were named during creation of the VM,
-        only a single one was provided and it is safe to assign this value directly to an environment variable.
+        Since the returned value is a single bare string, it's safe to assign directly to an environment variable.
 
         Go ahead and assign the NIC object ID to an environment variable now.
 
@@ -130,7 +127,7 @@ items:
         ```
 
         This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
-        the CLI.
+        the CLI. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.
 
     - durationInMinutes: 4
       title: Set environment variables from CLI output
@@ -148,7 +145,7 @@ items:
         az network nic show --ids $NIC_ID -g CLITutorial --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}'
         ```
 
-        This displays a JSON object which has custom identifiers ('IP' and 'Subnet') for the extracted values. While this might not be useful
+        This displays a JSON object which has custom keys ('IP' and 'Subnet') for the extracted values. While this might not be useful
         for command-line tools, it helps with human readability and could be piped to your own tooling.
 
         Rather than create a new tool, for now take this output and output it as `tsv`. This can be processed by
@@ -159,8 +156,8 @@ items:
         read -d '' IP_ID SUBNET_ID <<< $(az network nic show --ids $NIC_ID -g CLITutorial --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' -o tsv)
         ```
 
-        You won't use the subnet ID right away, but since it can be obtained in this single query, it's useful to store it for later. What you 
-        do for now is use the public IP object ID to look up the public IP address and store it in a shell variable.
+        You won't use the subnet ID right away, but since it can be obtained in this single query, it's useful to store it for later. For now,
+        use the public IP object ID to look up the public IP address and store it in a shell variable.
 
         ```bash
         VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID -g CLITutorial --query ipAddress -o tsv)
@@ -168,11 +165,16 @@ items:
 
         Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
 
+        ```bash
+        echo $VM1_IP_ADDR
+        ```
+
     - durationInMinutes: 2
       title: Creating a new VM on the existing subnet
       content: |-
-        Your second VM will use the existing subnet. You can also skip a few steps to get the public IP address of the new VM stored into an environment
-        variable right away, since it's returned in the VM creation information.
+        The second VM will use the existing subnet. You can skip a few steps to get the public IP address of the new VM stored into an environment
+        variable right away, since it's returned in the VM creation information. If you'd need other information about the VM later, it can always be
+        obtained from the `az vm show` command.
 
         ```bash
         VM2_IP_ADDR=$(az vm create --resource-group CLITutorial --name TutorialVM2 --image UbuntuLTS --generate-ssh-keys --subnet $SUBNET_ID --query publicIpAddress -o tsv)
@@ -190,7 +192,7 @@ items:
       title: Cleanup
       content: |-
         Now that the tutorial is complete, it's time to clean up the created resources. While you
-        can delete individual resources with the `delete` command in their group, the fastest way to remove all resources
+        can delete individual resources with the `delete` command in their group, the safest way to remove all resources
         that have been put together into the same resource group is with `group delete`.
 
         ```azurecli
@@ -212,12 +214,11 @@ items:
     - durationInMinutes: 1
       title: Summary
       content: |-
-        Congratluations! You learned how to create VMs, use the `--query` and `--output` arguments to capture data to be stored in shell variables, and
-        looked at some of the resources that get created for Azure VMs.
+        Congratluations! You learned how to create VMs both with new and existing resources, used the `--query` and `--output` arguments
+        to capture data to be stored in shell variables, and looked at some of the resources that get created for Azure VMs.
 
-        Where you go from here depends on what you plan to use the CLI for. We offer
-        a variety of materials that go further in depth on the features covered in
-        this tutorial.
+        Where you go from here depends on what you plan to use the CLI for. We have a variety of materials that go further
+        in depth on the features covered in this tutorial.
 
         ### Samples
 

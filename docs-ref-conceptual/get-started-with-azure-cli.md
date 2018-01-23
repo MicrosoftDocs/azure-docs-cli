@@ -23,8 +23,6 @@ the features of the CLI and links out to resources that will help you be product
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
-
 Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/index#az_login).
 
 ```azurecli
@@ -40,14 +38,15 @@ Commands in the CLI are provided as _subcommands_ of _groups_.
 Each group represents a service provided by Azure, and the subgroups divide commands for these services
 into logical groupings.
 
-To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command name containing `secret`:
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command names containing `secret`,
+use the following command.
 
 ```azurecli
 az find -q secret
 ```
 
 The `find` command can be slow, so to list commands within a specific group, the `--help` argument
-may be the better choice. For example, when working with Network Security Groups (NSGs), you can find the available
+may be a better choice. For example, when working with Network Security Groups (NSGs) you can find the available
 NSG subgroups and commands.
 
 ```azurecli
@@ -74,7 +73,7 @@ All subcommands of these groups and their documentation can be looked up in onli
 
 The CLI offers an interactive mode which automatically displays help information and makes it easier to
 select subcommands. You enter this mode with the `az interactive` command. For more information on interactive mode
-and how it helps you get familiar with the CLI experience, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
+and how it helps you learn the CLI, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
@@ -106,7 +105,7 @@ To to get started with Azure services while using the CLI, we offer a variety of
 * [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
 * [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
-We also offer an in-depth tutorial about using the CLI to set up a virtual machine from a deployment profile. Go ahead and get started
+We also offer an in-depth tutorial about using the CLI to set up multiple virtual machines. Go ahead and get started
 with the [Create virtual machines with the Azure CLI 2.0](azure-cli-vm-tutorial.yml) tutorial.
 
 ## Give feedback
