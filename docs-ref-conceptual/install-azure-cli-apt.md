@@ -51,6 +51,24 @@ for the Azure CLI that you can install on your system.
 
 You can run the Azure CLI with the `az` command.
 
+## Troubleshooting
+
+### apt-key fails with "No dirmngr"
+
+When running the `apt-key` command, you may see output similar to the following error.
+
+```output
+gpg: failed to start the dirmngr '/usr/bin/dirmngr': No such file or directory
+gpg: connecting dirmngr at '/tmp/apt-key-gpghome.kt5zo27tp1/S.dirmngr' failed: No such file or directory
+gpg: keyserver receive failed: No dirmngr
+```
+
+This is due to a missing component required by `apt-key`. You can resolve this by installing the `dirmngr` package.
+
+```bash
+sudo apt-get install dirmngr
+```
+
 ## Update
 
 Use `apt-get upgrade` to update the CLI package.
