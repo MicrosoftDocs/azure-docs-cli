@@ -248,6 +248,22 @@ If your distribution is not listed above, you will need to install [Python 2.7 o
 
 If you encounter an issue during CLI install, check this section to see if your particular case is covered. If your issue is not here, please [file a Github issue](https://github.com/Azure/azure-cli/issues).
 
+### apt-key fails with "No dirmngr"
+
+When running the `apt-key` command, you may see output similar to the following error.
+
+```output
+gpg: failed to start the dirmngr '/usr/bin/dirmngr': No such file or directory
+gpg: connecting dirmngr at '/tmp/apt-key-gpghome.kt5zo27tp1/S.dirmngr' failed: No such file or directory
+gpg: keyserver receive failed: No dirmngr
+```
+
+This is due to a missing component required by `apt-key`. You can resolve this by installing the `dirmngr` package.
+
+```bash
+sudo apt-get install dirmngr
+```
+
 ### curl "Object Moved" error
 
 If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using the full URL instead of the `aka.ms` redirect:
