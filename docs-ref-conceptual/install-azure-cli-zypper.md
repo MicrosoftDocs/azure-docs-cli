@@ -11,9 +11,6 @@ ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ROBOTS: NOINDEX,NOFOLLOW
-experiment_id: 83e72847-fad8-4c
-experimental: false
 ---
 
 # Install Azure CLI 2.0 with zypper
