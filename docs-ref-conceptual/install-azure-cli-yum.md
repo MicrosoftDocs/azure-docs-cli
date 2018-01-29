@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure yum,azure rhel, azure fedora, azure 
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 11/01/2017
+ms.date: 01/29/18
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -15,8 +15,8 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 with yum
 
-If you are running a distirbution that comes with `yum`, such as RHEL, Fedora, or CentOS, there is an available package
-for the Azure CLI that you can install on your system.
+If you are running a distribution that comes with `yum`, such as RHEL, Fedora, or CentOS, there is an available package
+for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
 
@@ -54,9 +54,7 @@ sudo yum update azure-cli
 
 ## Uninstall
 
-If you ever decide to uninstall the Azure CLI, we're sorry to see you go. Before you uninstall, use the `az feedback` command to give us
-some reasons why you chose to uninstall and how we could improve the CLI experience. We want to make sure that the Azure
-CLI is as bug-free and user-friendly as we can make it. You can also [file a github issue](https://github.com/Azure/azure-cli/issues).
+[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
 
 1. Remove the package from your system.
 
