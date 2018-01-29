@@ -15,7 +15,7 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 with apt
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is an available package
+If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a package available
 for the Azure CLI. This package has been tested with Ubuntu Wheezy and Ubuntu Xenial.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]

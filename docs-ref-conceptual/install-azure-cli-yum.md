@@ -15,7 +15,7 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 with yum
 
-If you are running a distribution that comes with `yum`, such as RHEL, Fedora, or CentOS, there is an available package
+If you are running a distribution that comes with `yum`, such as RHEL, Fedora, or CentOS, there is a package available
 for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]

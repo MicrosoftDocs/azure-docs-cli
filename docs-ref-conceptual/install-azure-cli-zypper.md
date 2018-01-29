@@ -15,7 +15,7 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 with zypper
 
-If you are running a distribution that comes with `zypper`, such as openSUSE or SLES, there is an available package
+If you are running a distribution that comes with `zypper`, such as openSUSE or SLES, there is a package available
 for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 SP 2.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]

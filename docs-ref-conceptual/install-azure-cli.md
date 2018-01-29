@@ -19,8 +19,6 @@ The Azure CLI 2.0 is a command-line tool providing a great experience for managi
 to make scripting easy, flexibly query data, support long-running operations as non-blocking processes, and more. Try it today and
 find out what the CLI has to offer!
 
-It's available for macOS, Linux, Windows, and as a stand-alone Docker image.
-
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
 * [Install on Windows](install-azure-cli-windows.md)
