@@ -15,7 +15,7 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
-## January 17, 2017
+## January 17, 2018
 
 Version 2.0.25
 
