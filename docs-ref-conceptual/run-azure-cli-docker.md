@@ -18,7 +18,7 @@ ms.service: multiple
 You can use Docker to run a standalone Linux container with the Azure CLI 2.0 pre-installed. Docker lets you get started quickly
 with an environment where you can try out the CLI to decide if it's right for you, or use our image as a base for your own deployment.
 
-## Run in Docker container
+## Run in a Docker container
 
 Install the CLI using `docker run`.
 
@@ -36,7 +36,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 > docker run -it -v ${HOME}:/root microsoft/azure-cli
 > ```
 
-### Update Docker image
+## Update Docker image
 
 Updating with Docker requires both pulling the new image and re-creating any existing containers. For this reason you should
 try to avoid using a container that hosts the CLI as a data store.
@@ -47,7 +47,7 @@ Update your local image with `docker pull`.
 docker pull microsoft/azure-cli
 ```
 
-### Uninstall Docker image
+## Uninstall Docker image
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
 

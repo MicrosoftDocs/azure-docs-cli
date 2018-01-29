@@ -1,5 +1,5 @@
 ---
-title: Install the Azure CLI 2.0 with yum
+title: Install the Azure CLI 2.0 on Linux with yum
 description: How to install the Azure CLI 2.0 with yum
 keywords: Azure CLI,Install Azure CLI,azure yum,azure rhel, azure fedora, azure centos
 author: sptramer
