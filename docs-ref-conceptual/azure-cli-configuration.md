@@ -28,8 +28,8 @@ Configuration values used by the CLI are evaluted in the following precedence, w
 ## CLI configuration with az configure
 
 You set defaults for the CLI with the [az configure](/cli/azure/?view=azure-cli-latest#az_configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provded values are used by the CLI in place of 
-required arguments. 
+This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provded values are used by the CLI in place of
+required arguments.
 
 The following is a list of available keys that you can use.
 
@@ -51,11 +51,11 @@ az configure --defaults "location=westus2 group=MyResourceGroup"
 
 ## CLI configuration file
 
-The CLI configuration file contains other settings that are used for managing CLI behavior. The configuration file itself is located 
+The CLI configuration file contains other settings that are used for managing CLI behavior. The configuration file itself is located
 at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure/config` on Linux and macOS,
-and `%USERPROFILE%\.azure\config` on Windows. 
+and `%USERPROFILE%\.azure\config` on Windows.
 
-Configuration files are written in the INI file format. These files are made up of sections which start with a `[section-name]` header, followed by 
+Configuration files are written in the INI file format. These files are made up of sections which start with a `[section-name]` header, followed by
 a list of `key=value` entries. Section names are case-sensitive and key names are not.
 Comments are any line that begins with a `#` or `;`. Inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
 
