@@ -36,10 +36,10 @@ items:
       content: |-
         In Azure, all resources are allocated in a resource management group. Resource groups are used for logical
         groupings and to provide a mechanism for tying resources togther. For this tutorial all of the created resources will go into a
-        single group named `CLITutorial`.
+        single group named `TutorialResources`.
 
         ```azurecli
-        az group create --name CLITutorial --location eastus
+        az group create --name TutorialResources --location eastus
         ```
 
     - durationInMinutes: 4
@@ -51,7 +51,7 @@ items:
         Create a new virtual machine running Ubuntu, which uses SSH authentication for login.
 
         ```azurecli
-        az vm create --resource-group CLITutorial \
+        az vm create --resource-group TutorialResources \
           --name TutorialVM1 \
           --image UbuntuLTS \
           --generate-ssh-keys \
@@ -74,7 +74,7 @@ items:
           "powerState": "VM running",
           "privateIpAddress": "...",
           "publicIpAddress": <PUBLIC_IP_ADDRESS>,
-          "resourceGroup": "CLITutorial",
+          "resourceGroup": "TutorialResources",
           "zones": ""
         }
         ```
@@ -97,7 +97,7 @@ items:
         `show`.
 
         ```azurecli
-        az vm show --name TutorialVM1 --resource-group CLITutorial
+        az vm show --name TutorialVM1 --resource-group TutorialResources
         ```
 
         You'll see a lot of information, which can be difficult to parse visually. The data returned
@@ -109,7 +109,7 @@ items:
 
         ```azurecli
         az vm show --name TutorialVM1 \
-          --resource-group CLITutorial \
+          --resource-group TutorialResources \
           --query 'networkProfile.networkInterfaces[].id' \
           --output tsv
         ```
@@ -127,7 +127,7 @@ items:
         Go ahead and assign the NIC object ID to an environment variable now.
 
         ```bash
-        NIC_ID=$(az vm show -n TutorialVM1 -g CLITutorial \
+        NIC_ID=$(az vm show -n TutorialVM1 -g TutorialResources \
           --query 'networkProfile.networkInterfaces[].id' \
           -o tsv)
         ```
@@ -141,7 +141,7 @@ items:
         Now that you have the NIC ID, run `az network nic show` to get its information.
 
         ```azurecli
-        az network nic show --ids $NIC_ID -g CLITutorial
+        az network nic show --ids $NIC_ID -g TutorialResources
         ```
 
         This displays a lot of information applicable to the network interface of the VM such as DNS settings, IP information, security settings, and the NIC MAC address. Right now
@@ -149,7 +149,7 @@ items:
 
         ```azurecli
         az network nic show --ids $NIC_ID \
-          -g CLITutorial \
+          -g TutorialResources \
           --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
           -o table
         ```
@@ -163,7 +163,7 @@ items:
 
         ```bash
         read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
-          --ids $NIC_ID -g CLITutorial \
+          --ids $NIC_ID -g TutorialResources \
           --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
           -o tsv)
         ```
@@ -173,7 +173,7 @@ items:
 
         ```bash
         VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
-          -g CLITutorial \
+          -g TutorialResources \
           --query ipAddress \
           -o tsv)
         ```
@@ -192,7 +192,7 @@ items:
         obtained from the `az vm show` command.
 
         ```bash
-        VM2_IP_ADDR=$(az vm create -g CLITutorial \
+        VM2_IP_ADDR=$(az vm create -g TutorialResources \
           -n TutorialVM2 \
           --image UbuntuLTS \
           --generate-ssh-keys \
@@ -217,7 +217,7 @@ items:
         that have been put together into the same resource group is with `group delete`.
 
         ```azurecli
-        az group delete --name CLITutorial --no-wait
+        az group delete --name TutorialResources --no-wait
         ```
 
         This command deletes the resources created during the tutorial, and is guaranteed to deallocate
@@ -226,7 +226,7 @@ items:
         you use the `group wait` command.
 
         ```azurecli
-        az group wait --name CLITutorial --deleted
+        az group wait --name TutorialResources --deleted
         ```
 
         With cleanup completed, the tutorial is finished. Continue on for a summary of everything
