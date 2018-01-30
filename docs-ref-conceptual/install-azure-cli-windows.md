@@ -35,7 +35,7 @@ not available from CMD.
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
 
-Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option. 
+Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option.
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/InstallAzureCliWindows)
