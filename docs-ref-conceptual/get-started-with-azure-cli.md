@@ -61,13 +61,15 @@ use the following command.
 az find -q secret
 ```
 
-The `find` command can be slow, so to list commands within a specific group, the `--help` argument
-may be a better choice. For example, when working with Network Security Groups (NSGs) you can find the available
+If you know which group of commands you want to work with, the `--help` argument
+may be a better choice. This displays not just detailed information for a command, but when used with a command group, displays all of the available subcommands. For example, when working with Network Security Groups (NSGs) you can find the available
 NSG subgroups and commands.
 
 ```azurecli
 az network nsg --help
 ```
+
+The CLI also has full tab completion for commands under the bash shell.
 
 ## Globally available arguments
 
