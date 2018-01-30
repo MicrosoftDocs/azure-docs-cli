@@ -32,6 +32,22 @@ az login
 This prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
 which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
+## Common commands
+
+This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference.
+All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.
+
+| Resource type | Azure CLI command group |
+|---------------|-------------------------|
+| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
+| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
+| [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
+| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
+| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
+| [Azure Container Instances](/azure/container-instances) | [az aci](/cli/azure/aci) |
+
 ## Finding commands
 
 Commands in the CLI are provided as _subcommands_ of _groups_.
@@ -53,21 +69,20 @@ NSG subgroups and commands.
 az network nsg --help
 ```
 
-## Common commands
+## Globally available arguments
 
-This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference.
-All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.
+There are some arguments that are available for every command.
 
-| Resource type | Azure CLI command group |
-|---------------|-------------------------|
-| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
-| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
-| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
-| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
-| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
-| [Azure Container Instances](/azure/container-instances) | [az aci](/cli/azure/aci) |
+* `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
+  commands.
+* `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
+  Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
+  output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services . To learn
+  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+* `--verbose` prints information about every resource created in Azure during a CLI operation and the local environment settings used.
+* `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
+
 
 ## Interactive mode
 
@@ -78,24 +93,18 @@ and how it helps you learn the CLI, see [Azure CLI 2.0 Interactive Mode](interac
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
 
-## Globally available arguments
 
-There are some arguments that are available for every command.
-
-* `--debug` prints verbose information for debugging purposes when running a command. If you encounter a bug,
-  always try and provide output generated with the `--debug` flag on when submitting a bug report.
-* `--verbose` prints information about every resource created in Azure during a CLI operation and the local environment settings used.
-* `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
-  commands.
-* `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
-  Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
-  output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
-* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services . To learn
-  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 
 ## Learn CLI basics with quickstarts and tutorials
 
-To to get started with Azure services while using the CLI, we offer a variety of quickstarts.
+To get you started with the Azure CLI 2.0, we offer an in-depth tutorial for setting up virtual machines and using the power
+of the CLI to query Azure resources.
+
+> [!div class="nextstepaction"]
+> [Create virtual machines with the Azure CLI 2.0 tutorial](azure-cli-vm-tutorial.yml)
+
+If you would rather focus on completing specific tasks for a service you plan to use, there are a variety of quickstarts for
+Azure services that use the CLI.
 
 * [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
 * [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
@@ -104,9 +113,6 @@ To to get started with Azure services while using the CLI, we offer a variety of
 * [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
 * [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
 * [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
-
-We also offer an in-depth tutorial about using the CLI to set up multiple virtual machines. Go ahead and get started
-with the [Create virtual machines with the Azure CLI 2.0](azure-cli-vm-tutorial.yml) tutorial.
 
 ## Give feedback
 

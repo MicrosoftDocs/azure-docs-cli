@@ -3,7 +3,7 @@ title: Create virtual machines with the Azure CLI 2.0
 metadata:
     title: Create virtual machines with the Azure CLI 2.0
     description: Get started with the Azure CLI by creating virtual machines.
-    audience: IT Pro
+    audience: Developer
     level: Beginner
     displayType: two-column
     interactive: azurecli
@@ -17,11 +17,13 @@ items:
         This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
         locally.
 
+        To paste tutorial text into Azure Cloud Shell, use __ctrl-shift-v__ (__cmd-shift-v__ on macOS).
+
     - durationInMinutes: 1
       title: Log in
       content: |-
         If you're using a local install of the CLI, you need to log in before performing
-        any other steps. If you're using Azure Cloud Shell, you've already been logged in.
+        any other steps.
 
         ```azurecli
         az login
@@ -34,27 +36,26 @@ items:
       content: |-
         In Azure, all resources are allocated in a resource management group. Resource groups are used for logical
         groupings and to provide a mechanism for tying resources togther. For this tutorial all of the created resources will go into a
-        single group.
+        single group named `CLITutorial`.
 
         ```azurecli
         az group create --name CLITutorial --location eastus
         ```
 
-        > [!NOTE]
-        > If you change the location of this resource group, some resources in this
-        > tutorial may not be able to be created due to datacenter availability.
-
     - durationInMinutes: 4
       title: Create a virtual machine
       content: |-
         Virtual machines in Azure have a large number of dependencies. The CLI creates these resources for you based on
-        the command line arguments you specify. In this step you'll create a virtual machine, and then get information
-        on the created resources with `--query`.
+        the command line arguments you specify.
 
-        Start by creating a new virtual machine which is running Ubuntu LTS and uses SSH authentication for login.
+        Create a new virtual machine running Ubuntu, which uses SSH authentication for login.
 
         ```azurecli
-        az vm create --verbose --resource-group CLITutorial --name TutorialVM1 --image UbuntuLTS --generate-ssh-keys
+        az vm create --resource-group CLITutorial \
+          --name TutorialVM1 \
+          --image UbuntuLTS \
+          --generate-ssh-keys \
+          --verbose 
         ```
 
         > [!NOTE]
@@ -64,14 +65,14 @@ items:
         As the VM is created, you see the local values used and Azure resources being created due to the `--verbose` option.
         Once the VM is ready, JSON is returned from the Azure service including the public IP address.
 
-        ```output
+        ```json
         {
           "fqdns": "",
-          "id": ...,
+          "id": "...",
           "location": "eastus",
-          "macAddress": ...,
+          "macAddress": "...",
           "powerState": "VM running",
-          "privateIpAddress": ...,
+          "privateIpAddress": "...",
           "publicIpAddress": <PUBLIC_IP_ADDRESS>,
           "resourceGroup": "CLITutorial",
           "zones": ""
@@ -102,12 +103,15 @@ items:
         You'll see a lot of information, which can be difficult to parse visually. The data returned
         contains details on how to authenticate with the VM, network interfaces it connects to, and the storage that it uses. Most importantly,
         it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow querying these resources directly
-        to get more information about the VM's configuration and capabilities.
+        to get more information about the VM's configuration and capabilities. Queries are written in the [JMESPath query language](http://jmespath.org).
 
         Since it's used to get information about how to connect to the VM, start with getting the network interface controller (NIC) object ID.
 
         ```azurecli
-        az vm show --name TutorialVM1 --resource-group CLITutorial --query 'networkProfile.networkInterfaces[].id' --output tsv
+        az vm show --name TutorialVM1 \
+          --resource-group CLITutorial \
+          --query 'networkProfile.networkInterfaces[].id' \
+          --output tsv
         ```
 
         There's a lot going on here, just by adding the query. Each part of it references keys in the returned JSON, or is a JMESPath operator.
@@ -123,7 +127,9 @@ items:
         Go ahead and assign the NIC object ID to an environment variable now.
 
         ```bash
-        NIC_ID=$(az vm show -n TutorialVM1 -g CLITutorial --query 'networkProfile.networkInterfaces[].id' -o tsv)
+        NIC_ID=$(az vm show -n TutorialVM1 -g CLITutorial \
+          --query 'networkProfile.networkInterfaces[].id' \
+          -o tsv)
         ```
 
         This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
@@ -142,7 +148,10 @@ items:
         the goal is to obtain the public IP address and subnet object IDs. This information can be pulled with a query.
 
         ```azurecli
-        az network nic show --ids $NIC_ID -g CLITutorial --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}'
+        az network nic show --ids $NIC_ID \
+          -g CLITutorial \
+          --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
+          -o table
         ```
 
         This displays a JSON object which has custom keys ('IP' and 'Subnet') for the extracted values. While this might not be useful
@@ -153,14 +162,20 @@ items:
         delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
         ```bash
-        read -d '' IP_ID SUBNET_ID <<< $(az network nic show --ids $NIC_ID -g CLITutorial --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' -o tsv)
+        read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
+          --ids $NIC_ID -g CLITutorial \
+          --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
+          -o tsv)
         ```
 
         You won't use the subnet ID right away, but since it can be obtained in this single query, it's useful to store it for later. For now,
         use the public IP object ID to look up the public IP address and store it in a shell variable.
 
         ```bash
-        VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID -g CLITutorial --query ipAddress -o tsv)
+        VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
+          -g CLITutorial \
+          --query ipAddress \
+          -o tsv)
         ```
 
         Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
@@ -177,7 +192,13 @@ items:
         obtained from the `az vm show` command.
 
         ```bash
-        VM2_IP_ADDR=$(az vm create --resource-group CLITutorial --name TutorialVM2 --image UbuntuLTS --generate-ssh-keys --subnet $SUBNET_ID --query publicIpAddress -o tsv)
+        VM2_IP_ADDR=$(az vm create -g CLITutorial \
+          -n TutorialVM2 \
+          --image UbuntuLTS \
+          --generate-ssh-keys \
+          --subnet $SUBNET_ID \
+          --query publicIpAddress \
+          -o tsv)
         ```
 
         Using the stored IP address, SSH into the newly-created VM.
