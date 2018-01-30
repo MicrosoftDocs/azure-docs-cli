@@ -42,7 +42,7 @@ You can use the `--query` parameter to show just the Resource Group name and VM 
 
 ```azurecli-interactive
 az vm list \
-  --query [*].[name, resourceGroup] --out table
+  --query "[].[name, resourceGroup]" --out table
 ```
 
 ```
