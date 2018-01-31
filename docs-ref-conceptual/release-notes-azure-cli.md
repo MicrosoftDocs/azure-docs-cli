@@ -15,6 +15,76 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## January 31, 2018
+
+Version 2.0.26
+
+### Core
+
+* Support raw token retrival in MSI context
+* Remove polling indicator string after finishing LRO on Windows cmd.exe
+* Warning that appears when using a configured default has been changed to an INFO level entry. Use --verbose to see.
+* Add a progress indicator for wait commands
+
+### ACS
+
+* clarify `--disable-browser` argument
+* improve tab completion for --vm-size arguments
+
+### Appservice
+
+* fix broken webapp log tail/download
+* relieve the 'kind' check on webapp/functionapp
+
+### CDN
+
+* `cdn custom-domain create`: Fixed missing client issue.
+
+### CosmosDB
+
+* Fix parameter description for failover policies.
+
+### Interactive
+
+* Fixed issue where command option completions no longer appeared.
+
+### Network
+
+* `application-gateway create`: `--cert-password` protected using secureString.
+* `application-gateway update`: Fix issue where `--sku` erroneously applied a default value.
+* `vpn-connection create`: `--shared-key` and `--authorization-key` protected using secureString.
+* `asg create`: Fix missing client issue.
+* `dns zone export`: Fix issue with exported names. Add `--file-name/-f` parameter.
+                     Fix issue where long TXT records were incorrectly exported.
+                     Fix issue where quoted TXT records were incorrectly exported without escaped quotes.
+* `dns zone import`: Fix issue where certain records were imported twice.
+* Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands.
+
+### Profile
+
+* ensure 'get-access-token' work inside a VM with identity
+
+### Resource
+
+* `deployment create/validate`: Fix bug where warning was incorrectly displayed when a template 'type' field contained uppercase values.
+
+### Storage
+
+* `storage account update`: do not create new networkRuleSet if "default_action" arg is not provided.
+* Added progress reporting for all upload/download commands, including batch.
+* `storage account check-name`: fixed bug preventing "-n" arg option.
+* Added 'snapshot' column to table output for blob list/show.
+* Fixed bugs with various parameters that needed to be parsed as ints, added test coverage.
+* Small fix with test, `storage blob service-properties show`: "hourMetrics.enabled" defaults to false.
+
+### VM
+
+* vm image: support accept market terms to use vm images
+* vm/vmss create: ensure commands can run under proxy with unsigned certificates.
+* vmss:(PREVIEW) support low priority
+* `vm/vmss create` - `--admin-password` updated to type secureString.
+
+
 ## January 17, 2018
 
 Version 2.0.25
