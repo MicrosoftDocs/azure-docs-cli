@@ -21,68 +21,68 @@ Version 2.0.26
 
 ### Core
 
-* Support raw token retrival in MSI context
-* Remove polling indicator string after finishing LRO on Windows cmd.exe
-* Warning that appears when using a configured default has been changed to an INFO level entry. Use --verbose to see.
+* Added support raw token retrival in MSI context
+* Removed polling indicator string after finishing LRO on Windows cmd.exe
+* Added a warning that appears when using a configured default has been changed to an INFO level entry. Use `--verbose` to see
 * Add a progress indicator for wait commands
 
 ### ACS
 
-* clarify `--disable-browser` argument
-* improve tab completion for --vm-size arguments
+* Clarified `--disable-browser` argument
+* Improved tab completion for `--vm-size` arguments
 
 ### Appservice
 
-* fix broken webapp log tail/download
-* relieve the 'kind' check on webapp/functionapp
+* Fixed `webapp log [tail|download]`
+* Removed the `kind` check on webapps and functions
 
 ### CDN
 
-* `cdn custom-domain create`: Fixed missing client issue.
+* Fixed missing client issue with `cdn custom-domain create`
 
 ### CosmosDB
 
-* Fix parameter description for failover policies.
+* Fixed parameter description for failover policies
 
 ### Interactive
 
-* Fixed issue where command option completions no longer appeared.
+* Fixed issue where command option completions no longer appeared
 
 ### Network
 
-* `application-gateway create`: `--cert-password` protected using secureString.
-* `application-gateway update`: Fix issue where `--sku` erroneously applied a default value.
-* `vpn-connection create`: `--shared-key` and `--authorization-key` protected using secureString.
-* `asg create`: Fix missing client issue.
-* `dns zone export`: Fix issue with exported names. Add `--file-name/-f` parameter.
-                     Fix issue where long TXT records were incorrectly exported.
-                     Fix issue where quoted TXT records were incorrectly exported without escaped quotes.
-* `dns zone import`: Fix issue where certain records were imported twice.
-* Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands.
+* Added protection for `--cert-password` to `application-gateway create`
+* Fixed issue with `application-gateway update` where `--sku` erroneously applied a default value
+* Added protection for `--shared-key` and `--authorization-key` to `vpn-connection create`
+* Fixed missing client issue with `asg create`
+* Fixed the following issues with `dns zone export`:
+  * Added `--file-name/-f` parameter for exported names
+  * Fixed issue where long TXT records were incorrectly exported
+  * Fixed issue where quoted TXT records were incorrectly exported without escaped quotes
+* Fixed issue where certain records were imported twice with `dns zone import` 
+* Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands
 
 ### Profile
 
-* ensure 'get-access-token' work inside a VM with identity
+* Fixed `get-access-token` to work inside a VM with identity
 
 ### Resource
 
-* `deployment create/validate`: Fix bug where warning was incorrectly displayed when a template 'type' field contained uppercase values.
+* Fixed bug with `deployment [create|validate]` where warning was incorrectly displayed when a template 'type' field contained uppercase values
 
 ### Storage
 
-* `storage account update`: do not create new networkRuleSet if "default_action" arg is not provided.
-* Added progress reporting for all upload/download commands, including batch.
-* `storage account check-name`: fixed bug preventing "-n" arg option.
-* Added 'snapshot' column to table output for blob list/show.
-* Fixed bugs with various parameters that needed to be parsed as ints, added test coverage.
-* Small fix with test, `storage blob service-properties show`: "hourMetrics.enabled" defaults to false.
+* Changed `storage account update` to not create a new networkRuleSet if "default\_action" arg is not provided [X]
+* Added progress reporting for all upload/download commands
+* Fixed bug preventing "-n" arg option with `storage account check-name`  
+* Added 'snapshot' column to table output for `blob [list|show]`
+* Fixed bugs with various parameters that needed to be parsed as ints
 
 ### VM
 
-* vm image: support accept market terms to use vm images
-* vm/vmss create: ensure commands can run under proxy with unsigned certificates.
-* vmss:(PREVIEW) support low priority
-* `vm/vmss create` - `--admin-password` updated to type secureString.
+* vm image: support accept market terms to use vm images [X]
+* Fixed `[vm|vmss create]` to ensure commands can run under proxy with unsigned certificates
+* [PREVIEW] Added support for "low" priority to VMSS
+* Added protection for `--admin-password` to `[vm|vmss] create`
 
 
 ## January 17, 2018
