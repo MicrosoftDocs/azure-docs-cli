@@ -24,7 +24,7 @@ for the list of supported package managers or how to install manually under WSL.
 The MSI distributable is used for installing, updating, and uninstalling the `az` command on Windows.
 
 > [!div class="nextstepaction"]
-> [Download the MSI installer](https://aka.ms/InstallAzureCliWindows)
+> [Download the MSI installer](https://azurecliprod.blob.core.windows.net/msi/azure-cli-latest.msi)
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
@@ -38,4 +38,4 @@ not available from CMD.
 Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option.
 
 > [!div class="nextstepaction"]
-> [Download the MSI installer](https://aka.ms/InstallAzureCliWindows)
+> [Download the MSI installer](https://azurecliprod.blob.core.windows.net/msi/azure-cli-latest.msi)
