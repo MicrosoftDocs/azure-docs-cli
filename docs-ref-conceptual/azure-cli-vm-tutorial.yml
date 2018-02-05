@@ -101,10 +101,11 @@ items:
 
         You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interfaces, storage,
         and more. Most importantly,
-        it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow querying these resources directly
-        to get more information about the VM's configuration and capabilities. Queries are written in the [JMESPath query language](http://jmespath.org).
-
-        Since it's used to get information about how to connect to the VM, start with getting the network interface controller (NIC) object ID.
+        it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
+        to get more information about the VM's configuration and capabilities. 
+        
+        In order to extract the object ID we want, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org). Start
+        with getting the network interface controller (NIC) object ID.
 
         ```azurecli
         az vm show --name TutorialVM1 \
@@ -113,7 +114,7 @@ items:
           --output tsv
         ```
 
-        There's a lot going on here, just by adding the query. Each part of it references keys in the returned JSON, or is a JMESPath operator.
+        There's a lot going on here, just by adding the query. Each part of it references a key in the output JSON, or is a JMESPath operator.
 
         * `networkProfile` is a key of the top-level JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
           its keys are referenced from the parent key with the `.` operator.
@@ -143,7 +144,7 @@ items:
         ```
 
         This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now
-        the goal is to obtain the public IP address and subnet object IDs. This information can be pulled with a query.
+        the goal is to obtain the public IP address and subnet object IDs.
 
         ```azurecli
         az network nic show --ids $NIC_ID \
