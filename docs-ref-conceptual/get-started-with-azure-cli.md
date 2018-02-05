@@ -5,7 +5,7 @@ keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 12/15/2017
+ms.date: 02/05/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -15,9 +15,8 @@ ms.service: multiple
 
 # Get started with Azure CLI 2.0
 
-Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services
-and products, and is geared towards making tasks efficient and easy to automate. This article introduces
-the features of the CLI and links out to resources that will help you be productive.
+Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
+with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
 ## Install and log in
 
@@ -29,7 +28,7 @@ Before using any CLI commands with a local install, you need to log in with [az 
 az login
 ```
 
-This prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
+This command prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
 which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Common commands
@@ -55,7 +54,7 @@ Each group represents a service provided by Azure, and the subgroups divide comm
 into logical groupings.
 
 To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command names containing `secret`,
-use the following command.
+use the following command:
 
 ```azurecli
 az find -q secret
@@ -69,7 +68,7 @@ NSG subgroups and commands.
 az network nsg --help
 ```
 
-The CLI also has full tab completion for commands under the bash shell.
+The CLI has full tab completion for commands under the bash shell.
 
 ## Globally available arguments
 
@@ -80,16 +79,16 @@ There are some arguments that are available for every command.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
-* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services . To learn
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
   To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
-* `--verbose` prints information about every resource created in Azure during a CLI operation and the local environment settings used.
+* `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
 
 ## Interactive mode
 
-The CLI offers an interactive mode which automatically displays help information and makes it easier to
-select subcommands. You enter this mode with the `az interactive` command. For more information on interactive mode
+The CLI offers an interactive mode that automatically displays help information and makes it easier to
+select subcommands. You enter interactive mode with the `az interactive` command. For more information on interactive mode
 and how it helps you learn the CLI, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
@@ -99,14 +98,13 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 ## Learn CLI basics with quickstarts and tutorials
 
-To get you started with the Azure CLI 2.0, we offer an in-depth tutorial for setting up virtual machines and using the power
+To get you started with the Azure CLI 2.0, try an in-depth tutorial for setting up virtual machines and using the power
 of the CLI to query Azure resources.
 
 > [!div class="nextstepaction"]
 > [Create virtual machines with the Azure CLI 2.0 tutorial](azure-cli-vm-tutorial.yml)
 
-If you would rather focus on completing specific tasks for a service you plan to use, there are a variety of quickstarts for
-Azure services that use the CLI.
+If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
 
 * [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
 * [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
