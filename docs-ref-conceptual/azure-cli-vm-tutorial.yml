@@ -10,14 +10,13 @@ metadata:
 items:
     - durationInMinutes: 1
       content: |-
-        In this tutorial, you learn all of the steps involved in setting up a virtual machine with the Azure CLI 2.0. You'll
-        also learn how to query CLI outputs to get information, re-use created resources when making new VMs, and quickly
-        and safely clean up Azure resources.
+        In this tutorial, you learn all of the steps involved in setting up a virtual machine with the Azure CLI 2.0. The tutorial
+        also covers output queries, Azure resource reuse, and resource cleanup.
 
         This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
         locally.
 
-        To paste tutorial text into Azure Cloud Shell, use __ctrl-shift-v__ (__cmd-shift-v__ on macOS).
+        Use __ctrl-shift-v__ (__cmd-shift-v__ on macOS) to paste tutorial text into Azure Cloud Shell.
 
     - durationInMinutes: 1
       title: Log in
@@ -29,13 +28,13 @@ items:
         az login
         ```
 
-        Follow the steps displayed in your terminal to complete the log in process.
+        Complete the login process by following the steps displayed in your terminal. 
 
     - durationInMinutes: 1
       title: Create a resource group
       content: |-
-        In Azure, all resources are allocated in a resource management group. Resource groups are used for logical
-        groupings and to provide a mechanism for tying resources togther. For this tutorial all of the created resources will go into a
+        In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
+        that make them easier to work with as a collection. For this tutorial, all of the created resources go into a
         single group named `TutorialResources`.
 
         ```azurecli
@@ -46,7 +45,7 @@ items:
       title: Create a virtual machine
       content: |-
         Virtual machines in Azure have a large number of dependencies. The CLI creates these resources for you based on
-        the command line arguments you specify.
+        the command-line arguments you specify.
 
         Create a new virtual machine running Ubuntu, which uses SSH authentication for login.
 
@@ -79,7 +78,7 @@ items:
         }
         ```
 
-        Try connecting to the VM over SSH to make sure that it is up and running.
+        Confirm that the VM is running by connecting over SSH.
 
         ```bash
         ssh <PUBLIC_IP_ADDRESS>
@@ -87,8 +86,8 @@ items:
 
         Go ahead and log out from the VM.
 
-        There are other ways to get this IP address after the VM has started. You can also get other information about the VM itself such as
-        what virtual network it's on, if it has assigned FQDNs, and whether or not it is powered on.
+        There are other ways to get this IP address after the VM has started. In the next section you will see how to get detailed information on
+        the VM, and how to filter it.
 
     - durationInMinutes: 3
       title: Get VM information with queries
@@ -100,8 +99,8 @@ items:
         az vm show --name TutorialVM1 --resource-group TutorialResources
         ```
 
-        You'll see a lot of information, which can be difficult to parse visually. The data returned
-        contains details on how to authenticate with the VM, network interfaces it connects to, and the storage that it uses. Most importantly,
+        You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interfaces, storage,
+        and more. Most importantly,
         it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow querying these resources directly
         to get more information about the VM's configuration and capabilities. Queries are written in the [JMESPath query language](http://jmespath.org).
 
@@ -116,7 +115,7 @@ items:
 
         There's a lot going on here, just by adding the query. Each part of it references keys in the returned JSON, or is a JMESPath operator.
 
-        * `networkProfile` is a key of the toplevel JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
+        * `networkProfile` is a key of the top-level JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
           its keys are referenced from the parent key with the `.` operator.
         * The `networkInterfaces` value is an array, so it is flattened with the `[]` operator. This operator runs the remainder
           of the query on each array element. In this case, it gets the `id` value of every array element.
@@ -132,8 +131,7 @@ items:
           -o tsv)
         ```
 
-        This example also demonstrates the use of short arguments, which are available for some of the most common arguments passed to
-        the CLI. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.
+        This example also demonstrates the use of short arguments. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.
 
     - durationInMinutes: 4
       title: Set environment variables from CLI output
@@ -144,7 +142,7 @@ items:
         az network nic show --ids $NIC_ID -g TutorialResources
         ```
 
-        This displays a lot of information applicable to the network interface of the VM such as DNS settings, IP information, security settings, and the NIC MAC address. Right now
+        This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now
         the goal is to obtain the public IP address and subnet object IDs. This information can be pulled with a query.
 
         ```azurecli
@@ -152,9 +150,6 @@ items:
           -g TutorialResources \
           --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' 
         ```
-
-        This displays a JSON object which has custom keys ('IP' and 'Subnet') for the extracted values. While this might not be useful
-        for command-line tools, it helps with human readability and could be piped to your own tooling.
 
         ```json
         {
@@ -167,7 +162,10 @@ items:
         }
         ```
 
-        Rather than create a new tool, for now take this output and output it as `tsv`. This can be processed by
+        This command displays a JSON object that has custom keys ('IP' and 'Subnet') for the extracted values. While this style of output might not be useful
+        for command-line tools, it helps with human readability and can be used with custom scripts.
+
+        In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. This style of output can be processed by
         the shell `read` command to load results into multiple variables. Since two values on separate lines are displayed, the `read` command
         delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
@@ -178,7 +176,7 @@ items:
           -o tsv)
         ```
 
-        You won't use the subnet ID right away, but since it can be obtained in this single query, it's useful to store it for later. For now,
+        You won't use the subnet ID right away, but it should be stored now to avoid having to perform a second lookup later. For now,
         use the public IP object ID to look up the public IP address and store it in a shell variable.
 
         ```bash
@@ -197,7 +195,7 @@ items:
     - durationInMinutes: 2
       title: Creating a new VM on the existing subnet
       content: |-
-        The second VM will use the existing subnet. You can skip a few steps to get the public IP address of the new VM stored into an environment
+        The second VM uses the existing subnet. You can skip a few steps to get the public IP address of the new VM stored into an environment
         variable right away, since it's returned in the VM creation information. If you'd need other information about the VM later, it can always be
         obtained from the `az vm show` command.
 
@@ -211,7 +209,7 @@ items:
           -o tsv)
         ```
 
-        Using the stored IP address, SSH into the newly-created VM.
+        Using the stored IP address, SSH into the newly created VM.
 
         ```bash
         ssh $VM2_IP_ADDR
@@ -222,9 +220,9 @@ items:
     - durationInMinutes: 2
       title: Cleanup
       content: |-
-        Now that the tutorial is complete, it's time to clean up the created resources. While you
-        can delete individual resources with the `delete` command in their group, the safest way to remove all resources
-        that have been put together into the same resource group is with `group delete`.
+        Now that the tutorial is complete, it's time to clean up the created resources. You
+        can delete individual resources with the `delete` command, but the safest way to remove all resources
+        in a resource group is with `group delete`.
 
         ```azurecli
         az group delete --name TutorialResources --no-wait
@@ -232,8 +230,7 @@ items:
 
         This command deletes the resources created during the tutorial, and is guaranteed to deallocate
         them in the correct order. The `--no-wait` parameter keeps the CLI from blocking while the
-        deletion takes place. If you decide to wait until the deletion is complete, or want to watch it progress,
-        you use the `group wait` command.
+        deletion takes place. If you want to wait until the deletion is complete or watch it progress, use the `group wait` command.
 
         ```azurecli
         az group wait --name TutorialResources --deleted
@@ -245,15 +242,15 @@ items:
     - durationInMinutes: 1
       title: Summary
       content: |-
-        Congratluations! You learned how to create VMs both with new and existing resources, used the `--query` and `--output` arguments
+        Congratulations! You learned how to create VMs with new or existing resources, used the `--query` and `--output` arguments
         to capture data to be stored in shell variables, and looked at some of the resources that get created for Azure VMs.
 
-        Where you go from here depends on what you plan to use the CLI for. We have a variety of materials that go further
+        Where you go from here depends on what you plan to use the CLI for. There are a variety of materials that go further
         in depth on the features covered in this tutorial.
 
         ### Samples
 
-        If you want to get started right away doing specific simple tasks, we offer a number of sample scripts.
+        If you want to get started right away with specific tasks, look at some sample scripts.
 
         * Working with [Linux VMs](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json) and [Windows VMs](/azure/virtual-machines/windows/cli-samples?toc=%2fcli%2fazure%2ftoc.json)
         * Working with [webapps](/azure/app-service/app-service-cli-samples?toc=%2Fcli%2Fazure%2Ftoc.json) and [Azure Functions](/azure/azure-functions/functions-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
@@ -270,7 +267,7 @@ items:
         ### Other useful documentation
 
         You might want to take time to explore more advanced features of the CLI, like
-         [configuring defaults](azure-cli-configuration.md) or [extensions](azure-cli-extensions.md).
+          [configuring defaults](azure-cli-configuration.md) or [extensions](azure-cli-extensions.md).
 
         ### Feedback
 
@@ -278,7 +275,7 @@ items:
         ways for you to get in touch.
 
         * `az feedback` is a built-in command for the CLI that allows providing free-form feedback to the team.
-        * File a feature request or an issue with the CLI in the [Azure CLI 2.0 repository](https://github.com/Azure/azure-cli).
-        * Ask a question or get clarification on documentation by filing an issue in the [Azure CLI 2.0 documentation repository](https://github.com/Azure/azure-docs-cli-python).
+        * File a feature request or a bug report with the CLI in the [Azure CLI 2.0 repository](https://github.com/Azure/azure-cli).
+        * Ask a question or get clarification by filing an issue in the [Azure CLI 2.0 documentation repository](https://github.com/Azure/azure-docs-cli-python).
 
         We hope that you enjoy using the Azure CLI!
