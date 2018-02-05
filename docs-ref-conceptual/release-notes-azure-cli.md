@@ -80,7 +80,7 @@ Version 2.0.25
 ### Monitor
 
 * Added multi-diagnostic setting support. The `--name` parameter is now required for `az monitor diagnostic-settings create`
-* Added command `monitor diagnostic-settings categories` to get diagnostic settings category 
+* Added command `monitor diagnostic-settings categories` to get diagnostic settings category
 
 ### Network
 

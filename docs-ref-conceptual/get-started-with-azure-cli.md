@@ -1,442 +1,124 @@
 ---
 title: Get started with Azure CLI 2.0
-description: Get started with Azure CLI 2.0 on Linux, Mac, or Windows.
-keywords: Azure CLI 2.0, Linux, Mac, Windows, OS X, Ubuntu, Debian, CentOS, RHEL, SUSE, CoreOS, Docker, Windows, Python, PIP
-author: rloutlaw
-ms.author: routlaw
-manager: douge
-ms.date: 02/27/2017
+description: Get started with Azure CLI 2.0
+keywords: Azure CLI, CLI help, Azure help, query, automation,
+author: sptramer
+ms.author: sttramer
+manager: routlaw
+ms.date: 02/05/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ms.assetid: 85c418a8-6177-4833-bb8d-ff4ce2233c1a
 ---
 
 # Get started with Azure CLI 2.0
 
-The Azure CLI 2.0 is Azure's new command line experience for managing Azure resources.
-You can use it in your browser with [Azure Cloud Shell](/azure/cloud-shell/overview),
-or you can [install](install-azure-cli.md) it on macOS, Linux, and Windows and run it from the command line.
+Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
+with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
-Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line,
-and for building automation scripts that work against the Azure Resource Manager.
-This article helps get you started using it, and teaches you the core concepts behind it.
+## Install and log in
 
-For information about the latest release, see the [release notes](release-notes-azure-cli.md).
+If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-## Connect
+Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/index#az_login).
 
-The simplest way to get started is to [launch Cloud Shell](/azure/cloud-shell/quickstart).
-
-1. Launch Cloud Shell from the top navigation of the Azure portal.
-
-   ![Shell icon](media/get-started-with-azure-cli/shell-icon.png)
-
-2. Choose the subscription you want to use and create a storage account.
-
-   ![Create a storage account](media/get-started-with-azure-cli/storage-prompt.png)
-
-You can also [install](install-azure-cli.md) the CLI and run it locally from the command line. Once you have installed the CLI,
-run `az login` to log in with your default subscription.
-
-## Create a Resource Group
-
-Now that we've got everything set up, let's use the Azure CLI to create resources within Azure.
-
-First, create a Resource Group.  Resource Groups in Azure provide a way to manage multiple resources that you
-want to logically group.  For example, you might create a Resource Group for an application or project
-and add a virtual machine, a database and a CDN service within it.
-
-Let's create a resource group named "MyResourceGroup" in the *westus2* region of Azure.  To do so type the following command:
-
-```azurecli-interactive
-az group create -n MyResourceGroup -l westus2
+```azurecli
+az login
 ```
 
-Once the resource group has been created, the `az group create` command outputs several properties of the newly created resource:
+This command prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
+which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
-```Output
-{
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup",
-  "location": "westus2",
-  "managedBy": null,
-  "name": "MyResourceGroup",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null
-}
+## Common commands
+
+This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference.
+All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.
+
+| Resource type | Azure CLI command group |
+|---------------|-------------------------|
+| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
+| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
+| [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
+| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
+| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
+| [Azure Container Instances](/azure/container-instances) | [az aci](/cli/azure/aci) |
+
+## Finding commands
+
+Commands in the CLI are provided as _subcommands_ of _groups_.
+Each group represents a service provided by Azure, and the subgroups divide commands for these services
+into logical groupings.
+
+To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command names containing `secret`,
+use the following command:
+
+```azurecli
+az find -q secret
 ```
 
-## Create a Linux Virtual Machine
+If you know which group of commands you want to work with, the `--help` argument
+may be a better choice. This displays not just detailed information for a command, but when used with a command group, displays all of the available subcommands. For example, when working with Network Security Groups (NSGs) you can find the available
+NSG subgroups and commands.
 
-Now that we have our resource group, let's create a Linux VM within it.
-
-You can create a Linux VM using the popular UbuntuLTS image, with two attached storage disks of 10 GB and 20 GB, with the following command:
-
-```azurecli-interactive
-az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes-gb 10 20
+```azurecli
+az network nsg --help
 ```
 
-When you run the preceding command, the Azure CLI 2.0 looks for an SSH key pair stored under your ~/.ssh directory.  If you don't already have an SSH key pair stored there, you can ask the Azure CLI to automatically create one for you by passing the --generate-ssh-keys parameter:
+The CLI has full tab completion for commands under the bash shell.
 
-```azurecli-interactive
-az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS --data-disk-sizes-gb 10 20 --generate-ssh-keys
-```
+## Globally available arguments
 
-The `az vm create` command returns output once the VM has been fully created and is ready to be accessed and used. The output includes several properties of the newly created VM including its public IP address:
+There are some arguments that are available for every command.
 
-```Output
-{
-  "fqdns": "",
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM",
-  "location": "westus2",
-  "macAddress": "xx-xx-xx-xx-xx-xx",
-  "powerState": "VM running",
-  "privateIpAddress": "xx.x.x.x",
-  "publicIpAddress": "xx.xxx.xxx.xx",
-  "resourceGroup": "MyResourceGroup"
-}
-```
+* `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
+  commands.
+* `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
+  Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
+  output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
+  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+* `--verbose` prints information about resources created in Azure during an operation, and other useful information.
+* `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
-Now that the VM has been created, you can log on to your new Linux VM using **SSH** with the public IP address of the VM you created:
 
-```azurecli-interactive
-ssh xx.xxx.xxx.xxx
-```
+## Interactive mode
 
-```Output
-Welcome to Ubuntu 14.04.4 LTS (GNU/Linux 3.19.0-65-generic x86_64)
+The CLI offers an interactive mode that automatically displays help information and makes it easier to
+select subcommands. You enter interactive mode with the `az interactive` command. For more information on interactive mode
+and how it helps you learn the CLI, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
- * Documentation:  https://help.ubuntu.com/
+There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
+offers an interactive experience, including autocomplete and mouse-over documentation.
 
-  System information as of Sun Feb 19 00:32:28 UTC 2017
 
-  System load: 0.31              Memory usage: 3%   Processes:       89
-  Usage of /:  39.6% of 1.94GB   Swap usage:   0%   Users logged in: 0
 
-  Graph this data and manage this system at:
-    https://landscape.canonical.com/
+## Learn CLI basics with quickstarts and tutorials
 
-  Get cloud support with Ubuntu Advantage Cloud Guest:
-    http://www.ubuntu.com/business/services/cloud
+To get you started with the Azure CLI 2.0, try an in-depth tutorial for setting up virtual machines and using the power
+of the CLI to query Azure resources.
 
-0 packages can be updated.
-0 updates are security updates.
+> [!div class="nextstepaction"]
+> [Create virtual machines with the Azure CLI 2.0 tutorial](azure-cli-vm-tutorial.yml)
 
+If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
 
+* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
+* [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
+* [Create a single Azure SQL database using the Azure CLI](/azure/sql-database/sql-database-get-started-cli)
+* [Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli)
+* [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
+* [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
+* [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
+## Give feedback
 
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
+We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on Github](https://github.com/azure/azure-cli/issues) or use the built-in
+features of the CLI to leave general feedback with the `az feedback` command.
 
-my-login@MyLinuxVM:~$
-```
-
-## Create a Windows Server Virtual Machine
-
-Let's now create a Windows Server 2016 Datacenter-based VM using the `az vm create` command and add it to the same "MyResourceGroup" resource group that we used for our Linux VM.  Like the Linux VM example, we'll also attach two storage disks using the `--data-disk-sizes-gb` parameter.
-
-Azure requires that you avoid using easily guessed usernames/passwords. There are specific rules for what characters can be used as well as the minimum length of both username and password.
-
-> [!NOTE]
-> You will be prompted to enter your username and password when running this command.
-
-```azurecli-interactive
-az vm create -n MyWinVM -g MyResourceGroup --image Win2016Datacenter
-```
-
-The `az vm create` command output results once the VM has been fully created and is ready to be accessed and used.
-
-```Output
-{
-  "fqdns": "",
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM",
-  "location": "westus2",
-  "macAddress": "xx-xx-xx-xx-xx-xx",
-  "powerState": "VM running",
-  "privateIpAddress": "xx.x.x.x",
-  "publicIpAddress": "xx.xxx.xx.xxx",
-  "resourceGroup": "MyResourceGroup"
-}
-```
-
-Now log on to your newly created Windows Server VM using Remote Desktop and the public IP address of the VM (which is returned in the output from `az vm create`).
-If you are on a Windows-based system, you can do this from the command line using the `mstsc` command:
-
-```azurecli-interactive
-mstsc /v:xx.xxx.xx.xxx
-```
-
-Supply the same username/password combination you used when creating the VM to log in.
-
-## Creating other resources in Azure
-
-We've now walked through how to create a Resource Group, a Linux VM, and a Windows Server VM. You can create many other types of Azure resources as well.
-
-All new resources are created using a consistent `az <resource type name> create` naming pattern.  For example, to create an Azure Network Load Balancer that we could then associate with our newly created VMs, we can use the following create command:
-
-```azurecli-interactive
-az network lb create -n MyLoadBalancer -g MyResourceGroup
-```
-
-We could also create a new private Virtual Network (commonly referred to as a "VNet" within Azure) for our infrastructure using the following create command:
-
-```azurecli-interactive
-az network vnet create -n MyVirtualNetwork -g MyResourceGroup --address-prefix 10.0.0.0/16
-```
-
-What makes Azure and the Azure CLI powerful is that we can use it not just to get cloud-based infrastructure but also to
-create managed platform services.  The managed platform services can also be combined with infrastructure to build even more powerful solutions.
-
-For example, you can use the Azure CLI to create an Azure AppService.  Azure AppService is a managed platform service that provides a great way to host web apps without having to worry about infrastructure.  After creating the Azure AppService, you can create two new Azure Web Apps within the AppService using the following create commands:
-
-```azurecli-interactive
-# Create an Azure AppService that we can host any number of web apps within
-az appservice plan create -n MyAppServicePlan -g MyResourceGroup
-
-# Create Two Web Apps within the AppService (note: name param must be a unique DNS entry)
-az webapp create -n MyWebApp43432 -g MyResourceGroup --plan MyAppServicePlan
-az webapp create -n MyWebApp43433 -g MyResourceGroup --plan MyAppServicePlan
-```
-
-Once you understand the basics of the `az <resource type name> create` pattern, it becomes easy to create anything. Following are
-some popular Azure resource types and the corresponding Azure CLI create commands to create them:
-
-```
-Resource Type               Azure CLI create command
--------------               ------------------------
-Resource Group              az group create
-Virtual Machine             az vm create
-Virtual Network             az network vnet create
-Load Balancer               az network lb create
-Managed Disk                az disk create
-Storage account             az storage account create
-Virtual Machine Scale Set   az vmss create
-Azure Container Service     az acs create
-Web App                     az webapp create
-SQL Database Server         az sql server create
-Document DB                 az documentdb create
-```
-
-Visit the [Reference documentation](/cli/azure) to learn more about the additional resource-specific parameters that you can pass to each of the preceding commands and the resource types you can create.
-
-## Useful tip: Optimizing create operations using --no-wait
-
-By default when you create resources using the Azure CLI 2.0, the `az <resource type name> create` command waits until the
-resource has been created and is ready for you to use.  For example, if you create a VM, the `az vm create` command will, by default,
-not return until the VM is created and is ready for you to SSH or RDP into it.
-
-We use this approach because it makes it easier to write automation scripts that contain multiple steps with dependencies (and need a prior task to have completed successfully before continuing).
-
-If you do not need to wait on creation of a resource before continuing, you can use the `no-wait` option to start
-a create action in the background. You can continue using the CLI for other commands.
-
-For example, the following usage of the `az vm create` starts a VM deployment and then return much more quickly (and before the VM
-has fully booted):
-
-```azurecli-interactive
-az vm create -n MyLinuxVM2 -g MyResourceGroup --image UbuntuLTS --no-wait
-```
-
-Using the `--no-wait` approach can help you optimize the performance of your automation scripts considerably.
-
-## Listing resources and formatting output
-
-You can use the `list` command within the Azure CLI to find and list the resources running in Azure.
-
-Like with the create command, you can list resources using the Azure CLI 2.0 using a common `az <resource type name> list` naming pattern that is consistent across all resource types.  There are various output formats and query options available to filter and sort the list of resources in the way you prefer to see them.
-
-For example, `az vm list` shows the list of all VMs you have.
-
-```azurecli-interactive
-az vm list
-```
-The values returned are by default in JSON (only showing partial output for sake of brevity).
-
-```json
-[
-  {
-    "availabilitySet": null,
-    "diagnosticsProfile": null,
-    "hardwareProfile": {
-      "vmSize": "Standard_DS1_v2"
-    },
-    "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010",
-    "instanceView": null,
-    "licenseType": null,
-    "location": "westus2",
-    "name": "MyLinuxVM",
-    "networkProfile": {
-      "networkInterfaces": [
-        {
-          "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/demorg1/providers/Microsoft.Network/networkInterfaces/DemoVM010VMNic",
-          "primary": null,
-          "resourceGroup": "MyResourceGroup"
-        }
-      ]
-    },
-          ...
-          ...
-          ...
-]
-```
-
-You can optionally modify the output format using the `--output` option.  Run the `az vm list` command to see both the Linux and Windows Server VMs created earlier, along with the most common properties of a VM, using the easy to read *table* format option:
-
-```azurecli-interactive
-az vm list --output table
-```
-
-```Output
-Name       ResourceGroup    Location
----------  ---------------  ----------
-MyLinuxVM  MyResourceGroup  westus2
-MyWinVM    MyResourceGroup  westus2
-```
-
-The *tsv* output option can be used to get a text-based, tab-separated format without any headers.  This format is useful when you
-want to pipe the output into another text-based tool like grep.
-
-```azurecli-interactive
-az vm list --output tsv
-```
-
-```
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyLinuxVM        None    None    westus2 MyLinuxVM                   None        Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-None    None            /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/MyResourceGroup/providers/Microsoft.Compute/virtualMachines/MyWinVM  None    None    westus2 MyWinVM                 None    Succeeded       MyResourceGroup None                    Microsoft.Compute/virtualMachines       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-```
-Visit the [output formats](format-output-azure-cli.md) article to learn more about the additional ways to list resources and format the output.
-
-## Querying resources and shaping outputs
-
-Often you want to be able to query for only those resources that meet a specific condition.
-
-The `list` command has built-in support
-that makes it easy to filter resources by Resource Group name.  For example, you can pass either a `--ResourceGroup` or `-g` parameter
-to a `list` command to only retrieve those resources within a specific resource group:
-
-
-```azurecli-interactive
-az vm list -g MyResourceGroup --output table
-```
-
-```Output
-Name       ResourceGroup    Location
----------  ---------------  ----------
-MyLinuxVM  MyResourceGroup  westus2
-MyWinVM    MyResourceGroup  westus2
-```
-
-For even more powerful querying support, you can use the `--query` parameter to execute
-a JMESPath query on the results of *any* `az` command.  JMESPath queries can be used both to filter as well
-as shape the output of any returned result.
-
-For example, execute the following command to query for any VM resource within any resource group that contains the letters "My":
-
-```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup, 'MY')]"
-```
-
-```Output
-ResourceGroup    ProvisioningState    Name       Location    VmId
----------------  -------------------  ---------  ----------  ------------------------------------
-MYRESOURCEGROUP  Succeeded            MyLinuxVM  westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-MYRESOURCEGROUP  Succeeded            MyWinVM    westus2     XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-```
-
-We could then choose to further refine the output by using the shaping capability of JMESPath queries to output different values
-as well.  For example, the following command retrieves the type of OS disk the VM is using to determine whether the OS is Linux or Windows based:
-
-```azurecli-interactive
-az vm list --output table --query "[?contains(resourceGroup, 'MY')].{ VMName:name, OSType:storageProfile.osDisk.osType }"
-```
-
-```Output
-VMName     OSType
----------  --------
-MyLinuxVM  Linux
-MyWinVM    Windows
-```
-
-The JMESPath support in Azure CLI is powerful.  Learn more about how to use it in our [query](query-azure-cli.md) article.
-
-## Deleting resources
-
-You can use the `delete` command within Azure CLI to delete the resources you no longer need. You can use the `delete` command with
-any resource just like you can with the `create` command.
-
-```azurecli-interactive
-az vm delete -n MyLinuxVM -g MyResourceGroup
-```
-
-By default the CLI prompts to confirm deletion.  You can suppress this prompt for automated scripts.
-
-```Output
-Are you sure you want to perform this operation? (y/n): y
-EndTime                           Name                                  StartTime                         Status
---------------------------------  ------------------------------------  --------------------------------  ---------
-2017-02-19T02:35:56.678905+00:00  5b74ab80-9b29-4329-b483-52b406583e2f  2017-02-19T02:33:35.372769+00:00  Succeeded
-```
-
-You can also use the `delete` command to delete many resources at a time. For example, the following command deletes all the
-resources in the "MyResourceGroup" resource group that we've used for all the samples in this Get Started tutorial.
-
-```azurecli-interactive
-az group delete -n MyResourceGroup
-```
-
-```Output
-Are you sure you want to perform this operation? (y/n): y
-```
-
-## Get samples
-
-To learn more about ways to use the Azure CLI, check out our most common scripts for
-[Linux VMs](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
-[Windows VMs](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
-[Web apps](/azure/app-service-web/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json),
-and [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json).
-
-## Read the API reference docs
-
-[API reference](/cli/azure)
-
-## Get help
-
-The Azure CLI has built-in help documentation, which matches our web documentation that you can run from the command line:
-
-```azurecli-interactive
-az [command-group [command]] -h
-```
-
-For example, to see what commands and subgroups are available for VMs, use:
-
-```azurecli-interactive
-az vm -h
-```
-
-To get help with the command to create a VM, use:
-
-```azurecli-interactive
-az vm create -h
-```
-
-## Switch from Azure CLI 1.0
-
-If you already know how to use Azure CLI 1.0 (azure.js),
-you'll notice places where the commands aren't quite the same.
-Sometimes the commands to perform a task are significantly different.
-To help you make the switch from Azure CLI 1.0 to Azure CLI 2.0,
-we've started this [command mapping](https://github.com/Azure/azure-cli/blob/master/doc/azure2az_commands.rst).
-
-## Send us your feedback
-
-```azurecli-interactive
+```azurecli
 az feedback
 ```
