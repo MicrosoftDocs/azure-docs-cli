@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure linux, azure install linux
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/18
+ms.date: 01/29/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
