@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure macos, azure install macos
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/18
+ms.date: 01/29/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -20,7 +20,7 @@ installation of the CLI update to date. The CLI package has been tested on macOS
 
 ## Install
 
-Homebrew is the easiest way to manage your CLI install. It provides convenient ways to install, update, and uninstall. 
+Homebrew is the easiest way to manage your CLI install. It provides convenient ways to install, update, and uninstall.
 If you don't have homebrew available on your system, [install homebrew](https://docs.brew.sh/Installation.html) before continuing.
 
 You can install the CLI by updating your brew repository information, and then running the `install` command:

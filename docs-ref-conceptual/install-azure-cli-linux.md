@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure linux, azure install linux
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/18
+ms.date: 01/29/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -31,7 +31,7 @@ In order to install the CLI, you need the following software available on your s
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
-## Install or update 
+## Install or update
 
 Whether you are installing or updating the CLI, you need to perform a full installation. Once you have the prerequisites, you can
 install the CLI by running `curl`.
@@ -79,19 +79,19 @@ of the `az` command is
 Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is `$HOME`.
 
 1. Remove the installed CLI files.
-  
+
   ```bash
   rm -r <install location>/lib/azure-cli
   rm <install location>/bin/az
   ```
 2. Modify your `$HOME/.bash_profile` file to remove the following line:
-  
+
   ```
   <install location>/lib/azure-cli/az.completion
   ```
 
 3. If using `bash` or `zsh`, reload your shell's command cache.
-  
+
   ```bash
   hash -r
   ```

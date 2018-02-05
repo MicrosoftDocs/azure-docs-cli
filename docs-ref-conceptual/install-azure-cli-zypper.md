@@ -5,7 +5,7 @@ keywords: azure cli, azure cli install, azure cli zypper, azure cli opensuse, az
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/18
+ms.date: 01/29/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure

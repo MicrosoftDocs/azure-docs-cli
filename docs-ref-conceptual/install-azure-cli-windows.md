@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure install windows, azure cli windows, 
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/18
+ms.date: 01/29/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -35,7 +35,7 @@ not available from CMD.
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
 
-Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option. 
+Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option.
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://azurecliprod.blob.core.windows.net/msi/azure-cli-latest.msi)
