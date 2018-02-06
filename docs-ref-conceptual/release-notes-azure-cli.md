@@ -54,8 +54,8 @@ Version 2.0.26
 * Fixed issue with `application-gateway update` where `--sku` erroneously applied a default value
 * Added protection for `--shared-key` and `--authorization-key` to `vpn-connection create`
 * Fixed missing client issue with `asg create`
+* Added `--file-name / -f` parameter for exported names to `dns zone export`
 * Fixed the following issues with `dns zone export`:
-  * Added `--file-name/-f` parameter for exported names
   * Fixed issue where long TXT records were incorrectly exported
   * Fixed issue where quoted TXT records were incorrectly exported without escaped quotes
 * Fixed issue where certain records were imported twice with `dns zone import` 
@@ -79,7 +79,7 @@ Version 2.0.26
 
 ### VM
 
-* Added `vm image accept-terms` command to allow images with additional charges to be created
+* Added `vm image accept-terms` command to allow creating VMs from images with additional charges
 * Fixed `[vm|vmss create]` to ensure commands can run under proxy with unsigned certificates
 * [PREVIEW] Added support for "low" priority to VMSS
 * Added protection for `--admin-password` to `[vm|vmss] create`
