@@ -71,7 +71,7 @@ Version 2.0.26
 
 ### Storage
 
-* Changed `storage account update` to not create a new networkRuleSet if "default\_action" arg is not provided [X]
+* Fixed issue with migrating Storage V1 accounts to Storage V2
 * Added progress reporting for all upload/download commands
 * Fixed bug preventing "-n" arg option with `storage account check-name`  
 * Added 'snapshot' column to table output for `blob [list|show]`
