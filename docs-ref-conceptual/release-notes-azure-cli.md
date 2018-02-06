@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0, release notes
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/17/2018
+ms.date: 02/06/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -79,7 +79,7 @@ Version 2.0.26
 
 ### VM
 
-* vm image: support accept market terms to use vm images [X]
+* Added `vm image accept-terms` command to allow images with additional charges to be created
 * Fixed `[vm|vmss create]` to ensure commands can run under proxy with unsigned certificates
 * [PREVIEW] Added support for "low" priority to VMSS
 * Added protection for `--admin-password` to `[vm|vmss] create`
