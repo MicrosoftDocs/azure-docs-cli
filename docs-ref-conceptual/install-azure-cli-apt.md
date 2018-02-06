@@ -5,7 +5,7 @@ keywords: Azure CLI,Install Azure CLI,azure apt, azure debian, azure ubuntu
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/29/2018
+ms.date: 02/06/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -15,26 +15,19 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 with apt
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a package available
-for the Azure CLI. This package has been tested with Ubuntu Wheezy and Ubuntu Xenial.
+If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a 64-bit package available
+for the Azure CLI. This package has been tested with:
 
-[!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
+* Ubuntu wheezy, xenial, and artful
+* Debian wheezy, jessie, and stretch
 
 ## Install
 
 1. Modify your sources list:
 
-   - 32-bit system
-
      ```bash
-     echo "deb https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
-          sudo tee /etc/apt/sources.list.d/azure-cli.list
-     ```
-
-   - 64-bit system
-
-     ```bash
-     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | \
+     AZ_REPO=$(lsb_release -cs)
+     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
           sudo tee /etc/apt/sources.list.d/azure-cli.list
      ```
 
