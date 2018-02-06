@@ -45,7 +45,6 @@ All subcommands of these groups and their documentation can be looked up in onli
 | [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
 | [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
 | [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
-| [Azure Container Instances](/azure/container-instances) | [az aci](/cli/azure/aci) |
 
 ## Finding commands
 
