@@ -5,7 +5,7 @@ keywords: Azure CLI 2.0, release notes
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 01/17/2018
+ms.date: 02/06/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -14,6 +14,76 @@ ms.service: multiple
 ---
 
 # Azure CLI 2.0 release notes
+
+## January 31, 2018
+
+Version 2.0.26
+
+### Core
+
+* Added support raw token retrival in MSI context
+* Removed polling indicator string after finishing LRO on Windows cmd.exe
+* Added a warning that appears when using a configured default has been changed to an INFO level entry. Use `--verbose` to see
+* Add a progress indicator for wait commands
+
+### ACS
+
+* Clarified `--disable-browser` argument
+* Improved tab completion for `--vm-size` arguments
+
+### Appservice
+
+* Fixed `webapp log [tail|download]`
+* Removed the `kind` check on webapps and functions
+
+### CDN
+
+* Fixed missing client issue with `cdn custom-domain create`
+
+### CosmosDB
+
+* Fixed parameter description for failover policies
+
+### Interactive
+
+* Fixed issue where command option completions no longer appeared
+
+### Network
+
+* Added protection for `--cert-password` to `application-gateway create`
+* Fixed issue with `application-gateway update` where `--sku` erroneously applied a default value
+* Added protection for `--shared-key` and `--authorization-key` to `vpn-connection create`
+* Fixed missing client issue with `asg create`
+* Added `--file-name / -f` parameter for exported names to `dns zone export`
+* Fixed the following issues with `dns zone export`:
+  * Fixed issue where long TXT records were incorrectly exported
+  * Fixed issue where quoted TXT records were incorrectly exported without escaped quotes
+* Fixed issue where certain records were imported twice with `dns zone import` 
+* Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands
+
+### Profile
+
+* Fixed `get-access-token` to work inside a VM with identity
+
+### Resource
+
+* Fixed bug with `deployment [create|validate]` where warning was incorrectly displayed when a template 'type' field contained uppercase values
+
+### Storage
+
+* Fixed issue with migrating Storage V1 accounts to Storage V2
+* Added progress reporting for all upload/download commands
+* Fixed bug preventing "-n" arg option with `storage account check-name`  
+* Added 'snapshot' column to table output for `blob [list|show]`
+* Fixed bugs with various parameters that needed to be parsed as ints
+
+### VM
+
+* Added `vm image accept-terms` command to allow creating VMs from images with additional charges
+* Fixed `[vm|vmss create]` to ensure commands can run under proxy with unsigned certificates
+* [PREVIEW] Added support for "low" priority to VMSS
+* Added protection for `--admin-password` to `[vm|vmss] create`
+
 
 ## January 17, 2018
 
