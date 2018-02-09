@@ -11,6 +11,7 @@ items:
   - az_aks_create
   - az_aks_delete
   - az_aks_get_credentials
+  - az_aks_get_upgrades
   - az_aks_get_versions
   - az_aks_install_cli
   - az_aks_install_connector
@@ -50,7 +51,7 @@ items:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
   - summary: Create a Kubernetes cluster with a specific version.
     syntax:
-      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.8.1
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.8.7
   - summary: Create a Kubernetes cluster with a larger node pool.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --node-count 7
@@ -77,9 +78,9 @@ items:
     summary: Generate SSH public and private key files if missing.
     description: ''
   - name: --kubernetes-version -k
-    defaultValue: 1.7.7
-    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.7" or "1.8.2".
+    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
     description: ''
+    valueFrom: '`az aks get-versions`'
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
@@ -94,18 +95,18 @@ items:
     summary: Size in GB of the OS disk for each node in the node pool.
     description: ''
   - name: --node-vm-size -s
-    defaultValue: Standard_D1_v2
+    defaultValue: Standard_DS1_v2
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --service-principal
     summary: Service principal used for authentication to Azure APIs.
-    description: If not specified, a new service principal with the contributor role is created and cached at $HOME.azureacsServicePrincipal.json to be used by subsequent `az aks` commands.
+    description: If not specified, a new service principal is created and cached at $HOME.azureaksServicePrincipal.json to be used by subsequent `az aks` commands.
   - name: --ssh-key-value
     defaultValue: ~.sshid_rsa.pub
     summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
     description: ''
   - name: --tags
-    summary: Space separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
 - uid: az_aks_delete
   name: az aks delete
@@ -150,9 +151,9 @@ items:
     defaultValue: C:Usersappveyor.kubeconfig
     summary: Kubernetes configuration file to update. Use "-" to print YAML to stdout instead.
     description: ''
-- uid: az_aks_get_versions
-  name: az aks get-versions
-  summary: Get versions available to upgrade a managed Kubernetes cluster.
+- uid: az_aks_get_upgrades
+  name: az aks get-upgrades
+  summary: Get the upgrade versions available for a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
@@ -164,6 +165,17 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+- uid: az_aks_get_versions
+  name: az aks get-versions
+  summary: Get the versions available for creating a managed Kubernetes cluster.
+  description: 'Deprecation notice: the previous behavior of this command is now in `az aks get-upgrades`.'
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
 - uid: az_aks_install_cli
   name: az aks install-cli
@@ -182,7 +194,7 @@ items:
     description: ''
 - uid: az_aks_install_connector
   name: az aks install-connector
-  summary: Install the Azure Container Instances (ACI) Connector on a managed Kubernetes cluster.
+  summary: Install the ACI Connector on a managed Kubernetes cluster.
   description: ''
   langs:
   - azurecli
@@ -232,7 +244,7 @@ items:
     description: ''
   - name: --service-principal
     summary: Service principal used for authentication to Azure APIs.
-    description: If not specified, a new service principal with the contributor role is created and cached at $HOME.azureacsServicePrincipal.json to be used by subsequent `az aks` commands.
+    description: If not specified, a new service principal is created and cached at $HOME.azureaksServicePrincipal.json to be used by subsequent `az aks` commands.
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
@@ -320,9 +332,9 @@ items:
   parameters:
   - isRequired: true
     name: --kubernetes-version -k
-    summary: Version of Kubernetes to upgrade the cluster to, such as "1.7.7" or "1.8.2".
+    summary: Version of Kubernetes to upgrade the cluster to, such as "1.7.12" or "1.8.7".
     description: ''
-    valueFrom: '`az aks get-versions`'
+    valueFrom: '`az aks get-upgrades`'
   - isRequired: true
     name: --name -n
     summary: Name of the managed cluster.
@@ -392,15 +404,18 @@ commands:
 - uid: az_aks_get_credentials
   name: az aks get-credentials
   summary: Get access credentials for a managed Kubernetes cluster.
+- uid: az_aks_get_upgrades
+  name: az aks get-upgrades
+  summary: Get the upgrade versions available for a managed Kubernetes cluster.
 - uid: az_aks_get_versions
   name: az aks get-versions
-  summary: Get versions available to upgrade a managed Kubernetes cluster.
+  summary: Get the versions available for creating a managed Kubernetes cluster.
 - uid: az_aks_install_cli
   name: az aks install-cli
   summary: Download and install kubectl, the Kubernetes command-line tool.
 - uid: az_aks_install_connector
   name: az aks install-connector
-  summary: Install the Azure Container Instances (ACI) Connector on a managed Kubernetes cluster.
+  summary: Install the ACI Connector on a managed Kubernetes cluster.
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.

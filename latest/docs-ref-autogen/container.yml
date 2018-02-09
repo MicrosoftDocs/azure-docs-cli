@@ -7,11 +7,36 @@ items:
   langs:
   - azurecli
   children:
+  - az_container_attach
   - az_container_create
   - az_container_delete
   - az_container_list
   - az_container_logs
   - az_container_show
+- uid: az_container_attach
+  name: az container attach
+  summary: Attach local standard output and error streams to a container in a container group.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --container-name
+    summary: The container to attach to. If omitted, the first container in the container group will be chosen.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_container_create
   name: az container create
   summary: Create a container group.
@@ -28,6 +53,9 @@ items:
   - summary: Create a container in a container group with public IP address and ports.
     syntax:
       content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --ip-address public --ports 80 443
+  - summary: Create a container in a container group with public IP address, ports and DNS name label.
+    syntax:
+      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --ports 80 443 --dns-name-label contoso
   - summary: Create a container in a container group that invokes a script upon start.
     syntax:
       content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --command-line "/bin/sh -c '/path to/myscript.sh'"
@@ -66,8 +94,11 @@ items:
     defaultValue: "1"
     summary: The required number of CPU cores of the containers.
     description: ''
+  - name: --dns-name-label
+    summary: The dns name label for container group with public IP.
+    description: ''
   - name: --environment-variables -e
-    summary: A list of environment variable for the container. Space separated values in 'key=value' format.
+    summary: A list of environment variable for the container. Space-separated values in 'key=value' format.
     description: ''
   - name: --ip-address
     parameterValueGroup: Public
@@ -163,7 +194,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_container_logs
   name: az container logs
-  summary: Examine the logs for a container group.
+  summary: Examine the logs for a container in a container group.
   description: ''
   langs:
   - azurecli
@@ -177,7 +208,10 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --container-name
-    summary: The container name to tail the logs.
+    summary: The container name to tail the logs. If omitted, the first container in the container group will be chosen.
+    description: ''
+  - name: --follow
+    summary: Indicate to stream the tailing logs.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -207,6 +241,9 @@ items:
       path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
+- uid: az_container_attach
+  name: az container attach
+  summary: Attach local standard output and error streams to a container in a container group.
 - uid: az_container_create
   name: az container create
   summary: Create a container group.
@@ -218,7 +255,7 @@ commands:
   summary: List container groups.
 - uid: az_container_logs
   name: az container logs
-  summary: Examine the logs for a container group.
+  summary: Examine the logs for a container in a container group.
 - uid: az_container_show
   name: az container show
   summary: Get the details of a container group.
@@ -238,6 +275,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8346147d0da04063bd9000d1b370b2d65204cda8/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-updated_at: 11/13/2017 7:42:14 PM
-ms.date: 11/13/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/ff8e9d2a3dfdfb28c18dd267210a66678dfd654c/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+updated_at: 2/6/2018 11:13:08 PM
+ms.date: 2/6/2018
