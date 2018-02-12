@@ -15,7 +15,7 @@ ms.service: multiple
 
 # Install Azure CLI 2.0 on macOS
 
-For the macOS platform, you can install the Azure CLI either through the [homebrew package manager](http://brew.sh). Homebrew makes it easy to keep your
+For the macOS platform, you can install the Azure CLI with [homebrew package manager](http://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
 
 ## Install
