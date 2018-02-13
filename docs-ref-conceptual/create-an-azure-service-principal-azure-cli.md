@@ -22,15 +22,21 @@ If you want to create a separate login with access restrictions, you can do so t
 Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) command to create a service principal. The Service Principal's name does not need to be tied to any existing application or user name. You can create a service principal with your choice of authentication type.
 
 * `--password` is used for password-based authentication. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). If you don't specify a password, one is created for you.
+
   ```azurecli
-  az ad sp create-for-rbac --name {ServicePrincipal} --password PASSWORD
+  az ad sp create-for-rbac --name ServicePrincipalName --password PASSWORD
   ```
+
 * `--cert` is used for certificate-based authentication for an existing certificate, either as a PEM or DER public string, or `@{file}` to load a file.
+
   ```azurecli
-  az ad sp create-for-rbac --name SP_NAME --cert {CertStringOrFile} --keyvault
+  az ad sp create-for-rbac --name ServicePrincipalName --cert {CertStringOrFile} 
   ```
+
   The `--keyvault` argument can be added to indicate the cert is stored in Azure Key Vault. In this case, the `--cert` value refers to the name of the certificate in Key Vault.
+
 * `--create-cert` creates a _self-signed_ certificate for authentication. The `--keyvault` argument can be added to store the certificate in Azure Key Vault.
+
   ```azurecli
   az ad sp create-for-rbac --name SP_NAME --create-cert
   ```
@@ -42,8 +48,8 @@ The output of the `create-for-rbac` command is in the following format.
 ```json
 {
   "appId": "APP_ID",
-  "displayName": "APP_NAME",
-  "name": "http://APP_NAME",
+  "displayName": "ServicePrincipalName",
+  "name": "http://ServicePrincipalName",
   "password": ...,
   "tenant": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 }
@@ -97,4 +103,11 @@ To log in with a certificate, it must be available locally as a PEM or DER file.
 
 ```azurecli
 az login --service-principal --username APP_ID --tenant TENANT_ID --password PATH_TO_CERT
+```
+## Reset credentials
+
+In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp reset-credentials](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az_ad_sp_reset_credentials) command. The same restrictions and options for creating a new service principal also apply here.
+
+```azurecli
+az ad sp reset-credentials --name APP_ID --password NEW_PASSWORD
 ```
