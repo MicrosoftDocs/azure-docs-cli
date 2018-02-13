@@ -15,11 +15,11 @@ ms.service: multiple
 
 # Create an Azure service principal with Azure CLI 2.0
 
-If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article will run you through the steps for creating a service principal.
+If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
 
 ## Create the service principal
 
-Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) command to create a service principal. The Service Principal's name does not need to be tied to any existing application or user name. You can create a service principal with your choice of authentication type.
+Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) command to create a service principal. The Service Principal's name isn't tied to any existing application or user name. You can create a service principal with your choice of authentication type.
 
 * `--password` is used for password-based authentication. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). If you don't specify a password, one is created for you.
 
@@ -38,12 +38,12 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) command to 
 * `--create-cert` creates a _self-signed_ certificate for authentication. The `--keyvault` argument can be added to store the certificate in Azure Key Vault.
 
   ```azurecli
-  az ad sp create-for-rbac --name SP_NAME --create-cert
+  az ad sp create-for-rbac --name ServicePrincipalName --create-cert
   ```
 
-If an argument indicating the authentication type is not included, `--password` is used by default.
+If an argument indicating the authentication type isn't included, `--password` is used by default.
 
-The output of the `create-for-rbac` command is in the following format.
+The output of the `create-for-rbac` command is in the following format:
 
 ```json
 {
@@ -58,7 +58,7 @@ The output of the `create-for-rbac` command is in the following format.
 The `appId`, `tenant`, and `password` values are used for authentication. The `displayName` is used when searching for an existing service principal.
 
 > [!NOTE]
-> If your account does not have sufficient permissions to create a service principal, you will see an error message containing "Insufficient privileges to complete the operation." In this case, contact your Azure Active Directory admin to create a service principal.
+> If your account does not have sufficient permissions to create a service principal, you see an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
 ## Managing roles 
 
@@ -68,17 +68,16 @@ The Azure CLI 2.0 provides the following commands to manage role assignments.
 * [az role assignment create](/cli/azure/role/assignment#create)
 * [az role assignment delete](/cli/azure/role/assignment#delete)
 
-The default role for a service principal is **Contributor**. This has full permissions to read and write to an Azure account, and is usually not appropriate for applications. The **Reader** role is more restrictive, providing read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
+The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account, and is usually not appropriate for applications. The **Reader** role is more restrictive, providing read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
-In this example, add the **Reader** role to our prior example, and delete the **Contributor** one:
+This example adds the **Reader** role and deletes the **Contributor** one.
 
 ```azurecli
 az role assignment create --assignee APP_ID --role Reader
 az role assignment delete --assignee APP_ID --role Contributor
 ```
 
-> [!NOTE]
-> Adding a role does _not_ change any previously assigned permissions. They may have multiple roles. This means that when restricting a service principal's permissions, the __Contributor__ role should always be removed.
+Adding a role does _not_ change any previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should always be removed.
 
 The changes can be verified by listing the assigned roles.
 
@@ -87,11 +86,11 @@ az role assignment list --assignee APP_ID
 ```
 
 > [!NOTE] 
-> If your account does not have sufficient permissions to assign a role, you will see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'."
+> If your account doesn't have the permissions to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'." Contact your Azure Active Directory admin to manage roles.
 
 ## Log in using the service principal
 
-You can test the new service principal's login and permissions by logging in under it within the Azure CLI. Log in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide will change based on whether you chose to create the service principal with a password, or a certificate.
+You can test the new service principal's login and permissions by logging in under it within the Azure CLI. Log in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
 
 To log in with a password, provide it as an argument parameter.
 
