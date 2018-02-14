@@ -5,7 +5,7 @@ keywords: Azure CLI, Extensions
 author: sptramer
 ms.author: sttramer
 manager: routlaw
-ms.date: 10/30/2017
+ms.date: 02/13/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -15,18 +15,20 @@ ms.service: multiple
 
 # Using extensions with the Azure CLI 2.0
 
-Extensions are individual modules not shipped with the Azure CLI itself that allow you to add functionality through new commands. These might be experimental or pre-release offerings, specialized tools that Microsoft has for your needs, or even extensions that you yourself have written. Extensions allow for a degree of flexibility with the CLI that let you modify it to your own needs, without having to ship a lot of additional packages that aren't considered part of the core feature set.
+Extensions are individual modules not shipped with the Azure CLI itself that add functionality through new commands. These might be experimental or pre-release offerings, specialized tools from Microsoft, or custom features you
+write yourself. Extensions allow for a degree of flexibility with the CLI that let you modify it to your own needs, without having to ship a lot of additional packages that aren't considered part of the core feature set.
 
-This article will help you understand how to install, update, and remove extensions for the CLI. It should also answer common questions about extension behavior.
+This article helps you understand how to install, update, and remove extensions for the CLI. It should also answer common questions about extension behavior.
 
 ## Finding extensions
 
-In order to know what extensions are available, you can use `az extension list-available`. This command lists the available, official extensions which are provided and supported by Microsoft.
+In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available). This command lists the available, official extensions
+which are provided and supported by Microsoft.
 
 ## Installing extensions
 
-Once you have found an extension to install, use `az extension add` to get it. If the extension is an official Microsoft extension listed in `az extension list-available`, you can install the extension
-by name.
+Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az_extension_add) to get it. If the extension is 
+listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli
 az extension add --name <extension-name>
@@ -38,11 +40,12 @@ If the extension is from an external resource or you have a direct link to it, y
 az extension add --source <URL-or-path>
 ```
 
-Once an extension is installed, it can be found under the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
+Once an extension is installed, it can be found under the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on 
+Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ## Updating extensions
 
-Extensions can only be updated by name:
+Extensions can only be updated by name, using [az extension update](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az_extension_update).
 
 ```azurecli
 az extension update --name <extension-name>
@@ -54,13 +57,14 @@ built-in command for the CLI. In that case, update the CLI and uninstall the ext
 
 ## Uninstalling extensions
 
-If you no longer need an extension, it can be removed with `az extension remove`,
+If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az_extension_remove).
 
 ```azurecli
 az extension remove --name <extension-name>
 ```
 
-You can also remove an extension manually by deleting it from the location where it was installed. This will be the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
+You can also remove an extension manually by deleting it from the location where it was installed. This will be the value of the `$AZURE_EXTENSION_DIR` shell variable. 
+If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ```bash
 rm -rf $AZURE_EXTENSION_DIR/<extension-name>
@@ -87,7 +91,8 @@ with plans to move them into the main CLI interface once the product is out of p
 
 ### Can extensions depend upon each other?
 
-No. Extensions must be individual packages which do not rely on one another. This is because the CLI gives no guarantee about when extensions are loaded, so dependencies could not be guaranteed to be satisfied. Installing an extension installs that extension only, and it should continue to work even if you remove other extensions.
+No. Extensions must be individual packages which do not rely on one another. This is because the CLI gives no guarantee about when extensions are loaded, so dependencies could not 
+be guaranteed to be satisfied. Installing an extension installs that extension only, and it should continue to work even if you remove other extensions.
 
 ### Are extensions updated along with the CLI?
 

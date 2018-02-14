@@ -1,7 +1,6 @@
 ---
-title: Create an Azure service principal with Azure CLI 2.0
-description: Learn how to create a service principal for your app or service with Azure CLI 2.0.
-keywords: Azure CLI 2.0, Azure Active Directory, Azure Active directory, AD, RBAC
+title: Use Azure service principals with Azure CLI 2.0
+description: Learn how to create and use a service principal with Azure CLI 2.0.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -15,7 +14,8 @@ ms.service: multiple
 
 # Create an Azure service principal with Azure CLI 2.0
 
-If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
+If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
+associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
 
 ## Create the service principal
 
@@ -60,7 +60,7 @@ The `appId`, `tenant`, and `password` values are used for authentication. The `d
 > [!NOTE]
 > If your account does not have sufficient permissions to create a service principal, you see an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
-## Managing roles 
+## Manage service principal roles 
 
 The Azure CLI 2.0 provides the following commands to manage role assignments.
 
