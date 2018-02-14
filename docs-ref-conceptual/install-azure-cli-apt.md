@@ -1,7 +1,6 @@
 ---
 title: Install the Azure CLI 2.0 on Linux with apt
 description: How to install the Azure CLI 2.0 with the apt package manager
-keywords: Azure CLI,Install Azure CLI,azure apt, azure debian, azure ubuntu
 author: sptramer
 ms.author: sttramer
 manager: routlaw
