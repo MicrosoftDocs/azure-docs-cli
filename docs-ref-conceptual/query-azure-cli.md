@@ -1,7 +1,6 @@
 ---
 title: Query command results with Azure CLI 2.0
-description: Use --query to perform JMESPath queries on the output of Azure CLI 2.0 commands.
-keywords: Azure CLI 2.0, JMESPath, query, Linux, Mac, Windows, OS X
+description: Learn how to perform JMESPath queries on the output of Azure CLI 2.0 commands.
 author: rloutlaw
 ms.author: routlaw
 manager: douge
@@ -11,16 +10,15 @@ ms.prod: azure
 ms.technology: azure
 ms.devlang: azurecli
 ms.service: multiple
-ms.assetid: 5979acc5-21a5-41e2-a4b6-3183bfe6aa22
 ---
 
-# Using JMESPath queries with Azure CLI 2.0
+# Use JMESPath queries with Azure CLI 2.0
 
 The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you are unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http://JMESPath.org/tutorial.html).
 
 `Query` parameter is supported by every resource type (Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for various different purposes.  We have listed several examples below.
 
-## Selecting simple properties
+## Select simple properties
 
 The simple `list` command with `table` output format returns a curated set of most common, simple properties for each resource type in an easy-to-read tabular format.
 
@@ -81,7 +79,7 @@ RGDEMO001  KBDemo001VM
 RGDEMO001  KBDemo020
 ```
 
-## Selecting complex nested properties
+## Select complex nested properties
 
 If the property you want to select is nested deep in the JSON output you need to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
 

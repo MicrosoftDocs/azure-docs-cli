@@ -1,7 +1,6 @@
 ---
 title: Install the Azure CLI for Windows
 description: How to install the Azure CLI 2.0 on Windows
-keywords: Azure CLI,Install Azure CLI,azure install windows, azure cli windows, azure windows
 author: sptramer
 ms.author: sttramer
 manager: routlaw

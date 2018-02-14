@@ -1,7 +1,6 @@
 ---
 title: Install the Azure CLI 2.0 on Linux with zypper
 description: How to install the Azure CLI 2.0 with zypper
-keywords: azure cli, azure cli install, azure cli zypper, azure cli opensuse, azure cli sle
 author: sptramer
 ms.author: sttramer
 manager: routlaw

@@ -1,7 +1,6 @@
 ---
 title: Install the Azure CLI for macOS
 description: How to install the Azure CLI 2.0 on macOS
-keywords: Azure CLI,Install Azure CLI,azure macos, azure install macos
 author: sptramer
 ms.author: sttramer
 manager: routlaw

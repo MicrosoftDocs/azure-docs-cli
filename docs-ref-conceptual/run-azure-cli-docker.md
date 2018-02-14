@@ -1,7 +1,6 @@
 ---
 title: Run Azure CLI 2.0 in a Docker Container
 description: How to run a Docker container hosting the Azure CLI 2.0
-keywords: Azure CLI,Install Azure CLI,azure docker,azure docker image,
 author: sptramer
 ms.author: sttramer
 manager: routlaw

@@ -1,7 +1,6 @@
 ---
 title: Install the Azure CLI 2.0 for Linux manually
 description: How to install the Azure CLI 2.0 on Linux manually
-keywords: Azure CLI,Install Azure CLI,azure linux, azure install linux
 author: sptramer
 ms.author: sttramer
 manager: routlaw
