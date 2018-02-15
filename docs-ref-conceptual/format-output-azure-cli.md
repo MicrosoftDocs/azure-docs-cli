@@ -19,18 +19,16 @@ to format the output of the command into one of the output types noted in the fo
 
 --output | Description
 ---------|-------------------------------
-`json`   | json string. `json` is the default.
-`jsonc`  | colorized json string.
-`table`  | table with column headings.
-`tsv`    | tab-separated values.
-
-[!INCLUDE [cloud-shell-try-it.md](includes/cloud-shell-try-it.md)]
+`json`   | JSON string. This setting is the default.
+`jsonc`  | Colorized JSON.
+`table`  | ASCII table with keys as column headings.
+`tsv`    | Tab-separated values, with no keys
 
 ## Using the json option
 
 The following example displays the list of virtual machines in your subscriptions in the default json format.
 
-```azurecli-interactive
+```azurecli
 az vm list --output json
 ```
 
@@ -139,7 +137,7 @@ For the purposes of processing tab-separated fields, the values are in the same 
 
 Use the interactive `az configure` command to set up your environment and establish default settings for output formats. The default output format is `json`. 
 
-```azurecli-interactive
+```azurecli
 az configure
 ```
 
@@ -149,15 +147,7 @@ Welcome to the Azure CLI! This command will guide you through logging in and set
 Your settings can be found at /home/defaultuser/.azure/config
 Your current configuration is as follows:
 
-[cloud]
-name = AzureCloud
-
-[core]
-collect_telemetry = yes
-output = json
-
-[logging]
-enable_log_file = no
+  ...
 
 Do you wish to change your settings? (y/N): y
 
