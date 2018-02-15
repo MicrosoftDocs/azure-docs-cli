@@ -21,22 +21,21 @@ for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and highe
 
 ## Install
 
-1. Import the Microsoft repository key:
+1. Import the Microsoft repository key.
 
    ```bash
    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
    ```
 
-2. Create local `azure-cli` repository information:
+2. Create local `azure-cli` repository information.
 
    ```bash
    sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
    ```
 
-3. Update the `yum` package index and install:
+3. Install with the `yum install` command. 
 
    ```bash
-   yum check-update
    sudo yum install azure-cli
    ```
 
@@ -47,7 +46,6 @@ Run the Azure CLI with the `az` command.
 Update the Azure CLI with the `yum update` command.
 
 ```bash
-yum check-update
 sudo yum update azure-cli
 ```
 
