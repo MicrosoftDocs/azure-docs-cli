@@ -66,7 +66,7 @@ The following output has some fields omitted for brevity, and identifying inform
 
 The `table` output format provides plain output formatted as rows and columns of collated data, making it easy to read and scan. Nested objects are not included in table output, but can still be filtered as part of a query. Some fields are also omitted from the table data, so this format is best when you want a quick, human-searchable overview of data.
 
-```azurecli-interactive
+```azurecli
 az vm list --out table
 ```
 
@@ -81,7 +81,7 @@ KBDemo020    RGDEMO001        westus
 ```
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
-```azurecli-interactive
+```azurecli
 az vm list --query "[].{ resource: resourceGroup, name: name }" -o table
 ```
 
@@ -108,7 +108,7 @@ The `tsv` output format returns tab- and newline-separated values without additi
 
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
-```azurecli-interactive
+```azurecli
 az vm list --out tsv
 ```
 
