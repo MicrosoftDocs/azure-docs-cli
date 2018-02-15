@@ -24,7 +24,7 @@ to format the output of the command into one of the output types noted in the fo
 `table`  | ASCII table with keys as column headings.
 `tsv`    | Tab-separated values, with no keys
 
-## Using the json option
+## JSON output format
 
 The following example displays the list of virtual machines in your subscriptions in the default json format.
 
@@ -62,7 +62,7 @@ The following output has some fields omitted for brevity, and identifying inform
 ]
 ```
 
-## Using the table option
+## Table output format
 
 The `table` output format provides plain output formatted as rows and columns of collated data, making it easy to read and scan. Nested objects are not included in table output, but can still be filtered as part of a query. Some fields are also omitted from the table data, so this format is best when you want a quick, human-searchable overview of data.
 
@@ -102,7 +102,7 @@ RGDEMO001   KBDemo020
 
 For more about using queries to filter data, see [Use JMESPath queries with Azure CLI 2.0](/cli/azure/query-azure-cli).
 
-## Using the tsv option
+## TSV output format
 
 The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, the `tsv` output option does not print nested objects.
 
@@ -133,7 +133,7 @@ KBDemo020
 
 For the purposes of processing tab-separated fields, the values are in the same order that they appear in the printed JSON object. This order is guaranteed to be consistent between runs of the command.
 
-## Setting the default output format
+## Set the default output format
 
 Use the interactive `az configure` command to set up your environment and establish default settings for output formats. The default output format is `json`. 
 
