@@ -17,7 +17,7 @@ ms.service: multiple
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a 64-bit package available
 for the Azure CLI. This package has been tested with:
 
-* Ubuntu wheezy, xenial, and artful
+* Ubuntu trusty, xenial, and artful
 * Debian wheezy, jessie, and stretch
 
 ## Install
