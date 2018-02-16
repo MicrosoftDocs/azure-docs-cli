@@ -82,7 +82,7 @@ KBDemo020    RGDEMO001        westus
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
 ```azurecli
-az vm list --query "[].{ resource: resourceGroup, name: name }" -o table
+az vm list --query "[].{resource:resourceGroup, name:name}" -o table
 ```
 
 ```
@@ -96,9 +96,12 @@ RGDEMO001   KBDemo020
 ```
 
 > [!NOTE]
-> There is a length restriction on the width of columns in table output. When filtering
-> on long values, such as Azure Object IDs in the `id` JSON field, output may not appear in the table.
-> In that case, use the `json` or `jsonc` output format.
+> Certain keys are filtered out and not printed in the table view. These are `id`, `type`, and `etag`. If you need to see these
+> in your output, you can use the JMESPath re-keying feature to change the key name and avoid filtering.
+>
+> ```azurecli
+> az vm list --query "[].{objectID:id}" -o table
+> ```
 
 For more about using queries to filter data, see [Use JMESPath queries with Azure CLI 2.0](/cli/azure/query-azure-cli).
 
