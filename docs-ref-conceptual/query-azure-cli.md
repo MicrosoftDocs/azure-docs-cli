@@ -52,7 +52,14 @@ az vm show -g QueryDemo -n TestVM --query 'storageProfile.{image:imageReference.
 }
 ```
 
-In particular, re-keying output is useful when working with the `table` output format. This allows you to customize the header names for columns and make the data even easier to inspect visually.
+In particular, re-keying output is useful when working with the `table` output format. This allows you to customize the header names for columns and make the data even easier to inspect visually. For more information on output formats, see [Output formats for Azure CLI 2.0 commands](/cli/azure/format-output-azure-cli).
+
+> [!NOTE]
+> Certain keys are filtered out and not printed in the table view. These are `id`, `type`, and `etag`. If you need to see these, you can use JMESPath multiselect to change the key name and avoid filtering.
+>
+> ```azurecli
+> az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
+> ```
 
 ## Work with list output
 
@@ -94,50 +101,24 @@ Arrays which are part of a key path can be flattened as well. This example demon
 az vm show -g QueryDemo -n TestVM --query 'networkProfile.networkInterfaces[].id'
 ```
 
-## Filter output with predicates
+## Filter array output with predicates
 
-JMESPath offers a [number of built-in functions](http://jmespath.org/specification.html#builtin-functions) that can be used as part of queries to manipulate data. These functions can be used in conjunction with [filtering expressions](http://jmespath.org/specification.html#filterexpressions) to filter out the data displayed or change its values. For example, rather than
-piping output to `grep` to search for specific expressions, instead you can filter directly on the key path that you're interested in. The following example demonstrates how to find the VMs
-in a resource group running Windows, and prints their names and Azure object IDs.
+JMESPath offers [filtering expressions](http://jmespath.org/specification.html#filterexpressions) to filter out the data displayed. These expressions are powerful, especially when combined with [JMESPath built-in functions](http://jmespath.org/specification.html#built-in-functions) to perform partial matches or manipulate data into a standard format. Filtering expressions only work on array data, and when used in any other situation, return the `null` value. This means that you can take the output of commands like `vm list` and filter on it to look for specific types of VMs. The following example expands on the previous by filtering out the VM type to capture only Windows VMs and print their name. This is a much easier way to find a _class_ of VMs rather than manually searching
+their image names.
 
 ```azurecli
-
+az vm list --query '[?osProfile.windowsConfiguration!=null].name'
 ```
 
-```azurecli-interactive
-az vm list \
-  --query "[?contains(resourceGroup, 'RGD')].{ resource: resourceGroup, name: name }" --out table
-```
-
-```
-Resource    VMName
-----------  -----------
-RGDEMO001   KBDemo001VM
-RGDEMO001   KBDemo020
-```
-
-With the next example, the results will return the VMs that have the vmSize 'Standard_DS1'.
-
-```azurecli-interactive
-az vm list \
-  --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]" --out table
-```
-
-```
-ResourceGroup    VMName     VmId                                  Location    ProvisioningState
----------------  ---------  ------------------------------------  ----------  -------------------
-DEMORG1          DemoVM010  cbd56d9b-9340-44bc-a722-25f15b578444  westus      Succeeded
-DEMORG1          demovm111  c1c024eb-3837-4075-9117-bfbc212fa7da  westus      Succeeded
-DEMORG1          demovm211  95eda642-417f-4036-9475-67246ac0f0d0  westus      Succeeded
-DEMORG1          demovm212  4bdac85d-c2f7-410f-9907-ca7921d930b4  westus      Succeeded
-DEMORG1          demovm213  2131c664-221a-4b7f-9653-f6d542fbfa34  westus      Succeeded
-DEMORG1          demovm214  48f419af-d27a-4df0-87f3-9481007c2e5a  westus      Succeeded
-DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Succeeded
+```json
+[
+  "WinServ"
+]
 ```
 
 ## Explore with jpterm
 
-To learn more about working with CLI output and JMESPath, you can install [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal), pipe output to it, and experiment with your JMESPath query there.
+To experiment with JMESPath, you might want to work in an interactive environment where you can quickly edit queries and inspect the output. This is offered by the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package, which allows for piping data as input and then writing in-program queries to extract the data.
 
 ```bash
 pip install jmespath-terminal
