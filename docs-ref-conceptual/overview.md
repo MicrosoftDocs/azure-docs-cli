@@ -41,5 +41,5 @@ A detailed [reference](/cli/azure/) is also available that documents how to use 
 
 
 > [!NOTE]
-> If you use the previous version of the CLI (Azure CLI), you can continue to use it.
-> If you use both CLIs, remember that `azure` is the old CLI - Azure CLI, and that `az` is the new CLI - Azure CLI 2.0.
+> The 1.0 version of Azure CLI should only be used if you are working with the Azure Classic deployment model.
+> All users of the ARM deployment model should be using Azure CLI 2.0.
