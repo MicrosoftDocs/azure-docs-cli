@@ -1,10 +1,10 @@
 ---
 title: Query command results with Azure CLI 2.0
 description: Learn how to perform JMESPath queries on the output of Azure CLI 2.0 commands.
-author: rloutlaw
-ms.author: routlaw
-manager: douge
-ms.date: 02/27/2017
+author: sptramer
+ms.author: sttramer
+manager: carmonm
+ms.date: 02/22/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -14,150 +14,111 @@ ms.service: multiple
 
 # Use JMESPath queries with Azure CLI 2.0
 
-The Azure CLI 2.0 uses the `--query` parameter to execute a [JMESPath query](http://jmespath.org) on the results of your `az` command. JMESPath is a powerful query language for JSON outputs.  If you are unfamiliar with JMESPath queries you can find a tutorial at [JMESPath.org/tutorial](http://JMESPath.org/tutorial.html).
+The Azure CLI 2.0 uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and present data from CLI output. These queries are executed on the JSON output, before performing any other display formatting.
 
-`Query` parameter is supported by every resource type (Container Services, Web Apps, VM, etc.) within Azure CLI 2.0 and can be used for various different purposes.  We have listed several examples below.
+The `--query` argument is supported by all commands in the Azure CLI. This article's examples cover common use cases and demonstrate how to use the features of JMESPath.
 
-## Select simple properties
+## Work with dictionary output
 
-The simple `list` command with `table` output format returns a curated set of most common, simple properties for each resource type in an easy-to-read tabular format.
+Commands that return a JSON dictionary can be explored by their key names alone. Key paths use the `.` character as a separator. The following example pulls a list of the public SSH keys allowed to connect to a Linux VM:
 
-```azurecli-interactive
-az vm list --out table
+```azurecli
+az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys
 ```
 
-```
-Name         ResourceGroup    Location
------------  ---------------  ----------
-DemoVM010    DEMORG1          westus
-demovm212    DEMORG1          westus
-demovm213    DEMORG1          westus
-KBDemo001VM  RGDEMO001        westus
-KBDemo020    RGDEMO001        westus
+You can also get multiple values, putting them in an ordered array. The array doesn't have any key information, but the order of the array's elements matches the order of the queried keys. The following example shows how to retrieve the Azure image offering name and the size of the OS disk:
+
+```azurecli
+az vm show -g QueryDemo -n TestVM --query 'storageProfile.[imageReference.offer, osDisk.diskSizeGb]'
 ```
 
-You can use the `--query` parameter to show just the Resource Group name and VM name for all virtual machines in your subscription.
-
-```azurecli-interactive
-az vm list \
-  --query "[].[name, resourceGroup]" --out table
+```json
+[
+  "UbuntuServer",
+  30
+]
 ```
 
-```
-Column1     Column2
----------   -----------
-DemoVM010   DEMORG1
-demovm111   DEMORG1
-demovm211   DEMORG1
-demovm212   DEMORG1
-demovm213   DEMORG1
-demovm214   DEMORG1
-demovm222   DEMORG1
-KBDemo001VM RGDEMO001
-KBDemo020   RGDEMO001
+If you want keys in your output, you can use an alternate dictionary syntax. Multiple element selection into a dictionary uses the format `{displayKey:keyPath, ...}` to filter on the `keyPath` JMESPath expression. This displays in the output as `{displayKey: value}`. The next example takes the last example's query, and makes it clearer by assigning keys to the output:
+
+```azurecli
+az vm show -g QueryDemo -n TestVM --query 'storageProfile.{image:imageReference.offer, diskSize:osDisk.diskSizeGb}'
 ```
 
-In the previous example, you notice that the column headings are "Column1" and "Column2".  You can add friendly labels or names to the properties you select, as well.  In the following example, we added the labels "VMName" and "RGName" to the selected properties "name" and "resourceGroup".
-
-
-```azurecli-interactive
-az vm list \
-  --query "[].{RGName:resourceGroup, VMName:name}" --out table
+```json
+{
+  "diskSize": 30,
+  "image": "UbuntuServer"
+}
 ```
 
-```
-RGName     VMName
----------  -----------
-DEMORG1    DemoVM010
-DEMORG1    demovm111
-DEMORG1    demovm211
-DEMORG1    demovm212
-DEMORG1    demovm213
-DEMORG1    demovm214
-DEMORG1    demovm222
-RGDEMO001  KBDemo001VM
-RGDEMO001  KBDemo020
-```
+When displaying information in the `table` output format, dictionary display is especially useful. This allows for setting your own column headers, making output even easier to read. For more information on output formats, see [Output formats for Azure CLI 2.0 commands](/cli/azure/format-output-azure-cli).
 
-## Select complex nested properties
+> [!NOTE]
+> Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. If you need to see this information, you can change the key name and avoid filtering.
+>
+> ```azurecli
+> az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
+> ```
 
-If the property you want to select is nested deep in the JSON output you need to supply the full path to that nested property. The following example shows how to select the VMName and the OS type from the vm list command.
+## Work with list output
 
-```azurecli-interactive
-az vm list \
-  --query "[].{VMName:name, OSType:storageProfile.osDisk.osType}" --out table
+CLI commands that may return more than one value always return an array. Arrays can have their elements accessed by index, but there's never an order guarantee from the CLI. The best way to query an array of values is to flatten them with the `[]` operator. The operator is written after the key for the array, or as the first element in the expression. Flattening runs the query following it against each individual element in the array, and places the resulting values into a new array. The following example prints out the name and OS running on each VM in a resource group. 
+
+```azurecli
+az vm list -g QueryDemo --query '[].{name:name, image:storageProfile.imageReference.offer}'
 ```
 
-```
-VMName       OSType
------------  --------
-DemoVM010    Linux
-demovm111    Linux
-demovm211    Linux
-demovm212    Linux
-demovm213    Linux
-demovm214    Linux
-demovm222    Linux
-KBDemo001VM  Linux
-KBDemo020    Linux
-```
-
-## Filter with the contains function
-
-You can use the JMESPath `contains` function to refine your results returned in the query.
-In the following example, the command selects only VMs that have the text "RGD" in their name.
-
-```azurecli-interactive
-az vm list \
-  --query "[?contains(resourceGroup, 'RGD')].{ resource: resourceGroup, name: name }" --out table
-```
-
-```
-Resource    VMName
-----------  -----------
-RGDEMO001   KBDemo001VM
-RGDEMO001   KBDemo020
+```json
+[
+  {
+    "image": "CentOS",
+    "name": "CentBox"
+  },
+  {
+    "image": "openSUSE-Leap",
+    "name": "SUSEBox"
+  },
+  {
+    "image": "UbuntuServer",
+    "name": "TestVM"
+  },
+  {
+    "image": "UbuntuServer",
+    "name": "Test2"
+  },
+  {
+    "image": "WindowsServer",
+    "name": "WinServ"
+  }
+]
 ```
 
-With the next example, the results will return the VMs that have the vmSize 'Standard_DS1'.
+Arrays that are part of a key path can be flattened as well. This example demonstrates a query that gets the Azure object IDs for the NICs a VM is connected to.
 
-```azurecli-interactive
-az vm list \
-  --query "[?contains(hardwareProfile.vmSize, 'Standard_DS1')]" --out table
+```azurecli
+az vm show -g QueryDemo -n TestVM --query 'networkProfile.networkInterfaces[].id'
 ```
 
-```
-ResourceGroup    VMName     VmId                                  Location    ProvisioningState
----------------  ---------  ------------------------------------  ----------  -------------------
-DEMORG1          DemoVM010  cbd56d9b-9340-44bc-a722-25f15b578444  westus      Succeeded
-DEMORG1          demovm111  c1c024eb-3837-4075-9117-bfbc212fa7da  westus      Succeeded
-DEMORG1          demovm211  95eda642-417f-4036-9475-67246ac0f0d0  westus      Succeeded
-DEMORG1          demovm212  4bdac85d-c2f7-410f-9907-ca7921d930b4  westus      Succeeded
-DEMORG1          demovm213  2131c664-221a-4b7f-9653-f6d542fbfa34  westus      Succeeded
-DEMORG1          demovm214  48f419af-d27a-4df0-87f3-9481007c2e5a  westus      Succeeded
-DEMORG1          demovm222  e0f59516-1d69-4d54-b8a2-f6c4a5d031de  westus      Succeeded
+## Filter array output with predicates
+
+JMESPath offers [filtering expressions](http://jmespath.org/specification.html#filterexpressions) to filter out the data displayed. These expressions are powerful, especially when combined with [JMESPath built-in functions](http://jmespath.org/specification.html#built-in-functions) to perform partial matches or manipulate data into a standard format. Filtering expressions only work on array data, and when used in any other situation, return the `null` value. For example, you can take the output of commands like `vm list` and filter on it to look for specific types of VMs. The following example expands on the previous by filtering out the VM type to capture only Windows VMs and print their name.
+
+```azurecli
+az vm list --query '[?osProfile.windowsConfiguration!=null].name'
 ```
 
-## Filter with grep
-
-The `tsv` output format is a tab-separated text with no headers. It can be piped to commands like `grep` and `cut` to further parse specific values out of the `list` output. In the following example, the `grep` command selects only VMs that have text "RGD" in their name.  The `cut` command selects only the 8th field (separated by tabs) value to show in the output.
-
-```azurecli-interactive
-az vm list --out tsv | grep RGD | cut -f8
+```json
+[
+  "WinServ"
+]
 ```
 
-```
-KBDemo001VM
-KBDemo020
-```
+## Experiment with queries interactively
 
-## Explore with jpterm
-
-You can also pipe the command output to [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal)
-and experiment with your JMESPath query there.
+To experiment with JMESPath expressions, you might want to work in a way where you can quickly edit queries and inspect the output. An interactive environment is offered by the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package, which allows for piping data as input and then writing in-program queries to extract the data.
 
 ```bash
 pip install jmespath-terminal
 az vm list | jpterm
 ```
-
