@@ -3,8 +3,8 @@ title: Azure CLI 2.0 release notes
 description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
-manager: routlaw
-ms.date: 02/13/2018
+manager: carmonm
+ms.date: 02/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -20,58 +20,58 @@ Version 2.0.28
 
 ### Core
 
-* Bug fix for 'ValueError: field 6 out of range (need a 48-bit value)' - https://github.com/Azure/azure-cli/issues/5184
-* Fix issue that required extension to use `client_arg_name` keyword argument. This is no longer necessary.
-* Allow extensions to send telemetry with custom instrumentation key
-* Enable HTTP logging with --debug
+* Fixed [#5184](https://github.com/Azure/azure-cli/issues/5184): Homebrew install issue
+* Added support for extension telemetry with custom keys
+* Added HTTP logging to `--debug`
 
 ### ACS
 
-* use the virtual-kubelet-for-aks helm chart for `aks install-connector` by default
-* fix the service principal insufficient permission to create ACI container group issue
-* add --aci-container-group, --location, --image-tag optional parameters for `aks install-connector`
-* remove deprecation notice from `aks get-versions`
+* Changed to use the the `virtual-kubelet-for-aks` Helm chart for `aks install-connector` by default
+* Fixed issue: Insuffient permission for service principals to create ACI container group issue
+* Added `--aci-container-group`, `--location`, and `--image-tag` parameters to `aks install-connector`
+* Removed deprecation notice from `aks get-versions`
 
 ### Appservice
 
-* webapp: updating tests/code for sdk update
-* appservice: list-location: Fixes the bug where 'Free' was reported as an invalid SKU
+* Updates for new SDK version (azure-mgmt-web 0.35.0)
+* Fixed [#5538](https://github.com/Azure/azure-cli/issues/5538): `Free` reported as invalid SKU
 
 ### Cognitive Services
 
-* Update the 'notice' of creating a new Cognitive Service account.
+* Updated the 'notice' when creating a new Cognitive Services account
 
 ### Consumption
 
-* Added new commands for pricesheet API. Also, updated the existing Usage Details and Reservation Details API request format.
+* Added new commands for pricesheet API
+* Updated the existing Usage Details and Reservation Details formats
 
 ### Container
 
-* Add '--secrets' and '--secrets-mount-path' options to 'az container create' for using secrets in ACI
+* Added `--secrets` and `--secrets-mount-path` arguments to `container create` to use secrets in ACI
 
 ### Network
 
-* `network vnet-gateway vpn-client generate`: Fix missing client issue.
+* Fixed [#5559](https://github.com/Azure/azure-cli/issues/5559): Missing client in `network vnet-gateway vpn-client generate`
 
 ### Resource
 
-* `group deployment export`: On failure, command will now output a partial template and any failures.
+* Changed `group deployment export` to display a partial template and errors on failure
 
 ### Role
 
-* role assignments: expose "role assignment list-changelogs" for rbac audit
+* Added `role assignment list-changelogs` to allow auditing of service principal roles
 
 ### SQL
 
-* Added zone redundancy support for databases and elastic pools on creation and update. 
+* Added zone redundancy support for databases and elastic pools on creation and update
 
 ### Storage
 
-* Enabled specifying destination-path/prefix to blobs in batch upload and copy commands.
+* Enabled specifying destination-path/prefix for `storage blob [upload-batch|download-batch]`
 
 ### VM
 
-* vmss instance update: support attach/detach disks on an individual instance
+* Added suport for attaching/detatching disks on a single VMSS instance
 
 
 ## February 13, 2018
