@@ -14,6 +14,66 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## February 27, 2018
+
+Version 2.0.28
+
+### Core
+
+* Bug fix for 'ValueError: field 6 out of range (need a 48-bit value)' - https://github.com/Azure/azure-cli/issues/5184
+* Fix issue that required extension to use `client_arg_name` keyword argument. This is no longer necessary.
+* Allow extensions to send telemetry with custom instrumentation key
+* Enable HTTP logging with --debug
+
+### ACS
+
+* use the virtual-kubelet-for-aks helm chart for `aks install-connector` by default
+* fix the service principal insufficient permission to create ACI container group issue
+* add --aci-container-group, --location, --image-tag optional parameters for `aks install-connector`
+* remove deprecation notice from `aks get-versions`
+
+### Appservice
+
+* webapp: updating tests/code for sdk update
+* appservice: list-location: Fixes the bug where 'Free' was reported as an invalid SKU
+
+### Cognitive Services
+
+* Update the 'notice' of creating a new Cognitive Service account.
+
+### Consumption
+
+* Added new commands for pricesheet API. Also, updated the existing Usage Details and Reservation Details API request format.
+
+### Container
+
+* Add '--secrets' and '--secrets-mount-path' options to 'az container create' for using secrets in ACI
+
+### Network
+
+* `network vnet-gateway vpn-client generate`: Fix missing client issue.
+
+### Resource
+
+* `group deployment export`: On failure, command will now output a partial template and any failures.
+
+### Role
+
+* role assignments: expose "role assignment list-changelogs" for rbac audit
+
+### SQL
+
+* Added zone redundancy support for databases and elastic pools on creation and update. 
+
+### Storage
+
+* Enabled specifying destination-path/prefix to blobs in batch upload and copy commands.
+
+### VM
+
+* vmss instance update: support attach/detach disks on an individual instance
+
+
 ## February 13, 2018
 
 Version 2.0.27
