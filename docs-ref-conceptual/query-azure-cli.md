@@ -1,10 +1,10 @@
 ---
 title: Query command results with Azure CLI 2.0
 description: Learn how to perform JMESPath queries on the output of Azure CLI 2.0 commands.
-author: rloutlaw
-ms.author: routlaw
-manager: douge
-ms.date: 02/27/2017
+author: sptramer
+ms.author: sttramer
+manager: carmonm
+ms.date: 02/22/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -14,19 +14,19 @@ ms.service: multiple
 
 # Use JMESPath queries with Azure CLI 2.0
 
-The Azure CLI 2.0 uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, allowing for traversing paths, flattening objects, re-keying dictionaries, and more. These queries are executed on the JSON output, before any other display formatting.
+The Azure CLI 2.0 uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and present data from CLI output. These queries are executed on the JSON output, before performing any other display formatting.
 
-The `--query` argument is supported by all commands in the Azure CLI. The examples below cover common use cases and demonstrate how to use the features of JMESPath to extract the information you need from CLI output.
+The `--query` argument is supported by all commands in the Azure CLI. This article's examples cover common use cases and demonstrate how to use the features of JMESPath.
 
 ## Work with dictionary output
 
-Commands which are guaranteed to return information on only a single JSON dictionary rather than array, most often `create` or `show` commands, can be explored by their key names alone. Key paths use the `.` character as a separator. The following example pulls all of the authorized public keys for connecting to a Linux VM:
+Commands that return a JSON dictionary can be explored by their key names alone. Key paths use the `.` character as a separator. The following example pulls a list of the public SSH keys allowed to connect to a Linux VM:
 
 ```azurecli
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys
 ```
 
-When retrieving multiple keys in a query, there are two ways to do so. The first is to provide an array of key values, which are then presented in an array without any identifying key values. The following example shows how to retrieve the Azure image offering name, and the size of the OS disk it is allocated to:
+You can also get multiple values, putting them in an ordered array. The array doesn't have any key information, but the order of the array's elements matches the order of the queried keys. The following example shows how to retrieve the Azure image offering name and the size of the OS disk:
 
 ```azurecli
 az vm show -g QueryDemo -n TestVM --query 'storageProfile.[imageReference.offer, osDisk.diskSizeGb]'
@@ -39,7 +39,7 @@ az vm show -g QueryDemo -n TestVM --query 'storageProfile.[imageReference.offer,
 ]
 ```
 
-To query multiple elements at once while placing them into a JSON dictionary with keys, you can re-key them using a JMESPath feature called multiselect. This uses the format `{displayKey:keyPath, ...}` to filter on the `keyPath` JMESPath expression, and display it in the output as `displayKey`. The next example improves on the previous by making it clear what the values refer to.
+If you want keys in your output, you can use an alternate dictionary syntax. Multiple element selection into a dictionary uses the format `{displayKey:keyPath, ...}` to filter on the `keyPath` JMESPath expression. This displays in the output as `{displayKey: value}`. The next example takes the last example's query, and makes it clearer by assigning keys to the output:
 
 ```azurecli
 az vm show -g QueryDemo -n TestVM --query 'storageProfile.{image:imageReference.offer, diskSize:osDisk.diskSizeGb}'
@@ -52,10 +52,10 @@ az vm show -g QueryDemo -n TestVM --query 'storageProfile.{image:imageReference.
 }
 ```
 
-In particular, re-keying output is useful when working with the `table` output format. This allows you to customize the header names for columns and make the data even easier to inspect visually. For more information on output formats, see [Output formats for Azure CLI 2.0 commands](/cli/azure/format-output-azure-cli).
+When displaying information in the `table` output format, dictionary display is especially useful. This allows for setting your own column headers, making output even easier to read. For more information on output formats, see [Output formats for Azure CLI 2.0 commands](/cli/azure/format-output-azure-cli).
 
 > [!NOTE]
-> Certain keys are filtered out and not printed in the table view. These are `id`, `type`, and `etag`. If you need to see these, you can use JMESPath multiselect to change the key name and avoid filtering.
+> Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. If you need to see this information, you can change the key name and avoid filtering.
 >
 > ```azurecli
 > az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
@@ -63,8 +63,7 @@ In particular, re-keying output is useful when working with the `table` output f
 
 ## Work with list output
 
-CLI commands which could return more than one value, such as `list` operations, will return a JSON array instead of dictionary. Since arrays do not have keys, they can't be
-immediately processed in the same way that single-result outputs can be. JMESPath allows for flattening arrays with the `[]` operator, written after the part of the key path to flaten. Flattening runs the query after it against every element of the array. The following example prints out the name and OS running on each VM in a resource group. 
+CLI commands that may return more than one value always return an array. Arrays can have their elements accessed by index, but there's never an order guarantee from the CLI. The best way to query an array of values is to flatten them with the `[]` operator. The operator is written after the key for the array, or as the first element in the expression. Flattening runs the query following it against each individual element in the array, and places the resulting values into a new array. The following example prints out the name and OS running on each VM in a resource group. 
 
 ```azurecli
 az vm list -g QueryDemo --query '[].{name:name, image:storageProfile.imageReference.offer}'
@@ -95,7 +94,7 @@ az vm list -g QueryDemo --query '[].{name:name, image:storageProfile.imageRefere
 ]
 ```
 
-Arrays which are part of a key path can be flattened as well. This example demonstrates a query which will get the Azure object IDs for the NICs a VM is connected to.
+Arrays that are part of a key path can be flattened as well. This example demonstrates a query that gets the Azure object IDs for the NICs a VM is connected to.
 
 ```azurecli
 az vm show -g QueryDemo -n TestVM --query 'networkProfile.networkInterfaces[].id'
@@ -103,8 +102,7 @@ az vm show -g QueryDemo -n TestVM --query 'networkProfile.networkInterfaces[].id
 
 ## Filter array output with predicates
 
-JMESPath offers [filtering expressions](http://jmespath.org/specification.html#filterexpressions) to filter out the data displayed. These expressions are powerful, especially when combined with [JMESPath built-in functions](http://jmespath.org/specification.html#built-in-functions) to perform partial matches or manipulate data into a standard format. Filtering expressions only work on array data, and when used in any other situation, return the `null` value. This means that you can take the output of commands like `vm list` and filter on it to look for specific types of VMs. The following example expands on the previous by filtering out the VM type to capture only Windows VMs and print their name. This is a much easier way to find a _class_ of VMs rather than manually searching
-their image names.
+JMESPath offers [filtering expressions](http://jmespath.org/specification.html#filterexpressions) to filter out the data displayed. These expressions are powerful, especially when combined with [JMESPath built-in functions](http://jmespath.org/specification.html#built-in-functions) to perform partial matches or manipulate data into a standard format. Filtering expressions only work on array data, and when used in any other situation, return the `null` value. For example, you can take the output of commands like `vm list` and filter on it to look for specific types of VMs. The following example expands on the previous by filtering out the VM type to capture only Windows VMs and print their name.
 
 ```azurecli
 az vm list --query '[?osProfile.windowsConfiguration!=null].name'
@@ -116,9 +114,9 @@ az vm list --query '[?osProfile.windowsConfiguration!=null].name'
 ]
 ```
 
-## Explore with jpterm
+## Experiment with queries interactively
 
-To experiment with JMESPath, you might want to work in an interactive environment where you can quickly edit queries and inspect the output. This is offered by the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package, which allows for piping data as input and then writing in-program queries to extract the data.
+To experiment with JMESPath expressions, you might want to work in a way where you can quickly edit queries and inspect the output. An interactive environment is offered by the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package, which allows for piping data as input and then writing in-program queries to extract the data.
 
 ```bash
 pip install jmespath-terminal
