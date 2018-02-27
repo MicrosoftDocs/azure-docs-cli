@@ -3,8 +3,8 @@ title: Azure CLI 2.0 release notes
 description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
-manager: routlaw
-ms.date: 02/13/2018
+manager: carmonm
+ms.date: 02/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -13,6 +13,66 @@ ms.service: multiple
 ---
 
 # Azure CLI 2.0 release notes
+
+## February 27, 2018
+
+Version 2.0.28
+
+### Core
+
+* Fixed [#5184](https://github.com/Azure/azure-cli/issues/5184): Homebrew install issue
+* Added support for extension telemetry with custom keys
+* Added HTTP logging to `--debug`
+
+### ACS
+
+* Changed to use the the `virtual-kubelet-for-aks` Helm chart for `aks install-connector` by default
+* Fixed issue: Insuffient permission for service principals to create ACI container group issue
+* Added `--aci-container-group`, `--location`, and `--image-tag` parameters to `aks install-connector`
+* Removed deprecation notice from `aks get-versions`
+
+### Appservice
+
+* Updates for new SDK version (azure-mgmt-web 0.35.0)
+* Fixed [#5538](https://github.com/Azure/azure-cli/issues/5538): `Free` reported as invalid SKU
+
+### Cognitive Services
+
+* Updated the 'notice' when creating a new Cognitive Services account
+
+### Consumption
+
+* Added new commands for pricesheet API
+* Updated the existing Usage Details and Reservation Details formats
+
+### Container
+
+* Added `--secrets` and `--secrets-mount-path` arguments to `container create` to use secrets in ACI
+
+### Network
+
+* Fixed [#5559](https://github.com/Azure/azure-cli/issues/5559): Missing client in `network vnet-gateway vpn-client generate`
+
+### Resource
+
+* Changed `group deployment export` to display a partial template and errors on failure
+
+### Role
+
+* Added `role assignment list-changelogs` to allow auditing of service principal roles
+
+### SQL
+
+* Added zone redundancy support for databases and elastic pools on creation and update
+
+### Storage
+
+* Enabled specifying destination-path/prefix for `storage blob [upload-batch|download-batch]`
+
+### VM
+
+* Added suport for attaching/detatching disks on a single VMSS instance
+
 
 ## February 13, 2018
 
