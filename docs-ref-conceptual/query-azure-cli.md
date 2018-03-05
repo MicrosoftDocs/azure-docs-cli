@@ -120,5 +120,5 @@ To experiment with JMESPath expressions, you might want to work in a way where y
 
 ```bash
 pip install jmespath-terminal
-az vm list | jpterm
+az vm list --output json | jpterm
 ```
