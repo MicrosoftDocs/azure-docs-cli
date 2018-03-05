@@ -105,8 +105,8 @@ of the CLI to query Azure resources.
 
 If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
 
-* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
-* [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
+* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cli)
+* [Transfer objects to/from Azure Blob storage using the CLI](/azure/storage/blobs/storage-quickstart-blobs-cli)
 * [Create a single Azure SQL database using the Azure CLI](/azure/sql-database/sql-database-get-started-cli)
 * [Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli)
 * [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
