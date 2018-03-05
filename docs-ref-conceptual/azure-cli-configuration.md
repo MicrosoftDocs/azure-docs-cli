@@ -52,8 +52,8 @@ az configure --defaults "location=westus2 group=MyResourceGroup"
 ## CLI configuration file
 
 The CLI configuration file contains other settings that are used for managing CLI behavior. The configuration file itself is located
-at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure/config` on Linux and macOS,
-and `%USERPROFILE%\.azure\config` on Windows.
+at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS,
+and `%USERPROFILE%\.azure` on Windows.
 
 Configuration files are written in the INI file format. These files are made up of sections which start with a `[section-name]` header, followed by
 a list of `key=value` entries. Section names are case-sensitive and key names are not.
