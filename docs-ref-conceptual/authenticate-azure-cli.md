@@ -40,6 +40,15 @@ Provide your credentials on the command line.
 az login -u <username> -p <password>
 ```
 
+## Log in with a specific tenant
+
+If you work with multiple tenants, you can select your tenant to log in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain
+or the Azure object ID for the tenant. You can log in interactively, or provide your credentials with the `--user` and `--password` arguments. 
+
+```
+az login --tenant <tenant>
+```
+
 ## Logging in with a service principal
 
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
@@ -53,10 +62,9 @@ To log in with a service principal, you provide the username, password or certif
 az login --service-principal -u <user> -p <password-or-cert> --tenant <tenant>
 ```
 
-The tenant value is the Azure Active Directory tenant associated with the service principal. This can either be an .onmicrosoft.com domain or the Azure object ID for the tenant.
+The tenant value is the Azure Active Directory tenant associated with the service principal. This can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant.
 You can get the tenant object ID for your current login by using the following command:
 
 ```azurecli
 az account show --query 'tenantId' -o tsv
 ```
-

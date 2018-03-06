@@ -22,7 +22,7 @@ with an emphasis on automation. This article introduces features of the CLI and 
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/index#az_login).
+Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/reference-index#az_login).
 
 ```azurecli
 az login
@@ -52,7 +52,7 @@ Commands in the CLI are provided as _subcommands_ of _groups_.
 Each group represents a service provided by Azure, and the subgroups divide commands for these services
 into logical groupings.
 
-To search for commands, use [az find](/cli/azure/index#az_find). For example, to search for command names containing `secret`,
+To search for commands, use [az find](/cli/azure/reference-index#az_find). For example, to search for command names containing `secret`,
 use the following command:
 
 ```azurecli
@@ -105,8 +105,8 @@ of the CLI to query Azure resources.
 
 If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
 
-* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cl)
-* [Transfer objects to/from Azure Blob storage using the CLI](/storage/blobs/storage-quickstart-blobs-cli)
+* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cli)
+* [Transfer objects to/from Azure Blob storage using the CLI](/azure/storage/blobs/storage-quickstart-blobs-cli)
 * [Create a single Azure SQL database using the Azure CLI](/azure/sql-database/sql-database-get-started-cli)
 * [Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli)
 * [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
