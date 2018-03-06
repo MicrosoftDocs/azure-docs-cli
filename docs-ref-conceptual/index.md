@@ -35,7 +35,7 @@ The following samples can help you learn how to perform common scenarios with Az
 - [Web Apps](/azure/app-service-web/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 - [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 
-A detailed [reference](/cli/azure/) is also available that documents how to use each individual Azure CLI 2.0 command.
+A detailed [reference](/cli/azure/reference-index) is also available that documents how to use each individual Azure CLI 2.0 command.
 
 [Get started](get-started-with-azure-cli.md) with Azure CLI 2.0 now.
 
