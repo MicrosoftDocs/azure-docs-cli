@@ -27,6 +27,7 @@ which are the agreements with Microsoft to use cloud services, including Azure. 
 
 To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
 To learn how to add a new subscription to your Azure Active Directory tenant, see [How to add an Azure subscription to Azure Active Directory](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+When working with multiple tenants, you may need to log into a specific tenant. To do this, see [Log in with Azure CLI 2.0](/cli/azure/authenticate-azure-cli).
 
 ## Working with multiple subscriptions
 
