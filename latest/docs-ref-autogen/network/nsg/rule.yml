@@ -24,11 +24,13 @@ items:
       content: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --priority 100
   - summary: Create a "Deny" rule over TCP for a specific IP address range with the lowest priority.
     syntax:
-      content: >-
-        az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --priority 4096
-                                        --source-address-prefixes 208.130.28/24 --source-port-ranges 80
-                                        --destination-address-prefixes '*' --destination-port-ranges 80 8080 --access Deny
-                                        --protocol Tcp --description "Deny from specific IP address ranges on 80 and 8080."
+      content: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --priority 4096     --source-address-prefixes 208.130.28/24 --source-port-ranges 80     --destination-address-prefixes '*' --destination-port-ranges 80 8080 --access Deny     --protocol Tcp --description "Deny from specific IP address ranges on 80 and 8080."
+  - summary: Create a security rule using service tags.  For more details visit https://aka.ms/servicetags
+    syntax:
+      content: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRuleWithTags     --priority 400 --source-address-prefixes VirtualNetwork --destination-address-prefixes Storage     --destination-port-ranges * --direction Outbound --access Allow --protocol Tcp --description "Allow VirtualNetwork to Storage."
+  - summary: Create a security rule using application security groups. https://aka.ms/applicationsecuritygroups
+    syntax:
+      content: az network nsg rule create -g MyResourceGroup --nsg-name MyNsg -n MyNsgRuleWithAsg     --priority 500 --source-address-prefixes Internet --destination-port-ranges 80 8080     --destination-asgs Web --access Allow --protocol Tcp --description "Allow Internet to Web ASG on ports 80,8080."
   parameters:
   - isRequired: true
     name: --name -n
@@ -187,7 +189,6 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --access
-    defaultValue: Allow
     parameterValueGroup: Allow, Deny
     summary: ''
     description: ''
@@ -195,7 +196,6 @@ items:
     summary: Rule description.
     description: ''
   - name: --direction
-    defaultValue: Inbound
     parameterValueGroup: Inbound, Outbound
     summary: ''
     description: ''
@@ -203,7 +203,6 @@ items:
     summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
     description: ''
   - name: --protocol
-    defaultValue: ''
     parameterValueGroup: '*, Tcp, Udp'
     summary: Network protocol this rule applies to.
     description: ''
@@ -272,6 +271,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/44879f3e15d94fd3ed52aa26d9e209867d5c8016/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 2/5/2018 11:51:42 PM
-ms.date: 2/5/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/cdad09adee19b07e04b15df32919f74e392eb5c7/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 3/8/2018 11:53:05 PM
+ms.date: 3/8/2018
