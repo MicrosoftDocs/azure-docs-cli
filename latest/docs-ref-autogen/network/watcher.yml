@@ -3,7 +3,7 @@ items:
 - uid: az_network_watcher
   name: az network watcher
   summary: Manage the Azure Network Watcher.
-  description: ''
+  description: Network Watcher assists with monitoring and diagnosing conditions at a network scenario level. To learn more visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/">https://docs.microsoft.com/en-us/azure/network-watcher/</a>.
   langs:
   - azurecli
   children:
@@ -20,6 +20,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Configure Network Watcher in a region.
+    syntax:
+      content: az network watcher configure --resource-group NetworkWatcherRG  --locations westus --enabled true
   parameters:
   - isRequired: true
     name: --locations -l
@@ -31,7 +35,9 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. Required when enabling new regions.
-    description: When a previously disabled region is enabled to use Network Watcher, a Network Watcher resource will be created in this resource group.
+    description: >-
+      When a previously disabled region is enabled to use Network Watcher, a
+                                              Network Watcher resource will be created in this resource group.
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
@@ -47,6 +53,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all Network Watchers in a subscription.
+    syntax:
+      content: az network watcher list
   parameters: []
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -57,9 +67,13 @@ items:
 - uid: az_network_watcher_show_next_hop
   name: az network watcher show-next-hop
   summary: Get information on the 'next hop' for a VM.
-  description: Requires that Network Watcher is enabled for the region in which the VM is located.
+  description: Requires that Network Watcher is enabled for the region in which the VM is located. For more information about show-next-hop visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-next-hop-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-next-hop-cli</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Get the next hop from a VM's assigned IP address to a destination at 10.1.0.4.
+    syntax:
+      content: az network watcher show-next-hop -g MyResourceGroup --vm MyVm --source-ip 10.0.0.4 --dest-ip 10.1.0.4
   parameters:
   - isRequired: true
     name: --dest-ip
@@ -89,9 +103,13 @@ items:
 - uid: az_network_watcher_show_security_group_view
   name: az network watcher show-security-group-view
   summary: Get detailed security information on a VM for the currently configured network security group.
-  description: ''
+  description: For more information on using security group view visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-security-group-view-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-security-group-view-cli</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Get the network security group information for the specified VM.
+    syntax:
+      content: az network watcher show-security-group-view -g MyResourceGroup --vm MyVm
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -109,18 +127,27 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_show_topology
   name: az network watcher show-topology
-  summary: Get the network topology of a resource group.
-  description: ''
+  summary: Get the network topology of a resource group, virtual network or subnet.
+  description: For more information about using network topology visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-topology-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-topology-cli</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Use show-topology to get the topology of resources within a resource group.
+    syntax:
+      content: az network watcher show-topology -g resourcegroupname
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: The name of the target resource group to perform topology on.
-    description: ''
   - name: --location -l
     summary: Location. Defaults to the location of the target resource group.
     description: Topology information is only shown for resources within the target resource group that are within the specified region.
+  - name: --resource-group -g
+    summary: The name of the target resource group to perform topology on.
+    description: ''
+  - name: --subnet
+    summary: Name or ID of the subnet to target. If name is used, --vnet NAME must also be supplied.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of the virtual network to target.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -129,10 +156,17 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_test_connectivity
   name: az network watcher test-connectivity
-  summary: Test if a direct TCP connection can be established between a Virtual Machine and a given endpoint.
-  description: ''
+  summary: (PREVIEW) Test if a connection can be established between a Virtual Machine and a given endpoint.
+  description: To register for this feature or see additional examples visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Check connectivity between two virtual machines in the same resource group over port 80.
+    syntax:
+      content: az network watcher test-connectivity -g MyResourceGroup --source-resource MyVmName1 --dest-resource MyVmName2 --dest-port 80
+  - summary: Check connectivity between two virtual machines in the same subscription in two different resource groups over port 80.
+    syntax:
+      content: Vm1Id=$(az vm show --resource-group MyResourceGroup--name MyVm1 --query id --out tsv)     Vm2Id=$(az vm show --resource-group MyResourceGroup--name MyVm2 --query id --out tsv)     az network watcher test-connectivity --source-resource $MyVmId1 --dest-resource $MyVmId2 --dest-port 80
   parameters:
   - isRequired: true
     name: --source-resource
@@ -162,9 +196,13 @@ items:
 - uid: az_network_watcher_test_ip_flow
   name: az network watcher test-ip-flow
   summary: Test IP flow to/from a VM given the currently configured network security group rules.
-  description: Requires that Network Watcher is enabled for the region in which the VM is located.
+  description: Requires that Network Watcher is enabled for the region in which the VM is located. For more information visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-ip-flow-verify-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-ip-flow-verify-cli</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Run test-ip-flow verify to test logical connectivity from a VM to the specified destination IPv4 address and port.
+    syntax:
+      content: az network watcher test-ip-flow --resource-group MyResourceGroup --direction Outbound      --protocol TCP --local 10.0.0.4:* --remote 10.1.0.4:80 --vm MyVm
   parameters:
   - isRequired: true
     name: --direction
@@ -204,6 +242,30 @@ commands:
 - uid: az_network_watcher_configure
   name: az network watcher configure
   summary: Configure the Network Watcher service for different regions.
+- uid: az_network_watcher_connection_monitor
+  name: az network watcher connection-monitor
+  summary: Manage connection monitoring.
+- uid: az_network_watcher_connection_monitor_create
+  name: az network watcher connection-monitor create
+  summary: Create a connection monitor.
+- uid: az_network_watcher_connection_monitor_delete
+  name: az network watcher connection-monitor delete
+  summary: Deletes the specified connection monitor.
+- uid: az_network_watcher_connection_monitor_list
+  name: az network watcher connection-monitor list
+  summary: List connection monitors for the given region.
+- uid: az_network_watcher_connection_monitor_query
+  name: az network watcher connection-monitor query
+  summary: Query a snapshot of the most recent connection states.
+- uid: az_network_watcher_connection_monitor_show
+  name: az network watcher connection-monitor show
+  summary: Gets a connection monitor by name.
+- uid: az_network_watcher_connection_monitor_start
+  name: az network watcher connection-monitor start
+  summary: Starts the specified connection monitor.
+- uid: az_network_watcher_connection_monitor_stop
+  name: az network watcher connection-monitor stop
+  summary: Stops the specified connection monitor.
 - uid: az_network_watcher_flow_log
   name: az network watcher flow-log
   summary: Manage network security group flow logging.
@@ -245,10 +307,10 @@ commands:
   summary: Get detailed security information on a VM for the currently configured network security group.
 - uid: az_network_watcher_show_topology
   name: az network watcher show-topology
-  summary: Get the network topology of a resource group.
+  summary: Get the network topology of a resource group, virtual network or subnet.
 - uid: az_network_watcher_test_connectivity
   name: az network watcher test-connectivity
-  summary: Test if a direct TCP connection can be established between a Virtual Machine and a given endpoint.
+  summary: (PREVIEW) Test if a connection can be established between a Virtual Machine and a given endpoint.
 - uid: az_network_watcher_test_ip_flow
   name: az network watcher test-ip-flow
   summary: Test IP flow to/from a VM given the currently configured network security group rules.
@@ -277,6 +339,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/44879f3e15d94fd3ed52aa26d9e209867d5c8016/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 2/5/2018 11:51:42 PM
-ms.date: 2/5/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/cdad09adee19b07e04b15df32919f74e392eb5c7/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 3/8/2018 11:53:05 PM
+ms.date: 3/8/2018
