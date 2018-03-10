@@ -11,46 +11,39 @@ items:
   - az_acr_repository_list
   - az_acr_repository_show_manifests
   - az_acr_repository_show_tags
+  - az_acr_repository_untag
 - uid: az_acr_repository_delete
   name: az acr repository delete
-  summary: Delete a repository, manifest, or tag in a container registry.
+  summary: Delete a repository or image in a container registry.
   description: ''
   langs:
   - azurecli
   examples:
   - summary: Delete a repository from a container registry.
     syntax:
-      content: az acr repository delete -n MyRegistry --repository MyRepository
-  - summary: Delete a tag from a repository. This does not delete the manifest referenced by the tag or any associated layer data.
+      content: az acr repository delete -n MyRegistry --repository hello-world
+  - summary: Delete an image by tag. This deletes the manifest referenced by 'hello-world:latest', all other tags referencing the manifest, and any associated layer data.
     syntax:
-      content: az acr repository delete -n MyRegistry --repository MyRepository --tag MyTag
-  - summary: Delete the manifest referenced by a tag. This also deletes any associated layer data and all other tags referencing the manifest.
+      content: az acr repository delete -n MyRegistry --image hello-world:latest
+  - summary: Delete an image by sha256-based manifest digest. This deletes all tags referencing the manifest and any associated layer data.
     syntax:
-      content: az acr repository delete -n MyRegistry --repository MyRepository --tag MyTag --manifest
-  - summary: Delete a manifest using a sha256 based digest. This also deletes any associated layer data and all tags referencing the manifest.
-    syntax:
-      content: az acr repository delete -n MyRegistry --repository MyRepository --manifest sha256:abc123
+      content: az acr repository delete -n MyRegistry --image hello-world@sha256:abc123
   parameters:
   - isRequired: true
     name: --name -n
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
-  - isRequired: true
-    name: --repository
-    summary: The name of the repository to delete.
+  - name: --image
+    summary: The name of the image to delete. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
-  - name: --manifest
-    summary: The sha256 based digest of manifest to delete.
-    description: ''
-    valueFrom: az acr repository show-manifests
   - name: --password -p
     summary: The password used to log into a container registry.
     description: ''
+  - name: --repository
+    summary: The name of the repository to delete.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --tag
-    summary: The name of tag to delete.
     description: ''
   - name: --username -u
     summary: The username used to log into a container registry.
@@ -162,10 +155,44 @@ items:
       branch: master
       path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_repository_untag
+  name: az acr repository untag
+  summary: Untag an image in a container registry.
+  description: This command does not delete the manifest referenced by the tag or any associated layer data.
+  langs:
+  - azurecli
+  examples:
+  - summary: Untag an image from a repository.
+    syntax:
+      content: az acr repository untag -n MyRegistry --image hello-world:latest
+  parameters:
+  - isRequired: true
+    name: --image
+    summary: The name of the image to untag. May include a tag in the format 'name:tag'.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_acr_repository_delete
   name: az acr repository delete
-  summary: Delete a repository, manifest, or tag in a container registry.
+  summary: Delete a repository or image in a container registry.
 - uid: az_acr_repository_list
   name: az acr repository list
   summary: List repositories in a container registry.
@@ -175,6 +202,9 @@ commands:
 - uid: az_acr_repository_show_tags
   name: az acr repository show-tags
   summary: Show tags for a repository in a container registry.
+- uid: az_acr_repository_untag
+  name: az acr repository untag
+  summary: Untag an image in a container registry.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -191,6 +221,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/78163f6b27acaf77dc10030271cd0c10fcfa57e5/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 1/24/2018 11:42:27 PM
-ms.date: 1/24/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/92671a752ce9467767c07656a30b89df83250e67/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 3/9/2018 6:46:25 PM
+ms.date: 3/9/2018
