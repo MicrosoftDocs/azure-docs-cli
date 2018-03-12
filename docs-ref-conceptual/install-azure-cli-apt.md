@@ -60,6 +60,18 @@ The error is due to a missing component required by `apt-key`. You can resolve i
 sudo apt-get install dirmngr
 ```
 
+### apt-key hangs
+
+When behind a firewall blocking outgoing connections to port 11371, the `apt-key` command might hang indefinitely.
+
+In that case, you might need to specify a proxy server to use:
+
+```bash
+sudo apt-key adv --keyserver-options http-proxy=http://<USER>:<PASSWORD>@<PROXY-HOST>:<PROXY-PORT>/ --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+```
+(if your proxy doesn't require a login, leave out the user, password and `@` parts)
+
+
 ## Update
 
 Use `apt-get upgrade` to update the CLI package.
