@@ -14,6 +14,93 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## March 13, 2018
+
+Version 2.0.29
+
+### Core
+
+* Support mechanism for a command module to suppress the loading of particular extensions.
+
+### ACR
+
+* Improve repository delete command with --image parameter to support docker image format.
+* Deprecate --manifest and --tag parameters in repository delete command.
+* Add acr repository untag command to remove a tag without deleting data.
+
+### ACS
+
+* warn the user that `az aks browse` won't work in Azure Cloud Shell
+* add `aks upgrade-connector` command to upgrade an existing connector
+* `kubectl` config files are more readable block-style YAML
+
+### Advisor
+
+* BC: `advisor configuration get` has been renamed to `advisor configuration list`.
+* BC: `advisor configuration set` has been renamed to `advisor configuration update`.
+* BC: `advisor recommendation generate` has been removed.
+* `advisor recommendation list` has a new --refresh parameter.
+* `advisor recommendation show` has been added.
+
+### Appservice
+
+* webapp/functionapp: author managed identity commands `identity assign/show`, and deprecate `assign-identity`
+
+### Eventhubs
+
+* Initial release.
+
+### Extension
+
+* Added check to warn user if used distro is different then the one stored in package source file, as this may lead into errors.
+
+### Interactive
+
+* Persist history across different sessions
+* Fixed history while in scope
+* Updates to interactive telemetry
+* Fixed progress meter for long running operations
+* Completions more robust to command table exceptions
+
+### Monitor
+
+* Deprecates the `monitor autoscale-settings` commands.
+* Adds the `monitor autoscale` command group.
+* Adds the `monitor autoscale profile` command group.
+* Adds the `monitor autoscale rule` command group.
+
+### Network
+
+* BREAKING CHANGE: `route-filter rule create`: The `--tags` parameter is no longer supported.
+* Fix issues with update commands in `express-route`, `nsg rule`, `public-ip`, `traffic manager profile` and `vnet-gateway` where some parameters erroneously had default values.
+* `network watcher`: Added `connection-monitor` commands.
+* `network watcher show-topology`: Added support to target `--vnet` and `--subnet`.
+
+### Profile
+
+* az login: use `--identity` and deprecate `--msi`
+* enable login/logout commands in cloud shell
+
+### RDBMS
+
+* Preview release with new business model API 2017-12-01-preview.
+
+### Service Bus
+
+* Initial release.
+
+### Storage
+
+* Fix issue of missing endpoint suffix in batch copy command.
+* Blob batch commands no longer throw error upon failed precondition.
+
+### VM
+
+* vm/vmss create: support to attach unmanaged data disks and configure their caching modes 
+* vm/vmss: author managed identity commands `identity assign/remove/show`, and deprecate `assign-identity/remove-identity`
+* vmss create: default priority to None
+
+
 ## February 27, 2018
 
 Version 2.0.28
