@@ -18,88 +18,88 @@ ms.service: multiple
 
 Version 2.0.29
 
-### Core
-
-* Support mechanism for a command module to suppress the loading of particular extensions.
-
 ### ACR
 
-* Improve repository delete command with --image parameter to support docker image format.
-* Deprecate --manifest and --tag parameters in repository delete command.
-* Add acr repository untag command to remove a tag without deleting data.
+* Added support for `--image` parameter to `repository delete`
+* Deprecated `--manifest` and `--tag` parameters of the `repository delete` command
+* Added `repository untag` command to remove a tag without deleting data
 
 ### ACS
 
-* warn the user that `az aks browse` won't work in Azure Cloud Shell
-* add `aks upgrade-connector` command to upgrade an existing connector
-* `kubectl` config files are more readable block-style YAML
+* Added `aks upgrade-connector` command to upgrade an existing connector
+* Changed `kubectl` config files to use a more readable block-style YAML
 
 ### Advisor
 
-* BC: `advisor configuration get` has been renamed to `advisor configuration list`.
-* BC: `advisor configuration set` has been renamed to `advisor configuration update`.
-* BC: `advisor recommendation generate` has been removed.
-* `advisor recommendation list` has a new --refresh parameter.
-* `advisor recommendation show` has been added.
+* [BREAKING CHANGE] Renamed `advisor configuration get` to `advisor configuration list`
+* [BREAKING CHANGE] Renamed `advisor configuration set` to `advisor configuration update`
+* [BREAKING CHANGE] Removed `advisor recommendation generate` 
+* Added `--refresh` parameter to `advisor recommendation list`
+* Added `advisor recommendation show` command
 
 ### Appservice
 
-* webapp/functionapp: author managed identity commands `identity assign/show`, and deprecate `assign-identity`
+* Deprecated `[webapp|functionapp] assign-identity`
+* Added managed identity commands `webapp identity [assign|show]` and `functionapp identity [assign|show]`
 
 ### Eventhubs
 
-* Initial release.
+* Initial release
 
 ### Extension
 
-* Added check to warn user if used distro is different then the one stored in package source file, as this may lead into errors.
+* Added check to warn user if used distro is different then the one stored in package source file, as this may lead into errors
 
 ### Interactive
 
-* Persist history across different sessions
-* Fixed history while in scope
-* Updates to interactive telemetry
+* Fixed [#5625](https://github.com/Azure/azure-cli/issues/5625): Persist history across different sessions
+* Fixed [#3016](https://github.com/Azure/azure-cli/issues/3016): History not recorded while in scope
+* Fixed [#5688](https://github.com/Azure/azure-cli/issues/5688): Completions did not appear if command table loading encountered an exception
 * Fixed progress meter for long running operations
-* Completions more robust to command table exceptions
 
 ### Monitor
 
-* Deprecates the `monitor autoscale-settings` commands.
-* Adds the `monitor autoscale` command group.
-* Adds the `monitor autoscale profile` command group.
-* Adds the `monitor autoscale rule` command group.
+* Deprecated the `monitor autoscale-settings` commands
+* Added `monitor autoscale` commands
+* Added `monitor autoscale profile` commands
+* Added `monitor autoscale rule` commands
 
 ### Network
 
-* BREAKING CHANGE: `route-filter rule create`: The `--tags` parameter is no longer supported.
-* Fix issues with update commands in `express-route`, `nsg rule`, `public-ip`, `traffic manager profile` and `vnet-gateway` where some parameters erroneously had default values.
-* `network watcher`: Added `connection-monitor` commands.
-* `network watcher show-topology`: Added support to target `--vnet` and `--subnet`.
+* [BREAKING CHANGE] Removed `--tags` parameter from  `route-filter rule create`
+* Removed some erroneous default values for the following commands:
+  * `network express-route update`
+  * `network nsg rule update`
+  * `network public-ip update`
+  * `traffic-manager profile update`
+  * `network vnet-gateway update`
+* Added `network watcher connection-monitor` commands`
+* Added `--vnet` and `--subnet` parameters to `network watcher show-topology`
 
 ### Profile
 
-* az login: use `--identity` and deprecate `--msi`
-* enable login/logout commands in cloud shell
+* Deprecated `--msi` parameter for `az login`
+* Added `--identity` parameter for `az login` to replace `--msi`
 
 ### RDBMS
 
-* Preview release with new business model API 2017-12-01-preview.
+* [PREVIEW] Changed to use the API 2017-12-01-preview
 
 ### Service Bus
 
-* Initial release.
+* Initial release
 
 ### Storage
 
-* Fix issue of missing endpoint suffix in batch copy command.
-* Blob batch commands no longer throw error upon failed precondition.
+* Fixed [#4971](https://github.com/Azure/azure-cli/issues/4971): `storage blob copy` now supports other Azure clouds.
+* Fixed [#5286](https://github.com/Azure/azure-cli/issues/5286): Batch commands `storage blob [delete-batch|download-batch|upload-batch]` no longer throw an error upon precondition failures
 
 ### VM
 
-* vm/vmss create: support to attach unmanaged data disks and configure their caching modes 
-* vm/vmss: author managed identity commands `identity assign/remove/show`, and deprecate `assign-identity/remove-identity`
-* vmss create: default priority to None
-
+* Added support to `[vm|vmss] create` to attach unmanaged data disks and configure caching
+* Deprecated `[vm|vmss] assign-identity` and `[vm|vmss] remove-identity`
+* Added `vm identity [assign|remove|show]` and `vmss identity [assign|remove|show]` commands to replace deprecated commands
+* Changed default priority in `vmss create` to None
 
 ## February 27, 2018
 
