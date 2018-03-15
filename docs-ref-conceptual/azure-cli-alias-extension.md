@@ -60,11 +60,6 @@ All of your alias definitions will be stored in the alias configuration file. Th
 - With Python 2 installed on your system, in case of a duplicated alias/command, the latter alias/command will take precedence.
 - Error parsing the alias configuration will lead to inability to use the alias feature.
 
-## Features Demonstrations
-
-![Demo 1](./media/azure-cli-alias-extension/azure-cli-alias-demo-1.gif)
-![Demo 1](./media/azure-cli-alias-extension/azure-cli-alias-demo-2.gif)
-
 ### Simple Aliases
 
 The first use case of the extension is to shorten existing commands. Below is an example of the alias configuration file containing three aliases, `c`, `ac`, and `ls`, each maps to a different command.
