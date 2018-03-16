@@ -14,6 +14,93 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## March 13, 2018
+
+Version 2.0.29
+
+### ACR
+
+* Added support for `--image` parameter to `repository delete`
+* Deprecated `--manifest` and `--tag` parameters of the `repository delete` command
+* Added `repository untag` command to remove a tag without deleting data
+
+### ACS
+
+* Added `aks upgrade-connector` command to upgrade an existing connector
+* Changed `kubectl` config files to use a more readable block-style YAML
+
+### Advisor
+
+* [BREAKING CHANGE] Renamed `advisor configuration get` to `advisor configuration list`
+* [BREAKING CHANGE] Renamed `advisor configuration set` to `advisor configuration update`
+* [BREAKING CHANGE] Removed `advisor recommendation generate` 
+* Added `--refresh` parameter to `advisor recommendation list`
+* Added `advisor recommendation show` command
+
+### Appservice
+
+* Deprecated `[webapp|functionapp] assign-identity`
+* Added managed identity commands `webapp identity [assign|show]` and `functionapp identity [assign|show]`
+
+### Eventhubs
+
+* Initial release
+
+### Extension
+
+* Added check to warn user if used distro is different then the one stored in package source file, as this may lead into errors
+
+### Interactive
+
+* Fixed [#5625](https://github.com/Azure/azure-cli/issues/5625): Persist history across different sessions
+* Fixed [#3016](https://github.com/Azure/azure-cli/issues/3016): History not recorded while in scope
+* Fixed [#5688](https://github.com/Azure/azure-cli/issues/5688): Completions did not appear if command table loading encountered an exception
+* Fixed progress meter for long running operations
+
+### Monitor
+
+* Deprecated the `monitor autoscale-settings` commands
+* Added `monitor autoscale` commands
+* Added `monitor autoscale profile` commands
+* Added `monitor autoscale rule` commands
+
+### Network
+
+* [BREAKING CHANGE] Removed `--tags` parameter from  `route-filter rule create`
+* Removed some erroneous default values for the following commands:
+  * `network express-route update`
+  * `network nsg rule update`
+  * `network public-ip update`
+  * `traffic-manager profile update`
+  * `network vnet-gateway update`
+* Added `network watcher connection-monitor` commands`
+* Added `--vnet` and `--subnet` parameters to `network watcher show-topology`
+
+### Profile
+
+* Deprecated `--msi` parameter for `az login`
+* Added `--identity` parameter for `az login` to replace `--msi`
+
+### RDBMS
+
+* [PREVIEW] Changed to use the API 2017-12-01-preview
+
+### Service Bus
+
+* Initial release
+
+### Storage
+
+* Fixed [#4971](https://github.com/Azure/azure-cli/issues/4971): `storage blob copy` now supports other Azure clouds.
+* Fixed [#5286](https://github.com/Azure/azure-cli/issues/5286): Batch commands `storage blob [delete-batch|download-batch|upload-batch]` no longer throw an error upon precondition failures
+
+### VM
+
+* Added support to `[vm|vmss] create` to attach unmanaged data disks and configure caching
+* Deprecated `[vm|vmss] assign-identity` and `[vm|vmss] remove-identity`
+* Added `vm identity [assign|remove|show]` and `vmss identity [assign|remove|show]` commands to replace deprecated commands
+* Changed default priority in `vmss create` to None
+
 ## February 27, 2018
 
 Version 2.0.28
