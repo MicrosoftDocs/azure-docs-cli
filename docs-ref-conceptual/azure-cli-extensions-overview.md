@@ -4,8 +4,8 @@ description: Using extensions with the Azure CLI 2.0
 keywords: Azure CLI, Extensions
 author: sptramer
 ms.author: sttramer
-manager: routlaw
-ms.date: 02/13/2018
+manager: carmonm
+ms.date: 03/15/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -22,8 +22,13 @@ This article helps you understand how to install, update, and remove extensions 
 
 ## Finding extensions
 
-In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available). This command lists the available, official extensions
-which are provided and supported by Microsoft.
+In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available). This command lists the official extensions provided and maintained by Microsoft.
+
+```azurecli
+az extension list-available --query '*[].{Name:metadata.name, Version:metadata.version, Summary:metadata.summary}' --output table
+```
+
+We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on the documentation site.
 
 ## Installing extensions
 
