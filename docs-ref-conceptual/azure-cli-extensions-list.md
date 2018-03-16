@@ -1,7 +1,6 @@
 ---
-title: Azure CLI 2.0 Extensions
-description: Available extensions for the Azure CLI 2.0
-keywords: Azure CLI, Extensions
+title: Available extensions for the Azure CLI 2.0
+description: A complete list of the officially supported extensions for the Azure CLI 2.0.
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
@@ -15,13 +14,13 @@ ms.service: multiple
 
 # Available extensions for the Azure CLI 2.0
 
-Below is a list of extensions available in Azure CLI 2.0.
+This article is a complete list of the available extensions for the Azure CLI 2.0 which are offered and supported by Microsoft.
 
-These are official extensions which are provided and supported by Microsoft.
+The list of extensions is also available directly from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available):
 
-This data is also accessible from the CLI.
-Use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available).
-
+```azurecli
+az extension list-available --query '*[].{Name:metadata.name, Version:metadata.version, Summary:metadata.summary}' --output table
+```
 
 ## aem
 
@@ -178,7 +177,6 @@ _Latest version:_ `0.1.0`
 
 _Project URL:_ [https://github.com/Azure/azure-cli-extensions](https://github.com/Azure/azure-cli-extensions)
 
-
 ## webapp
 
 ```azurecli
@@ -190,5 +188,3 @@ An Azure CLI Extension to manage appservice resources
 _Latest version:_ `0.1.2`
 
 _Project URL:_ [https://github.com/Azure/azure-cli-extensions](https://github.com/Azure/azure-cli-extensions)
-
-
