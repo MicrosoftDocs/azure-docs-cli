@@ -46,7 +46,7 @@ The following is a list of available keys that you can use.
 As an example, here's how you would set the default resource group and location for all commands.
 
 ```azurecli
-az configure --defaults "location=westus2 group=MyResourceGroup"
+az configure --defaults location=westus2 group=MyResourceGroup
 ```
 
 ## CLI configuration file
