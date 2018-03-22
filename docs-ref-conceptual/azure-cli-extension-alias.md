@@ -97,7 +97,7 @@ This type of alias is most useful when you have a command you run often and want
 
 ## Create an alias command with arguments
 
-You can also add positional arguments to an alias command, by including them as `{{ arg_name }}` in the alias name. The whitespace in the curly braces is required.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace in the curly braces is required.
 
 ```
 [alias_name {{ arg1 }} {{ arg2 }} ...]
