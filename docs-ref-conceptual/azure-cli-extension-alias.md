@@ -84,7 +84,7 @@ Aliases can also be shortcuts for complete commands. For example, here is an ali
 
 ```
 [lsgroups]
-command = group list --query [].{Name:name, Location:location} --output table
+command = group list --query '[].{Name:name, Location:location}' --output table
 ```
 
 Now `lsgroups` can be run like any other CLI command.
@@ -110,7 +110,7 @@ In the following command, the name of a resource group and VM are used and the f
 
 ```
 [get-vm-ip {{ resourceGroup }} {{ vmName }}]
-command = vm list-ip-addresses --resource-group {{ resourceGroup } --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress
+command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress
 ```
 
 When running this command, you give values to the positional arguments. This example gets the IP information for the vm `MyVM` in the `MyResourceGroup` resource group.
