@@ -14,6 +14,113 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## March 27, 2018
+
+Version 2.0.30
+
+### Core
+
+* Show message for extensions marked as preview on -h.
+
+### ACS
+
+* fix a certificate verification error for `az aks install-cli` in Cloud Shell / PS
+
+### Appservice
+
+* webapp: az webapp update supports httpsOnly
+* webapp/functionapp:  slot support for identity assign & identity show
+
+### Backup
+
+* Added new command 'az backup protection isenabled-for-vm'. This command can be used to check if a VM is backed up by any vault in the subscription.
+* Enabled --ids for vault_name and resource_group parameters for the following commands:
+  az backup container show
+  az backup item set-policy
+  az backup item show
+  az backup job show
+  az backup job stop
+  az backup job wait
+  az backup policy delete
+  az backup policy get-default-for-vm
+  az backup policy list-associated-items
+  az backup policy set
+  az backup policy show
+  az backup protection backup-now
+  az backup protection disable
+  az backup protection enable-for-vm
+  az backup recoverypoint show
+  az backup restore files mount-rp
+  az backup restore files unmount-rp
+  az backup restore restore-disks
+  az backup vault delete
+  az backup vault show
+* 'name' parameters now accept the name format as output from the show commands.
+
+### Container
+
+* Add 'az container exec' command that allows for exec commands in a container for a running container group.
+* Allow table output for creating and updating a container group.
+
+### Extension
+
+* Preview extensions: Show message on `az extension add` if extension is in preview
+* BC: `az extension list-available` - The full extension data is now available with `--show-details`
+* `az extension list-available` - A simplified view of the extensions available is now shown by default
+
+### Interactive
+
+* Completions kick in as soon as command table loading is done.
+* Fix bug with using `--style` parameter.
+* Interactive lexer instantiated after command table dump if missing.
+* Improvements to completer support.
+
+### Lab
+
+* Fixed create environment command.
+
+### Monitor
+
+* `metrics list`: Added support for `--top`, `--orderby` and `--namespace`. [Closes #5785](https://github.com/Azure/azure-cli/issues/5785)
+* `metrics list`: Accepts a space-separated list of metrics to retrieve. [Fixes #4529](https://github.com/Azure/azure-cli/issues/5785)
+* `metrics list-definitions`: Added support for `--namespace`. [Closes #5785](https://github.com/Azure/azure-cli/issues/5785)
+
+### Network
+
+* `network dns zone create/update`: Adding support for Private DNS zones.
+
+### Profile
+
+* az login: warn on using --identity-port/--msi-port as they become useless with imds support
+
+### RDBMS
+
+* Release with new business model GA API version 2017-12-01.
+
+### Resource
+
+* provider operation list/show: (breaking change)`api-version` is no longer required to run the command
+
+### Role
+
+* graph: support required access configuration and native client
+* rbac: ensure collection has less than 1000 ids on resolving graph objects
+* ad sp: new commands to manage credentials "az ad sp credential reset/list/delete"
+* role assignments: (breaking change)list/show output has "properties" removed to align with SDK
+* role definition: support `dataActions` and `notDataActions`
+
+### Storage
+
+* Fix issue of upload file with size between 195GB and 200GB
+* Fix problems with append blob uploads ignoring condition parameters.
+
+### VM
+
+* `vmss create`: warn on upcoming breaking changes on default balancer for scaleset with 100+ instances
+* vm snapshot/image: support zone resilient
+* vmss: report better encryption status through disk instance view
+* BC: `az vm extension delete` no longer returns output as expected for a `delete` command.
+
 ## March 13, 2018
 
 Version 2.0.29
