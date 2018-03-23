@@ -34,4 +34,4 @@ az extension list-available --output table
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Management Partner Preview | Yes |
 | [rdbms](https://github.com/Azure/azure-cli-extensions) | 0.0.4 | Azure MySQL and Azure PostgreSQL |  |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Subscription Definitions Preview | Yes |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Cretae and deploy appservice resources | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Create and deploy appservice resources | Yes |
