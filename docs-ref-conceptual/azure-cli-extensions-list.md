@@ -24,14 +24,14 @@ az extension list-available --output table
 
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
-| [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [alias](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Support for command aliases |  |
-| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.1.0 | Additional preview Azure Batch commands |  |
-| [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.1 | Additional commands for working with IoT Hub, Edge and Device Provisioning |  |
-| [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Support for the Azure Private DNS Public Preview |  |
+| [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Manage Azure Enhanced Monitoring Extensions for SAP. |  |
+| [alias](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Support for command aliases. |  |
+| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.1.0 | Additional preview Azure Batch commands. |  |
+| [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.1 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service. |  |
+| [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Support for the Azure Private DNS Public Preview. |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.5 | Copy images from region to region. |  |
-| [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Management Groups Preview | Yes |
-| [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Management Partner Preview | Yes |
-| [rdbms](https://github.com/Azure/azure-cli-extensions) | 0.0.4 | Azure MySQL and Azure PostgreSQL |  |
-| [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Subscription Definitions Preview | Yes |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Create and deploy appservice resources | Yes |
+| [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for Management Groups preview. | Yes |
+| [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for Management Partner preview. | Yes |
+| [rdbms](https://github.com/Azure/azure-cli-extensions) | 0.0.4 | Support for Azure MySQL and Azure PostgreSQL. |  |
+| [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for subscription definitions preview. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Create and deploy appservice resources. | Yes |
