@@ -25,7 +25,7 @@ This article helps you understand how to install, update, and remove extensions 
 In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available). This command lists the official extensions provided and maintained by Microsoft.
 
 ```azurecli
-az extension list-available --query '*[].{Name:metadata.name, Version:metadata.version, Summary:metadata.summary}' --output table
+az extension list-available --output table
 ```
 
 We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on the documentation site.
