@@ -32,8 +32,7 @@ We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on t
 
 ## Install extensions
 
-Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az-extension-add) to get it. If the extension is 
-listed in `az extension list-available`, you can install the extension by name.
+Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli
 az extension add --name <extension-name>
@@ -56,7 +55,7 @@ If an extension was installed by name, it can be updated using [az extension upd
 az extension update --name <extension-name>
 ```
 
-Otherwise, an extension can be updated from source by following the [Install extensions](#Install-extensions) instructions.
+Otherwise, an extension can be updated from source by following the [Install extensions](#install-extensions) instructions.
 
 If an extension name cannot be resolved by the CLI, uninstall it and attempt to reinstall. There's also the possibility that the extension was moved out of preview and became a
 built-in command for the CLI. Try updating the CLI as described in [Install the Azure CLI 2.0](install-azure-cli.md) and see if the extension's commands were added. 
@@ -102,4 +101,4 @@ be guaranteed to be satisfied. Installing an extension installs that extension o
 
 ### Are extensions updated along with the CLI?
 
-No. Extensions must be updated separately, as described in the [Updating extensions](#updating-extensions) section.
+No. Extensions must be updated separately, as described in [Update extensions](#update-extensions).

@@ -143,4 +143,4 @@ To uninstall the extension, use the [az extension remove](/cli/azure/extension#a
 az extension remove --name alias
 ```
 
-If you uninstalled due to a bug or other problem with the extension, please [file a GitHub issue](https://github.com/Azure/azure-cli-extensions) so that we can provide a fix.
+If you uninstalled due to a bug or other problem with the extension, please [file a GitHub issue](https://github.com/Azure/azure-cli-extensions/issues) so that we can provide a fix.
