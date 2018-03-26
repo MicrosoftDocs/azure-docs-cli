@@ -23,13 +23,13 @@ The alias extension allows users to define custom commands for the Azure CLI by 
 
 The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI 2.0](./install-azure-cli.md).
 
-Install the extension with the [az extension add](/cli/azure/extension#az_extension_add) command.
+Install the extension with the [az extension add](/cli/azure/extension#az-extension-add) command.
 
 ```azurecli
 az extension add --name alias
 ```
 
-Verify the installation of the extension with [az extension list](/cli/azure/extension#az_extension_list). If the alias extension was installed properly, it's listed in the command output.
+Verify the installation of the extension with [az extension list](/cli/azure/extension#az-extension-list). If the alias extension was installed properly, it's listed in the command output.
 
 ```azurecli
 az extension list --output table
@@ -43,7 +43,7 @@ whl              alias                      0.2.0
 
 ## Keep the extension up to date
 
-The alias extension is under active development and new versions are released regularly. New versions are not automatically installed whenever you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az_extension_update).
+The alias extension is under active development and new versions are released regularly. New versions are not automatically installed whenever you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az-extension-update).
 
 ```azurecli
 az extension update --name alias
@@ -137,7 +137,7 @@ To learn about the Jinja2 template engine, see [the Jinja2 documentation](http:/
 
 ## Uninstall the alias extension
 
-To uninstall the extension, use the [az extension remove](/cli/azure/extension#az_extension_remove) command.
+To uninstall the extension, use the [az extension remove](/cli/azure/extension#az-extension-remove) command.
 
 ```bash
 az extension remove --name alias

@@ -16,7 +16,7 @@ ms.service: multiple
 
 This article is a complete list of the available extensions for the Azure CLI 2.0 which are offered and supported by Microsoft.
 
-The list of extensions is also available directly from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az_extension_list_available):
+The list of extensions is also available directly from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az-extension-list-available):
 
 ```azurecli
 az extension list-available --output table
