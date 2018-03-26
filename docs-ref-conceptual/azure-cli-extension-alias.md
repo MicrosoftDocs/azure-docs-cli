@@ -93,11 +93,9 @@ Now `ls-groups` can be run like any other CLI command.
 az ls-groups
 ```
 
-This type of alias is useful when you have a command you run often and want a short name for it.
-
 ## Create an alias command with arguments
 
-You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace in the curly braces is required.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the curly braces is required.
 
 ```
 [alias_name {{ arg1 }} {{ arg2 }} ...]
