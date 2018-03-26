@@ -20,106 +20,106 @@ Version 2.0.30
 
 ### Core
 
-* Show message for extensions marked as preview on -h.
+* Show message for extensions marked as preview in help
 
 ### ACS
 
-* fix a certificate verification error for `az aks install-cli` in Cloud Shell / PS
+* Fix SSL certificate verification error for `aks install-cli` in Cloud Shell
 
 ### Appservice
 
-* webapp: az webapp update supports httpsOnly
-* webapp/functionapp:  slot support for identity assign & identity show
+* Added HTTPS-only support to `webapp update`
+* Added support for slots to `az webapp identity [assign|show]` and `az functionapp identity [assign|show]`
 
 ### Backup
 
-* Added new command 'az backup protection isenabled-for-vm'. This command can be used to check if a VM is backed up by any vault in the subscription.
-* Enabled --ids for vault_name and resource_group parameters for the following commands:
-  az backup container show
-  az backup item set-policy
-  az backup item show
-  az backup job show
-  az backup job stop
-  az backup job wait
-  az backup policy delete
-  az backup policy get-default-for-vm
-  az backup policy list-associated-items
-  az backup policy set
-  az backup policy show
-  az backup protection backup-now
-  az backup protection disable
-  az backup protection enable-for-vm
-  az backup recoverypoint show
-  az backup restore files mount-rp
-  az backup restore files unmount-rp
-  az backup restore restore-disks
-  az backup vault delete
-  az backup vault show
-* 'name' parameters now accept the name format as output from the show commands.
+* Added new command `az backup protection isenabled-for-vm`. This command can be used to check if a VM is backed up by any vault in the subscription
+* Enabled Azure object IDs for `--resource-group` and `--vault-name` parameters for the following commands:
+  * `backup container show`
+  * `backup item set-policy`
+  * `backup item show`
+  * `backup job show`
+  * `backup job stop`
+  * `backup job wait`
+  * `backup policy delete`
+  * `backup policy get-default-for-vm`
+  * `backup policy list-associated-items`
+  * `backup policy set`
+  * `backup policy show`
+  * `backup protection backup-now`
+  * `backup protection disable`
+  * `backup protection enable-for-vm`
+  * `backup recoverypoint show`
+  * `backup restore files mount-rp`
+  * `backup restore files unmount-rp`
+  * `backup restore restore-disks`
+  * `backup vault delete`
+  * `backup vault show`
+* Changed `--name` parameters to accept the output format from `backup ... show` commands
 
 ### Container
 
-* Add 'az container exec' command that allows for exec commands in a container for a running container group.
-* Allow table output for creating and updating a container group.
+* Added `container exec` command. Executes commands in a container for a running container group
+* Allow table output for creating and updating a container group
 
 ### Extension
 
-* Preview extensions: Show message on `az extension add` if extension is in preview
-* BC: `az extension list-available` - The full extension data is now available with `--show-details`
-* `az extension list-available` - A simplified view of the extensions available is now shown by default
+* Added message for `extension add` if extension is in preview
+* Changed `extension list-available` to show full extension data with `--show-details`
+* [BREAKING CHANGE] Changed `extension list-available` to show simplified extension data by default
 
 ### Interactive
 
-* Completions kick in as soon as command table loading is done.
-* Fix bug with using `--style` parameter.
-* Interactive lexer instantiated after command table dump if missing.
-* Improvements to completer support.
+* Changed completions to activate as soon as command table loading is done
+* Fixed bug with using `--style` parameter
+* Interactive lexer instantiated after command table dump if missing
+* Improved completer support
 
 ### Lab
 
-* Fixed create environment command.
+* Fixed bugs with `create environment` command
 
 ### Monitor
 
-* `metrics list`: Added support for `--top`, `--orderby` and `--namespace`. [Closes #5785](https://github.com/Azure/azure-cli/issues/5785)
-* `metrics list`: Accepts a space-separated list of metrics to retrieve. [Fixes #4529](https://github.com/Azure/azure-cli/issues/5785)
-* `metrics list-definitions`: Added support for `--namespace`. [Closes #5785](https://github.com/Azure/azure-cli/issues/5785)
+* Added support for `--top`, `--orderby` and `--namespace` to `metrics list` [#5785](https://github.com/Azure/azure-cli/issues/5785)
+* Fixed [#4529](https://github.com/Azure/azure-cli/issues/5785): `metrics list` Accepts a space-separated list of metrics to retrieve
+* Added support for `--namespace` to `metrics list-definitions` [#5785](https://github.com/Azure/azure-cli/issues/5785)
 
 ### Network
 
-* `network dns zone create/update`: Adding support for Private DNS zones.
+* Added support for Private DNS zones
 
 ### Profile
 
-* az login: warn on using --identity-port/--msi-port as they become useless with imds support
+* Added warning for `--identity-port` and `--msi-port` to `login`
 
 ### RDBMS
 
-* Release with new business model GA API version 2017-12-01.
+* Added business model GA API version 2017-12-01
 
 ### Resource
 
-* provider operation list/show: (breaking change)`api-version` is no longer required to run the command
+* [BREAKING CHANGE]: Changed `provider operation [list|show]` to not require `--api-version`
 
 ### Role
 
-* graph: support required access configuration and native client
-* rbac: ensure collection has less than 1000 ids on resolving graph objects
-* ad sp: new commands to manage credentials "az ad sp credential reset/list/delete"
-* role assignments: (breaking change)list/show output has "properties" removed to align with SDK
-* role definition: support `dataActions` and `notDataActions`
+* Added support for required access configurations and native clients to `az ad app create`
+* Changed `rbac` commands to return less than 1000 IDs on object resolution
+* Added credential management commands `ad sp credential [reset|list|delete]`
+* [BREAKING CHANGE] Removed 'properties' from `az role assignment [list|show]` output
+* Added support for `dataActions` and `notDataActions` permissions to `role definition`
 
 ### Storage
 
-* Fix issue of upload file with size between 195GB and 200GB
-* Fix problems with append blob uploads ignoring condition parameters.
+* Fixed issue when uploading file with size between 195GB and 200GB
+* Fixed [#4049](https://github.com/Azure/azure-cli/issues/4049): Problems with append blob uploads ignoring condition parameters
 
 ### VM
 
-* `vmss create`: warn on upcoming breaking changes on default balancer for scaleset with 100+ instances
-* vm snapshot/image: support zone resilient
-* vmss: report better encryption status through disk instance view
-* BC: `az vm extension delete` no longer returns output as expected for a `delete` command.
+* Added warning to `vmss create` for upcoming breaking changes for sets with 100+ instances
+* Added zone resilient support to `vm [snapshot|image]`
+* Changed disk instance view to report better encryption status
+* [BREAKING CHANGE] Changed `vm extension delete` to no longer return output
 
 ## March 13, 2018
 
@@ -198,7 +198,7 @@ Version 2.0.29
 
 ### Storage
 
-* Fixed [#4971](https://github.com/Azure/azure-cli/issues/4971): `storage blob copy` now supports other Azure clouds.
+* Fixed [#4971](https://github.com/Azure/azure-cli/issues/4971): `storage blob copy` now supports other Azure clouds
 * Fixed [#5286](https://github.com/Azure/azure-cli/issues/5286): Batch commands `storage blob [delete-batch|download-batch|upload-batch]` no longer throw an error upon precondition failures
 
 ### VM
@@ -321,8 +321,8 @@ Version 2.0.27
 
 ### IoT
 
-* Fixed issue where `iot dps access policy [create|update]` would return a 'not found' error on success.
-* Fixed issue where `iot dps linked-hub [create|update]` would return a 'not found' error on success.
+* Fixed issue where `iot dps access policy [create|update]` would return a 'not found' error on success
+* Fixed issue where `iot dps linked-hub [create|update]` would return a 'not found' error on success
 * Added `--no-wait` support to `iot dps access policy [create|update]` and `iot dps linked-hub [create|update]`
 * Changed `iot hub create` to allow specifying the number of partitions
 
@@ -902,15 +902,15 @@ Version 2.0.17
 
 ### CDN
 
-* Fixed 'CustomDomain is not interable' bug for `cdn custom-domain create`.
+* Fixed 'CustomDomain is not interable' bug for `cdn custom-domain create`
 
 ### Extension
 
-* Initial Release.
+* Initial Release
 
 ### Keyvault
 
-* Fixed issue where permissions were case sensitive for `keyvault set-policy`.
+* Fixed issue where permissions were case sensitive for `keyvault set-policy`
 
 ### Network
 
@@ -962,13 +962,13 @@ Version 2.0.15
 
 ### CLI
 
-* Added legal note to `--version`.
+* Added legal note to `--version`
 
 ### ACS
 
-* Corrected preview regions.
-* Formatted default `dns_name_prefix` properly.
-* Optimized acs command output.
+* Corrected preview regions
+* Formatted default `dns_name_prefix` properly
+* Optimized acs command output
 
 ### Appservice
 
@@ -1193,7 +1193,7 @@ vm (2.0.11)
 
 ### CDN
 
-* Provided a better error message for `cdn endpoint list` when the profile specified by `--profile-name` does not exist.
+* Provided a better error message for `cdn endpoint list` when the profile specified by `--profile-name` does not exist
 
 ### Cloud
 
@@ -1206,7 +1206,7 @@ vm (2.0.11)
 ### CosmosDB
 
 * Fixed allowing creation of collection with custom partition key
-* Added support for collection default TTL.
+* Added support for collection default TTL
 
 ### Data Lake Analytics
 
@@ -1361,7 +1361,7 @@ vm (2.0.11)
 * Support configuring nsg
 * Fixed a bug where the DNS server would not be configured correctly
 * Support managed service identities
-* Fixed issue where `cmss create` with an existing load balancer required `--backend-pool-name`.
+* Fixed issue where `cmss create` with an existing load balancer required `--backend-pool-name`
 * Make datadisks created with `vm image create` lun start with 0
 
 
@@ -1371,12 +1371,12 @@ Version 2.0.6
 
 * documentdb renamed to cosmosdb
 * Add rdbms (mysql, postgres)
-* Include Data Lake Analytics and Data Lake Store modules.
-* Include Cognitive Services module.
-* Include Service Fabric module.
-* Include Interactive module (rename of az-shell).
-* Add support for CDN commands.
-* Remove Container module.
+* Include Data Lake Analytics and Data Lake Store modules
+* Include Cognitive Services module
+* Include Service Fabric module
+* Include Interactive module (rename of az-shell)
+* Add support for CDN commands
+* Remove Container module
 * Add 'az -v' as shortcut for 'az --version' ([#2926](https://github.com/Azure/azure-cli/issues/2926))
 * Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
 
@@ -1453,7 +1453,7 @@ vm (2.0.6)
 
 ### CosmosDB
 
-* Rename documentdb module to cosmosdb.
+* Rename documentdb module to cosmosdb
 * Added support for documentdb data-plane APIs:
   database and collection management
 * Added support for enabling automatic failover on database accounts
@@ -1461,18 +1461,18 @@ vm (2.0.6)
 
 ### Data Lake Analytics
 
-* Fix a bug where filtering on result and state for job lists would throw an error.
+* Fix a bug where filtering on result and state for job lists would throw an error
 * Add support for new catalog item type: package. accessed through: `az dla catalog package`
 * Made it possible to list the following catalog items from within a database (no schema specification required):
 
   * Table
   * Table valued function
   * View
-  * Table Statistics. This can also be listed with a schema, but without specifying a table name.
+  * Table Statistics. This can also be listed with a schema, but without specifying a table name
 
 ### Data Lake Store
 
-* Update the version of the underlying filesystem SDK, which gives better support for handling server side throttling scenarios.
+* Update the version of the underlying filesystem SDK, which gives better support for handling server side throttling scenarios
 * Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
 * missed help for access show. adding it. ([#2743](https://github.com/Azure/azure-cli/issues/2743))
 
@@ -1483,18 +1483,18 @@ vm (2.0.6)
 ### KeyVault
 
 * BC:`az keyvault certificate download` change -e from string or binary to PEM or DER to better represent the options
-* BC: Remove --expires and --not-before from `keyvault certificate create` as these parameters are not supported by the service.
+* BC: Remove --expires and --not-before from `keyvault certificate create` as these parameters are not supported by the service
 * Adds the --validity parameter to `keyvault certificate create` to selectively override the value in --policy
-* Fixes issue in `keyvault certificate get-default-policy` where 'expires' and 'not_before' were exposed but 'validity_in_months' was not.
+* Fixes issue in `keyvault certificate get-default-policy` where 'expires' and 'not_before' were exposed but 'validity_in_months' was not
 * keyvault fix for import of pem and pfx ([#2754](https://github.com/Azure/azure-cli/issues/2754))
 
 ### Lab
 
-* Adding create, show, delete & list commands for environment in the lab.
-* Adding show & list commands to view ARM templates in the lab.
-* Adding --environment flag in `az lab vm list` to filter VMs by environment in the lab.
-* Add convenience command `az lab formula export-artifacts` to export artifact scaffold within a Lab's formula.
-* Add commands to manage secrets within a Lab.
+* Adding create, show, delete & list commands for environment in the lab
+* Adding show & list commands to view ARM templates in the lab
+* Adding --environment flag in `az lab vm list` to filter VMs by environment in the lab
+* Add convenience command `az lab formula export-artifacts` to export artifact scaffold within a Lab's formula
+* Add commands to manage secrets within a Lab
 
 ### Monitor
 
@@ -1503,22 +1503,22 @@ vm (2.0.6)
 
 ### Network
 
-* Add `network watcher test-connectivity` command.
-* Add support for `--filters` parameter for `network watcher packet-capture create`.
-* Add support for Application Gateway connection draining.
-* Add support for Application Gateway WAF rule set configuration.
-* Add support for ExpressRoute route filters and rules.
-* Add support for TrafficManager geographic routing.
-* Add support for VPN connection policy-based traffic selectors.
-* Add support for VPN connection IPSec policies.
-* Fix bug with `vpn-connection create` when using the `--no-wait` or `--validate` parameters.
+* Add `network watcher test-connectivity` command
+* Add support for `--filters` parameter for `network watcher packet-capture create`
+* Add support for Application Gateway connection draining
+* Add support for Application Gateway WAF rule set configuration
+* Add support for ExpressRoute route filters and rules
+* Add support for TrafficManager geographic routing
+* Add support for VPN connection policy-based traffic selectors
+* Add support for VPN connection IPSec policies
+* Fix bug with `vpn-connection create` when using the `--no-wait` or `--validate` parameters
 * Add support for active-active VNet gateways
-* Remove nulls values from output of `network vpn-connection list/show` commands.
+* Remove nulls values from output of `network vpn-connection list/show` commands
 * BC: Fix bug in the output of `vpn-connection create`
-* Fix bug where '--key-length' argument of 'vpn-connection create' was not parsed correctly.
-* Fix bug in `dns zone import` where records were not imported correctly.
-* Fix bug where `traffic-manager endpoint update` did not work.
-* Add 'network watcher' preview commands.
+* Fix bug where '--key-length' argument of 'vpn-connection create' was not parsed correctly
+* Fix bug in `dns zone import` where records were not imported correctly
+* Fix bug where `traffic-manager endpoint update` did not work
+* Add 'network watcher' preview commands
 
 ### Profile
 
@@ -1528,7 +1528,7 @@ vm (2.0.6)
 ### Redis
 
 * Adding update command which also adds the ability to scale for redis cache
-* Deprecates the 'update-settings' command.
+* Deprecates the 'update-settings' command
 
 ### Resource
 
@@ -1550,12 +1550,12 @@ vm (2.0.6)
 
 ### SQL
 
-* Added az sql server list-usages and az sql db list-usages commands.
+* Added az sql server list-usages and az sql db list-usages commands
 * SQL - ability to connect directly to resource provider ([#2832](https://github.com/Azure/azure-cli/issues/2832))
 
 ### Storage
 
-* Default location to resource group location for `storage account create`.
+* Default location to resource group location for `storage account create`
 * Add support for incremental blob copy
 * Add support for large block blob upload
 * Change block size to 100MB when file to upload is larger than 200GB
@@ -1578,7 +1578,7 @@ vm (2.0.6)
 
 Version 2.0.2
 
-We released the ACR, Batch, KeyVault, and SQL components in this release.
+We released the ACR, Batch, KeyVault, and SQL components in this release
 
 ```
 azure-cli (2.0.2)
@@ -1612,7 +1612,7 @@ vm (2.0.2)
 
 ### Core
 
-* Add acr, lab, monitor, and find modules to default list.
+* Add acr, lab, monitor, and find modules to default list
 * Login: skip erroneous tenant ([#2634](https://github.com/Azure/azure-cli/pull/2634))
 * login: set default subscription to one with the state of "Enabled" ([#2575](https://github.com/Azure/azure-cli/pull/2575))
 * Add wait commands and --no-wait support to more commands ([#2524](https://github.com/Azure/azure-cli/pull/2524))
@@ -1637,8 +1637,8 @@ vm (2.0.2)
 
 ### DataLake
 
-* Initial release of Data Lake Analytics module.
-* Initial release of Data Lake Store module.
+* Initial release of Data Lake Analytics module
+* Initial release of Data Lake Store module
 
 ### DocuemntDB
 
@@ -1658,24 +1658,24 @@ vm (2.0.2)
 
 Version 2.0.0
 
-This release of Azure CLI 2.0 is the first "Generally Available" release.
+This release of Azure CLI 2.0 is the first "Generally Available" release
 General availability applies to these command modules:
 - Container Service (acs)
 - Compute (including Resource Manager, VM, virtual machine scale sets, Managed Disks)
 - Networking
 - Storage
 
-These command modules can be used in production and are supported by standard Microsoft SLA.
-You can open issues directly with Microsoft support or on our [github issues list](https://github.com/azure/azure-cli/issues/).
+These command modules can be used in production and are supported by standard Microsoft SLA
+You can open issues directly with Microsoft support or on our [github issues list](https://github.com/azure/azure-cli/issues/)
 You can ask questions on [StackOverflow using the azure-cli tag](http://stackoverflow.com/questions/tagged/azure-cli),
-or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
-You can provide feedback from the command line with the `az feedback` command.
+or contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
+You can provide feedback from the command line with the `az feedback` command
 
-The commands in these modules are stable and the syntax is not expected to change in upcoming releases of this version of Azure CLI.
+The commands in these modules are stable and the syntax is not expected to change in upcoming releases of this version of Azure CLI
 
-To verify the version of the CLI, use `az --version`.
+To verify the version of the CLI, use `az --version`
 The output lists the version of the CLI itself (2.0.0 in this release), the individual command modules,
-and the versions of Python and GCC that you're using.
+and the versions of Python and GCC that you're using
 
 ```
 azure-cli (2.0.0)
@@ -1707,15 +1707,15 @@ Python (Darwin) 2.7.10 (default, Jul 30 2016, 19:40:32)
 ```
 
 > [!Note]
-> Some of the command modules have a "b*n*" or "rc*n*" postfix.
-> These command modules are still in preview and will become generally available in the future.
+> Some of the command modules have a "b*n*" or "rc*n*" postfix
+> These command modules are still in preview and will become generally available in the future
 
-We also have nightly preview builds of the CLI.
+We also have nightly preview builds of the CLI
 For information, see these instructions on [getting the nightly builds](https://github.com/Azure/azure-cli#nightly-builds),
-and these instructions on [developer setup and contributing code](https://github.com/Azure/azure-cli#developer-setup).
+and these instructions on [developer setup and contributing code](https://github.com/Azure/azure-cli#developer-setup)
 
 You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
-- Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com).
-- Provide feedback from the command line with the `az feedback` command.
+- Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
+- Provide feedback from the command line with the `az feedback` command
 
