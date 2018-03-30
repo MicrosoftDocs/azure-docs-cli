@@ -32,13 +32,13 @@ az extension add --name alias
 Verify the installation of the extension with [az extension list](/cli/azure/extension#az-extension-list). If the alias extension was installed properly, it's listed in the command output.
 
 ```azurecli
-az extension list --output table
+az extension list --output table --query [].{Name:name}
 ```
 
 ```output
-ExtensionType    Name                       Version
----------------  -------------------------  ---------
-whl              alias                      0.3.0
+Name
+------
+alias
 ```
 
 ## Keep the extension up to date
@@ -49,22 +49,17 @@ The alias extension is under active development and new versions are released re
 az extension update --name alias
 ```
 
-## az alias
+## Manager Azure CLI aliases
 
-Alias provides convenient and familiar commands to manage your aliases.
-
-## az alias create
-
-Create an alias.
+The alias extension provides convenient and familiar commands to manage aliases. To view all the available commands and parameter detail, invoke the alias command with the help flag.
 
 ```azurecli
-az alias create --name
-                --command
+az alias --help
 ```
 
 ## Examples
 
-### Create simple alias commands
+## Create simple alias commands
 
 One use of aliases is for shortening existing command groups or command names. For example, you can shorten the `group` command group to `rg` and the `list` command to `ls`.
 
@@ -81,6 +76,8 @@ az rg ls
 az vm ls
 ```
 
+Don't include az as part of the command.
+
 Aliases can also be shortcuts for complete commands. The next example lists available resource groups and their locations in table output:
 
 ```azurecli
@@ -93,9 +90,9 @@ Now `ls-groups` can be run like any other CLI command.
 az ls-groups
 ```
 
-### Create an alias command with arguments
+## Create an alias command with arguments
 
-You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the braces is required.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name.
 
 ```azurecli
 az alias create --name "alias_name {{ arg1 }} {{ arg2 }} ..." --command "invoke_including_args"
@@ -118,21 +115,21 @@ az get-vm-ip MyResourceGroup MyVM
 
 You can also use environment variables in commands invoked by aliases, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
 
-```azruecli
+```azurecli
 az alias create \
     --name "create-rg {{ groupName }}" \
     --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
 ```
 
-Note that you will have to escape the dollar sign `$` by adding a slash `\` in order to register the environment variables inside the command of the alias.
+To register the environment variables inside the command of the alias, the dollar sign `$` needs to be escaped by adding a slash `\` in front of it.
 
-### Process arguments using Jinja2 templates
+## Process arguments using Jinja2 templates
 
 Argument substitution in the alias extension is performed by [Jinja2](http://jinja.pocoo.org/docs/2.10/), giving you full access to the capabilities of the Jinja2 template engine. Templates allow you to perform actions like data extraction and substitution on strings.
 
 With Jinja2 templates, you can write aliases which take different types of arguments than the underlying command. For example, you can make an alias which takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
-```azruecli
+```azurecli
 az alias create \
     --name 'storage-ls {{ url }}' \
     --command "storage blob list
@@ -141,39 +138,6 @@ az alias create \
 ```
 
 To learn about the Jinja2 template engine, see [the Jinja2 documentation](http://jinja.pocoo.org/docs/2.10/templates/).
-
-### Required Parameters
-
-### `--name -n`
-
-The name of the alias. Positional arguments are surrounded by a pair of double curly quotes. The name of the positional arguments can contain numbers, lower and uppercase characters, as well as underscores.
-
-### `--command -c`
-
-The command that the alias points to. Don't include `az` as part of the command.
-
-
-## az alias list
-
-List the registered aliases.
-
-```azurecli
-az alias list
-```
-
-## az alias remove
-
-Remove an alias.
-
-```azurecli
-az alias remove --name
-```
-
-### Required Parameters
-
-### `--name -n`
-
-The name of the alias.
 
 
 ## Uninstall the alias extension
