@@ -95,7 +95,7 @@ az ls-groups
 
 ## Create an alias command with arguments
 
-You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the curly braces is required.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the curly brackets is required.
 
 ```
 [alias_name {{ arg1 }} {{ arg2 }} ...]
@@ -111,7 +111,7 @@ command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vm
 
 When running this command, you give values to the positional arguments.
 
-```azruecli
+```azurecli
 az get-vm-ip MyResourceGroup MyVM
 ```
 
@@ -139,7 +139,7 @@ To learn about the Jinja2 template engine, see [the Jinja2 documentation](http:/
 
 To uninstall the extension, use the [az extension remove](/cli/azure/extension#az-extension-remove) command.
 
-```bash
+```azurecli
 az extension remove --name alias
 ```
 
