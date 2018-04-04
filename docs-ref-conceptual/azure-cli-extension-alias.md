@@ -95,7 +95,7 @@ az ls-groups
 
 ## Create an alias command with arguments
 
-You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the curly brackets is required.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the braces is required.
 
 ```
 [alias_name {{ arg1 }} {{ arg2 }} ...]
