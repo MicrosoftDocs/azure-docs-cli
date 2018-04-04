@@ -140,6 +140,14 @@ az alias create \
 To learn about the Jinja2 template engine, see [the Jinja2 documentation](http://jinja.pocoo.org/docs/2.10/templates/).
 
 
+## Alias configuration file
+Another way to create and modify aliaes is to alter the alias configuration file. Alias command definitions are written into a configuration file, located at `$AZURE_USER_CONFIG/alias`. The default value of `AZURE_USER_CONFIG` is `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. The alias configuration file is written in the INI configuration file format. The general format for alias commands is:
+```
+[command_name]
+command = invoked_commands
+```
+
+
 ## Uninstall the alias extension
 
 To uninstall the extension, use the [az extension remove](/cli/azure/extension#az-extension-remove) command.
