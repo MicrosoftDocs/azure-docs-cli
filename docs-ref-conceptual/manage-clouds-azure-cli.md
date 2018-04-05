@@ -17,7 +17,7 @@ If you work across different regions or use [Azure Stack](https://docs.microsoft
 
 ## Listing clouds
 
-You can list available clouds with the [cloud list](/cli/azure/cloud#list) command. This tells you which cloud is currently active, what its current profile is, and information on regional suffixes and host names.
+You can list available clouds with the [az cloud list](/cli/azure/cloud#az-cloud-list) command. This tells you which cloud is currently active, what its current profile is, and information on regional suffixes and host names.
 
 To get the active cloud and a list of all the available clouds:
 
@@ -69,7 +69,7 @@ az cloud show --name AzureChinaCloud --output json
 
 ## Switching the active cloud
 
-To switch the currently active cloud, run the [cloud set](/cli/azure/cloud#set) command. This command takes one required argument, the name of the cloud.
+To switch the currently active cloud, run the [az cloud set](/cli/azure/cloud#az-cloud-set) command. This command takes one required argument, the name of the cloud.
 
 ```azurecli
 az cloud set --name AzureChinaCloud
@@ -81,20 +81,20 @@ az cloud set --name AzureChinaCloud
 
 ## Register a cloud
 
-Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [cloud register](/cli/azure/cloud#register) command. This command requires a name and a set of capabilities with associated endpoints. To learn how to register a cloud for use with Azure Stack, see [Install and configure CLI for use with Azure Stack](/azure/azure-stack/user/azure-stack-connect-cli#connect-to-azure-stack).
+Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [az cloud register](/cli/azure/cloud#az-cloud-register) command. This command requires a name and a set of capabilities with associated endpoints. To learn how to register a cloud for use with Azure Stack, see [Install and configure CLI for use with Azure Stack](/azure/azure-stack/user/azure-stack-connect-cli#connect-to-azure-stack).
 
-You do not need to register your own cloud for China, US Government, or German regions. These are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud?view=azure-cli-latest#az_cloud_register).
+You do not need to register your own cloud for China, US Government, or German regions. These are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud#az-cloud-register).
 
 Registering a cloud does not automatically switch to it. Use the `az cloud set` command to select the newly created cloud as described above.
 
 ## Update an existing cloud
 
 If you have permissions, you can also update an existing cloud. Do this when you need to switch to a different Azure profile, add an endpoint, or change an endpoint.
-You do this with the `az cloud update` command, which takes the same arguments as `az cloud register`. For more information, see the [documentation for `az cloud update`](/cli/azure/cloud?view=azure-cli-latest#az_cloud_update).
+You do this with the [az cloud update](/cli/azure/cloud#az-cloud-update) command, which takes the same arguments as `az cloud register`.
 
 ## Unregister a cloud
 
-If you no longer require a registered cloud, it can be unregistered with the [cloud unregister](/cli/azure/cloud#unregister) command:
+If you no longer require a registered cloud, it can be unregistered with the [az cloud unregister](/cli/azure/cloud#az-cloud-unregister) command:
 
 ```azurecli
 az cloud unregister --name MyCloud

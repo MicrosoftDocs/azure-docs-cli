@@ -19,7 +19,7 @@ associated with an account. Service principals are useful for working with appli
 
 ## Create the service principal
 
-Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#create-for-rbac) command to create a service principal. The Service Principal's name isn't tied to any existing application or user name. You can create a service principal with your choice of authentication type.
+Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command to create a service principal. The Service Principal's name isn't tied to any existing application or user name. You can create a service principal with your choice of authentication type.
 
 * `--password` is used for password-based authentication. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). If you don't specify a password, one is created for you.
 
@@ -64,9 +64,9 @@ The `appId`, `tenant`, and `password` values are used for authentication. The `d
 
 The Azure CLI 2.0 provides the following commands to manage role assignments.
 
-* [az role assignment list](/cli/azure/role/assignment#list)
-* [az role assignment create](/cli/azure/role/assignment#create)
-* [az role assignment delete](/cli/azure/role/assignment#delete)
+* [az role assignment list](/cli/azure/role/assignment#az-role-assignment-list)
+* [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create)
+* [az role assignment delete](/cli/azure/role/assignment#az-role-assignment-delete)
 
 The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account, and is usually not appropriate for applications. The **Reader** role is more restrictive, providing read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
@@ -105,7 +105,7 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password PAT
 ```
 ## Reset credentials
 
-In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp reset-credentials](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az_ad_sp_reset_credentials) command. The same restrictions and options for creating a new service principal also apply here.
+In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp reset-credentials](https://docs.microsoft.com/en-us/cli/azure/ad/sp#az-ad-sp-reset-credentials) command. The same restrictions and options for creating a new service principal also apply here.
 
 ```azurecli
 az ad sp reset-credentials --name APP_ID --password NEW_PASSWORD
