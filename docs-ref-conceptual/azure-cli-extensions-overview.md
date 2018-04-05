@@ -22,7 +22,7 @@ This article helps you understand how to install, update, and remove extensions 
 
 ## Find extensions
 
-In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az-extension-list-available). This command lists the official extensions provided and maintained by Microsoft.
+In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension#az-extension-list-available). This command lists the official extensions provided and maintained by Microsoft.
 
 ```azurecli
 az extension list-available --output table
@@ -32,7 +32,7 @@ We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on t
 
 ## Install extensions
 
-Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
+Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli
 az extension add --name <extension-name>
@@ -49,7 +49,7 @@ Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ## Update extensions
 
-If an extension was installed by name, it can be updated using [az extension update](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az-extension-update).
+If an extension was installed by name, it can be updated using [az extension update](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-update).
 
 ```azurecli
 az extension update --name <extension-name>
@@ -62,7 +62,7 @@ built-in command for the CLI. Try updating the CLI as described in [Install the 
 
 ## Uninstall extensions
 
-If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/en-us/cli/azure/extension?view=azure-cli-latest#az-extension-remove).
+If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-remove).
 
 ```azurecli
 az extension remove --name <extension-name>
