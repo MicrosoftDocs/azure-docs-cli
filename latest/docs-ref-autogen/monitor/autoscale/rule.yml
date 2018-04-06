@@ -53,13 +53,19 @@ items:
   examples:
   - summary: Scale to 5 instances when the CPU Percentage across instances is greater than 75 averaged over 10 minutes.
     syntax:
-      content: az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss}   --scale to 5 --condition "Percentage CPU > 75 avg 10m"
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale to 5 --condition "Percentage CPU > 75 avg 10m"
   - summary: Scale up 2 instances when the CPU Percentage across instances is greater than 75 averaged over 5 minutes.
     syntax:
-      content: az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss}   --scale out 2 --condition "Percentage CPU > 75 avg 5m"
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale out 2 --condition "Percentage CPU > 75 avg 5m"
   - summary: Scale down 50% when the CPU Percentage across instances is less than 25 averaged over 15 minutes.
     syntax:
-      content: az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss}   --scale in 50% --condition "Percentage CPU < 25 avg 15m"
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale in 50% --condition "Percentage CPU < 25 avg 15m"
   parameters:
   - isRequired: true
     name: --autoscale-name
@@ -69,10 +75,6 @@ items:
     name: --condition
     summary: The condition which triggers the scaling action.
     description: The form of a condition is "METRIC {==,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD {avg,min,max,total,count} PERIOD". Values for METRIC and appropriate THRESHOLD values can be obtained from the `az monitor metric` command. Format of PERIOD is "##h##m##s".
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - isRequired: true
     name: --scale
     summary: The direction and amount to scale.
@@ -93,16 +95,19 @@ items:
     defaultValue: avg 1m
     summary: The way metrics are polled across instances.
     description: The form of the timegrain is {avg,min,max,sum} VALUE. Values can be obtained from the `az monitor metric` command. Format of VALUE is "##h##m##s".
-  - name: --source
+  - name: --resource
     summary: Name or ID of the target resource.
     description: ''
-  - name: --source-namespace
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --resource-namespace
     summary: Target resource provider namespace.
     description: ''
-  - name: --source-parent
+  - name: --resource-parent
     summary: Target resource parent path, if applicable.
     description: ''
-  - name: --source-type
+  - name: --resource-type
     summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines)')."
     description: ''
   source:

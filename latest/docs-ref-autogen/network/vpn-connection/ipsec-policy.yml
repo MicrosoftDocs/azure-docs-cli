@@ -13,9 +13,16 @@ items:
 - uid: az_network_vpn_connection_ipsec_policy_add
   name: az network vpn-connection ipsec-policy add
   summary: Add a VPN connection IPSec policy.
-  description: ''
+  description: Set all IPsec policies of a VPN connection. If you want to set any IPsec policy, you must set them all.
   langs:
   - azurecli
+  examples:
+  - summary: Add specified IPsec policies to a connection instead of relying on defaults.
+    syntax:
+      content: >-
+        az network vpn-connection ipsec-policy add -g MyResourceGroup --connection-name MyConnection \
+                                    --dh-group DHGroup14 --ike-encryption AES256 --ike-integrity SHA384 --ipsec-encryption DES3 \
+                                    --ipsec-integrity GCMAES256 --pfs-group PFS2048 --sa-lifetime 600 --sa-max-size 1024
   parameters:
   - isRequired: true
     name: --connection-name
@@ -28,12 +35,12 @@ items:
     description: ''
   - isRequired: true
     name: --ike-encryption
-    parameterValueGroup: AES128, AES192, AES256, DES, DES3
+    parameterValueGroup: AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES256
     summary: Required. The IKE encryption algorithm (IKE phase 2).
     description: ''
   - isRequired: true
     name: --ike-integrity
-    parameterValueGroup: MD5, SHA1, SHA256, SHA384
+    parameterValueGroup: GCMAES128, GCMAES256, MD5, SHA1, SHA256, SHA384
     summary: Required. The IKE integrity algorithm (IKE phase 2).
     description: ''
   - isRequired: true
@@ -48,8 +55,8 @@ items:
     description: ''
   - isRequired: true
     name: --pfs-group
-    parameterValueGroup: ECP256, ECP384, None, PFS1, PFS2, PFS2048, PFS24
-    summary: Required. The DH Groups used in IKE Phase 2 for new child SA.
+    parameterValueGroup: ECP256, ECP384, None, PFS1, PFS14, PFS2, PFS2048, PFS24, PFSMM
+    summary: Required. The Pfs Groups used in IKE Phase 2 for new child SA.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -74,10 +81,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vpn_connection_ipsec_policy_clear
   name: az network vpn-connection ipsec-policy clear
-  summary: Delete all IPSec policies on a VPN connection.
+  summary: Delete all IPsec policies on a VPN connection.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Remove all previously specified IPsec policies from a connection.
+    syntax:
+      content: az network vpn-connection ipsec-policy clear -g MyResourceGroup --connection-name MyConnection
   parameters:
   - isRequired: true
     name: --connection-name
@@ -102,6 +113,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List the IPsec policies set on a connection.
+    syntax:
+      content: az network vpn-connection ipsec-policy list -g MyResourceGroup --connection-name MyConnection
   parameters:
   - isRequired: true
     name: --connection-name
@@ -123,7 +138,7 @@ commands:
   summary: Add a VPN connection IPSec policy.
 - uid: az_network_vpn_connection_ipsec_policy_clear
   name: az network vpn-connection ipsec-policy clear
-  summary: Delete all IPSec policies on a VPN connection.
+  summary: Delete all IPsec policies on a VPN connection.
 - uid: az_network_vpn_connection_ipsec_policy_list
   name: az network vpn-connection ipsec-policy list
   summary: List IPSec policies associated with a VPN connection.
@@ -143,6 +158,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

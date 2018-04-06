@@ -3,7 +3,7 @@ items:
 - uid: az_network_vnet_gateway
   name: az network vnet-gateway
   summary: Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity.
-  description: ''
+  description: To learn more about Azure Virtual Network Gateways, visit <a href="https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli">https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli</a>.
   langs:
   - azurecli
   children:
@@ -24,9 +24,17 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Create a basic virtual network gateway and associate with a public IP address.
+  - summary: Create a basic virtual network gateway for site-to-site connectivity.
     syntax:
-      content: az network vnet-gateway create -g MyResourceGroup --vnet MyVnet -n MyVnetGateway --public-ip-address MyIp
+      content: >-
+        az network vnet-gateway create -g MyResourceGroup -n MyVnetGateway --public-ip-address MyGatewayIp \
+                                    --vnet MyVnet --gateway-type Vpn --sku VpnGw1 --vpn-type RouteBased --no-wait
+  - summary: Create a basic virtual network gateway that provides point-to-site connectivity with a RADIUS secret that matches what is configured on a RADIUS server.
+    syntax:
+      content: >-
+        az network vnet-gateway create -g MyResourceGroup -n MyVnetGateway --public-ip-address MyGatewayIp \
+                                    --vnet MyVnet --gateway-type Vpn --sku VpnGw1 --vpn-type RouteBased --address-prefixes 40.1.0.0/24 \
+                                    --client-protocol IkeV2 SSTP --radius-secret 111_aaa --radius-server 30.1.1.15
   parameters:
   - isRequired: true
     name: --name -n
@@ -99,9 +107,20 @@ items:
 - uid: az_network_vnet_gateway_delete
   name: az network vnet-gateway delete
   summary: Delete a virtual network gateway.
-  description: ''
+  description: >-
+    In order to delete a Virtual Network Gateway, you must first delete ALL Connection objects in Azure that are
+
+                                 connected to the Gateway. After deleting the Gateway, proceed to delete other resources now not in use.
+
+                                 For more information, follow the order of instructions on this page:
+
+                                 <a href="https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-delete-vnet-gateway-portal">https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-delete-vnet-gateway-portal</a>.
   langs:
   - azurecli
+  examples:
+  - summary: Delete a virtual network gateway.
+    syntax:
+      content: az network vnet-gateway delete -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
     name: --name -n
@@ -126,6 +145,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List virtual network gateways in a resource group.
+    syntax:
+      content: az network vnet-gateway list -g MyResourceGroup
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -139,10 +162,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vnet_gateway_list_advertised_routes
   name: az network vnet-gateway list-advertised-routes
-  summary: This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+  summary: List the routes of a virtual network gateway advertised to the specified peer.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List the routes of a virtual network gateway advertised to the specified peer.
+    syntax:
+      content: az network vnet-gateway list-advertised-routes -g MyResourceGroup -n MyVnetGateway --peer 23.10.10.9
   parameters:
   - isRequired: true
     name: --name -n
@@ -164,10 +191,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vnet_gateway_list_bgp_peer_status
   name: az network vnet-gateway list-bgp-peer-status
-  summary: The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+  summary: Retrieve the status of BGP peers.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Retrieve the status of a BGP peer.
+    syntax:
+      content: az network vnet-gateway list-bgp-peer-status -g MyResourceGroup -n MyVnetGateway --peer 23.10.10.9
   parameters:
   - isRequired: true
     name: --name -n
@@ -192,6 +223,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Retrieve a list of learned routes.
+    syntax:
+      content: az network vnet-gateway list-learned-routes -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
     name: --name -n
@@ -213,6 +248,13 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Reset a virtual network gateway.
+    syntax:
+      content: az network vnet-gateway reset -g MyResourceGroup -n MyVnetGateway
+  - summary: Reset a virtual network gateway with Active-Active feature enabled.
+    syntax:
+      content: az network vnet-gateway reset -g MyResourceGroup -n MyVnetGateway --gateway-vip MyGatewayIP
   parameters:
   - isRequired: true
     name: --name -n
@@ -233,10 +275,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vnet_gateway_show
   name: az network vnet-gateway show
-  summary: Get the details for a virtual network gateway.
+  summary: Get the details of a virtual network gateway.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Get the details of a virtual network gateway.
+    syntax:
+      content: az network vnet-gateway show -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
     name: --name -n
@@ -258,6 +304,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Change the SKU of a virtual network gateway.
+    syntax:
+      content: az network vnet-gateway update -g MyResourceGroup -n MyVnetGateway --sku VpnGw2
   parameters:
   - isRequired: true
     name: --name -n
@@ -338,6 +388,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Pause CLI until the virtual network gateway is created.
+    syntax:
+      content: az network vnet-gateway wait -g MyResourceGroup -n MyVnetGateway --created
   parameters:
   - isRequired: true
     name: --name -n
@@ -388,10 +442,10 @@ commands:
   summary: List virtual network gateways.
 - uid: az_network_vnet_gateway_list_advertised_routes
   name: az network vnet-gateway list-advertised-routes
-  summary: This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
+  summary: List the routes of a virtual network gateway advertised to the specified peer.
 - uid: az_network_vnet_gateway_list_bgp_peer_status
   name: az network vnet-gateway list-bgp-peer-status
-  summary: The GetBgpPeerStatus operation retrieves the status of all BGP peers.
+  summary: Retrieve the status of BGP peers.
 - uid: az_network_vnet_gateway_list_learned_routes
   name: az network vnet-gateway list-learned-routes
   summary: This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
@@ -409,7 +463,7 @@ commands:
   summary: Delete a revoked certificate.
 - uid: az_network_vnet_gateway_root_cert
   name: az network vnet-gateway root-cert
-  summary: Manage root certificates for a virtual network gateway.
+  summary: Manage root certificates of a virtual network gateway.
 - uid: az_network_vnet_gateway_root_cert_create
   name: az network vnet-gateway root-cert create
   summary: Upload a root certificate.
@@ -418,19 +472,19 @@ commands:
   summary: Delete a root certificate.
 - uid: az_network_vnet_gateway_show
   name: az network vnet-gateway show
-  summary: Get the details for a virtual network gateway.
+  summary: Get the details of a virtual network gateway.
 - uid: az_network_vnet_gateway_update
   name: az network vnet-gateway update
   summary: Update a virtual network gateway.
 - uid: az_network_vnet_gateway_vpn_client
   name: az network vnet-gateway vpn-client
-  summary: Download a configured client with which to connect to a VPN.
+  summary: Download a VPN client configuration required to connect to Azure via point-to-site.
 - uid: az_network_vnet_gateway_vpn_client_generate
   name: az network vnet-gateway vpn-client generate
-  summary: Generates a binary client file that can be used to connect to a VPN.
+  summary: Generate VPN client configuration.
 - uid: az_network_vnet_gateway_vpn_client_show_url
   name: az network vnet-gateway vpn-client show-url
-  summary: Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group.
+  summary: Retrieve a pre-generated VPN client configuration.
 - uid: az_network_vnet_gateway_wait
   name: az network vnet-gateway wait
   summary: Place the CLI in a waiting state until a condition of the virtual network gateway is met.
@@ -450,6 +504,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

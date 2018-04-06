@@ -10,17 +10,25 @@ items:
   - az_batchai_job_create
   - az_batchai_job_delete
   - az_batchai_job_list
-  - az_batchai_job_list_files
   - az_batchai_job_list_nodes
   - az_batchai_job_show
-  - az_batchai_job_stream_file
   - az_batchai_job_terminate
+  - az_batchai_job_wait
 - uid: az_batchai_job_create
   name: az batchai job create
   summary: Create a job.
-  description: ''
+  description: Please refer to <a href="https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md">https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md</a> for the documentation.
   langs:
   - azurecli
+  examples:
+  - summary: Create a job using a configuration file and submit it for running on a cluster in the same resource group.
+    syntax:
+      content: az batchai job create -n MyJob -r MyCluster -g MyResourceGroup -c job.json
+  - summary: Create a job using a configuration file and submit it for running on a cluster in a different resource group.
+    syntax:
+      content: >-
+        az batchai job create -n MyJob -g MyJobResourceGroup -c job.json \
+                                    -r MyCluster --cluster-resource-group MyClusterResourceGroup
   parameters:
   - isRequired: true
     name: --config -c
@@ -41,10 +49,37 @@ items:
     summary: Specifies a resource group for the cluster given with --cluster-name parameter. If omitted, --resource-group value will be used.
     description: ''
   - name: --location -l
-    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    summary: Location in which to create the job. If default location is not configured, will default to the resource group's location.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --afs-mount-path
+    defaultValue: afs
+    summary: Relative mount path for Azure File Share. The File Share will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    description: ''
+  - name: --afs-name
+    summary: Name of the Azure File Share to mount during the job execution. The File Share will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure File share, configure them in a configuration file and use --config option.
+    description: ''
+  - name: --bfs-mount-path
+    defaultValue: bfs
+    summary: Relative mount path for Azure Storage Blob Container. The container will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    description: ''
+  - name: --bfs-name
+    summary: Name of Azure Storage Blob Container to mount during the job execution. The container will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure Storage container, configure them in a configuration file and use --config option.
+    description: ''
+  - name: --nfs-mount-path
+    defaultValue: nfs
+    summary: Relative mount path for NFS. The NFS will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    description: ''
+  - name: --nfs-name
+    summary: Name of a file server to mount during the job execution. The NFS will be mounted only on the nodes which are executing the job. If you need to mount more than one file server, configure them in a configuration file and use --config option.
+    description: ''
+  - name: --nfs-resource-group
+    summary: Resource group in which file server is created. Can be omitted if the file server and the job belong to the same resource group.
+    description: ''
+  - name: --storage-account-key
+    summary: 'Storage account key. Must be used in conjunction with --storage-account-name. Environment variable: AZURE_BATCHAI_STORAGE_KEY.'
+    description: ''
+  - name: --storage-account-name
+    summary: 'Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted. Related environment variable: AZURE_BATCHAI_STORAGE_ACCOUNT. Must be used in conjunction with --storage-account-key. If the key is not provided, the command will try to query the storage account key using the authenticated Azure account.'
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -58,6 +93,16 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a job. The job will be terminated if it's currently running.
+    syntax:
+      content: az batchai job delete -n MyJob -g MyResourceGroup
+  - summary: Delete a job without asking for confirmation (for non-interactive scenarios).
+    syntax:
+      content: az batchai job delete -n MyJob -g MyResourceGroup -y
+  - summary: Request job deletion without waiting for job to be deleted.
+    syntax:
+      content: az batchai job delete -n MyJob -g MyResourceGroup --no-wait
   parameters:
   - isRequired: true
     name: --name -n
@@ -85,33 +130,15 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all jobs under current subscription.
+    syntax:
+      content: az batchai job list -o table
+  - summary: List all jobs under current subscription in the given resource group.
+    syntax:
+      content: az batchai job list -g MyResourceGroup -o table
   parameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_batchai_job_list_files
-  name: az batchai job list-files
-  summary: List job's output files in a directory with given id.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the job.
-    description: ''
-  - isRequired: true
-    name: --output-directory-id -d
-    summary: The Id of the Job output directory (as specified by "id" element in outputDirectories collection in job create parameters). Use "stdouterr" to access job stdout and stderr files.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
@@ -123,7 +150,9 @@ items:
 - uid: az_batchai_job_list_nodes
   name: az batchai job list-nodes
   summary: List remote login information for nodes on which the job was run.
-  description: ''
+  description: >-
+    List remote login information about currently existing (not deallocated) nodes on which the job was executed. The information includes node id, public ip and ssh port number. All cluster nodes are sharing the same public IP. You can ssh to a particular node using the provided public IP and the port number.
+                                E.g. ssh <admin user name>@<public ip> -p <node's port number>.
   langs:
   - azurecli
   parameters:
@@ -147,39 +176,17 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Show full information about a job.
+    syntax:
+      content: az batchai job show -n MyJob -g MyResourceGroup
+  - summary: Show brief information about a job.
+    syntax:
+      content: az batchai job show -n MyJob -g MyResourceGroup -o table
   parameters:
   - isRequired: true
     name: --name -n
     summary: Name of the job.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_batchai_job_stream_file
-  name: az batchai job stream-file
-  summary: Output the current content of the file and outputs appended data as the file grows (similar to 'tail -f').
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --job-name -j
-    summary: Name of the job.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the file to stream.
-    description: ''
-  - isRequired: true
-    name: --output-directory-id -d
-    summary: The Id of the Job output directory (as specified by "id" element in outputDirectories collection in job create parameters). Use "stdouterr" to access job stdout and stderr files.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -197,6 +204,16 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Terminate a job and wait for the job to be terminated.
+    syntax:
+      content: az batchai job terminate -n MyJob -g MyResourceGroup
+  - summary: Terminate a job without asking for confirmation (for non-interactive scenarios).
+    syntax:
+      content: az batchai job terminate -n MyJob -g MyResourceGroup -y
+  - summary: Request job termination without waiting for the job to be terminated.
+    syntax:
+      content: az batchai job terminate -n MyJob -g MyResourceGroup --no-wait
   parameters:
   - isRequired: true
     name: --name -n
@@ -208,6 +225,34 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batchai_job_wait
+  name: az batchai job wait
+  summary: Waits for specified job completion and setups the exit code to the code of the job.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the job.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --interval
+    defaultValue: "15"
+    summary: Polling interval in sec.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -222,24 +267,30 @@ commands:
 - uid: az_batchai_job_delete
   name: az batchai job delete
   summary: Delete a job.
+- uid: az_batchai_job_file
+  name: az batchai job file
+  summary: Commands to list and stream files in jobs' output directories.
+- uid: az_batchai_job_file_list
+  name: az batchai job file list
+  summary: List job's output files in a directory with given id.
+- uid: az_batchai_job_file_stream
+  name: az batchai job file stream
+  summary: Output the current content of the file and outputs appended data as the file grows (similar to 'tail -f').
 - uid: az_batchai_job_list
   name: az batchai job list
   summary: List jobs.
-- uid: az_batchai_job_list_files
-  name: az batchai job list-files
-  summary: List job's output files in a directory with given id.
 - uid: az_batchai_job_list_nodes
   name: az batchai job list-nodes
   summary: List remote login information for nodes on which the job was run.
 - uid: az_batchai_job_show
   name: az batchai job show
   summary: Show information about a job.
-- uid: az_batchai_job_stream_file
-  name: az batchai job stream-file
-  summary: Output the current content of the file and outputs appended data as the file grows (similar to 'tail -f').
 - uid: az_batchai_job_terminate
   name: az batchai job terminate
   summary: Terminate a job.
+- uid: az_batchai_job_wait
+  name: az batchai job wait
+  summary: Waits for specified job completion and setups the exit code to the code of the job.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -256,6 +307,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8346147d0da04063bd9000d1b370b2d65204cda8/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-updated_at: 11/13/2017 7:42:14 PM
-ms.date: 11/13/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/1b50977ec2d2f9e91eb77b3cf160a7cfe1c09c2d/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
+updated_at: 3/29/2018 7:52:42 PM
+ms.date: 3/29/2018

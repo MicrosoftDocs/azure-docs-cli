@@ -27,7 +27,10 @@ items:
       content: az ad sp create-for-rbac --skip-assignment
   - summary: Create with customized contributor assignments.
     syntax:
-      content: az ad sp create-for-rbac -n "MyApp" --role contributor     --scopes /subscriptions/{SubID}/resourceGroups/{ResourceGroup1}     /subscriptions/{SubID}/resourceGroups/{ResourceGroup2}
+      content: >-
+        az ad sp create-for-rbac -n "MyApp" --role contributor \
+                                    --scopes /subscriptions/{SubID}/resourceGroups/{ResourceGroup1} \
+                                    /subscriptions/{SubID}/resourceGroups/{ResourceGroup2}
   - summary: Create using a self-signed certificte.
     syntax:
       content: az ad sp create-for-rbac --create-cert
@@ -38,9 +41,6 @@ items:
     syntax:
       content: az ad sp create-for-rbac --keyvault MyVault --cert CertName
   parameters:
-  - name: --cert
-    summary: Certificate to use for credentials.
-    description: When used with `--keyvault,` indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{file}` to load from a file. Do not include private key info.
   - name: --name -n
     summary: Name or app URI to associate the RBAC with. If not present, a name will be generated.
     description: ''
@@ -59,6 +59,9 @@ items:
     parameterValueGroup: false, true
     summary: Do not create default assignment.
     description: ''
+  - name: --cert
+    summary: Certificate to use for credentials.
+    description: When used with `--keyvault,` indicates the name of the cert to use or create. Otherwise, supply a PEM or DER formatted public certificate string. Use `@{file}` to load from a file. Do not include private key info.
   - name: --create-cert
     summary: Create a self-signed certificate to use for the credential.
     description: Use with `--keyvault` to create the certificate in Key Vault. Otherwise, a certificate will be created locally.

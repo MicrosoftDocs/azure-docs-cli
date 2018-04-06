@@ -26,7 +26,10 @@ items:
       content: az vm extension image list --query "[].name" -o tsv | sort -u | grep Docker
   - summary: List extension names where the publisher name starts with "Microsoft.Azure.App".
     syntax:
-      content: az vm extension image list --query     "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher"     -o tsv | sort -u | xargs -I{} az vm extension image list-names --publisher {} -l westus
+      content: >-
+        az vm extension image list --query \
+                                    "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher" \
+                                    -o tsv | sort -u | xargs -I{} az vm extension image list-names --publisher {} -l westus
   parameters:
   - name: --latest
     summary: Show the latest version only.
@@ -58,10 +61,14 @@ items:
   examples:
   - summary: Find Docker extensions by publisher and location.
     syntax:
-      content: az vm extension image list-names --publisher Microsoft.Azure.Extensions     -l westus --query "[?starts_with(name, 'Docker')]"
+      content: >-
+        az vm extension image list-names --publisher Microsoft.Azure.Extensions \
+                                    -l westus --query "[?starts_with(name, 'Docker')]"
   - summary: Find CustomScript extensions by publisher and location.
     syntax:
-      content: az vm extension image list-names --publisher Microsoft.Azure.Extensions     -l westus --query "[?starts_with(name, 'Custom')]"
+      content: >-
+        az vm extension image list-names --publisher Microsoft.Azure.Extensions \
+                                    -l westus --query "[?starts_with(name, 'Custom')]"
   parameters:
   - isRequired: true
     name: --location -l
@@ -86,7 +93,9 @@ items:
   examples:
   - summary: Find the available versions for the Docker extension.
     syntax:
-      content: az vm extension image list-versions --publisher Microsoft.Azure.Extensions     -l westus -n DockerExtension -otable
+      content: >-
+        az vm extension image list-versions --publisher Microsoft.Azure.Extensions \
+                                    -l westus -n DockerExtension -otable
   parameters:
   - isRequired: true
     name: --location -l
@@ -124,10 +133,12 @@ items:
   examples:
   - summary: Show the CustomScript extension version 2.0.2.
     syntax:
-      content: az vm extension image show -l westus -n CustomScript   --publisher Microsoft.Azure.Extensions --version 2.0.2
+      content: >-
+        az vm extension image show -l westus -n CustomScript \
+                                  --publisher Microsoft.Azure.Extensions --version 2.0.2
   - summary: Show the latest version of the Docker extension.
     syntax:
-      content: "publisher=Microsoft.Azure.Extensions\n                        extension=DockerExtension\n                        location=westus\n                        \n                        latest=$(az vm extension image list-versions   --publisher {publisher} -l {location} -n {extension}   --query \"[].name\" -o tsv | sort | tail -n 1)\n                        \n                        az vm extension image show -l {location}   --publisher {publisher} -n {extension} --version {latest}"
+      content: "publisher=Microsoft.Azure.Extensions\n                        extension=DockerExtension\n                        location=westus\n                        \n                        latest=$(az vm extension image list-versions \\\n                          --publisher {publisher} -l {location} -n {extension} \\\n                          --query \"[].name\" -o tsv | sort | tail -n 1)\n                        \n                        az vm extension image show -l {location} \\\n                          --publisher {publisher} -n {extension} --version {latest}"
   parameters:
   - isRequired: true
     name: --location -l
@@ -180,6 +191,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8f93ba0e7337ea3afebe25a827f2be04828695d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 3/12/2018 7:13:12 PM
-ms.date: 3/12/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/48a0c83d7404436e75ff65210a2e66f8444e027d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 4/5/2018 3:48:36 PM
+ms.date: 4/5/2018

@@ -3,7 +3,7 @@ items:
 - uid: az_network_watcher_packet_capture
   name: az network watcher packet-capture
   summary: Manage packet capture sessions on VMs.
-  description: These commands require that both Azure Network Watcher is enabled for the VM's region and that AzureNetworkWatcherExtension is enabled on the VM. For more information on packet-capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  description: These commands require that both Azure Network Watcher is enabled for the VMs region and that AzureNetworkWatcherExtension is enabled on the VM. For more information visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
   langs:
   - azurecli
   children:
@@ -16,16 +16,39 @@ items:
 - uid: az_network_watcher_packet_capture_create
   name: az network watcher packet-capture create
   summary: Create and start a packet capture session.
-  description: This command requires that both Azure Network Watcher is enabled for the VM's region and that AzureNetworkWatcherExtension is enabled on the VM. For more information on packet-capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create a packet capture session on a VM
+  - summary: Create a packet capture session on a VM.
     syntax:
       content: az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVm --storage-account MyStorageAccount
-  - summary: Create a packet capture session on a VM with optional filters for protocols, local IP address and remote IP address ranges and ports
+  - summary: Create a packet capture session on a VM with optional filters for protocols, local IP address and remote IP address ranges and ports.
     syntax:
-      content: az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVm      --storage-account MyStorageAccount --filters '[         {             "protocol":"TCP",             "remoteIPAddress":"1.1.1.1-255.255.255",             "localIPAddress":"10.0.0.3",             "remotePort":"20"         },         {             "protocol":"TCP",             "remoteIPAddress":"1.1.1.1-255.255.255",             "localIPAddress":"10.0.0.3",             "remotePort":"80"         },         {             "protocol":"TCP",             "remoteIPAddress":"1.1.1.1-255.255.255",             "localIPAddress":"10.0.0.3",             "remotePort":"443"         },         {             "protocol":"UDP"         }]'
+      content: >-
+        az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVm \
+                                    --storage-account MyStorageAccount --filters '[ \
+                                        { \
+                                            "protocol":"TCP", \
+                                            "remoteIPAddress":"1.1.1.1-255.255.255", \
+                                            "localIPAddress":"10.0.0.3", \
+                                            "remotePort":"20" \
+                                        }, \
+                                        { \
+                                            "protocol":"TCP", \
+                                            "remoteIPAddress":"1.1.1.1-255.255.255", \
+                                            "localIPAddress":"10.0.0.3", \
+                                            "remotePort":"80" \
+                                        }, \
+                                        { \
+                                            "protocol":"TCP", \
+                                            "remoteIPAddress":"1.1.1.1-255.255.255", \
+                                            "localIPAddress":"10.0.0.3", \
+                                            "remotePort":"443" \
+                                        }, \
+                                        { \
+                                            "protocol":"UDP" \
+                                        }]'
   parameters:
   - isRequired: true
     name: --name -n
@@ -68,14 +91,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_packet_capture_delete
   name: az network watcher packet-capture delete
-  summary: Deletes the specified packet capture session.
-  description: This command requires that both Azure Network Watcher is enabled for the VM's region and that AzureNetworkWatcherExtension is enabled on the VM. For more information about configuring packet capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  summary: Delete a packet capture session.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a packet capture session. Note that this only deletes the session and not the capture file.
+  - summary: Delete a packet capture session. This only deletes the session and not the capture file.
     syntax:
-      content: az network watcher packet-capture delete -n packetCaptureName --location westcentralus
+      content: az network watcher packet-capture delete -n packetCaptureName -l westcentralus
   parameters:
   - isRequired: true
     name: --location -l
@@ -93,14 +116,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_packet_capture_list
   name: az network watcher packet-capture list
-  summary: Lists all packet capture sessions within the specified resource group.
-  description: This command requires that both Azure Network Watcher is enabled for the VM's region and that AzureNetworkWatcherExtension is enabled on the VM. For more information about configuring packet capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  summary: List all packet capture sessions within a resource group.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: List all packet capture sessions within a resource group.
+  - summary: List all packet capture sessions within a region.
     syntax:
-      content: az network watcher packet-capture list --location westus
+      content: az network watcher packet-capture list -l westus
   parameters:
   - isRequired: true
     name: --location -l
@@ -114,14 +137,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_packet_capture_show
   name: az network watcher packet-capture show
-  summary: Gets a packet capture session by name.
-  description: For more information about configuring packet capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  summary: Show details of a packet capture session.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Show a packet capture session.
     syntax:
-      content: az network watcher packet-capture show --location myresourcegroup -n mypacketcapture
+      content: az network watcher packet-capture show -l westus -n MyPacketCapture
   parameters:
   - isRequired: true
     name: --location -l
@@ -139,14 +162,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_packet_capture_show_status
   name: az network watcher packet-capture show-status
-  summary: Query the status of a running packet capture session.
-  description: For more information about configuring packet capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  summary: Show the status of a packet capture session.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Show the status of a packet capture session.
     syntax:
-      content: az network watcher packet-capture show-status --location myresourcegroup -n mypacketcapture
+      content: az network watcher packet-capture show-status -l westus -n MyPacketCapture
   parameters:
   - isRequired: true
     name: --location -l
@@ -164,14 +187,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_packet_capture_stop
   name: az network watcher packet-capture stop
-  summary: Stops a specified packet capture session.
-  description: For more information about configuring packet capture visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-packet-capture-manage-cli</a>.
+  summary: Stop a running packet capture session.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Stop a running packet capture session.
     syntax:
-      content: az network watcher packet-capture stop --location myresourcegroup -n mypacketcapture
+      content: az network watcher packet-capture stop -l westus -n MyPacketCapture
   parameters:
   - isRequired: true
     name: --location -l
@@ -193,19 +216,19 @@ commands:
   summary: Create and start a packet capture session.
 - uid: az_network_watcher_packet_capture_delete
   name: az network watcher packet-capture delete
-  summary: Deletes the specified packet capture session.
+  summary: Delete a packet capture session.
 - uid: az_network_watcher_packet_capture_list
   name: az network watcher packet-capture list
-  summary: Lists all packet capture sessions within the specified resource group.
+  summary: List all packet capture sessions within a resource group.
 - uid: az_network_watcher_packet_capture_show
   name: az network watcher packet-capture show
-  summary: Gets a packet capture session by name.
+  summary: Show details of a packet capture session.
 - uid: az_network_watcher_packet_capture_show_status
   name: az network watcher packet-capture show-status
-  summary: Query the status of a running packet capture session.
+  summary: Show the status of a packet capture session.
 - uid: az_network_watcher_packet_capture_stop
   name: az network watcher packet-capture stop
-  summary: Stops a specified packet capture session.
+  summary: Stop a running packet capture session.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -222,6 +245,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

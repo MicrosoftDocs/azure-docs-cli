@@ -23,7 +23,7 @@ items:
   examples:
   - summary: Check whether 10.0.0.4 is available within MyVnet.
     syntax:
-      content: az network vnet check-ip-address -n MyVnet -g MyResourceGroup --ip-address 10.0.0.4
+      content: az network vnet check-ip-address -g MyResourceGroup -n MyVnet --ip-address 10.0.0.4
   parameters:
   - isRequired: true
     name: --name -n
@@ -45,7 +45,7 @@ items:
 - uid: az_network_vnet_create
   name: az network vnet create
   summary: Create a virtual network.
-  description: You may also create a subnet at the same time by specifying a subnet name and (optionally) an address prefix. To learn about how to create a virtual network visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#create-vnet">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#create-vnet</a>.
+  description: You may also create a subnet at the same time by specifying a subnet name and (optionally) an address prefix. To learn about how to create a virtual network visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#create-a-virtual-network">https://docs.microsoft.com/en-us/azure/virtual-network/manage-virtual-network#create-a-virtual-network</a>.
   langs:
   - azurecli
   examples:
@@ -54,7 +54,9 @@ items:
       content: az network vnet create -g MyResourceGroup -n MyVnet
   - summary: Create a virtual network with a specific address prefix and one subnet.
     syntax:
-      content: az network vnet create -g MyResourceGroup -n MyVnet --address-prefix 10.0.0.0/16 --subnet-name MySubnet --subnet-prefix 10.0.0.0/24
+      content: >-
+        az network vnet create -g MyResourceGroup -n MyVnet --address-prefix 10.0.0.0/16 \
+                                    --subnet-name MySubnet --subnet-prefix 10.0.0.0/24
   parameters:
   - isRequired: true
     name: --name -n
@@ -70,7 +72,10 @@ items:
     description: ''
   - name: --ddos-protection
     parameterValueGroup: false, true
-    summary: Enable DDoS protection for protected resources in the VNet.
+    summary: Control whether DDoS protection is enabled.
+    description: ''
+  - name: --ddos-protection-plan
+    summary: Name or ID of a DDoS protection plan to associate with the VNet.
     description: ''
   - name: --dns-servers
     summary: Space-separated list of DNS server IP addresses.
@@ -100,13 +105,13 @@ items:
 - uid: az_network_vnet_delete
   name: az network vnet delete
   summary: Delete a virtual network.
-  description: 'To learn more about deleting a virtual network, visit: <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#delete-vnet">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#delete-vnet</a>.'
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a virtual network
+  - summary: Delete a virtual network.
     syntax:
-      content: az network vnet delete -n myVNet -g MyResourceGroup
+      content: az network vnet delete -g MyResourceGroup -n myVNet
   parameters:
   - isRequired: true
     name: --name -n
@@ -125,11 +130,17 @@ items:
 - uid: az_network_vnet_list
   name: az network vnet list
   summary: List virtual networks.
-  description: To learn more about virtual networks, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#a-name--view-vnetaview-virtual-networks-and-settings">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#a-name--view-vnetaview-virtual-networks-and-settings</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: List virtual networks which specify a certain address prefix.
+  - summary: List all virtual networks in a subscription.
+    syntax:
+      content: az network vnet list
+  - summary: List all virtual networks in a resource group.
+    syntax:
+      content: az network vnet list -g MyResourceGroup
+  - summary: List virtual networks in a subscription which specify a certain address prefix.
     syntax:
       content: az network vnet list --query "[?contains(addressSpace.addressPrefixes, '10.0.0.0/16')]"
   parameters:
@@ -144,7 +155,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_vnet_list_endpoint_services
   name: az network vnet list-endpoint-services
-  summary: List which services support VNET service tunneling for a given region.
+  summary: List which services support VNET service tunneling in a given region.
   description: To learn more about service endpoints visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-configure#azure-cli">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-configure#azure-cli</a>.
   langs:
   - azurecli
@@ -166,13 +177,13 @@ items:
 - uid: az_network_vnet_show
   name: az network vnet show
   summary: Get the details of a virtual network.
-  description: To learn more about virtual networks and settings, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#a-name--view-vnetaview-virtual-networks-and-settings">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network#a-name--view-vnetaview-virtual-networks-and-settings</a>.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Get details for MyVNet.
     syntax:
-      content: az network vnet show -n MyVNet -g MyResourceGroup
+      content: az network vnet show -g MyResourceGroup -n MyVNet
   parameters:
   - isRequired: true
     name: --name -n
@@ -194,13 +205,13 @@ items:
 - uid: az_network_vnet_update
   name: az network vnet update
   summary: Update a virtual network.
-  description: To learn more about managing virtual networks, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-network</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Update MyVNet's DNS server
+  - summary: Update a virtual network with the IP address of a DNS server.
     syntax:
-      content: az network vnet update -n MyVNet -g MyResourceGroup --dns-servers 10.2.0.8
+      content: az network vnet update -g MyResourceGroup -n MyVNet --dns-servers 10.2.0.8
   parameters:
   - isRequired: true
     name: --name -n
@@ -215,7 +226,10 @@ items:
     description: ''
   - name: --ddos-protection
     parameterValueGroup: false, true
-    summary: Enable DDoS protection for protected resources in the VNet.
+    summary: Control whether DDoS protection is enabled.
+    description: ''
+  - name: --ddos-protection-plan
+    summary: Name or ID of a DDoS protection plan to associate with the VNet.
     description: ''
   - name: --dns-servers
     summary: Space-separated list of DNS server IP addresses.
@@ -254,13 +268,13 @@ commands:
   summary: List virtual networks.
 - uid: az_network_vnet_list_endpoint_services
   name: az network vnet list-endpoint-services
-  summary: List which services support VNET service tunneling for a given region.
+  summary: List which services support VNET service tunneling in a given region.
 - uid: az_network_vnet_peering
   name: az network vnet peering
   summary: Manage peering connections between Azure Virtual Networks.
 - uid: az_network_vnet_peering_create
   name: az network vnet peering create
-  summary: Create a peering.
+  summary: Create a virtual network peering connection.
 - uid: az_network_vnet_peering_delete
   name: az network vnet peering delete
   summary: Delete a peering.
@@ -287,7 +301,7 @@ commands:
   summary: Delete a subnet.
 - uid: az_network_vnet_subnet_list
   name: az network vnet subnet list
-  summary: List subnets.
+  summary: List the subnets in a virtual network.
 - uid: az_network_vnet_subnet_show
   name: az network vnet subnet show
   summary: Show details of a subnet.
@@ -313,6 +327,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

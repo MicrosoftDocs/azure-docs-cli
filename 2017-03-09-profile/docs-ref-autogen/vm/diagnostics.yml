@@ -18,7 +18,10 @@ items:
   examples:
   - summary: Get the default diagnostics for a Linux VM and override the storage account name and the VM resource ID.
     syntax:
-      content: az vm diagnostics get-default-config     | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#MyStorageAccount#g"     | sed "s#__VM_OR_VMSS_RESOURCE_ID__#MyVmResourceId#g"
+      content: >-
+        az vm diagnostics get-default-config \
+                                    | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#MyStorageAccount#g" \
+                                    | sed "s#__VM_OR_VMSS_RESOURCE_ID__#MyVmResourceId#g"
   - summary: Get the default diagnostics for a Windows VM.
     syntax:
       content: az vm diagnostics get-default-config --is-windows-os
@@ -41,7 +44,7 @@ items:
   examples:
   - summary: Set up default diagnostics on a Linux VM for Azure Portal VM metrics graphs and syslog collection.
     syntax:
-      content: "# Set the following 3 parameters first.\n                        my_resource_group=<Resource group name containing your Linux VM and the storage account>\n                        my_linux_vm=<Your Azure Linux VM name>\n                        my_diagnostic_storage_account=<Your Azure storage account for storing VM diagnostic data>\n                        \n                        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query \"id\" -o tsv)\n                        \n                        default_config=$(az vm diagnostics get-default-config     | sed \"s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g\"     | sed \"s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g\")\n                        \n                        storage_sastoken=$(az storage account generate-sas     --account-name $my_diagnostic_storage_account --expiry 9999-12-31T23:59Z     --permissions wlacu --resource-types co --services bt -o tsv)\n                        \n                        protected_settings=\"{'storageAccountName': '{my_diagnostic_storage_account}',     'storageAccountSasToken': '{storage_sastoken}'}\"\n                        \n                        az vm diagnostics set --settings \"{default_config}\"     --protected-settings \"{protected_settings}\"     --resource-group $my_resource_group --vm-name $my_linux_vm"
+      content: "# Set the following 3 parameters first.\n                        my_resource_group=<Resource group name containing your Linux VM and the storage account>\n                        my_linux_vm=<Your Azure Linux VM name>\n                        my_diagnostic_storage_account=<Your Azure storage account for storing VM diagnostic data>\n                        \n                        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query \"id\" -o tsv)\n                        \n                        default_config=$(az vm diagnostics get-default-config \\\n                            | sed \"s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g\" \\\n                            | sed \"s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g\")\n                        \n                        storage_sastoken=$(az storage account generate-sas \\\n                            --account-name $my_diagnostic_storage_account --expiry 9999-12-31T23:59Z \\\n                            --permissions wlacu --resource-types co --services bt -o tsv)\n                        \n                        protected_settings=\"{'storageAccountName': '{my_diagnostic_storage_account}', \\\n                            'storageAccountSasToken': '{storage_sastoken}'}\"\n                        \n                        az vm diagnostics set --settings \"{default_config}\" \\\n                            --protected-settings \"{protected_settings}\" \\\n                            --resource-group $my_resource_group --vm-name $my_linux_vm"
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -93,6 +96,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8f93ba0e7337ea3afebe25a827f2be04828695d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 3/12/2018 7:13:12 PM
-ms.date: 3/12/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/48a0c83d7404436e75ff65210a2e66f8444e027d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 4/5/2018 3:48:36 PM
+ms.date: 4/5/2018
