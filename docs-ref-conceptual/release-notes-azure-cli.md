@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/27/2018
+ms.date: 04/10/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -20,16 +20,16 @@ Version 2.0.31
 
 ### ACR
 
-* Improve error handling of wincred fallback.
+* Improved error handling of wincred fallback
 
 ### ACS
 
-* aks created spn will be valid for 5 years
+* Changed aks created SPNs to be valid for 5 years
 
 ### Appservice
 
-* (Breaking change): remove `assign-identity` which was tagged `deprecating` 2 releases ago
-* webapp: capture the unhandled exception if the appservice plan doesn't exist
+* [BREAKING CHANGE]: Removed `assign-identity`
+* Fixed uncaught exception for nonexistant webapp plans
 
 ### BatchAI
 
@@ -45,8 +45,8 @@ Version 2.0.31
  - Support for custom images
  - Added pyTorch toolkit support
 
-* Added 'job wait' command which allows to wait for the job completion and reports job exit code
-* Added 'usage show' command to list current Batch AI resources usage and limits for different regions
+* Added `job wait` command which allows to wait for the job completion and reports job exit code
+* Added `usage show` command to list current Batch AI resources usage and limits for different regions
 * National clouds are supported
 * Added job command line arguments to mount filesystems on the job level in addition to config files
 * Added more options to customize clusters - vm priority, subnet, initial nodes count for auto-scale clusters,
@@ -55,92 +55,87 @@ Version 2.0.31
 * Simplified specifying mount filesystem in config files. Now you can omit credentials for Azure File Share and
   Azure Blob Containers - CLI will populate missing credentials using storage account key provided via command line
   parameters or specified via environment variable or will query the key from Azure Storage (if the storage account
-  belongs to the current subscription).
-* Job file stream command now auto-completes when the job is completed (succeeded, failed, terminated or deleted).
-* Improved '-o table' support for show operations.
-* Added --use-auto-storage option for cluster creation. This option make it simpler to manage storage accounts and
-  and mount Azure File Share and Azure Blob Containers to clusters.
-* Added --generate-ssh-keys option into 'cluster create' and 'file-server create'.
-* Added ability to provide node setup task via command line.
-* Breaking change: 'job stream-file' and 'job list-files' commands are grouped under 'job file' group.
-* Breaking change: renamed --admin-user-name to --user-name in 'file-server create' command to be consistent with
-  'cluster create' command.
+  belongs to the current subscription)
+* Job file stream command now auto-completes when the job is completed (succeeded, failed, terminated or deleted)
+* Improved `table` output for `show` operations
+* Added `--use-auto-storage` option for cluster creation. This option make it simpler to manage storage accounts 
+  and mount Azure File Share and Azure Blob Containers to clusters
+* Added `--generate-ssh-keys` option to `cluster create` and `file-server create`
+* Added ability to provide node setup task via command line
+* [BREAKING CHANGE] Moved `job stream-file` and `job list-files` commands under `job file` group
+* [BREAKING CHANGE] Renamed `--admin-user-name` to `--user-name` in `file-server create` command to be consistent with
+  `cluster create` command
 
 ### Billing
 
-* Add enrollment account commands
+* Added enrollment account commands
 
 ### Consumption
 
-* Added commands `marketplace`.
-* BREAKING CHANGE: `reservations summaries` commands renamed to `reservation summary`.
-* BREAKING CHANGE: `reservations details` commands renamed to `reservation detail`.
-* BREAKING CHANGE: removed `--reservation-order-id` and `--reservation-id` short options for `reservation` commands.
-* BREAKING CHANGE: removed `--grain` short options for `reservation summary` commands.
-* BREAKING CHANGE: removed `--include-meter-details` short options for `pricesheet` commands.
+* Added `marketplace` commands
+* [BREAKING CHANGE] Renamed `reservations summaries` to `reservation summary`
+* [BREAKING CHANGE] Renamed `reservations details` to `reservation detail`
+* [BREAKING CHANGE] Removed `--reservation-order-id` and `--reservation-id` short options for `reservation` commands
+* [BREAKING CHANGE] Removed `--grain` short options for `reservation summary` commands
+* [BREAKING CHANGE] Removed `--include-meter-details` short options for `pricesheet` commands
 
 ### Container
 
-* Add Git Repo volume mount parameters '--gitrepo-url' '--gitrepo-dir' '--gitrepo-revision' and '--gitrepo-mount-path'
-* Fixed [#5926](https://github.com/Azure/azure-cli/issues/5926): Fix `az container exec` failing when --container-name specified
+* Added git repo volume mount parameters `--gitrepo-url` `--gitrepo-dir` `--gitrepo-revision` and `--gitrepo-mount-path`
+* Fixed [#5926](https://github.com/Azure/azure-cli/issues/5926): `az container exec` failing when --container-name specified
 
 ### Extension
 
-* Linux distro check message is now debug message instead of warning.
+* Changed distribution check message to be debug-level
 
 ### Interactive
 
-* Stops completions upon unrecognized commands.
-* Add event hooks before and after command subtree is created.
-* Allow completions for --ids parameters.
+* Changed to stop completions upon unrecognized commands
+* Added event hooks before and after command subtree is created
+* Added completion for `--ids` parameters
 
 ### Network
 
-* `application-gateway create`: Fix issue where tags could not be set. [#5936](https://github.com/Azure/azure-cli/issues/5936)
-* `application-gateway http-settings create/update`: Add convenience argument `--auth-certs` to attach authentication certificates. [#4910](https://github.com/Azure/azure-cli/issues/4910)
-* `ddos-protection`: Added new commands to create DDoS protection plans .
-* `vnet create/update`: Added support for `--ddos-protection-plan` to associate a VNet to a DDoS protection plan.
-* `network route-table create/update`: Fix issue with `--disable-bgp-route-propagation` flag.
-* `network lb create/update`: Removed dummy arguments `--public-ip-address-type` and `--subnet-type`.
-* `network dns zone import`: Support for importing of TXT records with RFC 1035 escape sequences.
-* `network dns zone export`: Support for exporting of TXT records with RFC 1035 escape sequences.
-* `network dns record-set txt add-record`: Support for TXT records with RFC 1035 escape sequences.
+* Fixed [#5936](https://github.com/Azure/azure-cli/issues/5936): `application-gateway create` tags could not bet set
+* Added argument `--auth-certs` to attach authentication certificates for `application-gateway http-settings [create|update]`. [#4910](https://github.com/Azure/azure-cli/issues/4910)
+* Added `ddos-protection` commands to create DDoS protection plans 
+* Added support for `--ddos-protection-plan` to `vnet [create|update]` to associate a VNet to a DDoS protection plan
+* Fixed issue with `--disable-bgp-route-propagation` flag in `network route-table [create|update]`
+* Removed dummy arguments `--public-ip-address-type` and `--subnet-type` for `network lb [create|update]`
+* Added support for TXT records with RFC 1035 escape sequences to `network dns zone [import|export]` and `network dns record-set txt add-record`
 
 ### Profile
 
-* account list: handle accounts which come from CLI 1.0/ASM mode
-* (Breaking change): remove `--msi` & `--msi-port` which were tagged `deprecating` 2 releases ago
+* Added support for Azure Classic accounts in `account list`
+* [BREAKING CHANGE] Removed `--msi` & `--msi-port` arguments
 
 ### RDBMS
 
-* Introduce georestore command.
-* Remove storage size restriction from create command.
+* Added `georestore` command
+* Removed storage size restriction from `create` command
 
 ### Resource
 
-* `policy definition create`: Add support for `--metadata`.
-* `policy definition update`: Add support for `--metadata`, `--set`, `--add`, `--remove`.
+* Added support for `--metadata` to `policy definition create`
+* Added support for `--metadata`, `--set`, `--add`, `--remove` to `policy definition update`
 
 ### SQL
 
-* Use new release azure-mgmt-sql 0.8.6 SDK Python package
-* Added az sql elastic-pool op list and az sql elastic-pool op cancel, Support list and cancel azure sql elastic pool operations
+* Added `sql elastic-pool op list` and `sql elastic-pool op cancel`
 
 ### Storage
 
-* Better error message for malformed connection strings.
+* Improved error messages for malformed connection strings
 
 ### VM
 
-* `vmss create`: support to configure platform fault domain count
-* `vmss create`: default to Standard LB for zonal, large or single-placement-group disabled scale-set
-* BREAKING CHANGE: `vm assign-identity`, `vm remove-identity`: Deprecated commands have been removed.
-* BREAKING CHANGE: `vm format-secret`: Deprecated command has been removed.
-* `vm create`: support configure Public-IP sku
-* `vm create`: support configure Public-IP SKU
-* `vm secret format`: Added extra validation. Added `--keyvault` and `--resource-group` to support scenarios
-                      where the command is unable to resolve the vault ID. [#5718](https://github.com/Azure/azure-cli/issues/5718)
-* `vm/vmss create`: emit out a better error if resource group's location has no zone support
+* Added support to configure platform fault domain count to `vmss create`
+* Changed `vmss create` to default to Standard LB for zonal, large or single-placement-group disabled scale-set
+* [BREAKING CHANGE]: Removed `vm assign-identity`, `vm remove-identity and `vm format-secret`
+* Added support for Public-IP SKU to `vm create`
+* Added `--keyvault` and `--resource-group` arguments to `vm secret format` to support scenarios where the command 
+  is unable to resolve the vault ID. [#5718](https://github.com/Azure/azure-cli/issues/5718)
+* Better errors for `[vm|vmss create]` when a resource group's location has no zone support
 
 
 ## March 27, 2018
