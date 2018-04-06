@@ -14,6 +14,135 @@ ms.service: multiple
 
 # Azure CLI 2.0 release notes
 
+## April 10, 2018
+
+Version 2.0.31
+
+### ACR
+
+* Improve error handling of wincred fallback.
+
+### ACS
+
+* aks created spn will be valid for 5 years
+
+### Appservice
+
+* (Breaking change): remove `assign-identity` which was tagged `deprecating` 2 releases ago
+* webapp: capture the unhandled exception if the appservice plan doesn't exist
+
+### BatchAI
+
+* Added support for 2018-03-01 API
+
+ - Job level mounting
+ - Environment variables with secret values
+ - Performance counters settings
+ - Reporting of job specific path segment
+ - Support for subfolders in list files api
+ - Usage and limits reporting
+ - Allow to specify caching type for NFS servers
+ - Support for custom images
+ - Added pyTorch toolkit support
+
+* Added 'job wait' command which allows to wait for the job completion and reports job exit code
+* Added 'usage show' command to list current Batch AI resources usage and limits for different regions
+* National clouds are supported
+* Added job command line arguments to mount filesystems on the job level in addition to config files
+* Added more options to customize clusters - vm priority, subnet, initial nodes count for auto-scale clusters,
+  specifying custom image
+* Added command line option to specify caching type for Batch AI managed NFS
+* Simplified specifying mount filesystem in config files. Now you can omit credentials for Azure File Share and
+  Azure Blob Containers - CLI will populate missing credentials using storage account key provided via command line
+  parameters or specified via environment variable or will query the key from Azure Storage (if the storage account
+  belongs to the current subscription).
+* Job file stream command now auto-completes when the job is completed (succeeded, failed, terminated or deleted).
+* Improved '-o table' support for show operations.
+* Added --use-auto-storage option for cluster creation. This option make it simpler to manage storage accounts and
+  and mount Azure File Share and Azure Blob Containers to clusters.
+* Added --generate-ssh-keys option into 'cluster create' and 'file-server create'.
+* Added ability to provide node setup task via command line.
+* Breaking change: 'job stream-file' and 'job list-files' commands are grouped under 'job file' group.
+* Breaking change: renamed --admin-user-name to --user-name in 'file-server create' command to be consistent with
+  'cluster create' command.
+
+### Billing
+
+* Add enrollment account commands
+
+### Consumption
+
+* Added commands `marketplace`.
+* BREAKING CHANGE: `reservations summaries` commands renamed to `reservation summary`.
+* BREAKING CHANGE: `reservations details` commands renamed to `reservation detail`.
+* BREAKING CHANGE: removed `--reservation-order-id` and `--reservation-id` short options for `reservation` commands.
+* BREAKING CHANGE: removed `--grain` short options for `reservation summary` commands.
+* BREAKING CHANGE: removed `--include-meter-details` short options for `pricesheet` commands.
+
+### Container
+
+* Add Git Repo volume mount parameters '--gitrepo-url' '--gitrepo-dir' '--gitrepo-revision' and '--gitrepo-mount-path'
+* Fixed [#5926](https://github.com/Azure/azure-cli/issues/5926): Fix `az container exec` failing when --container-name specified
+
+### Extension
+
+* Linux distro check message is now debug message instead of warning.
+
+### Interactive
+
+* Stops completions upon unrecognized commands.
+* Add event hooks before and after command subtree is created.
+* Allow completions for --ids parameters.
+
+### Network
+
+* `application-gateway create`: Fix issue where tags could not be set. [#5936](https://github.com/Azure/azure-cli/issues/5936)
+* `application-gateway http-settings create/update`: Add convenience argument `--auth-certs` to attach authentication certificates. [#4910](https://github.com/Azure/azure-cli/issues/4910)
+* `ddos-protection`: Added new commands to create DDoS protection plans .
+* `vnet create/update`: Added support for `--ddos-protection-plan` to associate a VNet to a DDoS protection plan.
+* `network route-table create/update`: Fix issue with `--disable-bgp-route-propagation` flag.
+* `network lb create/update`: Removed dummy arguments `--public-ip-address-type` and `--subnet-type`.
+* `network dns zone import`: Support for importing of TXT records with RFC 1035 escape sequences.
+* `network dns zone export`: Support for exporting of TXT records with RFC 1035 escape sequences.
+* `network dns record-set txt add-record`: Support for TXT records with RFC 1035 escape sequences.
+
+### Profile
+
+* account list: handle accounts which come from CLI 1.0/ASM mode
+* (Breaking change): remove `--msi` & `--msi-port` which were tagged `deprecating` 2 releases ago
+
+### RDBMS
+
+* Introduce georestore command.
+* Remove storage size restriction from create command.
+
+### Resource
+
+* `policy definition create`: Add support for `--metadata`.
+* `policy definition update`: Add support for `--metadata`, `--set`, `--add`, `--remove`.
+
+### SQL
+
+* Use new release azure-mgmt-sql 0.8.6 SDK Python package
+* Added az sql elastic-pool op list and az sql elastic-pool op cancel, Support list and cancel azure sql elastic pool operations
+
+### Storage
+
+* Better error message for malformed connection strings.
+
+### VM
+
+* `vmss create`: support to configure platform fault domain count
+* `vmss create`: default to Standard LB for zonal, large or single-placement-group disabled scale-set
+* BREAKING CHANGE: `vm assign-identity`, `vm remove-identity`: Deprecated commands have been removed.
+* BREAKING CHANGE: `vm format-secret`: Deprecated command has been removed.
+* `vm create`: support configure Public-IP sku
+* `vm create`: support configure Public-IP SKU
+* `vm secret format`: Added extra validation. Added `--keyvault` and `--resource-group` to support scenarios
+                      where the command is unable to resolve the vault ID. [#5718](https://github.com/Azure/azure-cli/issues/5718)
+* `vm/vmss create`: emit out a better error if resource group's location has no zone support
+
+
 ## March 27, 2018
 
 Version 2.0.30
