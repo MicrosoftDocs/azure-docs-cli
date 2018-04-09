@@ -32,7 +32,7 @@ az extension add --name alias
 Verify the installation of the extension with [az extension list](/cli/azure/extension#az-extension-list). If the alias extension was installed properly, it's listed in the command output.
 
 ```azurecli
-az extension list --output table --query [].{Name:name}
+az extension list --output table --query '[].{Name:name}'
 ```
 
 ```output
@@ -40,6 +40,7 @@ Name
 ------
 alias
 ```
+
 
 ## Keep the extension up to date
 
@@ -49,15 +50,15 @@ The alias extension is under active development and new versions are released re
 az extension update --name alias
 ```
 
-## Manager Azure CLI aliases
 
-The alias extension provides convenient and familiar commands to manage aliases. To view all the available commands and parameter detail, invoke the alias command with the help flag.
+## Manage aliases for the Azure CLI
+
+The alias extension provides convenient and familiar commands to manage aliases. To view all the available commands and parameter details, invoke the alias command with `--help`.
 
 ```azurecli
 az alias --help
 ```
 
-## Examples
 
 ## Create simple alias commands
 
@@ -76,7 +77,7 @@ az rg ls
 az vm ls
 ```
 
-Don't include az as part of the command.
+Do not include `az` as part of the command.
 
 Aliases can also be shortcuts for complete commands. The next example lists available resource groups and their locations in table output:
 
@@ -90,9 +91,10 @@ Now `ls-groups` can be run like any other CLI command.
 az ls-groups
 ```
 
+
 ## Create an alias command with arguments
 
-You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name.
+You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the braces is required.
 
 ```azurecli
 az alias create --name "alias_name {{ arg1 }} {{ arg2 }} ..." --command "invoke_including_args"
@@ -101,10 +103,7 @@ az alias create --name "alias_name {{ arg1 }} {{ arg2 }} ..." --command "invoke_
 The next example alias shows how to use positional arguments to get the public IP address for a VM.
 
 ```azurecli
-az alias create \
-    --name "get-vm-ip {{ resourceGroup }} {{ vmName }}" \
-    --command "vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }}
-        --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress"
+az alias create --name "get-vm-ip {{ resourceGroup }} {{ vmName }}" --command "vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress"
 ```
 
 When running this command, you give values to the positional arguments.
@@ -116,12 +115,11 @@ az get-vm-ip MyResourceGroup MyVM
 You can also use environment variables in commands invoked by aliases, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
 
 ```azurecli
-az alias create \
-    --name "create-rg {{ groupName }}" \
-    --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
+az alias create --name "create-rg {{ groupName }}" --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
 ```
 
-To register the environment variables inside the command of the alias, the dollar sign `$` needs to be escaped by adding a slash `\` in front of it.
+To register the environment variables inside the command of the alias, the dollar sign `$` must be escaped.
+
 
 ## Process arguments using Jinja2 templates
 
@@ -130,21 +128,36 @@ Argument substitution in the alias extension is performed by [Jinja2](http://jin
 With Jinja2 templates, you can write aliases which take different types of arguments than the underlying command. For example, you can make an alias which takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
 ```azurecli
-az alias create \
-    --name 'storage-ls {{ url }}' \
-    --command "storage blob list
-        --account-name {{ url.replace('https://', '').split('.')[0] }}
-        --container-name {{ url.replace('https://', '').split('/')[1] }}"
+az alias create --name 'storage-ls {{ url }}' --command "storage blob list --account-name {{ url.replace('https://', '').split('.')[0] }} --container-name {{ url.replace('https://', '').split('/')[1] }}"
 ```
 
 To learn about the Jinja2 template engine, see [the Jinja2 documentation](http://jinja.pocoo.org/docs/2.10/templates/).
 
 
 ## Alias configuration file
-Another way to create and modify aliaes is to alter the alias configuration file. Alias command definitions are written into a configuration file, located at `$AZURE_USER_CONFIG/alias`. The default value of `AZURE_USER_CONFIG` is `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. The alias configuration file is written in the INI configuration file format. The general format for alias commands is:
-```
-[command_name]
+
+Another way to create and modify aliases is to alter the alias configuration file. Alias command definitions are written into a configuration file, located at `$AZURE_USER_CONFIG/alias`. The default value of `AZURE_USER_CONFIG` is `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. The alias configuration file is written in the INI configuration file format. The format for alias commands is:
+
+```ini
+[alias_name]
 command = invoked_commands
+```
+
+For aliases that contain positional arguments, the format for alias commands is:
+
+```ini
+[alias_name {{ arg1 }} {{ arg2 }} ...]
+command = invoked_commands_including_args
+```
+
+
+## Create an alias command with arguments via the alias configuration file
+
+Below is an alias configuration file that contains an example alias command with arguments, which gets the public IP address for a VM. Ensure that the invoked command is in a single line, and contains the same arguments defined in the alias.
+
+```ini
+[get-vm-ip {{ resourceGroup }} {{ vmName }}]
+command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress
 ```
 
 
