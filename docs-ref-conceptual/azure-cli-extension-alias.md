@@ -103,7 +103,10 @@ az alias create --name "alias_name {{ arg1 }} {{ arg2 }} ..." --command "invoke_
 The next example alias shows how to use positional arguments to get the public IP address for a VM.
 
 ```azurecli
-az alias create --name "get-vm-ip {{ resourceGroup }} {{ vmName }}" --command "vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress"
+az alias create \
+    --name "get-vm-ip {{ resourceGroup }} {{ vmName }}" \
+    --command "vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }}
+        --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress"
 ```
 
 When running this command, you give values to the positional arguments.
@@ -115,7 +118,9 @@ az get-vm-ip MyResourceGroup MyVM
 You can also use environment variables in commands invoked by aliases, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
 
 ```azurecli
-az alias create --name "create-rg {{ groupName }}" --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
+az alias create \
+    --name "create-rg {{ groupName }}" \
+    --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
 ```
 
 To register the environment variables inside the command of the alias, the dollar sign `$` must be escaped.
@@ -128,7 +133,11 @@ Argument substitution in the alias extension is performed by [Jinja2](http://jin
 With Jinja2 templates, you can write aliases which take different types of arguments than the underlying command. For example, you can make an alias which takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
 ```azurecli
-az alias create --name 'storage-ls {{ url }}' --command "storage blob list --account-name {{ url.replace('https://', '').split('.')[0] }} --container-name {{ url.replace('https://', '').split('/')[1] }}"
+az alias create \
+    --name 'storage-ls {{ url }}' \
+    --command "storage blob list
+        --account-name {{ url.replace('https://', '').split('.')[0] }}
+        --container-name {{ url.replace('https://', '').split('/')[1] }}"
 ```
 
 To learn about the Jinja2 template engine, see [the Jinja2 documentation](http://jinja.pocoo.org/docs/2.10/templates/).
