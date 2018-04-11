@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 04/02/18
+ms.date: 04/11/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure
@@ -25,7 +25,7 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP. |  |
-| [alias](https://github.com/Azure/azure-cli-extensions) | 0.3.0 | Support for command aliases. | Yes |
+| [alias](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Support for command aliases. | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.1.0 | Additional preview Azure Batch commands. |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.1 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service. |  |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | Support for the Azure Private DNS Public Preview. |  |
