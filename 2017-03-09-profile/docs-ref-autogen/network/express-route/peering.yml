@@ -2,7 +2,7 @@
 items:
 - uid: az_network_express_route_peering
   name: az network express-route peering
-  summary: Manage ExpressRoute peering.
+  summary: Manage ExpressRoute peering of an ExpressRoute circuit.
   description: ''
   langs:
   - azurecli
@@ -14,14 +14,24 @@ items:
   - az_network_express_route_peering_update
 - uid: az_network_express_route_peering_create
   name: az network express-route peering create
-  summary: Create peering settings.
+  summary: Create peering settings for an ExpressRoute circuit.
   description: ''
   langs:
   - azurecli
   examples:
   - summary: Create Microsoft Peering settings with IPv4 configuration.
     syntax:
-      content: az network express-route peering create -g MyResourceGroup     --circuit-name MyCircuit --peering-type MicrosoftPeering --peer-asn 10002     --vlan-id 103 --primary-peer-subnet 101.0.0.0/30     --secondary-peer-subnet 102.0.0.0/30 --advertised-public-prefixes 101.0.0.0/30
+      content: >-
+        az network express-route peering create -g MyResourceGroup --circuit-name MyCircuit \
+                                    --peering-type MicrosoftPeering --peer-asn 10002 --vlan-id 103 \
+                                    --primary-peer-subnet 101.0.0.0/30 --secondary-peer-subnet 102.0.0.0/30 \
+                                    --advertised-public-prefixes 101.0.0.0/30
+  - summary: Add IPv6 settings to existing IPv4 config for Microsoft peering.
+    syntax:
+      content: >-
+        az network express-route peering update -g MyResourceGroup --circuit-name MyCircuit \
+                                    --peering-type MicrosoftPeering --ip-version ipv6 --primary-peer-subnet 2002:db00::/126 \
+                                    --secondary-peer-subnet 2003:db00::/126 --advertised-public-prefixes 2002:db00::/126
   parameters:
   - isRequired: true
     name: --circuit-name
@@ -77,6 +87,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete private peering.
+    syntax:
+      content: az network express-route peering delete -g MyResourceGroup --circuit-name MyCircuit -n AzurePrivatePeering
   parameters:
   - isRequired: true
     name: --circuit-name
@@ -98,10 +112,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_express_route_peering_list
   name: az network express-route peering list
-  summary: List peering settings.
+  summary: List peering settings of an ExpressRoute circuit.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List peering settings of an ExpressRoute circuit.
+    syntax:
+      content: az network express-route peering list -g MyResourceGroup --circuit-name MyCircuit
   parameters:
   - isRequired: true
     name: --circuit-name
@@ -119,10 +137,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_express_route_peering_show
   name: az network express-route peering show
-  summary: Get the details for an express route peering.
+  summary: Get the details of an express route peering.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Get private peering details of an ExpressRoute circuit.
+    syntax:
+      content: az network express-route peering show -g MyResourceGroup --circuit-name MyCircuit -n AzurePrivatePeering
   parameters:
   - isRequired: true
     name: --circuit-name
@@ -144,7 +166,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_express_route_peering_update
   name: az network express-route peering update
-  summary: Update peering settings.
+  summary: Update peering settings of an ExpressRoute circuit.
   description: ''
   langs:
   - azurecli
@@ -204,19 +226,19 @@ items:
 commands:
 - uid: az_network_express_route_peering_create
   name: az network express-route peering create
-  summary: Create peering settings.
+  summary: Create peering settings for an ExpressRoute circuit.
 - uid: az_network_express_route_peering_delete
   name: az network express-route peering delete
   summary: Delete peering settings.
 - uid: az_network_express_route_peering_list
   name: az network express-route peering list
-  summary: List peering settings.
+  summary: List peering settings of an ExpressRoute circuit.
 - uid: az_network_express_route_peering_show
   name: az network express-route peering show
-  summary: Get the details for an express route peering.
+  summary: Get the details of an express route peering.
 - uid: az_network_express_route_peering_update
   name: az network express-route peering update
-  summary: Update peering settings.
+  summary: Update peering settings of an ExpressRoute circuit.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -233,6 +255,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

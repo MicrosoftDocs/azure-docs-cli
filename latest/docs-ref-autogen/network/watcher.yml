@@ -21,9 +21,9 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Configure Network Watcher in a region.
+  - summary: Configure Network Watcher for the West US region.
     syntax:
-      content: az network watcher configure --resource-group NetworkWatcherRG  --locations westus --enabled true
+      content: az network watcher configure -g NetworkWatcherRG  -l westus --enabled true
   parameters:
   - isRequired: true
     name: --locations -l
@@ -31,7 +31,7 @@ items:
     description: ''
   - name: --enabled
     parameterValueGroup: false, true
-    summary: Enabled status of Network Watch in the specified regions.
+    summary: Enabled status of Network Watcher in the specified regions.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. Required when enabling new regions.
@@ -66,12 +66,12 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_watcher_show_next_hop
   name: az network watcher show-next-hop
-  summary: Get information on the 'next hop' for a VM.
+  summary: Get information on the 'next hop' of a VM.
   description: Requires that Network Watcher is enabled for the region in which the VM is located. For more information about show-next-hop visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-next-hop-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-check-next-hop-cli</a>.
   langs:
   - azurecli
   examples:
-  - summary: Get the next hop from a VM's assigned IP address to a destination at 10.1.0.4.
+  - summary: Get the next hop from a VMs assigned IP address to a destination at 10.1.0.4.
     syntax:
       content: az network watcher show-next-hop -g MyResourceGroup --vm MyVm --source-ip 10.0.0.4 --dest-ip 10.1.0.4
   parameters:
@@ -134,7 +134,7 @@ items:
   examples:
   - summary: Use show-topology to get the topology of resources within a resource group.
     syntax:
-      content: az network watcher show-topology -g resourcegroupname
+      content: az network watcher show-topology -g MyResourceGroup
   parameters:
   - name: --location -l
     summary: Location. Defaults to the location of the target resource group.
@@ -157,7 +157,7 @@ items:
 - uid: az_network_watcher_test_connectivity
   name: az network watcher test-connectivity
   summary: (PREVIEW) Test if a connection can be established between a Virtual Machine and a given endpoint.
-  description: To register for this feature or see additional examples visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli</a>.
+  description: To check connectivity between two VMs in different regions, use the VM ids instead of the VM names for the source and destination resource arguments. To register for this feature or see additional examples visit <a href="https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli">https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli</a>.
   langs:
   - azurecli
   examples:
@@ -166,7 +166,7 @@ items:
       content: az network watcher test-connectivity -g MyResourceGroup --source-resource MyVmName1 --dest-resource MyVmName2 --dest-port 80
   - summary: Check connectivity between two virtual machines in the same subscription in two different resource groups over port 80.
     syntax:
-      content: Vm1Id=$(az vm show --resource-group MyResourceGroup--name MyVm1 --query id --out tsv)     Vm2Id=$(az vm show --resource-group MyResourceGroup--name MyVm2 --query id --out tsv)     az network watcher test-connectivity --source-resource $MyVmId1 --dest-resource $MyVmId2 --dest-port 80
+      content: az network watcher test-connectivity --source-resource MyVmId1 --dest-resource MyVmId2 --dest-port 80
   parameters:
   - isRequired: true
     name: --source-resource
@@ -202,7 +202,9 @@ items:
   examples:
   - summary: Run test-ip-flow verify to test logical connectivity from a VM to the specified destination IPv4 address and port.
     syntax:
-      content: az network watcher test-ip-flow --resource-group MyResourceGroup --direction Outbound      --protocol TCP --local 10.0.0.4:* --remote 10.1.0.4:80 --vm MyVm
+      content: >-
+        az network watcher test-ip-flow -g MyResourceGroup --direction Outbound \
+                                    --protocol TCP --local 10.0.0.4:* --remote 10.1.0.4:80 --vm MyVm
   parameters:
   - isRequired: true
     name: --direction
@@ -211,16 +213,16 @@ items:
     description: ''
   - isRequired: true
     name: --local
-    summary: The private IPv4 address for the VM's NIC and the port of the packet in X.X.X.X:PORT format. '*' can be used for port when direction is outbound.
+    summary: The private IPv4 address for the VMs NIC and the port of the packet in X.X.X.X:PORT format. `*` can be used for port when direction is outbound.
     description: ''
   - isRequired: true
     name: --protocol
-    parameterValueGroup: TCP, UDP
+    parameterValueGroup: Http, Https, Icmp, Tcp
     summary: Protocol to test.
     description: ''
   - isRequired: true
     name: --remote
-    summary: The IPv4 address and port for the remote side of the packet X.X.X.X:PORT format. '*' can be used for port when direction is inbound.
+    summary: The IPv4 address and port for the remote side of the packet X.X.X.X:PORT format. `*` can be used for port when the direction is inbound.
     description: ''
   - isRequired: true
     name: --vm
@@ -244,28 +246,28 @@ commands:
   summary: Configure the Network Watcher service for different regions.
 - uid: az_network_watcher_connection_monitor
   name: az network watcher connection-monitor
-  summary: Manage connection monitoring.
+  summary: Manage connection monitoring between an Azure Virtual Machine and any IP resource.
 - uid: az_network_watcher_connection_monitor_create
   name: az network watcher connection-monitor create
   summary: Create a connection monitor.
 - uid: az_network_watcher_connection_monitor_delete
   name: az network watcher connection-monitor delete
-  summary: Deletes the specified connection monitor.
+  summary: Delete a connection monitor for the given region.
 - uid: az_network_watcher_connection_monitor_list
   name: az network watcher connection-monitor list
   summary: List connection monitors for the given region.
 - uid: az_network_watcher_connection_monitor_query
   name: az network watcher connection-monitor query
-  summary: Query a snapshot of the most recent connection states.
+  summary: Query a snapshot of the most recent connection state of a connection monitor.
 - uid: az_network_watcher_connection_monitor_show
   name: az network watcher connection-monitor show
-  summary: Gets a connection monitor by name.
+  summary: Shows a connection monitor by name.
 - uid: az_network_watcher_connection_monitor_start
   name: az network watcher connection-monitor start
-  summary: Starts the specified connection monitor.
+  summary: Start the specified connection monitor.
 - uid: az_network_watcher_connection_monitor_stop
   name: az network watcher connection-monitor stop
-  summary: Stops the specified connection monitor.
+  summary: Stop the specified connection monitor.
 - uid: az_network_watcher_flow_log
   name: az network watcher flow-log
   summary: Manage network security group flow logging.
@@ -274,7 +276,7 @@ commands:
   summary: Configure flow logging on a network security group.
 - uid: az_network_watcher_flow_log_show
   name: az network watcher flow-log show
-  summary: Get the flow log configuration for a network security group.
+  summary: Get the flow log configuration of a network security group.
 - uid: az_network_watcher_list
   name: az network watcher list
   summary: List Network Watchers.
@@ -286,22 +288,22 @@ commands:
   summary: Create and start a packet capture session.
 - uid: az_network_watcher_packet_capture_delete
   name: az network watcher packet-capture delete
-  summary: Deletes the specified packet capture session.
+  summary: Delete a packet capture session.
 - uid: az_network_watcher_packet_capture_list
   name: az network watcher packet-capture list
-  summary: Lists all packet capture sessions within the specified resource group.
+  summary: List all packet capture sessions within a resource group.
 - uid: az_network_watcher_packet_capture_show
   name: az network watcher packet-capture show
-  summary: Gets a packet capture session by name.
+  summary: Show details of a packet capture session.
 - uid: az_network_watcher_packet_capture_show_status
   name: az network watcher packet-capture show-status
-  summary: Query the status of a running packet capture session.
+  summary: Show the status of a packet capture session.
 - uid: az_network_watcher_packet_capture_stop
   name: az network watcher packet-capture stop
-  summary: Stops a specified packet capture session.
+  summary: Stop a running packet capture session.
 - uid: az_network_watcher_show_next_hop
   name: az network watcher show-next-hop
-  summary: Get information on the 'next hop' for a VM.
+  summary: Get information on the 'next hop' of a VM.
 - uid: az_network_watcher_show_security_group_view
   name: az network watcher show-security-group-view
   summary: Get detailed security information on a VM for the currently configured network security group.
@@ -339,6 +341,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

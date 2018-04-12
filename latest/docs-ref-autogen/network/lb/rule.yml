@@ -19,9 +19,24 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Create a basic load balancing rule that assigns a front-facing IP configuration and port to a backend address pool and port.
+  - summary: Create a load balancing rule that assigns a front-facing IP configuration and port to an address pool and port.
     syntax:
-      content: az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyLbRule     --protocol Tcp --frontend-port 80 --backend-port 80
+      content: >-
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyLbRule --protocol Tcp \
+                                    --frontend-ip-name MyFrontEndIp --frontend-port 80 \
+                                    --backend-pool-name MyAddressPool --backend-port 80
+  - summary: Create a load balancing rule that assigns a front-facing IP configuration and port to an address pool and port with the floating ip feature.
+    syntax:
+      content: >-
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyLbRule --protocol Tcp \
+                                    --frontend-ip-name MyFrontEndIp --backend-pool-name MyAddressPool --backend-port 80 \
+                                    --floating-ip true
+  - summary: Create an HA ports load balancing rule that assigns a frontend IP and port to use all available backend IPs in a pool on the same port.
+    syntax:
+      content: >-
+        az network lb rule create -g MyResourceGroup --lb-name MyLb -n MyHAPortsRule \
+                                    --protocol All --frontend-port 0 --backend-port 0 --frontend-ip-name MyFrontendIp \
+                                    --backend-pool-name MyAddressPool
   parameters:
   - isRequired: true
     name: --backend-port
@@ -42,7 +57,7 @@ items:
   - isRequired: true
     name: --protocol
     parameterValueGroup: All, Tcp, Udp
-    summary: ''
+    summary: Network transport protocol.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -68,7 +83,7 @@ items:
     summary: Affinity rule settings.
     description: ''
   - name: --probe-name
-    summary: ''
+    summary: Name of an existing probe to associate with this rule.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -82,6 +97,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a load balancing rule.
+    syntax:
+      content: az network lb rule delete -g MyResourceGroup --lb-name MyLb -n MyLbRule
   parameters:
   - isRequired: true
     name: --lb-name
@@ -107,6 +126,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List load balancing rules.
+    syntax:
+      content: az network lb rule list -g MyResourceGroup --lb-name MyLb -o table
   parameters:
   - isRequired: true
     name: --lb-name
@@ -128,6 +151,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Get the details of a load balancing rule.
+    syntax:
+      content: az network lb rule show -g MyResourceGroup --lb-name MyLb -n MyLbRule
   parameters:
   - isRequired: true
     name: --lb-name
@@ -153,6 +180,13 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Update a load balancing rule to change the protocol to UDP.
+    syntax:
+      content: az network lb rule update -g MyResourceGroup --lb-name MyLb -n MyLbRule --protocol Udp
+  - summary: Update a load balancing rule to support HA ports.
+    syntax:
+      content: az network lb rule update -g MyResourceGroup --lb-name MyLb -n MyLbRule \ --protocol All --frontend-port 0 --backend-port 0
   parameters:
   - isRequired: true
     name: --lb-name
@@ -191,11 +225,11 @@ items:
     summary: Affinity rule settings.
     description: ''
   - name: --probe-name
-    summary: ''
+    summary: Name of an existing probe to associate with this rule.
     description: ''
   - name: --protocol
     parameterValueGroup: All, Tcp, Udp
-    summary: ''
+    summary: Network transport protocol.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -244,6 +278,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

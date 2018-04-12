@@ -32,14 +32,15 @@ az extension add --name alias
 Verify the installation of the extension with [az extension list](/cli/azure/extension#az-extension-list). If the alias extension was installed properly, it's listed in the command output.
 
 ```azurecli
-az extension list --output table
+az extension list --output table --query '[].{Name:name}'
 ```
 
 ```output
-ExtensionType    Name                       Version
----------------  -------------------------  ---------
-whl              alias                      0.2.0
+Name
+------
+alias
 ```
+
 
 ## Keep the extension up to date
 
@@ -49,27 +50,23 @@ The alias extension is under active development and new versions are released re
 az extension update --name alias
 ```
 
-## Alias commands file format
 
-Alias command definitions are written into a configuration file, located at `$AZURE_USER_CONFIG/alias`. The default value of `AZURE_USER_CONFIG` is `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. The alias configuration file is written in the INI configuration file format. The general format for alias commands is:
+## Manage aliases for the Azure CLI
 
+The alias extension provides convenient and familiar commands to manage aliases. To view all the available commands and parameter details, invoke the alias command with `--help`.
+
+```azurecli
+az alias --help
 ```
-[command_name]
-command = invoked_commands
-```
 
-Don't include `az` as part of the command.
 
 ## Create simple alias commands
 
 One use of aliases is for shortening existing command groups or command names. For example, you can shorten the `group` command group to `rg` and the `list` command to `ls`.
 
-```
-[rg]
-command = group
-
-[ls]
-command = list
+```azurecli
+az alias create --name rg --command group
+az alias create --name ls --command list
 ```
 
 These newly defined aliases can now be used anywhere that their definition would be.
@@ -80,11 +77,12 @@ az rg ls
 az vm ls
 ```
 
+Do not include `az` as part of the command.
+
 Aliases can also be shortcuts for complete commands. The next example lists available resource groups and their locations in table output:
 
-```
-[ls-groups]
-command = group list --query '[].{Name:name, Location:location}' --output table
+```azurecli
+az alias create --name ls-groups --command "group list --query '[].{Name:name, Location:location}' --output table"
 ```
 
 Now `ls-groups` can be run like any other CLI command.
@@ -93,20 +91,22 @@ Now `ls-groups` can be run like any other CLI command.
 az ls-groups
 ```
 
+
 ## Create an alias command with arguments
 
 You can also add positional arguments to an alias command by including them as `{{ arg_name }}` in the alias name. The whitespace inside the braces is required.
 
-```
-[alias_name {{ arg1 }} {{ arg2 }} ...]
-command = invoke_including_args
+```azurecli
+az alias create --name "alias_name {{ arg1 }} {{ arg2 }} ..." --command "invoke_including_args"
 ```
 
 The next example alias shows how to use positional arguments to get the public IP address for a VM.
 
-```
-[get-vm-ip {{ resourceGroup }} {{ vmName }}]
-command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress
+```azurecli
+az alias create \
+    --name "get-vm-ip {{ resourceGroup }} {{ vmName }}" \
+    --command "vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }}
+        --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress"
 ```
 
 When running this command, you give values to the positional arguments.
@@ -117,10 +117,14 @@ az get-vm-ip MyResourceGroup MyVM
 
 You can also use environment variables in commands invoked by aliases, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
 
+```azurecli
+az alias create \
+    --name "create-rg {{ groupName }}" \
+    --command "group create --name {{ groupName }} --location eastus --tags owner=\$USER"
 ```
-[create-rg {{ groupName }}]
-command = group create --name {{ groupName }} --location eastus --tags owner=$USER
-```
+
+To register the environment variables inside the command of the alias, the dollar sign `$` must be escaped.
+
 
 ## Process arguments using Jinja2 templates
 
@@ -128,12 +132,43 @@ Argument substitution in the alias extension is performed by [Jinja2](http://jin
 
 With Jinja2 templates, you can write aliases which take different types of arguments than the underlying command. For example, you can make an alias which takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
-```
-[storage-ls {{ url }}]
-command = storage blob list --account-name {{ url.replace('https://', '').split('.')[0] }} --container-name {{ url.replace('https://', '').split('/')[1] }}
+```azurecli
+az alias create \
+    --name 'storage-ls {{ url }}' \
+    --command "storage blob list
+        --account-name {{ url.replace('https://', '').split('.')[0] }}
+        --container-name {{ url.replace('https://', '').split('/')[1] }}"
 ```
 
 To learn about the Jinja2 template engine, see [the Jinja2 documentation](http://jinja.pocoo.org/docs/2.10/templates/).
+
+
+## Alias configuration file
+
+Another way to create and modify aliases is to alter the alias configuration file. Alias command definitions are written into a configuration file, located at `$AZURE_USER_CONFIG/alias`. The default value of `AZURE_USER_CONFIG` is `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. The alias configuration file is written in the INI configuration file format. The format for alias commands is:
+
+```ini
+[alias_name]
+command = invoked_commands
+```
+
+For aliases that contain positional arguments, the format for alias commands is:
+
+```ini
+[alias_name {{ arg1 }} {{ arg2 }} ...]
+command = invoked_commands_including_args
+```
+
+
+## Create an alias command with arguments via the alias configuration file
+
+Below is an alias configuration file that contains an example alias command with arguments, which gets the public IP address for a VM. Ensure that the invoked command is in a single line, and contains the same arguments defined in the alias.
+
+```ini
+[get-vm-ip {{ resourceGroup }} {{ vmName }}]
+command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vmName }} --query [0].virtualMachine.network.publicIpAddresses[0].ipAddress
+```
+
 
 ## Uninstall the alias extension
 

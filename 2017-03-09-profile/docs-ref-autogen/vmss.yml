@@ -7,7 +7,6 @@ items:
   langs:
   - azurecli
   children:
-  - az_vmss_assign_identity
   - az_vmss_create
   - az_vmss_deallocate
   - az_vmss_delete
@@ -26,40 +25,6 @@ items:
   - az_vmss_update
   - az_vmss_update_instances
   - az_vmss_wait
-- uid: az_vmss_assign_identity
-  name: az vmss assign-identity
-  summary: (Deprecated, please use 'az vmss identity assign').
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --identities
-    summary: The identities to assign.
-    description: ''
-  - name: --port
-    summary: 'The port to fetch AAD token. Default: 50342.'
-    description: ''
-  - name: --role
-    defaultValue: Contributor
-    summary: Role name or id the system assigned identity will have.
-    description: ''
-  - name: --scope
-    summary: Scope that the system assigned identity can access.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_create
   name: az vmss create
   summary: Create an Azure Virtual Machine Scale Set.
@@ -72,19 +37,24 @@ items:
       content: az vmss create -n MyVmss -g MyResourceGroup --instance-count 5 --image Win2012R2Datacenter --data-disk-sizes-gb 2
   - summary: Create a Linux VM scale set with an auto-generated ssh key pair, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
     syntax:
-      content: az vmss create -n MyVmss -g MyResourceGroup --dns-name-for-public-ip MyGloballyUniqueDnsName     --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS     --generate-ssh-keys
+      content: >-
+        az vmss create -n MyVmss -g MyResourceGroup --dns-name-for-public-ip MyGloballyUniqueDnsName \
+                                    --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS \
+                                    --generate-ssh-keys
   - summary: Create a Linux VM scale set from a custom image using the default existing public SSH key.
     syntax:
       content: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
   - summary: Create a Linux VM scale set with a load balancer and custom DNS servers. Each VM has a public-ip address and a custom domain name.
     syntax:
-      content: az vmss create -n MyVmss -g MyResourceGroup --image centos     --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
+      content: >-
+        az vmss create -n MyVmss -g MyResourceGroup --image centos \
+                                    --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init'
     syntax:
       content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1   -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname   -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy    --image debian --secrets \"$vm_secrets\""
+      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
   - summary: Create a VM scaleset with system assigned identity. The VM will have a 'Contributor' Role with access to a storage account.
     syntax:
       content: az vm create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
@@ -135,7 +105,7 @@ items:
     description: ''
   - name: --single-placement-group
     parameterValueGroup: false, true
-    summary: Enable single placement group. This flag will default to True if instance count <=100, and default to False for instance count >100.
+    summary: Enable replicate using fault domains within the same cluster. Default to 'false' for any zonals, or with 100+ instances See <a href="https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups">https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups</a> for details.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -731,9 +701,6 @@ items:
       path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
-- uid: az_vmss_assign_identity
-  name: az vmss assign-identity
-  summary: (Deprecated, please use 'az vmss identity assign').
 - uid: az_vmss_create
   name: az vmss create
   summary: Create an Azure Virtual Machine Scale Set.
@@ -864,6 +831,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8f93ba0e7337ea3afebe25a827f2be04828695d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 3/12/2018 7:13:12 PM
-ms.date: 3/12/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/48a0c83d7404436e75ff65210a2e66f8444e027d/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 4/5/2018 3:48:36 PM
+ms.date: 4/5/2018

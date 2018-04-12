@@ -2,7 +2,7 @@
 items:
 - uid: az_network_lb_inbound_nat_rule
   name: az network lb inbound-nat-rule
-  summary: Manage inbound NAT rules for a load balancer.
+  summary: Manage inbound NAT rules of a load balancer.
   description: ''
   langs:
   - azurecli
@@ -21,7 +21,14 @@ items:
   examples:
   - summary: Create a basic inbound NAT rule for port 80.
     syntax:
-      content: az network lb inbound-nat-rule create -g MyResourceGroup --lb-name MyLb -n MyNatRule     --protocol Tcp --frontend-port 80 --backend-port 80
+      content: >-
+        az network lb inbound-nat-rule create -g MyResourceGroup --lb-name MyLb -n MyNatRule \
+                                    --protocol Tcp --frontend-port 80 --backend-port 80
+  - summary: Create a basic inbound NAT rule for a specific frontend IP and enable floating IP for NAT Rule.
+    syntax:
+      content: >-
+        az network lb inbound-nat-rule create -g MyResourceGroup --lb-name MyLb -n MyNatRule --protocol Tcp \
+                                    --frontend-port 5432 --backend-port 3389 --frontend-ip-name MyFrontendIp --floating-ip true
   parameters:
   - isRequired: true
     name: --backend-port
@@ -42,7 +49,7 @@ items:
   - isRequired: true
     name: --protocol
     parameterValueGroup: Tcp, Udp
-    summary: ''
+    summary: Network transport protocol.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -71,6 +78,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete an inbound NAT rule.
+    syntax:
+      content: az network lb inbound-nat-rule delete -g MyResourceGroup --lb-name MyLb -n MyNatRule
   parameters:
   - isRequired: true
     name: --lb-name
@@ -96,6 +107,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List inbound NAT rules.
+    syntax:
+      content: az network lb inbound-nat-rule list -g MyResourceGroup --lb-name MyLb -o table
   parameters:
   - isRequired: true
     name: --lb-name
@@ -113,10 +128,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_lb_inbound_nat_rule_show
   name: az network lb inbound-nat-rule show
-  summary: Get the details for an inbound NAT rule.
+  summary: Get the details of an inbound NAT rule.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Get the details of an inbound NAT rule.
+    syntax:
+      content: az network lb inbound-nat-rule show -g MyResourceGroup --lb-name MyLb -n MyNatRule
   parameters:
   - isRequired: true
     name: --lb-name
@@ -142,6 +161,12 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Update an inbound NAT rule to disable floating IP and modify idle timeout duration.
+    syntax:
+      content: >-
+        az network lb inbound-nat-rule update -g MyResourceGroup --lb-name MyLb -n MyNatRule \
+                                    --floating-ip false --idle-timeout 5
   parameters:
   - isRequired: true
     name: --lb-name
@@ -173,7 +198,7 @@ items:
     description: ''
   - name: --protocol
     parameterValueGroup: Tcp, Udp
-    summary: ''
+    summary: Network transport protocol.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -202,7 +227,7 @@ commands:
   summary: List inbound NAT rules.
 - uid: az_network_lb_inbound_nat_rule_show
   name: az network lb inbound-nat-rule show
-  summary: Get the details for an inbound NAT rule.
+  summary: Get the details of an inbound NAT rule.
 - uid: az_network_lb_inbound_nat_rule_update
   name: az network lb inbound-nat-rule update
   summary: Update an inbound NAT rule.
@@ -222,6 +247,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

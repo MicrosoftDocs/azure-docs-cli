@@ -14,17 +14,16 @@ items:
   - az_network_vnet_peering_update
 - uid: az_network_vnet_peering_create
   name: az network vnet peering create
-  summary: Create a peering.
-  description: To learn more about virtual network peering about how to create a peering, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#before-you-begin">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#before-you-begin</a>.
+  summary: Create a virtual network peering connection.
+  description: To successfully peer two virtual networks this command must be called twice with the values for --vnet-name and --remote-vnet-id reversed.
   langs:
   - azurecli
   examples:
-  - summary: Create a virtual network peering between virtual networks in the same region
+  - summary: Create a peering connection between two virtual networks.
     syntax:
-      content: az network vnet create --name MyVnet1 --resource-group MyResourceGroup --location eastus --address-prefix 10.0.0.0/16     nn az network vnet create --name MyVnet2 --resource-group MyResourceGroup --location eastus --address-prefix 10.1.0.0/16     nn vnet1Id=$(az network vnet show --resource-group MyResourceGroup--name MyVnet1 --query id --out tsv)     nn vnet2Id=$(az network vnet show --resource-group MyResourceGroup --name MyVnet2 --query id --out tsv)     nn az network vnet peering create --name MyVnet1ToMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --remote-vnet-id $vnet2Id --allow-vnet-access     nn az network vnet peering create --name MyVnet2ToMyVnet1 --resource-group MyResourceGroup --vnet-name MyVnet2 --remote-vnet-id $vnet1Id --allow-vnet-access
-  - summary: Create a virtual network peering between virtual networks in different regions
-    syntax:
-      content: az network vnet create --name MyVnet1 --resource-group MyResourceGroup --location westcentralus --address-prefix 10.0.0.0/16     nn az network vnet create --name MyVnet2 --resource-group MyResourceGroup --location canadacentral --address-prefix 10.2.0.0/16     nn vnet1Id=$(az network vnet show --resource-group MyResourceGroup--name MyVnet1 --query id --out tsv)     nn vnet2Id=$(az network vnet show --resource-group MyResourceGroup --name MyVnet2 --query id --out tsv)     nn az network vnet peering create --name MyVnet1ToMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --remote-vnet-id $vnet2Id --allow-vnet-access     nn az network vnet peering create --name MyVnet2ToMyVnet1 --resource-group MyResourceGroup --vnet-name MyVnet2 --remote-vnet-id $vnet1Id --allow-vnet-access
+      content: >-
+        az network vnet peering create -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 \
+                                    --remote-vnet-id MyVnet2Id --allow-vnet-access
   parameters:
   - isRequired: true
     name: --name -n
@@ -63,13 +62,13 @@ items:
 - uid: az_network_vnet_peering_delete
   name: az network vnet peering delete
   summary: Delete a peering.
-  description: To learn more about how to delete a virtual network peering visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#delete-a-peering">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#delete-a-peering</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a virtual network peering
+  - summary: Delete a virtual network peering connection.
     syntax:
-      content: az network vnet peering delete --name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1
+      content: az network vnet peering delete -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
   parameters:
   - isRequired: true
     name: --name -n
@@ -92,13 +91,13 @@ items:
 - uid: az_network_vnet_peering_list
   name: az network vnet peering list
   summary: List peerings.
-  description: To learn more about virtual network peerings, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#view-or-change-peering-settings">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#view-or-change-peering-settings</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: List all peerings of a specified virtual network
+  - summary: List all peerings of a specified virtual network.
     syntax:
-      content: az network vnet peering list --resource-group MyResourceGroup --vnet-name MyVnet1
+      content: az network vnet peering list -g MyResourceGroup --vnet-name MyVnet1
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -117,13 +116,13 @@ items:
 - uid: az_network_vnet_peering_show
   name: az network vnet peering show
   summary: Show details of a peering.
-  description: To learn more about virtual network peering details and settings, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#view-or-change-peering-settings">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#view-or-change-peering-settings</a>.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Show all details of the specified virtual network peering.
     syntax:
-      content: az network vnet peering show --name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1
+      content: az network vnet peering show -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1
   parameters:
   - isRequired: true
     name: --name -n
@@ -146,22 +145,22 @@ items:
 - uid: az_network_vnet_peering_update
   name: az network vnet peering update
   summary: Update a peering.
-  description: To learn more about updating virtual network peerings, visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering</a>.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Change forwarded traffic configuration of a virtual network peering
+  - summary: Change forwarded traffic configuration of a virtual network peering.
     syntax:
-      content: az network vnet peering update ---name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --set allowForwardedTraffic==true
-  - summary: Change virtual network access of a virtual network peering
+      content: az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --set allowForwardedTraffic=true
+  - summary: Change virtual network access of a virtual network peering.
     syntax:
-      content: az network vnet peering update ---name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --set allowVirtualNetworkAccess==true
-  - summary: Change gateway transit property configuration of a virtual network peering
+      content: az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --set allowVirtualNetworkAccess=true
+  - summary: Change gateway transit property configuration of a virtual network peering.
     syntax:
-      content: az network vnet peering update ---name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --set allowGatewayTransit==true
-  - summary: Use remote gateways in virtual network peering
+      content: az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --set allowGatewayTransit=true
+  - summary: Use remote gateways in virtual network peering.
     syntax:
-      content: az network vnet peering update ---name MyVnet1toMyVnet2 --resource-group MyResourceGroup --vnet-name MyVnet1 --set useRemoteGateways==true
+      content: az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --set useRemoteGateways=true
   parameters:
   - isRequired: true
     name: --name -n
@@ -193,7 +192,7 @@ items:
 commands:
 - uid: az_network_vnet_peering_create
   name: az network vnet peering create
-  summary: Create a peering.
+  summary: Create a virtual network peering connection.
 - uid: az_network_vnet_peering_delete
   name: az network vnet peering delete
   summary: Delete a peering.
@@ -222,6 +221,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018

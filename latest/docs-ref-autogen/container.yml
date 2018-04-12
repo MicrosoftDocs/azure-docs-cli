@@ -2,7 +2,7 @@
 items:
 - uid: az_container
   name: az container
-  summary: (PREVIEW) Manage Azure Container Instances.
+  summary: Manage Azure Container Instances.
   description: ''
   langs:
   - azurecli
@@ -47,34 +47,37 @@ items:
   examples:
   - summary: Create a container in a container group with 1 core and 1Gb of memory.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --cpu 1 --memory 1
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --cpu 1 --memory 1
   - summary: Create a container in a container group that runs Windows, with 2 cores and 3.5Gb of memory.
     syntax:
       content: az container create -g MyResourceGroup --name mywinapp --image winappimage:latest --os-type Windows --cpu 2 --memory 3.5
   - summary: Create a container in a container group with public IP address and ports.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --ip-address public --ports 80 443
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ip-address public --ports 80 443
   - summary: Create a container in a container group with public IP address, ports and DNS name label.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --ports 80 443 --dns-name-label contoso
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ports 80 443 --dns-name-label contoso
   - summary: Create a container in a container group that invokes a script upon start.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --command-line "/bin/sh -c '/path to/myscript.sh'"
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "/bin/sh -c '/path to/myscript.sh'"
   - summary: Create a container in a container group that runs a command and stop the container afterwards.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest --command-line "echo hello" --restart-policy Never
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "echo hello" --restart-policy Never
   - summary: Create a container in a container group with environment variables.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image alpine:latest -e key1=value1 key2=value2
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest -e key1=value1 key2=value2
   - summary: Create a container in a container group using container image from Azure Container Registry.
     syntax:
-      content: az container create -g MyResourceGroup --name myalpine --image myAcrRegistry.azurecr.io/alpine:latest --registry-password password
+      content: az container create -g MyResourceGroup --name myapp --image myAcrRegistry.azurecr.io/myimage:latest --registry-password password
   - summary: Create a container in a container group using container image from another private container image registry.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --cpu 1 --memory 1.5 --registry-login-server myregistry.com --registry-username username --registry-password password
   - summary: Create a container in a container group that mounts an Azure File share as volume.
     syntax:
-      content: az container create -g MyResourceGroup --name myapp --image alpine:latest --command-line "cat /mnt/azfile/myfile" --azure-file-volume-share-name myshare --azure-file-volume-account-name mystorageaccount --azure-file-volume-account-key mystoragekey --azure-file-volume-mount-path /mnt/azfile
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "cat /mnt/azfile/myfile" --azure-file-volume-share-name myshare --azure-file-volume-account-name mystorageaccount --azure-file-volume-account-key mystoragekey --azure-file-volume-mount-path /mnt/azfile
+  - summary: Create a container in a container group that mounts a git repo as volume.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "cat /mnt/gitrepo" --gitrepo-url https://github.com/user/myrepo.git --gitrepo-dir ./dir1 --gitrepo-mount-path /mnt/gitrepo
   parameters:
   - isRequired: true
     name: --image
@@ -130,7 +133,7 @@ items:
     summary: Space-separated secrets in 'key=value' format.
     description: ''
   - name: --secrets-mount-path
-    summary: The path within the container where the secrets volume should be mounted. Must not contain colon (:).
+    summary: The path within the container where the secrets volume should be mounted. Must not contain colon ':'.
     description: ''
   - name: --azure-file-volume-account-key
     summary: The storage account access key used to access the Azure File share.
@@ -139,10 +142,23 @@ items:
     summary: The name of the storage account that contains the Azure File share.
     description: ''
   - name: --azure-file-volume-mount-path
-    summary: The path within the container where the volume should be mounted. Must not contain colon (:).
+    summary: The path within the container where the azure file volume should be mounted. Must not contain colon ':'.
     description: ''
   - name: --azure-file-volume-share-name
     summary: The name of the Azure File share to be mounted as a volume.
+    description: ''
+  - name: --gitrepo-dir
+    defaultValue: .
+    summary: The target directory path in the git repository. Must not contain '..'.
+    description: ''
+  - name: --gitrepo-mount-path
+    summary: The path within the container where the git repo volume should be mounted. Must not contain colon ':'.
+    description: ''
+  - name: --gitrepo-revision
+    summary: The commit hash for the specified revision.
+    description: ''
+  - name: --gitrepo-url
+    summary: The URL of a git repository to be mounted as a volume.
     description: ''
   - name: --registry-login-server
     summary: The container image registry login server.
@@ -195,6 +211,10 @@ items:
       content: az container exec -g MyResourceGroup --name mynginx --container-name nginx --exec-command "/bin/bash"
   parameters:
   - isRequired: true
+    name: --exec-command
+    summary: The command to run from within the container.
+    description: ''
+  - isRequired: true
     name: --name -n
     summary: The name of the container group.
     description: ''
@@ -204,9 +224,6 @@ items:
     description: ''
   - name: --container-name
     summary: The container name where to execute the command. Can be ommitted for container groups with only one container.
-    description: ''
-  - name: --exec-command
-    summary: The command to run from within the container.
     description: ''
   - name: --terminal-col-size
     defaultValue: "80"
@@ -324,6 +341,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/3329789b290ba4ff0f892530844cd5189276a423/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-updated_at: 3/22/2018 6:12:02 PM
-ms.date: 3/22/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/adc9bee08ea3dd835bf4a5c43e53f509064aa042/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+updated_at: 4/5/2018 10:28:54 PM
+ms.date: 4/5/2018

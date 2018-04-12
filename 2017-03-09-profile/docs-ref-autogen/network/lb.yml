@@ -3,7 +3,7 @@ items:
 - uid: az_network_lb
   name: az network lb
   summary: Manage and configure load balancers.
-  description: ''
+  description: To learn more about Azure Load Balancer visit <a href="https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-get-started-internet-arm-cli">https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-get-started-internet-arm-cli</a>.
   langs:
   - azurecli
   children:
@@ -21,16 +21,16 @@ items:
   examples:
   - summary: Create a basic load balancer.
     syntax:
-      content: az network lb create -g MyResourceGroup -n MyLb
-  - summary: Create a load balancer on a specific virtual network and subnet.
+      content: az network lb create -g MyResourceGroup -n MyLb --sku Basic
+  - summary: Create a basic internal load balancer on a specific virtual network and subnet.
     syntax:
-      content: az network lb create -g MyResourceGroup -n MyLb --vnet-name MyVnet --subnet MySubnet
-  - summary: Create a zone flavored public facing load balancer through provisioning a zonal public ip.
+      content: az network lb create -g MyResourceGroup -n MyLb --sku Basic --vnet-name MyVnet --subnet MySubnet
+  - summary: Create a basic zone flavored internal load balancer, through provisioning a zonal public ip.
     syntax:
-      content: az network lb create -g MyResourceGroup -n MyLB --public-ip-zone 2
-  - summary: Create a zone flavored internal facing load balancer through provisioning a zonal frontend ip configuration.
+      content: az network lb create -g MyResourceGroup -n MyLb --sku Basic --public-ip-zone 2
+  - summary: Create a standard zone flavored public-facing load balancer, through provisioning a zonal frontend ip configuration and Vnet.
     syntax:
-      content: az network lb create -g MyResourceGroup -n MyLB --frontend-ip-zone 1 -vnet-name MyVnet --subnet MySubnet
+      content: az network lb create -g MyResourceGroup -n MyLb --sku Standard --frontend-ip-zone 1 -vnet-name MyVnet --subnet MySubnet
   parameters:
   - isRequired: true
     name: --name -n
@@ -56,15 +56,18 @@ items:
   - name: --private-ip-address
     summary: Static private IP address to use.
     description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validate
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
   - name: --public-ip-address
     summary: Name or ID of the public IP address, or "" for none. Uses existing resource if available or will create a new resource with defaults if omitted.
     description: ''
   - name: --public-ip-address-allocation
     parameterValueGroup: Dynamic, Static
-    summary: ''
-    description: ''
-  - name: --public-ip-address-type
-    summary: ''
+    summary: IP allocation method.
     description: ''
   - name: --public-ip-dns-name
     summary: Globally unique DNS name for a new public IP.
@@ -75,15 +78,6 @@ items:
   - name: --subnet-address-prefix
     defaultValue: 10.0.0.0/24
     summary: The CIDR address prefix to use when creating a new subnet.
-    description: ''
-  - name: --subnet-type
-    summary: ''
-    description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --validate
-    summary: Generate and validate the ARM template without creating any resources.
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
@@ -104,6 +98,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a load balancer.
+    syntax:
+      content: az network lb delete -g MyResourceGroup -n MyLb
   parameters:
   - isRequired: true
     name: --name -n
@@ -125,6 +123,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List load balancers.
+    syntax:
+      content: az network lb list -g MyResourceGroup
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -137,10 +139,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_network_lb_show
   name: az network lb show
-  summary: Get the details for a load balancer.
+  summary: Get the details of a load balancer.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Get the details of a load balancer.
+    syntax:
+      content: az network lb show -g MyResourceGroup -n MyLb
   parameters:
   - isRequired: true
     name: --name -n
@@ -162,9 +168,13 @@ items:
 - uid: az_network_lb_update
   name: az network lb update
   summary: Update a load balancer.
-  description: ''
+  description: This command can only be used to update the tags for a load balancer. Name and resource group are immutable and cannot be updated.
   langs:
   - azurecli
+  examples:
+  - summary: Update the tags of a load balancer.
+    syntax:
+      content: az network lb update -g MyResourceGroup -n MyLb --set tags.CostCenter=MyBusinessGroup
   parameters:
   - isRequired: true
     name: --name -n
@@ -192,19 +202,19 @@ items:
 commands:
 - uid: az_network_lb_address_pool
   name: az network lb address-pool
-  summary: Manage backend address pools for a load balancer.
+  summary: Manage address pools of a load balancer.
 - uid: az_network_lb_address_pool_create
   name: az network lb address-pool create
-  summary: Create a backend address pool.
+  summary: Create an address pool.
 - uid: az_network_lb_address_pool_delete
   name: az network lb address-pool delete
-  summary: Delete a backend address pool.
+  summary: Delete an address pool.
 - uid: az_network_lb_address_pool_list
   name: az network lb address-pool list
-  summary: List backend address pools.
+  summary: List address pools.
 - uid: az_network_lb_address_pool_show
   name: az network lb address-pool show
-  summary: Get the details for a backend address pool.
+  summary: Get the details of an address pool.
 - uid: az_network_lb_create
   name: az network lb create
   summary: Create a load balancer.
@@ -213,7 +223,7 @@ commands:
   summary: Delete a load balancer.
 - uid: az_network_lb_frontend_ip
   name: az network lb frontend-ip
-  summary: Manage frontend IP addresses for a load balancer.
+  summary: Manage frontend IP addresses of a load balancer.
 - uid: az_network_lb_frontend_ip_create
   name: az network lb frontend-ip create
   summary: Create a frontend IP address.
@@ -231,7 +241,7 @@ commands:
   summary: Update a frontend IP address.
 - uid: az_network_lb_inbound_nat_pool
   name: az network lb inbound-nat-pool
-  summary: Manage inbound NAT address pools for a load balancer.
+  summary: Manage inbound NAT address pools of a load balancer.
 - uid: az_network_lb_inbound_nat_pool_create
   name: az network lb inbound-nat-pool create
   summary: Create an inbound NAT address pool.
@@ -243,13 +253,13 @@ commands:
   summary: List inbound NAT address pools.
 - uid: az_network_lb_inbound_nat_pool_show
   name: az network lb inbound-nat-pool show
-  summary: Get the details for an inbound NAT address pool.
+  summary: Get the details of an inbound NAT address pool.
 - uid: az_network_lb_inbound_nat_pool_update
   name: az network lb inbound-nat-pool update
   summary: Update an inbound NAT address pool.
 - uid: az_network_lb_inbound_nat_rule
   name: az network lb inbound-nat-rule
-  summary: Manage inbound NAT rules for a load balancer.
+  summary: Manage inbound NAT rules of a load balancer.
 - uid: az_network_lb_inbound_nat_rule_create
   name: az network lb inbound-nat-rule create
   summary: Create an inbound NAT rule.
@@ -261,7 +271,7 @@ commands:
   summary: List inbound NAT rules.
 - uid: az_network_lb_inbound_nat_rule_show
   name: az network lb inbound-nat-rule show
-  summary: Get the details for an inbound NAT rule.
+  summary: Get the details of an inbound NAT rule.
 - uid: az_network_lb_inbound_nat_rule_update
   name: az network lb inbound-nat-rule update
   summary: Update an inbound NAT rule.
@@ -282,7 +292,7 @@ commands:
   summary: List probes.
 - uid: az_network_lb_probe_show
   name: az network lb probe show
-  summary: Get the details for a probe.
+  summary: Get the details of a probe.
 - uid: az_network_lb_probe_update
   name: az network lb probe update
   summary: Update a probe.
@@ -306,7 +316,7 @@ commands:
   summary: Update a load balancing rule.
 - uid: az_network_lb_show
   name: az network lb show
-  summary: Get the details for a load balancer.
+  summary: Get the details of a load balancer.
 - uid: az_network_lb_update
   name: az network lb update
   summary: Update a load balancer.
@@ -326,6 +336,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a961c66e1c66c14349b421972d8c8d6bf27e3400/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 3/16/2018 2:49:34 PM
-ms.date: 3/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b9e20814dcf82d6d53d2632a2c60b96262c85c89/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 4/5/2018 11:34:01 PM
+ms.date: 4/5/2018
