@@ -39,8 +39,9 @@ install the CLI by running `curl`.
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-You can also download the script and run it locally instead. You may have to restart
-your shell in order for changes to take effect. After installation, run the CLI with the `az` command.
+You can also download the script and run it locally. For what some changes take effect, you may have to restart the shell. After installation, run the CLI with the `az` command.
+
+The [Azure CLI is also available in the Python module repositories](https://pypi.python.org/pypi/azure-cli). HE can install in the usual way pip install azure-cli in Linux as well as in Windows or MacOS.
 
 ## Troubleshooting
 
