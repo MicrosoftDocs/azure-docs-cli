@@ -51,7 +51,13 @@ for the Azure CLI. This package has been tested with:
    sudo apt-get update && sudo apt-get install azure-cli
    ```
 
-You can run the Azure CLI with the `az` command.
+You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+
+```azurecli
+az login
+```
+
+To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Troubleshooting
 
