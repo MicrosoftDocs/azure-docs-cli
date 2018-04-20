@@ -39,7 +39,13 @@ for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and highe
    sudo yum install azure-cli
    ```
 
-Run the Azure CLI with the `az` command.
+You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+
+```azurecli
+az login
+```
+
+To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Update
 

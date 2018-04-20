@@ -25,7 +25,13 @@ Install the CLI using `docker run`.
    docker run -it microsoft/azure-cli
    ```
 
-The CLI is installed on the image as the `az` command in `/usr/local/bin`.
+The CLI is installed on the image as the `az` command in `/usr/local/bin`. To log in, run the `az login` command.
+
+```azurecli
+az login
+```
+
+To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
