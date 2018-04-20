@@ -31,7 +31,7 @@ Log in interactively from your web browser.
 
 ## Command line
 
-Provide your credentials on the command line.
+Provide your Azure user credentials on the command line.
 
 > [!Note]
 > This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
@@ -39,6 +39,23 @@ Provide your credentials on the command line.
 ```azurecli
 az login -u <username> -p <password>
 ```
+
+> [!IMPORTANT]
+> If you want to avoid displaying your password on console and are using `az login` interactively,
+> use the `read -s` command under `bash`.
+> 
+> ```bash
+> read -sp "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
+> ```
+>
+> Under PowerShell, use the `Read-Host -AsSecureString` cmdlet and secure string conversion.
+> 
+> ```powershell
+> $securePass =  Read-Host "Azure password: " -AsSecureString;
+> $AzPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePass));
+> az login -u <username> -p $AzPass;
+> $AzPass = ""
+> ```
 
 ## Log in with a specific tenant
 
@@ -49,7 +66,7 @@ or the Azure object ID for the tenant. You can log in interactively, or provide 
 az login --tenant <tenant>
 ```
 
-## Logging in with a service principal
+## Log in with a service principal
 
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 pre-defined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
@@ -59,7 +76,7 @@ about service principals, see [Create an Azure service principal with the Azure 
 To log in with a service principal, you provide the username, password or certificate PEM file, and the tenant associated with the service principal:
 
 ```azurecli
-az login --service-principal -u <user> -p <password-or-cert> --tenant <tenant>
+az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant>
 ```
 
 The tenant value is the Azure Active Directory tenant associated with the service principal. This can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant.
@@ -68,3 +85,20 @@ You can get the tenant object ID for your current login by using the following c
 ```azurecli
 az account show --query 'tenantId' -o tsv
 ```
+
+> [!IMPORTANT]
+> If you want to avoid displaying your password on console and are using `az login` interactively,
+> use the `read -s` command under `bash`.
+> 
+> ```bash
+> read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-url> -p $AZ_PASS --tenant <tenant>
+> ```
+>
+> Under PowerShell, use the `Read-Host -AsSecureString` cmdlet and secure string conversion.
+> 
+> ```powershell
+> $securePass =  Read-Host "Azure password: " -AsSecureString;
+> $AzPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePass));
+> az login --service-principal -u <app-url> -p $AzPass --tenant <tenant>;
+> $AzPass = ""
+> ```
