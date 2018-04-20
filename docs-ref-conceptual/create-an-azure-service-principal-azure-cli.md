@@ -35,10 +35,20 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
 
   The `--keyvault` argument can be added to indicate the cert is stored in Azure Key Vault. In this case, the `--cert` value refers to the name of the certificate in Key Vault.
 
-* `--create-cert` creates a _self-signed_ certificate for authentication. The `--keyvault` argument can be added to store the certificate in Azure Key Vault.
+  ```azurecli
+  az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
+  ```
+
+* `--create-cert` creates a _self-signed_ certificate for authentication. If the `--cert` argument is not provided, a random certificate name is generated.
 
   ```azurecli
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert
+  ```
+
+  The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is also required.
+
+  ```azurecli
+  az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
   ```
 
 If an argument indicating the authentication type isn't included, `--password` is used by default.
