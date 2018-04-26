@@ -69,7 +69,7 @@ If you use a Mac or Windows computer, the following CLI installers are available
 If you have set up your computer as a [Docker](https://docs.docker.com/engine/understanding-docker/) host, you can run the latest Azure CLI 1.0 in a Docker container. Run the following command (on Linux distributions you might need to use **sudo**):
 
 ```bash
-docker run -it microsoft/azure-cli
+docker run -it microsoft/azure-cli:0.10.17
 ```
 
 ## Run Azure CLI 1.0 commands
