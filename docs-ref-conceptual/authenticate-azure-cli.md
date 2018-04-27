@@ -3,13 +3,14 @@ title: Log in with Azure CLI 2.0
 description: Log in with the Azure CLI 2.0 interactively or with local credentials 
 author: sptramer
 ms.author: sttramer
-manager: routlaw
+manager: carmonm
 ms.date: 02/13/2018
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
+ms.technology: azure-cli
 ms.devlang: azurecli
-ms.service: multiple
+ms.service: active-directory
+ms.component: authentication
 ---
 
 # Log in with Azure CLI 2.0

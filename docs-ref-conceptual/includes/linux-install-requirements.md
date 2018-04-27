@@ -1,3 +1,10 @@
+---
+author: sptramer
+ms.author: sttramer
+manager: carmonm
+ms.date: 12/08/2017
+ms.topic: include
+---
 > [!NOTE]
 > To install the CLI, your distribution must have packages with the following software:
 > * [Python 2.7x or Python 3.x](https://ww.python.org/downloads/)

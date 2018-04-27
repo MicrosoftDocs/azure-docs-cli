@@ -4,13 +4,11 @@ description: Reference for the installation of Azure CLI 2.0
 keywords: Azure CLI,Install Azure CLI
 author: sptramer
 ms.author: sttramer
-manager: routlaw
-ms.date: 01/29/2018
-ms.topic: article
+manager: carmonm
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Install Azure CLI 2.0
