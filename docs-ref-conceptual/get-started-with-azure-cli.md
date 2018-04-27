@@ -4,13 +4,12 @@ description: Get started using the Azure CLI 2.0 by learning command basics.
 keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
-manager: routlaw
+manager: carmonm
 ms.date: 02/05/2018
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Get started with Azure CLI 2.0

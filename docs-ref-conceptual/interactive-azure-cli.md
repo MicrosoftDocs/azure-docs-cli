@@ -1,15 +1,14 @@
 ---
 title: Azure CLI 2.0 Interactive Mode
 description: Use Azure CLI 2.0 in interactive mode.
-author: rloutlaw
-ms.author: routlaw
-manager: douge
+author: sptramer
+ms.author: sttramer
+manager: carmonm
 ms.date: 04/06/2017
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Interactive Azure CLI 2.0

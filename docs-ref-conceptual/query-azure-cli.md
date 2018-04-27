@@ -5,11 +5,10 @@ author: sptramer
 ms.author: sttramer
 manager: carmonm
 ms.date: 02/22/2018
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Use JMESPath queries with Azure CLI 2.0

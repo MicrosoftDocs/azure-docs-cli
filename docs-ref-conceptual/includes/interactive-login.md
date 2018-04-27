@@ -1,5 +1,9 @@
 ---
-ms.assetid: 16dae88b-a4b8-4bfd-aa3c-25245a9ad975
+author: sptramer
+ms.author: sttramer
+manager: carmonm
+ms.date: 01/05/2018
+ms.topic: include
 ---
 
 1. Run the login command.
