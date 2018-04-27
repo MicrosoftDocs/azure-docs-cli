@@ -5,11 +5,10 @@ author: sptramer
 ms.author: sttramer
 manager: carmonm
 ms.date: 03/14/2018
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # The Azure CLI 2.0 alias extension

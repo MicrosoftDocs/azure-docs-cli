@@ -5,11 +5,10 @@ author: rloutlaw
 ms.author: routlaw
 manager: douge
 ms.date: 02/27/2017
-ms.topic: article
+ms.topic: conceptual
 ms.prod: azure
-ms.technology: azure
-ms.devlang: azurecli
-ms.service: multiple
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0
