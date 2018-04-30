@@ -29,7 +29,7 @@ az extension list-available --output table
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.3 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.5 | An Azure CLI Extension that copies images from region to region. |  |
-| [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.1 | Preview Azure Key Vault commands. | Yes |
+| [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.2 | Preview Azure Key Vault commands. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [rdbms](https://github.com/Azure/azure-cli-extensions) | 0.0.5 | An Azure CLI Extension providing support for Azure MySQL and Azure PostgreSQL. |  |
