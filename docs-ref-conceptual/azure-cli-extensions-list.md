@@ -28,7 +28,8 @@ az extension list-available --output table
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.2.1 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.3 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
-| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.5 | An Azure CLI Extension that copies images from region to region. |  |
+| [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
+| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.6 | Support for copying managed vm images between regions |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.2 | Preview Azure Key Vault commands. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
