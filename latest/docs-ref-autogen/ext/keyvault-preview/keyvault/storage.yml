@@ -13,52 +13,52 @@ items:
   - ext_keyvault-preview_az_keyvault_storage_list_deleted
   - ext_keyvault-preview_az_keyvault_storage_purge
   - ext_keyvault-preview_az_keyvault_storage_recover
+  - ext_keyvault-preview_az_keyvault_storage_regenerate_key
   - ext_keyvault-preview_az_keyvault_storage_remove
   - ext_keyvault-preview_az_keyvault_storage_restore
   - ext_keyvault-preview_az_keyvault_storage_show
   - ext_keyvault-preview_az_keyvault_storage_show_deleted
+  - ext_keyvault-preview_az_keyvault_storage_update
 - uid: ext_keyvault-preview_az_keyvault_storage_add
   name: az keyvault storage add
   summary: Creates or updates a new storage account.
-  description: This operation requires the storage/set permission.
+  description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Create a storage account and setup a vault to manage its keys
+    syntax:
+      content: "$id = az storage account create -g resourcegroup -n storageacct –query id\n                        \n                        # assign the Azure Key Vault service the “Storage Account Key Operator Service Role” role. az role assignment create –role “Storage Account Key Operator Service Role” –scope $id \\ –assignee cfa8b339-82a2-471a-a3c9-0fc0be7a4093\n                        \n                        az keyvault storage add –vault-name vault -n storageacct –active-key-name key1    \\ –auto-regenerate-key –regeneration-period P90D  –resource-id $id"
   parameters:
   - isRequired: true
     name: --active-key-name
     summary: Current active storage account key name.
     description: ''
   - isRequired: true
-    name: --auto-regenerate-key
+    name: --resource-id
+    summary: Storage account resource id.
+    description: ''
+  - name: --auto-regenerate-key
+    parameterValueGroup: false, true
     summary: Whether keyvault should manage the storage account for the user.
+    description: ''
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
+    description: ''
+  - name: --regeneration-period
+    summary: The key regeneration time duration specified in ISO-8601 format, such as “P30D” for rotation every 30 days.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
     description: ''
   - isRequired: true
     name: --name -n
     summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --resource-id
-    summary: Storage account resource id.
-    description: ''
-  - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
-    description: ''
-  - name: --disabled
-    parameterValueGroup: false, true
-    summary: Create storage_account in disabled state.
-    description: ''
-  - name: --expires
-    summary: Expiration UTC datetime  (Y-m-d’T’H:M:S’Z’).
-    description: ''
-  - name: --not-before
-    summary: Key not usable before the provided UTC datetime  (Y-m-d’T’H:M:S’Z’).
-    description: ''
-  - name: --regeneration-period
-    summary: The key regeneration time duration specified in ISO-8601 format.
-    description: ''
-  - name: --tags
-    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_backup
   name: az keyvault storage backup
@@ -71,14 +71,14 @@ items:
     name: --file -f
     summary: Local file path in which to store storage account backup.
     description: ''
-  - name: --identifier
-    summary: ''
+  - name: --id
+    summary: Id of the storage account.  If specified all other ‘Id’ arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name to identify the storage account in the vault.
+    summary: Name to identify the storage account in the vault. Required if –id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault.
+    summary: Name of the key vault. Required if –id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_list
   name: az keyvault storage list
@@ -87,12 +87,12 @@ items:
   langs:
   - azurecli
   parameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
   - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
-    description: ''
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_list_deleted
   name: az keyvault storage list-deleted
@@ -101,12 +101,12 @@ items:
   langs:
   - azurecli
   parameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
   - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
-    description: ''
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_purge
   name: az keyvault storage purge
@@ -138,6 +138,26 @@ items:
     name: --vault-name
     summary: Name of the key vault.
     description: ''
+- uid: ext_keyvault-preview_az_keyvault_storage_regenerate_key
+  name: az keyvault storage regenerate-key
+  summary: Regenerates the specified key value for the given storage account.
+  description: This operation requires the storage/regeneratekey permission.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --key-name
+    summary: The storage account key name.
+    description: ''
+  - name: --id
+    summary: Id of the storage account.  If specified all other ‘Id’ arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if –id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if –id is not specified.
+    description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_remove
   name: az keyvault storage remove
   summary: Deletes a storage account.
@@ -145,13 +165,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name to identify the storage account in the vault.
+  - name: --id
+    summary: Id of the storage account.  If specified all other ‘Id’ arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: Name of the key vault.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if –id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if –id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_restore
   name: az keyvault storage restore
@@ -175,13 +196,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name to identify the storage account in the vault.
+  - name: --id
+    summary: Id of the storage account.  If specified all other ‘Id’ arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: Name of the key vault.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if –id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if –id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_storage_show_deleted
   name: az keyvault storage show-deleted
@@ -197,6 +219,39 @@ items:
   - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_storage_update
+  name: az keyvault storage update
+  summary: Updates the specified attributes associated with the given storage account.
+  description: This operation requires the storage/set/update permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --active-key-name
+    summary: The current active storage account key name.
+    description: ''
+  - name: --auto-regenerate-key
+    parameterValueGroup: false, true
+    summary: Whether keyvault should manage the storage account for the user.
+    description: ''
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
+    description: ''
+  - name: --regeneration-period
+    summary: The key regeneration time duration specified in ISO-8601 format, such as “P30D” for rotation every 30 days.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
+    description: ''
+  - name: --id
+    summary: Id of the storage account.  If specified all other ‘Id’ arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if –id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if –id is not specified.
     description: ''
 commands:
 - uid: ext_keyvault-preview_az_keyvault_storage_add
@@ -217,6 +272,9 @@ commands:
 - uid: ext_keyvault-preview_az_keyvault_storage_recover
   name: az keyvault storage recover
   summary: Recovers the deleted storage account.
+- uid: ext_keyvault-preview_az_keyvault_storage_regenerate_key
+  name: az keyvault storage regenerate-key
+  summary: Regenerates the specified key value for the given storage account.
 - uid: ext_keyvault-preview_az_keyvault_storage_remove
   name: az keyvault storage remove
   summary: Deletes a storage account.
@@ -247,12 +305,18 @@ commands:
 - uid: ext_keyvault-preview_az_keyvault_storage_sas_definition_show_deleted
   name: az keyvault storage sas-definition show-deleted
   summary: Gets the specified deleted sas definition.
+- uid: ext_keyvault-preview_az_keyvault_storage_sas_definition_update
+  name: az keyvault storage sas-definition update
+  summary: Updates the specified attributes associated with the given SAS definition.
 - uid: ext_keyvault-preview_az_keyvault_storage_show
   name: az keyvault storage show
   summary: Gets information about a specified storage account.
 - uid: ext_keyvault-preview_az_keyvault_storage_show_deleted
   name: az keyvault storage show-deleted
   summary: Gets the specified deleted storage account.
+- uid: ext_keyvault-preview_az_keyvault_storage_update
+  name: az keyvault storage update
+  summary: Updates the specified attributes associated with the given storage account.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
