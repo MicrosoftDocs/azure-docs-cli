@@ -30,10 +30,10 @@ az extension list-available --output table
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.6 | Support for copying managed vm images between regions |  |
-| [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.2 | Preview Azure Key Vault commands. | Yes |
+| [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [rdbms](https://github.com/Azure/azure-cli-extensions) | 0.0.5 | An Azure CLI Extension providing support for Azure MySQL and Azure PostgreSQL. |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.2 | An Azure CLI Extension to manage appservice resources | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.3 | An Azure CLI Extension to manage appservice resources | Yes |
