@@ -13,6 +13,137 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## May 7, 2018
+
+Version 2.0.32
+
+### Core
+
+* Fixed an unhandled exception when retrieving secrets from a service principal account with cert
+* Added limited support for positional arguments
+* Fix issue where `--query` could not be used with `--ids`. [#5591](https://github.com/Azure/azure-cli/issues/5591)
+* Improved piping scenarios from commands when using `--ids`. Supports `-o tsv` with a query specified or `-o json` without specifying a query
+* Added command suggestions on error if users have typo in their commands
+* Improved error when users type `az ''`
+* Added support custom resource types for command modules and extensions
+
+### ACR
+
+* Added ACR Build commands
+* Improved resource not found error messages
+* Improved resource creation performance and error handling
+* Improved acr login in non-standard consoles and WSL
+* Improved repository commands error messages
+* Updated table columns and ordering
+
+### ACS
+
+* Added warning that `az aks` is a preview service
+* Fixed the permission issue in `aks install-connector` when `--aci-resource-group` is not specified
+
+### AMS
+
+* Initial release - Manage Azure Media Services resources
+
+### Appservice
+
+* Fixed a bug in `webapp delete` when `--slot` is provided
+* Removed `--runtime-version` from `webapp auth update`
+* Added support for min\_tls\_version & https2.0
+* Added support for multicontainers
+
+### Batch AI
+
+* Changed `batchai create cluster` to respect vm priority configured in the cluster's configuration file
+
+### Cognitive Services
+
+* Fixed typo in example for `cognitiveservices account create` [#5603](https://github.com/Azure/azure-cli/issues/5603)
+
+### Consumption
+
+* Added new commands for budget API
+
+### Container
+
+* Removed requirement for `--registry-server` for `container create` when a registry server is included in the image name
+
+### Cosmos DB
+
+* Introducing VNET support for Azure CLI - Cosmos DB
+
+### DMS
+
+* Initial release - Adds support for the SQL to Azure SQL migration scenario
+
+### Extension
+
+* Fixed bug where extension metadata stopped being shown
+
+### Interactive
+
+* Allow interactive completers to function with positional arguments
+* More user-friendly output when users type '\'
+* Fixed completions for parameters with no help
+* Fixed descriptions for command-groups
+
+### Lab
+
+* Fixed regressions from knack conversion
+
+### Network
+
+* [BREAKING CHANGE] Removed the `--ids` parameter for: 
+  * `express-route auth list`
+  * `express-route peering list`
+  * `nic ip-config list`
+  * `nsg rule list`
+  * `route-filter rule list`
+  * `route-table route list`
+  * `traffic-manager endpoint list`
+
+### Profile
+
+* Fixed `disk create` source detection
+* [BREAKING CHANGE] Removed `--msi-port` and `--identity-port` as they are no longer used
+* Fixed typo in `account get-access-token` short summary
+
+### Redis
+
+* Deprecated `redis patch-schedule patch-schedule show` in favor of `redis patch-schedule show`
+* Deprecated `redis list-all`. This functionality has been folded into `redis list`
+* Deprecated `redis import-method` in favor of `redis import`
+* Added support for `--ids` to various commands
+
+### Role
+
+* [BREAKING CHANGE] Removed deprecated `ad sp reset-credentials`
+
+### Storage
+
+* Allow destination sas-token to apply to source for blob copy if source sas and account key are unspecified
+* Exposed --socket-timeout for blob uploads and downloads
+* Treat blob names that start with path separators as relative paths
+* Allow `storage blob copy --source-sas` with starting query char, '?'
+* Fixed `storage entity query --marker` to accept list of key=values
+
+### VM
+
+* Fixed an invalid detection logic on unmanaged blob uri
+* Added support disk encryption w/o user provided service principals
+* [BREAKING CHANGE] Do not use VM 'ManagedIdentityExtension' for MSI support
+* Added support for eviction policy to `vmss`
+* [BREAKING CHANGE] Removed `--ids` from:
+  * `vm extension list`
+  * `vm secret list`
+  * `vm unmanaged-disk list`
+  * `vmss nic list`
+* Added write accelerator support 
+* Added `vmss perform-maintenance`
+* Fixed `vm diagnostics set` to detect VM's OS type reliably
+* Changed `vm resize` to check if the requested size is different than currently set and update only on change
+
+
 ## April 10, 2018
 
 Version 2.0.31

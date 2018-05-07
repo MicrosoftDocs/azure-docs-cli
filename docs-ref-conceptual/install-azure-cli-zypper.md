@@ -43,7 +43,7 @@ for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 S
 
    ```bash
    sudo zypper refresh
-   sudo zypper install -y azure-cli
+   sudo zypper install --from azure-cli -y azure-cli
    ```
 
 You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.

@@ -14,7 +14,7 @@ ms.devlang: azure-cli
 # Install Azure CLI 2.0 on Windows
 
 On Windows the Azure CLI binary is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
-If you are running Windows Subsystem for Linux (WSL), there are packages available for your Linux distribution. See the [main install page](install-azure-cli.md)
+If you are running the Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
