@@ -62,6 +62,20 @@ To learn more about different login methods, see [Log in with Azure CLI 2.0](aut
 
 Here are some common problems seen when installing with `apt`. If your issue is not listed here, please [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
+### lsb_release fails with "Command not found"
+
+When running the `lsb_release` command, you may see output similar to the following error:
+
+```output
+-bash: lsb_release: command not found
+```
+
+The error is due to lsb_release not being installed. You can resolve it by installing the `lsb-release` package.
+
+```bash
+sudo apt-get install lsb-release
+```
+
 ### apt-key fails with "No dirmngr"
 
 When running the `apt-key` command, you may see output similar to the following error:
