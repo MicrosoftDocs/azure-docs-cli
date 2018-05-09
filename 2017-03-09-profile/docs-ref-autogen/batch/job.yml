@@ -54,7 +54,7 @@ items:
     summary: The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --job-manager-task-command-line
-    summary: The command line of the Job Manager task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    summary: The command line of the Job Manager task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variable (<a href="https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables">https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables</a>).
     description: ''
   - name: --job-manager-task-environment-settings
     summary: A list of environment variable settings for the Job Manager task. Space-separated values in 'key=value' format.
@@ -396,7 +396,7 @@ items:
 - uid: az_batch_job_stop
   name: az batch job stop
   summary: Terminates the specified job, marking it as completed.
-  description: When a Terminate Job request is received, the Batch service sets the job to the terminating state. The Batch service then terminates any active or running tasks associated with the job, and runs any required Job Release tasks. The job then moves into the completed state.
+  description: When a Terminate Job request is received, the Batch service sets the job to the terminating state. The Batch service then terminates any running tasks associated with the job and runs any required job release tasks. Then the job moves into the completed state. If there are any tasks in the job in the active state, they will remain in the active state. Once a job is terminated, new tasks cannot be added and any remaining active tasks will not be scheduled.
   langs:
   - azurecli
   parameters:
@@ -496,6 +496,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8346147d0da04063bd9000d1b370b2d65204cda8/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
-updated_at: 11/13/2017 7:42:14 PM
-ms.date: 11/13/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/11607d4f7b7a74a5ede41929a906a21d1344c047/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+updated_at: 4/10/2018 2:16:09 AM
+ms.date: 4/10/2018
