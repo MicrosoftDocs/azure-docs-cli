@@ -11,6 +11,7 @@ items:
   - az_redis_delete
   - az_redis_export
   - az_redis_force_reboot
+  - az_redis_import
   - az_redis_import_method
   - az_redis_list
   - az_redis_list_all
@@ -41,17 +42,17 @@ items:
   - isRequired: true
     name: --sku
     parameterValueGroup: Basic, Premium, Standard
-    summary: 'What type of redis cache to deploy. Valid values: (Basic, Standard, Premium).'
+    summary: Type of Redis cache.
     description: ''
   - isRequired: true
     name: --vm-size
-    summary: 'Size of redis cache to deploy. Example : values for C family (C0, C1, C2, C3, C4, C5, C6). For P family (P1, P2, P3, P4).'
+    summary: 'Size of Redis cache to deploy. Example : values for C family (C0, C1, C2, C3, C4, C5, C6). For P family (P1, P2, P3, P4).'
     description: ''
   - name: --enable-non-ssl-port
     summary: If the value is true, then the non-ssl redis server port (6379) will be enabled.
     description: ''
   - name: --redis-configuration
-    summary: All Redis Settings. Few possible keys rdb-backup-enabled, rdb-storage-connection-string, rdb-backup-frequency, maxmemory-delta, maxmemory-policy, notify-keyspace-events, maxmemory-samples, slowlog-log-slower-than, slowlog-max-len, list-max-ziplist-entries, list-max-ziplist-value, hash-max-ziplist-entries, hash-max-ziplist-value, set-max-intset-entries, zset-max-ziplist-entries, zset-max-ziplist-value etc.
+    summary: JSON encoded configuration settings. Use @{file} to load from a file.
     description: ''
   - name: --shard-count
     summary: The number of shards to be created on a Premium Cluster Cache.
@@ -63,7 +64,7 @@ items:
     summary: The full resource ID of a subnet in a virtual network to deploy the redis cache in. Example format /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --tenant-settings
     summary: Json dictionary with tenant settings.
@@ -83,7 +84,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -104,22 +105,22 @@ items:
   parameters:
   - isRequired: true
     name: --container
-    summary: ''
+    summary: Container name to export to.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --prefix
-    summary: ''
+    summary: Prefix to use for exported files.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --file-format
-    summary: ''
+    summary: File format to export.
     description: ''
   source:
     path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
@@ -136,7 +137,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --reboot-type
@@ -156,8 +157,8 @@ items:
       branch: master
       path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_redis_import_method
-  name: az redis import-method
+- uid: az_redis_import
+  name: az redis import
   summary: Import data into a Redis cache.
   description: ''
   langs:
@@ -165,15 +166,44 @@ items:
   parameters:
   - isRequired: true
     name: --file-format
-    summary: ''
+    summary: File format to import.
     description: ''
   - isRequired: true
     name: --files
-    summary: ''
+    summary: Space-separated list of files to import.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_redis_import_method
+  name: az redis import-method
+  summary: (DEPRECATED) Import data into a Redis cache.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --file-format
+    summary: File format to import.
+    description: ''
+  - isRequired: true
+    name: --files
+    summary: Space-separated list of files to import.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -187,13 +217,12 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_redis_list
   name: az redis list
-  summary: Lists all Redis caches in a resource group.
+  summary: List Redis caches.
   description: ''
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
@@ -204,7 +233,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_redis_list_all
   name: az redis list-all
-  summary: Gets all Redis caches in the specified subscription.
+  summary: (DEPRECATED) Gets all Redis caches in the specified subscription.
   description: ''
   langs:
   - azurecli
@@ -224,7 +253,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -250,7 +279,7 @@ items:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -271,7 +300,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -292,7 +321,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -300,10 +329,10 @@ items:
     description: ''
   - name: --sku
     parameterValueGroup: Basic, Premium, Standard
-    summary: ''
+    summary: Type of Redis cache.
     description: ''
   - name: --vm-size
-    summary: 'Size of redis cache to deploy. Example : values for C family (C0, C1, C2, C3, C4, C5, C6). For P family (P1, P2, P3, P4).'
+    summary: 'Size of Redis cache to deploy. Example : values for C family (C0, C1, C2, C3, C4, C5, C6). For P family (P1, P2, P3, P4).'
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -329,11 +358,11 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the redis cache.
+    summary: Name of the Redis cache.
     description: ''
   - isRequired: true
     name: --redis-configuration
-    summary: ''
+    summary: JSON encoded configuration settings. Use @{file} to load from a file.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -358,15 +387,18 @@ commands:
 - uid: az_redis_force_reboot
   name: az redis force-reboot
   summary: Reboot specified Redis node(s).
+- uid: az_redis_import
+  name: az redis import
+  summary: Import data into a Redis cache.
 - uid: az_redis_import_method
   name: az redis import-method
-  summary: Import data into a Redis cache.
+  summary: (DEPRECATED) Import data into a Redis cache.
 - uid: az_redis_list
   name: az redis list
-  summary: Lists all Redis caches in a resource group.
+  summary: List Redis caches.
 - uid: az_redis_list_all
   name: az redis list-all
-  summary: Gets all Redis caches in the specified subscription.
+  summary: (DEPRECATED) Gets all Redis caches in the specified subscription.
 - uid: az_redis_list_keys
   name: az redis list-keys
   summary: Retrieve a Redis cache's access keys.
@@ -378,13 +410,16 @@ commands:
   summary: Deletes the patching schedule of a redis cache (requires Premium SKU).
 - uid: az_redis_patch_schedule_patch_schedule
   name: az redis patch-schedule patch-schedule
-  summary: ''
+  summary: This group is deprecated and will be removed in CLI version 2.0.36. The command, `redis patch-schedule patch-schedule show`, will be replaced with `redis patch-schedule show`'.
 - uid: az_redis_patch_schedule_patch_schedule_show
   name: az redis patch-schedule patch-schedule show
   summary: Gets the patching schedule of a redis cache (requires Premium SKU).
 - uid: az_redis_patch_schedule_set
   name: az redis patch-schedule set
   summary: Create or replace the patching schedule for Redis cache (requires Premium SKU).
+- uid: az_redis_patch_schedule_show
+  name: az redis patch-schedule show
+  summary: Gets the patching schedule of a redis cache (requires Premium SKU).
 - uid: az_redis_regenerate_keys
   name: az redis regenerate-keys
   summary: Regenerate Redis cache's access keys.
@@ -413,6 +448,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8346147d0da04063bd9000d1b370b2d65204cda8/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-updated_at: 11/13/2017 7:42:14 PM
-ms.date: 11/13/2017
+gitcommit: https://github.com/Azure/azure-cli/blob/2aaaf66966c2d3e3e55e9181d59b65613c491a09/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+updated_at: 4/11/2018 12:11:08 AM
+ms.date: 4/11/2018
