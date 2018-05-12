@@ -25,9 +25,10 @@ az extension list-available --output table
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.1 | Support for command aliases | Yes |
-| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.2.1 | Additional commands for working with Azure Batch service |  |
+| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.2.2 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.4.4 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Support for Azure Bot Service 2017-12-01 preview features | Yes |
+| [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.6 | Support for copying managed vm images between regions |  |
