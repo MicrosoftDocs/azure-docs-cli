@@ -4,13 +4,12 @@ description: Create, log in, and manage multiple clouds with the Azure CLI 2.0.
 author: sptramer
 manager: carmonm
 ms.author: sttramer
-ms.date: 10/20/2017
+ms.date: 05/16/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-
 # Managing multiple clouds with Azure CLI 2.0
 
 If you work across different regions or use [Azure Stack](https://docs.microsoft.com/azure/azure-stack/user/), you may need to use more than one cloud. Microsoft provides clouds for compliance with regional laws, which are available for your use. This article shows you how to get information on clouds available to your account, change the current cloud, and register or unregister new clouds for use with Azure Stack.
@@ -21,7 +20,7 @@ You can list available clouds with the [az cloud list](/cli/azure/cloud#az-cloud
 
 To get the active cloud and a list of all the available clouds:
 
-```azurecli
+```azurecli-interactive
 az cloud list --output table
 ```
 
@@ -36,7 +35,7 @@ True        AzureCloud         latest
 
 The currently active cloud has `True` in the `IsActive` column. Only one cloud can be active at any time. To get more detailed information on a cloud, including the endpoints that it uses for Azure services, use the `cloud show` command:
 
-```azurecli
+```azurecli-interactive
 az cloud show --name AzureChinaCloud --output json
 ```
 
@@ -71,7 +70,7 @@ az cloud show --name AzureChinaCloud --output json
 
 To switch the currently active cloud, run the [az cloud set](/cli/azure/cloud#az-cloud-set) command. This command takes one required argument, the name of the cloud.
 
-```azurecli
+```azurecli-interactive
 az cloud set --name AzureChinaCloud
 ```
 
@@ -96,6 +95,6 @@ You do this with the [az cloud update](/cli/azure/cloud#az-cloud-update) command
 
 If you no longer require a registered cloud, it can be unregistered with the [az cloud unregister](/cli/azure/cloud#az-cloud-unregister) command:
 
-```azurecli
+```azurecli-interactive
 az cloud unregister --name MyCloud
 ```

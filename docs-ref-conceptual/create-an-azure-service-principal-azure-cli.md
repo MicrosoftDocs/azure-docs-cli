@@ -4,14 +4,13 @@ description: Learn how to create and use a service principal with Azure CLI 2.0.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/12/2018
+ms.date: 05/16/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: role-based-access-control
 ---
-
 # Create an Azure service principal with Azure CLI 2.0
 
 If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
@@ -23,31 +22,31 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
 
 * `--password` is used for password-based authentication. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). If you don't specify a password, one is created for you.
 
-  ```azurecli
+  ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --password PASSWORD
   ```
 
 * `--cert` is used for certificate-based authentication for an existing certificate, either as a PEM or DER public string, or `@{file}` to load a file.
 
-  ```azurecli
+  ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --cert {CertStringOrFile} 
   ```
 
   The `--keyvault` argument can be added to indicate the cert is stored in Azure Key Vault. In this case, the `--cert` value refers to the name of the certificate in Key Vault.
 
-  ```azurecli
+  ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
   ```
 
 * `--create-cert` creates a _self-signed_ certificate for authentication. If the `--cert` argument is not provided, a random certificate name is generated.
 
-  ```azurecli
+  ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert
   ```
 
   The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is also required.
 
-  ```azurecli
+  ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
   ```
 
@@ -82,7 +81,7 @@ The default role for a service principal is **Contributor**. This role has full 
 
 This example adds the **Reader** role and deletes the **Contributor** one.
 
-```azurecli
+```azurecli-interactive
 az role assignment create --assignee APP_ID --role Reader
 az role assignment delete --assignee APP_ID --role Contributor
 ```
@@ -91,7 +90,7 @@ Adding a role does _not_ change any previously assigned permissions. When restri
 
 The changes can be verified by listing the assigned roles.
 
-```azurecli
+```azurecli-interactive
 az role assignment list --assignee APP_ID
 ```
 
@@ -104,19 +103,20 @@ You can test the new service principal's login and permissions by logging in und
 
 To log in with a password, provide it as an argument parameter.
 
-```azurecli
+```azurecli-interactive
 az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
 ```
 
 To log in with a certificate, it must be available locally as a PEM or DER file.
 
-```azurecli
+```azurecli-interactive
 az login --service-principal --username APP_ID --tenant TENANT_ID --password PATH_TO_CERT
 ```
+
 ## Reset credentials
 
 In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp reset-credentials](https://docs.microsoft.com/en-us/cli/azure/ad/sp#az-ad-sp-reset-credentials) command. The same restrictions and options for creating a new service principal also apply here.
 
-```azurecli
+```azurecli-interactive
 az ad sp reset-credentials --name APP_ID --password NEW_PASSWORD
 ```

@@ -87,7 +87,7 @@ az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait
 az>> ? [*].provisioningState
 ```
 
-```
+```output
 [
   "Creating"
 ]
