@@ -4,13 +4,12 @@ description: Learn how to format the output of Azure CLI 2.0 commands to tables,
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/15/2018
+ms.date: 05/16/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-
 # Output formats for Azure CLI 2.0 commands
 
 Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter 
@@ -27,7 +26,7 @@ to format the output of the command into one of the output types noted in the fo
 
 The following example displays the list of virtual machines in your subscriptions in the default json format.
 
-```azurecli
+```azurecli-interactive
 az vm list --output json
 ```
 
@@ -65,7 +64,7 @@ The following output has some fields omitted for brevity, and identifying inform
 
 The `table` output format provides plain output formatted as rows and columns of collated data, making it easy to read and scan. Nested objects are not included in table output, but can still be filtered as part of a query. Some fields are also omitted from the table data, so this format is best when you want a quick, human-searchable overview of data.
 
-```azurecli
+```azurecli-interactive
 az vm list --out table
 ```
 
@@ -78,13 +77,14 @@ demovm213    DEMORG1          westus
 KBDemo001VM  RGDEMO001        westus
 KBDemo020    RGDEMO001        westus
 ```
+
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
 ```azurecli
 az vm list --query "[].{resource:resourceGroup, name:name}" -o table
 ```
 
-```
+```output
 Resource    Name
 ----------  -----------
 DEMORG1     DemoVM010
@@ -110,7 +110,7 @@ The `tsv` output format returns tab- and newline-separated values without additi
 
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
-```azurecli
+```azurecli-interactive
 az vm list --out tsv
 ```
 
@@ -139,7 +139,7 @@ For the purposes of processing tab-separated fields, the values are in the same 
 
 Use the interactive `az configure` command to set up your environment and establish default settings for output formats. The default output format is `json`. 
 
-```azurecli
+```azurecli-interactive
 az configure
 ```
 

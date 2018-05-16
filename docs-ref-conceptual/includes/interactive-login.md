@@ -2,7 +2,7 @@
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/05/2018
+ms.date: 05/16/2018
 ms.topic: include
 ---
 
@@ -14,10 +14,7 @@ ms.topic: include
 
    You get a code to use in the next step.
 
-1. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
+2. Use a web browser to open the page [https://aka.ms/devicelogin](https://aka.ms/devicelogin)
     and enter the code to authenticate.
 
-    You are prompted to log in using your credentials.
-
-1. Log in.
-
+3. Log in with your account credentials in the browser.

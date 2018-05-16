@@ -5,13 +5,12 @@ keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/05/2018
+ms.date: 05/16/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-
 # Get started with Azure CLI 2.0
 
 Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
@@ -54,7 +53,7 @@ into logical groupings.
 To search for commands, use [az find](/cli/azure/reference-index#az-find). For example, to search for command names containing `secret`,
 use the following command:
 
-```azurecli
+```azurecli-interactive
 az find -q secret
 ```
 
@@ -62,7 +61,7 @@ If you know which group of commands you want to work with, the `--help` argument
 may be a better choice. This displays not just detailed information for a command, but when used with a command group, displays all of the available subcommands. For example, when working with Network Security Groups (NSGs) you can find the available
 NSG subgroups and commands.
 
-```azurecli
+```azurecli-interactive
 az network nsg --help
 ```
 
@@ -86,13 +85,16 @@ There are some arguments that are available for every command.
 ## Interactive mode
 
 The CLI offers an interactive mode that automatically displays help information and makes it easier to
-select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az-interactive) command. For more information on interactive mode
-and how it helps you learn the CLI, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
+select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az-interactive) command.
+
+```azurecli-interactive
+az interactive
+```
+
+For more information on interactive mode, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
-
-
 
 ## Learn CLI basics with quickstarts and tutorials
 
@@ -117,6 +119,6 @@ If you would rather focus on other services, there are a variety of quickstarts 
 We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on Github](https://github.com/azure/azure-cli/issues) or use the built-in
 features of the CLI to leave general feedback with the [az feedback](/cli/azure/reference-index#az-feedback) command.
 
-```azurecli
+```azurecli-interactive
 az feedback
 ```
