@@ -11,7 +11,6 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: active-directory
 ---
-
 # Manage multiple Azure subscriptions
 
 Most Azure users will only ever have a single subscription. However, if you are part of multiple organizations or your organization has

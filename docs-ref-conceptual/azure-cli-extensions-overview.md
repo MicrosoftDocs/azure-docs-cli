@@ -5,7 +5,7 @@ keywords: Azure CLI, Extensions
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/15/2018
+ms.date: 05/16/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -23,7 +23,7 @@ This article helps you understand how to install, update, and remove extensions 
 
 In order to know what extensions are available, you can use [az extension list-available](/cli/azure/extension#az-extension-list-available). This command lists the official extensions provided and maintained by Microsoft.
 
-```azurecli
+```azurecli-interactive
 az extension list-available --output table
 ```
 
@@ -33,13 +33,13 @@ We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on t
 
 Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
-```azurecli
+```azurecli-interactive
 az extension add --name <extension-name>
 ```
 
 If the extension is from an external resource or you have a direct link to it, you can provide the source URL or local path. This _must_ be a compiled Python wheel file.
 
-```azurecli
+```azurecli-interactive
 az extension add --source <URL-or-path>
 ```
 
@@ -50,7 +50,7 @@ Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 If an extension was installed by name, it can be updated using [az extension update](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-update).
 
-```azurecli
+```azurecli-interactive
 az extension update --name <extension-name>
 ```
 
@@ -63,7 +63,7 @@ built-in command for the CLI. Try updating the CLI as described in [Install the 
 
 If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-remove).
 
-```azurecli
+```azurecli-interactive
 az extension remove --name <extension-name>
 ```
 
