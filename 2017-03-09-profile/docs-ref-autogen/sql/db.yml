@@ -24,9 +24,16 @@ items:
 - uid: az_sql_db_copy
   name: az sql db copy
   summary: Create a copy of a database.
-  description: ''
+  description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`. The copy destination database must have the same edition as the source database, but you can change the edition after the copy has completed.
   langs:
   - azurecli
+  examples:
+  - summary: Create a database with performance level S0 as a copy of an existing Standard database.
+    syntax:
+      content: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb --service-objective S0
+  - summary: Create a database with GeneralPurpose edition, Gen4 hardware, and 1 vcore as a copy of an existing GeneralPurpose database.
+    syntax:
+      content: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb -f Gen4 -c 1
   parameters:
   - isRequired: true
     name: --dest-name
@@ -50,17 +57,31 @@ items:
   - name: --dest-server
     summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
     description: ''
-  - name: --elastic-pool
-    summary: Name of the elastic pool to create the new database in.
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --service-objective
-    summary: Name of the service objective for the new database.
-    description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -71,14 +92,20 @@ items:
 - uid: az_sql_db_create
   name: az sql db create
   summary: Create a database.
-  description: ''
+  description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`.
   langs:
   - azurecli
   examples:
-  - summary: Create database with zone redundancy enabled
+  - summary: Create a Standard S0 database.
+    syntax:
+      content: az sql db create -g mygroup -s myserver -n mydb --service-objective S0
+  - summary: Create a database with GeneralPurpose edition, Gen4 hardware and 1 vcore
+    syntax:
+      content: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
+  - summary: Create a database with zone redundancy enabled
     syntax:
       content: az sql db create -g mygroup -s myserver -n mydb -z
-  - summary: Create database with zone redundancy explicitly disabled
+  - summary: Create a database with zone redundancy explicitly disabled
     syntax:
       content: az sql db create -g mygroup -s myserver -n mydb -z false
   parameters:
@@ -94,33 +121,47 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --collation
-    summary: The collation of the database. If createMode is not Default, this value is ignored.
-    description: ''
-  - name: --edition
-    summary: The edition of the database.
-    description: ''
-  - name: --elastic-pool
-    summary: The name of the elastic pool the database is in. If elasticPoolName and requestedServiceObjectiveName are both updated, the value of requestedServiceObjectiveName is ignored. Not supported for DataWarehouse edition.
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --max-size
-    summary: 'The max storage size of the database. Only the following sizes are supported (in addition to limitations being placed on each edition): 100MB, 500MB, 1GB, 5GB, 10GB, 20GB, 30GB, 150GB, 200GB, 500GB. If no unit is specified, defaults to bytes (B).'
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --sample-name
-    summary: Indicates the name of the sample schema to apply when creating this database. If createMode is not Default, this value is ignored. Not supported for DataWarehouse edition.
-    description: ''
-  - name: --service-objective
-    summary: 'The name of the configured service level objective of the database. This is the service level objective that is in the process of being applied to the database. Once successfully updated, it will match the value of serviceLevelObjective property. To see possible values, query the capabilities API (/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationID}/capabilities) referred to by operationId: "Capabilities_ListByLocation." or use the Azure CLI command `az sql db list-editions --location &lt;location&gt; --query [].supportedServiceLevelObjectives[].name`.'
-    description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy for the database.
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --catalog-collation
+    parameterValueGroup: DATABASE_DEFAULT, SQL_Latin1_General_CP1_CI_AS
+    summary: Collation of the metadata catalog.
+    description: ''
+  - name: --collation
+    summary: The collation of the database.
+    description: ''
+  - name: --sample-name
+    summary: The name of the sample schema to apply when creating this database.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -146,6 +187,9 @@ items:
   - isRequired: true
     name: --server -s
     summary: Name of the Azure SQL server.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -184,11 +228,11 @@ items:
   parameters:
   - isRequired: true
     name: --admin-password -p
-    summary: The password of the SQL administrator.
+    summary: Required. The password of the SQL administrator.
     description: ''
   - isRequired: true
     name: --admin-user -u
-    summary: The name of the SQL administrator.
+    summary: Required. The name of the SQL administrator.
     description: ''
   - isRequired: true
     name: --name -n
@@ -204,19 +248,18 @@ items:
     description: ''
   - isRequired: true
     name: --storage-key
-    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
+    summary: Required. The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - isRequired: true
     name: --storage-key-type
     parameterValueGroup: SharedAccessKey, StorageAccessKey
-    summary: The type of the storage key to use.
+    summary: Required. The type of the storage key to use.
     description: ''
   - isRequired: true
     name: --storage-uri
-    summary: The storage uri to use.
+    summary: Required. The storage uri to use.
     description: ''
   - name: --auth-type -a
-    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
     summary: The authentication type.
     description: ''
@@ -254,11 +297,11 @@ items:
   parameters:
   - isRequired: true
     name: --admin-password -p
-    summary: The password of the SQL administrator.
+    summary: Required. The password of the SQL administrator.
     description: ''
   - isRequired: true
     name: --admin-user -u
-    summary: The name of the SQL administrator.
+    summary: Required. The name of the SQL administrator.
     description: ''
   - isRequired: true
     name: --name -n
@@ -274,19 +317,18 @@ items:
     description: ''
   - isRequired: true
     name: --storage-key
-    summary: The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
+    summary: Required. The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - isRequired: true
     name: --storage-key-type
     parameterValueGroup: SharedAccessKey, StorageAccessKey
-    summary: The type of the storage key to use.
+    summary: Required. The type of the storage key to use.
     description: ''
   - isRequired: true
     name: --storage-uri
-    summary: The storage uri to use.
+    summary: Required. The storage uri to use.
     description: ''
   - name: --auth-type -a
-    defaultValue: SQL
     parameterValueGroup: ADPassword, SQL
     summary: The authentication type.
     description: ''
@@ -362,15 +404,24 @@ items:
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
+  - name: --available -a
+    summary: If specified, show only results that are available in the specified region.
+    description: ''
   - name: --show-details -d
     parameterValueGroup: max-size
     summary: List of additional details to include in output.
     description: ''
-  - name: --edition
+  - name: --dtu
+    summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
+    description: ''
+  - name: --edition --tier -e
     summary: Edition to search for. If unspecified, all editions are shown.
     description: ''
   - name: --service-objective
-    summary: Service objective to search for. If unspecified, all editions are shown.
+    summary: Service objective to search for. If unspecified, all service objectives are shown.
+    description: ''
+  - name: --vcores
+    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -455,20 +506,34 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --edition
-    summary: The edition for the new database.
-    description: ''
-  - name: --elastic-pool
-    summary: Name of the elastic pool to create the new database in.
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --service-objective
-    summary: Name of service objective for the new database.
-    description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
     description: ''
   - name: --deleted-time
     summary: If specified, restore from a deleted database instead of from an existing database. Must match the deleted time of a deleted database in the same server. Either --time or --deleted-time (or both) must be specified.
@@ -568,21 +633,30 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --elastic-pool
-    summary: The name of the elastic pool to move the database into.
-    description: ''
   - name: --max-size
     summary: The new maximum size of the database expressed in bytes.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --service-objective
-    summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
-    description: ''
   - name: --zone-redundant -z
     parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy for the database.
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to move the database into.
+    description: ''
+  - name: --service-objective
+    summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -712,6 +786,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/6729d6d544b93b1f7ba6979a88b566b59d0b9392/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-updated_at: 4/4/2018 11:05:48 PM
-ms.date: 4/4/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/e95f2701706bb605f89f44932045efc30df51f9b/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+updated_at: 5/15/2018 10:49:53 PM
+ms.date: 5/15/2018

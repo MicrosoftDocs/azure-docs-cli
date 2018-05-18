@@ -14,9 +14,16 @@ items:
 - uid: az_sql_db_replica_create
   name: az sql db replica create
   summary: Create a database as a readable secondary replica of an existing database.
-  description: ''
+  description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`. The secondary database must have the same edition as the primary database.
   langs:
   - azurecli
+  examples:
+  - summary: Create a database with performance level S0 as a secondary replica of an existing Standard database.
+    syntax:
+      content: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb --service-objective S0
+  - summary: Create a database with GeneralPurpose edition, Gen4 hardware, and 1 vcore as a secondary replica of an existing GeneralPurpose database
+    syntax:
+      content: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb -f Gen4 -c 1
   parameters:
   - isRequired: true
     name: --name -n
@@ -34,8 +41,9 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --elastic-pool
-    summary: Name of elastic pool to create the new replica in.
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -43,11 +51,24 @@ items:
   - name: --partner-resource-group
     summary: Name of the resource group to create the new replica in. If unspecified, defaults to the origin resource group.
     description: ''
-  - name: --service-objective
-    summary: Name of service objective for the new replica.
-    description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -172,6 +193,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/6729d6d544b93b1f7ba6979a88b566b59d0b9392/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-updated_at: 4/4/2018 11:05:48 PM
-ms.date: 4/4/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/e95f2701706bb605f89f44932045efc30df51f9b/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+updated_at: 5/15/2018 10:49:53 PM
+ms.date: 5/15/2018
