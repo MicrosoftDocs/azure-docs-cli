@@ -29,19 +29,11 @@ for the Azure CLI. This package has been tested with:
           sudo tee /etc/apt/sources.list.d/azure-cli.list
      ```
 
-2. Get the Microsoft signing key:
+2. <a name="signingKey"></a>Get the Microsoft signing key:
 
    ```bash
-   sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
+   curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
    ```
-
-  > [!WARNING]
-  > This signing key is deprecated, and will be replaced at the end of May 2018. In order to keep
-  > getting updates with `apt`, make sure that you also install the new key:
-  > 
-  > ```bash
-  > curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-  > ``` 
 
 3. Install the CLI:
 
@@ -49,6 +41,10 @@ for the Azure CLI. This package has been tested with:
    sudo apt-get install apt-transport-https
    sudo apt-get update && sudo apt-get install azure-cli
    ```
+
+   > [!WARNING]
+   > The signing key was updated in May 2018, and has been replaced. If you receive
+   > signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
 
 You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
 
