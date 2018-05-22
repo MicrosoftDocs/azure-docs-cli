@@ -43,6 +43,9 @@ for the Azure CLI. This package has been tested with:
   > curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
   > ``` 
 
+  Here's a temporary workaround for Ubuntu 18.04 if you keep getting a _public key unavailable error_:
+  https://github.com/Azure/azure-docs-cli-python/issues/821#issuecomment-390526049
+
 3. Install the CLI:
 
    ```bash
