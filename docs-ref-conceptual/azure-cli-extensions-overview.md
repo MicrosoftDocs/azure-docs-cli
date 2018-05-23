@@ -31,7 +31,7 @@ We also host a [list of Microsoft extensions](azure-cli-extensions-list.md) on t
 
 ## Install extensions
 
-Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
+Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli-interactive
 az extension add --name <extension-name>
@@ -48,7 +48,7 @@ Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ## Update extensions
 
-If an extension was installed by name, it can be updated using [az extension update](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-update).
+If an extension was installed by name, it can be updated using [az extension update](https://docs.microsoft.com/cli/azure/extension#az-extension-update).
 
 ```azurecli-interactive
 az extension update --name <extension-name>
@@ -61,7 +61,7 @@ built-in command for the CLI. Try updating the CLI as described in [Install the 
 
 ## Uninstall extensions
 
-If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/en-us/cli/azure/extension#az-extension-remove).
+If you no longer need an extension, it can be removed with [az extension remove](https://docs.microsoft.com/cli/azure/extension#az-extension-remove).
 
 ```azurecli-interactive
 az extension remove --name <extension-name>
