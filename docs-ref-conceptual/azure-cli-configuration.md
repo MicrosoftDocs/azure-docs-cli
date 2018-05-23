@@ -5,20 +5,19 @@ keywords: Azure CLI, configuration, settings, Azure
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 12/13/2017
+ms.date: 05/16/2018 
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-
 # Azure CLI 2.0 configuration
 
 The Azure CLI 2.0 allows for user configuration to override internal settings such as logging and data collection, and provide default options for
 some required parameters. The CLI offers a convenience command for managing some of these values, `az configure`, and other values can be set in a
 configuration file or with environment variables.
 
-Configuration values used by the CLI are evaluted in the following precedence, with items higher on the list taking priority.
+Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
 2. Environment variables
@@ -27,7 +26,7 @@ Configuration values used by the CLI are evaluted in the following precedence, w
 ## CLI configuration with az configure
 
 You set defaults for the CLI with the [az configure](/cli/azure/reference-index#az-configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provded values are used by the CLI in place of
+This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provided values are used by the CLI in place of
 required arguments.
 
 The following is a list of available keys that you can use.
@@ -44,7 +43,7 @@ The following is a list of available keys that you can use.
 
 As an example, here's how you would set the default resource group and location for all commands.
 
-```azurecli
+```azurecli-interactive
 az configure --defaults location=westus2 group=MyResourceGroup
 ```
 
@@ -63,7 +62,7 @@ Comments are any line that begins with a `#` or `;`. Inline comments are not all
 
 Here's an example of a CLI configuration file which disables any confirmation prompts and sets up logging to the `/var/log/azure` directory.
 
-```
+```ini
 [core]
 disable_confirm_prompt=Yes
 

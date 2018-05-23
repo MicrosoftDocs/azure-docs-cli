@@ -11,6 +11,7 @@ items:
   - az_container_create
   - az_container_delete
   - az_container_exec
+  - az_container_export
   - az_container_list
   - az_container_logs
   - az_container_show
@@ -78,15 +79,10 @@ items:
   - summary: Create a container in a container group that mounts a git repo as volume.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "cat /mnt/gitrepo" --gitrepo-url https://github.com/user/myrepo.git --gitrepo-dir ./dir1 --gitrepo-mount-path /mnt/gitrepo
+  - summary: Create a container in a container group using a yaml file.
+    syntax:
+      content: az container create -g MyResourceGroup -f containerGroup.yaml
   parameters:
-  - isRequired: true
-    name: --image
-    summary: The container image name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the container group.
-    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -104,6 +100,12 @@ items:
   - name: --environment-variables -e
     summary: A list of environment variable for the container. Space-separated values in 'key=value' format.
     description: ''
+  - name: --file -f
+    summary: The path to the input file.
+    description: ''
+  - name: --image
+    summary: The container image name.
+    description: ''
   - name: --ip-address
     parameterValueGroup: Public
     summary: The IP address type of the container group.
@@ -114,6 +116,9 @@ items:
   - name: --memory
     defaultValue: "1.5"
     summary: The required memory of the containers in GB.
+    description: ''
+  - name: --name -n
+    summary: The name of the container group.
     description: ''
   - name: --os-type
     defaultValue: Linux
@@ -239,6 +244,35 @@ items:
       branch: master
       path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_container_export
+  name: az container export
+  summary: Export a container group in yaml format.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Export a container group in yaml.
+    syntax:
+      content: az container export -g MyResourceGroup --name mynginx -f output.yaml
+  parameters:
+  - isRequired: true
+    name: --file -f
+    summary: The file path to export the container group.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_container_list
   name: az container list
   summary: List container groups.
@@ -316,6 +350,9 @@ commands:
 - uid: az_container_exec
   name: az container exec
   summary: Execute a command from within a running container of a container group.
+- uid: az_container_export
+  name: az container export
+  summary: Export a container group in yaml format.
 - uid: az_container_list
   name: az container list
   summary: List container groups.
@@ -341,6 +378,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/adc9bee08ea3dd835bf4a5c43e53f509064aa042/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-updated_at: 4/5/2018 10:28:54 PM
-ms.date: 4/5/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/af43da7169181e34fd94bd6b98bff5839139ab44/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+updated_at: 5/3/2018 3:38:44 PM
+ms.date: 5/3/2018

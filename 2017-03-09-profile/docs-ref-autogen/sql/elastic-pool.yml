@@ -27,6 +27,12 @@ items:
   - summary: Create elastic pool with zone redundancy explicitly disabled
     syntax:
       content: az sql elastic-pool create -g mygroup -s myserver -n mypool -z false
+  - summary: Create a Standard 100 DTU elastic pool.
+    syntax:
+      content: az sql elastic-pool create -g mygroup -s myserver -n mydb -e Standard -c 100
+  - summary: Create an elastic pool with GeneralPurpose edition, Gen4 hardware and 1 vcore.
+    syntax:
+      content: az sql elastic-pool create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
   parameters:
   - isRequired: true
     name: --name -n
@@ -40,27 +46,37 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --db-dtu-max --db-max-dtu
-    summary: The maximum DTU any one database can consume.
+  - name: --db-dtu-max --db-max-capacity --db-max-dtu
+    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
     description: ''
-  - name: --db-dtu-min --db-min-dtu
-    summary: The minimum DTU all databases are guaranteed.
+  - name: --db-dtu-min --db-min-capacity --db-min-dtu
+    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
     description: ''
-  - name: --dtu
-    summary: The total shared DTU for the database elastic pool.
-    description: ''
-  - name: --edition
-    summary: The edition of the elastic pool.
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this elastic pool.
     description: ''
   - name: --max-size --storage
-    summary: The max storage size of the elastic pool. If no unit is specified, defaults to megabytes (MB).
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy for the elastic pool.
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity --dtu -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -70,7 +86,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_elastic_pool_delete
   name: az sql elastic-pool delete
-  summary: Deletes the elastic pool.
+  summary: Deletes an elastic pool.
   description: ''
   langs:
   - azurecli
@@ -87,6 +103,9 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
     remote:
@@ -95,7 +114,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_elastic_pool_list
   name: az sql elastic-pool list
-  summary: Returns a list of elastic pools in a server.
+  summary: Gets all elastic pools in a server.
   description: ''
   langs:
   - azurecli
@@ -108,6 +127,9 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
+  - name: --skip
+    summary: The number of elements in the collection to skip.
+    description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
     remote:
@@ -116,7 +138,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_elastic_pool_list_dbs
   name: az sql elastic-pool list-dbs
-  summary: Returns a list of databases in an elastic pool.
+  summary: Gets a list of databases in an elastic pool.
   description: ''
   langs:
   - azurecli
@@ -163,15 +185,21 @@ items:
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
+  - name: --available -a
+    summary: If specified, show only results that are available in the specified region.
+    description: ''
   - name: --show-details -d
     parameterValueGroup: db-max-dtu, db-max-size, db-min-dtu, max-size
     summary: List of additional details to include in output.
     description: ''
   - name: --dtu
-    summary: Elastic pool DTU limit to search for. If unspecified, all DTU limits are shown.
+    summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
     description: ''
-  - name: --edition
+  - name: --edition --tier -e
     summary: Edition to search for. If unspecified, all editions are shown.
+    description: ''
+  - name: --vcores
+    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -230,21 +258,30 @@ items:
     name: --server -s
     summary: Name of the Azure SQL server.
     description: ''
-  - name: --db-dtu-max --db-max-dtu
-    summary: The maximum DTU any one database can consume.
+  - name: --db-dtu-max --db-max-capacity --db-max-dtu
+    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
     description: ''
-  - name: --db-dtu-min --db-min-dtu
-    summary: The minimum DTU all databases are guaranteed.
-    description: ''
-  - name: --dtu
-    summary: TThe total shared DTU for the elastic eool.
+  - name: --db-dtu-min --db-min-capacity --db-min-dtu
+    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
     description: ''
   - name: --max-size --storage
-    summary: Storage limit for the elastic pool in MB.
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy for the elastic pool.
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity --dtu -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -267,13 +304,13 @@ commands:
   summary: Create an elastic pool.
 - uid: az_sql_elastic_pool_delete
   name: az sql elastic-pool delete
-  summary: Deletes the elastic pool.
+  summary: Deletes an elastic pool.
 - uid: az_sql_elastic_pool_list
   name: az sql elastic-pool list
-  summary: Returns a list of elastic pools in a server.
+  summary: Gets all elastic pools in a server.
 - uid: az_sql_elastic_pool_list_dbs
   name: az sql elastic-pool list-dbs
-  summary: Returns a list of databases in an elastic pool.
+  summary: Gets a list of databases in an elastic pool.
 - uid: az_sql_elastic_pool_list_editions
   name: az sql elastic-pool list-editions
   summary: List elastic pool editions available for the active subscription.
@@ -308,6 +345,6 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/6729d6d544b93b1f7ba6979a88b566b59d0b9392/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-updated_at: 4/4/2018 11:05:48 PM
-ms.date: 4/4/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/e95f2701706bb605f89f44932045efc30df51f9b/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+updated_at: 5/15/2018 10:49:53 PM
+ms.date: 5/15/2018
