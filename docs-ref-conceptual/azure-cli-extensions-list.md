@@ -35,6 +35,7 @@ az extension list-available --output table
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
+| [rdbms-vnet](https://github.com/Azure/azure-cli-extensions) | 10.0.0 | Support for Virtual Network rules in Azure MySQL and Azure PostgreSQL resources |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
