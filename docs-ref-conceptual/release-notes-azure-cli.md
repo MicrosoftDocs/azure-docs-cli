@@ -15,7 +15,7 @@ ms.devlang: azure-cli
 
 ## May 22, 2018
 
-Version 2.0.32
+Version 2.0.33
 
 ### Core
 
