@@ -4,7 +4,7 @@ description: How to install the Azure CLI 2.0 with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/06/2018
+ms.date: 05/24/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -106,6 +106,10 @@ Use `apt-get upgrade` to update the CLI package.
    sudo apt-get update && sudo apt-get upgrade
    ```
 
+> [!WARNING]
+> The signing key was updated in May 2018, and has been replaced. If you receive
+> signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
+   
 > [!NOTE]
 > This command upgrades all of the installed packages on your system that have not had a dependency change.
 > To upgrade the CLI only, use `apt-get install`.
