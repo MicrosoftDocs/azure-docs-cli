@@ -13,6 +13,76 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## May 22, 2018
+
+Version 2.0.32
+
+### Core
+
+* core: ignore FileNotFoundError error on expanding `@`
+
+### ACS
+
+* Add new Dev-Spaces commands: `az aks use-dev-spaces` and `az aks remove-dev-spaces`
+* Fix typo in help message
+
+### AppService
+
+* Improve generic update commands
+* Webapp deployment source config-zip supports async operation with status updates for long running operation 
+
+### Container
+
+* Allow exporting a container group in yaml format.
+* Allow using a yaml file to create / update a container group.
+
+### Extension
+
+* Be more resilient to system error when removing an extension.
+
+### Interactive
+
+* Mute logging from parser for completions.
+* Made interactive more resistant to stale/corrupted help caches.
+
+### KeyVault
+
+* Make keyvault commands work in cloud shell or vms with identity
+
+### Network
+
+* `network watcher show-topology`: Fix issue where command would not work with vnet and/or subnet name. [#6326](https://github.com/Azure/azure-cli/issues/6326)
+* `network watcher`: Fix issue where certain commands would claim Network Watcher is not enabled for regions when it actually is. [#6264](https://github.com/Azure/azure-cli/issues/6264)
+
+### SQL
+
+* BREAKING CHANGES: Updated database, data warehouse, and elastic pool commands to use Azure-standard SKU properties for configuring performance level. This has resulted in some changes to the respose objects returned from db, dw, and elastic-pool commands.
+    * Database & data warehouse respose objects:
+        * "serviceLevelObjective" property renamed to "currentServiceObjectiveName"
+        * "currentServiceObjectiveId" and "requestedServiceObjectiveId" properties removed
+        * "requestedServiceObjectiveName" property is now readonly. To update service objective, use --service-objective parameter or set sku.name property.
+        * "edition" property is now readonly. To update edition, use --edition parameter or set sku.tier property.
+        * "elasticPoolName" property is now readonly. To update elastic pool, use --elastic-pool parameter or set elasticPoolId property.
+        * "maxSizeBytes" property is now an integer value instead of a string.
+    * Elastic pool respose objects:
+      * "edition", "dtu", "databaseDtuMin", and "databaseDtuMax" properties are now readonly. To update, use --edition, --capacity, --db-max-capacity, and --db-min-capacity parameters respectively.
+* Database, data warehouse, and elastic pool create and update commands now accept parameters to set the family (i.e. compute generation) and capacity (i.e. scale) aspects of performance level. Capacity can be used to set the scale of DTU-based editions (e.g. Basic, Standard, Premium), and family & capacity can be used to set the scale of vcore-based editions (e.g. GeneralPurpose and BusinessCritical).
+* Database, data warehouse, and elastic pool commands now have table formatters (for use with `-o table`) which provide a more compact view of their major properties.
+
+### Storage
+
+* Added completer for `--account-name` argument.
+* Fixed problem with `storage entity query`.
+
+### VM
+
+* BREAKING CHANGE: remove `--write-accelerator` from `vm create`. The same support
+                   can be accessed through `vm update` or `vm disk attach`
+* vm/vmss extension: fix an incorrect extension image matching logic
+* vm create: expose `--boot-diagnostics-storage` to capture boot log
+* vm/vmss update: expose `--license-type`
+* vm/vmss: use PATCH for updating identities
+
 ## May 7, 2018
 
 Version 2.0.32
