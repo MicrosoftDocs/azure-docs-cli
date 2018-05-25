@@ -66,7 +66,7 @@ Version 2.0.33
         * "maxSizeBytes" property is now an integer value instead of a string.
     * Elastic pool respose objects:
       * "edition", "dtu", "databaseDtuMin", and "databaseDtuMax" properties are now readonly. To update, use --edition, --capacity, --db-max-capacity, and --db-min-capacity parameters respectively.
-* Database, data warehouse, and elastic pool create and update commands now accept parameters to set the family (i.e. compute generation) and capacity (i.e. scale) aspects of performance level. Capacity can be used to set the scale of DTU-based editions (e.g. Basic, Standard, Premium), and family & capacity can be used to set the scale of vcore-based editions (e.g. GeneralPurpose and BusinessCritical).
+* Database, data warehouse, and elastic pool create and update commands now accept parameters to set the `--family` (i.e. compute generation) and `--capacity` (i.e. scale) aspects of performance level. Capacity can be used to set the scale of DTU-based editions (e.g. Basic, Standard, Premium), and family & capacity can be used to set the scale of vcore-based editions (e.g. GeneralPurpose and BusinessCritical).
 * Database, data warehouse, and elastic pool commands now have table formatters (for use with `-o table`) which provide a more compact view of their major properties.
 
 ### Storage
