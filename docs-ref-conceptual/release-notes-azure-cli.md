@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 04/10/2018
+ms.date: 05/24/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,77 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0 release notes
+
+## May 22, 2018
+
+Version 2.0.33
+
+### Core
+
+* Added support for expanding `@` in file names
+
+### ACS
+
+* Added new Dev-Spaces commands `aks use-dev-spaces` and `aks remove-dev-spaces`
+* Fixed typo in help message
+
+### AppService
+
+* Improved generic update commands
+* Added async support for `webapp deployment source config-zip`
+
+### Container
+
+* Added support for exporting a container group in yaml format
+* Added support for using a yaml file to create / update a container group
+
+### Extension
+
+* Improved removal of extensions
+
+### Interactive
+
+* Changed logging to mute parser for completions
+* Improved handling of bad help caches
+
+### KeyVault
+
+* Fixed keyvault commands to work in cloud shell or VMs with identity
+
+### Network
+
+* Fix issue where `network watcher show-topology` would not work with vnet and/or subnet name [#6326](https://github.com/Azure/azure-cli/issues/6326)
+* Fix issue where some `network watcher` commands would claim Network Watcher is not enabled for regions when it actually is [#6264](https://github.com/Azure/azure-cli/issues/6264)
+
+### SQL
+
+* [BREAKING CHANGE] Changed response objects returned from `db` and `dw` commands:
+    * Renamed `serviceLevelObjective` property to `currentServiceObjectiveName`
+    * Removed `currentServiceObjectiveId` and `requestedServiceObjectiveId` properties 
+    * Changed `maxSizeBytes` property to be an integer value instead of a string
+* [BREAKING CHANGE] Changed the following `db` and `dw` properties to be read-only:
+    * `requestedServiceObjectiveName`.  To update, use the `--service-objective` parameter or set the `sku.name` property
+    * `edition`. To update, use the `--edition` parameter or set the `sku.tier` property
+    * `elasticPoolName`. To update, use the `--elastic-pool` parameter or set the `elasticPoolId` property
+* [BREAKING CHANGE] Changed the following `elastic-pool` properties to be read-only:
+    * `edition`. To update, use the `--edition` parameter
+    * `dtu`. To update, use the `--capacity` parameter
+    *  `databaseDtuMin`. To update, use the `--db-min-capacity` parameter
+    *  `databaseDtuMax`. To update, use the `--db-max-capacity` parameter
+* Added `--family` and `--capacity` parameters to `db`, `dw`, and `elastic-pool` commands.
+* Added table formatters to `db`, `dw`, and `elastic-pool` commands.
+
+### Storage
+
+* Added completer for `--account-name` argument
+* Fixed problem with `storage entity query`
+
+### VM
+
+* [BREAKING CHANGE] Removed `--write-accelerator` from `vm create`. The same support can be accessed through `vm update` or `vm disk attach`
+* Fixed extension image matching in `[vm|vmss] extension`
+* Added `--boot-diagnostics-storage` to `vm create` to capture boot log
+* Added `--license-type` to `[vm|vmss] update`
 
 ## May 7, 2018
 
