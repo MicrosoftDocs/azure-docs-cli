@@ -1,0 +1,668 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_storage-preview_az_storage_file
+  name: az storage file
+  summary: Manage file shares that use the SMB 3.0 protocol.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_storage-preview_az_storage_file_delete
+  - ext_storage-preview_az_storage_file_delete_batch
+  - ext_storage-preview_az_storage_file_download
+  - ext_storage-preview_az_storage_file_download_batch
+  - ext_storage-preview_az_storage_file_exists
+  - ext_storage-preview_az_storage_file_generate_sas
+  - ext_storage-preview_az_storage_file_list
+  - ext_storage-preview_az_storage_file_resize
+  - ext_storage-preview_az_storage_file_show
+  - ext_storage-preview_az_storage_file_update
+  - ext_storage-preview_az_storage_file_upload
+  - ext_storage-preview_az_storage_file_upload_batch
+  - ext_storage-preview_az_storage_file_url
+- uid: ext_storage-preview_az_storage_file_delete
+  name: az storage file delete
+  summary: Marks the specified file for deletion.
+  description: The file is later deleted during garbage collection.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_delete_batch
+  name: az storage file delete-batch
+  summary: Delete files from an Azure Storage File Share.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --source -s
+    summary: The source of the file delete operation. The source can be the file share URL or the share name.
+    description: ''
+  - name: --dryrun
+    summary: List the files and blobs to be deleted. No actual data deletion will occur.
+    description: ''
+  - name: --pattern
+    summary: The pattern used for file globbing. The supported patterns are ‘*’, ‘?’, ‘[seq]’, and ‘[!seq]’.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_download
+  name: az storage file download
+  summary: Downloads a file to a file path, with automatic chunking and progress notifications.
+  description: Returns an instance of File with properties and metadata.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --dest
+    summary: Path of the file to write to. The source filename will be used if not specified.
+    description: ''
+  - name: --end-range
+    summary: 'End of byte range to use for downloading a section of the file. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
+    description: ''
+  - name: --max-connections
+    defaultValue: "2"
+    summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the file. If this is the entire file, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be valuable if the file is being concurrently modified to enforce atomicity or if many files are expected to be empty as an extra request is required for empty files if max_connections is greater than 1.
+    description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --open-mode
+    defaultValue: wb
+    summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --start-range
+    summary: 'Start of byte range to use for downloading a section of the file. If no end_range is given, all bytes after the start_range will be downloaded. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --validate-content
+    summary: If set to true, validates an MD5 hash for each retrieved portion of the file. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that the service will only return transactional MD5s for chunks 4MB or less so the first get request will be of size self.MAX_CHUNK_GET_SIZE instead of self.MAX_SINGLE_GET_SIZE. If self.MAX_CHUNK_GET_SIZE was set to greater than 4MB an error will be thrown. As computing the MD5 takes processing time and more requests will need to be done due to the reduced chunk size there may be some increase in latency.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_download_batch
+  name: az storage file download-batch
+  summary: Download files from an Azure Storage File Share to a local directory in a batch operation.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --destination -d
+    summary: The local directory where the files are downloaded to. This directory must already exist.
+    description: ''
+  - isRequired: true
+    name: --source -s
+    summary: The source of the file download operation. The source can be the file share URL or the share name.
+    description: ''
+  - name: --dryrun
+    summary: List the files and blobs to be downloaded. No actual data transfer will occur.
+    description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --pattern
+    summary: The pattern used for file globbing. The supported patterns are ‘*’, ‘?’, ‘[seq]’, and ‘[!seq]’.
+    description: ''
+  - name: --validate-content
+    summary: If set, calculates an MD5 hash for each range of the file for validation.
+    description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
+  - name: --max-connections
+    defaultValue: "1"
+    summary: The maximum number of parallel connections to use. Default value is 1.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_exists
+  name: az storage file exists
+  summary: Check for the existence of a file.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_generate_sas
+  name: az storage file generate-sas
+  summary: Generates a shared access signature for the file.
+  description: Use the returned signature with the sas_token parameter of FileService.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --cache-control
+    summary: Response header value for Cache-Control when resource is accessed using this shared access signature.
+    description: ''
+  - name: --content-disposition
+    summary: Response header value for Content-Disposition when resource is accessed using this shared access signature.
+    description: ''
+  - name: --content-encoding
+    summary: Response header value for Content-Encoding when resource is accessed using this shared access signature.
+    description: ''
+  - name: --content-language
+    summary: Response header value for Content-Language when resource is accessed using this shared access signature.
+    description: ''
+  - name: --content-type
+    summary: Response header value for Content-Type when resource is accessed using this shared access signature.
+    description: ''
+  - name: --expiry
+    summary: Specifies the UTC datetime (Y-m-d’T’H:M’Z’) at which the SAS becomes invalid. Do not use if a stored access policy is referenced with –id that specifies this value.
+    description: ''
+  - name: --https-only
+    summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
+    description: ''
+  - name: --ip
+    summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
+    description: ''
+  - name: --permissions
+    summary: 'The permissions the SAS grants. Allowed values: (c)reate (d)elete (r)ead (w)rite. Do not use if a stored access policy is referenced with –id that specifies this value. Can be combined.'
+    description: ''
+  - name: --policy-name
+    summary: The name of a stored access policy within the container’s ACL.
+    description: ''
+  - name: --start
+    summary: Specifies the UTC datetime (Y-m-d’T’H:M’Z’) at which the SAS becomes valid. Do not use if a stored access policy is referenced with –id that specifies this value. Defaults to the time of the request.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_list
+  name: az storage file list
+  summary: List files and directories in a share.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --exclude-dir
+    summary: List only files in the given share.
+    description: ''
+  - name: --path -p
+    summary: The directory path within the file share.
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_resize
+  name: az storage file resize
+  summary: Resizes a file to the specified size.
+  description: If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - isRequired: true
+    name: --size
+    summary: The length to resize the file to.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_show
+  name: az storage file show
+  summary: Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
+  description: Returns an instance of File with FileProperties and a metadata dict.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_update
+  name: az storage file update
+  summary: Sets system properties on the file.
+  description: If one property is set for the content_settings, all properties will be overriden.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --content-cache-control
+    summary: The cache control string.
+    description: ''
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content’s MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_upload
+  name: az storage file upload
+  summary: Upload a file to a share that uses the SMB 3.0 protocol.
+  description: Creates or updates an Azure file from a source path with automatic chunking and progress notifications.
+  langs:
+  - azurecli
+  examples:
+  - summary: Upload to a local file to a share.
+    syntax:
+      content: az storage file upload -s MyShare -source /path/to/file
+  parameters:
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - isRequired: true
+    name: --source
+    summary: Path of the local file to upload as the file content.
+    description: ''
+  - name: --content-cache-control
+    summary: The cache control string.
+    description: ''
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content’s MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
+    description: ''
+  - name: --max-connections
+    defaultValue: "2"
+    summary: Maximum number of parallel connections to use.
+    description: ''
+  - name: --metadata
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --path -p
+    summary: The path to the file within the file share. If the file name is omitted, the source file name will be used.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --validate-content
+    summary: If true, calculates an MD5 hash for each range of the file. The storage service checks the hash of the content that has arrived with the hash that was sent. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that this MD5 hash is not stored with the file.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_upload_batch
+  name: az storage file upload-batch
+  summary: Upload files from a local directory to an Azure Storage File Share in a batch operation.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --destination -d
+    summary: The destination of the upload operation.
+    description: The destination can be the file share URL or the share name. When the destination is the share URL, the storage account name is parsed from the URL.
+  - isRequired: true
+    name: --source -s
+    summary: The directory to upload files from.
+    description: ''
+  - name: --destination-path
+    summary: The directory where the source data is copied to. If omitted, data is copied to the root directory.
+    description: ''
+  - name: --dryrun
+    summary: List the files and blobs to be uploaded. No actual data transfer will occur.
+    description: ''
+  - name: --metadata
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --pattern
+    summary: The pattern used for file globbing. The supported patterns are ‘*’, ‘?’, ‘[seq’, and ‘[!seq]’.
+    description: ''
+  - name: --validate-content
+    summary: If set, calculates an MD5 hash for each range of the file for validation.
+    description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
+  - name: --content-cache-control
+    summary: The cache control string.
+    description: ''
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content’s MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
+    description: ''
+  - name: --max-connections
+    defaultValue: "1"
+    summary: The maximum number of parallel connections to use. Default value is 1.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_file_url
+  name: az storage file url
+  summary: Creates the url to access a file.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - isRequired: true
+    name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --protocol
+    defaultValue: https
+    parameterValueGroup: http, https
+    summary: Protocol to use.
+    description: ''
+  - name: --sas-token
+    summary: Shared access signature token created with generate_shared_access_signature.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+commands:
+- uid: ext_storage-preview_az_storage_file_copy
+  name: az storage file copy
+  summary: Manage file copy operations.
+- uid: ext_storage-preview_az_storage_file_copy_cancel
+  name: az storage file copy cancel
+  summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
+- uid: ext_storage-preview_az_storage_file_copy_start
+  name: az storage file copy start
+  summary: Copies a file asynchronously.
+- uid: ext_storage-preview_az_storage_file_copy_start_batch
+  name: az storage file copy start-batch
+  summary: Copy multiple files or blobs to a file share.
+- uid: ext_storage-preview_az_storage_file_delete
+  name: az storage file delete
+  summary: Marks the specified file for deletion.
+- uid: ext_storage-preview_az_storage_file_delete_batch
+  name: az storage file delete-batch
+  summary: Delete files from an Azure Storage File Share.
+- uid: ext_storage-preview_az_storage_file_download
+  name: az storage file download
+  summary: Downloads a file to a file path, with automatic chunking and progress notifications.
+- uid: ext_storage-preview_az_storage_file_download_batch
+  name: az storage file download-batch
+  summary: Download files from an Azure Storage File Share to a local directory in a batch operation.
+- uid: ext_storage-preview_az_storage_file_exists
+  name: az storage file exists
+  summary: Check for the existence of a file.
+- uid: ext_storage-preview_az_storage_file_generate_sas
+  name: az storage file generate-sas
+  summary: Generates a shared access signature for the file.
+- uid: ext_storage-preview_az_storage_file_list
+  name: az storage file list
+  summary: List files and directories in a share.
+- uid: ext_storage-preview_az_storage_file_metadata
+  name: az storage file metadata
+  summary: Manage file metadata.
+- uid: ext_storage-preview_az_storage_file_metadata_show
+  name: az storage file metadata show
+  summary: Returns all user-defined metadata for the specified file.
+- uid: ext_storage-preview_az_storage_file_metadata_update
+  name: az storage file metadata update
+  summary: Sets user-defined metadata for the specified file as one or more name-value pairs.
+- uid: ext_storage-preview_az_storage_file_resize
+  name: az storage file resize
+  summary: Resizes a file to the specified size.
+- uid: ext_storage-preview_az_storage_file_show
+  name: az storage file show
+  summary: Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
+- uid: ext_storage-preview_az_storage_file_update
+  name: az storage file update
+  summary: Sets system properties on the file.
+- uid: ext_storage-preview_az_storage_file_upload
+  name: az storage file upload
+  summary: Upload a file to a share that uses the SMB 3.0 protocol.
+- uid: ext_storage-preview_az_storage_file_upload_batch
+  name: az storage file upload-batch
+  summary: Upload files from a local directory to an Azure Storage File Share in a batch operation.
+- uid: ext_storage-preview_az_storage_file_url
+  name: az storage file url
+  summary: Creates the url to access a file.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage file shares that use the SMB 3.0 protocol.
