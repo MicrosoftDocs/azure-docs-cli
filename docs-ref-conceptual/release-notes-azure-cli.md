@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/24/2018
+ms.date: 06/01/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,32 +19,29 @@ Version 2.0.34
 
 ### Core
 
-* core: support cross tenant resource referencing
-* Improve telemetry upload reliability
-  1. Remove retry. Once failed stop uploading.
-  2. Update the process start configuration to prevent upload process from blocking the CLI process.
+* Added support for cross tenant resource referencing
+* Improved telemetry upload reliability
 
 ### ACR
 
-* Allow VSTS as a remote source location
-* Add 'acr import' command.
+* Added support for VSTS as a remote source location
+* Added `acr import` command
 
 ### AKS
 
-* `az aks get-credentials` creates the kube config file with more secure filesystem permissions
+* Changed `aks get-credentials` to create the kube config file with more secure filesystem permissions
 
 ### Batch
 
-* Fixed bug in Pool list table formatting: issue #4378.
+* Fixed bug in Pool list table formatting [[Issue #4378](https://github.com/Azure/azure-cli/issues/4378)]
 
 ### IOT
 
-* Adds support for creating Basic Tier IoT Hubs.
-* Updates to Azure SDK 0.5.0
+* Added support for creating Basic Tier IoT Hubs
 
 ### Network
 
-* `network vnet peering`: a few improvements
+* Improved `network vnet peering`
 
 ### Policy Insights
 
@@ -52,35 +49,32 @@ Version 2.0.34
 
 ### ARM
 
-* add `account management-group` commands.
+* Added `account management-group` commands.
 
 ### SQL
 
-* Added new Managed instance and Managed database CRUD commands.
-    * Managed instance commands:
-        * az sql mi create
-        * az sql mi show
-        * az sql mi list
-        * az sql mi update
-        * az sql mi delete
-
-    * Managed database commands:
-        * az sql midb create
-        * az sql midb show
-        * az sql midb list
-        * az sql midb restore
-        * az sql midb delete
+* Added new managed instance commands:
+  * `sql mi create`
+  * `sql mi show`
+  * `sql mi list`
+  * `sql mi update`
+  * `sql mi delete`
+* Added new managed database commands:
+  * `sql midb create`
+  * `sql midb show`
+  * `sql midb list`
+  * `sql midb restore`
+  * `sql midb delete`
 
 ### Storage
 
-* Added extra mimetypes for json and javascript to be inferred from file extensions.
+* Added extra mimetypes for json and javascript to be inferred from file extensions
 
 ### VM
 
-* `vm list-skus`: make sure we have fixed columns; warn about `Tier` and "Size" columns will be removed
-* `vm create`: support `--accelerated-networking`
-* `vm/vmss extension image list`: absorb 404 when an image type is not found
-* `identity create`: support `--tags`
+* Changed `vm list-skus` to use fixed columns and add warning that `Tier` and `Size` will be removed
+* Added `--accelerated-networking` option to `vm create`
+* Added `--tags` to `identity create`
 
 ## May 22, 2018
 
