@@ -13,6 +13,75 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## June 5, 2018
+
+Version 2.0.34
+
+### Core
+
+* core: support cross tenant resource referencing
+* Improve telemetry upload reliability
+  1. Remove retry. Once failed stop uploading.
+  2. Update the process start configuration to prevent upload process from blocking the CLI process.
+
+### ACR
+
+* Allow VSTS as a remote source location
+* Add 'acr import' command.
+
+### AKS
+
+* `az aks get-credentials` creates the kube config file with more secure filesystem permissions
+
+### Batch
+
+* Fixed bug in Pool list table formatting: issue #4378.
+
+### IOT
+
+* Adds support for creating Basic Tier IoT Hubs.
+* Updates to Azure SDK 0.5.0
+
+### Network
+
+* `network vnet peering`: a few improvements
+
+### Policy Insights
+
+* Initial Release
+
+### ARM
+
+* add `account management-group` commands.
+
+### SQL
+
+* Added new Managed instance and Managed database CRUD commands.
+    * Managed instance commands:
+        * az sql mi create
+        * az sql mi show
+        * az sql mi list
+        * az sql mi update
+        * az sql mi delete
+
+    * Managed database commands:
+        * az sql midb create
+        * az sql midb show
+        * az sql midb list
+        * az sql midb restore
+        * az sql midb delete
+
+### Storage
+
+* Added extra mimetypes for json and javascript to be inferred from file extensions.
+
+### VM
+
+* `vm list-skus`: make sure we have fixed columns; warn about `Tier` and "Size" columns will be removed
+* `vm create`: support `--accelerated-networking`
+* `vm/vmss extension image list`: absorb 404 when an image type is not found
+* `identity create`: support `--tags`
+
 ## May 22, 2018
 
 Version 2.0.33
