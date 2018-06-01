@@ -92,7 +92,7 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
   ```
 2. Modify your `$HOME/.bash_profile` file to remove the following line:
 
-  ```
+  ```text
   <install location>/lib/azure-cli/az.completion
   ```
 
