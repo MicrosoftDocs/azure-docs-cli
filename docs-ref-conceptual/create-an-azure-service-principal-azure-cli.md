@@ -6,7 +6,6 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 05/16/2018
 ms.topic: conceptual
-ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: role-based-access-control

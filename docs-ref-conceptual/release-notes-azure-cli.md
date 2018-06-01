@@ -1426,7 +1426,7 @@ Version 2.0.12
 * Added container commands
 * Added billing and consumption modules
 
-```
+```text
 azure-cli (2.0.12)
 
 acr (2.0.9)
@@ -1705,7 +1705,7 @@ Version 2.0.6
 * Add 'az -v' as shortcut for 'az --version' ([#2926](https://github.com/Azure/azure-cli/issues/2926))
 * Improve performance of package load and command execution ([#2819](https://github.com/Azure/azure-cli/issues/2819))
 
-```
+```text
 azure-cli (2.0.6)
 
 acr (2.0.4)
@@ -1905,7 +1905,7 @@ Version 2.0.2
 
 We released the ACR, Batch, KeyVault, and SQL components in this release
 
-```
+```text
 azure-cli (2.0.2)
 
 acr (2.0.0)
@@ -2002,7 +2002,7 @@ To verify the version of the CLI, use `az --version`
 The output lists the version of the CLI itself (2.0.0 in this release), the individual command modules,
 and the versions of Python and GCC that you're using
 
-```
+```text
 azure-cli (2.0.0)
 
 acs (2.0.0)
