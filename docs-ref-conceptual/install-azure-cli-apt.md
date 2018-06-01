@@ -21,13 +21,13 @@ for the Azure CLI. This package has been tested with:
 
 ## Install
 
-1. Modify your sources list:
+1. <a name="install-step-1"/> Modify your sources list:
 
-     ```bash
-     AZ_REPO=$(lsb_release -cs)
-     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-          sudo tee /etc/apt/sources.list.d/azure-cli.list
-     ```
+    ```bash
+    AZ_REPO=$(lsb_release -cs)
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
+    ```
 
 2. <a name="signingKey"></a>Get the Microsoft signing key:
 
@@ -71,6 +71,12 @@ The error is due to lsb_release not being installed. You can resolve it by insta
 ```bash
 sudo apt-get install lsb-release
 ```
+
+### lsb_release does not return the base distribution version
+
+Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
+determine the package to install. If you know the name of the version your distribution is derived from, you can set the `AZ_REPO` value manually in
+[install step 1](#install-step-1). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
 
 ### apt-key fails with "No dirmngr"
 
