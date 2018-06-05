@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/24/2018
+ms.date: 06/01/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,69 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0 release notes
+
+## June 5, 2018
+
+Version 2.0.34
+
+### Core
+
+* Added support for cross tenant resource referencing
+* Improved telemetry upload reliability
+
+### ACR
+
+* Added support for VSTS as a remote source location
+* Added `acr import` command
+
+### AKS
+
+* Changed `aks get-credentials` to create the kube config file with more secure filesystem permissions
+
+### Batch
+
+* Fixed bug in Pool list table formatting [[Issue #4378](https://github.com/Azure/azure-cli/issues/4378)]
+
+### IOT
+
+* Added support for creating Basic Tier IoT Hubs
+
+### Network
+
+* Improved `network vnet peering`
+
+### Policy Insights
+
+* Initial Release
+
+### ARM
+
+* Added `account management-group` commands.
+
+### SQL
+
+* Added new managed instance commands:
+  * `sql mi create`
+  * `sql mi show`
+  * `sql mi list`
+  * `sql mi update`
+  * `sql mi delete`
+* Added new managed database commands:
+  * `sql midb create`
+  * `sql midb show`
+  * `sql midb list`
+  * `sql midb restore`
+  * `sql midb delete`
+
+### Storage
+
+* Added extra mimetypes for json and javascript to be inferred from file extensions
+
+### VM
+
+* Changed `vm list-skus` to use fixed columns and add warning that `Tier` and `Size` will be removed
+* Added `--accelerated-networking` option to `vm create`
+* Added `--tags` to `identity create`
 
 ## May 22, 2018
 
