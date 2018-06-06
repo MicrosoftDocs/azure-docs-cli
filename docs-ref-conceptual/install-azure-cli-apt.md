@@ -39,6 +39,11 @@ for the Azure CLI. This package has been tested with:
 
    ```bash
    sudo apt-get install apt-transport-https
+   ```
+   
+4. Install the command-line interface:
+
+   ```bash
    sudo apt-get update && sudo apt-get install azure-cli
    ```
 
