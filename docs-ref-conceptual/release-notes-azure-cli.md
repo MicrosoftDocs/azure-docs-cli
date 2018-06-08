@@ -13,6 +13,30 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## June 13, 2018
+
+Version 2.0.36
+
+### AKS
+
+* `az aks create` understands advanced networking (VNet) options
+* `az aks create` accepts options to enable Log Analytics monitoring and HTTP application routing addons
+* `az aks create --no-ssh-key` creates a cluster without using local SSH keys
+* `az aks create --enable-rbac` creates a cluster with Kubernetes Role-Based Access Control
+* `az aks create` handles Azure Active Directory auth options (PREVIEW)
+
+### AppService
+
+* dependencies: cap the urllib to 1.22 to avoid conflit with requests 2.18.4
+
+## June 5, 2018
+
+Version 2.0.35
+
+### Interactive
+
+* Limit the dependencies of Interactive module to prevent breaking change of `prompt_toolkit` from breaking the CLI
+
 ## June 5, 2018
 
 Version 2.0.34
