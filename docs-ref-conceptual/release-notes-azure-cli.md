@@ -19,15 +19,15 @@ Version 2.0.36
 
 ### AKS
 
-* `az aks create` understands advanced networking (VNet) options
-* `az aks create` accepts options to enable Log Analytics monitoring and HTTP application routing addons
-* `az aks create --no-ssh-key` creates a cluster without using local SSH keys
-* `az aks create --enable-rbac` creates a cluster with Kubernetes Role-Based Access Control
-* `az aks create` handles Azure Active Directory auth options (PREVIEW)
+* Added advanced networking options to `aks create`
+* Added arguments to `aks create` to enable monitoring and HTTP routing 
+* Added `--no-ssh-key` argument to `aks create`
+* Added `--enable-rbac` argument to `aks create`
+* [PREVIEW] Added support for Azure Active Directory authentication to `aks create`
 
 ### AppService
 
-* dependencies: cap the urllib to 1.22 to avoid conflit with requests 2.18.4
+* Fixed an issue with incompatible urllib versions
 
 ## June 5, 2018
 
@@ -35,7 +35,7 @@ Version 2.0.35
 
 ### Interactive
 
-* Limit the dependencies of Interactive module to prevent breaking change of `prompt_toolkit` from breaking the CLI
+* Added limits to the dependencies of interactive mode
 
 ## June 5, 2018
 
