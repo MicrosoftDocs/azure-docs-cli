@@ -1,6 +1,6 @@
 ---
 title: Install the Azure CLI for Windows
-description: How to install the Azure CLI 2.0 on Windows
+description: How to install the Azure CLI on Windows
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0 on Windows
+# Install Azure CLI on Windows
 
 On Windows the Azure CLI binary is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 If you are running the Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
@@ -33,7 +33,7 @@ not available from Windows Command Prompt. To log in, run the `az login` command
 az login
 ```
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
 
 ## Uninstall
 

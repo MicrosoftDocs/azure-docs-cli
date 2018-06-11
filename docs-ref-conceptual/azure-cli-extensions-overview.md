@@ -1,18 +1,18 @@
 ---
-title: Azure CLI 2.0 Extensions
-description: Using extensions with the Azure CLI 2.0
+title: Azure CLI Extensions
+description: Using extensions with the Azure CLI
 keywords: Azure CLI, Extensions
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Using extensions with the Azure CLI 2.0
+# Using extensions with the Azure CLI
 
 Extensions are individual modules not shipped with the Azure CLI itself that add functionality through new commands. These might be experimental or pre-release offerings, specialized tools from Microsoft, or custom features you
 write yourself. Extensions allow for a degree of flexibility with the CLI that let you modify it to your own needs, without having to ship a lot of additional packages that aren't considered part of the core feature set.

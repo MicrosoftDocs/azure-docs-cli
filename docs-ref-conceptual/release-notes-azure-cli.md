@@ -1,17 +1,17 @@
 ---
-title: Azure CLI 2.0 release notes
-description: Learn about the latest updates to Azure CLI 2.0
+title: Azure CLI release notes
+description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/01/2018
+ms.date: 06/11/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Azure CLI 2.0 release notes
+# Azure CLI release notes
 
 ## June 5, 2018
 

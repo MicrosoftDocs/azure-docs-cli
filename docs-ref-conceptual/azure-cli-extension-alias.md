@@ -1,17 +1,17 @@
 ---
-title: Azure CLI 2.0 alias extension
-description: How to use the Azure CLI 2.0 alias extension
+title: Azure CLI alias extension
+description: How to use the Azure CLI alias extension
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# The Azure CLI 2.0 alias extension
+# The Azure CLI alias extension
 
 The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow concise and simple by allowing shortcuts and giving you the ability to use positional arguments. Since aliases are powered by the Jinja2 template engine, they even offer advanced argument processing.
 
@@ -20,7 +20,7 @@ The alias extension allows users to define custom commands for the Azure CLI by 
 
 ## Install the alias extension
 
-The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI 2.0](./install-azure-cli.md).
+The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI](./install-azure-cli.md).
 
 Install the extension with the [az extension add](/cli/azure/extension#az-extension-add) command.
 

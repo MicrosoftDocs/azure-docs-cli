@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI 2.0 for Linux manually
-description: How to install the Azure CLI 2.0 on Linux manually
+title: Install the Azure CLI for Linux manually
+description: How to install the Azure CLI on Linux manually
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0 on Linux manually
+# Install Azure CLI on Linux manually
 
 If you do not have a package for the Azure CLI available on your distribution, you can always install the CLI manually by
 running an installation script.
@@ -47,7 +47,7 @@ You can then run the Azure CLI with the `az` command. To log in, run the `az log
 az login
 ```
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 

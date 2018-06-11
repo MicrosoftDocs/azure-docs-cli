@@ -1,19 +1,19 @@
 ---
 title: Azure CLI configuration options
-description: How to configure the Azure CLI 2.0
+description: How to configure the Azure CLI
 keywords: Azure CLI, configuration, settings, Azure
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018 
+ms.date: 06/11/2018 
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-# Azure CLI 2.0 configuration
+# Azure CLI configuration
 
-The Azure CLI 2.0 allows for user configuration to override internal settings such as logging and data collection, and provide default options for
+The Azure CLI allows for user configuration to override internal settings such as logging and data collection, and provide default options for
 some required parameters. The CLI offers a convenience command for managing some of these values, `az configure`, and other values can be set in a
 configuration file or with environment variables.
 
