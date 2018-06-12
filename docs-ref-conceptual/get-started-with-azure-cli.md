@@ -40,7 +40,7 @@ All subcommands of these groups and their documentation can be looked up in onli
 | [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
 | [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
 | [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
+| [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
 | [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
 | [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
 
