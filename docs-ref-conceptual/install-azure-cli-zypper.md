@@ -23,7 +23,6 @@ for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 S
 1. Install `curl`:
 
    ```bash
-   sudo zypper refresh
    sudo zypper install -y curl
    ```
 
@@ -36,13 +35,12 @@ for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 S
 3. Create local `azure-cli` repository information:
 
    ```bash
-   sudo sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/azure-cli.repo'
+   sudo zypper addrepo --name 'Azure CLI' --check https://packages.microsoft.com/yumrepos/azure-cli azure-cli
    ```
 
 4. Update the `zypper` package index and install:
 
    ```bash
-   sudo zypper refresh
    sudo zypper install --from azure-cli -y azure-cli
    ```
 
@@ -76,7 +74,7 @@ sudo zypper update azure-cli
 2. If you do not plan to reinstall the CLI, remove the repository information.
 
   ```bash
-  sudo rm /etc/zypp/repos.d/azure-cli.repo
+  sudo zypper removerepo azure-cli
   ```
 
 3. If you removed the repository information, also remove the Microsoft GPG signature key.
