@@ -1,16 +1,16 @@
 ---
-title: Use Azure service principals with Azure CLI 2.0
-description: Learn how to create and use a service principal with Azure CLI 2.0.
+title: Use Azure service principals with Azure CLI
+description: Learn how to create and use a service principal with Azure CLI.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: role-based-access-control
 ---
-# Create an Azure service principal with Azure CLI 2.0
+# Create an Azure service principal with Azure CLI
 
 If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
 associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
@@ -68,9 +68,9 @@ The `appId`, `tenant`, and `password` values are used for authentication. The `d
 > [!NOTE]
 > If your account does not have sufficient permissions to create a service principal, you see an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
-## Manage service principal roles 
+## Manage service principal roles
 
-The Azure CLI 2.0 provides the following commands to manage role assignments.
+The Azure CLI provides the following commands to manage role assignments.
 
 * [az role assignment list](/cli/azure/role/assignment#az-role-assignment-list)
 * [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create)
@@ -93,12 +93,12 @@ The changes can be verified by listing the assigned roles.
 az role assignment list --assignee APP_ID
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > If your account doesn't have the permissions to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'." Contact your Azure Active Directory admin to manage roles.
 
-## Log in using the service principal
+## Sign in using the service principal
 
-You can test the new service principal's login and permissions by logging in under it within the Azure CLI. Log in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
+You can test the new service principal's login and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
 
 To log in with a password, provide it as an argument parameter.
 

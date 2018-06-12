@@ -1,18 +1,18 @@
 ---
-title: Azure CLI 2.0 Extensions
-description: Using extensions with the Azure CLI 2.0
+title: Azure CLI Extensions
+description: Using extensions with the Azure CLI
 keywords: Azure CLI, Extensions
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Using extensions with the Azure CLI 2.0
+# Using extensions with the Azure CLI
 
 Extensions are individual modules not shipped with the Azure CLI itself that add functionality through new commands. These might be experimental or pre-release offerings, specialized tools from Microsoft, or custom features you
 write yourself. Extensions allow for a degree of flexibility with the CLI that let you modify it to your own needs, without having to ship a lot of additional packages that aren't considered part of the core feature set.
@@ -57,7 +57,7 @@ az extension update --name <extension-name>
 Otherwise, an extension can be updated from source by following the [Install extensions](#install-extensions) instructions.
 
 If an extension name cannot be resolved by the CLI, uninstall it and attempt to reinstall. There's also the possibility that the extension was moved out of preview and became a
-built-in command for the CLI. Try updating the CLI as described in [Install the Azure CLI 2.0](install-azure-cli.md) and see if the extension's commands were added. 
+built-in command for the CLI. Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.md) and see if the extension's commands were added. 
 
 ## Uninstall extensions
 

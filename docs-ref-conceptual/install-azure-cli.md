@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI 2.0
-description: Reference for the installation of Azure CLI 2.0
+title: Install the Azure CLI
+description: Reference for the installation of Azure CLI
 keywords: Azure CLI,Install Azure CLI
 author: sptramer
 ms.author: sttramer
@@ -11,9 +11,9 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0
+# Install Azure CLI
 
-The Azure CLI 2.0 is a command-line tool providing a great experience for managing Azure resources. The CLI is designed
+The Azure CLI is a command-line tool providing a great experience for managing Azure resources. The CLI is designed
 to make scripting easy, flexibly query data, support long-running operations as non-blocking processes, and more. Try it today and
 find out what the CLI has to offer!
 
@@ -29,5 +29,4 @@ The current version of the CLI is __2.0.34__. For information about the latest r
 * [Run in Docker container](run-azure-cli-docker.md)
 
 > [!NOTE]
-> If you are using the Azure classic deployment model, [install Azure CLI 1.0](install-cli-version-1.0.md).
-
+> If you are using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).

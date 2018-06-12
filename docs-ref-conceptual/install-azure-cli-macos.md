@@ -1,6 +1,6 @@
 ---
 title: Install the Azure CLI for macOS
-description: How to install the Azure CLI 2.0 on macOS
+description: How to install the Azure CLI on macOS
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0 on macOS
+# Install Azure CLI on macOS
 
 For the macOS platform, you can install the Azure CLI with [homebrew package manager](http://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
@@ -33,7 +33,7 @@ You can then run the Azure CLI with the `az` command. To log in, run the `az log
 az login
 ```
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 

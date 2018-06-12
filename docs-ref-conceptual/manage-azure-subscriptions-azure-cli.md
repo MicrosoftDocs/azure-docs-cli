@@ -1,16 +1,16 @@
 ---
-title: Manage Azure subscriptions with Azure CLI 2.0
-description: Manage Azure subscriptions with Azure CLI 2.0 on Linux, Mac, or Windows.
+title: Manage Azure subscriptions with the Azure CLI 
+description: Manage Azure subscriptions with the Azure CLI on Linux, Mac, or Windows.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/30/2017
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: active-directory
 ---
-# Manage multiple Azure subscriptions
+# Manage multiple subscriptions with the Azure CLI
 
 Most Azure users will only ever have a single subscription. However, if you are part of multiple organizations or your organization has
 divided up access to certain resources across groupings, you may have multiple subscriptions within Azure. Multiple subscriptions can
@@ -25,7 +25,7 @@ which are the agreements with Microsoft to use cloud services, including Azure. 
 
 To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
 To learn how to add a new subscription to your Azure Active Directory tenant, see [How to add an Azure subscription to Azure Active Directory](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
-When working with multiple tenants, you may need to log into a specific tenant. To do this, see [Log in with Azure CLI 2.0](/cli/azure/authenticate-azure-cli).
+When working with multiple tenants, you may need to log into a specific tenant. To do this, see [Log in with Azure CLI](/cli/azure/authenticate-azure-cli).
 
 ## Working with multiple subscriptions
 

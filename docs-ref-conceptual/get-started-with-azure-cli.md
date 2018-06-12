@@ -1,19 +1,19 @@
 ---
-title: Get started with Azure CLI 2.0
-description: Get started using the Azure CLI 2.0 by learning command basics.
+title: Get started with Azure CLI
+description: Get started using the Azure CLI by learning command basics.
 keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-# Get started with Azure CLI 2.0
+# Get started with Azure CLI
 
-Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
+Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
 with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
 ## Install and log in
@@ -27,7 +27,7 @@ az login
 ```
 
 This command prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
-which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+which are covered in detail in [Log in with Azure CLI](authenticate-azure-cli.md).
 
 ## Common commands
 
@@ -75,9 +75,9 @@ There are some arguments that are available for every command.
   commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
-  output formats, see [Output formats for Azure CLI 2.0](format-output-azure-cli.md).
+  output formats, see [Output formats for Azure CLI](format-output-azure-cli.md).
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
-  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+  To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
@@ -91,18 +91,18 @@ select subcommands. You enter interactive mode with the [az interactive](/cli/az
 az interactive
 ```
 
-For more information on interactive mode, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
+For more information on interactive mode, see [Azure CLI Interactive Mode](interactive-azure-cli.md).
 
 There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
 
 ## Learn CLI basics with quickstarts and tutorials
 
-To get you started with the Azure CLI 2.0, try an in-depth tutorial for setting up virtual machines and using the power
+To get you started with the Azure CLI, try an in-depth tutorial for setting up virtual machines and using the power
 of the CLI to query Azure resources.
 
 > [!div class="nextstepaction"]
-> [Create virtual machines with the Azure CLI 2.0 tutorial](azure-cli-vm-tutorial.yml)
+> [Create virtual machines with the Azure CLI tutorial](azure-cli-vm-tutorial.yml)
 
 If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
 

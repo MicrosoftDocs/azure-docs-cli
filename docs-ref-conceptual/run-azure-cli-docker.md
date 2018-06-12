@@ -1,6 +1,6 @@
 ---
-title: Run Azure CLI 2.0 in a Docker Container
-description: How to run a Docker container hosting the Azure CLI 2.0
+title: Run Azure CLI in a Docker Container
+description: How to run a Docker container hosting the Azure CLI 
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,9 +11,9 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Run Azure CLI 2.0 in a Docker container
+# Run Azure CLI in a Docker container
 
-You can use Docker to run a standalone Linux container with the Azure CLI 2.0 pre-installed. Docker lets you get started quickly
+You can use Docker to run a standalone Linux container with the Azure CLI  pre-installed. Docker lets you get started quickly
 with an environment where you can try out the CLI to decide if it's right for you, or use our image as a base for your own deployment.
 
 ## Run in a Docker container
@@ -30,7 +30,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`. To lo
 az login
 ```
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
