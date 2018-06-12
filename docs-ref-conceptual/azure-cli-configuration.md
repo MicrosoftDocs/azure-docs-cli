@@ -86,7 +86,7 @@ Any value with a default available does not have to be present in the command li
 |---------|-----------|------|------------|
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
-| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI 2.0 Terms of Use](http://aka.ms/AzureCliLegal). |
+| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](http://aka.ms/AzureCliLegal). |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |

@@ -57,7 +57,7 @@ az extension update --name <extension-name>
 Otherwise, an extension can be updated from source by following the [Install extensions](#install-extensions) instructions.
 
 If an extension name cannot be resolved by the CLI, uninstall it and attempt to reinstall. There's also the possibility that the extension was moved out of preview and became a
-built-in command for the CLI. Try updating the CLI as described in [Install the Azure CLI 2.0](install-azure-cli.md) and see if the extension's commands were added. 
+built-in command for the CLI. Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.md) and see if the extension's commands were added. 
 
 ## Uninstall extensions
 

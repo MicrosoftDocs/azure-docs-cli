@@ -77,7 +77,7 @@ There are some arguments that are available for every command.
   Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI](format-output-azure-cli.md).
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
-  To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+  To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
