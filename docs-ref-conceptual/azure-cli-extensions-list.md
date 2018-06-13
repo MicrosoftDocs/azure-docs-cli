@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 06/05/2018
+ms.date: 06/13/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -31,7 +31,7 @@ az extension list-available --output table
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
-| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.6 | Support for copying managed vm images between regions |  |
+| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.7 | Support for copying managed vm images between regions |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
