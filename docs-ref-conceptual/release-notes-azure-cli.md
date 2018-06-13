@@ -13,6 +13,30 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## June 13, 2018
+
+Version 2.0.36
+
+### AKS
+
+* Added advanced networking options to `aks create`
+* Added arguments to `aks create` to enable monitoring and HTTP routing 
+* Added `--no-ssh-key` argument to `aks create`
+* Added `--enable-rbac` argument to `aks create`
+* [PREVIEW] Added support for Azure Active Directory authentication to `aks create`
+
+### AppService
+
+* Fixed an issue with incompatible urllib versions
+
+## June 5, 2018
+
+Version 2.0.35
+
+### Interactive
+
+* Added limits to the dependencies of interactive mode
+
 ## June 5, 2018
 
 Version 2.0.34
