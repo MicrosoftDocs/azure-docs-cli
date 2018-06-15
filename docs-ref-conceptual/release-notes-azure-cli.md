@@ -19,103 +19,92 @@ Version 2.0.38
 
 ### Core
 
-* Add global support for `--subscription` to most commands.
+* Added global support for `--subscription` to most commands
 
 ### ACR
 
-* Add 'azure-storage-blob' as dependency.
-* Use 2 cores as the default CPU configuration in 'acr build-task create' command.
+* Added `azure-storage-blob` as dependency
+* Changed default CPU configuration with `acr build-task create` to use 2 cores
 
 ### ACS
 
-* Updated options of `az aks use-dev-spaces` command. Added `--update` support.
-* `az aks get-credentials --admin` won't replace the user context in $HOME/.kube/config
-* expose read-only "nodeResourceGroup" property on managed clusters
-* fix `az acs browse` command error
-* make --connector-name optional for `aks install-connector`, `aks upgrade-connector` and `aks remove-connector`
-* add 2 new Azure Container Instance regions for `aks install-connector`
-* `aks install-connector` add the normalized location into the helm release name and node name
+* Updated options of `aks use-dev-spaces` command. Added `--update` support
+* Changed `aks get-credentials --admin` to not eplace the user context in `$HOME/.kube/config`
+* Exposed read-only `nodeResourceGroup` property on managed clusters
+* Fixed `acs browse` command error
+* Made `--connector-name` optional for `aks install-connector`, `aks upgrade-connector` and `aks remove-connector`
+* Added new Azure Container Instance regions for `aks install-connector`
+* Added the normalized location into the helm release name and node name to `aks install-connector` 
 
 ### AppService
 
-* dependencies: remove the cap on the urllib as newer requests was released
-* functionapp create: support to use appservice plan from external resource groups
+* Added support for newer versions of urllib
+* Added support to `functionapp create` to use appservice plan from external resource groups
 
 ### Batch
 
-* Remove azure-batch-extensions dependency.
+* Removed `azure-batch-extensions` dependency
 
 ### Batch AI
 
-* Added support for 2018-05-01 API
-
- - Added support for workspaces. Workspaces allow to group clusters, file-servers and experiments in groups removing
-   limitation on number of resources can be created;
- - Added support for experiments. Experiments allow to group jobs in collections removing limitation on number of
-   created jobs;
- - It's possible to configure /dev/shm for jobs running in docker container.
-
-* Added 'az batchai cluster node exec' and 'az batchai job node exec' commands. These commands allow to execute any
-  commands directly on nodes and provide functionality for port forwarding. Port forwarding can be used, for example,
-  to access tensorboard and jupyter running on cluster's nodes;
-* az batchai now supports --ids parameters like other az commands;
-* Breaking change: now all clusters and fileservers must be created under workspaces;
-* Breaking change: now jobs must be created under experiments;
-* Breaking change: '--nfs-resource-group' option is deleted from 'cluster create' and 'job create' commands. To mount
-  NFS belonging to a different workspace/resource group provide file server's ARM ID via '--nfs' option;
-* Breaking change: '--cluster-resource-group' option is deleted from 'job create' command. To submit a job on a cluster
-  belonging to a different workspace/resource group provide cluster's ARM ID via '--cluster' option;
-* Breaking change: jobs, cluster and file servers do not longer have location attribute. Location now is an attribute of
-  a workspace. So, '--location' parameter has been removed from 'job create', 'cluster create' and 'file-server create'
-  commands;
-* Breaking change: names of short options were changed to make interface more consistent:
-
- - In create cluster, file-server and job commands ['--config', '-c'] option was renamed to ['--config-file', '-f'];
- - In create job command ['--cluster', '-r'] option was renamed to ['--cluster', '-c'];
- - In 'job file list' and 'job file stream' commands ['--job', '-n'] option was renamed to ['--job', '-j'];
- - In 'cluster file list' command ['--cluster', '-n'] option was renamed to ['--cluster', '-c']
+* Added support for workspaces. Workspaces allow to group clusters, file-servers and experiments in groups removing
+   limitation on number of resources can be created
+* Added support for experiments. Experiments allow to group jobs in collections removing limitation on number of
+   created jobs
+* Added support to configure `/dev/shm` for jobs running in a docker container
+* Added `batchai cluster node exec` and `batchai job node exec` commands. These commands allow to execute any
+  commands directly on nodes and provide functionality for port forwarding.
+* Added support for `--ids` to `batchai` commands 
+* [BREAKING CHANGE] All clusters and fileservers must be created under workspaces
+* [BREAKING CHANGE] Jobs must be created under experiments
+* [BREAKING CHANGE] Removed `--nfs-resource-group` from `cluster create` and `job create` commands. To mount
+  an NFS belonging to a different workspace/resource group provide file server's ARM ID via `--nfs` option
+* [BREAKING CHANGE] Removed `--cluster-resource-group` from `job create` command. To submit a job on a cluster
+  belonging to a different workspace/resource group provide cluster's ARM ID via `--cluster` option
+* [BREAKING CHANGE] Removed `location` attribute from jobs, cluster and file servers. Location now is an attribute of
+  a workspace.
+* [BREAKING CHANGE] Removed `--location` from `job create`, `cluster create` and `file-server create` commands
+* [BREAKING CHANGE] Changed names of short options to make interface more consistent:
+ - Renamed [`--config`, `-c`] to [`--config-file`, `-f`]
+ - Renamed [`--cluster`, `-r`] to [`--cluster`, `-c`]
+ - Renamed [`--cluster`, `-n`] to [`--cluster`, `-c`]
+ - Renamed [`--job`, `-n`] to [`--job`, `-j`]
 
 ### Maps
 
-* BREAKING CHANGE: `maps account create`: added requirement to accept Terms of Service either by interactive prompt or `--accept-tos` flag.
+* [BREAKING CHANGE] Changed `maps account create` to require accepting Terms of Service either by interactive prompt or `--accept-tos` flag
 
 ### Network
 
-* `network lb probe create`: support `Https` protocol [#6571](https://github.com/Azure/azure-cli/issues/6571)
-* `network traffic-manager endpoint create/update`: Fix issue where `--endpoint-status` was case sensitive. [#6502](https://github.com/Azure/azure-cli/issues/6502)
+* Added support for `https` to `network lb probe create` [#6571](https://github.com/Azure/azure-cli/issues/6571)
+* Fixed issue where `--endpoint-status` was case sensitive. [#6502](https://github.com/Azure/azure-cli/issues/6502)
 
 ### Reservations
 
-* BREAKING CHANGE: reservations catalog show
-    - Added required parameter ReservedResourceType.
-    - Added optional parameter Location.
-* BREAKING CHANGE: Updated ReservationProperties model.
-    - Removed 'kind'.
-* BREAKING CHANGE: Updated Catalog model.
-    - Renamed 'capabilities' to 'sku_properties'.
-    - Removed 'size' and 'tier'.
-* reservations reservation update
-    - Added optional parameter InstanceFlexibility.
-* Support for InstanceFlexibility and ReservedResourceType.
+* [BREAKING CHANGE] Added required parameter `ReservedResourceType` to `reservations catalog show`
+* Added parameter `Location`to `reservations catalog show`
+* [BREAKING CHANGE] Removed `kind` from `ReservationProperties`
+* [BREAKING CHANGE] Renamed `capabilities` to `sku_properties` in `Catalog`
+* [BREAKING CHANGE] Removed `size` and `tier` properties from `Catalog`
+* Added parameter `InstanceFlexibility` to `reservations reservation update`
 
 ### Role
 
-* ad: remove stack traces from graph exceptions before surface to users
-* ad sp create: do not throw if CLI can't resolve app id
+* Improved error handling
 
 ### SQL
 
-* Fixed confusing error when running `az sql db list-editions` for a location that is not available to your subscription.
+* Fixed confusing error when running `az sql db list-editions` for a location that is not available to your subscription
 
 ### Storage
 
-* Changed table output for `storage blob download` to be more readable.
+* Changed table output for `storage blob download` to be more readable
 
 ### VM
 
-* vm create: refine vm size check for accelerated networking support
-* vmss create: warn about the default vm size will be switched from "Standard_D1_v2" to "Standard_DS1_v2"
-* vm/vmss extension set: Expose `--force-update` flag to update the extension even when the configuration has not changed.
+* Improved refine vm size check for accelerated networking support in `vm create`
+* Added warning for `vmss create` that the default vm size will be switched from `Standard_D1_v2` to `Standard_DS1_v2`
+* Added `--force-update` to `[vm|vmss] extension set` to update the extension even when the configuration has not changed
 
 ## June 13, 2018
 
@@ -123,7 +112,7 @@ Version 2.0.37
 
 ### Core
 
-* Improve interactive telemetry
+* Improved interactive telemetry
 
 ## June 13, 2018
 
