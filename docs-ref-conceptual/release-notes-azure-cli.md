@@ -119,6 +119,14 @@ Version 2.0.38
 
 ## June 13, 2018
 
+Version 2.0.37
+
+### Core
+
+* Improve interactive telemetry
+
+## June 13, 2018
+
 Version 2.0.36
 
 ### AKS
