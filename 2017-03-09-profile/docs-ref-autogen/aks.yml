@@ -252,9 +252,7 @@ items:
   examples:
   - summary: Install the ACI Connector for Linux to a managed Kubernetes cluster.
     syntax:
-      content: >-
-        az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup \
-                                  --connector-name aci-connector
+      content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup
   - summary: Install the ACI Connector for Windows to a managed Kubernetes cluster.
     syntax:
       content: >-
@@ -278,10 +276,6 @@ items:
                                   --connector-name aci-connector --chart-url <CustomURL> --image-tag <VirtualKubeletImageTag>
   parameters:
   - isRequired: true
-    name: --connector-name
-    summary: Name of the ACI Connector.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: Name of the managed cluster.
     description: ''
@@ -298,6 +292,10 @@ items:
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+    description: ''
+  - name: --connector-name
+    defaultValue: aci-connector
+    summary: Name of the ACI Connector.
     description: ''
   - name: --image-tag
     summary: The image tag of the virtual kubelet. Use 'latest' if it is not specified.
@@ -337,10 +335,6 @@ items:
                                   --connector-name MyConnector --graceful
   parameters:
   - isRequired: true
-    name: --connector-name
-    summary: Name of the ACI Connector.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: Name of the managed cluster.
     description: ''
@@ -348,8 +342,15 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --connector-name
+    defaultValue: aci-connector
+    summary: Name of the ACI Connector.
+    description: ''
   - name: --graceful
     summary: Use a "cordon and drain" strategy to evict pods safely before removing the ACI node.
+    description: ''
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - name: --os-type
     defaultValue: Linux
@@ -362,6 +363,13 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Remove Azure Dev Spaces from a managed Kubernetes cluster.
+    syntax:
+      content: az aks remove-dev-spaces -g my-aks-group -n my-aks
+  - summary: Remove Azure Dev Spaces from a managed Kubernetes cluster without prompting.
+    syntax:
+      content: az aks remove-dev-spaces -g my-aks-group -n my-aks --yes
   parameters:
   - isRequired: true
     name: --name -n
@@ -472,10 +480,6 @@ items:
                                   --connector-name aci-connector --chart-url <CustomURL> --image-tag <VirtualKubeletImageTag>
   parameters:
   - isRequired: true
-    name: --connector-name
-    summary: Name of the ACI Connector.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: Name of the managed cluster.
     description: ''
@@ -492,6 +496,10 @@ items:
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+    description: ''
+  - name: --connector-name
+    defaultValue: aci-connector
+    summary: Name of the ACI Connector.
     description: ''
   - name: --image-tag
     summary: The image tag of the virtual kubelet. Use 'latest' if it is not specified.
@@ -513,6 +521,16 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, interactively selecting a dev space.
+    syntax:
+      content: az aks use-dev-spaces -g my-aks-group -n my-aks
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, updating to the latest Azure Dev Spaces         client components and selecting a new or existing dev space 'my-space'.
+    syntax:
+      content: az aks use-dev-spaces -g my-aks-group -n my-aks --update --space my-space
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, selecting a new or existing dev space         'develop/my-space' without prompting for confirmation.
+    syntax:
+      content: az aks use-dev-spaces -g my-aks-group -n my-aks -s develop/my-space -y
   parameters:
   - isRequired: true
     name: --name -n
@@ -522,12 +540,14 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --parent-space -p
-    summary: Name of a parent dev space to inherit from when creating a new dev space. By default, if there is already a single dev space with no parent, the new space inherits from this one.
-    description: ''
   - name: --space -s
-    defaultValue: default
-    summary: Name of the dev space to use.
+    summary: Name of the new or existing dev space to select. Defaults to an interactive selection experience.
+    description: ''
+  - name: --update
+    summary: Update to the latest Azure Dev Spaces client components.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation. Requires --space.
     description: ''
 - uid: az_aks_wait
   name: az aks wait

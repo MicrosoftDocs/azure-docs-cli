@@ -11,8 +11,6 @@ items:
   - az_batchai_cluster_create
   - az_batchai_cluster_delete
   - az_batchai_cluster_list
-  - az_batchai_cluster_list_files
-  - az_batchai_cluster_list_nodes
   - az_batchai_cluster_resize
   - az_batchai_cluster_show
 - uid: az_batchai_cluster_auto_scale
@@ -24,7 +22,7 @@ items:
   examples:
   - summary: Make a cluster to auto scale between 0 and 10 nodes depending on number of queued and running jobs.
     syntax:
-      content: az batchai auto-scale -n MyCluster -g MyResourceGroup --min 0 --max 10
+      content: az batchai auto-scale -g MyResourceGroup -w MyWorkspace -n MyCluster --min 0 --max 10
   parameters:
   - isRequired: true
     name: --max
@@ -36,11 +34,15 @@ items:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the cluster.
+    summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -51,63 +53,62 @@ items:
 - uid: az_batchai_cluster_create
   name: az batchai cluster create
   summary: Create a cluster.
-  description: Please refer to <a href="https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md">https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md</a> for the documentation.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: (Recommended approach) Create a cluster using a configuration file.
-    syntax:
-      content: az batchai cluster create -n MyCluster -g MyResourceGroup -c cluster.json
-  - summary: Create a cluster using a configuration file and override admin user account settings.
+  - summary: Create a single node GPU cluster with default image and auto-storage account.
     syntax:
       content: >-
-        az batchai cluster create -n MyCluster -g MyResourceGroup -c cluster.json \
-                                    -u $USER -k ~/.ssh/id_rsa.pub
-  - summary: Create a single node GPU cluster with default image, given ssh key and with auto-storage account.
-    syntax:
-      content: >-
-        az batchai cluster create -n MyCluster -g MyResourceGroup --use-auto-storage \
-                                    -s Standard_NC6 -t 1 -k id_rsa.pub
+        az batchai cluster create -g MyResourceGroup -w MyWorkspace -n MyCluster \
+                                    -s Standard_NC6 -t 1 --use-auto-storage --generate-ssh-keys
   - summary: Create a cluster with a setup command which installs unzip on every node, the command output will be stored on auto storage account Azure File Share.
     syntax:
       content: >-
-        az batchai cluster create -n MyCluster -g MyResourceGroup --use-auto-storage \
+        az batchai cluster create -g MyResourceGroup -w MyWorkspace -n MyCluster \
+                                    --use-auto-storage \
                                     -s Standard_NC6 -t 1 -k id_rsa.pub \
                                     --setup-task 'sudo apt update; sudo apt install unzip' \
                                     --setup-task-output '$AZ_BATCHAI_MOUNT_ROOT/autoafs'
   - summary: Create a cluster providing all parameters manually.
     syntax:
       content: >-
-        az batchai cluster create -n MyCluster -g MyResourceGroup \
-                                    -i UbuntuDSVM -s Standard_NC6 --vm-priority lowpriority \
+        az batchai cluster create -g MyResourceGroup -w MyWorkspace -n MyCluster \
+                                    -i UbuntuLTS -s Standard_NC6 --vm-priority lowpriority \
                                     --min 0 --target 1 --max 10 \
-                                    --nfs-name MyNfsToMount --afs-name MyAzureFileShareToMount --bfs-name MyBlobContainerNameToMount \
-                                    -u $USER -k ~/.ssh/id_rsa.pub -p ImpossibleToGuessPassword
+                                    --storage-account-name MyStorageAccount \
+                                    --nfs-name MyNfsToMount --afs-name MyAzureFileShareToMount \
+                                    --bfs-name MyBlobContainerNameToMount \
+                                    -u AdminUserName -k id_rsa.pub -p ImpossibleToGuessPassword
+  - summary: Create a cluster using a configuration file.
+    syntax:
+      content: az batchai cluster create -g MyResourceGroup -w MyWorkspace -n MyCluster -f cluster.json
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the cluster.
+    summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --location -l
-    summary: Location in which to create the cluster. If the location is not specified and default location is not configured, will default to the resource group's location.
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --generate-ssh-keys
-    summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+    summary: Generate SSH public and private key files in ~/.ssh directory (if missing).
     description: ''
   - name: --password -p
-    summary: Password.
+    summary: Optional password for the admin user account to be created on each compute node.
     description: ''
   - name: --ssh-key -k
-    summary: SSH public key value or path. If the value is not provided and no ssh public key or password is configured in the config file the default public ssh key (~/.ssh/id_rsa.pub) of the current user will be used (if available).
+    summary: Optional SSH public key value or path. If ommited and no password specified, default SSH key (~/.ssh/id_rsa.pub) will be used.
     description: ''
   - name: --user-name -u
-    summary: Name of the admin user account to be created on each compute node. If the value is not provided and no user configuration is provided in the config file, current user's name will be used.
+    summary: Name of admin user account to be created on each compute node. If the value is not provided and no user configuration is provided in the config file, current user's name will be used.
     description: ''
-  - name: --config -c
+  - name: --config-file -f
     summary: A path to a json file containing cluster create parameters (json representation of azure.mgmt.batchai.models.ClusterCreateParameters).
     description: ''
   - name: --use-auto-storage
@@ -118,27 +119,30 @@ items:
     summary: Relative mount path for Azure File share. The file share will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --afs-name
-    summary: Name of the Azure File Share to be mounted on each cluster node. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure File Share, configure them in a configuration file and use --config option.
+    summary: Name of Azure File Share to be mounted on each cluster node. Must be used in conjunction with --storage-account-name. Multiple shares can be mounted using configuration file (see --config-file option).
     description: ''
-  - name: --bfs-mount-path --container-mount-path
+  - name: --bfs-mount-path
     defaultValue: bfs
     summary: Relative mount path for Azure Storage container. The container will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
-  - name: --bfs-name --container-name
-    summary: Name of Azure Storage container to be mounted on each cluster node. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure Storage Blob Container, configure them in a configuration file and use --config option.
+  - name: --bfs-name
+    summary: Name of Azure Storage container to be mounted on each cluster node. Must be used in conjunction with --storage-account-name. Multiple containers can be mounted using configuration file (see --config-file option).
     description: ''
-  - name: --nfs --nfs-name
-    summary: Name of a file server to mount on each cluster node. If you need to mount more than one file server, configure them in a configuration file and use --config option.
+  - name: --storage-account-key
+    summary: Storage account key. Required if the storage account belongs to a different subscription. Can be specified using AZURE_BATCHAI_STORAGE_KEY environment variable.
+    description: ''
+  - name: --storage-account-name
+    summary: Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted on each cluster node. Can be specified using AZURE_BATCHAI_STORAGE_ACCOUNT environment variable.
+    description: ''
+  - name: --nfs
+    summary: Name or ARM ID of a file server to be mounted on each cluster node. You need to provide full ARM ID if the file server belongs to a different workspace. Multiple NFS can be mounted using configuration file (see --config-file option).
     description: ''
   - name: --nfs-mount-path
     defaultValue: nfs
     summary: Relative mount path for NFS. The NFS will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
-  - name: --nfs-resource-group
-    summary: Resource group in which file server is created. Can be omitted if the file server and the cluster belong to the same resource group.
-    description: ''
   - name: --custom-image
-    summary: Resource id of a virtual machine image to be used for nodes creation. Note, you need to provide --image with which this image was created.
+    summary: ARM ID of a virtual machine image to be used for nodes creation. Note, you need to provide --image containing information about the base image used for this image creation.
     description: ''
   - name: --image -i
     summary: Operation system image for cluster nodes. The value may contain an alias (UbuntuLTS, UbuntuDSVM) or specify image details in the form "publisher:offer:sku:version". If image configuration is not provided via command line or configuration file, Batch AI will choose default OS image.
@@ -154,25 +158,19 @@ items:
     description: ''
   - name: --vm-priority
     parameterValueGroup: dedicated, lowpriority
-    summary: VM priority. If lowpriority selected the node can get preempted while the job is running.
+    summary: VM priority.
     description: ''
   - name: --vm-size -s
     summary: VM size for cluster nodes (e.g. Standard_NC6 for 1 GPU node).
     description: ''
   - name: --setup-task
-    summary: A command line which should be executed on each compute node when it's got allocated or rebooted. The task is executed under a user account added into sudoers list (so, it can use sudo). Note, if this parameter is specified, it will overwrite setup task given in the configuration file.
+    summary: A command line which should be executed on each compute node when it's got allocated or rebooted. The task is executed under a user account added into sudoers list (so, it can use `sudo`).
     description: ''
   - name: --setup-task-output
-    summary: Location of the folder where setup-task's logs will be stored. Required if setup-task argument is provided. Note, Batch AI will create create several helper folders under this location. The created folders are reported as stdOutErrPathSuffix by get cluster command.
-    description: ''
-  - name: --storage-account-key
-    summary: 'Storage account key. Must be used in conjunction with --storage-account-name. Environment variable: AZURE_BATCHAI_STORAGE_KEY. Optional if the storage account belongs to the current subscription.'
-    description: ''
-  - name: --storage-account-name
-    summary: 'Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted on each cluster node. Related environment variable: AZURE_BATCHAI_STORAGE_ACCOUNT. Must be used in conjunction with --storage-account-key. If the key is not provided, the command will try to query the storage account key using the authenticated Azure account.'
+    summary: Directory path to store where setup-task's logs. Note, Batch AI will create several helper directories under this path. The created directories are reported as stdOutErrPathSuffix by 'az cluster show' command.
     description: ''
   - name: --subnet
-    summary: Resource id of a virtual network subnet to put the cluster in.
+    summary: ARM ID of a virtual network subnet to put the cluster in.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -189,21 +187,25 @@ items:
   examples:
   - summary: Delete a cluster and wait for deletion to be completed.
     syntax:
-      content: az batchai cluster delete -n MyCluster -g MyResourceGroup
+      content: az batchai cluster delete -g MyResourceGroup -w MyWorkspace -n MyCluster
   - summary: Send a delete command for a cluster and do not wait for deletion to be completed.
     syntax:
-      content: az batchai cluster delete -n MyCluster -g MyResourceGroup --no-wait
+      content: az batchai cluster delete -g MyResourceGroup -w MyWorkspace -n MyCluster --no-wait
   - summary: Delete cluster without asking for confirmation (for non-interactive scenarios).
     syntax:
-      content: az batchai cluster delete -n MyCluster -g MyResourceGroup -y
+      content: az batchai cluster delete -g MyResourceGroup -w MyWorkspace -n MyCluster -y
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the cluster.
+    summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -224,84 +226,17 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: List all clusters under the current subscription.
+  - summary: List all clusters in a workspace.
     syntax:
-      content: az batchai cluster list -o table
-  - summary: List all clusters under the current subscription belonging to the given resource group.
-    syntax:
-      content: az batchai cluster list -g MyResourceGroup -o table
+      content: az batchai cluster list -g MyResourceGroup -w MyWorkspace -o table
   parameters:
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_batchai_cluster_list_files
-  name: az batchai cluster list-files
-  summary: List files generated by the cluster's node setup task.
-  description: List files generated by the cluster's node setup task under $AZ_BATCHAI_STDOUTERR_DIR path. This functionality is available only if the node setup task output directory is located on mounted Azure File Share or Azure Blob Container.
-  langs:
-  - azurecli
-  examples:
-  - summary: List names and sizes of files and directories inside of $AZ_BATCHAI_STDOUTERR_DIR.
-    syntax:
-      content: az batchai cluster list-files -n MyCluster -g MyResourceGroup -o table
-  - summary: List names, sizes and download URLs for files and directories inside of $AZ_BATCHAI_STDOUTERR_DIR.
-    syntax:
-      content: az batchai cluster list-files -n MyCluster -g MyResourceGroup
-  - summary: List names, sizes and download URLs for files and directories inside of $AZ_BATCHAI_STDOUTERR_DIR/folder/subfolder.
-    syntax:
-      content: az batchai cluster list-files -n MyCluster -g MyResourceGroup -p folder/subfolder
-  - summary: List names, sizes and download URLs for files and directories inside of $AZ_BATCHAI_STDOUTERR_DIR making download URLs to remain valid for one hour.
-    syntax:
-      content: az batchai cluster list-files -n MyCluster -g MyResourceGroup -e 60
-  parameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the cluster.
-    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --expiry -e
-    defaultValue: "60"
-    summary: Time in minutes for how long generated download URLs should remain valid.
-    description: ''
-  - name: --path -p
-    defaultValue: .
-    summary: Relative path of a subfolder inside of node setup task output directory.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_batchai_cluster_list_nodes
-  name: az batchai cluster list-nodes
-  summary: List remote login information for cluster's nodes.
-  description: >-
-    List remote login information for cluster nodes - node id, public ip and ssh port. All cluster nodes share the same public IP. You can ssh to a particular node using the provided public IP and the port number.
-                                E.g. ssh <admin user name>@<public ip> -p <node's port number>.
-  langs:
-  - azurecli
-  examples:
-  - summary: List remote login information for a cluster.
-    syntax:
-      content: az batchai cluster list-nodes -n MyCluster -g MyResourceGroup -o table
-  parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -318,14 +253,14 @@ items:
   examples:
   - summary: Resize a cluster to zero size to stop paying for it.
     syntax:
-      content: az batchai cluster resize -n MyCluster -g MyResourceGroup -t 0
+      content: az batchai cluster resize -g MyResourceGroup -w MyWorkspace -n MyCluster -t 0
   - summary: Resize a cluster to have 10 nodes.
     syntax:
-      content: az batchai cluster resize -n MyCluster -g MyResourceGroup -t 10
+      content: az batchai cluster resize -g MyResourceGroup -w MyWorkspace -n MyCluster -t 10
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the cluster.
+    summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -334,6 +269,10 @@ items:
   - isRequired: true
     name: --target -t
     summary: Target number of compute nodes.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -350,18 +289,22 @@ items:
   examples:
   - summary: Show full information about a cluster.
     syntax:
-      content: az batchai cluster show -n MyCluster -g MyResourceGroup
-  - summary: Show brief information about a cluster.
+      content: az batchai cluster show -g MyResourceGroup -w MyWorkspace -n MyCluster
+  - summary: Show cluster's summary.
     syntax:
-      content: az batchai cluster show -n MyCluster -g MyResourceGroup -o table
+      content: az batchai cluster show -g MyResourceGroup -w MyWorkspace -n MyCluster -o table
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the cluster.
+    summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -379,14 +322,23 @@ commands:
 - uid: az_batchai_cluster_delete
   name: az batchai cluster delete
   summary: Delete a cluster.
+- uid: az_batchai_cluster_file
+  name: az batchai cluster file
+  summary: Commands to work with files generated by node setup task.
+- uid: az_batchai_cluster_file_list
+  name: az batchai cluster file list
+  summary: List files generated by the cluster's node setup task.
 - uid: az_batchai_cluster_list
   name: az batchai cluster list
   summary: List clusters.
-- uid: az_batchai_cluster_list_files
-  name: az batchai cluster list-files
-  summary: List files generated by the cluster's node setup task.
-- uid: az_batchai_cluster_list_nodes
-  name: az batchai cluster list-nodes
+- uid: az_batchai_cluster_node
+  name: az batchai cluster node
+  summary: Commands to work with cluster nodes.
+- uid: az_batchai_cluster_node_exec
+  name: az batchai cluster node exec
+  summary: Executes a command line on a cluster's node with optional ports forwarding.
+- uid: az_batchai_cluster_node_list
+  name: az batchai cluster node list
   summary: List remote login information for cluster's nodes.
 - uid: az_batchai_cluster_resize
   name: az batchai cluster resize
@@ -410,7 +362,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/1b50977ec2d2f9e91eb77b3cf160a7cfe1c09c2d/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-updated_at: 3/29/2018 7:52:42 PM
-ms.date: 03/29/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/05d895e2ba04db9685fe61b6cc0dfedcd861a5d2/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
+updated_at: 6/13/2018 9:53:10 PM
+ms.date: 06/13/2018
 description: Commands to manage clusters.
