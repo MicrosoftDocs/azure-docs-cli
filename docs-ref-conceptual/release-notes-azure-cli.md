@@ -13,6 +13,107 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## June 19, 2018
+
+Version 2.0.38
+
+### Core
+
+* Added global support for `--subscription` to most commands
+
+### ACR
+
+* Added `azure-storage-blob` as dependency
+* Changed default CPU configuration with `acr build-task create` to use 2 cores
+
+### ACS
+
+* Updated options of `aks use-dev-spaces` command. Added `--update` support
+* Changed `aks get-credentials --admin` to not eplace the user context in `$HOME/.kube/config`
+* Exposed read-only `nodeResourceGroup` property on managed clusters
+* Fixed `acs browse` command error
+* Made `--connector-name` optional for `aks install-connector`, `aks upgrade-connector` and `aks remove-connector`
+* Added new Azure Container Instance regions for `aks install-connector`
+* Added the normalized location into the helm release name and node name to `aks install-connector` 
+
+### AppService
+
+* Added support for newer versions of urllib
+* Added support to `functionapp create` to use appservice plan from external resource groups
+
+### Batch
+
+* Removed `azure-batch-extensions` dependency
+
+### Batch AI
+
+* Added support for workspaces. Workspaces allow to group clusters, file-servers and experiments in groups removing
+   limitation on number of resources can be created
+* Added support for experiments. Experiments allow to group jobs in collections removing limitation on number of
+   created jobs
+* Added support to configure `/dev/shm` for jobs running in a docker container
+* Added `batchai cluster node exec` and `batchai job node exec` commands. These commands allow to execute any
+  commands directly on nodes and provide functionality for port forwarding.
+* Added support for `--ids` to `batchai` commands 
+* [BREAKING CHANGE] All clusters and fileservers must be created under workspaces
+* [BREAKING CHANGE] Jobs must be created under experiments
+* [BREAKING CHANGE] Removed `--nfs-resource-group` from `cluster create` and `job create` commands. To mount
+  an NFS belonging to a different workspace/resource group provide file server's ARM ID via `--nfs` option
+* [BREAKING CHANGE] Removed `--cluster-resource-group` from `job create` command. To submit a job on a cluster
+  belonging to a different workspace/resource group provide cluster's ARM ID via `--cluster` option
+* [BREAKING CHANGE] Removed `location` attribute from jobs, cluster and file servers. Location now is an attribute of
+  a workspace.
+* [BREAKING CHANGE] Removed `--location` from `job create`, `cluster create` and `file-server create` commands
+* [BREAKING CHANGE] Changed names of short options to make interface more consistent:
+ - Renamed [`--config`, `-c`] to [`--config-file`, `-f`]
+ - Renamed [`--cluster`, `-r`] to [`--cluster`, `-c`]
+ - Renamed [`--cluster`, `-n`] to [`--cluster`, `-c`]
+ - Renamed [`--job`, `-n`] to [`--job`, `-j`]
+
+### Maps
+
+* [BREAKING CHANGE] Changed `maps account create` to require accepting Terms of Service either by interactive prompt or `--accept-tos` flag
+
+### Network
+
+* Added support for `https` to `network lb probe create` [#6571](https://github.com/Azure/azure-cli/issues/6571)
+* Fixed issue where `--endpoint-status` was case sensitive. [#6502](https://github.com/Azure/azure-cli/issues/6502)
+
+### Reservations
+
+* [BREAKING CHANGE] Added required parameter `ReservedResourceType` to `reservations catalog show`
+* Added parameter `Location`to `reservations catalog show`
+* [BREAKING CHANGE] Removed `kind` from `ReservationProperties`
+* [BREAKING CHANGE] Renamed `capabilities` to `sku_properties` in `Catalog`
+* [BREAKING CHANGE] Removed `size` and `tier` properties from `Catalog`
+* Added parameter `InstanceFlexibility` to `reservations reservation update`
+
+### Role
+
+* Improved error handling
+
+### SQL
+
+* Fixed confusing error when running `az sql db list-editions` for a location that is not available to your subscription
+
+### Storage
+
+* Changed table output for `storage blob download` to be more readable
+
+### VM
+
+* Improved refine vm size check for accelerated networking support in `vm create`
+* Added warning for `vmss create` that the default vm size will be switched from `Standard_D1_v2` to `Standard_DS1_v2`
+* Added `--force-update` to `[vm|vmss] extension set` to update the extension even when the configuration has not changed
+
+## June 13, 2018
+
+Version 2.0.37
+
+### Core
+
+* Improved interactive telemetry
+
 ## June 13, 2018
 
 Version 2.0.36
