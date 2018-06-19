@@ -24,15 +24,13 @@ for the Azure CLI. This package has been tested with:
 1. <a name="install-step-1"/> Modify your sources list:
 
     ```bash
-    AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-        sudo tee /etc/apt/sources.list.d/azure-cli.list
+     sudo apt-add-repository "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main"
     ```
 
 2. <a name="signingKey"></a>Get the Microsoft signing key:
 
    ```bash
-   curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+   curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
    ```
 
 3. Install the CLI:
