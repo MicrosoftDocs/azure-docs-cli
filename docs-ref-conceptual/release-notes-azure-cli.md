@@ -13,6 +13,87 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## July 3, 2018
+
+Version 2.0.41
+
+### AKS
+
+* handle monitoring solution through its subscription ID
+
+## July 3, 2018
+
+Version 2.0.40
+
+### Core
+
+* authentication: support authorization code flow for interactive login
+
+### ACR
+
+* Add polling build status.
+* Allow case-insensitive enum values.
+* Add --top and --orderby parameters for show-manifests.
+
+### ACS
+
+* Breaking change: Enable Kubernetes role-based access control by default.
+* Add a `--disable-rbac` argument and deprecate `--enable-rbac` since it's the default now.
+* Updated options for `az aks browse` command. Added `--listen-port` support.
+* Update the default helm chart package for `az aks install-connector` command. Use virtual-kubelet-for-aks-latest.tgz.
+* added `az aks enable-addons` and `disable-addons` commands to update an existing cluster
+
+### AppService
+
+* Minor fixes
+* webapp/functionapp: Adding support for disabling identity az webapp identity remove. Preview tag removed for Identity feature.
+
+### Backup
+
+* Updated module definition.
+
+### BatchAI
+
+* Fixed `-o table` option for `az batchai cluster node list` and `az batchai job node list` commands.
+
+### Cloud
+
+* Add acr login server suffix to cloud config.
+
+### Container
+
+* Default to long running operation for `az container create`
+* Add Log Analytics parameters '--log-analytics-workspace' and '--log-analytics-workspace-key'
+* Add --protocol parameter to specify which network protocol to use
+
+### Extension
+
+* `extension list-available` will only show extensions compatible with CLI version.
+
+### Network
+
+* `network dns zone import`: Fix issue where record types were case-sensitive. [#6602](https://github.com/Azure/azure-cli/issues/6602)
+
+### Rdbms
+
+* Added 'postgres/myql server vnet-rule' commands.
+
+### Resource
+
+* Support deployment at subscription scope: new operation group `deployment`.
+
+### VM
+
+* msi: support removing system assigned identity
+
+## June 25, 2018
+
+Version 2.0.39
+
+### CLI
+
+Windows-only hotfix: Update file trimming in MSI installer to fix extension installation issue.
+
 ## June 19, 2018
 
 Version 2.0.38
