@@ -23,9 +23,9 @@ without being used. At that point, you need to re-authenticate.
 
 After logging in, CLI Commands are run against your default subscription. If you have more than one subscription, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
 
-## Interactive log-in
+## Interactive sign in
 
-Log in interactively from your web browser.
+The Azure CLI's default authentication method is to sign in interactively from your web browser.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 

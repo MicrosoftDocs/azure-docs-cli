@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/01/2018
+ms.date: 07/03/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,87 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0 release notes
+
+## July 3, 2018
+
+Version 2.0.41
+
+### AKS
+
+* Changed monitoring to use subscription ID
+
+## July 3, 2018
+
+Version 2.0.40
+
+### Core
+
+* Added a new authorization code flow for interactive login
+
+### ACR
+
+* Added polling build status
+* Added support for case-insensitive enum values
+* Added `--top` and `--orderby` parameters for `show-manifests`
+
+### ACS
+
+* [BREAKING CHANGE] Enable Kubernetes role-based access control by default
+* Added `--disable-rbac` argument and deprecated `--enable-rbac` since it's the default now
+* Updated options for `aks browse` command. Added `--listen-port` support
+* Updated the default helm chart package for `aks install-connector` command. Use virtual-kubelet-for-aks-latest.tgz
+* Added `aks enable-addons` and `aks disable-addons` commands to update an existing cluster
+
+### AppService
+
+* Added support for disabling identity via `webapp identity remove`
+* Removed `preview` tag for Identity feature
+
+### Backup
+
+* Updated module definition
+
+### BatchAI
+
+* Fixed table output for `batchai cluster node list` and `batchai job node list` commands
+
+### Cloud
+
+* Added `acr login` server suffix to cloud config
+
+### Container
+
+* Changed `container create` to default to long running operation
+* Added Log Analytics parameters `--log-analytics-workspace` and `--log-analytics-workspace-key`
+* Added `--protocol` parameter to specify which network protocol to use
+
+### Extension
+
+* Changed `extension list-available` to only show extensions compatible with CLI version
+
+### Network
+
+* Fixed issue where record types were case-sensitive ([#6602](https://github.com/Azure/azure-cli/issues/6602))
+
+### Rdbms
+
+* Added `[postgres|myql] server vnet-rule` commands
+
+### Resource
+
+* Added new operation group `deployment`
+
+### VM
+
+* Added support for removing system assigned identity
+
+## June 25, 2018
+
+Version 2.0.39
+
+### CLI
+
+* Updated file trimming in MSI installer to fix extension installation issue
 
 ## June 19, 2018
 
