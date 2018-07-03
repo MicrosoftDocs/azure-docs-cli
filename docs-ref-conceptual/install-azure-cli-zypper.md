@@ -44,11 +44,9 @@ for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 S
    sudo zypper install --from azure-cli -y azure-cli
    ```
 
-You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
 To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 

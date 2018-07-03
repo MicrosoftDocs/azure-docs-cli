@@ -41,11 +41,9 @@ curl -L https://aka.ms/InstallAzureCli | bash
 You can also download the script and run it locally instead. You may have to restart
 your shell in order for changes to take effect. 
 
-You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
 To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
 

@@ -96,7 +96,7 @@ az role assignment list --assignee APP_ID
 > [!NOTE] 
 > If your account doesn't have the permissions to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'." Contact your Azure Active Directory admin to manage roles.
 
-## Log in using the service principal
+## Sign in using the service principal
 
 You can test the new service principal's login and permissions by logging in under it within the Azure CLI. Log in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
 
