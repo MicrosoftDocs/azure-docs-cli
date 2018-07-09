@@ -22,7 +22,7 @@ be easily managed with the CLI either by setting a global subscription for all c
 
 You might have some confusion over the difference between tenants, users, and subscriptions within Azure. A _tenant_ is the Azure Active Directory
 entity which encompasses a whole organization. This tenant has at least one _subscription_ and _user_. A user is an individual and is associated
-with only one tenant, the organization that they belong to. Users are those accounts which log in to Azure to provision and use resources.
+with only one tenant, the organization that they belong to. Users are those accounts which sign in to Azure to provision and use resources.
 A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource
 is associated with a subscription.
 

@@ -24,7 +24,7 @@ Before using any CLI commands with a local install, you need to sign in with [az
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-There are ways to sign in non-interactively, which are covered in detail in [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Common commands
 
