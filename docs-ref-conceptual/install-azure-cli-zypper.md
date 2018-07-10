@@ -48,7 +48,7 @@ You can then run the Azure CLI with the `az` command. To sign in, use [az login]
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Update
 

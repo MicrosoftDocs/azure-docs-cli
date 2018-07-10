@@ -22,7 +22,7 @@ and you have access to descriptions of commands and their parameters and command
 > [!NOTE]
 > We're not using the default style here, which doesn't read as well on a black background.
 
-If you're not already logged in to your account, use the `login` command to do that.
+If you're not already signed in to your account, use the `login` command.
 
 ## Configure
 

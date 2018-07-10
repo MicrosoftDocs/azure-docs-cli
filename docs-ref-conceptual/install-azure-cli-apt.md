@@ -46,11 +46,11 @@ for the Azure CLI. This package has been tested with:
    > The signing key was updated in May 2018, and has been replaced. If you receive
    > signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
 
-You can then run the Azure CLI with the `az` command. To log in, use [az login](/cli/azure/reference-index#az-login) command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different login methods, see [Log in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
 
 ## Troubleshooting
 
