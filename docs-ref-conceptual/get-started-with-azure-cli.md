@@ -78,7 +78,6 @@ There are some arguments that are available for every command.
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
-
 ## Interactive mode
 
 The CLI offers an interactive mode that automatically displays help information and makes it easier to

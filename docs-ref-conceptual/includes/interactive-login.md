@@ -5,7 +5,6 @@ manager: carmonm
 ms.date: 07/02/2018
 ms.topic: include
 ---
-
 1. Run the `login` command.
 
     ```azurecli-interactive

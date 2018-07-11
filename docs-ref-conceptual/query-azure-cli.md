@@ -61,7 +61,7 @@ When displaying information in the `table` output format, dictionary display is 
 
 ## Work with list output
 
-CLI commands that may return more than one value always return an array. Arrays can have their elements accessed by index, but there's never an order guarantee from the CLI. The best way to query an array of values is to flatten them with the `[]` operator. The operator is written after the key for the array, or as the first element in the expression. Flattening runs the query following it against each individual element in the array, and places the resulting values into a new array. The following example prints out the name and OS running on each VM in a resource group. 
+CLI commands that may return more than one value always return an array. Arrays can have their elements accessed by index, but there's never an order guarantee from the CLI. The best way to query an array of values is to flatten them with the `[]` operator. The operator is written after the key for the array, or as the first element in the expression. Flattening runs the query following it against each individual element in the array, and places the resulting values into a new array. The following example prints out the name and OS running on each VM in a resource group.
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query '[].{name:name, image:storageProfile.imageReference.offer}'

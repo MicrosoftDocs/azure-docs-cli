@@ -27,7 +27,7 @@ Install the CLI using `docker run`.
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
 > you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
-
+>
 > ```bash
 > docker run -it -v ${HOME}:/root microsoft/azure-cli
 > ```
@@ -37,7 +37,6 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`. To si
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
 To learn more about different authentication methods, see [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
-
 
 ## Update Docker image
 

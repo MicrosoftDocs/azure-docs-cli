@@ -27,6 +27,7 @@ For more options and background, see the project repository on [GitHub](https://
 Once the Azure CLI 1.0 is installed, [connect it with your Azure subscription](/cli/azure/authenticate-azure-cli) and run the **azure** commands from your command-line interface (Bash, Terminal, Command prompt, and so on) to work with your Azure resources.
 
 ## Option 1: Install an npm package
+
 To install the CLI from an npm package, make sure you have downloaded and installed the [latest Node.js and npm](https://nodejs.org/en/download/package-manager/). Then, run **npm install** to install the azure-cli package:
 
 ```bash
@@ -49,6 +50,7 @@ npm install -g <path to downloaded tar file>
 ```
 
 ## Option 2: Use an installer
+
 If you use a Mac or Windows computer, the following CLI installers are available for download:
 
 * [Mac OS X installer][mac-installer]
@@ -58,6 +60,7 @@ If you use a Mac or Windows computer, the following CLI installers are available
 > On Windows, you can also download the [Web Platform Installer](https://go.microsoft.com/?linkid=9828653) to install the CLI. This installer gives you the option to install additional Azure SDK and command-line tools after installing the CLI.
 
 ## Option 3: Use a Docker container
+
 If you have set up your computer as a [Docker](https://docs.docker.com/engine/understanding-docker/) host, you can run the latest Azure CLI 1.0 in a Docker container. Run the following command (on Linux distributions you might need to use **sudo**):
 
 ```bash
@@ -65,6 +68,7 @@ docker run -it microsoft/azure-cli:0.10.17
 ```
 
 ## Run Azure CLI 1.0 commands
+
 After the Azure CLI 1.0 is installed, run the **azure** command from your command-line user interface (Bash, Terminal, Command prompt, and so on). For example, to run the help command, type the following:
 
 ```azurecli
@@ -90,6 +94,7 @@ Now you are ready! To access all the CLI commands to work with your own resource
 > When you first use Azure CLI, you see a message asking if you want to allow Microsoft to collect usage information. Participation is voluntary. If you choose to participate, you can stop at any time by running `azure telemetry --disable`. To enable participation at any time, run `azure telemetry --enable`.
 
 ## Update the CLI
+
 Microsoft frequently releases updated versions of the Azure CLI. Reinstall the CLI using the installer for your operating system, or run the latest Docker container. Or, if you have the latest Node.js and npm installed, update by typing the following (on Linux distributions you might need to use **sudo**).
 
 ```bash
@@ -97,6 +102,7 @@ npm update -g azure-cli
 ```
 
 ## Enable tab completion
+
 Tab completion of CLI commands is supported for Mac and Linux.
 
 To enable it in zsh, run:
@@ -112,12 +118,11 @@ azure --completion >> ~/azure.completion.sh
 echo 'source ~/azure.completion.sh' >> ~/.bash_profile
 ```
 
-
 ## Next steps
+
 * [Connect from the CLI to your Azure subscription](/cli/azure/authenticate-azure-cli) to create and manage Azure resources.
 * To learn more about the Azure CLI, download source code, report problems, or contribute to the project, visit the [GitHub repository for the Azure CLI](https://github.com/azure/azure-xplat-cli).
 * If you have questions about using the Azure CLI, or Azure, visit the [Azure Forums](https://social.msdn.microsoft.com/Forums/en-US/home?forum=azurescripting).
-
 
 [mac-installer]: http://aka.ms/mac-azure-cli
 [windows-installer]: http://aka.ms/webpi-azure-cli
