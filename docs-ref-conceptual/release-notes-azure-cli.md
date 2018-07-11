@@ -115,7 +115,7 @@ Version 2.0.38
 * Fixed `acs browse` command error
 * Made `--connector-name` optional for `aks install-connector`, `aks upgrade-connector` and `aks remove-connector`
 * Added new Azure Container Instance regions for `aks install-connector`
-* Added the normalized location into the helm release name and node name to `aks install-connector` 
+* Added the normalized location into the helm release name and node name to `aks install-connector`
 
 ### AppService
 
@@ -135,7 +135,7 @@ Version 2.0.38
 * Added support to configure `/dev/shm` for jobs running in a docker container
 * Added `batchai cluster node exec` and `batchai job node exec` commands. These commands allow to execute any
   commands directly on nodes and provide functionality for port forwarding.
-* Added support for `--ids` to `batchai` commands 
+* Added support for `--ids` to `batchai` commands
 * [BREAKING CHANGE] All clusters and fileservers must be created under workspaces
 * [BREAKING CHANGE] Jobs must be created under experiments
 * [BREAKING CHANGE] Removed `--nfs-resource-group` from `cluster create` and `job create` commands. To mount
@@ -202,7 +202,7 @@ Version 2.0.36
 ### AKS
 
 * Added advanced networking options to `aks create`
-* Added arguments to `aks create` to enable monitoring and HTTP routing 
+* Added arguments to `aks create` to enable monitoring and HTTP routing
 * Added `--no-ssh-key` argument to `aks create`
 * Added `--enable-rbac` argument to `aks create`
 * [PREVIEW] Added support for Azure Active Directory authentication to `aks create`
@@ -327,7 +327,7 @@ Version 2.0.33
 
 * [BREAKING CHANGE] Changed response objects returned from `db` and `dw` commands:
     * Renamed `serviceLevelObjective` property to `currentServiceObjectiveName`
-    * Removed `currentServiceObjectiveId` and `requestedServiceObjectiveId` properties 
+    * Removed `currentServiceObjectiveId` and `requestedServiceObjectiveId` properties
     * Changed `maxSizeBytes` property to be an integer value instead of a string
 * [BREAKING CHANGE] Changed the following `db` and `dw` properties to be read-only:
     * `requestedServiceObjectiveName`.  To update, use the `--service-objective` parameter or set the `sku.name` property
@@ -433,7 +433,7 @@ Version 2.0.32
 
 ### Network
 
-* [BREAKING CHANGE] Removed the `--ids` parameter for: 
+* [BREAKING CHANGE] Removed the `--ids` parameter for:
   * `express-route auth list`
   * `express-route peering list`
   * `nic ip-config list`
@@ -478,7 +478,7 @@ Version 2.0.32
   * `vm secret list`
   * `vm unmanaged-disk list`
   * `vmss nic list`
-* Added write accelerator support 
+* Added write accelerator support
 * Added `vmss perform-maintenance`
 * Fixed `vm diagnostics set` to detect VM's OS type reliably
 * Changed `vm resize` to check if the requested size is different than currently set and update only on change
@@ -528,7 +528,7 @@ Version 2.0.31
   belongs to the current subscription)
 * Job file stream command now auto-completes when the job is completed (succeeded, failed, terminated or deleted)
 * Improved `table` output for `show` operations
-* Added `--use-auto-storage` option for cluster creation. This option make it simpler to manage storage accounts 
+* Added `--use-auto-storage` option for cluster creation. This option make it simpler to manage storage accounts
   and mount Azure File Share and Azure Blob Containers to clusters
 * Added `--generate-ssh-keys` option to `cluster create` and `file-server create`
 * Added ability to provide node setup task via command line
@@ -568,7 +568,7 @@ Version 2.0.31
 
 * Fixed [#5936](https://github.com/Azure/azure-cli/issues/5936): `application-gateway create` tags could not bet set
 * Added argument `--auth-certs` to attach authentication certificates for `application-gateway http-settings [create|update]`. [#4910](https://github.com/Azure/azure-cli/issues/4910)
-* Added `ddos-protection` commands to create DDoS protection plans 
+* Added `ddos-protection` commands to create DDoS protection plans
 * Added support for `--ddos-protection-plan` to `vnet [create|update]` to associate a VNet to a DDoS protection plan
 * Fixed issue with `--disable-bgp-route-propagation` flag in `network route-table [create|update]`
 * Removed dummy arguments `--public-ip-address-type` and `--subnet-type` for `network lb [create|update]`
@@ -603,7 +603,7 @@ Version 2.0.31
 * Changed `vmss create` to default to Standard LB for zonal, large or single-placement-group disabled scale-set
 * [BREAKING CHANGE]: Removed `vm assign-identity`, `vm remove-identity and `vm format-secret`
 * Added support for Public-IP SKU to `vm create`
-* Added `--keyvault` and `--resource-group` arguments to `vm secret format` to support scenarios where the command 
+* Added `--keyvault` and `--resource-group` arguments to `vm secret format` to support scenarios where the command
   is unable to resolve the vault ID. [#5718](https://github.com/Azure/azure-cli/issues/5718)
 * Better errors for `[vm|vmss create]` when a resource group's location has no zone support
 
@@ -734,7 +734,7 @@ Version 2.0.29
 
 * [BREAKING CHANGE] Renamed `advisor configuration get` to `advisor configuration list`
 * [BREAKING CHANGE] Renamed `advisor configuration set` to `advisor configuration update`
-* [BREAKING CHANGE] Removed `advisor recommendation generate` 
+* [BREAKING CHANGE] Removed `advisor recommendation generate`
 * Added `--refresh` parameter to `advisor recommendation list`
 * Added `advisor recommendation show` command
 
@@ -1006,7 +1006,7 @@ Version 2.0.26
 * Fixed the following issues with `dns zone export`:
   * Fixed issue where long TXT records were incorrectly exported
   * Fixed issue where quoted TXT records were incorrectly exported without escaped quotes
-* Fixed issue where certain records were imported twice with `dns zone import` 
+* Fixed issue where certain records were imported twice with `dns zone import`
 * Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands
 
 ### Profile
@@ -1021,7 +1021,7 @@ Version 2.0.26
 
 * Fixed issue with migrating Storage V1 accounts to Storage V2
 * Added progress reporting for all upload/download commands
-* Fixed bug preventing "-n" arg option with `storage account check-name`  
+* Fixed bug preventing "-n" arg option with `storage account check-name`
 * Added 'snapshot' column to table output for `blob [list|show]`
 * Fixed bugs with various parameters that needed to be parsed as ints
 
