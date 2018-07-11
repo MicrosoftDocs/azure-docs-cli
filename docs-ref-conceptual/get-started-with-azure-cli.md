@@ -16,18 +16,15 @@ ms.devlang: azure-cli
 Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
 with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
-## Install and log in
+## Install and sign in
 
 If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
 
-Before using any CLI commands with a local install, you need to log in with [az login](/cli/azure/reference-index#az-login).
+Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-This command prompts you to log in with an authentication code via a website. There are ways to log in non-interactively,
-which are covered in detail in [Log in with Azure CLI](authenticate-azure-cli.md).
+There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Common commands
 
@@ -40,7 +37,7 @@ All subcommands of these groups and their documentation can be looked up in onli
 | [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
 | [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
 | [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/ap-service) | [az webapp](/cli/azure/webapp) |
+| [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
 | [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
 | [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
 
@@ -80,7 +77,6 @@ There are some arguments that are available for every command.
   To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
-
 
 ## Interactive mode
 

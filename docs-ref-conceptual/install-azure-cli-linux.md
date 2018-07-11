@@ -39,19 +39,18 @@ curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 You can also download the script and run it locally instead. You may have to restart
-your shell in order for changes to take effect. 
+your shell in order for changes to take effect.
 
-You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 
 Here are some common problems seen during a manual installation. If your issue is not listed here, please [file an issue on github](https://github.com/Azure/azure-cli/issues).
+
 ### curl "Object Moved" error
 
 If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using
@@ -90,6 +89,7 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
   rm -r <install location>/lib/azure-cli
   rm <install location>/bin/az
   ```
+
 2. Modify your `$HOME/.bash_profile` file to remove the following line:
 
   ```text

@@ -10,76 +10,80 @@ items:
   - az_batchai_job_create
   - az_batchai_job_delete
   - az_batchai_job_list
-  - az_batchai_job_list_nodes
   - az_batchai_job_show
   - az_batchai_job_terminate
   - az_batchai_job_wait
 - uid: az_batchai_job_create
   name: az batchai job create
   summary: Create a job.
-  description: Please refer to <a href="https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md">https://github.com/Azure/BatchAI/blob/master/documentation/using-azure-cli-20.md</a> for the documentation.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create a job using a configuration file and submit it for running on a cluster in the same resource group.
-    syntax:
-      content: az batchai job create -n MyJob -r MyCluster -g MyResourceGroup -c job.json
-  - summary: Create a job using a configuration file and submit it for running on a cluster in a different resource group.
+  - summary: Create a job to run on a cluster in the same resource group.
     syntax:
       content: >-
-        az batchai job create -n MyJob -g MyJobResourceGroup -c job.json \
-                                    -r MyCluster --cluster-resource-group MyClusterResourceGroup
+        az batchai job create -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob \
+                                    -r MyCluster -f job.json
+  - summary: Create a job to run on a cluster in a different workspace.
+    syntax:
+      content: >-
+        az batchai job create -g MyJobResourceGroup -w MyJobWorkspace -e MyExperiment -n MyJob \
+                                    -f job.json \
+                                    -r "/subscriptions/00000000-0000-0000-0000-000000000000/"\
+                                    "resourceGroups/MyClusterResourceGroup"\
+                                    "/providers/Microsoft.BatchAI/workspaces/MyClusterWorkspace/clusters/MyCluster"
   parameters:
   - isRequired: true
-    name: --config -c
+    name: --cluster -c
+    summary: Name or ARM ID of the cluster to run the job. You need to provide ARM ID if the cluster belongs to a different workspace.
+    description: ''
+  - isRequired: true
+    name: --config-file -f
     summary: A path to a json file containing job create parameters (json representation of azure.mgmt.batchai.models.JobCreateParameters).
     description: ''
   - isRequired: true
+    name: --experiment -e
+    summary: Name of experiment.
+    description: ''
+  - isRequired: true
     name: --name -n
-    summary: Name of the job.
+    summary: Name of job.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --cluster-name -r
-    summary: If specified, the job will run on the given cluster instead of the one configured in the json file.
-    description: ''
-  - name: --cluster-resource-group
-    summary: Specifies a resource group for the cluster given with --cluster-name parameter. If omitted, --resource-group value will be used.
-    description: ''
-  - name: --location -l
-    summary: Location in which to create the job. If default location is not configured, will default to the resource group's location.
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --afs-mount-path
     defaultValue: afs
     summary: Relative mount path for Azure File Share. The File Share will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --afs-name
-    summary: Name of the Azure File Share to mount during the job execution. The File Share will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure File share, configure them in a configuration file and use --config option.
+    summary: Name of Azure File Share to mount during the job execution. The File Share will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name.  Multiple shares can be mounted using configuration file (see --config-file option).
     description: ''
   - name: --bfs-mount-path
     defaultValue: bfs
     summary: Relative mount path for Azure Storage Blob Container. The container will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --bfs-name
-    summary: Name of Azure Storage Blob Container to mount during the job execution. The container will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name and --storage-account-key arguments or AZURE_BATCHAI_STORAGE_ACCOUNT and AZURE_BATCHAI_STORAGE_KEY environment variables. If you need to mount more than one Azure Storage container, configure them in a configuration file and use --config option.
+    summary: Name of Azure Storage Blob Container to mount during the job execution. The container will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name. Multiple containers can be mounted using configuration file (see --config-file option).
+    description: ''
+  - name: --storage-account-key
+    summary: Storage account key. Required if the storage account belongs to a different subscription. Can be specified using AZURE_BATCHAI_STORAGE_KEY environment variable.
+    description: ''
+  - name: --storage-account-name
+    summary: Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted on each cluster node. Can be specified using AZURE_BATCHAI_STORAGE_ACCOUNT environment variable.
+    description: ''
+  - name: --nfs
+    summary: Name or ARM ID of the file server to be mounted during the job execution. You need to provide ARM ID if the file server belongs to a different workspace. You can configure multiple file servers using job's  configuration file.
     description: ''
   - name: --nfs-mount-path
     defaultValue: nfs
     summary: Relative mount path for NFS. The NFS will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
-    description: ''
-  - name: --nfs-name
-    summary: Name of a file server to mount during the job execution. The NFS will be mounted only on the nodes which are executing the job. If you need to mount more than one file server, configure them in a configuration file and use --config option.
-    description: ''
-  - name: --nfs-resource-group
-    summary: Resource group in which file server is created. Can be omitted if the file server and the job belong to the same resource group.
-    description: ''
-  - name: --storage-account-key
-    summary: 'Storage account key. Must be used in conjunction with --storage-account-name. Environment variable: AZURE_BATCHAI_STORAGE_KEY.'
-    description: ''
-  - name: --storage-account-name
-    summary: 'Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted. Related environment variable: AZURE_BATCHAI_STORAGE_ACCOUNT. Must be used in conjunction with --storage-account-key. If the key is not provided, the command will try to query the storage account key using the authenticated Azure account.'
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -96,21 +100,29 @@ items:
   examples:
   - summary: Delete a job. The job will be terminated if it's currently running.
     syntax:
-      content: az batchai job delete -n MyJob -g MyResourceGroup
+      content: az batchai job delete -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob
   - summary: Delete a job without asking for confirmation (for non-interactive scenarios).
     syntax:
-      content: az batchai job delete -n MyJob -g MyResourceGroup -y
+      content: az batchai job delete -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob -y
   - summary: Request job deletion without waiting for job to be deleted.
     syntax:
-      content: az batchai job delete -n MyJob -g MyResourceGroup --no-wait
+      content: az batchai job delete -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob --no-wait
   parameters:
   - isRequired: true
+    name: --experiment -e
+    summary: Name of experiment.
+    description: ''
+  - isRequired: true
     name: --name -n
-    summary: Name of the job.
+    summary: Name of job.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -131,38 +143,21 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: List all jobs under current subscription.
+  - summary: List jobs.
     syntax:
-      content: az batchai job list -o table
-  - summary: List all jobs under current subscription in the given resource group.
-    syntax:
-      content: az batchai job list -g MyResourceGroup -o table
-  parameters:
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-    remote:
-      branch: master
-      path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_batchai_job_list_nodes
-  name: az batchai job list-nodes
-  summary: List remote login information for nodes on which the job was run.
-  description: >-
-    List remote login information about currently existing (not deallocated) nodes on which the job was executed. The information includes node id, public ip and ssh port number. All cluster nodes are sharing the same public IP. You can ssh to a particular node using the provided public IP and the port number.
-                                E.g. ssh <admin user name>@<public ip> -p <node's port number>.
-  langs:
-  - azurecli
+      content: az batchai job list -g MyResourceGroup -w MyWorkspace -e MyExperiment -o table
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the job.
+    name: --experiment -e
+    summary: Name of experiment.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -179,18 +174,26 @@ items:
   examples:
   - summary: Show full information about a job.
     syntax:
-      content: az batchai job show -n MyJob -g MyResourceGroup
-  - summary: Show brief information about a job.
+      content: az batchai job show -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob
+  - summary: Show job's summary.
     syntax:
-      content: az batchai job show -n MyJob -g MyResourceGroup -o table
+      content: az batchai job show -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob -o table
   parameters:
   - isRequired: true
+    name: --experiment -e
+    summary: Name of experiment.
+    description: ''
+  - isRequired: true
     name: --name -n
-    summary: Name of the job.
+    summary: Name of job.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -207,21 +210,31 @@ items:
   examples:
   - summary: Terminate a job and wait for the job to be terminated.
     syntax:
-      content: az batchai job terminate -n MyJob -g MyResourceGroup
+      content: az batchai job terminate -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob
   - summary: Terminate a job without asking for confirmation (for non-interactive scenarios).
     syntax:
-      content: az batchai job terminate -n MyJob -g MyResourceGroup -y
+      content: az batchai job terminate -g MyResourceGroup  -w MyWorkspace -e MyExperiment -n MyJob -y
   - summary: Request job termination without waiting for the job to be terminated.
     syntax:
-      content: az batchai job terminate -n MyJob -g MyResourceGroup --no-wait
+      content: >-
+        az batchai job terminate -g MyResourceGroup -e MyExperiment -w MyWorkspace -n MyJob \
+                                    --no-wait
   parameters:
   - isRequired: true
+    name: --experiment -e
+    summary: Name of experiment.
+    description: ''
+  - isRequired: true
     name: --name -n
-    summary: Name of the job.
+    summary: Name of job.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -237,18 +250,30 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_batchai_job_wait
   name: az batchai job wait
-  summary: Waits for specified job completion and setups the exit code to the code of the job.
+  summary: Waits for specified job completion and setups the exit code to the job's exit code.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Wait for the job completion.
+    syntax:
+      content: az batchai job wait -g MyResourceGroup -w MyWorkspace -n MyJob
   parameters:
   - isRequired: true
+    name: --experiment -e
+    summary: Name of experiment.
+    description: ''
+  - isRequired: true
     name: --name -n
-    summary: Name of the job.
+    summary: Name of job.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: Name of workspace.
     description: ''
   - name: --interval
     defaultValue: "15"
@@ -269,19 +294,25 @@ commands:
   summary: Delete a job.
 - uid: az_batchai_job_file
   name: az batchai job file
-  summary: Commands to list and stream files in jobs' output directories.
+  summary: Commands to list and stream files in job's output directories.
 - uid: az_batchai_job_file_list
   name: az batchai job file list
   summary: List job's output files in a directory with given id.
 - uid: az_batchai_job_file_stream
   name: az batchai job file stream
-  summary: Output the current content of the file and outputs appended data as the file grows (similar to 'tail -f').
+  summary: Stream the content of a file (similar to 'tail -f').
 - uid: az_batchai_job_list
   name: az batchai job list
   summary: List jobs.
-- uid: az_batchai_job_list_nodes
-  name: az batchai job list-nodes
-  summary: List remote login information for nodes on which the job was run.
+- uid: az_batchai_job_node
+  name: az batchai job node
+  summary: Commands to work with nodes which executed a job.
+- uid: az_batchai_job_node_exec
+  name: az batchai job node exec
+  summary: Executes a command line on a cluster's node used to execute the job with optional ports forwarding.
+- uid: az_batchai_job_node_list
+  name: az batchai job node list
+  summary: List remote login information for nodes which executed the job.
 - uid: az_batchai_job_show
   name: az batchai job show
   summary: Show information about a job.
@@ -290,7 +321,7 @@ commands:
   summary: Terminate a job.
 - uid: az_batchai_job_wait
   name: az batchai job wait
-  summary: Waits for specified job completion and setups the exit code to the code of the job.
+  summary: Waits for specified job completion and setups the exit code to the job's exit code.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -307,7 +338,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/1b50977ec2d2f9e91eb77b3cf160a7cfe1c09c2d/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
-updated_at: 3/29/2018 7:52:42 PM
-ms.date: 03/29/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/05d895e2ba04db9685fe61b6cc0dfedcd861a5d2/src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
+updated_at: 6/13/2018 9:53:10 PM
+ms.date: 06/13/2018
 description: Commands to manage jobs.

@@ -16,12 +16,12 @@ ms.devlang: azure-cli
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a 64-bit package available
 for the Azure CLI. This package has been tested with:
 
-* Ubuntu trusty, xenial, and artful
+* Ubuntu trusty, xenial, artful, and bionic
 * Debian wheezy, jessie, and stretch
 
 ## Install
 
-1. <a name="install-step-1"/> Modify your sources list:
+1. <div id="install-step-1"/>Modify your sources list:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
@@ -29,7 +29,7 @@ for the Azure CLI. This package has been tested with:
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
-2. <a name="signingKey"></a>Get the Microsoft signing key:
+2. <div id="signingKey"/>Get the Microsoft signing key:
 
    ```bash
    curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -46,13 +46,11 @@ for the Azure CLI. This package has been tested with:
    > The signing key was updated in May 2018, and has been replaced. If you receive
    > signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
 
-You can then run the Azure CLI with the `az` command. To log in, run the `az login` command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 
@@ -115,7 +113,7 @@ Use `apt-get upgrade` to update the CLI package.
 > [!WARNING]
 > The signing key was updated in May 2018, and has been replaced. If you receive
 > signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
-   
+>
 > [!NOTE]
 > This command upgrades all of the installed packages on your system that have not had a dependency change.
 > To upgrade the CLI only, use `apt-get install`.

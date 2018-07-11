@@ -2,7 +2,7 @@
 items:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity
   name: az iot hub module-identity
-  summary: Manage IoT Edge modules.
+  summary: Manage IoT device modules.
   description: ''
   langs:
   - azurecli
@@ -15,7 +15,7 @@ items:
   - ext_azure-cli-iot-ext_az_iot_hub_module_identity_update
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_create
   name: az iot hub module-identity create
-  summary: Create a module on a target IoT Edge device in an IoT Hub.
+  summary: Create a module on a target IoT device in an IoT Hub.
   description: ''
   langs:
   - azurecli
@@ -28,6 +28,11 @@ items:
     name: --module-id -m
     summary: Target Module.
     description: ''
+  - name: --auth-method -am
+    defaultValue: shared_private_key
+    parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
+    summary: The authorization type an entity is to be created with.
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -36,6 +41,18 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure –defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --output-dir -od
+    summary: Generate self-signed cert and use its thumbprint. Output to specified target directory.
+    description: ''
+  - name: --primary-thumbprint -ptp
+    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    description: ''
+  - name: --secondary-thumbprint -stp
+    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    description: ''
+  - name: --valid-days -vd
+    summary: 'Generate self-signed cert and use its thumbprint. Valid for specified number of days. Default: 365.'
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_delete
   name: az iot hub module-identity delete
@@ -63,7 +80,7 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_list
   name: az iot hub module-identity list
-  summary: List modules of an IoT Edge device.
+  summary: List modules located on an IoT device in an IoT Hub.
   description: ''
   langs:
   - azurecli
@@ -81,13 +98,13 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure –defaults group=&lt;name&gt;`.
     description: ''
-  - name: --top -top
+  - name: --top
     defaultValue: "1000"
     summary: Maximum number of elements to return. Use -1 for unlimited.
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_show
   name: az iot hub module-identity show
-  summary: Get the details of an IoT Edge module.
+  summary: Get the details of an IoT device module in an IoT Hub.
   description: ''
   langs:
   - azurecli
@@ -111,7 +128,7 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_show_connection_string
   name: az iot hub module-identity show-connection-string
-  summary: Show a target IoT Edge module connection string.
+  summary: Show a target IoT device module connection string.
   description: ''
   langs:
   - azurecli
@@ -140,14 +157,14 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_update
   name: az iot hub module-identity update
-  summary: Update an IoT Hub Edge module.
+  summary: Update an IoT Hub device module.
   description: Use –set followed by property assignments for updating a module. Leverage properties returned from ‘iot hub module-identity show’.
   langs:
   - azurecli
   examples:
   - summary: Regenerate module symmetric authentication keys
     syntax:
-      content: az iot hub module-identity update -m [Module Name] -d [Device ID] -n [IoTHub Name] –set authentication.symmetricKey.primaryKey=”[Key Value]” authentication.symmetricKey.secondaryKey=”[key value]”
+      content: az iot hub module-identity update -m [Module Name] -d [Device ID] -n [IoTHub Name] –set authentication.symmetricKey.primaryKey=”” authentication.symmetricKey.secondaryKey=”“
   parameters:
   - isRequired: true
     name: --device-id -d
@@ -178,22 +195,22 @@ items:
 commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_create
   name: az iot hub module-identity create
-  summary: Create a module on a target IoT Edge device in an IoT Hub.
+  summary: Create a module on a target IoT device in an IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_delete
   name: az iot hub module-identity delete
   summary: Delete a device in an IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_list
   name: az iot hub module-identity list
-  summary: List modules of an IoT Edge device.
+  summary: List modules located on an IoT device in an IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_show
   name: az iot hub module-identity show
-  summary: Get the details of an IoT Edge module.
+  summary: Get the details of an IoT device module in an IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_show_connection_string
   name: az iot hub module-identity show-connection-string
-  summary: Show a target IoT Edge module connection string.
+  summary: Show a target IoT device module connection string.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_module_identity_update
   name: az iot hub module-identity update
-  summary: Update an IoT Hub Edge module.
+  summary: Update an IoT Hub device module.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -207,4 +224,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage IoT Edge modules.
+description: Manage IoT device modules.

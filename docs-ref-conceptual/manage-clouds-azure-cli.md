@@ -76,7 +76,7 @@ az cloud set --name AzureChinaCloud
 
 > [!IMPORTANT]
 > If your authentication for the activated cloud has expired, you need to re-authenticate before performing any other CLI tasks. If this is your first time switching to the new cloud, you also need to set the active subscription.
-> For instructions on authenticating, see [Log in with Azure CLI](authenticate-azure-cli.md). For information on subscription management, see [Manage Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
+> For instructions on authenticating, see [Sign in with Azure CLI](authenticate-azure-cli.md). For information on subscription management, see [Manage Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
 
 ## Register a cloud
 
