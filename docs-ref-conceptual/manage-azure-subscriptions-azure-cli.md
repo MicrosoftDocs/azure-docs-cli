@@ -26,9 +26,9 @@ with only one tenant, the organization that they belong to. Users are those acco
 A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource
 is associated with a subscription.
 
-To learn more about the differences between tenants, users, and subscriptions, see the 
+To learn more about the differences between tenants, users, and subscriptions, see the
 [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).  To learn how to add a new subscription to your Azure Active
-Directory tenant, see 
+Directory tenant, see
 [How to add an Azure subscription to Azure Active Directory](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 When working with multiple tenants, you may need to sign in to a specific tenant. To do this, see
 [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli).

@@ -25,7 +25,7 @@ After signing in, CLI Commands are run against your default subscription. If you
 
 ## Interactive sign in
 
-The Azure CLI's default authentication method is to sign in interactively from your web browser.
+The Azure CLI's default authentication method uses a web browser and access token to sign in.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
@@ -43,13 +43,13 @@ az login -u <username> -p <password>
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
 > use the `read -s` command under `bash`.
-> 
+>
 > ```bash
 > read -sp "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
 > ```
 >
 > Under PowerShell, use the `Read-Host -AsSecureString` cmdlet and secure string conversion.
-> 
+>
 > ```powershell
 > $securePass =  Read-Host "Azure password: " -AsSecureString;
 > $AzPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePass));
@@ -59,8 +59,7 @@ az login -u <username> -p <password>
 
 ## Sign in with a specific tenant
 
-If you work with multiple tenants, you can select your tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain
-or the Azure object ID for the tenant. You can sign in interactively, or provide your credentials with the `--user` and `--password` arguments. 
+If you work with multiple tenants, you can select your tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. You can sign in interactively, or provide your credentials with the `--user` and `--password` arguments.
 
 ```azurecli
 az login --tenant <tenant>
@@ -89,13 +88,13 @@ az account show --query 'tenantId' -o tsv
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
 > use the `read -s` command under `bash`.
-> 
+>
 > ```bash
 > read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-url> -p $AZ_PASS --tenant <tenant>
 > ```
 >
 > Under PowerShell, use the `Read-Host -AsSecureString` cmdlet and secure string conversion.
-> 
+>
 > ```powershell
 > $securePass =  Read-Host "Azure password: " -AsSecureString;
 > $AzPass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePass));
