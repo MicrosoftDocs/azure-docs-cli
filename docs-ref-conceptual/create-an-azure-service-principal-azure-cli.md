@@ -12,7 +12,7 @@ ms.service: role-based-access-control
 ---
 # Create an Azure service principal with Azure CLI
 
-If you want to create a separate login with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
+If you want to create a separate sign in with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
 associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
 
 ## Create the service principal
@@ -28,7 +28,7 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
 * `--cert` is used for certificate-based authentication for an existing certificate, either as a PEM or DER public string, or `@{file}` to load a file.
 
   ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --cert {CertStringOrFile} 
+  az ad sp create-for-rbac --name ServicePrincipalName --cert {CertStringOrFile}
   ```
 
   The `--keyvault` argument can be added to indicate the cert is stored in Azure Key Vault. In this case, the `--cert` value refers to the name of the certificate in Key Vault.
@@ -98,15 +98,15 @@ az role assignment list --assignee APP_ID
 
 ## Sign in using the service principal
 
-You can test the new service principal's login and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
+You can test the new service principal's credentials and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
 
-To log in with a password, provide it as an argument parameter.
+To sign in with a password, provide it as an argument parameter.
 
 ```azurecli-interactive
 az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
 ```
 
-To log in with a certificate, it must be available locally as a PEM or DER file.
+To sign in with a certificate, it must be available locally as a PEM or DER file.
 
 ```azurecli-interactive
 az login --service-principal --username APP_ID --tenant TENANT_ID --password PATH_TO_CERT

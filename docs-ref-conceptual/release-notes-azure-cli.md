@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/11/2018
+ms.date: 07/03/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,212 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+
+## July 3, 2018
+
+Version 2.0.41
+
+### AKS
+
+* Changed monitoring to use subscription ID
+
+## July 3, 2018
+
+Version 2.0.40
+
+### Core
+
+* Added a new authorization code flow for interactive login
+
+### ACR
+
+* Added polling build status
+* Added support for case-insensitive enum values
+* Added `--top` and `--orderby` parameters for `show-manifests`
+
+### ACS
+
+* [BREAKING CHANGE] Enable Kubernetes role-based access control by default
+* Added `--disable-rbac` argument and deprecated `--enable-rbac` since it's the default now
+* Updated options for `aks browse` command. Added `--listen-port` support
+* Updated the default helm chart package for `aks install-connector` command. Use virtual-kubelet-for-aks-latest.tgz
+* Added `aks enable-addons` and `aks disable-addons` commands to update an existing cluster
+
+### AppService
+
+* Added support for disabling identity via `webapp identity remove`
+* Removed `preview` tag for Identity feature
+
+### Backup
+
+* Updated module definition
+
+### BatchAI
+
+* Fixed table output for `batchai cluster node list` and `batchai job node list` commands
+
+### Cloud
+
+* Added `acr login` server suffix to cloud config
+
+### Container
+
+* Changed `container create` to default to long running operation
+* Added Log Analytics parameters `--log-analytics-workspace` and `--log-analytics-workspace-key`
+* Added `--protocol` parameter to specify which network protocol to use
+
+### Extension
+
+* Changed `extension list-available` to only show extensions compatible with CLI version
+
+### Network
+
+* Fixed issue where record types were case-sensitive ([#6602](https://github.com/Azure/azure-cli/issues/6602))
+
+### Rdbms
+
+* Added `[postgres|myql] server vnet-rule` commands
+
+### Resource
+
+* Added new operation group `deployment`
+
+### VM
+
+* Added support for removing system assigned identity
+
+## June 25, 2018
+
+Version 2.0.39
+
+### CLI
+
+* Updated file trimming in MSI installer to fix extension installation issue
+
+## June 19, 2018
+
+Version 2.0.38
+
+### Core
+
+* Added global support for `--subscription` to most commands
+
+### ACR
+
+* Added `azure-storage-blob` as dependency
+* Changed default CPU configuration with `acr build-task create` to use 2 cores
+
+### ACS
+
+* Updated options of `aks use-dev-spaces` command. Added `--update` support
+* Changed `aks get-credentials --admin` to not eplace the user context in `$HOME/.kube/config`
+* Exposed read-only `nodeResourceGroup` property on managed clusters
+* Fixed `acs browse` command error
+* Made `--connector-name` optional for `aks install-connector`, `aks upgrade-connector` and `aks remove-connector`
+* Added new Azure Container Instance regions for `aks install-connector`
+* Added the normalized location into the helm release name and node name to `aks install-connector`
+
+### AppService
+
+* Added support for newer versions of urllib
+* Added support to `functionapp create` to use appservice plan from external resource groups
+
+### Batch
+
+* Removed `azure-batch-extensions` dependency
+
+### Batch AI
+
+* Added support for workspaces. Workspaces allow to group clusters, file-servers and experiments in groups removing
+   limitation on number of resources can be created
+* Added support for experiments. Experiments allow to group jobs in collections removing limitation on number of
+   created jobs
+* Added support to configure `/dev/shm` for jobs running in a docker container
+* Added `batchai cluster node exec` and `batchai job node exec` commands. These commands allow to execute any
+  commands directly on nodes and provide functionality for port forwarding.
+* Added support for `--ids` to `batchai` commands
+* [BREAKING CHANGE] All clusters and fileservers must be created under workspaces
+* [BREAKING CHANGE] Jobs must be created under experiments
+* [BREAKING CHANGE] Removed `--nfs-resource-group` from `cluster create` and `job create` commands. To mount
+  an NFS belonging to a different workspace/resource group provide file server's ARM ID via `--nfs` option
+* [BREAKING CHANGE] Removed `--cluster-resource-group` from `job create` command. To submit a job on a cluster
+  belonging to a different workspace/resource group provide cluster's ARM ID via `--cluster` option
+* [BREAKING CHANGE] Removed `location` attribute from jobs, cluster and file servers. Location now is an attribute of
+  a workspace.
+* [BREAKING CHANGE] Removed `--location` from `job create`, `cluster create` and `file-server create` commands
+* [BREAKING CHANGE] Changed names of short options to make interface more consistent:
+ - Renamed [`--config`, `-c`] to [`--config-file`, `-f`]
+ - Renamed [`--cluster`, `-r`] to [`--cluster`, `-c`]
+ - Renamed [`--cluster`, `-n`] to [`--cluster`, `-c`]
+ - Renamed [`--job`, `-n`] to [`--job`, `-j`]
+
+### Maps
+
+* [BREAKING CHANGE] Changed `maps account create` to require accepting Terms of Service either by interactive prompt or `--accept-tos` flag
+
+### Network
+
+* Added support for `https` to `network lb probe create` [#6571](https://github.com/Azure/azure-cli/issues/6571)
+* Fixed issue where `--endpoint-status` was case sensitive. [#6502](https://github.com/Azure/azure-cli/issues/6502)
+
+### Reservations
+
+* [BREAKING CHANGE] Added required parameter `ReservedResourceType` to `reservations catalog show`
+* Added parameter `Location`to `reservations catalog show`
+* [BREAKING CHANGE] Removed `kind` from `ReservationProperties`
+* [BREAKING CHANGE] Renamed `capabilities` to `sku_properties` in `Catalog`
+* [BREAKING CHANGE] Removed `size` and `tier` properties from `Catalog`
+* Added parameter `InstanceFlexibility` to `reservations reservation update`
+
+### Role
+
+* Improved error handling
+
+### SQL
+
+* Fixed confusing error when running `az sql db list-editions` for a location that is not available to your subscription
+
+### Storage
+
+* Changed table output for `storage blob download` to be more readable
+
+### VM
+
+* Improved refine vm size check for accelerated networking support in `vm create`
+* Added warning for `vmss create` that the default vm size will be switched from `Standard_D1_v2` to `Standard_DS1_v2`
+* Added `--force-update` to `[vm|vmss] extension set` to update the extension even when the configuration has not changed
+
+## June 13, 2018
+
+Version 2.0.37
+
+### Core
+
+* Improved interactive telemetry
+
+## June 13, 2018
+
+Version 2.0.36
+
+### AKS
+
+* Added advanced networking options to `aks create`
+* Added arguments to `aks create` to enable monitoring and HTTP routing
+* Added `--no-ssh-key` argument to `aks create`
+* Added `--enable-rbac` argument to `aks create`
+* [PREVIEW] Added support for Azure Active Directory authentication to `aks create`
+
+### AppService
+
+* Fixed an issue with incompatible urllib versions
+
+## June 5, 2018
+
+Version 2.0.35
+
+### Interactive
+
+* Added limits to the dependencies of interactive mode
 
 ## June 5, 2018
 
@@ -121,7 +327,7 @@ Version 2.0.33
 
 * [BREAKING CHANGE] Changed response objects returned from `db` and `dw` commands:
     * Renamed `serviceLevelObjective` property to `currentServiceObjectiveName`
-    * Removed `currentServiceObjectiveId` and `requestedServiceObjectiveId` properties 
+    * Removed `currentServiceObjectiveId` and `requestedServiceObjectiveId` properties
     * Changed `maxSizeBytes` property to be an integer value instead of a string
 * [BREAKING CHANGE] Changed the following `db` and `dw` properties to be read-only:
     * `requestedServiceObjectiveName`.  To update, use the `--service-objective` parameter or set the `sku.name` property
@@ -227,7 +433,7 @@ Version 2.0.32
 
 ### Network
 
-* [BREAKING CHANGE] Removed the `--ids` parameter for: 
+* [BREAKING CHANGE] Removed the `--ids` parameter for:
   * `express-route auth list`
   * `express-route peering list`
   * `nic ip-config list`
@@ -272,7 +478,7 @@ Version 2.0.32
   * `vm secret list`
   * `vm unmanaged-disk list`
   * `vmss nic list`
-* Added write accelerator support 
+* Added write accelerator support
 * Added `vmss perform-maintenance`
 * Fixed `vm diagnostics set` to detect VM's OS type reliably
 * Changed `vm resize` to check if the requested size is different than currently set and update only on change
@@ -322,7 +528,7 @@ Version 2.0.31
   belongs to the current subscription)
 * Job file stream command now auto-completes when the job is completed (succeeded, failed, terminated or deleted)
 * Improved `table` output for `show` operations
-* Added `--use-auto-storage` option for cluster creation. This option make it simpler to manage storage accounts 
+* Added `--use-auto-storage` option for cluster creation. This option make it simpler to manage storage accounts
   and mount Azure File Share and Azure Blob Containers to clusters
 * Added `--generate-ssh-keys` option to `cluster create` and `file-server create`
 * Added ability to provide node setup task via command line
@@ -362,7 +568,7 @@ Version 2.0.31
 
 * Fixed [#5936](https://github.com/Azure/azure-cli/issues/5936): `application-gateway create` tags could not bet set
 * Added argument `--auth-certs` to attach authentication certificates for `application-gateway http-settings [create|update]`. [#4910](https://github.com/Azure/azure-cli/issues/4910)
-* Added `ddos-protection` commands to create DDoS protection plans 
+* Added `ddos-protection` commands to create DDoS protection plans
 * Added support for `--ddos-protection-plan` to `vnet [create|update]` to associate a VNet to a DDoS protection plan
 * Fixed issue with `--disable-bgp-route-propagation` flag in `network route-table [create|update]`
 * Removed dummy arguments `--public-ip-address-type` and `--subnet-type` for `network lb [create|update]`
@@ -397,7 +603,7 @@ Version 2.0.31
 * Changed `vmss create` to default to Standard LB for zonal, large or single-placement-group disabled scale-set
 * [BREAKING CHANGE]: Removed `vm assign-identity`, `vm remove-identity and `vm format-secret`
 * Added support for Public-IP SKU to `vm create`
-* Added `--keyvault` and `--resource-group` arguments to `vm secret format` to support scenarios where the command 
+* Added `--keyvault` and `--resource-group` arguments to `vm secret format` to support scenarios where the command
   is unable to resolve the vault ID. [#5718](https://github.com/Azure/azure-cli/issues/5718)
 * Better errors for `[vm|vmss create]` when a resource group's location has no zone support
 
@@ -528,7 +734,7 @@ Version 2.0.29
 
 * [BREAKING CHANGE] Renamed `advisor configuration get` to `advisor configuration list`
 * [BREAKING CHANGE] Renamed `advisor configuration set` to `advisor configuration update`
-* [BREAKING CHANGE] Removed `advisor recommendation generate` 
+* [BREAKING CHANGE] Removed `advisor recommendation generate`
 * Added `--refresh` parameter to `advisor recommendation list`
 * Added `advisor recommendation show` command
 
@@ -800,7 +1006,7 @@ Version 2.0.26
 * Fixed the following issues with `dns zone export`:
   * Fixed issue where long TXT records were incorrectly exported
   * Fixed issue where quoted TXT records were incorrectly exported without escaped quotes
-* Fixed issue where certain records were imported twice with `dns zone import` 
+* Fixed issue where certain records were imported twice with `dns zone import`
 * Restored `vnet-gateway root-cert` and `vnet-gateway revoked-cert` commands
 
 ### Profile
@@ -815,7 +1021,7 @@ Version 2.0.26
 
 * Fixed issue with migrating Storage V1 accounts to Storage V2
 * Added progress reporting for all upload/download commands
-* Fixed bug preventing "-n" arg option with `storage account check-name`  
+* Fixed bug preventing "-n" arg option with `storage account check-name`
 * Added 'snapshot' column to table output for `blob [list|show]`
 * Fixed bugs with various parameters that needed to be parsed as ints
 

@@ -27,13 +27,11 @@ The MSI distributable is used for installing, updating, and uninstalling the `az
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
-not available from Windows Command Prompt. To log in, run the `az login` command.
+not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
 
-```azurecli
-az login
-```
+[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different login methods, see [Log in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Uninstall
 
