@@ -25,6 +25,6 @@ deployments to use the Azure Resource Manager model and migrate to the latest av
 
 If you are still using the classic CLI, you can learn about the process of migrating by seeing the following articles:
 
-* [Migrate from Classic to Azure Resource Manager](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/migration-classic-resource-manager-overview)
+* [Migrate from Classic to Azure Resource Manager](/azure/virtual-machines/linux/migration-classic-resource-manager-overview)
 * [Install the Azure CLI](install-azure-cli.md)
 * [Migrating from Azure classic CLI to Azure CLI](https://github.com/Azure/azure-cli/blob/dev/doc/classic_cli_migration.md)
