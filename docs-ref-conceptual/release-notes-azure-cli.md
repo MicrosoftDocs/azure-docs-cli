@@ -13,6 +13,82 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## July 17, 2018
+
+Version 2.0.42
+
+### Core
+
+* login: support browser based login in WSL bash window
+* Adds `--force-string` flag to all generic update commands.
+* BREAKING CHANGE: 'show' commands log error message and fail with exit code of 3 upon a missing resource.
+
+### ACR
+
+* BREAKING CHANGE: Update '--no-push' to a pure flag in 'acr build' command.
+* Add 'show' and 'update' commands under 'acr repository' group.
+* Add '--detail' flag for 'show-manifests' and 'show-tags' to show more detailed information.
+* Add '--image' parameter to support get build details or logs by an image.
+
+### ACS
+
+* `az aks create` will error out if `--max-pods` is less than 5
+
+### AppService
+
+* appservice: allow PremiumV2 skus
+
+### Batch
+
+* Fix bug on using token credential on cloud shell mode
+* When use json file as input parameter, deserialize content with case insentive.
+
+### Batch AI
+
+* Fixed `az batchai job exec` command
+
+### Container
+
+* Remove the requirement for username and password for non dockerhub registries
+* Fix error when creating container groups from yaml file
+
+### KeyVault
+
+* adding commands for managing storage accounts and sas-definitions
+* adding commands for network-rules
+* adding id parameter to secret, key, and certificate operations
+
+### Network
+
+* `network nic create/update/delete`: Add `--no-wait` support.
+* Added `network nic wait`.
+* `network vnet subnet list`: Argument `--ids` is deprecated.
+* `network vnet peering list`: Argument `--ids` is deprecated.
+* `network nsg rule list`: Added `--include-default` flag to include default security rules in the output.
+
+### Resource
+
+* `group deployment delete`: Add `--no-wait` support.
+* `deployment delete`: Add `--no-wait` support.
+* Added `deployment wait` command.
+* Fix issue where the subscription-level `az deployment` commands erroneously appeared for profile 2017-03-09-profile.
+
+### SQL
+
+* Fixed 'The provided resource group name ... did not match the name in the Url' error when specifying elastic pool name for `sql db copy` and `sql db replica create` commands.
+* Allow configuring default sql server by executing `az configure --defaults sql-server=<name>`.
+* Implemented table formatters for 'sql server', 'sql server firewall-rule', 'sql list-usages', and 'sql show-usage' commands. Use '-o table' to format output as a table.
+
+### Storage
+
+* Added `pageRanges` property to `storage blob show` output that will be populated for page blobs.
+
+### VM
+
+* BREAKING CHANGE: update `vmss create` to use `Standard_DS1_v2` as the default instance size
+* `vm/vmss extension set/delete`: Added `--no-wait` support.
+* Added `vm extension wait`.
+
 ## July 3, 2018
 
 Version 2.0.41
