@@ -52,12 +52,6 @@ Version 2.0.42
 * Removed the requirement for username and password for non dockerhub registries
 * Fixed error when creating container groups from yaml file
 
-### KeyVault
-
-* Added commands for managing storage accounts and sas-definitions
-* Added commands for `network-rules`
-* Added id parameter to secret, key, and certificate operations
-
 ### Network
 
 * Added `--no-wait` support to `network nic [create|update|delete]` 
