@@ -13,6 +13,75 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## July 18, 2018
+
+Version 2.0.42
+
+### Core
+
+* Added support for browser-based login in WSL bash window
+* Added `--force-string` flag to all generic update commands
+* [BREAKING CHANGE] Changed 'show' commands to log error message and fail with exit code of 3 upon a missing resource
+
+### ACR
+
+* [BREAKING CHANGE] Updated '--no-push' to a pure flag in 'acr build' command
+* Added `show` and `update` commands under `acr repository` group
+* Added `--detail` flag for `show-manifests` and `show-tags` to show more detailed information
+* Added `--image` parameter to support get build details or logs by an image
+
+### ACS
+
+* Changed `az aks create` to error out if `--max-pods` is less than 5
+
+### AppService
+
+* Added support for PremiumV2 skus
+
+### Batch
+
+* Fixed bug on using token credential on cloud shell mode
+* Changed JSON input to be case-insensitive
+
+### Batch AI
+
+* Fixed `az batchai job exec` command
+
+### Container
+
+* Removed the requirement for username and password for non dockerhub registries
+* Fixed error when creating container groups from yaml file
+
+### Network
+
+* Added `--no-wait` support to `network nic [create|update|delete]` 
+* Added `network nic wait`
+* Deprecated `--ids` argument for `network vnet [subnet|peering] list`
+* Added `--include-default` flag to include default security rules in the output of `network nsg rule list`  
+
+### Resource
+
+* Added `--no-wait` support to `group deployment delete`
+* Added `--no-wait` support to `deployment delete`
+* Added `deployment wait` command
+* Fixed issue where the subscription-level `az deployment` commands erroneously appeared for profile 2017-03-09-profile
+
+### SQL
+
+* Fixed 'The provided resource group name ... did not match the name in the Url' error when specifying elastic pool name for `sql db copy` and `sql db replica create` commands
+* Allow configuring default sql server by executing `az configure --defaults sql-server=<name>`
+* Implemented table formatters for `sql server`, `sql server firewall-rule`, `sql list-usages`, and `sql show-usage` commands
+
+### Storage
+
+* Added `pageRanges` property to `storage blob show` output that will be populated for page blobs
+
+### VM
+
+* [BREAKING CHANGE] Changed `vmss create` to use `Standard_DS1_v2` as the default instance size
+* Added `--no-wait` support to `vm extension [set|delete]` and `vmss extension [set|delete]`
+* Added `vm extension wait`
+
 ## July 3, 2018
 
 Version 2.0.41
