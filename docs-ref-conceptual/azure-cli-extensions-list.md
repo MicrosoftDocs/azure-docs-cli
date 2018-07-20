@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 07/02/2018
+ms.date: 04/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -25,7 +25,7 @@ az extension list-available --output table
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.1 | Support for command aliases | Yes |
-| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.3.0 | Additional commands for working with Azure Batch service |  |
+| [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.4.0 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.5.0 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.0.3 | Support for Azure Bot Service 2017-12-01 preview features | Yes |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
