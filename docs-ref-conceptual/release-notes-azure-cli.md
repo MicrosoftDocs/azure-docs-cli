@@ -13,6 +13,68 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## July 31, 2018
+
+Version 2.0.43
+
+### ACR
+
+* Add --with-secure-properties flag in 'acr build-task show' command.
+* Add 'acr build-task update-build' command.
+
+### ACS
+
+* Return 0 (success) when ending `az aks browse` by pressing [Ctrl+C]
+* changes for consuming multi api azure.mgmt.authorization package
+
+### Batch
+
+* Fix bug when show AAD token in cloudshell
+
+### Container
+
+* Do not require '--log-analytics-workspace-key' for name or ID when in set subscription
+
+### Network
+
+* `dns`: Added dns support to 2017-03-09-profile for Azure Stack 
+
+### Resource
+
+* `group deployment create`: Add `--rollback-on-error` to execute a known-good deployment on error.
+* `group deployment create`: Fix issue where `--parameters {}` resulted in an error.
+
+### Role
+
+* support for stack profile 2017-03-09-profile
+* `ad app update`: Fixes issue where generic update parameters would not work correctly.
+
+### Search
+
+* Introduce commands for Azure Search service
+
+### Service Bus
+
+* Added migration command group to migrate a namespace from Service Bus Standard to Premium
+
+* Added new optional properties to Service Bus queue and Subscription
+    --enable-batched-operations and --enable-dead-lettering-on-message-expiration in queue
+    --dead-letter-on-filter-exceptions in subscriptions
+
+### Storage
+
+* Allows download of large files using a single connection.
+* Converted 'show' commands that were missed from failing with exit code 3 upon a missing resource.
+
+### VM
+
+* availability set: support list by subscription
+* vm/vmss: support StandardSSD_LRS
+* vm/vmss: support application security group on creating VM scale set
+* BREAKING CHANGE: `vm/vmss create`, `vm/vmss identity assign/remove` will output `user assigned identities`
+                   in dictionary format
+* Consuming multi api azure.mgmt.authorization package for azure stack support
+
 ## July 18, 2018
 
 Version 2.0.42
