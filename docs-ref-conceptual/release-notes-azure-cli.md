@@ -13,6 +13,64 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## July 31, 2018
+
+Version 2.0.43
+
+### ACR
+
+* Added `--with-secure-properties` flag to `acr build-task show` command
+* Added `acr build-task update-build` command
+
+### ACS
+
+* Changed to return return 0 (success) when ending `az aks browse` by pressing [Ctrl+C]
+
+### Batch
+
+* Fixed bug when showing AAD token in cloudshell
+
+### Container
+
+* Removed requirement for `--log-analytics-workspace-key` for name or ID when in set subscription
+
+### Network
+
+* Added dns support to 2017-03-09-profile for Azure Stack 
+
+### Resource
+
+* Added `--rollback-on-error` to `group deployment create` to execute a known-good deployment on error
+* Fixed issue where `--parameters {}` with `group deployment create` resulted in an error
+
+### Role
+
+* Added support for stack profile 2017-03-09-profile
+* Fixed issue where generic update parameters to `app update` would not work correctly
+
+### Search
+
+* Added commands for Azure Search service
+
+### Service Bus
+
+* Added migration command group to migrate a namespace from Service Bus Standard to Premium
+* Added new optional properties to Service Bus queue and Subscription
+  *  `--enable-batched-operations` and `--enable-dead-lettering-on-message-expiration` in `queue`
+  *  `--dead-letter-on-filter-exceptions` in `subscriptions`
+
+### Storage
+
+* Added support for download of large files using a single connection
+* Converted `show` commands that were missed from failing with exit code 3 upon a missing resource
+
+### VM
+
+* Added support to list availability sets by subscription
+* Added support for support `StandardSSD_LRS`
+* Added support for application security group on creating VM scale set
+* [BREAKING CHANGE] Changed `[vm|vmss] create`, `[vm|vmss] identity assign`, and `[vm|vmss] identity remove` to output user assigned identities in dictionary format
+
 ## July 18, 2018
 
 Version 2.0.42
