@@ -9,23 +9,25 @@ items:
   children:
   - az_acr_repository_delete
   - az_acr_repository_list
+  - az_acr_repository_show
   - az_acr_repository_show_manifests
   - az_acr_repository_show_tags
   - az_acr_repository_untag
+  - az_acr_repository_update
 - uid: az_acr_repository_delete
   name: az acr repository delete
   summary: Delete a repository or image in a container registry.
-  description: ''
+  description: This command deletes all associated layer data that are not referenced by any other manifest in the container registry.
   langs:
   - azurecli
   examples:
-  - summary: Delete a repository from a container registry.
+  - summary: Delete a repository from a container registry. This deletes all manifests and tags under 'hello-world'.
     syntax:
       content: az acr repository delete -n MyRegistry --repository hello-world
-  - summary: Delete an image by tag. This deletes the manifest referenced by 'hello-world:latest', all other tags referencing the manifest, and any associated layer data.
+  - summary: Delete an image by tag. This deletes the manifest referenced by 'hello-world:latest' and all other tags referencing the manifest.
     syntax:
       content: az acr repository delete -n MyRegistry --image hello-world:latest
-  - summary: Delete an image by sha256-based manifest digest. This deletes all tags referencing the manifest and any associated layer data.
+  - summary: Delete an image by sha256-based manifest digest. This deletes the manifest identified by 'hello-world@sha256:abc123' and all tags referencing the manifest.
     syntax:
       content: az acr repository delete -n MyRegistry --image hello-world@sha256:abc123
   parameters:
@@ -33,14 +35,14 @@ items:
     name: --name -n
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
-  - name: --image
-    summary: The name of the image to delete. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
   - name: --password -p
     summary: The password used to log into a container registry.
     description: ''
   - name: --repository
-    summary: The name of the repository to delete.
+    summary: The name of the repository.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -78,6 +80,51 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --top
+    summary: Limit the number of items in the results.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_repository_show
+  name: az acr repository show
+  summary: Get the attributes of a repository or image in a container registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the attributes of the repository 'hello-world'.
+    syntax:
+      content: az acr repository show -n MyRegistry --repository hello-world
+  - summary: Get the attributes of the image referenced by tag 'hello-world:latest'.
+    syntax:
+      content: az acr repository show -n MyRegistry --image hello-world:latest
+  - summary: Get the attributes of the image referenced by digest 'hello-world@sha256:abc123'.
+    syntax:
+      content: az acr repository show -n MyRegistry --image hello-world@sha256:abc123
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
+    description: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --repository
+    summary: The name of the repository.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
@@ -97,6 +144,12 @@ items:
   - summary: Show manifests of a repository in a container registry.
     syntax:
       content: az acr repository show-manifests -n MyRegistry --repository MyRepository
+  - summary: Show the latest 10 manifests ordered by timestamp of a repository in a container registry.
+    syntax:
+      content: az acr repository show-manifests -n MyRegistry --repository MyRepository --top 10 --orderby time_desc
+  - summary: Show the detailed information of the latest 10 manifests ordered by timestamp of a repository in a container registry.
+    syntax:
+      content: az acr repository show-manifests -n MyRegistry --repository MyRepository --top 10 --orderby time_desc --detail
   parameters:
   - isRequired: true
     name: --name -n
@@ -104,13 +157,23 @@ items:
     description: ''
   - isRequired: true
     name: --repository
-    summary: The repository to obtain manifests from.
+    summary: The name of the repository.
+    description: ''
+  - name: --detail
+    summary: Show detailed information.
+    description: ''
+  - name: --orderby
+    parameterValueGroup: time_asc, time_desc
+    summary: Order the items in the results. Default to alphabetical order of names.
     description: ''
   - name: --password -p
     summary: The password used to log into a container registry.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --top
+    summary: Limit the number of items in the results.
     description: ''
   - name: --username -u
     summary: The username used to log into a container registry.
@@ -131,6 +194,12 @@ items:
   - summary: Show tags of a repository in a container registry.
     syntax:
       content: az acr repository show-tags -n MyRegistry --repository MyRepository
+  - summary: Show the detailed information of tags of a repository in a container registry.
+    syntax:
+      content: az acr repository show-tags -n MyRegistry --repository MyRepository --detail
+  - summary: Show the detailed information of the latest 10 tags ordered by timestamp of a repository in a container registry.
+    syntax:
+      content: az acr repository show-tags -n MyRegistry --repository MyRepository --top 10 --orderby time_desc --detail
   parameters:
   - isRequired: true
     name: --name -n
@@ -138,13 +207,23 @@ items:
     description: ''
   - isRequired: true
     name: --repository
-    summary: The repository to obtain tags from.
+    summary: The name of the repository.
+    description: ''
+  - name: --detail
+    summary: Show detailed information.
+    description: ''
+  - name: --orderby
+    parameterValueGroup: time_asc, time_desc
+    summary: Order the items in the results. Default to alphabetical order of names.
     description: ''
   - name: --password -p
     summary: The password used to log into a container registry.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --top
+    summary: Limit the number of items in the results.
     description: ''
   - name: --username -u
     summary: The username used to log into a container registry.
@@ -167,8 +246,8 @@ items:
       content: az acr repository untag -n MyRegistry --image hello-world:latest
   parameters:
   - isRequired: true
-    name: --image
-    summary: The name of the image to untag. May include a tag in the format 'name:tag'.
+    name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - isRequired: true
     name: --name -n
@@ -189,6 +268,64 @@ items:
       branch: master
       path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_repository_update
+  name: az acr repository update
+  summary: Update the attributes of a repository or image in a container registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update the attributes of the repository 'hello-world' to disable write operation.
+    syntax:
+      content: az acr repository update -n MyRegistry --repository hello-world --write-enabled false
+  - summary: Update the attributes of the image referenced by tag 'hello-world:latest' to disable write operation.
+    syntax:
+      content: az acr repository update -n MyRegistry --image hello-world:latest --write-enabled false
+  - summary: Update the attributes of the image referenced by digest 'hello-world@sha256:abc123' to disable write operation.
+    syntax:
+      content: az acr repository update -n MyRegistry --image hello-world@sha256:abc123 --write-enabled false
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --delete-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether delete operation is allowed.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
+    description: ''
+  - name: --list-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether this item shows in list operation results.
+    description: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --read-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether read operation is allowed.
+    description: ''
+  - name: --repository
+    summary: The name of the repository.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+  - name: --write-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether write or delete operation is allowed.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_acr_repository_delete
   name: az acr repository delete
@@ -196,6 +333,9 @@ commands:
 - uid: az_acr_repository_list
   name: az acr repository list
   summary: List repositories in a container registry.
+- uid: az_acr_repository_show
+  name: az acr repository show
+  summary: Get the attributes of a repository or image in a container registry.
 - uid: az_acr_repository_show_manifests
   name: az acr repository show-manifests
   summary: Show manifests of a repository in a container registry.
@@ -205,6 +345,9 @@ commands:
 - uid: az_acr_repository_untag
   name: az acr repository untag
   summary: Untag an image in a container registry.
+- uid: az_acr_repository_update
+  name: az acr repository update
+  summary: Update the attributes of a repository or image in a container registry.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -221,7 +364,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/dbe24401b163ac2bac4f993982375296414b81b7/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 5/31/2018 10:45:58 PM
-ms.date: 05/31/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/bd3e48d5f8cf70f8bc08e0841392ce5f14fdfec4/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 7/23/2018 4:29:34 PM
+ms.date: 07/23/2018
 description: Manage repositories (image names) for Azure Container Registries.
