@@ -16,6 +16,7 @@ items:
   - az_acr_build_task_show
   - az_acr_build_task_show_build
   - az_acr_build_task_update
+  - az_acr_build_task_update_build
 - uid: az_acr_build_task_create
   name: az acr build-task create
   summary: Creates a new build definition which can be triggered by git commits or base image updates.
@@ -37,7 +38,7 @@ items:
     description: ''
   - isRequired: true
     name: --image -t
-    summary: The image repository and optionally a tag in the 'repository:tag' format.
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - isRequired: true
     name: --name -n
@@ -101,7 +102,7 @@ items:
     description: ''
   - name: --timeout
     defaultValue: "3600"
-    summary: Build timeout in seconds.
+    summary: The build timeout in seconds.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -174,6 +175,12 @@ items:
   - summary: List all of the builds for a registry and show the results in a table.
     syntax:
       content: az acr build-task list-builds -r MyRegistry -o table
+  - summary: List the last 10 successful builds for a registry and show the results in a table.
+    syntax:
+      content: az acr build-task list-builds -r MyRegistry --build-status Succeeded --top 10 -o table
+  - summary: List all of the builds that built the image 'hello-world:latest' for a registry and show the results in a table.
+    syntax:
+      content: az acr build-task list-builds -r MyRegistry --image hello-world:latest -o table
   parameters:
   - isRequired: true
     name: --registry -r
@@ -182,6 +189,9 @@ items:
   - name: --build-status
     parameterValueGroup: Canceled, Error, Failed, Queued, Running, Started, Succeeded, Timeout
     summary: The current status of build.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
   - name: --name -n
     summary: The name of the build task.
@@ -201,20 +211,23 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_logs
   name: az acr build-task logs
-  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last updated build.
+  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last created build.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Show logs for the last updated build in the registry.
+  - summary: Show logs for the last created build in the registry.
     syntax:
       content: az acr build-task logs -r MyRegistry
-  - summary: Show logs for the last updated build in the registry, filtered by build task.
+  - summary: Show logs for the last created build in the registry, filtered by build task.
     syntax:
       content: az acr build-task logs -r MyRegistry -n MyBuildTask
   - summary: Show logs for a particular build.
     syntax:
       content: az acr build-task logs -r MyRegistry --build-id buildId
+  - summary: Show logs for the last created build in the registry that built the image 'hello-world:latest'.
+    syntax:
+      content: az acr build-task logs -r MyRegistry --image hello-world:latest
   parameters:
   - isRequired: true
     name: --registry -r
@@ -222,6 +235,9 @@ items:
     description: ''
   - name: --build-id
     summary: The unique build identifier.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
   - name: --name -n
     summary: The name of the build task.
@@ -276,6 +292,9 @@ items:
   - summary: Get the details of a build task, displaying the results in a table.
     syntax:
       content: az acr build-task show -n MyBuildTask -r MyRegistry -o table
+  - summary: Get the details of a build task including secure properties.
+    syntax:
+      content: az acr build-task show -n MyBuildTask -r MyRegistry --with-secure-properties
   parameters:
   - isRequired: true
     name: --name -n
@@ -287,6 +306,9 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --with-secure-properties
+    summary: Indicates whether the secure properties of a build task should be returned.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -371,7 +393,7 @@ items:
     summary: The access token used to access the source control provider.
     description: ''
   - name: --image -t
-    summary: The image repository and optionally a tag in the 'repository:tag' format.
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - name: --no-cache
     parameterValueGroup: false, true
@@ -396,7 +418,39 @@ items:
     summary: The current status of build task.
     description: ''
   - name: --timeout
-    summary: Build timeout in seconds.
+    summary: The build timeout in seconds.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_build_task_update_build
+  name: az acr build-task update-build
+  summary: Patch the build properties.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update an existing build to be archived.
+    syntax:
+      content: az acr build-task update-build -r MyRegistry --build-id MyBuild --no-archive false
+  parameters:
+  - isRequired: true
+    name: --build-id
+    summary: The unique build identifier.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --no-archive
+    parameterValueGroup: false, true
+    summary: Indicates whether the build should be archived.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -419,7 +473,7 @@ commands:
   summary: List all of the executed builds for a registry, with the ability to filter by a specific build task.
 - uid: az_acr_build_task_logs
   name: az acr build-task logs
-  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last updated build.
+  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last created build.
 - uid: az_acr_build_task_run
   name: az acr build-task run
   summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers.
@@ -432,6 +486,9 @@ commands:
 - uid: az_acr_build_task_update
   name: az acr build-task update
   summary: Update a build task for a container registry.
+- uid: az_acr_build_task_update_build
+  name: az acr build-task update-build
+  summary: Patch the build properties.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -448,7 +505,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/dbe24401b163ac2bac4f993982375296414b81b7/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 5/31/2018 10:45:58 PM
-ms.date: 05/31/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/bd3e48d5f8cf70f8bc08e0841392ce5f14fdfec4/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 7/23/2018 4:29:34 PM
+ms.date: 07/23/2018
 description: Manage build definitions, which can be triggered by git commits or base image updates.
