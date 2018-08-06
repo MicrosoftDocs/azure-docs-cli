@@ -29,7 +29,7 @@ items:
   examples:
   - summary: Create a self-signed certificate with the default policy and add it to a virtual machine.
     syntax:
-      content: "az keyvault certificate create –vault-name vaultname -n cert1 \\\n                          -p “$(az keyvault certificate get-default-policy)”\n                        \n                        secrets=$(az keyvault secret list-versions –vault-name vaultname \\\n                          -n cert1 –query “[?attributes.enabled].id” -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s “$secrets”) \n                        \n                        az vm create -g group-name -n vm-name –admin-username deploy  \\\n                          –image debian –secrets “$vm_secrets”"
+      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
     name: --policy -p
@@ -40,10 +40,10 @@ items:
     summary: Create certificate in disabled state.
     description: ''
   - name: --tags
-    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --validity
-    summary: Number of months the certificate is valid for. Overrides the value specified with –policy/-p.
+    summary: Number of months the certificate is valid for. Overrides the value specified with --policy/-p.
     description: ''
   - isRequired: true
     name: --name -n
@@ -61,13 +61,13 @@ items:
   - azurecli
   parameters:
   - name: --id
-    summary: Id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_download
   name: az keyvault certificate download
@@ -78,10 +78,10 @@ items:
   examples:
   - summary: Download a certificate as PEM and check its fingerprint in openssl.
     syntax:
-      content: az keyvault certificate download –vault-name vault -n cert-name -f cert.pem && \ openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
+      content: az keyvault certificate download --vault-name vault -n cert-name -f cert.pem && \ openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
   - summary: Download a certificate as DER and check its fingerprint in openssl.
     syntax:
-      content: az keyvault certificate download –vault-name vault -n cert-name -f cert.crt -e DER && \ openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
+      content: az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && \ openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
   parameters:
   - isRequired: true
     name: --file -f
@@ -93,13 +93,13 @@ items:
     summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
     description: ''
   - name: --id
-    summary: Id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
   - name: --version -v
     summary: The certificate version. If omitted, uses the latest version.
@@ -114,8 +114,8 @@ items:
   - summary: Create a self-signed certificate with the default policy
     syntax:
       content: >-
-        az keyvault certificate create –vault-name vaultname -n cert1 \
-                                  -p “$(az keyvault certificate get-default-policy)”
+        az keyvault certificate create --vault-name vaultname -n cert1 \
+                                  -p "$(az keyvault certificate get-default-policy)"
   parameters:
   - name: --scaffold
     summary: Create a fully formed policy structure with default values.
@@ -129,7 +129,7 @@ items:
   examples:
   - summary: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
     syntax:
-      content: "service_principal=$(az ad sp create-for-rbac –create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import –vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions –vault-name vaultname \\\n                          -n cert1 –query “[?attributes.enabled].id” -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s “$secrets”) \n                        \n                        az vm create -g group-name -n vm-name –admin-username deploy  \\\n                          –image debian –secrets “$vm_secrets”"
+      content: "service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
     name: --file -f
@@ -146,7 +146,7 @@ items:
     summary: JSON encoded policy defintion. Use @{file} to load from a file.
     description: ''
   - name: --tags
-    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - isRequired: true
     name: --name -n
@@ -211,39 +211,39 @@ items:
 - uid: ext_keyvault-preview_az_keyvault_certificate_purge
   name: az keyvault certificate purge
   summary: Permanently deletes the specified deleted certificate.
-  description: The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify ‘Purgeable’. This operation requires the certificate/purge permission.
+  description: The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify 'Purgeable'. This operation requires the certificate/purge permission.
   langs:
   - azurecli
   parameters:
   - name: --id
-    summary: The recovery id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_recover
   name: az keyvault certificate recover
   summary: Recovers the deleted certificate back to its current version under /certificates.
-  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate’s attributes). This operation requires the certificates/recover permission.
+  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
   langs:
   - azurecli
   parameters:
   - name: --id
-    summary: The recovery id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_set_attributes
   name: az keyvault certificate set-attributes
   summary: Updates the specified attributes associated with the given certificate.
-  description: The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate’s attributes. This operation requires the certificates/update permission.
+  description: The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate's attributes. This operation requires the certificates/update permission.
   langs:
   - azurecli
   parameters:
@@ -255,16 +255,16 @@ items:
     summary: JSON encoded policy defintion. Use @{file} to load from a file.
     description: ''
   - name: --tags
-    summary: Space-separated tags in ‘key[=value]’ format. Use “” to clear existing tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --id
-    summary: Id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
   - name: --version -v
     summary: The certificate version. If omitted, uses the latest version.
@@ -277,13 +277,13 @@ items:
   - azurecli
   parameters:
   - name: --id
-    summary: Id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
   - name: --version -v
     summary: The certificate version. If omitted, uses the latest version.
@@ -296,13 +296,13 @@ items:
   - azurecli
   parameters:
   - name: --id
-    summary: The recovery id of the certificate.  If specified all other ‘Id’ arguments should be omitted.
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
-    summary: Name of the certificate. Required if –id is not specified.
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
   - name: --vault-name
-    summary: Name of the key vault. Required if –id is not specified.
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 commands:
 - uid: ext_keyvault-preview_az_keyvault_certificate_contact
