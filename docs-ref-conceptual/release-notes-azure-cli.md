@@ -67,7 +67,7 @@ Version 2.0.43
 ### VM
 
 * Added support to list availability sets by subscription
-* Added support for support `StandardSSD_LRS`
+* Added support for `StandardSSD_LRS`
 * Added support for application security group on creating VM scale set
 * [BREAKING CHANGE] Changed `[vm|vmss] create`, `[vm|vmss] identity assign`, and `[vm|vmss] identity remove` to output user assigned identities in dictionary format
 
