@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 07/30/2018
+ms.date: 04/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -31,6 +31,7 @@ az extension list-available --output table
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
+| [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.0 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.7 | Support for copying managed vm images between regions |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.2 | Support for Azure Log Analytics query capabilities. | Yes |
@@ -41,4 +42,4 @@ az extension list-available --output table
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.1.3 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.6 | An Azure CLI Extension to manage appservice resources | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.7 | An Azure CLI Extension to manage appservice resources | Yes |
