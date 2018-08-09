@@ -32,6 +32,10 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --enable-purge-protection
+    parameterValueGroup: false, true
+    summary: Prevents manual purging of deleted vault, and all contained entities.
+    description: ''
   - name: --enable-soft-delete
     parameterValueGroup: false, true
     summary: Enable vault deletion recovery for the vault, and all contained entities.
@@ -58,7 +62,7 @@ items:
   - name: --sku
     defaultValue: standard
     parameterValueGroup: premium, standard
-    summary: SKU details.
+    summary: Required. SKU details.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -227,6 +231,10 @@ items:
     parameterValueGroup: backup, delete, get, list, purge, recover, restore, set
     summary: Space-separated list of secret permissions to assign.
     description: ''
+  - name: --storage-permissions
+    parameterValueGroup: backup, delete, deletesas, get, getsas, list, listsas, purge, recover, regeneratekey, restore, set, setsas, update
+    summary: Space-separated list of storage permissions to assign.
+    description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
     remote:
@@ -263,6 +271,14 @@ items:
   - isRequired: true
     name: --name -n
     summary: Name of the key vault.
+    description: ''
+  - name: --enable-purge-protection
+    parameterValueGroup: false, true
+    summary: Prevents manual purging of deleted vault, and all contained entities.
+    description: ''
+  - name: --enable-soft-delete
+    parameterValueGroup: false, true
+    summary: Enable vault deletion recovery for the vault, and all contained entities.
     description: ''
   - name: --enabled-for-deployment
     parameterValueGroup: false, true
@@ -363,7 +379,7 @@ commands:
   summary: List certificates in a specified key vault.
 - uid: az_keyvault_certificate_list_deleted
   name: az keyvault certificate list-deleted
-  summary: Lists the deleted certificates in the specified vault, currently available for recovery.
+  summary: Lists the deleted certificates in the specified vault currently available for recovery.
 - uid: az_keyvault_certificate_list_versions
   name: az keyvault certificate list-versions
   summary: List the versions of a certificate.
@@ -372,13 +388,13 @@ commands:
   summary: Manage pending certificate creation operations.
 - uid: az_keyvault_certificate_pending_delete
   name: az keyvault certificate pending delete
-  summary: Deletes the operation for a specified certificate.
+  summary: Deletes the creation operation for a specific certificate.
 - uid: az_keyvault_certificate_pending_merge
   name: az keyvault certificate pending merge
   summary: Merges a certificate or a certificate chain with a key pair existing on the server.
 - uid: az_keyvault_certificate_pending_show
   name: az keyvault certificate pending show
-  summary: Gets the operation associated with a specified certificate.
+  summary: Gets the creation operation of a certificate.
 - uid: az_keyvault_certificate_purge
   name: az keyvault certificate purge
   summary: Permanently deletes the specified deleted certificate.
@@ -390,7 +406,7 @@ commands:
   summary: Updates the specified attributes associated with the given certificate.
 - uid: az_keyvault_certificate_show
   name: az keyvault certificate show
-  summary: Gets information about a specified certificate.
+  summary: Gets information about a certificate.
 - uid: az_keyvault_certificate_show_deleted
   name: az keyvault certificate show-deleted
   summary: Retrieves information about the specified deleted certificate.
@@ -423,7 +439,7 @@ commands:
   summary: List keys in the specified vault.
 - uid: az_keyvault_key_list_deleted
   name: az keyvault key list-deleted
-  summary: List deleted keys in the specified vault.
+  summary: Lists the deleted keys in the specified vault.
 - uid: az_keyvault_key_list_versions
   name: az keyvault key list-versions
   summary: Retrieves a list of individual key versions with the same key name.
@@ -432,7 +448,7 @@ commands:
   summary: Permanently deletes the specified key.
 - uid: az_keyvault_key_recover
   name: az keyvault key recover
-  summary: Recovers the deleted key back to its current version under /keys.
+  summary: Recovers the deleted key to its latest version.
 - uid: az_keyvault_key_restore
   name: az keyvault key restore
   summary: Restores a backed up key to a vault.
@@ -444,7 +460,7 @@ commands:
   summary: Gets the public part of a stored key.
 - uid: az_keyvault_key_show_deleted
   name: az keyvault key show-deleted
-  summary: Retrieves the deleted key information plus its attributes.
+  summary: Gets the public part of a deleted key.
 - uid: az_keyvault_list
   name: az keyvault list
   summary: List key vaults.
@@ -462,7 +478,7 @@ commands:
   summary: Manage secrets.
 - uid: az_keyvault_secret_backup
   name: az keyvault secret backup
-  summary: Requests that a backup of the specified secret be downloaded to the client.
+  summary: Backs up the specified secret.
 - uid: az_keyvault_secret_delete
   name: az keyvault secret delete
   summary: Deletes a secret from a specified key vault.
@@ -474,16 +490,16 @@ commands:
   summary: List secrets in a specified key vault.
 - uid: az_keyvault_secret_list_deleted
   name: az keyvault secret list-deleted
-  summary: List deleted secrets in the specified vault.
+  summary: Lists deleted secrets for the specified vault.
 - uid: az_keyvault_secret_list_versions
   name: az keyvault secret list-versions
-  summary: List the versions of the specified secret.
+  summary: List all versions of the specified secret.
 - uid: az_keyvault_secret_purge
   name: az keyvault secret purge
   summary: Permanently deletes the specified secret.
 - uid: az_keyvault_secret_recover
   name: az keyvault secret recover
-  summary: Recovers the deleted secret back to its current version under /secrets.
+  summary: Recovers the deleted secret to the latest version.
 - uid: az_keyvault_secret_restore
   name: az keyvault secret restore
   summary: Restores a backed up secret to a vault.
@@ -498,13 +514,52 @@ commands:
   summary: Get a specified secret from a given key vault.
 - uid: az_keyvault_secret_show_deleted
   name: az keyvault secret show-deleted
-  summary: Retrieves the deleted secret information plus its attributes.
+  summary: Gets the specified deleted secret.
 - uid: az_keyvault_set_policy
   name: az keyvault set-policy
   summary: Update security policy settings for a Key Vault.
 - uid: az_keyvault_show
   name: az keyvault show
   summary: Show details of a key vault.
+- uid: az_keyvault_storage
+  name: az keyvault storage
+  summary: Manage storage accounts.
+- uid: az_keyvault_storage_add
+  name: az keyvault storage add
+  summary: Creates or updates a new storage account.
+- uid: az_keyvault_storage_list
+  name: az keyvault storage list
+  summary: List storage accounts managed by the specified key vault.
+- uid: az_keyvault_storage_regenerate_key
+  name: az keyvault storage regenerate-key
+  summary: Regenerates the specified key value for the given storage account.
+- uid: az_keyvault_storage_remove
+  name: az keyvault storage remove
+  summary: Deletes a storage account.
+- uid: az_keyvault_storage_sas_definition
+  name: az keyvault storage sas-definition
+  summary: Manage storage account SAS definitions.
+- uid: az_keyvault_storage_sas_definition_create
+  name: az keyvault storage sas-definition create
+  summary: Creates or updates a new SAS definition for the specified storage account.
+- uid: az_keyvault_storage_sas_definition_delete
+  name: az keyvault storage sas-definition delete
+  summary: Deletes a SAS definition from a specified storage account.
+- uid: az_keyvault_storage_sas_definition_list
+  name: az keyvault storage sas-definition list
+  summary: List storage SAS definitions for the given storage account.
+- uid: az_keyvault_storage_sas_definition_show
+  name: az keyvault storage sas-definition show
+  summary: Gets information about a SAS definition for the specified storage account.
+- uid: az_keyvault_storage_sas_definition_update
+  name: az keyvault storage sas-definition update
+  summary: Updates the specified attributes associated with the given SAS definition.
+- uid: az_keyvault_storage_show
+  name: az keyvault storage show
+  summary: Gets information about a specified storage account.
+- uid: az_keyvault_storage_update
+  name: az keyvault storage update
+  summary: Updates the specified attributes associated with the given storage account.
 - uid: az_keyvault_update
   name: az keyvault update
   summary: Update the properties of a key vault.
@@ -524,7 +579,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/bcf1164be3905a420c7f27a539e7b10654eece18/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
-updated_at: 7/13/2018 9:59:55 PM
-ms.date: 07/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/5afb8bd9536d5789a12647d090dc1cfe11dec6a2/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+updated_at: 8/8/2018 11:51:49 PM
+ms.date: 08/08/2018
 description: Manage KeyVault keys, secrets, and certificates.
