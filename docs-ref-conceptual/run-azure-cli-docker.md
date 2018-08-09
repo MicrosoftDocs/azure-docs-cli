@@ -26,10 +26,10 @@ Install the CLI using `docker run`.
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
-> you can use `-v ${HOME}:/root` to mount $HOME as `/root`.
+> you can use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
-> docker run -it -v ${HOME}:/root microsoft/azure-cli
+> docker run -it -v ${HOME}/.ssh:/root/.ssh microsoft/azure-cli
 > ```
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
