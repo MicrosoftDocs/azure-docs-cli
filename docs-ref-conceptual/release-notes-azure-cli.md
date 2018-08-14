@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/03/2018
+ms.date: 08/14/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,58 +19,56 @@ Version 2.0.44
 
 ### Core
 
-* use knack/0.4.2 with fix towards numeric value display in table output
-* Introduce YAML output format
-* Overhaul telemetry upload mechanism
+* Fixed numeric display in `table` output
+* Added YAML output format
 
 ### Telemetry
 
-* Initialize the azure-cli-telemetry package.
+* Improved telemetry reporting
 
 ### ACR
 
-* Add content-trust policy commands.
-* Fix a few issues to handle .dockerignore file properly in build command.
-* Minor fixes
+* Added `content-trust policy` commands
+* Fixed issue where `.dockerignore` was not handled properly
 
 ### ACS
 
-* `az acs/aks install-cli` will install to under %USERPROFILE%\.azure-kubectl on Windows
-* `az aks install-connector` will now detect if the cluster has RBAC and configure ACI Connector appropriately
-* Create role assignment to the subnet when it's provided.                     
-* Add new option "skip role assignment" for subnet when it's provided                                 
-* Skip role assignment to subnet when assignment already exists                
+* Changed `az acs/aks install-cli` to install under `%USERPROFILE%\.azure-kubectl` on Windows
+* Changed `az aks install-connector` to detect if the cluster has RBAC and configure ACI Connector appropriately
+* Changed to role assignment to the subnet when it's provided
+* Added new option to "skip role assignment" for subnet when it's provided                                 
+* Changed to skip role assignment to subnet when assignment already exists                
 
 ### AppService
 
-* Fix a bug that prevent from creating a function-app using storage accounts in external resource groups
-* Fix a crash on zip deployment
+* Fixed a bug that prevent from creating a function-app using storage accounts in external resource groups
+* Fixed a crash on zip deployment
 
 ### BatchAI
 
-* Logger output for auto-storage account creation now specifies "resource *group*".        
+* Changed logger output for auto-storage account creation to specifies "resource *group*".        
 
 ### Container
 
-* Add '--secure-environment-variables' for passing secure environment variables to a container      
+* Added `--secure-environment-variables` for passing secure environment variables to a container      
 
 ### IoT
 
-* BREAKING CHANGE: Removed deprecated commands which have moved to the iot extension
-* Updated elements to not assume azure-devices.net domain
+* [BREAKING CHANGE] Removed deprecated commands which have moved to the iot extension
+* Updated elements to not assume `azure-devices.net` domain
 
 ### Iot Central
 
-* Initial release of IoT Central module.
+* Initial release of IoT Central module
 
 ### KeyVault
 
 
-* Adding commands for managing storage accounts and sas-definitions
-* Adding commands for network-rules                                                           
-* Adding id parameter to secret, key, and certificate operations
-* Support KV mgmt multi-api version
-* Support KV data plane multi-api version
+* Added commands for managing storage accounts and sas-definitions
+* Added commands for network-rules                                                           
+* Added `--id` parameter to secret, key, and certificate operations
+* Added support for KV mgmt multi-api version
+* Added support for KV data plane multi-api version
 
 ### Relay
 
@@ -78,19 +76,19 @@ Version 2.0.44
 
 ### Sql
 
-* Added az sql failover-group commands.
+* Added `sql failover-group` commands
 
 ### Storage
 
-* BREAKING CHANGE: `storage account show-usage` now requires `--location` parameter and will list by region.
-* Make '--resource-group' parameter optional for 'storage account' commands.                                        
-* Remove 'Failed precondition' warnings for individual failures in batch commands for single aggregated message.
-* blob/file delete-batch commands no longer output array of nulls.
-* blob download/upload/delete-batch commands will read sas-token from container url
+* [BREAKING CHANGE] Changed `storage account show-usage` to require `--location` parameter and will list by region
+* Changed `--resource-group` parameter to be optional for `storage account` commands
+* Removed 'Failed precondition' warnings for individual failures in batch commands for single aggregated message
+* Changed `[blob|file] delete-batch` commands to no longer output array of nulls
+* Changed `blob [download|upload|delete-batch]` commands to read sas-token from container url
 
 ### VM
 
-* vm list-skus: add a few common filters to make the command easier to use
+* Added common filters to `vm list-skus` for ease of use
 
 ## July 31, 2018
 
