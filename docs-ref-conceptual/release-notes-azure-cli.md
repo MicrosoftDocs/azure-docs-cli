@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/03/2018
+ms.date: 08/14/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,83 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0 release notes
+
+## Auguest 14, 2018
+
+Version 2.0.44
+
+### Core
+
+* Fixed numeric display in `table` output
+* Added YAML output format
+
+### Telemetry
+
+* Improved telemetry reporting
+
+### ACR
+
+* Added `content-trust policy` commands
+* Fixed issue where `.dockerignore` was not handled properly
+
+### ACS
+
+* Changed `az acs/aks install-cli` to install under `%USERPROFILE%\.azure-kubectl` on Windows
+* Changed `az aks install-connector` to detect if the cluster has RBAC and configure ACI Connector appropriately
+* Changed to role assignment to the subnet when it's provided
+* Added new option to "skip role assignment" for subnet when it's provided                                 
+* Changed to skip role assignment to subnet when assignment already exists                
+
+### AppService
+
+* Fixed a bug that prevent from creating a function-app using storage accounts in external resource groups
+* Fixed a crash on zip deployment
+
+### BatchAI
+
+* Changed logger output for auto-storage account creation to specifies "resource *group*".        
+
+### Container
+
+* Added `--secure-environment-variables` for passing secure environment variables to a container      
+
+### IoT
+
+* [BREAKING CHANGE] Removed deprecated commands which have moved to the iot extension
+* Updated elements to not assume `azure-devices.net` domain
+
+### Iot Central
+
+* Initial release of IoT Central module
+
+### KeyVault
+
+
+* Added commands for managing storage accounts and sas-definitions
+* Added commands for network-rules                                                           
+* Added `--id` parameter to secret, key, and certificate operations
+* Added support for KV mgmt multi-api version
+* Added support for KV data plane multi-api version
+
+### Relay
+
+* Initial release
+
+### Sql
+
+* Added `sql failover-group` commands
+
+### Storage
+
+* [BREAKING CHANGE] Changed `storage account show-usage` to require `--location` parameter and will list by region
+* Changed `--resource-group` parameter to be optional for `storage account` commands
+* Removed 'Failed precondition' warnings for individual failures in batch commands for single aggregated message
+* Changed `[blob|file] delete-batch` commands to no longer output array of nulls
+* Changed `blob [download|upload|delete-batch]` commands to read sas-token from container url
+
+### VM
+
+* Added common filters to `vm list-skus` for ease of use
 
 ## July 31, 2018
 
