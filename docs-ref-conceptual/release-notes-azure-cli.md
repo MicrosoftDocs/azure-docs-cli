@@ -13,6 +13,72 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## Auguest 28, 2018
+
+Version 2.0.45
+
+### Core
+
+* Fix issue of loading empty configuration file.
+* Azure Stack: support new profile 2018-03-01-hybrid
+
+### ACR
+
+* Provide a workaround for runtime operations without ARM requests.
+* Exclude version control files (eg, .git, .gitignore) from uploaded tar by default in build command.
+
+### ACS
+
+* `az aks create` now defaults to Standard_DS2_v2 VMs.
+* `az aks get-credentials` will now call new apis to get cluster credential.
+
+### AppService
+
+* Support CORS on functionapp & webapp
+* Arm tag support on create commands
+* `webapp/functionapp identity show`: exception handling to exit with code 3 upon a missing resource for consistency
+
+### Backup
+
+* `backup vault backup-properties show`: exception handling to exit with code 3 upon a missing resource for consistency.
+
+### Bot Service
+
+* Initial Bot Service CLI Release
+
+### Cognitive Services
+
+* Add new parameter --api-properties, which is required for creating some of the services.
+
+### IoT
+
+* Increment DPS mgmt SDK requirement
+* Fix internal breaking changes for SDK usage patterns
+* Apply work around (back rev API) for assocating a linked-hub due to swagger/sdk mismatch with API.
+* Update tests and DPS recording
+
+### Monitor
+
+* Added `monitor metrics alert` commands for near-realtime metric alerts.
+* Deprecated `monitor alert` commands.
+
+### Network
+
+* `network application-gateway ssl-policy predefined show`: exception handling to exit with code 3 upon a missing resource for consistency
+
+### Resource
+
+* `provider operation show`: exception handling to exit with code 3 upon a missing resource for consistency.
+
+### Storage
+
+* `storage share policy show`: exception handling to exit with code 3 upon a missing resource for consistency.
+
+### VM
+
+* `vm/vmss identity show`: exception handling to exit with code 3 upon a missing resource for consistency
+* `vm create`: deprecate `--storage-caching` option.
+
 ## Auguest 14, 2018
 
 Version 2.0.44
