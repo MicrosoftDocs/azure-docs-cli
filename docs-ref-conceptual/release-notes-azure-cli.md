@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/14/2018
+ms.date: 08/28/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,28 +19,28 @@ Version 2.0.45
 
 ### Core
 
-* Fix issue of loading empty configuration file.
-* Azure Stack: support new profile 2018-03-01-hybrid
+* Fixed issue of loading empty configuration file
+* Added support for profile `2018-03-01-hybrid` for Azure Stack
 
 ### ACR
 
-* Provide a workaround for runtime operations without ARM requests.
-* Exclude version control files (eg, .git, .gitignore) from uploaded tar by default in build command.
+* Added a workaround for runtime operations without ARM requests
+* Changed to exclude version control files (eg, .git, .gitignore) from uploaded tar by default in `build` command
 
 ### ACS
 
-* `az aks create` now defaults to Standard_DS2_v2 VMs.
-* `az aks get-credentials` will now call new apis to get cluster credential.
+* Changed `aks create` to defaults to `Standard_DS2_v2` VMs
+* Changed `aks get-credentials` to now call new apis to get cluster credential
 
 ### AppService
 
-* Support CORS on functionapp & webapp
-* Arm tag support on create commands
-* `webapp/functionapp identity show`: exception handling to exit with code 3 upon a missing resource for consistency
+* Added support for CORS on functionapp & webapp
+* Added ARM tag support on create commands
+* Changed `[webapp|functionapp] identity show` to exit with code 3 upon a missing resource
 
 ### Backup
 
-* `backup vault backup-properties show`: exception handling to exit with code 3 upon a missing resource for consistency.
+* Changed `backup vault backup-properties show` to exit with code 3 upon a missing resource
 
 ### Bot Service
 
@@ -48,36 +48,33 @@ Version 2.0.45
 
 ### Cognitive Services
 
-* Add new parameter --api-properties, which is required for creating some of the services.
+* Added new parameter `--api-properties,` which is required for creating some of the services
 
 ### IoT
 
-* Increment DPS mgmt SDK requirement
-* Fix internal breaking changes for SDK usage patterns
-* Apply work around (back rev API) for assocating a linked-hub due to swagger/sdk mismatch with API.
-* Update tests and DPS recording
+* Fixed issue with associating linked hubs
 
 ### Monitor
 
-* Added `monitor metrics alert` commands for near-realtime metric alerts.
-* Deprecated `monitor alert` commands.
+* Added `monitor metrics alert` commands for near-realtime metric alerts
+* Deprecated `monitor alert` commands
 
 ### Network
 
-* `network application-gateway ssl-policy predefined show`: exception handling to exit with code 3 upon a missing resource for consistency
+* Changed `network application-gateway ssl-policy predefined show` to exit with code 3 upon a missing resource
 
 ### Resource
 
-* `provider operation show`: exception handling to exit with code 3 upon a missing resource for consistency.
+* Changed `provider operation show` to exit with code 3 upon a missing resource
 
 ### Storage
 
-* `storage share policy show`: exception handling to exit with code 3 upon a missing resource for consistency.
+* Changed `storage share policy show` to exit with code 3 upon a missing resource
 
 ### VM
 
-* `vm/vmss identity show`: exception handling to exit with code 3 upon a missing resource for consistency
-* `vm create`: deprecate `--storage-caching` option.
+* Changed `vm/vmss identity show` to exit with code 3 upon a missing resource 
+* Deprecated `--storage-caching` for `vm create`
 
 ## Auguest 14, 2018
 
