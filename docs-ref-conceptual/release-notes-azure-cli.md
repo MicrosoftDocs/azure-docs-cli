@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI 2.0
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/14/2018
+ms.date: 08/28/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,69 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI 2.0 release notes
+
+## Auguest 28, 2018
+
+Version 2.0.45
+
+### Core
+
+* Fixed issue of loading empty configuration file
+* Added support for profile `2018-03-01-hybrid` for Azure Stack
+
+### ACR
+
+* Added a workaround for runtime operations without ARM requests
+* Changed to exclude version control files (eg, .git, .gitignore) from uploaded tar by default in `build` command
+
+### ACS
+
+* Changed `aks create` to defaults to `Standard_DS2_v2` VMs
+* Changed `aks get-credentials` to now call new apis to get cluster credential
+
+### AppService
+
+* Added support for CORS on functionapp & webapp
+* Added ARM tag support on create commands
+* Changed `[webapp|functionapp] identity show` to exit with code 3 upon a missing resource
+
+### Backup
+
+* Changed `backup vault backup-properties show` to exit with code 3 upon a missing resource
+
+### Bot Service
+
+* Initial Bot Service CLI Release
+
+### Cognitive Services
+
+* Added new parameter `--api-properties,` which is required for creating some of the services
+
+### IoT
+
+* Fixed issue with associating linked hubs
+
+### Monitor
+
+* Added `monitor metrics alert` commands for near-realtime metric alerts
+* Deprecated `monitor alert` commands
+
+### Network
+
+* Changed `network application-gateway ssl-policy predefined show` to exit with code 3 upon a missing resource
+
+### Resource
+
+* Changed `provider operation show` to exit with code 3 upon a missing resource
+
+### Storage
+
+* Changed `storage share policy show` to exit with code 3 upon a missing resource
+
+### VM
+
+* Changed `vm/vmss identity show` to exit with code 3 upon a missing resource 
+* Deprecated `--storage-caching` for `vm create`
 
 ## Auguest 14, 2018
 
