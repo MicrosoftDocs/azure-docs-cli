@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/03/2018
+ms.date: 08/28/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,273 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+
+## Auguest 28, 2018
+
+Version 2.0.45
+
+### Core
+
+* Fixed issue of loading empty configuration file
+* Added support for profile `2018-03-01-hybrid` for Azure Stack
+
+### ACR
+
+* Added a workaround for runtime operations without ARM requests
+* Changed to exclude version control files (eg, .git, .gitignore) from uploaded tar by default in `build` command
+
+### ACS
+
+* Changed `aks create` to defaults to `Standard_DS2_v2` VMs
+* Changed `aks get-credentials` to now call new apis to get cluster credential
+
+### AppService
+
+* Added support for CORS on functionapp & webapp
+* Added ARM tag support on create commands
+* Changed `[webapp|functionapp] identity show` to exit with code 3 upon a missing resource
+
+### Backup
+
+* Changed `backup vault backup-properties show` to exit with code 3 upon a missing resource
+
+### Bot Service
+
+* Initial Bot Service CLI Release
+
+### Cognitive Services
+
+* Added new parameter `--api-properties,` which is required for creating some of the services
+
+### IoT
+
+* Fixed issue with associating linked hubs
+
+### Monitor
+
+* Added `monitor metrics alert` commands for near-realtime metric alerts
+* Deprecated `monitor alert` commands
+
+### Network
+
+* Changed `network application-gateway ssl-policy predefined show` to exit with code 3 upon a missing resource
+
+### Resource
+
+* Changed `provider operation show` to exit with code 3 upon a missing resource
+
+### Storage
+
+* Changed `storage share policy show` to exit with code 3 upon a missing resource
+
+### VM
+
+* Changed `vm/vmss identity show` to exit with code 3 upon a missing resource 
+* Deprecated `--storage-caching` for `vm create`
+
+## Auguest 14, 2018
+
+Version 2.0.44
+
+### Core
+
+* Fixed numeric display in `table` output
+* Added YAML output format
+
+### Telemetry
+
+* Improved telemetry reporting
+
+### ACR
+
+* Added `content-trust policy` commands
+* Fixed issue where `.dockerignore` was not handled properly
+
+### ACS
+
+* Changed `az acs/aks install-cli` to install under `%USERPROFILE%\.azure-kubectl` on Windows
+* Changed `az aks install-connector` to detect if the cluster has RBAC and configure ACI Connector appropriately
+* Changed to role assignment to the subnet when it's provided
+* Added new option to "skip role assignment" for subnet when it's provided                                 
+* Changed to skip role assignment to subnet when assignment already exists                
+
+### AppService
+
+* Fixed a bug that prevent from creating a function-app using storage accounts in external resource groups
+* Fixed a crash on zip deployment
+
+### BatchAI
+
+* Changed logger output for auto-storage account creation to specifies "resource *group*".        
+
+### Container
+
+* Added `--secure-environment-variables` for passing secure environment variables to a container      
+
+### IoT
+
+* [BREAKING CHANGE] Removed deprecated commands which have moved to the iot extension
+* Updated elements to not assume `azure-devices.net` domain
+
+### Iot Central
+
+* Initial release of IoT Central module
+
+### KeyVault
+
+
+* Added commands for managing storage accounts and sas-definitions
+* Added commands for network-rules                                                           
+* Added `--id` parameter to secret, key, and certificate operations
+* Added support for KV mgmt multi-api version
+* Added support for KV data plane multi-api version
+
+### Relay
+
+* Initial release
+
+### Sql
+
+* Added `sql failover-group` commands
+
+### Storage
+
+* [BREAKING CHANGE] Changed `storage account show-usage` to require `--location` parameter and will list by region
+* Changed `--resource-group` parameter to be optional for `storage account` commands
+* Removed 'Failed precondition' warnings for individual failures in batch commands for single aggregated message
+* Changed `[blob|file] delete-batch` commands to no longer output array of nulls
+* Changed `blob [download|upload|delete-batch]` commands to read sas-token from container url
+
+### VM
+
+* Added common filters to `vm list-skus` for ease of use
+
+## July 31, 2018
+
+Version 2.0.43
+
+### ACR
+
+* Added `--with-secure-properties` flag to `acr build-task show` command
+* Added `acr build-task update-build` command
+
+### ACS
+
+* Changed to return return 0 (success) when ending `az aks browse` by pressing [Ctrl+C]
+
+### Batch
+
+* Fixed bug when showing AAD token in cloudshell
+
+### Container
+
+* Removed requirement for `--log-analytics-workspace-key` for name or ID when in set subscription
+
+### Network
+
+* Added dns support to 2017-03-09-profile for Azure Stack 
+
+### Resource
+
+* Added `--rollback-on-error` to `group deployment create` to execute a known-good deployment on error
+* Fixed issue where `--parameters {}` with `group deployment create` resulted in an error
+
+### Role
+
+* Added support for stack profile 2017-03-09-profile
+* Fixed issue where generic update parameters to `app update` would not work correctly
+
+### Search
+
+* Added commands for Azure Search service
+
+### Service Bus
+
+* Added migration command group to migrate a namespace from Service Bus Standard to Premium
+* Added new optional properties to Service Bus queue and Subscription
+  *  `--enable-batched-operations` and `--enable-dead-lettering-on-message-expiration` in `queue`
+  *  `--dead-letter-on-filter-exceptions` in `subscriptions`
+
+### Storage
+
+* Added support for download of large files using a single connection
+* Converted `show` commands that were missed from failing with exit code 3 upon a missing resource
+
+### VM
+
+* Added support to list availability sets by subscription
+* Added support for `StandardSSD_LRS`
+* Added support for application security group on creating VM scale set
+* [BREAKING CHANGE] Changed `[vm|vmss] create`, `[vm|vmss] identity assign`, and `[vm|vmss] identity remove` to output user assigned identities in dictionary format
+
+## July 18, 2018
+
+Version 2.0.42
+
+### Core
+
+* Added support for browser-based login in WSL bash window
+* Added `--force-string` flag to all generic update commands
+* [BREAKING CHANGE] Changed 'show' commands to log error message and fail with exit code of 3 upon a missing resource
+
+### ACR
+
+* [BREAKING CHANGE] Updated '--no-push' to a pure flag in 'acr build' command
+* Added `show` and `update` commands under `acr repository` group
+* Added `--detail` flag for `show-manifests` and `show-tags` to show more detailed information
+* Added `--image` parameter to support get build details or logs by an image
+
+### ACS
+
+* Changed `az aks create` to error out if `--max-pods` is less than 5
+
+### AppService
+
+* Added support for PremiumV2 skus
+
+### Batch
+
+* Fixed bug on using token credential on cloud shell mode
+* Changed JSON input to be case-insensitive
+
+### Batch AI
+
+* Fixed `az batchai job exec` command
+
+### Container
+
+* Removed the requirement for username and password for non dockerhub registries
+* Fixed error when creating container groups from yaml file
+
+### Network
+
+* Added `--no-wait` support to `network nic [create|update|delete]` 
+* Added `network nic wait`
+* Deprecated `--ids` argument for `network vnet [subnet|peering] list`
+* Added `--include-default` flag to include default security rules in the output of `network nsg rule list`  
+
+### Resource
+
+* Added `--no-wait` support to `group deployment delete`
+* Added `--no-wait` support to `deployment delete`
+* Added `deployment wait` command
+* Fixed issue where the subscription-level `az deployment` commands erroneously appeared for profile 2017-03-09-profile
+
+### SQL
+
+* Fixed 'The provided resource group name ... did not match the name in the Url' error when specifying elastic pool name for `sql db copy` and `sql db replica create` commands
+* Allow configuring default sql server by executing `az configure --defaults sql-server=<name>`
+* Implemented table formatters for `sql server`, `sql server firewall-rule`, `sql list-usages`, and `sql show-usage` commands
+
+### Storage
+
+* Added `pageRanges` property to `storage blob show` output that will be populated for page blobs
+
+### VM
+
+* [BREAKING CHANGE] Changed `vmss create` to use `Standard_DS1_v2` as the default instance size
+* Added `--no-wait` support to `vm extension [set|delete]` and `vmss extension [set|delete]`
+* Added `vm extension wait`
 
 ## July 3, 2018
 
