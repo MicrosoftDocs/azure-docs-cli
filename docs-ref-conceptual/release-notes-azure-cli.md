@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
-## Auguest 28, 2018
+## August 28, 2018
 
 Version 2.0.45
 
