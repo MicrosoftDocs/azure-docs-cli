@@ -23,12 +23,17 @@ Azure CLI 2.0 is optimized for managing and administering Azure resources from t
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
-Use the [Cloud Shell](/azure/cloud-shell/overview) to run the CLI in your browser,
-or [install](install-azure-cli.md) it on macOS, Linux, or Windows.
-Read the [Get Started](get-started-with-azure-cli.md) article to begin using the CLI.
-For information about the latest release, see the [release notes](release-notes-azure-cli.md).
+## Run or Install
 
-The following samples help you get started with common tasks in Azure CLI 2.0:
+You can install the CLI locally, run it in the browser with Azure Cloud Shell, or run in a Docker container.
+
+* To run in your browser with Azure Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart) or [Quickstart for PowerShell in Azure Cloud Shell](/azure/cloud-shell/quickstart-powershell).
+* To install the CLI, see [Install the Azure CLI 2.0](install-azure-cli.md).
+* To run as a Docker container, see [Run Azure CLI 2.0 in a Docker Container](run-azure-cli-docker.md)
+
+## Get started
+
+Read the [Get Started](get-started-with-azure-cli.md) article to learn the CLI basics. The following samples demonstrate some common uses cases:
 
 - [Linux Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 - [Windows Virtual Machines](/azure/virtual-machines/virtual-machines-windows-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
@@ -36,8 +41,6 @@ The following samples help you get started with common tasks in Azure CLI 2.0:
 - [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 
 A detailed [reference](/cli/azure/reference-index) is also available that documents how to use each individual Azure CLI 2.0 command.
-
-[Get started](get-started-with-azure-cli.md) with Azure CLI 2.0 now.
 
 > [!NOTE]
 > If you use the previous version of the CLI (Azure CLI 1.0), you can continue to use it.
