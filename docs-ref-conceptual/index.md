@@ -23,11 +23,17 @@ Azure CLI 2.0 is optimized for managing and administering Azure resources from t
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
-Use the [Cloud Shell](/azure/cloud-shell/overview) to run the CLI in your browser,
-or [install](install-azure-cli.md) it on macOS, Linux, or Windows.
+## Run or Install
 Read the [Get Started](get-started-with-azure-cli.md) article to begin using the CLI.
 For information about the latest release, see the [release notes](release-notes-azure-cli.md).
 
+#### Run on your browser
+Use the [Cloud Shell](/azure/cloud-shell/overview) to run the CLI in your browser right from the Azure Portal.
+
+#### Install on your computer or server
+[Install](install-azure-cli.md) it on macOS, Linux, or Windows.
+
+## Get started
 The following samples help you get started with common tasks in Azure CLI 2.0:
 
 - [Linux Virtual Machines](/azure/virtual-machines/virtual-machines-linux-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
