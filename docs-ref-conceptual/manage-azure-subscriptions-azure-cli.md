@@ -1,6 +1,6 @@
 ---
-title: Manage Azure subscriptions with Azure CLI
-description: Manage Azure subscriptions with Azure CLI.
+title: Manage Azure subscriptions with the Azure CLI
+description: Manage Azure subscriptions with the Azure CLI.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,8 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ms.service: active-directory
 ---
-
-# Manage multiple Azure subscriptions
+# Manage multiple subscriptions with the Azure CLI
 
 Most Azure users will only ever have a single subscription. However, if you are part of multiple organizations or your organization has
 divided up access to certain resources across groupings, you may have multiple subscriptions within Azure. Multiple subscriptions can

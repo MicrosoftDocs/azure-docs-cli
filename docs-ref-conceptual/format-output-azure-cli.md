@@ -1,19 +1,18 @@
 ---
-title: Output formats for Azure CLI 2.0
-description: Learn how to format the output of Azure CLI 2.0 commands to tables, lists or json.
+title: Output formats for Azure CLI
+description: Learn how to format the output of Azure CLI commands to tables, lists or json.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-# Output formats for Azure CLI 2.0 commands
+# Output formats for Azure CLI commands
 
-Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter
-to format the output of the command into one of the output types noted in the following table:
+The Azure CLI uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter to format the output of the command into one of the output types noted in the following table:
 
 --output | Description
 ---------|-------------------------------
@@ -102,7 +101,7 @@ RGDEMO001   KBDemo020
 > az vm list --query "[].{objectID:id}" -o table
 > ```
 
-For more about using queries to filter data, see [Use JMESPath queries with Azure CLI 2.0](/cli/azure/query-azure-cli).
+For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](/cli/azure/query-azure-cli).
 
 ## TSV output format
 
@@ -161,4 +160,4 @@ What default output format would you like?
 Please enter a choice [1]:
 ```
 
-To learn more about configuring your environment, see [Azure CLI 2.0 configuration](/cli/azure/azure-cli-configuration).
+To learn more about configuring your environment, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
