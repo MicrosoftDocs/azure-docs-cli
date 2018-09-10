@@ -4,7 +4,7 @@ description: Learn how to format the output of Azure CLI 2.0 commands to tables,
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,8 +12,8 @@ ms.devlang: azure-cli
 ---
 # Output formats for Azure CLI 2.0 commands
 
-Azure CLI 2.0 uses json as its default output option, but offers various ways for you to format the output of any command.  Use the `--output` (or `--out` or `-o`) parameter
-to format the output of the command into one of the output types noted in the following table:
+Azure CLI 2.0 uses JSON as its default output format, but offers other formats.  Use the `--output` (`--out` or `-o`) parameter
+to format CLI output. The argument values and types of output are:
 
 --output | Description
 ---------|-------------------------------
@@ -62,7 +62,7 @@ The following output has some fields omitted for brevity, and identifying inform
 
 ## Table output format
 
-The `table` output format provides plain output formatted as rows and columns of collated data, making it easy to read and scan. Nested objects are not included in table output, but can still be filtered as part of a query. Some fields are also omitted from the table data, so this format is best when you want a quick, human-searchable overview of data.
+The `table` format prints output as an ASCII table, making it easy to read and scan. Nested objects aren't included in table output, but can still be filtered as part of a query. Some fields aren't included in the table, so this format is best when you want a quick, human-searchable overview of data.
 
 ```azurecli-interactive
 az vm list --out table
@@ -95,7 +95,7 @@ RGDEMO001   KBDemo020
 ```
 
 > [!NOTE]
-> Certain keys are filtered out and not printed in the table view. These are `id`, `type`, and `etag`. If you need to see these
+> Some keys are not printed in the table view by default. These are `id`, `type`, and `etag`. If you need to see these
 > in your output, you can use the JMESPath re-keying feature to change the key name and avoid filtering.
 >
 > ```azurecli
@@ -106,7 +106,7 @@ For more about using queries to filter data, see [Use JMESPath queries with Azur
 
 ## TSV output format
 
-The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, the `tsv` output option does not print nested objects.
+The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, `tsv` doesn't print nested objects.
 
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
@@ -122,7 +122,7 @@ None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Micros
 None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None    None    westus    KBDemo020            None    Succeeded    RGDEMO001    None            Microsoft.Compute/virtualMachines    36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-The next example shows how the `tsv` output can be piped to other commands on UNIX systems to extract more specific data. The `grep` command selects items that have text "RGD" in them, and then the `cut` command selects the eighth field (separated by tabs) to show the name of the VM in output.
+The next example shows how `tsv` output can be piped to other commands in bash. `grep` selects items that have text "RGD" in them, then the `cut` command selects the eighth field to show the name of the VM in output.
 
 ```bash
 az vm list --out tsv | grep RGD | cut -f8

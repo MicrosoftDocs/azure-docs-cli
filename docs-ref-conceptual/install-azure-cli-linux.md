@@ -4,7 +4,7 @@ description: How to install the Azure CLI 2.0 on Linux manually
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/29/2018
+ms.date: 09/09/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,17 +13,16 @@ ms.devlang: azure-cli
 
 # Install Azure CLI 2.0 on Linux manually
 
-If you do not have a package for the Azure CLI available on your distribution, you can always install the CLI manually by
-running an installation script.
+If there's no package for the Azure CLI for you your distribution, install the CLI manually by running a script.
 
 > [!NOTE]
-> It's strongly recommend that you use a package manager for the CLI. A package manager makes sure you always get the latest updates,
+> It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
 > and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
 > installing manually.
 
 ## Prerequisites
 
-In order to install the CLI, you need the following software available on your system:
+The CLI requires the following software:
 
 * [Python 2.7 or Python 3.x](https://www.python.org/downloads/)
 * [libffi](https://sourceware.org/libffi/)
@@ -31,15 +30,13 @@ In order to install the CLI, you need the following software available on your s
 
 ## Install or update
 
-Whether you are installing or updating the CLI, you need to perform a full installation. Once you have the prerequisites, you can
-install the CLI by running `curl`.
+Both installing and updating the CLI requires re-running the install script. Install the CLI by running `curl`.
 
 ```bash
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-You can also download the script and run it locally instead. You may have to restart
-your shell in order for changes to take effect.
+The script can also be downloaded and run locally. You may have to restart your shell in order for changes to take effect.
 
 You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
@@ -49,7 +46,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen during a manual installation. If your issue is not listed here, please [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
 ### curl "Object Moved" error
 
@@ -70,7 +67,7 @@ hash -r
 
 and check if the problem is resolved.
 
-The issue can also occur if you did not restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
+The issue can also occur if you didn't restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
 of the `az` command is
 
 ```bash

@@ -4,7 +4,7 @@ description: Overview of the Azure CLI 2.0.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,11 +13,11 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0
 
-The Azure CLI 2.0 is Microsoft's cross-platform command line experience for managing Azure resources.
+The Azure CLI 2.0 is Microsoft's cross-platform command-line experience for managing Azure resources.
 You can use it in your browser with [Azure Cloud Shell](/azure/cloud-shell/overview),
 or [install](install-azure-cli.md) it on macOS, Linux, or Windows and run it from the command line.
 
-Azure CLI 2.0 is optimized for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. Using the Azure CLI 2.0, you can create VMs within Azure as easily as typing the following command:
+Azure CLI 2.0 is simple to get started with, and best used for building automation scripts that work against the Azure Resource Manager. Using the Azure CLI 2.0, you can create VMs within Azure as easily as typing the following command:
 
 ```azurecli-interactive
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS

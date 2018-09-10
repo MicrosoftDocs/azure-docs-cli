@@ -4,7 +4,7 @@ description: How to install the Azure CLI 2.0 with zypper
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/29/2018
+ms.date: 09/09/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 
 # Install Azure CLI 2.0 with zypper
 
-If you are running a distribution that comes with `zypper`, such as openSUSE or SLES, there is a package available
+For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
 for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 SP 2.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]
@@ -69,7 +69,7 @@ sudo zypper update azure-cli
     sudo zypper remove -y azure-cli
     ```
 
-2. If you do not plan to reinstall the CLI, remove the repository information.
+2. If you don't plan to reinstall the CLI, remove the repository information.
 
   ```bash
   sudo zypper removerepo azure-cli

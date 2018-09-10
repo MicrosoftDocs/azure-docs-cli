@@ -5,7 +5,7 @@ keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -28,8 +28,7 @@ There are ways to sign in non-interactively, which are covered in detail in [Sig
 
 ## Common commands
 
-This table lists a few of the common commands used in the CLI links out to their documentation pages in the reference.
-All subcommands of these groups and their documentation can be looked up in online reference or with the `--help` argument.
+This table lists some common commands used in the CLI and links to their reference documentation.
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
@@ -43,9 +42,7 @@ All subcommands of these groups and their documentation can be looked up in onli
 
 ## Finding commands
 
-Commands in the CLI are provided as _subcommands_ of _groups_.
-Each group represents a service provided by Azure, and the subgroups divide commands for these services
-into logical groupings.
+Commands in the CLI are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
 
 To search for commands, use [az find](/cli/azure/reference-index#az-find). For example, to search for command names containing `secret`,
 use the following command:
@@ -54,9 +51,8 @@ use the following command:
 az find -q secret
 ```
 
-If you know which group of commands you want to work with, the `--help` argument
-may be a better choice. This displays not just detailed information for a command, but when used with a command group, displays all of the available subcommands. For example, when working with Network Security Groups (NSGs) you can find the available
-NSG subgroups and commands.
+Use the `--help` argument to get a complete list of commands and subgroups of a group. For example, to find the CLI commands for working with
+Network Security Groups (NSGs):
 
 ```azurecli-interactive
 az network nsg --help
@@ -76,7 +72,7 @@ There are some arguments that are available for every command.
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
   To learn more about queries, see [Query command results with Azure CLI 2.0](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
-* `--debug` prints even more information about CLI operations, used for debugging purposes. If you encounter a bug, provide output generated with the `--debug` flag on when submitting a bug report.
+* `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
 ## Interactive mode
 
@@ -89,7 +85,7 @@ az interactive
 
 For more information on interactive mode, see [Azure CLI 2.0 Interactive Mode](interactive-azure-cli.md).
 
-There is also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
+There's also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
 
 ## Learn CLI basics with quickstarts and tutorials
@@ -100,7 +96,7 @@ of the CLI to query Azure resources.
 > [!div class="nextstepaction"]
 > [Create virtual machines with the Azure CLI 2.0 tutorial](azure-cli-vm-tutorial.yml)
 
-If you would rather focus on other services, there are a variety of quickstarts for Azure services that use the CLI.
+There are also quickstarts for other popular services.
 
 * [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cli)
 * [Transfer objects to/from Azure Blob storage using the CLI](/azure/storage/blobs/storage-quickstart-blobs-cli)

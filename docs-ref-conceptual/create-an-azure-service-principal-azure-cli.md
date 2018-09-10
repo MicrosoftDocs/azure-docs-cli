@@ -4,7 +4,7 @@ description: Learn how to create and use a service principal with Azure CLI 2.0.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.technology: azure-cli
 ms.devlang: azure-cli
@@ -12,7 +12,7 @@ ms.service: role-based-access-control
 ---
 # Create an Azure service principal with Azure CLI 2.0
 
-If you want to create a separate sign in with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
+If you want to create a separate sign-in with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
 associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
 
 ## Create the service principal
@@ -37,7 +37,7 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
   az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
   ```
 
-* `--create-cert` creates a _self-signed_ certificate for authentication. If the `--cert` argument is not provided, a random certificate name is generated.
+* `--create-cert` creates a _self-signed_ certificate for authentication. If the `--cert` argument isn't provided, a random certificate name is generated.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert
@@ -76,7 +76,7 @@ The Azure CLI 2.0 provides the following commands to manage role assignments.
 * [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create)
 * [az role assignment delete](/cli/azure/role/assignment#az-role-assignment-delete)
 
-The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account, and is usually not appropriate for applications. The **Reader** role is more restrictive, providing read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
+The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account, and is not appropriate for applications. The **Reader** role is more restrictive, providing read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
 This example adds the **Reader** role and deletes the **Contributor** one.
 
@@ -98,7 +98,7 @@ az role assignment list --assignee APP_ID
 
 ## Sign in using the service principal
 
-You can test the new service principal's credentials and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. The authentication information you provide changes based on whether you chose to create the service principal with a password, or a certificate.
+You can test the new service principal's credentials and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. Use the authentication type that the service principal was created with.
 
 To sign in with a password, provide it as an argument parameter.
 
