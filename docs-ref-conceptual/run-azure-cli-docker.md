@@ -13,8 +13,8 @@ ms.devlang: azure-cli
 
 # Run Azure CLI 2.0 in a Docker container
 
-You can use Docker to run a standalone Linux container with the Azure CLI 2.0 pre-installed. Docker lets you get started quickly
-with an environment where you can try out the CLI to decide if it's right for you, or use our image as a base for your own deployment.
+You can use Docker to run a standalone Linux container with the Azure CLI 2.0 pre-installed. Docker gets you started quickly
+with an isolated environment to run the CLI in. The image can also be used as a base for your own deployments.
 
 ## Run in a Docker container
 
@@ -26,7 +26,7 @@ Install the CLI using `docker run`.
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
-> you can use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
+> use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
 > docker run -it -v ${HOME}/.ssh:/root/.ssh microsoft/azure-cli
@@ -40,7 +40,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Update Docker image
 
-Updating with Docker requires both pulling the new image and re-creating any existing containers. For this reason you should
+Updating with Docker requires both pulling the new image and re-creating any existing containers. For this reason, you should
 try to avoid using a container that hosts the CLI as a data store.
 
 Update your local image with `docker pull`.

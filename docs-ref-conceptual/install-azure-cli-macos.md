@@ -4,7 +4,7 @@ description: How to install the Azure CLI 2.0 on macOS
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/29/2018
+ms.date: 09/09/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -35,20 +35,21 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If your issue is not listed here, please [file an issue on github](https://github.com/Azure/azure-cli/issues).
+If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
 ### Unable to find Python or installed packages
 
-If your install is unable to find Python or installed packages, there may be a minor version mismatch or other issue that occurred during
-homebrew installation. Since the CLI does not use a Python virtual environment, it relies on being able to find correct Python version. You may be able to fix these issues by relinking your Python installation.
+There may be a minor version mismatch or other issue during homebrew installation. The CLI doesn't use a Python virtual environment, so it relies on finding
+the installed Python version. A possible fix is to install and relink the `python3` dependency from Homebrew.
 
 ```bash
+brew update && brew install python3 && brew upgrade python3
 brew link --overwrite python3
 ```
 
 ### CLI version 1.x is installed
 
-If an out-of-date version was installed, it could be due to a stale homebrew cache. Follow the [update](#Update) instructions.
+If an out-of-date version was installed, it could be because of a stale homebrew cache. Follow the [update](#Update) instructions.
 
 ## Update
 
