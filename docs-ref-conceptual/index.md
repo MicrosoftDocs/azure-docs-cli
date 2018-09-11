@@ -1,5 +1,5 @@
 ---
-title: Azure CLI 2.0
+title: Overview of Azure CLI 2.0
 description: Overview of the Azure CLI 2.0.
 author: sptramer
 ms.author: sttramer

@@ -114,7 +114,7 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password PAT
 
 ## Reset credentials
 
-In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp reset-credentials](https://docs.microsoft.com/en-us/cli/azure/ad/sp#az-ad-sp-reset-credentials) command. The same restrictions and options for creating a new service principal also apply here.
+In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) command. The same restrictions and options for creating a new service principal also apply here.
 
 ```azurecli-interactive
 az ad sp credential reset --name APP_ID --password NEW_PASSWORD
