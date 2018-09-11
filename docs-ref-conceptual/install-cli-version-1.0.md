@@ -4,7 +4,7 @@ description: Install the Azure CLI 1.0 for Mac, Linux, and Windows to start usin
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/20/2017
+ms.date: 09/09/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -61,7 +61,7 @@ If you use a Mac or Windows computer, the following CLI installers are available
 
 ## Option 3: Use a Docker container
 
-If you have set up your computer as a [Docker](https://docs.docker.com/engine/understanding-docker/) host, you can run the latest Azure CLI 1.0 in a Docker container. Run the following command (on Linux distributions you might need to use **sudo**):
+If you have set up your computer as a [Docker](https://docs.docker.com/engine/understanding-docker/) host, you can run the latest Azure CLI 1.0 in a Docker container. Run the command (on Linux distributions you might need to use **sudo**):
 
 ```bash
 docker run -it microsoft/azure-cli:0.10.17
@@ -69,7 +69,7 @@ docker run -it microsoft/azure-cli:0.10.17
 
 ## Run Azure CLI 1.0 commands
 
-After the Azure CLI 1.0 is installed, run the **azure** command from your command-line user interface (Bash, Terminal, Command prompt, and so on). For example, to run the help command, type the following:
+After the Azure CLI 1.0 is installed, run the **azure** command from your command-line user interface. For example, to run the help command:
 
 ```azurecli
 azure help
@@ -82,13 +82,13 @@ azure help
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
 
-To see the version of the Azure CLI 1.0 you installed, type the following:
+To see the version of the Azure CLI 1.0 you installed, type the command:
 
 ```azurecli
 azure --version
 ```
 
-Now you are ready! To access all the CLI commands to work with your own resources, [connect to your Azure subscription from the Azure CLI](/cli/azure/authenticate-azure-cli).
+To access all the CLI commands, [connect to your Azure subscription from the Azure CLI](/cli/azure/authenticate-azure-cli).
 
 > [!NOTE]
 > When you first use Azure CLI, you see a message asking if you want to allow Microsoft to collect usage information. Participation is voluntary. If you choose to participate, you can stop at any time by running `azure telemetry --disable`. To enable participation at any time, run `azure telemetry --enable`.
@@ -124,8 +124,8 @@ echo 'source ~/azure.completion.sh' >> ~/.bash_profile
 * To learn more about the Azure CLI, download source code, report problems, or contribute to the project, visit the [GitHub repository for the Azure CLI](https://github.com/azure/azure-xplat-cli).
 * If you have questions about using the Azure CLI, or Azure, visit the [Azure Forums](https://social.msdn.microsoft.com/Forums/en-US/home?forum=azurescripting).
 
-[mac-installer]: http://aka.ms/mac-azure-cli
-[windows-installer]: http://aka.ms/webpi-azure-cli
-[linux-installer]: http://aka.ms/linux-azure-cli
+[mac-installer]: https://aka.ms/mac-azure-cli
+[windows-installer]: https://aka.ms/webpi-azure-cli
+[linux-installer]: https://aka.ms/linux-azure-cli
 [cliasm]: /cli/azure/get-started-with-az-cli2
 [cliarm]: ./virtual-machines/azure-cli-arm-commands.md
