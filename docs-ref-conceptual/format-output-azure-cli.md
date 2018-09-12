@@ -19,6 +19,7 @@ to format CLI output. The argument values and types of output are:
 ---------|-------------------------------
 `json`   | JSON string. This setting is the default.
 `jsonc`  | Colorized JSON.
+`yaml`   | YAML, a machine-readable alternative to JSON.
 `table`  | ASCII table with keys as column headings.
 `tsv`    | Tab-separated values, with no keys
 
@@ -58,6 +59,37 @@ The following output has some fields omitted for brevity, and identifying inform
           ...
           ...
 ]
+```
+
+## YAML output format
+
+The `yaml` format prints output as [YAML](http://yaml.org/), a plain-text data serialization format. YAML tends to be easier to read than JSON, and easily maps to
+that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
+
+```azurecli-interactive
+az vm list --out yaml
+```
+
+The following output has some fields omitted for brevity, and identifying information replaced.
+
+```yaml
+- availabilitySet: null
+  diagnosticsProfile: null
+  hardwareProfile:
+    vmSize: Standard_DS1_v2
+  id: /subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010
+  identity: null
+  instanceView: null
+  licenseType: null
+  location: westus
+  name: ExampleVM1
+  networkProfile:
+    networkInterfaces:
+    - id: /subscriptions/.../resourceGroups/DemoRG1/providers/Microsoft.Network/networkInterfaces/DemoVM010Nic
+      primary: null
+      resourceGroup: DemoRG1
+  ...
+...
 ```
 
 ## Table output format
