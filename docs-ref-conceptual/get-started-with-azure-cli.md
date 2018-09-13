@@ -16,9 +16,13 @@ ms.devlang: azure-cli
 Welcome to the Azure CLI 2.0! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
 with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
-## Install and sign in
+## Install or run in Azure Cloud Shell
 
-If you haven't already, [install the CLI](install-azure-cli.md) or try out the [Azure Cloud Shell](/azure/cloud-shell/overview).
+The easiest way to get started with the Azure CLI is by running it in an Azure Cloud Shell environment through your browser. To learn about Cloud Shell, see  [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+
+When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
+
+## Sign in
 
 Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
 
