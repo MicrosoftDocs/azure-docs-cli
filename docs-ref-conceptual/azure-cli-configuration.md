@@ -13,8 +13,8 @@ ms.devlang: azure-cli
 ---
 # Azure CLI configuration
 
-The Azure CLI allows for user configuration to override internal settings such as logging and data collection, and provide default options for
-some required parameters. The CLI offers a convenience command for managing some of these values, `az configure`, and other values can be set in a
+The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values.
+The CLI offers a convenience command for managing some defaults, `az configure`. Other values can be set in a
 configuration file or with environment variables.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
@@ -29,7 +29,7 @@ You set defaults for the CLI with the [az configure](/cli/azure/reference-index#
 This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provided values are used by the CLI in place of
 required arguments.
 
-The following is a list of available keys that you can use.
+The following table contains a list of available configuration keys.
 
 | Name | Description |
 |------|-------------|
@@ -37,9 +37,8 @@ The following is a list of available keys that you can use.
 | location | The default location to use for all commands. |
 | web | The default app name to use for `az webapp` commands. |
 | vm | The default VM name to use for `az vm` commands. |
-| vmss | The default VMSS name to use for  `az vmss` commands. |
+| vmss | The default virtual machine scale set (VMSS) name to use for  `az vmss` commands. |
 | acr | The default container registry name to use for `az acr` commands. |
-| acs | The default container service name to use for `az acs` commands. |
 
 As an example, here's how you would set the default resource group and location for all commands.
 
@@ -53,14 +52,18 @@ The CLI configuration file contains other settings that are used for managing CL
 at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS,
 and `%USERPROFILE%\.azure` on Windows.
 
-Configuration files are written in the INI file format. These files are made up of sections which start with a `[section-name]` header, followed by
-a list of `key=value` entries. Section names are case-sensitive and key names are not.
-Comments are any line that begins with a `#` or `;`. Inline comments are not allowed. Booleans are case-insensitive, and are represented by the following values.
+Configuration files are written in the INI file format. This file format is defined by section headers, followed by a list of key-value entries.
+
+* Section headers are written as `[section-name]`. Section names are case-sensitive.
+* Entries are written as `key=value`. Key names are not case-sensitive.
+* Comments are any line that begins with a `#` or `;`. Inline comments are not allowed.
+
+Booleans are case-insensitive, and are represented by the following values.
 
 * __True__: 1, yes, true, on
 * __False__: 0, no, false, off
 
-Here's an example of a CLI configuration file which disables any confirmation prompts and sets up logging to the `/var/log/azure` directory.
+Here's an example of a CLI configuration file that disables any confirmation prompts and sets up logging to the `/var/log/azure` directory.
 
 ```ini
 [core]
@@ -77,10 +80,10 @@ see the [Python documentation on INI](https://docs.python.org/3/library/configpa
 ## CLI configuration values and environment variables
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
-environment variables can be set as `AZURE_{section}_{name}`, in all caps. For example, you can set the `batchai` section's `storage_account` default
+environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, the `storage_account` default for `batchai` is set 
 in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
 
-Any value with a default available does not have to be present in the command line arguments, even if it is required.
+When you provide a default value, that argument is no longer required by any command. Instead, the default value is used.
 
 | Section | Name      | Type | Description|
 |---------|-----------|------|------------|
@@ -88,7 +91,7 @@ Any value with a default available does not have to be present in the command li
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](http://aka.ms/AzureCliLegal). |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
-| | log\_dir | string | The directory to write logs to. By default this is `${AZURE_CONFIG_DIR}/logs`. |
+| | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
 | | account | string | The default account name to use for `az storage` commands. |
 | | key | string | The default account key to use for `az storage` commands. |

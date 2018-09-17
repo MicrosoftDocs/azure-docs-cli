@@ -55,6 +55,9 @@ items:
   - summary: Create a container in a container group with public IP address and ports.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ip-address public --ports 80 443
+  - summary: Create a container in a container group with public IP address and UDP port.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ip-address public --ports 8081 --protocol UDP
   - summary: Create a container in a container group with public IP address, ports and DNS name label.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ports 80 443 --dns-name-label contoso
@@ -82,6 +85,12 @@ items:
   - summary: Create a container in a container group using a yaml file.
     syntax:
       content: az container create -g MyResourceGroup -f containerGroup.yaml
+  - summary: Create a container group using Log Analytics from a workspace name.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --log-analytics-workspace myworkspace
+  - summary: Create a container group using Log Analytics from a workspace id and key.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --log-analytics-workspace workspaceid --log-analytics-workspace-key workspacekey
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -120,6 +129,9 @@ items:
   - name: --name -n
     summary: The name of the container group.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --os-type
     defaultValue: Linux
     parameterValueGroup: Linux, Windows
@@ -128,6 +140,10 @@ items:
   - name: --ports
     defaultValue: '[80]'
     summary: The ports to open.
+    description: ''
+  - name: --protocol
+    parameterValueGroup: TCP, UDP
+    summary: The network protocol to use.
     description: ''
   - name: --restart-policy
     defaultValue: Always
@@ -139,6 +155,9 @@ items:
     description: ''
   - name: --secrets-mount-path
     summary: The path within the container where the secrets volume should be mounted. Must not contain colon ':'.
+    description: ''
+  - name: --secure-environment-variables
+    summary: A list of secure environment variable for the container. Space-separated values in 'key=value' format.
     description: ''
   - name: --azure-file-volume-account-key
     summary: The storage account access key used to access the Azure File share.
@@ -173,6 +192,12 @@ items:
     description: ''
   - name: --registry-username
     summary: The username to log in container image registry server.
+    description: ''
+  - name: --log-analytics-workspace
+    summary: The Log Analytics workspace name or id. Use the current subscription or use --subscription flag to set the desired subscription.
+    description: ''
+  - name: --log-analytics-workspace-key
+    summary: The Log Analytics workspace key.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -378,7 +403,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/af43da7169181e34fd94bd6b98bff5839139ab44/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-updated_at: 5/3/2018 3:38:44 PM
-ms.date: 05/03/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+updated_at: 6/28/2018 6:01:13 PM
+ms.date: 06/28/2018
 description: Manage Azure Container Instances.

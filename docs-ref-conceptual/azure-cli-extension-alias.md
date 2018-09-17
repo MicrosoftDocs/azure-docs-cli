@@ -4,7 +4,7 @@ description: How to use the Azure CLI alias extension
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/11/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 
 # The Azure CLI alias extension
 
-The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow concise and simple by allowing shortcuts and giving you the ability to use positional arguments. Since aliases are powered by the Jinja2 template engine, they even offer advanced argument processing.
+The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow simple by allowing shortcuts. Since aliases are powered by the Jinja2 template engine, they even offer advanced argument processing.
 
 > [!NOTE]
 > The Alias Extension is in public preview. The features and configuration file format may change.
@@ -40,9 +40,9 @@ Name
 alias
 ```
 
-## Keep the extension up to date
+## Keep the extension up-to-date
 
-The alias extension is under active development and new versions are released regularly. New versions are not automatically installed whenever you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az-extension-update).
+The alias extension is under active development and new versions are released regularly. New versions aren't installed when you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az-extension-update).
 
 ```azurecli-interactive
 az extension update --name alias
@@ -50,7 +50,7 @@ az extension update --name alias
 
 ## Manage aliases for the Azure CLI
 
-The alias extension provides convenient and familiar commands to manage aliases. To view all the available commands and parameter details, invoke the alias command with `--help`.
+The alias extension lets you create and manage aliases for other CLI commands. To view all the available commands and parameter details, run the alias command with `--help`.
 
 ```azurecli-interactive
 az alias --help
@@ -110,7 +110,7 @@ When running this command, you give values to the positional arguments.
 az get-vm-ip MyResourceGroup MyVM
 ```
 
-You can also use environment variables in commands invoked by aliases, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
+You can also use environment variables in aliased commands, which are evaluated at runtime. The next example adds the `create-rg` alias, which creates a resource group in `eastus` and adds an `owner` tag. This tag is assigned the value of the local environment variable `USER`.
 
 ```azurecli-interactive
 az alias create \
@@ -122,9 +122,9 @@ To register the environment variables inside the command of the alias, the dolla
 
 ## Process arguments using Jinja2 templates
 
-Argument substitution in the alias extension is performed by [Jinja2](http://jinja.pocoo.org/docs/2.10/), giving you full access to the capabilities of the Jinja2 template engine. Templates allow you to perform actions like data extraction and substitution on strings.
+Argument substitution in the alias extension is performed by [Jinja2](http://jinja.pocoo.org/docs/2.10/). Jinja2 templates allow for manipulating the arguments.
 
-With Jinja2 templates, you can write aliases which take different types of arguments than the underlying command. For example, you can make an alias which takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
+With Jinja2 templates, you can write aliases that take different types of arguments than the underlying command. For example, you can make an alias that takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 
 ```azurecli-interactive
 az alias create \
@@ -145,7 +145,7 @@ Another way to create and modify aliases is to alter the alias configuration fil
 command = invoked_commands
 ```
 
-For aliases that contain positional arguments, the format for alias commands is:
+For aliases that have positional arguments, the format for alias commands is:
 
 ```ini
 [alias_name {{ arg1 }} {{ arg2 }} ...]
@@ -154,7 +154,8 @@ command = invoked_commands_including_args
 
 ## Create an alias command with arguments via the alias configuration file
 
-Below is an alias configuration file that contains an example alias command with arguments, which gets the public IP address for a VM. Ensure that the invoked command is in a single line, and contains the same arguments defined in the alias.
+The next example shows an alias for a command with arguments. This command gets the public IP address for a VM. Aliased commands must all be on a single line, and use
+all of the arguments in the alias name.
 
 ```ini
 [get-vm-ip {{ resourceGroup }} {{ vmName }}]
@@ -169,4 +170,4 @@ To uninstall the extension, use the [az extension remove](/cli/azure/extension#a
 az extension remove --name alias
 ```
 
-If you uninstalled due to a bug or other problem with the extension, please [file a GitHub issue](https://github.com/Azure/azure-cli-extensions/issues) so that we can provide a fix.
+If you uninstalled because a bug or other problem with the extension, [file a GitHub issue](https://github.com/Azure/azure-cli-extensions/issues) so that we can provide a fix.
