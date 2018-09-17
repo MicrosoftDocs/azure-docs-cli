@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/24/2018
+ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azure-cli
 
 # Install Azure CLI with apt
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there is a 64-bit package available
+If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's a 64-bit package available
 for the Azure CLI. This package has been tested with:
 
 * Ubuntu trusty, xenial, artful, and bionic
@@ -38,8 +38,8 @@ for the Azure CLI. This package has been tested with:
 3. Install the CLI:
 
    ```bash
-   sudo apt-get install apt-transport-https
-   sudo apt-get update && sudo apt-get install azure-cli
+   sudo apt-get update
+   sudo apt-get install apt-transport-https azure-cli
    ```
 
    > [!WARNING]
@@ -54,7 +54,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `apt`. If your issue is not listed here, please [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
 ### lsb_release fails with "Command not found"
 
@@ -64,7 +64,7 @@ When running the `lsb_release` command, you may see output similar to the follow
 -bash: lsb_release: command not found
 ```
 
-The error is due to lsb_release not being installed. You can resolve it by installing the `lsb-release` package.
+The error is due to the `lsb_release` command not being installed. You can resolve it by installing the `lsb-release` package.
 
 ```bash
 sudo apt-get install lsb-release
@@ -100,7 +100,7 @@ When behind a firewall blocking outgoing connections to port 11371, the `apt-key
 sudo apt-key adv --keyserver-options http-proxy=http://<USER>:<PASSWORD>@<PROXY-HOST>:<PROXY-PORT>/ --keyserver packages.microsoft.com --recv-keys 52E16F86FEE04B979B07E28DB02C46DF417A0893
 ```
 
-If you do not know if you have a proxy, contact your system administrator. If your proxy does not require a login then leave out the user, password, and `@` token.
+To determine if you have a proxy, contact your system administrator. If your proxy does not require a login, then leave out the user, password, and `@` token.
 
 ## Update
 
@@ -131,7 +131,7 @@ Use `apt-get upgrade` to update the CLI package.
     sudo apt-get remove -y azure-cli
     ```
 
-2. If you do not plan to reinstall the CLI, remove the Azure CLI repository information.
+2. If you don't plan to reinstall the CLI, remove the Azure CLI repository information.
 
    ```bash
    sudo rm /etc/apt/sources.list.d/azure-cli.list
