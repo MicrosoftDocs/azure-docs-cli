@@ -2,7 +2,7 @@
 items:
 - uid: az_acr_build_task
   name: az acr build-task
-  summary: Manage build definitions, which can be triggered by git commits or base image updates.
+  summary: Manage build definitions, which can be triggered by git commits or base image updates for OS & Framework Patching.
   description: ''
   langs:
   - azurecli
@@ -19,18 +19,21 @@ items:
   - az_acr_build_task_update_build
 - uid: az_acr_build_task_create
   name: az acr build-task create
-  summary: Creates a new build definition which can be triggered by git commits or base image updates.
+  summary: Creates a new build definition which can be triggered by git commits or base image updates for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create a build definition which updates on git commits and base image updates.
+  - summary: Create a build definition without git commits and base image updates.
     syntax:
-      content: az acr build-task create -t helloworld:{{.Build.ID}} -n helloworld -r myRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node --git-access-token 0000000000000000000000000000000000000000
+      content: az acr build-task create -t hello-world:{{.Build.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git --commit-trigger-enabled false
+  - summary: Create a build definition which updates on git commits and base image updates (--git-access-token must have permissions to create github webhooks).
+    syntax:
+      content: az acr build-task create -t hello-world:{{.Build.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git --git-access-token 0000000000000000000000000000000000000000
   parameters:
   - isRequired: true
     name: --context -c
-    summary: The full URL to the source code respository.
+    summary: The full URL to the source code repository.
     description: ''
   - isRequired: true
     name: --git-access-token
@@ -102,7 +105,7 @@ items:
     description: ''
   - name: --timeout
     defaultValue: "3600"
-    summary: The build timeout in seconds.
+    summary: The timeout in seconds.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -112,12 +115,12 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_delete
   name: az acr build-task delete
-  summary: Delete a build task from a container registry.
+  summary: Delete a build task from an Azure Container Registry.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a build task from a container registry.
+  - summary: Delete a build task from an Azure Container Registry
     syntax:
       content: az acr build-task delete -n MyBuildTask -r MyRegistry
   parameters:
@@ -140,7 +143,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_list
   name: az acr build-task list
-  summary: List the build tasks for a container registry.
+  summary: List the build tasks for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -164,7 +167,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_list_builds
   name: az acr build-task list-builds
-  summary: List all of the executed builds for a registry, with the ability to filter by a specific build task.
+  summary: List all of the executed builds for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -172,15 +175,15 @@ items:
   - summary: List builds for a build task and show the results in a table.
     syntax:
       content: az acr build-task list-builds -n MyBuildTask -r MyRegistry -o table
-  - summary: List all of the builds for a registry and show the results in a table.
+  - summary: List all of the builds for a registry displaying the results in a table.
     syntax:
       content: az acr build-task list-builds -r MyRegistry -o table
-  - summary: List the last 10 successful builds for a registry and show the results in a table.
+  - summary: List the last 10 successful builds for a registry displaying the results in a table.
     syntax:
       content: az acr build-task list-builds -r MyRegistry --build-status Succeeded --top 10 -o table
-  - summary: List all of the builds that built the image 'hello-world:latest' for a registry and show the results in a table.
+  - summary: List all of the builds that built the image 'hello-world' for an Azure Container Registry, displaying the results in a table.
     syntax:
-      content: az acr build-task list-builds -r MyRegistry --image hello-world:latest -o table
+      content: az acr build-task list-builds -r MyRegistry --image hello-world -o table
   parameters:
   - isRequired: true
     name: --registry -r
@@ -211,7 +214,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_logs
   name: az acr build-task logs
-  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last created build.
+  summary: Show logs for a particular build. If no build-id is supplied, display the logs for the last created build.
   description: ''
   langs:
   - azurecli
@@ -224,10 +227,10 @@ items:
       content: az acr build-task logs -r MyRegistry -n MyBuildTask
   - summary: Show logs for a particular build.
     syntax:
-      content: az acr build-task logs -r MyRegistry --build-id buildId
-  - summary: Show logs for the last created build in the registry that built the image 'hello-world:latest'.
+      content: az acr build-task logs -r MyRegistry --build-id aa1b
+  - summary: Show logs for the last created build in the registry that built the image 'hello-world'.
     syntax:
-      content: az acr build-task logs -r MyRegistry --image hello-world:latest
+      content: az acr build-task logs -r MyRegistry --image hello-world
   parameters:
   - isRequired: true
     name: --registry -r
@@ -242,6 +245,9 @@ items:
   - name: --name -n
     summary: The name of the build task.
     description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
@@ -253,7 +259,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_run
   name: az acr build-task run
-  summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers.
+  summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -270,6 +276,9 @@ items:
     name: --registry -r
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
+    description: ''
   - name: --no-logs
     summary: Do not show logs after successfully queuing the build.
     description: ''
@@ -284,7 +293,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_show
   name: az acr build-task show
-  summary: Get the properties of a specified build task.
+  summary: Get the properties of a specified build task for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -318,14 +327,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_show_build
   name: az acr build-task show-build
-  summary: Get the properties of a specified build.
+  summary: Get the properties of a specified build for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
   examples:
   - summary: Get the details of a build, displaying the results in a table.
     syntax:
-      content: az acr build-task show-build -n MyBuildTask -r MyRegistry --build-id MyBuild -o table
+      content: az acr build-task show-build -n MyBuildTask -r MyRegistry --build-id aab1 -o table
   parameters:
   - isRequired: true
     name: --build-id
@@ -346,12 +355,12 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_update
   name: az acr build-task update
-  summary: Update a build task for a container registry.
+  summary: Update a build task for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Update the git access token for a build definition in a container registry.
+  - summary: Update the git access token for a build definition in an Azure Container Registry.
     syntax:
       content: az acr build-task update -n MyBuildTask -r MyRegistry --git-access-token 0000000000000000000000000000000000000000
   parameters:
@@ -381,7 +390,7 @@ items:
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code respository.
+    summary: The full URL to the source code repository.
     description: ''
   - name: --cpu
     summary: The CPU configuration in terms of number of cores required for the build.
@@ -418,7 +427,7 @@ items:
     summary: The current status of build task.
     description: ''
   - name: --timeout
-    summary: The build timeout in seconds.
+    summary: The timeout in seconds.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -428,7 +437,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_build_task_update_build
   name: az acr build-task update-build
-  summary: Patch the build properties.
+  summary: Patch the build properties of an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -461,34 +470,34 @@ items:
 commands:
 - uid: az_acr_build_task_create
   name: az acr build-task create
-  summary: Creates a new build definition which can be triggered by git commits or base image updates.
+  summary: Creates a new build definition which can be triggered by git commits or base image updates for an Azure Container Registry.
 - uid: az_acr_build_task_delete
   name: az acr build-task delete
-  summary: Delete a build task from a container registry.
+  summary: Delete a build task from an Azure Container Registry.
 - uid: az_acr_build_task_list
   name: az acr build-task list
-  summary: List the build tasks for a container registry.
+  summary: List the build tasks for an Azure Container Registry.
 - uid: az_acr_build_task_list_builds
   name: az acr build-task list-builds
-  summary: List all of the executed builds for a registry, with the ability to filter by a specific build task.
+  summary: List all of the executed builds for an Azure Container Registry.
 - uid: az_acr_build_task_logs
   name: az acr build-task logs
-  summary: Show logs for a particular build. If no build-id is supplied, it shows logs for the last created build.
+  summary: Show logs for a particular build. If no build-id is supplied, display the logs for the last created build.
 - uid: az_acr_build_task_run
   name: az acr build-task run
-  summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers.
+  summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers for an Azure Container Registry.
 - uid: az_acr_build_task_show
   name: az acr build-task show
-  summary: Get the properties of a specified build task.
+  summary: Get the properties of a specified build task for an Azure Container Registry.
 - uid: az_acr_build_task_show_build
   name: az acr build-task show-build
-  summary: Get the properties of a specified build.
+  summary: Get the properties of a specified build for an Azure Container Registry.
 - uid: az_acr_build_task_update
   name: az acr build-task update
-  summary: Update a build task for a container registry.
+  summary: Update a build task for an Azure Container Registry.
 - uid: az_acr_build_task_update_build
   name: az acr build-task update-build
-  summary: Patch the build properties.
+  summary: Patch the build properties of an Azure Container Registry.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -505,7 +514,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/985b543a5e2f65d907c84aee6432949a7d419642/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 7/31/2018 9:31:01 PM
-ms.date: 07/31/2018
-description: Manage build definitions, which can be triggered by git commits or base image updates.
+gitcommit: https://github.com/Azure/azure-cli/blob/d5467e4fdd4916f8c1249ca1ee030d3ff509d999/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 9/13/2018 10:43:56 PM
+ms.date: 09/13/2018
+description: Manage build definitions, which can be triggered by git commits or base image updates for OS & Framework Patching.
