@@ -14,7 +14,9 @@ items:
   - az_container_export
   - az_container_list
   - az_container_logs
+  - az_container_restart
   - az_container_show
+  - az_container_stop
 - uid: az_container_attach
   name: az container attach
   summary: Attach local standard output and error streams to a container in a container group.
@@ -199,6 +201,23 @@ items:
   - name: --log-analytics-workspace-key
     summary: The Log Analytics workspace key.
     description: ''
+  - name: --network-profile
+    summary: The network profile name or id.
+    description: ''
+  - name: --subnet
+    summary: The name of the subnet when creating a new VNET or referencing an existing one. Can also reference an existing subnet by ID.
+    description: ''
+  - name: --subnet-address-prefix
+    defaultValue: 10.0.0.0/24
+    summary: The subnet IP address prefix to use when creating a new VNET in CIDR format.
+    description: ''
+  - name: --vnet-address-prefix
+    defaultValue: 10.0.0.0/16
+    summary: The IP address prefix to use when creating a new VNET in CIDR format.
+    description: ''
+  - name: --vnet-name
+    summary: The name of the VNET when creating a new one or referencing an existing one.
+    description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
     remote:
@@ -341,10 +360,52 @@ items:
       branch: master
       path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_container_restart
+  name: az container restart
+  summary: Restarts all containers in a container group.
+  description: Restarts all containers in a container group in place. If container image has updates, new image will be downloaded.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_container_show
   name: az container show
   summary: Get the details of a container group.
   description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_container_stop
+  name: az container stop
+  summary: Stops all containers in a container group.
+  description: Stops all containers in a container group. Compute resources will be deallocated and billing will stop.
   langs:
   - azurecli
   parameters:
@@ -384,9 +445,15 @@ commands:
 - uid: az_container_logs
   name: az container logs
   summary: Examine the logs for a container in a container group.
+- uid: az_container_restart
+  name: az container restart
+  summary: Restarts all containers in a container group.
 - uid: az_container_show
   name: az container show
   summary: Get the details of a container group.
+- uid: az_container_stop
+  name: az container stop
+  summary: Stops all containers in a container group.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

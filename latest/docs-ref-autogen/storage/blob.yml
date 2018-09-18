@@ -41,6 +41,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --delete-snapshots
     parameterValueGroup: include, only
     summary: Required if the blob has associated snapshots.
@@ -58,13 +62,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -90,11 +94,21 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete all blobs ending with ".py" in a container that have not been modified for 10 days.
+    syntax:
+      content: >-
+        date=`date -d "10 days ago" '+%Y-%m-%dT%H:%MZ'`
+                                az storage blob delete-batch -s MyContainer --account-name MyStorageAccount --pattern *.py --if-unmodified-since $date
   parameters:
   - isRequired: true
     name: --source -s
     summary: The blob container from where the files will be deleted.
     description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --delete-snapshots
     parameterValueGroup: include, only
     summary: Required if the blob has associated snapshots.
@@ -115,13 +129,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*).
     description: Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -160,6 +174,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --end-range
     summary: 'End of byte range to use for downloading a section of the blob. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of blob.'
     description: ''
@@ -196,13 +214,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -228,6 +246,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Download all blobs that end with .py
+    syntax:
+      content: az storage blob download-batch -d . --pattern *.py -s MyContainer --account-name MyStorageAccount
   parameters:
   - isRequired: true
     name: --destination -d
@@ -237,6 +259,10 @@ items:
     name: --source -s
     summary: The blob container from where the files will be downloaded.
     description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --dryrun
     summary: Show the summary of the operations to be taken instead of actually downloading the file(s).
     description: ''
@@ -286,6 +312,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --snapshot
     summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the snapshot.
     description: ''
@@ -313,9 +343,15 @@ items:
 - uid: az_storage_blob_generate_sas
   name: az storage blob generate-sas
   summary: Generates a shared access signature for the blob.
-  description: Use the returned signature with the sas_token parameter of any BlobService.
+  description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Generate a sas token for a blob with read-only permissions.
+    syntax:
+      content: >-
+        end=`date -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+                                az storage blob generate-sas --account-name MyStorageAccount -c MyContainer -n MyBlob --permissions r --expiry $end --https-only
   parameters:
   - isRequired: true
     name: --container-name -c
@@ -324,6 +360,10 @@ items:
   - isRequired: true
     name: --name -n
     summary: The blob name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --cache-control
     summary: Response header value for Cache-Control when resource is accessed using this shared access signature.
@@ -387,6 +427,10 @@ items:
     name: --container-name -c
     summary: The container name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --delimiter
     summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
     description: ''
@@ -439,6 +483,10 @@ items:
     name: --tier
     summary: The tier value to set the blob to.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --timeout
     summary: The timeout parameter is expressed in seconds. This method may make multiple calls to the Azure service and the timeout will apply to each call individually.
     description: ''
@@ -484,6 +532,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
     description: ''
@@ -497,13 +549,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -538,6 +590,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
     description: ''
@@ -551,13 +607,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -591,6 +647,10 @@ items:
   - isRequired: true
     name: --name -n
     summary: The blob name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -628,6 +688,10 @@ items:
     name: --name -n
     summary: The blob name.
     description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
   - name: --content-cache-control
     summary: The cache control string.
     description: ''
@@ -656,13 +720,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -704,6 +768,10 @@ items:
   - isRequired: true
     name: --name -n
     summary: The blob name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --content-cache-control
     summary: The cache control string.
@@ -760,13 +828,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
     description: ''
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -792,6 +860,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Upload all files that end with .py unless blob exists and has been modified since given date.
+    syntax:
+      content: az storage blob upload-batch -d MyContainer --account-name MyStorageAccount -s directory_path --pattern *.py --if-unmodified-since 2018-08-27T20:51Z
   parameters:
   - isRequired: true
     name: --destination -d
@@ -800,6 +872,10 @@ items:
   - isRequired: true
     name: --source -s
     summary: The directory where the files to be uploaded are located.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --destination-path
     summary: The destination path that will be appended to the blob name.
@@ -861,13 +937,13 @@ items:
     summary: An ETag value, or the wildcard character (*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
     description: ''
   - name: --if-modified-since
-    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --if-none-match
     summary: An ETag value, or the wildcard character (*).
     description: Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
   - name: --if-unmodified-since
-    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -901,6 +977,10 @@ items:
   - isRequired: true
     name: --name -n
     summary: The blob name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --protocol
     defaultValue: https
@@ -1053,7 +1133,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/978a9c85517ab0c1bce356967fcc9934b0e90ae8/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 9/11/2018 8:34:08 PM
+ms.date: 09/11/2018
 description: Manage object storage for unstructured data (blobs).
