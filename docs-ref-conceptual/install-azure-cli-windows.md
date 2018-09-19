@@ -41,3 +41,10 @@ Uninstalling can be done by running the MSI again, and choosing the "Uninstall" 
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/installazurecliwindows)
+
+## Next Steps
+
+Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+
+> [!div class="nextstepaction"]
+> [Get started with the Azure CLI](get-started-with-azure-cli.md)
