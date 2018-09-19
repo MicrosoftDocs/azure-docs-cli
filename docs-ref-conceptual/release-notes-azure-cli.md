@@ -13,6 +13,117 @@ ms.devlang: azure-cli
 
 # Azure CLI 2.0 release notes
 
+## September 21, 2018
+
+Version 2.0.46
+
+### Core
+* Fixed issue where `az vm create --generate-ssh-keys` overwrites private key file if public key file is missing. (#4725, #6780)
+
+### ACR
+* Add ACR Task commands.
+* Add quick run command.
+* Deprecate build-task command group.
+* Add helm command group to support managing helm charts with ACR.
+* Allow idempotent create for managed registry.
+* Add a no-format flag for displaying build logs
+
+### ACS
+* install-connector: Updates the install-connector command to set the AKS Master FQDN
+* bugfix: creating role assignment for vnet-subnet-id when not specifying service principal and skip-role-assignemnt
+
+### AppService
+
+* support for webjobs(continuous and triggered) operations management
+* appservice plan, webapp & function app updated to use latest python websites SDK version
+* az webapp config set supports --fts-state property. Also added support fot az functionapp config set & show
+* webapp: add support for bring your own storage
+* webapp: add support for listing and restoring deleted apps
+
+### Batch
+* Updated to Batch SDK 5.0.0.
+* Update adding tasks through --json-file to support AddTaskCollectionParameter syntax
+* Update documentation of accepted --json-file formats
+* Add --max-tasks-per-node-option to az batch pool create
+* Update show behavior of az batch account to show currently logged in account if no options are specified.
+
+### Batch AI 
+* Fix auto storage account creation failure in `az batchai cluster create` command
+
+### Cognitive Services
+* Add completer for  `--sku`, `--kind`, `--location` arguments
+* Add new command `az cognitiveservices account list-usage`
+* Add new command `az cognitiveservices account list-kinds`
+* Add new command `az cognitiveservices account list`
+* Deprecate `az cognitiveservices list`
+* --name is now optional for `az cognitiveservices account list-skus`
+
+### Container
+* Added ability to restart and stop a running container group
+* Add '--network-profile' for passing in a network profile
+* Add '--subnet', '--vnet_name', to allow creating container groups in a VNET
+* Update the table output to show the status of the container group
+
+### Datalake
+* Update ADLS version to latest(0.0.31)
+* Added commands for virtual network rules.
+
+### Interactive Shell
+* Fix error found on windows where commands fail to run properly.
+* Fix command loading problem in interactive that was caused by deprecated objects.
+
+### IoT
+* Adds support for routing IoT Hubs.
+
+### Key Vault
+* Fixed Key Vault key import for RSA keys
+
+### Network
+* Add `network public-ip prefix` commands to support public IP prefixes features.
+* Add `network service-endpoint` commands to support service endpoint policy features.
+* Add `network lb outbound-rule` commands to support creation of Standard Load Balancer outbound rules.
+* Add `--public-ip-prefix` to `network lb frontend-ip create/update` to support frontend IP configurations using public IP prefixes.
+* Add `--enable-tcp-reset` to `network lb rule/inbound-nat-rule/inbound-nat-pool create/update`.
+* Add `--disable-outbound-snat` to `network lb rule create/update`.
+* Allow `network watcher flow-log show/configure` to be used with classic NSGs.
+* Add `network watcher run-configuration-diagnostic` command.
+* Fix `network watcher test-connectivity` command and add `--method`, `--valid-status-codes` and `--headers` properties.
+* `network express-route create/update`: Add `--allow-global-reach` flag.
+* `network vnet subnet create/update`: Add support for `--delegation`.
+* Added `network vnet subnet list-available-delegations` command.
+* `network traffic-manager profile create/update`: Added support for `--interval`, `--timeout` and `--max-failures` for Monitor configuration.
+  Deprecated options `--monitor-path`, `--monitor-port` and `--monitor-protocol` in favor of `--path`, `--port`, `--protocol`.
+* `network lb frontend-ip create/update`: Fixed the logic for setting private IP allocation method. If a private IP address is provided, the
+  allocation will be static. If no private IP address is provided, or empty string is provided for private IP address, allocation is dynamic.
+* `dns record-set * create/update`: Add support for `--target-resource`.
+* Add `network interface-endpoint` commands to query interface endpoint objects.
+* Add `network profile show/list/delete` for partial management of network profiles.
+* Add `network express-route peering connection` commands to manage peering connections between ExpressRoutes.
+
+### RDBMS
+* Add support for MariaDB service
+
+### Reservation
+* Add CosmosDb in the reserved resource enum type
+* Add name property in Patch model
+
+### Manage App
+* `managedapp create --kind MarketPlace`: fixed bug causing instance creation of a Marketplace managed app to crash.
+* Restrict `feature` commands to supported profiles.
+
+### Role
+* support list user's group memberships
+
+### SignalR
+* General available release.
+
+### Storage
+* `--auth-mode login` parameter allows use of user's login credentials for blob and queue authorization.
+* Added `storage container immutability-policy/legal-hold` to manage immutable storage.
+
+### VM
+* support shared image gallery through `az sig`
+
 ## August 28, 2018
 
 Version 2.0.45
