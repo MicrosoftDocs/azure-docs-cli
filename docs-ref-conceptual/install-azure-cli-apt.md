@@ -142,3 +142,10 @@ Use `apt-get upgrade` to update the CLI package.
    ```bash
    sudo apt autoremove
    ```
+
+## Next Steps
+
+Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+
+> [!div class="nextstepaction"]
+> [Get started with the Azure CLI](get-started-with-azure-cli.md)
