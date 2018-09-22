@@ -35,7 +35,7 @@ You can install the CLI locally, run it in the browser with Azure Cloud Shell, o
 
 - [Manage virtual machines with the Azure CLI](/learn/modules/manage-virtual-machines-with-azure-cli/)
 - [Control Azure services with the CLI](/learn/modules/control-azure-services-with-cli/)
-- [More interactive learning...](/learn/browse/?products=azure)
+- [More interactive learning...](/learn/browse/?products=azure-clis)
 
 ## Get started
 
