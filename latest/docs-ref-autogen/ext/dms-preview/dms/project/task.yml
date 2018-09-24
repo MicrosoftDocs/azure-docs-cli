@@ -1,0 +1,185 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_dms-preview_az_dms_project_task
+  name: az dms project task
+  summary: Manage Tasks for a Data Migration Service instance's Project.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_dms-preview_az_dms_project_task_create
+  - ext_dms-preview_az_dms_project_task_cutover
+- uid: ext_dms-preview_az_dms_project_task_create
+  name: az dms project task create
+  summary: Create and start a migration Task.
+  description: >-
+    The following task configurations are supported:
+                                    -) source -> target :: task type
+                                    1) SQL -> SQLDB :: OfflineMigration
+                                    2) MySQL -> AzureDbForMySql :: OnlineMigration
+                                    3) PostgreSQL -> AzureDbForPostgreSQL :: OnlineMigration.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create and start a SQL Task which performs no validation checks.
+    syntax:
+      content: "az dms project task create --database-options-json C:\\CLI Files\\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json '{'dataSource': 'myserver', 'authentication': 'SqlAuthentication', 'encryptConnection': 'true', 'trustServerCertificate': 'true'}' --target-connection-json C:\\CLI Files\\targetConnection.json --source-platform sql --target-platform sqldb --task-type offlinemigration"
+  - summary: Create and start a SQL Task which performs all validation checks.
+    syntax:
+      content: az dms project task create --database-options-json C:\CLI Files\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json C:\CLI Files\sourceConnection.json --target-connection-json C:\CLI Files\targetConnection.json --enable-data-integrity-validation=True --enable-query-analysis-validation --enable-schema-validation --source-platform sql --target-platform sqldb --task-type offlinemigration
+  - summary: For SQL, the format of the database options JSON object.
+    syntax:
+      content: >-
+        [
+                                    {
+                                        "name": "source database",
+                                        "target_database_name": "target database",
+                                        "make_source_db_read_only": false|true,
+                                        "table_map": {
+                                            "schema.SourceTableName1": "schema.TargetTableName1",
+                                            "schema.SourceTableName2": "schema.TargetTableName2",
+                                            ...n
+                                        }
+                                    },
+                                    ...n
+                                ]
+  - summary: For MySQL and PostgreSQL, the format of the database options JSON object.
+    syntax:
+      content: >-
+        [
+                                    {
+                                        "name": "source database",
+                                        "target_database_name": "target database",
+                                    },
+                                    ...n
+                                ]
+  - summary: The format of the connection JSON object for SQL connections.
+    syntax:
+      content: >-
+        {
+                                    "userName": "user name",    // if this is missing or null, you will be prompted
+                                    "password": null,           // if this is missing or null (highly recommended) you will be prompted
+                                    "dataSource": "server name[,port]",
+                                    "authentication": "SqlAuthentication|WindowsAuthentication",
+                                    "encryptConnection": true,      // highly recommended to leave as true
+                                    "trustServerCertificate": true  // highly recommended to leave as true
+                                }
+  - summary: The format of the connection JSON object for MySql connections.
+    syntax:
+      content: >-
+        {
+                                    "userName": "user name",    // if this is missing or null, you will be prompted
+                                    "password": null,           // if this is missing or null (highly recommended) you will be prompted
+                                    "serverName": "server name",
+                                    "port": 3306                // if this is missing, it will default to 3306
+                                }
+  - summary: The format of the connection JSON object for PostgreSQL connections.
+    syntax:
+      content: >-
+        {
+                                    "userName": "user name",    // if this is missing or null, you will be prompted
+                                    "password": null,           // if this is missing or null (highly recommended) you will be prompted
+                                    "serverName": "server name",
+                                    "databaseName": "database name", // if this is missing, it will default to the 'postgres' database
+                                    "port": 5432                // if this is missing, it will default to 5432
+                                }
+  parameters:
+  - isRequired: true
+    name: --database-options-json
+    summary: Database and table information. This can be either a JSON-formatted string or the location to a file containing the JSON object. See example below for the format.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - isRequired: true
+    name: --source-connection-json
+    summary: The connection information to the source server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See example below for the format.
+    description: ''
+  - isRequired: true
+    name: --source-platform
+    summary: 'The type of server for the source database. The supported types are: SQL, MySQL, PostgreSQL.'
+    description: ''
+  - isRequired: true
+    name: --target-connection-json
+    summary: The connection information to the target server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See example below for the format.
+    description: ''
+  - isRequired: true
+    name: --target-platform
+    summary: 'The type of server for the target database. The supported types are: SQLDB, AzureDbForMySql, AzureDbForPostgreSQL.'
+    description: ''
+  - isRequired: true
+    name: --task-type
+    summary: 'The type of data movement the task will support. The supported types are: OnlineMigration, OfflineMigration.'
+    description: ''
+  - name: --enable-data-integrity-validation
+    summary: (For SQL only) Whether to perform a checksum based data integrity validation between source and target for the selected database and tables.
+    description: ''
+  - name: --enable-query-analysis-validation
+    summary: (For SQL only) Whether to perform a quick and intelligent query analysis by retrieving queries from the source database and executing them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries.
+    description: ''
+  - name: --enable-schema-validation
+    summary: (For SQL only) Whether to compare the schema information between source and target.
+    description: ''
+- uid: ext_dms-preview_az_dms_project_task_cutover
+  name: az dms project task cutover
+  summary: For an online migration task, complete the migration by performing a cutover.
+  description: >-
+    To see the result of the request, please use the 'task show' command:
+                                    az dms project task show ... --expand command.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --database-name
+    summary: The name of the database on the source you wish to cutover.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+commands:
+- uid: ext_dms-preview_az_dms_project_task_create
+  name: az dms project task create
+  summary: Create and start a migration Task.
+- uid: ext_dms-preview_az_dms_project_task_cutover
+  name: az dms project task cutover
+  summary: For an online migration task, complete the migration by performing a cutover.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage Tasks for a Data Migration Service instance's Project.

@@ -9,7 +9,10 @@ items:
   children:
   - az_cognitiveservices_account_create
   - az_cognitiveservices_account_delete
+  - az_cognitiveservices_account_list
+  - az_cognitiveservices_account_list_kinds
   - az_cognitiveservices_account_list_skus
+  - az_cognitiveservices_account_list_usage
   - az_cognitiveservices_account_show
   - az_cognitiveservices_account_update
 - uid: az_cognitiveservices_account_create
@@ -27,6 +30,7 @@ items:
     name: --kind
     summary: The API name of cognitive services account.
     description: ''
+    valueFrom: az cognitiveservices account list-kinds
   - isRequired: true
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -42,6 +46,10 @@ items:
   - isRequired: true
     name: --sku
     summary: The Sku of cognitive services account.
+    description: ''
+    valueFrom: az cognitiveservices account list-skus
+  - name: --api-properties
+    summary: Api properties in JSON format or a=b c=d format. Some cognitive services (i.e. QnA Maker) require extra api properties to create the account.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -80,6 +88,39 @@ items:
       branch: master
       path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_cognitiveservices_account_list
+  name: az cognitiveservices account list
+  summary: List available Azure Cognitive Services accounts.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List all the Cognitive Services accounts in a resource group.
+    syntax:
+      content: az cognitiveservices account list -g MyResourceGroup
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_cognitiveservices_account_list_kinds
+  name: az cognitiveservices account list-kinds
+  summary: List all valid kinds for Azure Cognitive Services account.
+  description: ''
+  langs:
+  - azurecli
+  parameters: []
+  source:
+    path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_cognitiveservices_account_list_skus
   name: az cognitiveservices account list-skus
   summary: List the SKUs avaiable for an Azure Cognitive Services account.
@@ -89,7 +130,35 @@ items:
   examples:
   - summary: Show SKUs.
     syntax:
-      content: az cognitiveservices account list-skus --name myresource -g cognitive-services-resource-group
+      content: az cognitiveservices account list-skus --kind Face --location westus
+  parameters:
+  - name: --kind
+    summary: The API name of cognitive services account.
+    description: ''
+    valueFrom: az cognitiveservices account list-kinds
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --name -n
+    summary: Cognitive service account name.
+    description: >-
+      --kind and --location will be ignored when --name is specified.
+                                          --resource-group is required when when --name is specified.
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: --resource-group is used when when --name is specified. In other cases it will be ignored.
+  source:
+    path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_cognitiveservices_account_list_usage
+  name: az cognitiveservices account list-usage
+  summary: List usages for Azure Cognitive Services account.
+  description: ''
+  langs:
+  - azurecli
   parameters:
   - isRequired: true
     name: --name -n
@@ -152,6 +221,7 @@ items:
   - name: --sku
     summary: The Sku of cognitive services account.
     description: ''
+    valueFrom: az cognitiveservices account list-skus
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
@@ -177,9 +247,18 @@ commands:
 - uid: az_cognitiveservices_account_keys_regenerate
   name: az cognitiveservices account keys regenerate
   summary: Regenerate the keys of an Azure Cognitive Services account.
+- uid: az_cognitiveservices_account_list
+  name: az cognitiveservices account list
+  summary: List available Azure Cognitive Services accounts.
+- uid: az_cognitiveservices_account_list_kinds
+  name: az cognitiveservices account list-kinds
+  summary: List all valid kinds for Azure Cognitive Services account.
 - uid: az_cognitiveservices_account_list_skus
   name: az cognitiveservices account list-skus
   summary: List the SKUs avaiable for an Azure Cognitive Services account.
+- uid: az_cognitiveservices_account_list_usage
+  name: az cognitiveservices account list-usage
+  summary: List usages for Azure Cognitive Services account.
 - uid: az_cognitiveservices_account_show
   name: az cognitiveservices account show
   summary: Get the details of an Azure Cognitive Services account.
@@ -202,7 +281,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/7210b26b04e01588a5f41a31dcbac5c456a9f58d/src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
-updated_at: 7/6/2018 10:13:55 PM
-ms.date: 07/06/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/2940d935c32a8583477f04d4f6b330334842a8b2/src/command_modules/azure-cli-cognitiveservices/azure/cli/command_modules/cognitiveservices/_help.py
+updated_at: 9/4/2018 11:20:41 PM
+ms.date: 09/04/2018
 description: Manage Azure Cognitive Services accounts.

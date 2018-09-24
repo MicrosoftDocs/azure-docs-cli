@@ -10,6 +10,7 @@ items:
   - az_network_vnet_subnet_create
   - az_network_vnet_subnet_delete
   - az_network_vnet_subnet_list
+  - az_network_vnet_subnet_list_available_delegations
   - az_network_vnet_subnet_show
   - az_network_vnet_subnet_update
 - uid: az_network_vnet_subnet_create
@@ -41,11 +42,17 @@ items:
     name: --vnet-name
     summary: The virtual network (VNet) name.
     description: ''
+  - name: --delegations
+    summary: Space-separated list of services to whom the subnet should be delegated. (e.g. Microsoft.Sql/servers).
+    description: ''
   - name: --network-security-group
-    summary: Name or ID of network security group to associate with the subnet.
+    summary: Name or ID of a network security group (NSG).
     description: ''
   - name: --route-table
     summary: Name or ID of a route table to associate with the subnet.
+    description: ''
+  - name: --service-endpoint-policy
+    summary: Space-separated list of names or IDs of service endpoint policies to apply.
     description: ''
   - name: --service-endpoints
     summary: Space-separated list of services allowed private access to this subnet.
@@ -95,7 +102,7 @@ items:
   examples:
   - summary: List the subnets in a virtual network.
     syntax:
-      content: az network vnet subnet list -g MyResourceGroup -n MyVNet
+      content: az network vnet subnet list -g MyResourceGroup --vnet-name MyVNet
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -104,6 +111,29 @@ items:
   - isRequired: true
     name: --vnet-name
     summary: The virtual network (VNet) name.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_network_vnet_subnet_list_available_delegations
+  name: az network vnet subnet list-available-delegations
+  summary: List the services available for subnet delegation.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Retrieve the service names for available delegations in the West US region.
+    syntax:
+      content: az network vnet subnet list-available-delegations -l westus --query [].serviceName
+  parameters:
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -169,8 +199,11 @@ items:
   - name: --address-prefix
     summary: The address prefix in CIDR format.
     description: ''
+  - name: --delegations
+    summary: Space-separated list of services to whom the subnet should be delegated. (e.g. Microsoft.Sql/servers).
+    description: ''
   - name: --network-security-group
-    summary: Attach with existing network security group, both name or id are accepted. Use empty string "" to detach it.
+    summary: Name or ID of a network security group (NSG). Use empty string "" to detach it.
     description: ''
   - name: --route-table
     summary: Name or ID of a route table to associate with the subnet.
@@ -207,6 +240,9 @@ commands:
 - uid: az_network_vnet_subnet_list
   name: az network vnet subnet list
   summary: List the subnets in a virtual network.
+- uid: az_network_vnet_subnet_list_available_delegations
+  name: az network vnet subnet list-available-delegations
+  summary: List the services available for subnet delegation.
 - uid: az_network_vnet_subnet_show
   name: az network vnet subnet show
   summary: Show details of a subnet.
@@ -229,7 +265,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ad5275507bf0d16795ec1e4e7f3e56eea5859f7d/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 7/25/2018 10:19:48 PM
-ms.date: 07/25/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/41251dce326113bf757aa698b37d61ed4e9af19f/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 9/13/2018 9:09:15 PM
+ms.date: 09/13/2018
 description: To learn more about subnets visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet</a>.
