@@ -1,6 +1,6 @@
 ---
-title: Azure CLI 2.0 Interactive Mode
-description: Use Azure CLI 2.0 in interactive mode.
+title: Azure CLI interactive mode
+description: Use the Azure CLI in interactive mode.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,9 +11,9 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Interactive Azure CLI 2.0
+# Azure CLI interactive mode
 
-You can use Azure CLI 2.0 in interactive mode by running the `az interactive` command.
+You can use Azure CLI in interactive mode by running the `az interactive` command.
 This mode places you in an interactive shell with auto-completion, command descriptions, and examples.
 
 ![interactive mode](./media/interactive-azure-cli/webapp-create.png)
@@ -93,7 +93,7 @@ az>> ? [*].provisioningState
 ```
 
 To learn more about querying the results of your commands,
-see [Query command results with Azure 2.0](query-azure-cli.md).
+see [Query command results with the Azure CLI](query-azure-cli.md).
 
 ## Bash commands
 
