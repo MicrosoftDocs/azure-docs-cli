@@ -54,15 +54,6 @@ az login -u <username> -p <password>
 > $AzPass = ""
 > ```
 
-## Sign in with a specific tenant
-
-You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
-interactive and command-line sign in methods work with `--tenant`.
-
-```azurecli
-az login --tenant <tenant>
-```
-
 ## Sign in with a service principal
 
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
@@ -96,3 +87,22 @@ az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant
 > az login --service-principal -u <app-url> -p $AzPass --tenant <tenant>;
 > $AzPass = ""
 > ```
+
+## Sign in with a different tenant
+
+You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
+interactive and command-line sign in methods work with `--tenant`.
+
+```azurecli
+az login --tenant <tenant>
+```
+
+## Sign in with a managed identity
+
+On resources configured for managed identities for Azure resources, you can sign in using the managed identity. Signing in with the resource's identity is done through the `--identity` flag.
+
+```azurecli
+az login --identity
+```
+
+To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) and [Use managed identities for Azure resources for sign in](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).

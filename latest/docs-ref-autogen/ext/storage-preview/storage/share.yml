@@ -119,9 +119,16 @@ items:
 - uid: ext_storage-preview_az_storage_share_generate_sas
   name: az storage share generate-sas
   summary: Generates a shared access signature for the share.
-  description: Use the returned signature with the sas_token parameter of FileService.
+  description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Generate a sas token for a fileshare and use it to upload a file.
+    syntax:
+      content: >-
+        end=`date -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+                                sas=`az storage share generate-sas -n MyShare --account-name MyStorageAccount --https-only --permissions dlrw --expiry $end -otsv`
+                                az storage file upload -s MyShare --account-name MyStorageAccount --source file.txt  --sas-token $sas
   parameters:
   - isRequired: true
     name: --name -n

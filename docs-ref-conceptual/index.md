@@ -31,6 +31,12 @@ You can install the CLI locally, run it in the browser with Azure Cloud Shell, o
 * To install the CLI, see [Install the Azure CLI](install-azure-cli.md).
 * To run as a Docker container, see [Run Azure CLI in a Docker Container](run-azure-cli-docker.md)
 
+## Build your skills with Microsoft Learn
+
+- [Manage virtual machines with the Azure CLI](/learn/modules/manage-virtual-machines-with-azure-cli/)
+- [Control Azure services with the CLI](/learn/modules/control-azure-services-with-cli/)
+- [More interactive learning...](/learn/browse/?products=azure-clis)
+
 ## Get started
 
 Read the [Get Started](get-started-with-azure-cli.md) article to learn the CLI basics. The following samples demonstrate some common uses cases:

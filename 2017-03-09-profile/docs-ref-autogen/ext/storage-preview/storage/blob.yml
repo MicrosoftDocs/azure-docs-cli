@@ -99,13 +99,13 @@ items:
     description: ''
   - name: --delete-snapshots
     parameterValueGroup: include, only
-    summary: ''
+    summary: Required if the blob has associated snapshots.
     description: ''
   - name: --dryrun
     summary: Show the summary of the operations to be taken instead of actually deleting the file(s).
     description: ''
   - name: --lease-id
-    summary: ''
+    summary: Required if the blob has an active lease.
     description: ''
   - name: --pattern
     summary: The pattern used for globbing files or blobs in the source. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
@@ -240,7 +240,7 @@ items:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: ''
+    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
@@ -303,9 +303,15 @@ items:
 - uid: ext_storage-preview_az_storage_blob_generate_sas
   name: az storage blob generate-sas
   summary: Generates a shared access signature for the blob.
-  description: Use the returned signature with the sas_token parameter of any BlobService.
+  description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Generate a sas token for a blob with read-only permissions.
+    syntax:
+      content: >-
+        end=`date -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+                                az storage blob generate-sas --account-name MyStorageAccount -c MyContainer -n MyBlob --permissions r --expiry $end --https-only
   parameters:
   - isRequired: true
     name: --container-name -c
@@ -386,7 +392,7 @@ items:
     summary: 'Specifies additional datasets to include: (c)opy-info, (m)etadata, (s)napshots, (d)eleted-soft. Can be combined.'
     description: ''
   - name: --num-results
-    summary: Specifies the maximum number of blobs to return, including all BlobPrefix elements. If the request does not specify num_results or specifies a value greater than 5,000, the server will return up to 5,000 items. Setting num_results to a value less than or equal to zero results in error response code 400 (Bad Request).
+    summary: Specifies the maximum number of blobs to return. Must be in range [1,5000]. If this parameter is not provided, all blobs will be returned.
     description: ''
   - name: --prefix
     summary: Filters the results to return only blobs whose names begin with the specified prefix.
@@ -790,7 +796,7 @@ items:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: ''
+    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.

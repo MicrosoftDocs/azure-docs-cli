@@ -28,6 +28,9 @@ items:
   - summary: Create an enrollment group '[Enrollment ID]' in the Azure IoT provisioning service 'MyDps' in the resource group '[Resource Group Name]' with provisioning status 'enabled', target IoT Hub '[IoTHub Host Name]' and initial twin tags '{"location":{"region":"US"}} using an intermediate certificate as primary certificate'.
     syntax:
       content: az iot dps enrollment-group create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --certificate-path /certificates/Certificate.pem --provisioning-status enabled --iot-hub-host-name [IoTHub Host Name] --initial-twin-tags "{'location':{'region':'US'}}"
+  - summary: Create an enrollment group '[Enrollment ID]' in the Azure IoT provisioning service '[DPS Name]' in the resource group '[Resource Group Name] with attestation type 'symmetrickey'.
+    syntax:
+      content: az iot dps enrollment-group create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --primary-key [Primary Key] --secondary-key [Secondary Key]
   parameters:
   - isRequired: true
     name: --dps-name
@@ -41,30 +44,47 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --ca-name --root-ca-name -cn
+  - name: --allocation-policy --ap
+    parameterValueGroup: geolatency, hashed, static
+    summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --ca-name --cn --root-ca-name
     summary: The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
     description: ''
-  - name: --certificate-path -cp
+  - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
     description: ''
-  - name: --initial-twin-properties -props
-    summary: Initial twin properties.
-    description: ''
-  - name: --initial-twin-tags -tags
-    summary: Initial twin tags.
-    description: ''
-  - name: --iot-hub-host-name -hn
+  - name: --hn --iot-hub-host-name
     summary: Host name of target IoT Hub.
     description: ''
-  - name: --provisioning-status -ps
+  - name: --ih --iot-hubs
+    summary: Host name of target IoT Hub. Use space-separated list for multiple IoT Hubs.
+    description: ''
+  - name: --initial-twin-properties --props
+    summary: Initial twin properties.
+    description: ''
+  - name: --initial-twin-tags --tags
+    summary: Initial twin tags.
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --provisioning-status --ps
     parameterValueGroup: disabled, enabled
     summary: Enable or disable enrollment entry.
     description: ''
-  - name: --secondary-ca-name --secondary-root-ca-name -scn
+  - name: --reprovision-policy --rp
+    parameterValueGroup: never, reprovisionandmigratedata, reprovisionandresetdata
+    summary: Device data to be handled on re-provision to different Iot Hub.
+    description: ''
+  - name: --scn --secondary-ca-name --secondary-root-ca-name
     summary: The name of the secondary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
     description: ''
-  - name: --secondary-certificate-path -scp
+  - name: --scp --secondary-certificate-path
     summary: The path to the file containing the secondary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_dps_enrollment_group_delete
   name: az iot dps enrollment-group delete
@@ -138,6 +158,9 @@ items:
   - summary: Update enrollment group '[Enrollment ID]' in the Azure IoT provisioning service '[DPS name]' in the resource group '[Resource Group Name]' with new secondary CA certificate '[Certificate Name]' and remove existing primary CA certificate.
     syntax:
       content: az iot dps enrollment-group update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --secondary-certificate-name [Certificate Name] --remove-certificate --etag AAAAAAAAAAA=
+  - summary: Update enrollment group '[Enrollment ID]' in the Azure IoT provisioning service '[DPS name]' in the resource group '[Resource Group Name]' with new primary key.
+    syntax:
+      content: az iot dps enrollment-group update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --primary-key [New Primary Key] --etag AAAAAAAAAAA=
   parameters:
   - isRequired: true
     name: --dps-name
@@ -151,41 +174,58 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --ca-name --root-ca-name -cn
+  - name: --allocation-policy --ap
+    parameterValueGroup: geolatency, hashed, static
+    summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --ca-name --cn --root-ca-name
     summary: The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
     description: ''
-  - name: --certificate-path -cp
+  - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
     description: ''
   - name: --etag -e
     summary: Entity tag value.
     description: ''
-  - name: --initial-twin-properties -props
-    summary: Initial twin properties.
-    description: ''
-  - name: --initial-twin-tags -tags
-    summary: Initial twin tags.
-    description: ''
-  - name: --iot-hub-host-name -hn
+  - name: --hn --iot-hub-host-name
     summary: Host name of target IoT Hub.
     description: ''
-  - name: --provisioning-status -ps
+  - name: --ih --iot-hubs
+    summary: Host name of target IoT Hub. Use space-separated list for multiple IoT Hubs.
+    description: ''
+  - name: --initial-twin-properties --props
+    summary: Initial twin properties.
+    description: ''
+  - name: --initial-twin-tags --tags
+    summary: Initial twin tags.
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --provisioning-status --ps
     parameterValueGroup: disabled, enabled
     summary: Enable or disable enrollment entry.
     description: ''
-  - name: --remove-certificate -rc
+  - name: --rc --remove-certificate
     parameterValueGroup: false, true
     summary: Remove current primary certificate.
     description: ''
-  - name: --remove-secondary-certificate -rsc
+  - name: --remove-secondary-certificate --rsc
     parameterValueGroup: false, true
     summary: Remove current secondary certificate.
     description: ''
-  - name: --secondary-ca-name --secondary-root-ca-name -scn
+  - name: --reprovision-policy --rp
+    parameterValueGroup: never, reprovisionandmigratedata, reprovisionandresetdata
+    summary: Device data to be handled on re-provision to different Iot Hub.
+    description: ''
+  - name: --scn --secondary-ca-name --secondary-root-ca-name
     summary: The name of the secondary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
     description: ''
-  - name: --secondary-certificate-path -scp
+  - name: --scp --secondary-certificate-path
     summary: The path to the file containing the secondary certificate. If attestation with an intermediate certificate is desired then a certificate path must be provided.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
     description: ''
 commands:
 - uid: ext_azure-cli-iot-ext_az_iot_dps_enrollment_group_create

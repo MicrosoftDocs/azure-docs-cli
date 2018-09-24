@@ -28,10 +28,22 @@ items:
   - summary: Create an enrollment 'MyEnrollment' with attestation type 'tpm' in the Azure IoT Device Provisioning Service '[DPS Name]' in the resource group '[Resource Group Name]'.
     syntax:
       content: az iot dps enrollment create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --attestation-type tpm --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89
+  - summary: Create an enrollment 'MyEnrollment' with attestation type 'symmetrickey' in the Azure IoT Device Provisioning service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --attestation-type symmetrickey --primary-key [Primary Key] --secondary-key [Secondary Key]
+  - summary: Create an enrollment 'MyEnrollment' with reprovision in the Azure IoT Device Provisioning service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --attestation-type tpm --reprovision-policy [Reprovision Type] --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89
+  - summary: Create an enrollment 'MyEnrollment' with static allocation policy in the Azure IoT Device Provisioning service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --attestation-type tpm --allocation-policy static --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89 --iot-hubs [iot hub host name]
+  - summary: Create an enrollment 'MyEnrollment' with hashed allocation policy and multiple hubs in the Azure IoT Device Provisioning service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment create -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --attestation-type tpm --allocation-policy hashed --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89 --iot-hubs "[iot hub host name1] [iot hub host name2]"
   parameters:
   - isRequired: true
-    name: --attestation-type -at
-    parameterValueGroup: tpm, x509
+    name: --at --attestation-type
+    parameterValueGroup: symmetricKey, tpm, x509
     summary: Attestation Mechanism.
     description: ''
   - isRequired: true
@@ -46,30 +58,47 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --certificate-path -cp
+  - name: --allocation-policy --ap
+    parameterValueGroup: geolatency, hashed, static
+    summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate. When choosing x509 as attestation type, one of the certificate path is required.
     description: ''
   - name: --device-id -d
     summary: IoT Hub Device ID.
     description: ''
-  - name: --endorsement-key -ek
+  - name: --ek --endorsement-key
     summary: TPM endorsement key for a TPM device. When choosing tpm as attestation type, endorsement key is required.
     description: ''
-  - name: --initial-twin-properties -props
-    summary: Initial twin properties.
-    description: ''
-  - name: --initial-twin-tags -tags
-    summary: Initial twin tags.
-    description: ''
-  - name: --iot-hub-host-name -hn
+  - name: --hn --iot-hub-host-name
     summary: Host name of target IoT Hub.
     description: ''
-  - name: --provisioning-status -ps
+  - name: --ih --iot-hubs
+    summary: Host name of target IoT Hub. Use space-separated list for multiple IoT Hubs.
+    description: ''
+  - name: --initial-twin-properties --props
+    summary: Initial twin properties.
+    description: ''
+  - name: --initial-twin-tags --tags
+    summary: Initial twin tags.
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --provisioning-status --ps
     parameterValueGroup: disabled, enabled
     summary: Enable or disable enrollment entry.
     description: ''
-  - name: --secondary-certificate-path -scp
+  - name: --reprovision-policy --rp
+    parameterValueGroup: never, reprovisionandmigratedata, reprovisionandresetdata
+    summary: Device data to be handled on re-provision to different Iot Hub.
+    description: ''
+  - name: --scp --secondary-certificate-path
     summary: The path to the file containing the secondary certificate. When choosing x509 as attestation type, one of the certificate path is required.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_dps_enrollment_delete
   name: az iot dps enrollment delete
@@ -140,6 +169,15 @@ items:
   - summary: Update enrollment '[Enrollment ID]' with a new endorsement key in the Azure IoT Device Provisioning Service '[DPS Name]' in the resource group '[Resource Group Name]'.
     syntax:
       content: az iot dps enrollment update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89 --etag AAAAAAAAAAA=
+  - summary: Update enrollment '[Enrollment ID]' with a new primary key in the Azure IoT Device Provisioning Service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --primary-key [New Primary Key] --etag AAAAAAAAAAA=
+  - summary: Update enrollment '[Enrollment ID]' with a new reprovision type in the Azure IoT Device Provisioning Service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --reprovision-policy [Reprovision Type] --etag AAAAAAAAAAA=
+  - summary: Update enrollment '[Enrollment ID]' with a new allocation policy in the Azure IoT Device Provisioning Service '[DPS Name]' in the resource group '[Resource Group Name]'.
+    syntax:
+      content: az iot dps enrollment update -g [Resource Group Name] --dps-name [DPS Name] --enrollment-id [Enrollment ID] --allocation-policy geolatency --etag AAAAAAAAAAA= --iot-hubs "[iot hub host name1] [iot hub host name2] [iot hub host name3]"
   parameters:
   - isRequired: true
     name: --dps-name
@@ -153,41 +191,58 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --certificate-path -cp
+  - name: --allocation-policy --ap
+    parameterValueGroup: geolatency, hashed, static
+    summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate.
     description: ''
   - name: --device-id -d
     summary: IoT Hub Device ID.
     description: ''
-  - name: --endorsement-key -ek
+  - name: --ek --endorsement-key
     summary: TPM endorsement key for a TPM device.
     description: ''
   - name: --etag -e
     summary: Entity tag value.
     description: ''
-  - name: --initial-twin-properties -props
-    summary: Initial twin properties.
-    description: ''
-  - name: --initial-twin-tags -tags
-    summary: Initial twin tags.
-    description: ''
-  - name: --iot-hub-host-name -hn
+  - name: --hn --iot-hub-host-name
     summary: Host name of target IoT Hub.
     description: ''
-  - name: --provisioning-status -ps
+  - name: --ih --iot-hubs
+    summary: Host name of target IoT Hub. Use space-separated list for multiple IoT Hubs.
+    description: ''
+  - name: --initial-twin-properties --props
+    summary: Initial twin properties.
+    description: ''
+  - name: --initial-twin-tags --tags
+    summary: Initial twin tags.
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --provisioning-status --ps
     parameterValueGroup: disabled, enabled
     summary: Enable or disable enrollment entry.
     description: ''
-  - name: --remove-certificate -rc
+  - name: --rc --remove-certificate
     parameterValueGroup: false, true
     summary: Remove current primary certificate.
     description: ''
-  - name: --remove-secondary-certificate -rsc
+  - name: --remove-secondary-certificate --rsc
     parameterValueGroup: false, true
     summary: Remove current secondary certificate.
     description: ''
-  - name: --secondary-certificate-path -scp
+  - name: --reprovision-policy --rp
+    parameterValueGroup: never, reprovisionandmigratedata, reprovisionandresetdata
+    summary: Device data to be handled on re-provision to different Iot Hub.
+    description: ''
+  - name: --scp --secondary-certificate-path
     summary: The path to the file containing the secondary certificate.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
     description: ''
 commands:
 - uid: ext_azure-cli-iot-ext_az_iot_dps_enrollment_create

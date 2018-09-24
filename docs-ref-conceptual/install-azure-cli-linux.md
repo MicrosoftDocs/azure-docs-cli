@@ -98,3 +98,10 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
   ```bash
   hash -r
   ```
+
+## Next Steps
+
+Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+
+> [!div class="nextstepaction"]
+> [Get started with the Azure CLI](get-started-with-azure-cli.md)

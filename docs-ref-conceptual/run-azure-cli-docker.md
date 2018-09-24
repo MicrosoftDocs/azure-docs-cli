@@ -58,3 +58,10 @@ After halting any containers running the CLI image, remove it.
 ```bash
 docker rmi microsoft/azure-cli
 ```
+
+## Next Steps
+
+Now that you're ready to use the Azure CLI, take a short tour of its features and common commands.
+
+> [!div class="nextstepaction"]
+> [Get started with the Azure CLI](get-started-with-azure-cli.md)
