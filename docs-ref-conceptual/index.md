@@ -31,6 +31,12 @@ You can install the CLI locally, run it in the browser with Azure Cloud Shell, o
 * To install the CLI, see [Install the Azure CLI 2.0](install-azure-cli.md).
 * To run as a Docker container, see [Run Azure CLI 2.0 in a Docker Container](run-azure-cli-docker.md)
 
+## Build your skills with Microsoft Learn
+
+- [Manage virtual machines with the Azure CLI](/learn/modules/manage-virtual-machines-with-azure-cli/)
+- [Control Azure services with the CLI](/learn/modules/control-azure-services-with-cli/)
+- [More interactive learning...](/learn/browse/?products=azure-clis)
+
 ## Get started
 
 Read the [Get Started](get-started-with-azure-cli.md) article to learn the CLI basics. The following samples demonstrate some common uses cases:
@@ -40,7 +46,7 @@ Read the [Get Started](get-started-with-azure-cli.md) article to learn the CLI b
 - [Web Apps](/azure/app-service-web/app-service-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 - [SQL Database](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
 
-A detailed [reference](/cli/azure/reference-index) is also available that documents how to use each individual Azure CLI 2.0 command.
+A detailed [reference](/cli/azure/reference-index) is also available that documents how to use each individual Azure CLI 2.0 commandManage virtual machines with the Azure CLI.
 
 > [!NOTE]
 > If you use the previous version of the CLI (Azure CLI 1.0), you can continue to use it.
