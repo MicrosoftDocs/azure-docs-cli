@@ -1,6 +1,6 @@
 ---
-title: Sign in with Azure CLI 2.0
-description: Sign in with the Azure CLI 2.0 interactively or with local credentials 
+title: Sign in with Azure CLI
+description: Sign in with the Azure CLI interactively or with local credentials 
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -12,7 +12,7 @@ ms.service: active-directory
 ms.component: authentication
 ---
 
-# Sign in with Azure CLI 2.0
+# Sign in with Azure CLI 
 
 There are several authentication types for the Azure CLI. The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in. Locally, you can sign in interactively through your browser with the `az login` command. When writing scripts, the recommended approach is to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 

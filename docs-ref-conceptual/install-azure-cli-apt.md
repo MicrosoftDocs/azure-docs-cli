@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI 2.0 on Linux with apt
-description: How to install the Azure CLI 2.0 with the apt package manager
+title: Install the Azure CLI on Linux with apt
+description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0 with apt
+# Install Azure CLI with apt
 
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's a 64-bit package available
 for the Azure CLI. This package has been tested with:
@@ -50,7 +50,7 @@ You can then run the Azure CLI with the `az` command. To sign in, use [az login]
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 

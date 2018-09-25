@@ -1,6 +1,6 @@
 ---
-title: Manage Azure subscriptions with Azure CLI
-description: Manage Azure subscriptions with Azure CLI.
+title: Manage Azure subscriptions with the Azure CLI
+description: Manage Azure subscriptions with the Azure CLI.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
