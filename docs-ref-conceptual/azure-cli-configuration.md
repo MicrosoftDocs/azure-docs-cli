@@ -1,19 +1,19 @@
 ---
 title: Azure CLI configuration options
-description: How to configure the Azure CLI 2.0
+description: How to configure the Azure CLI
 keywords: Azure CLI, configuration, settings, Azure
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/16/2018 
+ms.date: 06/11/2018 
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-# Azure CLI 2.0 configuration
+# Azure CLI configuration
 
-The Azure CLI 2.0 allows for user configuration for settings such as logging, data collection, and default argument values.
+The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values.
 The CLI offers a convenience command for managing some defaults, `az configure`. Other values can be set in a
 configuration file or with environment variables.
 
@@ -89,7 +89,7 @@ When you provide a default value, that argument is no longer required by any com
 |---------|-----------|------|------------|
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
-| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI 2.0 Terms of Use](https://aka.ms/AzureCliLegal). |
+| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](http://aka.ms/AzureCliLegal). |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |

@@ -1,6 +1,6 @@
 ---
-title: Query command results with Azure CLI 2.0
-description: Learn how to perform JMESPath queries on the output of Azure CLI 2.0 commands.
+title: Query command results with Azure CLI 
+description: Learn how to perform JMESPath queries on the output of Azure CLI  commands.
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -10,9 +10,9 @@ ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
-# Use JMESPath queries with Azure CLI 2.0
+# Use JMESPath queries with Azure CLI 
 
-The Azure CLI 2.0 uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and present data from CLI output. These queries are executed on the JSON output before any display formatting.
+The Azure CLI uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and present data from CLI output. These queries are executed on the JSON output before any display formatting.
 
 The `--query` argument is supported by all commands in the Azure CLI. This article's examples cover common use cases and demonstrate how to use the features of JMESPath.
 
@@ -50,7 +50,7 @@ az vm show -g QueryDemo -n TestVM --query 'storageProfile.{image:imageReference.
 }
 ```
 
-When displaying information in the `table` output format, dictionary display allows setting your own column headers. For more information on output formats, see [Output formats for Azure CLI 2.0 commands](/cli/azure/format-output-azure-cli).
+When displaying information in the `table` output format, dictionary display allows setting your own column headers. For more information on output formats, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
 > [!NOTE]
 > Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. If you need to see this information, you can change the key name and avoid filtering.

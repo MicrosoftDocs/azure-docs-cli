@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI 2.0 on Linux with yum
-description: How to install the Azure CLI 2.0 with yum
+title: Install the Azure CLI on Linux with yum
+description: How to install the Azure CLI with yum
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI 2.0 with yum
+# Install Azure CLI with yum
 
 For Linux distributions with  `yum` such as RHEL, Fedora, or CentOS, there's a package 
 for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
@@ -42,7 +42,7 @@ You can then run the Azure CLI with the `az` command. To sign in, use [az login]
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI 2.0](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Update
 
