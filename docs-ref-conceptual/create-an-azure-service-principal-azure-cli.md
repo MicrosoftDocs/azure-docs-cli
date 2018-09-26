@@ -8,7 +8,6 @@ ms.date: 09/07/2018
 ms.topic: conceptual
 ms.technology: azure-cli
 ms.devlang: azure-cli
-ms.service: role-based-access-control
 ---
 # Create an Azure service principal with Azure CLI
 

@@ -9,7 +9,6 @@ ms.topic: conceptual
 ms.produdct: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
-ms.service: active-directory
 ---
 
 # Use multiple Azure subscriptions
