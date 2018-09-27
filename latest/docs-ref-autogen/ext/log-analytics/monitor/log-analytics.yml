@@ -2,12 +2,41 @@
 items:
 - uid: ext_log-analytics_az_monitor_log_analytics
   name: az monitor log-analytics
-  summary: ''
+  summary: Commands for querying data in Log Analytics workspaces.
   description: ''
   langs:
   - azurecli
-  children: []
-commands: []
+  children:
+  - ext_log-analytics_az_monitor_log_analytics_query
+- uid: ext_log-analytics_az_monitor_log_analytics_query
+  name: az monitor log-analytics query
+  summary: Query a Log Analytics workspace.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Execute a simple query over past 3.5 days.
+    syntax:
+      content: az monitor log-analytics query -w b8317023-66e4-4edc-8a5b-7c002b22f92f --analytics-query "AzureActivity | summarize count() by bin(timestamp, 1h)" -t P3DT12H
+  parameters:
+  - isRequired: true
+    name: --analytics-query
+    summary: Query to execute over Log Analytics data.
+    description: ''
+  - isRequired: true
+    name: --workspace -w
+    summary: GUID of the Log Analytics Workspace.
+    description: ''
+  - name: --timespan -t
+    summary: Timespan over which to query. Defaults to querying all available data.
+    description: ''
+  - name: --workspaces
+    summary: Additional workspaces to union data for querying. Specify additional workspace IDs separated by space.
+    description: ''
+commands:
+- uid: ext_log-analytics_az_monitor_log_analytics_query
+  name: az monitor log-analytics query
+  summary: Query a Log Analytics workspace.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -21,3 +50,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Commands for querying data in Log Analytics workspaces.
