@@ -1,6 +1,6 @@
 ---
 title: Available extensions for the Azure CLI
-description: A complete list of the officially supported extensions for the Azure CLI 2.0.
+description: A complete list of the officially supported extensions for the Azure CLI.
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
