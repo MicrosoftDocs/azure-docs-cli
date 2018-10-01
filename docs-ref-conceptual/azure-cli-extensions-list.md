@@ -1,19 +1,19 @@
 ---
-title: Available extensions for the Azure CLI 2.0
+title: Available extensions for the Azure CLI
 description: A complete list of the officially supported extensions for the Azure CLI 2.0.
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 04/27/2018
+ms.date: 10/03/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Available extensions for the Azure CLI 2.0
+# Available extensions for the Azure CLI
 
-This article is a complete list of the available extensions for the Azure CLI 2.0 which are offered and supported by Microsoft.
+This article is a complete list of the available extensions for the Azure CLI which are offered and supported by Microsoft.
 
 The list of extensions is also available directly from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az-extension-list-available):
 
