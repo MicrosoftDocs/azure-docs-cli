@@ -1,19 +1,19 @@
 ---
-title: Available extensions for the Azure CLI
-description: A complete list of the officially supported extensions for the Azure CLI.
+title: Available extensions for the Azure CLI 2.0
+description: A complete list of the officially supported extensions for the Azure CLI 2.0.
 author: derekbekoe
 ms.author: debekoe
 manager: routlaw
-ms.date: 10/03/2018
+ms.date: 04/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Available extensions for the Azure CLI
+# Available extensions for the Azure CLI 2.0
 
-This article is a complete list of the available extensions for the Azure CLI which are offered and supported by Microsoft.
+This article is a complete list of the available extensions for the Azure CLI 2.0 which are offered and supported by Microsoft.
 
 The list of extensions is also available directly from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az-extension-list-available):
 
@@ -39,7 +39,7 @@ az extension list-available --output table
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.0 | Manage networking FrontDoors. | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.8 | Support for copying managed vm images between regions |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
-| [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.2 | Support for Azure Log Analytics query capabilities. | Yes |
+| [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.3 | Support for Azure Log Analytics query capabilities. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.9.1 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
@@ -51,4 +51,4 @@ az extension list-available --output table
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.9 | Additional commands for Azure AppService. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.10 | Additional commands for Azure AppService. | Yes |
