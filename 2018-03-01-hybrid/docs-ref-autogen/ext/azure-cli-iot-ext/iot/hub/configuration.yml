@@ -1,0 +1,226 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration
+  name: az iot hub configuration
+  summary: Manage IoT device configurations at scale.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_create
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_delete
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_list
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_show
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_show_metric
+  - ext_azure-cli-iot-ext_az_iot_hub_configuration_update
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_create
+  name: az iot hub configuration create
+  summary: Create an IoT device configuration in the target IoT Hub.
+  description: "The configuration content is json and must include a root object containing the \"deviceContent\" property.\n                            \n                            Alternatively \"deviceContent\" can be nested in a \"content\" property.\n                            E.g. {\"deviceContent\":{...}} or {\"content\":{\"deviceContent\":{...}}}\n                            \n                            Device configurations can be created with user provided metrics for on demand evaluation.\n                            User metrics are json and in the form of {\"metrics\":{\"queries\":{...}}}."
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a device configuration that applies on condition where a device is in 'building 9' and the environment is 'test'.
+    syntax:
+      content: az iot hub configuration create -c [Config Name] -n [IoTHub Name] --content ../device_content.json --target-condition "tags.building=9 and tags.environment='test'"
+  - summary: Create a device configuration with labels and provide user metrics inline (bash syntax example)
+    syntax:
+      content: "az iot hub configuration create -c [Config Name] -n [IoTHub Name] --content ../device_content.json --target-condition \"tags.building=9\" --labels '{\"key0\":\"value0\", \"key1\":\"value1\"}' --metrics '{\"metrics\": {\"queries\": {\"mymetrik\": \"select deviceId from devices where tags.location='US'\"}}}'"
+  - summary: Create a device configuration with labels and provide user metrics inline (cmd syntax example)
+    syntax:
+      content: "az iot hub configuration create -c [Config Name] -n [IoTHub Name] --content ../device_content.json --target-condition \"tags.building=9\" --labels \"{\\\"key0\\\":\\\"value0\\\", \\\"key1\\\":\\\"value1\\\"}\" --metrics \"{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetrik\\\": \\\"select deviceId from devices where tags.location='US'\\\"}}}\""
+  parameters:
+  - isRequired: true
+    name: --config-id -c
+    summary: Target device configuration.
+    description: ''
+  - isRequired: true
+    name: --content -k
+    summary: Device configuration content. Provide file path or raw json.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --lab --labels
+    summary: 'Map of labels to be applied to target configuration. Format example: {"key0":"value0", "key1":"value1"}.'
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --metrics -m
+    summary: Device configuration metric definitions. Provide file path or raw json.
+    description: ''
+  - name: --pri --priority
+    summary: Weight of the device configuration in case of competing rules (highest wins).
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --target-condition --tc -t
+    summary: Target condition in which a device configuration applies to.
+    description: ''
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_delete
+  name: az iot hub configuration delete
+  summary: Delete an IoT device configuration.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --config-id -c
+    summary: Target device configuration.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_list
+  name: az iot hub configuration list
+  summary: List IoT device configurations in an IoT Hub.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --top
+    defaultValue: "10"
+    summary: Maximum number of configurations to return.
+    description: ''
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show
+  name: az iot hub configuration show
+  summary: Get the details of an IoT device configuration.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --config-id -c
+    summary: Target device configuration.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show_metric
+  name: az iot hub configuration show-metric
+  summary: Evaluate a target user or system metric defined in an IoT device configuration.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Evaluate the user defined 'warningLimit' metric
+    syntax:
+      content: az iot hub configuration show-metric -m warningLimit -d [Configuration Name] -n [IoTHub Name]
+  - summary: Evaluate the system 'appliedCount' metric
+    syntax:
+      content: az iot hub configuration show-metric --metric-id appliedCount -d [Configuration Name] -n [IoTHub Name] --metric-type system
+  parameters:
+  - isRequired: true
+    name: --config-id -c
+    summary: Target device configuration.
+    description: ''
+  - isRequired: true
+    name: --metric-id -m
+    summary: Target metric for evaluation.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --metric-type --mt
+    defaultValue: user
+    parameterValueGroup: system, user
+    summary: Indicates which metric collection should be used to lookup a metric.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_update
+  name: az iot hub configuration update
+  summary: Update an IoT device configuration with the specified properties.
+  description: Use --set followed by property assignments for updating a configuration. Leverage properties returned from 'az iot hub configuration show'.
+  langs:
+  - azurecli
+  examples:
+  - summary: Alter the priority of a device configuration and update its target condition
+    syntax:
+      content: az iot hub configuration update -c [Configuration Name] -n [IoTHub Name] --set priority=10 targetCondition="tags.building=43 and tags.environment='dev'"
+  parameters:
+  - isRequired: true
+    name: --config-id -c
+    summary: Target device configuration.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+commands:
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_create
+  name: az iot hub configuration create
+  summary: Create an IoT device configuration in the target IoT Hub.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_delete
+  name: az iot hub configuration delete
+  summary: Delete an IoT device configuration.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_list
+  name: az iot hub configuration list
+  summary: List IoT device configurations in an IoT Hub.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show
+  name: az iot hub configuration show
+  summary: Get the details of an IoT device configuration.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show_metric
+  name: az iot hub configuration show-metric
+  summary: Evaluate a target user or system metric defined in an IoT device configuration.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_update
+  name: az iot hub configuration update
+  summary: Update an IoT device configuration with the specified properties.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage IoT device configurations at scale.

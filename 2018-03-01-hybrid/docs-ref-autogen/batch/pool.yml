@@ -1,0 +1,465 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_batch_pool
+  name: az batch pool
+  summary: Manage Batch pools.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_batch_pool_create
+  - az_batch_pool_delete
+  - az_batch_pool_list
+  - az_batch_pool_reset
+  - az_batch_pool_resize
+  - az_batch_pool_set
+  - az_batch_pool_show
+- uid: az_batch_pool_create
+  name: az batch pool create
+  summary: Create a Batch pool in an account. When creating a pool, choose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --json-file
+    summary: A file containing the pool specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Pool Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-licenses
+    summary: The list of application licenses the Batch service will make available on each compute node in the pool. The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, pool creation will fail. Space-separated values.
+    description: ''
+  - name: --application-package-references
+    summary: The list of application packages to be installed on each compute node in the pool. Space-separated application IDs with optional version in 'id[#version]' format.
+    description: ''
+  - name: --auto-scale-formula
+    summary: A formula for the desired number of compute nodes in the pool. The formula is checked for validity before the pool is created. If the formula is not valid, the Batch service rejects the request with detailed error information. For more information about specifying this formula, see <a href="https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/">https://azure.microsoft.com/documentation/articles/batch-automatic-scaling/</a>.
+    description: ''
+  - name: --certificate-references
+    summary: The list of certificates to be installed on each compute node in the pool. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory. Space-separated certificate thumbprints.
+    description: ''
+  - name: --enable-inter-node-communication
+    summary: Whether the pool permits direct communication between nodes. Enabling inter-node communication limits the maximum size of the pool due to deployment restrictions on the nodes of the pool. This may result in the pool not reaching its desired size. The default value is false. True if flag present.
+    description: ''
+  - name: --id
+    summary: Required. A string that uniquely identifies the pool within the account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two pool IDs within an account that differ only by case).
+    description: ''
+  - name: --max-tasks-per-node
+    summary: The maximum number of tasks that can run concurrently on a single compute node in the pool. The default value is 1. The maximum value of this setting depends on the size of the compute nodes in the pool (the vmSize setting).
+    description: ''
+  - name: --metadata
+    summary: A list of name-value pairs associated with the pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --resize-timeout
+    summary: The timeout for allocation of compute nodes to the pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
+    description: ''
+  - name: --target-dedicated-nodes
+    summary: The desired number of dedicated compute nodes in the pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both.
+    description: ''
+  - name: --target-low-priority-nodes
+    summary: The desired number of low-priority compute nodes in the pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both.
+    description: ''
+  - name: --vm-size
+    summary: Required. The size of virtual machines in the pool. All virtual machines in a pool are the same size. For information about available sizes of virtual machines for Cloud Services pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (<a href="https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/">https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/</a>). Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and A2V2. For information about available VM sizes for pools using images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/</a>) or Sizes for Virtual Machines (Windows) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/</a>). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
+    description: ''
+  - name: --os-family
+    parameterValueGroup: 2, 3, 4, 5
+    summary: 'Required. The Azure Guest OS family to be installed on the virtual machines in the pool. Possible values are: 2 - OS Family 2, equivalent to Windows Server 2008 R2 SP1. 3 - OS Family 3, equivalent to Windows Server 2012. 4 - OS Family 4, equivalent to Windows Server 2012 R2. 5 - OS Family 5, equivalent to Windows Server 2016. For more information, see Azure Guest OS Releases (<a href="https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases">https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases</a>).'
+    description: ''
+  - name: --start-task-command-line
+    summary: Required. The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variable (<a href="https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables">https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables</a>).
+    description: ''
+  - name: --start-task-resource-files
+    summary: A list of files that the Batch service will download to the compute node before running the command line.  There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. Files listed under this element are located in the task's working directory. Space-separated resource references in filename=blobsource format.
+    description: ''
+  - name: --start-task-wait-for-success
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. If true and the start task fails on a compute node, the Batch service retries the start task up to its maximum retry count (maxTaskRetryCount). If the task has still not completed successfully after all retries, then the Batch service marks the compute node unusable, and will not schedule tasks to it. This condition can be detected via the node state and failure info details. If false, the Batch service will not wait for the start task to complete. In this case, other tasks can start executing on the compute node while the start task is still running; and even if the start task fails, new tasks will continue to be scheduled on the node. The default is false. True if flag present.
+    description: ''
+  - name: --image
+    summary: "OS image reference. This can be either 'publisher:offer:sku[:version]' format, or a fully qualified ARM image id of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}'. If 'publisher:offer:sku[:version]' format, version is optional and if omitted latest will be used. Valid values can be retrieved via 'az batch pool node-agent-skus list'. For example: 'MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest'."
+    description: ''
+  - name: --node-agent-sku-id
+    summary: Required. The SKU of the Batch node agent to be provisioned on compute nodes in the pool. The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_delete
+  name: az batch pool delete
+  summary: Deletes a pool from the specified account.
+  description: 'When you request that a pool be deleted, the following actions occur: the pool state is set to deleting; any ongoing resize operation on the pool are stopped; the Batch service starts resizing the pool to zero nodes; any tasks running on existing nodes are terminated and requeued (as if a resize pool operation had been requested with the default requeue option); finally, the pool is removed from the system. Because running tasks are requeued, the user can rerun these tasks by updating their job to target a different pool. The tasks can then run on the new pool. If you want to override the requeue behavior, then you should call resize pool explicitly to shrink the pool to zero size before deleting the pool. If you call an Update, Patch or Delete API on a pool in the deleting state, it will fail with HTTP status code 409 with error code PoolBeingDeleted.'
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --pool-id
+    summary: The ID of the pool to delete.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_list
+  name: az batch pool list
+  summary: Lists all of the pools in the specified account.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    summary: An OData $expand clause.
+    description: ''
+  - name: --filter
+    summary: An OData $filter clause. For more information on constructing this filter, see <a href="https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools">https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-pools</a>.
+    description: ''
+  - name: --select
+    summary: An OData $select clause.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_reset
+  name: az batch pool reset
+  summary: Update the properties of a Batch pool. Unspecified properties which can be updated are reset to their defaults.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --pool-id
+    summary: The ID of the pool to update.
+    description: ''
+  - name: --json-file
+    summary: The file containing pool update properties parameter specification in JSON(formatted to match REST API request body). If this parameter is specified, all 'Pool Update Properties Parameter Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-package-references
+    summary: Required. A list of application packages to be installed on each compute node in the pool. The list replaces any existing application package references on the pool. Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. If omitted, or if you specify an empty collection, any existing application packages references are removed from the pool.
+    description: ''
+  - name: --certificate-references
+    summary: Required. A list of certificates to be installed on each compute node in the pool. This list replaces any existing certificate references configured on the pool. If you specify an empty collection, any existing certificate references are removed from the pool. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
+    description: ''
+  - name: --metadata
+    summary: Required. A list of name-value pairs associated with the pool as metadata. This list replaces any existing metadata configured on the pool. If omitted, or if you specify an empty collection, any existing metadata is removed from the pool.
+    description: ''
+  - name: --start-task-command-line
+    summary: The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    description: ''
+  - name: --start-task-environment-settings
+    summary: A list of environment variable settings for the start task. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-max-task-retry-count
+    summary: The maximum number of times the task may be retried.
+    description: ''
+  - name: --start-task-wait-for-success
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. True if flag present, otherwise defaults to False.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_resize
+  name: az batch pool resize
+  summary: Resize or stop resizing a Batch pool.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --pool-id
+    summary: The ID of the pool.
+    description: ''
+  - name: --abort
+    summary: Stop the pool resize operation.
+    description: ''
+  - name: --node-deallocation-option
+    parameterValueGroup: requeue, retaineddata, taskcompletion, terminate
+    summary: When nodes may be removed from the pool, if the pool size is decreasing.
+    description: ''
+  - name: --resize-timeout
+    summary: The timeout for allocation of compute nodes to the pool or removal of compute nodes from the pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request).
+    description: ''
+  - name: --target-dedicated-nodes
+    summary: The desired number of dedicated compute nodes in the pool.
+    description: ''
+  - name: --target-low-priority-nodes
+    summary: The desired number of low-priority compute nodes in the pool.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --if-match
+    summary: The operation will be performed only if the resource's current ETag exactly matches the specified value.
+    description: ''
+  - name: --if-modified-since
+    summary: The operation will be performed only if the resource has been modified since the specified timestamp.
+    description: ''
+  - name: --if-none-match
+    summary: The operation will not be performed only if the resource's current ETag exactly matches the specified value.
+    description: ''
+  - name: --if-unmodified-since
+    summary: The operation will not be performed only if the resource has been modified since the specified timestamp.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_set
+  name: az batch pool set
+  summary: Update the properties of a Batch pool. Updating a property in a subgroup will reset the unspecified properties of that group.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --pool-id
+    summary: The ID of the pool to update.
+    description: ''
+  - name: --json-file
+    summary: A file containing the pool patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Pool Arguments' are ignored.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --application-package-references
+    summary: A list of application packages to be installed on each compute node in the pool. Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. If this element is present, it replaces any existing application package references. If you specify an empty collection, then all application package references are removed from the pool. If omitted, any existing application package references are left unchanged. Space-separated application IDs with optional version in 'id[#version]' format.
+    description: ''
+  - name: --certificate-references
+    summary: A list of certificates to be installed on each compute node in the pool. If this element is present, it replaces any existing certificate references configured on the pool. If omitted, any existing certificate references are left unchanged. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory. Space-separated certificate thumbprints.
+    description: ''
+  - name: --metadata
+    summary: A list of name-value pairs associated with the pool as metadata. If this element is present, it replaces any existing metadata configured on the pool. If you specify an empty collection, any metadata is removed from the pool. If omitted, any existing metadata is left unchanged. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-command-line
+    summary: Required. The command line of the start task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variable (<a href="https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables">https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables</a>).
+    description: ''
+  - name: --start-task-environment-settings
+    summary: A list of environment variable settings for the start task. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --start-task-max-task-retry-count
+    summary: The maximum number of times the task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries. The Batch service will try the task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries the task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry the task. If the maximum retry count is -1, the Batch service retries the task without limit.
+    description: ''
+  - name: --start-task-resource-files
+    summary: A list of files that the Batch service will download to the compute node before running the command line.  There is a maximum size for the list of resource files. When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. Files listed under this element are located in the task's working directory. Space-separated resource references in filename=blobsource format.
+    description: ''
+  - name: --start-task-wait-for-success
+    summary: Whether the Batch service should wait for the start task to complete successfully (that is, to exit with exit code 0) before scheduling any tasks on the compute node. If true and the start task fails on a compute node, the Batch service retries the start task up to its maximum retry count (maxTaskRetryCount). If the task has still not completed successfully after all retries, then the Batch service marks the compute node unusable, and will not schedule tasks to it. This condition can be detected via the node state and failure info details. If false, the Batch service will not wait for the start task to complete. In this case, other tasks can start executing on the compute node while the start task is still running; and even if the start task fails, new tasks will continue to be scheduled on the node. The default is false. Specify either 'true' or 'false' to update the property.
+    description: ''
+  - name: --if-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_batch_pool_show
+  name: az batch pool show
+  summary: Gets information about the specified pool.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --pool-id
+    summary: The ID of the pool to get.
+    description: ''
+  - name: --account-endpoint
+    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
+    description: ''
+  - name: --account-key
+    summary: 'Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --expand
+    summary: An OData $expand clause.
+    description: ''
+  - name: --if-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
+    description: ''
+  - name: --if-modified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has been modified since the specified time.
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service does not match the value specified by the client.
+    description: ''
+  - name: --if-unmodified-since
+    summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
+    description: ''
+  - name: --select
+    summary: An OData $select clause.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_batch_pool_all_statistics
+  name: az batch pool all-statistics
+  summary: View statistics of all pools under a Batch account.
+- uid: az_batch_pool_all_statistics_show
+  name: az batch pool all-statistics show
+  summary: Get lifetime summary statistics for all of the pools in a Batch account.
+- uid: az_batch_pool_autoscale
+  name: az batch pool autoscale
+  summary: Manage automatic scaling of Batch pools.
+- uid: az_batch_pool_autoscale_disable
+  name: az batch pool autoscale disable
+  summary: Disables automatic scaling for a pool.
+- uid: az_batch_pool_autoscale_enable
+  name: az batch pool autoscale enable
+  summary: Enables automatic scaling for a pool.
+- uid: az_batch_pool_autoscale_evaluate
+  name: az batch pool autoscale evaluate
+  summary: Gets the result of evaluating an automatic scaling formula on the pool.
+- uid: az_batch_pool_create
+  name: az batch pool create
+  summary: Create a Batch pool in an account. When creating a pool, choose arguments from either Cloud Services Configuration or Virtual Machine Configuration.
+- uid: az_batch_pool_delete
+  name: az batch pool delete
+  summary: Deletes a pool from the specified account.
+- uid: az_batch_pool_list
+  name: az batch pool list
+  summary: Lists all of the pools in the specified account.
+- uid: az_batch_pool_node_agent_skus
+  name: az batch pool node-agent-skus
+  summary: Retrieve node agent SKUs of Batch pools using a Virtual Machine Configuration.
+- uid: az_batch_pool_node_agent_skus_list
+  name: az batch pool node-agent-skus list
+  summary: Lists all node agent SKUs supported by the Azure Batch service.
+- uid: az_batch_pool_node_counts
+  name: az batch pool node-counts
+  summary: Get node counts for Batch pools.
+- uid: az_batch_pool_node_counts_list
+  name: az batch pool node-counts list
+  summary: Gets the number of nodes in each state, grouped by pool.
+- uid: az_batch_pool_os
+  name: az batch pool os
+  summary: Manage the operating system of Batch pools.
+- uid: az_batch_pool_os_upgrade
+  name: az batch pool os upgrade
+  summary: Upgrades the operating system of the specified pool.
+- uid: az_batch_pool_reset
+  name: az batch pool reset
+  summary: Update the properties of a Batch pool. Unspecified properties which can be updated are reset to their defaults.
+- uid: az_batch_pool_resize
+  name: az batch pool resize
+  summary: Resize or stop resizing a Batch pool.
+- uid: az_batch_pool_set
+  name: az batch pool set
+  summary: Update the properties of a Batch pool. Updating a property in a subgroup will reset the unspecified properties of that group.
+- uid: az_batch_pool_show
+  name: az batch pool show
+  summary: Gets information about the specified pool.
+- uid: az_batch_pool_usage_metrics
+  name: az batch pool usage-metrics
+  summary: View usage metrics of Batch pools.
+- uid: az_batch_pool_usage_metrics_list
+  name: az batch pool usage-metrics list
+  summary: Lists the usage metrics, aggregated by pool across individual time intervals, for the specified account.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
+doc_source_url_path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/b269df6b64dd622faa0ad69313b87274d08c8a55/src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
+updated_at: 8/28/2018 11:05:30 PM
+ms.date: 08/28/2018
+description: Manage Batch pools.
