@@ -1,0 +1,664 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_acr
+  name: az acr
+  summary: Manage private registries with Azure Container Registries.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_acr_build
+  - az_acr_check_name
+  - az_acr_create
+  - az_acr_delete
+  - az_acr_import
+  - az_acr_list
+  - az_acr_login
+  - az_acr_run
+  - az_acr_show
+  - az_acr_show_usage
+  - az_acr_update
+- uid: az_acr_build
+  name: az acr build
+  summary: Queues a quick build, providing streamed logs for an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Queue a local context (folder), pushed to ACR when complete, with streaming logs.
+    syntax:
+      content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry .
+  - summary: Queue a local context, pushed to ACR without streaming logs.
+    syntax:
+      content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-logs .
+  - summary: Queue a local context to validate a build is successful, without pushing to the registry using the --no-push parameter.
+    syntax:
+      content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-push .
+  - summary: Queue a local context to validate a build is successful, without pushing to the registry. Removing the -t parameter defaults to --no-push
+    syntax:
+      content: az acr build -r MyRegistry .
+  parameters:
+  - isRequired: true
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --build-arg
+    summary: Build argument in 'name[=value]' format.
+    description: ''
+  - name: --file -f
+    summary: The relative path of the the docker file to the source code root folder.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
+    description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
+    description: ''
+  - name: --no-logs
+    summary: Do not show logs after successfully queuing the build.
+    description: ''
+  - name: --no-push
+    summary: Indicates whether the image built should be pushed to the registry.
+    description: ''
+  - name: --os
+    defaultValue: Linux
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --secret-build-arg
+    summary: Secret build argument in 'name[=value]' format.
+    description: ''
+  - name: --timeout
+    summary: The timeout in seconds.
+    description: ''
+  - name: <SOURCE_LOCATION>
+    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_check_name
+  name: az acr check-name
+  summary: Checks if an Azure Container Registry name is valid and available for use.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Check if a registry name already exists.
+    syntax:
+      content: az acr check-name -n doesthisnameexist
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_create
+  name: az acr create
+  summary: Creates an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a managed container registry with the Standard SKU.
+    syntax:
+      content: az acr create -n MyRegistry -g MyResourceGroup --sku Standard
+  - summary: Create an Azure Container Registry with a new storage account with the Classic SKU (Classic registries are being deprecated by March 2019).
+    syntax:
+      content: az acr create -n MyRegistry -g MyResourceGroup --sku Classic
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --sku
+    parameterValueGroup: Basic, Classic, Premium, Standard
+    summary: The SKU of the container registry.
+    description: ''
+  - name: --admin-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether the admin user is enabled.
+    description: ''
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --storage-account-name
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Classic SKU.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_delete
+  name: az acr delete
+  summary: Deletes an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete an Azure Container Registry.
+    syntax:
+      content: az acr delete -n MyRegistry
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_import
+  name: az acr import
+  summary: Imports an image to an Azure Container Registry from another Container Registry. Import removes the need to docker pull, docker tag, docker push.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Import an image to the target registry and inherits sourcerepository:sourcetag from the source registry.
+    syntax:
+      content: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag
+  - summary: Import an image from a registry in a different subscription.
+    syntax:
+      content: az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --source
+    summary: The source identifier in the format '[registry.azurecr.io/]repository[:tag]' or '[registry.azurecr.io/]repository@digest'.
+    description: ''
+  - name: --force
+    summary: Overwrite the existing tag of the image to be imported.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
+    description: ''
+  - name: --registry -r
+    summary: The source container registry can be name, login server or resource ID of the source registry.
+    description: ''
+  - name: --repository
+    summary: The repository name to do a manifest-only copy for images.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_list
+  name: az acr list
+  summary: Lists all the container registries under the current subscription.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List container registries and show the results in a table, across multiple resource groups.
+    syntax:
+      content: az acr list -o table
+  - summary: List container registries in a resource group and show the results in a table.
+    syntax:
+      content: az acr list -g MyResourceGroup -o table
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_login
+  name: az acr login
+  summary: Log in to an Azure Container Registry through the Docker CLI.
+  description: Docker must be installed on your machine.
+  langs:
+  - azurecli
+  examples:
+  - summary: Log in to an Azure Container Registry
+    syntax:
+      content: az acr login -n MyRegistry
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_run
+  name: az acr run
+  summary: Queues a quick run providing streamed logs for an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Queue a local context, pushed to ACR with streaming logs.
+    syntax:
+      content: az acr run -r MyRegistry -f bash-echo.yaml .
+  - summary: Queue a remote git context with streaming logs.
+    syntax:
+      content: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f hello-world.yaml
+  parameters:
+  - isRequired: true
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --file -f
+    defaultValue: acb.yaml
+    summary: The task template/definition file path relative to the source context.
+    description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
+    description: ''
+  - name: --no-logs
+    summary: Do not show logs after successfully queuing the build.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the run to complete and return immediately after queuing the run.
+    description: ''
+  - name: --os
+    defaultValue: Linux
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --set
+    summary: Value in 'name[=value]' format.
+    description: ''
+  - name: --timeout
+    summary: The timeout in seconds.
+    description: ''
+  - name: --values
+    summary: The task values file path relative to the source context.
+    description: ''
+  - name: <SOURCE_LOCATION>
+    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_show
+  name: az acr show
+  summary: Get the details of an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the login server for an Azure Container Registry.
+    syntax:
+      content: az acr show -n MyRegistry --query loginServer
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_show_usage
+  name: az acr show-usage
+  summary: Get the storage usage for an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the storage usage for an Azure Container Registry.
+    syntax:
+      content: az acr show-usage -n MyRegistry
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_update
+  name: az acr update
+  summary: Update an Azure Container Registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update tags for an Azure Container Registry.
+    syntax:
+      content: az acr update -n MyRegistry --tags key1=value1 key2=value2
+  - summary: Update the storage account for an Azure Container Registry (Classic Registries are being deprecated as of March 2019).
+    syntax:
+      content: az acr update -n MyRegistry --storage-account-name MyStorageAccount
+  - summary: Enable the administrator user account for an Azure Container Registry.
+    syntax:
+      content: az acr update -n MyRegistry --admin-enabled true
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --admin-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether the admin user is enabled.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --sku
+    parameterValueGroup: Basic, Classic, Premium, Standard
+    summary: The SKU of the container registry.
+    description: ''
+  - name: --storage-account-name
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Classic SKU.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_acr_build
+  name: az acr build
+  summary: Queues a quick build, providing streamed logs for an Azure Container Registry.
+- uid: az_acr_build_task
+  name: az acr build-task
+  summary: Manage build definitions, which can be triggered by git commits or base image updates for OS & Framework Patching.
+- uid: az_acr_build_task_create
+  name: az acr build-task create
+  summary: Creates a new build definition which can be triggered by git commits or base image updates for an Azure Container Registry.
+- uid: az_acr_build_task_delete
+  name: az acr build-task delete
+  summary: Delete a build task from an Azure Container Registry.
+- uid: az_acr_build_task_list
+  name: az acr build-task list
+  summary: List the build tasks for an Azure Container Registry.
+- uid: az_acr_build_task_list_builds
+  name: az acr build-task list-builds
+  summary: List all of the executed builds for an Azure Container Registry.
+- uid: az_acr_build_task_logs
+  name: az acr build-task logs
+  summary: Show logs for a particular build. If no build-id is supplied, display the logs for the last created build.
+- uid: az_acr_build_task_run
+  name: az acr build-task run
+  summary: Trigger a build task that might otherwise be waiting for git commits or base image update triggers for an Azure Container Registry.
+- uid: az_acr_build_task_show
+  name: az acr build-task show
+  summary: Get the properties of a specified build task for an Azure Container Registry.
+- uid: az_acr_build_task_show_build
+  name: az acr build-task show-build
+  summary: Get the properties of a specified build for an Azure Container Registry.
+- uid: az_acr_build_task_update
+  name: az acr build-task update
+  summary: Update a build task for an Azure Container Registry.
+- uid: az_acr_build_task_update_build
+  name: az acr build-task update-build
+  summary: Patch the build properties of an Azure Container Registry.
+- uid: az_acr_check_name
+  name: az acr check-name
+  summary: Checks if an Azure Container Registry name is valid and available for use.
+- uid: az_acr_config
+  name: az acr config
+  summary: Configure policies for Azure Container Registries.
+- uid: az_acr_config_content_trust
+  name: az acr config content-trust
+  summary: Manage content-trust policy for Azure Container Registries.
+- uid: az_acr_config_content_trust_show
+  name: az acr config content-trust show
+  summary: Show the configured content-trust policy for an Azure Container Registry.
+- uid: az_acr_config_content_trust_update
+  name: az acr config content-trust update
+  summary: Update content-trust policy for an Azure Container Registry.
+- uid: az_acr_create
+  name: az acr create
+  summary: Creates an Azure Container Registry.
+- uid: az_acr_credential
+  name: az acr credential
+  summary: Manage login credentials for Azure Container Registries.
+- uid: az_acr_credential_renew
+  name: az acr credential renew
+  summary: Regenerate login credentials for an Azure Container Registry.
+- uid: az_acr_credential_show
+  name: az acr credential show
+  summary: Get the login credentials for an Azure Container Registry.
+- uid: az_acr_delete
+  name: az acr delete
+  summary: Deletes an Azure Container Registry.
+- uid: az_acr_helm
+  name: az acr helm
+  summary: Manage helm charts for Azure Container Registries.
+- uid: az_acr_helm_delete
+  name: az acr helm delete
+  summary: Delete a helm chart version in an Azure Container Registry.
+- uid: az_acr_helm_list
+  name: az acr helm list
+  summary: List all helm charts in an Azure Container Registry.
+- uid: az_acr_helm_push
+  name: az acr helm push
+  summary: Push a helm chart package to an Azure Container Registry.
+- uid: az_acr_helm_repo
+  name: az acr helm repo
+  summary: Manage helm chart repositories for Azure Container Registries.
+- uid: az_acr_helm_repo_add
+  name: az acr helm repo add
+  summary: Add a helm chart repository from an Azure Container Registry through the Helm CLI.
+- uid: az_acr_helm_show
+  name: az acr helm show
+  summary: Describe a helm chart in an Azure Container Registry.
+- uid: az_acr_import
+  name: az acr import
+  summary: Imports an image to an Azure Container Registry from another Container Registry. Import removes the need to docker pull, docker tag, docker push.
+- uid: az_acr_list
+  name: az acr list
+  summary: Lists all the container registries under the current subscription.
+- uid: az_acr_login
+  name: az acr login
+  summary: Log in to an Azure Container Registry through the Docker CLI.
+- uid: az_acr_replication
+  name: az acr replication
+  summary: Manage geo-replicated regions of Azure Container Registries.
+- uid: az_acr_replication_create
+  name: az acr replication create
+  summary: Create a replicated region for an Azure Container Registry.
+- uid: az_acr_replication_delete
+  name: az acr replication delete
+  summary: Delete a replicated region from an Azure Container Registry.
+- uid: az_acr_replication_list
+  name: az acr replication list
+  summary: List all of the regions for a geo-replicated Azure Container Registry.
+- uid: az_acr_replication_show
+  name: az acr replication show
+  summary: Get the details of a replicated region.
+- uid: az_acr_replication_update
+  name: az acr replication update
+  summary: Updates a replication.
+- uid: az_acr_repository
+  name: az acr repository
+  summary: Manage repositories (image names) for Azure Container Registries.
+- uid: az_acr_repository_delete
+  name: az acr repository delete
+  summary: Delete a repository or image in an Azure Container Registry.
+- uid: az_acr_repository_list
+  name: az acr repository list
+  summary: List repositories in an Azure Container Registry.
+- uid: az_acr_repository_show
+  name: az acr repository show
+  summary: Get the attributes of a repository or image in an Azure Container Registry.
+- uid: az_acr_repository_show_manifests
+  name: az acr repository show-manifests
+  summary: Show manifests of a repository in an Azure Container Registry.
+- uid: az_acr_repository_show_tags
+  name: az acr repository show-tags
+  summary: Show tags for a repository in an Azure Container Registry.
+- uid: az_acr_repository_untag
+  name: az acr repository untag
+  summary: Untag an image in an Azure Container Registry.
+- uid: az_acr_repository_update
+  name: az acr repository update
+  summary: Update the attributes of a repository or image in an Azure Container Registry.
+- uid: az_acr_run
+  name: az acr run
+  summary: Queues a quick run providing streamed logs for an Azure Container Registry.
+- uid: az_acr_show
+  name: az acr show
+  summary: Get the details of an Azure Container Registry.
+- uid: az_acr_show_usage
+  name: az acr show-usage
+  summary: Get the storage usage for an Azure Container Registry.
+- uid: az_acr_task
+  name: az acr task
+  summary: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
+- uid: az_acr_task_cancel_run
+  name: az acr task cancel-run
+  summary: Cancel a specified run of an Azure Container Registry.
+- uid: az_acr_task_create
+  name: az acr task create
+  summary: Creates a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
+- uid: az_acr_task_delete
+  name: az acr task delete
+  summary: Delete a task from an Azure Container Registry.
+- uid: az_acr_task_list
+  name: az acr task list
+  summary: List the tasks for an Azure Container Registry.
+- uid: az_acr_task_list_runs
+  name: az acr task list-runs
+  summary: List all of the executed runs for an Azure Container Registry, with the ability to filter by a specific Task.
+- uid: az_acr_task_logs
+  name: az acr task logs
+  summary: Show logs for a particular run. If no run-id is supplied, show logs for the last created run.
+- uid: az_acr_task_run
+  name: az acr task run
+  summary: Manually trigger a task that might otherwise be waiting for git commits or base image update triggers.
+- uid: az_acr_task_show
+  name: az acr task show
+  summary: Get the properties of a named task for an Azure Container Registry.
+- uid: az_acr_task_show_run
+  name: az acr task show-run
+  summary: Get the properties of a specified run of an Azure Container Registry Task.
+- uid: az_acr_task_update
+  name: az acr task update
+  summary: Update a task for an Azure Container Registry.
+- uid: az_acr_task_update_run
+  name: az acr task update-run
+  summary: Patch the run properties of an Azure Container Registry Task.
+- uid: az_acr_update
+  name: az acr update
+  summary: Update an Azure Container Registry.
+- uid: az_acr_webhook
+  name: az acr webhook
+  summary: Manage webhooks for Azure Container Registries.
+- uid: az_acr_webhook_create
+  name: az acr webhook create
+  summary: Create a webhook for an Azure Container Registry.
+- uid: az_acr_webhook_delete
+  name: az acr webhook delete
+  summary: Delete a webhook from an Azure Container Registry.
+- uid: az_acr_webhook_get_config
+  name: az acr webhook get-config
+  summary: Get the service URI and custom headers for the webhook.
+- uid: az_acr_webhook_list
+  name: az acr webhook list
+  summary: List all of the webhooks for an Azure Container Registry.
+- uid: az_acr_webhook_list_events
+  name: az acr webhook list-events
+  summary: List recent events for a webhook.
+- uid: az_acr_webhook_ping
+  name: az acr webhook ping
+  summary: Trigger a ping event for a webhook.
+- uid: az_acr_webhook_show
+  name: az acr webhook show
+  summary: Get the details of a webhook.
+- uid: az_acr_webhook_update
+  name: az acr webhook update
+  summary: Update a webhook.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
+doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/d5467e4fdd4916f8c1249ca1ee030d3ff509d999/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 9/13/2018 10:43:56 PM
+ms.date: 09/13/2018
+description: Manage private registries with Azure Container Registries.
