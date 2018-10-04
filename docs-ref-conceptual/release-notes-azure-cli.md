@@ -13,9 +13,70 @@ ms.devlang: azure-cli
 
 # Azure CLI release notes
 
+## October 9, 2018
+
+Version 2.0.47
+
+### Core
+* Introduces generic behavior to handle "Bad Request" errors.
+
+### ACR
+* Support similar table format as helm client.
+
+### ACS
+* `az aks create/scale --nodepool-name` configures nodepool name, truncated to 12 characters, default - nodepool1 
+* bugfix: Fall back to 'scp' when Parimiko fails.
+* `az aks create` no longer requires --aad-tenant-id
+* bugfix: improve merging of kubernetes credentials when duplicate entries are present.
+* In Azure Cloud Shell, open a tunnel and report the URL
+
+### Container
+* az functionapp create supports creating a linux consumption plan type with a specific runtime
+* (PREVIEW) support webapps hosting on Windows containers
+
+### Event Hub
+* Fix eventhub update command
+* BREAKING CHANGE: 'list' commands errors for resource(s) NotFound(404) are now handled in the typical way instead of showing empty list
+
+### Extensions
+* Attempting to add an extension that is already installed will not raise an exception.
+
+### HDInsight
+* Initial release of module.
+
+### IoT
+* Added extension installation comand to first-run banner
+
+### KeyVault
+* Restrict keyvault storage commmands to the latest API profile
+
+### Network
+* Fix `network dns zone create`. Command succeeds even if the user has configured a default location. See #6052.
+* `network vnet peering create`: Deprecated `--remote-vnet-id`. Added --remote-vnet which accepts a name or ID.
+* `network vnet create`: Added support for multiple subnet prefixes with `--subnet-prefixes`.
+* `network vnet subnet create/update`: Added support for multiple subnet prefixes with `--address-prefixes`.
+* `network application-gateway create`: Fixed logic that prevented creating gateways with WAF_v2 or Standard_v2 SKU.
+* `network vnet subnet update`: Added `--service-endpoint-policy` convenience argument.
+
+### Role
+* ad app owner: Adds support for listing Azure AD app owners.
+* ad sp owner: Adds support for listing Azure AD service principal owners.
+* role: ensure role definition create & update commands accept multiple permission configurations
+* create-for-rbac: ensure home page uri is always "https"
+
+### Service Bus
+* BREAKING CHANGE: 'list' commands errors for resource(s) NotFound(404) are now handled in the typical way instead of showing empty list
+
+### VM
+* `az disk grant-access`: fix the empty "accessSas" field
+* `vmss create`: reserve large enough frontend port range to handle overprovisioning
+* `az sig`: fix update commands, support --no-wait on managing image versions
+* `vm list-ip-addresses`: now shows availability zone of public IP addresses.
+* `az vm\vmss disk attach`: default disk's lun to the first available spot
+
 ## September 21, 2018
 
-Version 20.46
+Version 2.0.46
 
 ### ACR
 * Added ACR Task commands
