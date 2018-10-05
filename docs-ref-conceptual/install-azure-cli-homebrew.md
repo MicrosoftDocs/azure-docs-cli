@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI for macOS
-description: How to install the Azure CLI on macOS
+title: Install the Azure CLI with Homebrew for macOS
+description: How to install the Azure CLI with Homebrew on macOS
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azure-cli
 ---
 
-# Install Azure CLI on macOS
+# Install Azure CLI with Homebrew on macOS
 
 For the macOS platform, you can install the Azure CLI with [homebrew package manager](https://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
@@ -75,4 +75,4 @@ brew uninstall azure-cli
 Now that you've installed the Azure CLI, take a short tour of its features and common commands.
 
 > [!div class="nextstepaction"]
-> [Get started with the Azure CLI](get-started-with-azure-cli.md)
+[get started with the azure cli](get-started-with-azure-cli.md)
