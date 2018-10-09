@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/21/2018
+ms.date: 10/09/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,9 +13,71 @@ ms.devlang: azure-cli
 
 # Azure CLI release notes
 
+## October 9, 2018
+
+Version 2.0.47
+
+### Core
+* Improved error handling for "Bad Request" errors
+
+### ACR
+* Added support for similar table format as helm client
+
+### ACS
+* Added `aks [create|scale] --nodepool-name` to configure nodepool name, truncated to 12 characters, default - nodepool1 
+* Fixed to fall back to 'scp' when Parimiko fails
+* Changed `aks create` to no longer require `--aad-tenant-id`
+* Improved merging of Kubernetes credentials when duplicate entries are present
+
+### Container
+* Changed `functionapp create` to support creating a Linux consumption plan type with a specific runtime
+* [PREVIEW] Added support for hosting webapps on Windows containers
+
+### Event Hub
+* Fixed `eventhub update` command
+* [BREAKING CHANGE] Changed `list` commands to handle errors for resource(s) NotFound(404) in the typical way instead of showing empty list
+
+### Extensions
+* Fixed issue with attempting to add an extension that is already installed
+
+### HDInsight
+* Initial release
+
+### IoT
+* Added extension installation comand to first-run banner
+
+### KeyVault
+* Changed to restrict keyvault storage commmands to the latest API profile
+
+### Network
+* Fixed `network dns zone create`: Command succeeds even if the user has configured a default location. See #6052
+* Deprecated `--remote-vnet-id` for `network vnet peering create`
+* Added `--remote-vnet` to `network vnet peering create` which accepts a name or ID
+* Added support for multiple subnet prefixes to `network vnet create` with `--subnet-prefixes`
+* Added support for multiple subnet prefixes to `network vnet subnet [create|update]` with `--address-prefixes`
+* Fixed issue with `network application-gateway create` that prevented creating gateways with `WAF_v2` or `Standard_v2` SKU
+* Added `--service-endpoint-policy` convenience argument to `network vnet subnet update`
+
+### Role
+* Added support for listing Azure AD app owners to `ad app owner`
+* Added support for listing Azure AD service principal owners to `ad sp owner`
+* Changed to ensure role definition create & update commands accept multiple permission configurations
+* Changed `ad sp create-for-rbac` to ensure home page URI is always "https"
+
+### Service Bus
+* [BREAKING CHANGE] Changed `list` commands to handle errors for resource(s) NotFound(404) in the typical way instead of showing empty list
+
+### VM
+* Fixed empty `accessSas` field in `disk grant-access`
+* Changed `vmss create` to reserve large enough frontend port range to handle overprovisioning
+* Fixed update commands for `sig`
+* Added `--no-wait` support for managing image versions in `sig`
+* Changed `vm list-ip-addresses` to show availability zone of public IP addresses
+* Changed `[vm|vmss] disk attach` to set disk's default lun to the first available spot
+
 ## September 21, 2018
 
-Version 20.46
+Version 2.0.46
 
 ### ACR
 * Added ACR Task commands
