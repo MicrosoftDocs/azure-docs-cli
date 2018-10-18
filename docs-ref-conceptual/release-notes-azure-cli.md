@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/09/2018
+ms.date: 10/23/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -18,75 +18,73 @@ ms.devlang: azure-cli
 Version 2.0.49
 
 ### Core
-* Fix issue with `--ids` where `--subscription` would take precedence over the subscription in `--ids`.
-  Adding explicit warnings when name parameters would be ignored by use of `--ids`.
+* Fixed issue with `--ids` where `--subscription` would take precedence over the subscription in `--ids`
+* Added explicit warnings when parameters would be ignored by use of `--ids`
 
 ### ACR
-* Fix an ACR Build encoding issue in Python2.
-* Upgrade pinned dependency azure-storage-blob from 1.1.0 to 1.3.1
+* Fixed an ACR Build encoding issue in Python2
 
 ### CDN
-* BREAKING CHANGE: `cdn endpoint create`'s default query string caching behaviour no longer defaults to "IgnoreQueryString". It is now set by the service.
+* [BREAKING CHANGE] Changed `cdn endpoint create`'s default query string caching behaviour to no longer defaults to "IgnoreQueryString". It is now set by the service
 
 ### Container
-* Make 'Private' a valid type to pass to '--ip-address'
-* Allow using only subnet ID to setup a virtual network for the container group
-* Allow using vnet name or resource id to enable using vnets from different resource groups
-* Add '--assign-identity' for adding a MSI identity to a container group
-* Add '--scope' to create a role assignment for the system assigned MSI identity
-* Show warning when creating a container group with an image without a long running process
-* Fix table output issues for 'list' and 'show' commands
+* Added `Private` as a valid type to pass to '--ip-address'
+* Changed to allow using only subnet ID to setup a virtual network for the container group
+* Changed to allow using vnet name or resource id to enable using vnets from different resource groups
+* Added `--assign-identity` for adding a MSI identity to a container group
+* Added `--scope` to create a role assignment for the system assigned MSI identity
+* Added a warning when creating a container group with an image without a long running process
+* Fixed table output issues for `list` and `show` commands
 
 ### CosmosDB
-* `cosmosdb create`: Add `--enable-multiple-write-locations` support.
+* Added `--enable-multiple-write-locations` support to `cosmosdb create`
 
 ### Interactive
-* Ensure global subscription parameter appears in parameters.
+* Changed to ensure global subscription parameter appears in parameters
 
 ### IoT Central
-* Added template and display name options for IoT Central Application creation.
-* BREAKING CHANGE: The F1 Sku is no longer supported.
-* Please use the S1 Sku (default) for app creation.
+* Added template and display name options for IoT Central Application creation
+* [BREAKING CHANGE] Removed support for the F1 SKU; Use S1 SKU instead
 
 ### Monitor
-* `monitor activity-log list`:
-    Allow listing all events at the subscription level.
-    Added `--offset` parameter to more easily create time queries.
-    Improved validation for --start-time and --end-time to use wider range of ISO8601 formats and more user-friendly datetime formats.
-    Added `--namespace` as alias for deprecated option `--resource-provider`.
-    Deprecated `--filters` because no values other than those with strongly-typed options are supported by the service.
-* `monitor metrics list`:
-    Added `--offset` parameter to more easily create time queries.
-    Improved validation for --start-time and --end-time to use wider range of ISO8601 formats and more user-friendly datetime formats.
-* `monitor diagnostic-settings create`: Improve validation for arguments `--event-hub` and `--event-hub-rule`.
+* Changes to `monitor activity-log list`:
+  * Added support for listing all events at the subscription level
+  * Added `--offset` parameter to more easily create time queries
+  * Improved validation for `--start-time` and `--end-time` to use wider range of ISO8601 formats and more user-friendly datetime formats
+  * Added `--namespace` as alias for deprecated option `--resource-provider`
+  * Deprecated `--filters` because no values other than those with strongly-typed options are supported by the service
+* Changes to `monitor metrics list`:
+  * Added `--offset` parameter to more easily create time queries
+  * Improved validation for `--start-time` and `--end-time` to use wider range of ISO8601 formats and more user-friendly datetime formats
+* Improved validation for `--event-hub` and `--event-hub-rule` arguments to `monitor diagnostic-settings create`
 
 ### Network
-* `nic create` - Add `--app-gateway-address-pools` and `--gateway-name` arguments to support adding application
-  gateway backend address pools to a NIC.
-* `nic ip-config create/update` - Add `--app-gateway-address-pools` and `--gateway-name` arguments to support adding application
-  gateway backend address pools to a NIC.
+* Added `--app-gateway-address-pools` and `--gateway-name` arguments to `nic create`, to support adding application
+  gateway backend address pools to a NIC
+* Added `--app-gateway-address-pools` and `--gateway-name` arguments to `nic ip-config create/update`, to support adding application
+  gateway backend address pools to a NIC
 
 ### ServiceBus
-* Added Read-Only migration_state to MigrationConfigProperties to show current Service Bus Standard to Premium namespace migration state.
+* Added Read-Only `migration_state` to MigrationConfigProperties to show current Service Bus Standard to Premium namespace migration state
 
 ### SQL
-* Fixed az sql failover-group create and az sql failover-group update to work with Manual failover policy.
+* Fixed `sql failover-group create` and `sql failover-group update` to work with Manual failover policy
 
 ### Storage
-* Fix `az storage cors list` output formatting, all items show correct "Service" key
-* `--bypass-immutability-policy` parameter for immutability-policy blocked container deletion
+* Fixed `az storage cors list` output formatting, all items show correct "Service" key
+* Added `--bypass-immutability-policy` parameter for immutability-policy blocked container deletion
 
 ### VM
-* `vm/vmss create`: enforce disk caching mode be `None` for Lv/Lv2 series of machines
-* `vm create`: update supported size list supporting networking accelerator
-* `disk update`: expose strong typed arguments for ultrassd iops and mbps configs
+* Enforce disk caching mode be `None` for Lv/Lv2 series of machines in `[vm|vmss] create`
+* Updated supported size list supporting networking accelerator for `vm create`
+* Added strong typed arguments for ultrassd iops and mbps configs for `disk create`
 
 ## October 16, 2018
 
 Version 2.0.48
 
 ### VM
-* Fix SDK issue that caused Homebrew instllation to fail.
+* Fixed SDK issue that caused Homebrew instllation to fail
 
 ## October 9, 2018
 
