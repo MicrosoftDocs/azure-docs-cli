@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/18/2018
+ms.date: 10/19/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -33,7 +33,7 @@ az extension list-available --output table
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.5.0 | Support for new Database Migration Service scenarios. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Support for Azure EventGrid 2018-05-01-preview features | Yes |
-| [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.1 | Manage ExpressRoutes with preview features. | Yes |
+| [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.2 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.0 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.2.0 | Intelligent querying for CLI information. | Yes |
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.1 | Manage networking Front Doors. | Yes |
