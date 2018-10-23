@@ -11,44 +11,59 @@ items:
   - az_monitor_activity_log_list_categories
 - uid: az_monitor_activity_log_list
   name: az monitor activity-log list
-  summary: Provides the list of activity log.
+  summary: List and query activity log events.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all events from July 1st, looking forward one week.
+    syntax:
+      content: az monitor activity-log list --start-date 2018-07-01 --offset 7d
+  - summary: List events within the past six hours based on a correlation ID.
+    syntax:
+      content: az monitor activity-log list --correlation-id b5eac9d2-e829-4c9a-9efb-586d19417c5f
+  - summary: List events within the past hour based on resource group.
+    syntax:
+      content: az monitor activity-log list -g {ResourceGroup} --offset 1h
   parameters:
-  - name: --filters
-    summary: The OData filter for the list activity logs. If this argument is provided OData Filter Arguments will be ignored.
-    description: ''
   - name: --max-events
     defaultValue: "50"
-    summary: The maximum number of records to be returned by the command.
+    summary: Maximum number of records to return.
     description: ''
   - name: --select
-    summary: The list of event names.
+    parameterValueGroup: authorization, caller, category, claims, correlationId, description, eventDataId, eventName, eventTimestamp, httpRequest, id, level, operationId, operationName, properties, resourceGroupName, resourceId, resourceProviderName, resourceType, status, subStatus, submissionTimestamp, subscriptionId, tenantId
+    summary: Space-separated list of properties to return.
     description: ''
   - name: --caller
-    summary: The caller to look for when querying.
+    summary: Caller to query for, such as an e-mail address or service principal ID.
     description: ''
   - name: --correlation-id
-    summary: The correlation id of the query.
+    summary: Correlation ID to query.
     description: ''
-  - name: --end-time
-    summary: 'The end time of the query. In ISO format with explicit indication of timezone: 1970-01-01T00:00:00Z, 1970-01-01T00:00:00-0500. Defaults to current time.'
+  - name: --filters
+    summary: OData filters. Will ignore other filter arguments.
     description: ''
-  - name: --resource-group
-    summary: The resource group.
+  - name: --namespace
+    summary: Resource provider namespace.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: The identifier of the resource.
-    description: ''
-  - name: --resource-provider
-    summary: The resource provider.
-    description: ''
-  - name: --start-time
-    summary: 'The start time of the query. In ISO format with explicit indication of timezone: 1970-01-01T00:00:00Z, 1970-01-01T00:00:00-0500. Defaults to 1 Hour prior to the current time.'
+    summary: ARM ID of a resource.
     description: ''
   - name: --status
-    summary: 'The status value to query (ex: Failed).'
+    summary: 'Status to query for (ex: Failed).'
+    description: ''
+  - name: --end-time
+    summary: 'End time of the query. Defaults to the current time. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - name: --offset
+    defaultValue: 6h
+    summary: 'Time offset of the query range, in ##d##h format.'
+    description: Can be used with either --start-time or --end-time. If used with --start-time, then the end time will be calculated by adding the offset. If used with --end-time (default), then the start time will be calculated by subtracting the offset. If --start-time and --end-time are provided, then --offset will be ignored.
+  - name: --start-time
+    summary: 'Start time of the query. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
     description: ''
   source:
     path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
@@ -108,7 +123,7 @@ commands:
   summary: Update the details of this activity log alert.
 - uid: az_monitor_activity_log_list
   name: az monitor activity-log list
-  summary: Provides the list of activity log.
+  summary: List and query activity log events.
 - uid: az_monitor_activity_log_list_categories
   name: az monitor activity-log list-categories
   summary: List the event categories of activity logs.
@@ -128,7 +143,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ec93aeb47701889d5fcfba94ea3ac074fb0a0b29/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
-updated_at: 9/20/2018 4:44:06 PM
-ms.date: 09/20/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/e0b46a9125159f05a39a1909ff5b28ab9af07c5e/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+updated_at: 10/18/2018 4:25:28 PM
+ms.date: 10/18/2018
 description: Manage activity logs.

@@ -53,12 +53,6 @@ items:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --cpu 1 --memory 1
   - summary: Create a container in a container group that runs Windows, with 2 cores and 3.5Gb of memory.
     syntax:
-      content: az container create -g MyResourceGroup --name mywinapp --image winappimage:latest --os-type Windows --cpu 2 --memory 3.5
-  - summary: Create a container in a container group with public IP address and ports.
-    syntax:
-      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ip-address public --ports 80 443
-  - summary: Create a container in a container group with public IP address and UDP port.
-    syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --ip-address public --ports 8081 --protocol UDP
   - summary: Create a container in a container group with public IP address, ports and DNS name label.
     syntax:
@@ -71,13 +65,10 @@ items:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "echo hello" --restart-policy Never
   - summary: Create a container in a container group with environment variables.
     syntax:
-      content: az container create -g MyResourceGroup --name myapp --image myimage:latest -e key1=value1 key2=value2
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --environment-variables key1=value1 key2=value2
   - summary: Create a container in a container group using container image from Azure Container Registry.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myAcrRegistry.azurecr.io/myimage:latest --registry-password password
-  - summary: Create a container in a container group using container image from another private container image registry.
-    syntax:
-      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --cpu 1 --memory 1.5 --registry-login-server myregistry.com --registry-username username --registry-password password
   - summary: Create a container in a container group that mounts an Azure File share as volume.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --image myimage:latest --command-line "cat /mnt/azfile/myfile" --azure-file-volume-share-name myshare --azure-file-volume-account-name mystorageaccount --azure-file-volume-account-key mystoragekey --azure-file-volume-mount-path /mnt/azfile
@@ -90,9 +81,15 @@ items:
   - summary: Create a container group using Log Analytics from a workspace name.
     syntax:
       content: az container create -g MyResourceGroup --name myapp --log-analytics-workspace myworkspace
-  - summary: Create a container group using Log Analytics from a workspace id and key.
+  - summary: Create a container group with a system assigned identity.
     syntax:
-      content: az container create -g MyResourceGroup --name myapp --log-analytics-workspace workspaceid --log-analytics-workspace-key workspacekey
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --assign-identity
+  - summary: Create a container group with a system assigned identity. The group will have a 'Contributor' role with access to a storage account.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+  - summary: Create a container group with a user assigned identity.
+    syntax:
+      content: az container create -g MyResourceGroup --name myapp --image myimage:latest --assign-identity  /subscriptions/mySubscrpitionId/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   parameters:
   - isRequired: true
     name: --resource-group -g
@@ -118,7 +115,7 @@ items:
     summary: The container image name.
     description: ''
   - name: --ip-address
-    parameterValueGroup: Public
+    parameterValueGroup: Private, Public
     summary: The IP address type of the container group.
     description: ''
   - name: --location -l
@@ -201,6 +198,16 @@ items:
   - name: --log-analytics-workspace-key
     summary: The Log Analytics workspace key.
     description: ''
+  - name: --assign-identity
+    summary: Space-separated list of assigned identities. Assigned identities are either user assigned identities (resource IDs) and / or the system assigned identity ('[system]'). See examples for more info.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
   - name: --network-profile
     summary: The network profile name or id.
     description: ''
@@ -210,6 +217,9 @@ items:
   - name: --subnet-address-prefix
     defaultValue: 10.0.0.0/24
     summary: The subnet IP address prefix to use when creating a new VNET in CIDR format.
+    description: ''
+  - name: --vnet
+    summary: The name of the VNET when creating a new one or referencing an existing one. Can also reference an existing vnet by ID. This allows using vnets from other resource groups.
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
@@ -470,7 +480,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/8c0e2961b678086ee99a33059ed26b5ae0dae3a3/src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
+updated_at: 10/18/2018 5:36:05 PM
+ms.date: 10/18/2018
 description: Manage Azure Container Instances.
