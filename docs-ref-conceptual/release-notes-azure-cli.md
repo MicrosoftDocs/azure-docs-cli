@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/09/2018
+ms.date: 10/23/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,79 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+
+## October 23, 2018
+
+Version 2.0.49
+
+### Core
+* Fixed issue with `--ids` where `--subscription` would take precedence over the subscription in `--ids`
+* Added explicit warnings when parameters would be ignored by use of `--ids`
+
+### ACR
+* Fixed an ACR Build encoding issue in Python2
+
+### CDN
+* [BREAKING CHANGE] Changed `cdn endpoint create`'s default query string caching behaviour to no longer defaults to "IgnoreQueryString". It is now set by the service
+
+### Container
+* Added `Private` as a valid type to pass to '--ip-address'
+* Changed to allow using only subnet ID to setup a virtual network for the container group
+* Changed to allow using vnet name or resource id to enable using vnets from different resource groups
+* Added `--assign-identity` for adding a MSI identity to a container group
+* Added `--scope` to create a role assignment for the system assigned MSI identity
+* Added a warning when creating a container group with an image without a long running process
+* Fixed table output issues for `list` and `show` commands
+
+### CosmosDB
+* Added `--enable-multiple-write-locations` support to `cosmosdb create`
+
+### Interactive
+* Changed to ensure global subscription parameter appears in parameters
+
+### IoT Central
+* Added template and display name options for IoT Central Application creation
+* [BREAKING CHANGE] Removed support for the F1 SKU; Use S1 SKU instead
+
+### Monitor
+* Changes to `monitor activity-log list`:
+  * Added support for listing all events at the subscription level
+  * Added `--offset` parameter to more easily create time queries
+  * Improved validation for `--start-time` and `--end-time` to use wider range of ISO8601 formats and more user-friendly datetime formats
+  * Added `--namespace` as alias for deprecated option `--resource-provider`
+  * Deprecated `--filters` because no values other than those with strongly-typed options are supported by the service
+* Changes to `monitor metrics list`:
+  * Added `--offset` parameter to more easily create time queries
+  * Improved validation for `--start-time` and `--end-time` to use wider range of ISO8601 formats and more user-friendly datetime formats
+* Improved validation for `--event-hub` and `--event-hub-rule` arguments to `monitor diagnostic-settings create`
+
+### Network
+* Added `--app-gateway-address-pools` and `--gateway-name` arguments to `nic create`, to support adding application
+  gateway backend address pools to a NIC
+* Added `--app-gateway-address-pools` and `--gateway-name` arguments to `nic ip-config create/update`, to support adding application
+  gateway backend address pools to a NIC
+
+### ServiceBus
+* Added Read-Only `migration_state` to MigrationConfigProperties to show current Service Bus Standard to Premium namespace migration state
+
+### SQL
+* Fixed `sql failover-group create` and `sql failover-group update` to work with Manual failover policy
+
+### Storage
+* Fixed `az storage cors list` output formatting, all items show correct "Service" key
+* Added `--bypass-immutability-policy` parameter for immutability-policy blocked container deletion
+
+### VM
+* Enforce disk caching mode be `None` for Lv/Lv2 series of machines in `[vm|vmss] create`
+* Updated supported size list supporting networking accelerator for `vm create`
+* Added strong typed arguments for ultrassd iops and mbps configs for `disk create`
+
+## October 16, 2018
+
+Version 2.0.48
+
+### VM
+* Fixed SDK issue that caused Homebrew instllation to fail
 
 ## October 9, 2018
 
