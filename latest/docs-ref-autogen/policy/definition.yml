@@ -22,21 +22,42 @@ items:
   - summary: Create a read-only policy.
     syntax:
       content: >-
-        az policy definition create -n readOnlyStorage --rules '{
-                                        "if":
-                                        {
-                                            "field": "type",
-                                            "equals": "Microsoft.Storage/storageAccounts/write"
-                                        },
-                                        "then":
-                                        {
-                                            "effect": "deny"
-                                        }
-                                    }'
+        az policy definition create --name readOnlyStorage --rules '{
+                                    "if":
+                                    {
+                                        "field": "type",
+                                        "equals": "Microsoft.Storage/storageAccounts/write"
+                                    },
+                                    "then":
+                                    {
+                                        "effect": "deny"
+                                    }
+                                }'
   - summary: Create a policy parameter definition with the following example
     syntax:
       content: >-
-        az policy definition create -n allowedLocations --rules '{
+        az policy definition create --name allowedLocations --rules '{
+                                    "if": {
+                                        "allOf": [
+                                            {
+                                                "field": "location",
+                                                "notIn": "[parameters('listOfAllowedLocations')]"
+                                            },
+                                            {
+                                                "field": "location",
+                                                "notEquals": "global"
+                                            },
+                                            {
+                                                "field": "type",
+                                                "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
+                                            }
+                                        ]
+                                    },
+                                    "then": {
+                                        "effect": "deny"
+                                    }
+                                }' \
+                                --params '{
                                     "allowedLocations": {
                                         "type": "array",
                                         "metadata": {
@@ -199,7 +220,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c9fe2efc878a45fdefaec59d42ab7e47912fba24/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-updated_at: 8/16/2018 5:04:10 PM
-ms.date: 08/16/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/ce6558c2a00d54d8467544d59f247bc7687dd68b/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+updated_at: 10/5/2018 4:27:36 PM
+ms.date: 10/05/2018
 description: Manage resource policy definitions.
