@@ -581,10 +581,10 @@ Version 2.0.38
   a workspace.
 * [BREAKING CHANGE] Removed `--location` from `job create`, `cluster create` and `file-server create` commands
 * [BREAKING CHANGE] Changed names of short options to make interface more consistent:
- - Renamed [`--config`, `-c`] to [`--config-file`, `-f`]
- - Renamed [`--cluster`, `-r`] to [`--cluster`, `-c`]
- - Renamed [`--cluster`, `-n`] to [`--cluster`, `-c`]
- - Renamed [`--job`, `-n`] to [`--job`, `-j`]
+  - Renamed [`--config`, `-c`] to [`--config-file`, `-f`]
+  - Renamed [`--cluster`, `-r`] to [`--cluster`, `-c`]
+  - Renamed [`--cluster`, `-n`] to [`--cluster`, `-c`]
+  - Renamed [`--job`, `-n`] to [`--job`, `-j`]
 
 ### Maps
 
@@ -940,15 +940,15 @@ Version 2.0.31
 
 * Added support for 2018-03-01 API
 
- - Job level mounting
- - Environment variables with secret values
- - Performance counters settings
- - Reporting of job specific path segment
- - Support for subfolders in list files api
- - Usage and limits reporting
- - Allow to specify caching type for NFS servers
- - Support for custom images
- - Added pyTorch toolkit support
+  - Job level mounting
+  - Environment variables with secret values
+  - Performance counters settings
+  - Reporting of job specific path segment
+  - Support for subfolders in list files api
+  - Usage and limits reporting
+  - Allow to specify caching type for NFS servers
+  - Support for custom images
+  - Added pyTorch toolkit support
 
 * Added `job wait` command which allows to wait for the job completion and reports job exit code
 * Added `usage show` command to list current Batch AI resources usage and limits for different regions
@@ -2680,7 +2680,7 @@ vm (2.0.2)
 * VM/VMSS: incorporate credentials validation logic used by portal ([#2537](https://github.com/Azure/azure-cli/pull/2537))
 * Add wait commands and --no-wait support ([#2524](https://github.com/Azure/azure-cli/pull/2524))
 * Virtual machine scale set: support * to list instance view across vms ([#2467](https://github.com/Azure/azure-cli/pull/2467))
-* Add --secrets for VM and virtual machine scale set ([#2212}(https://github.com/Azure/azure-cli/pull/2212))
+* Add --secrets for VM and virtual machine scale set ([#2212}(<https://github.com/Azure/azure-cli/pull/2212>))
 * Allow VM creation with specialized VHD ([#2256](https://github.com/Azure/azure-cli/pull/2256))
 
 ## February 27, 2017
