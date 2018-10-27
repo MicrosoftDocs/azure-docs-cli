@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/25/2018
+ms.date: 10/27/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -24,7 +24,7 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.1 | Support for command aliases | Yes |
+| [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.5.1 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.6.0 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.0 | Manage Azure Firewall resources. | Yes |
@@ -38,7 +38,7 @@ az extension list-available --output table
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.2.0 | Intelligent querying for CLI information. | Yes |
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.1 | Manage networking Front Doors. | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.8 | Support for copying managed vm images between regions |  |
-| [interactive](https://github.com/Azure/azure-cli) | 0.4.0 | Microsoft Azure Command-Line Interactive Shell | Yes |
+| [interactive](https://github.com/Azure/azure-cli) | 0.4.1 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.3 | Support for Azure Log Analytics query capabilities. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
