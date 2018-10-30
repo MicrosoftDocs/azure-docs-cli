@@ -2,7 +2,7 @@
 items:
 - uid: ext_eventgrid_az_eventgrid_topic
   name: az eventgrid topic
-  summary: Manage Azure Event Grid topics.
+  summary: Manage topics.
   description: ''
   langs:
   - azurecli
@@ -27,7 +27,7 @@ items:
       content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=myTopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
   - summary: Create a new topic that accepts events published in CloudEvents V0.1 schema.
     syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventv01
+      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventv01schema
   parameters:
   - isRequired: true
     name: --location -l
@@ -42,15 +42,15 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --input-mapping-default-values
-    summary: When input-schema is specified as customeventschema, this parameter is used to specify input mappings based on default values. Specify space separated mappings in 'key=value' format. Allowed key names are 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the default values to be used for the mapping.
+    summary: When input-schema is specified as customeventschema, this parameter can be used to specify input mappings based on default values. You can use this parameter when your custom schema does not include a field that corresponds to one of the three fields supported by this parameter. Specify space separated mappings in 'key=value' format. Allowed key names are 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the default values to be used for the mapping and they will be used only when the published event doesn't have a valid mapping for a particular field.
     description: ''
   - name: --input-mapping-fields
-    summary: When input-schema is specified as customeventschema, this parameter is used to specify input mappings based on field names. Specify space separated mappings in 'key=value' format. Allowed key names are 'id', 'topic', 'eventtime', 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the names of the fields in the custom input schema.
+    summary: When input-schema is specified as customeventschema, this parameter is used to specify input mappings based on field names. Specify space separated mappings in 'key=value' format. Allowed key names are 'id', 'topic', 'eventtime', 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the names of the fields in the custom input schema. If a mapping for either 'id' or 'eventtime' is not provided, Event Grid will auto-generate a default value for these two fields.
     description: ''
   - name: --input-schema
     defaultValue: eventgridschema
     parameterValueGroup: cloudeventv01schema, customeventschema, eventgridschema
-    summary: Schema in which incoming events will be published for this topic. If customeventschema is specified, either input_mapping_default_values or input_mapping_fields must be specified as well.
+    summary: Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -103,7 +103,7 @@ items:
       content: az eventgrid topic show -g rg1 -n topic1
   - summary: Show the details of a topic based on resource ID.
     syntax:
-      content: az eventgrid topic show --ids /subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.EventGrid/topics/topic1
+      content: az eventgrid topic show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1
   parameters:
   - isRequired: true
     name: --name -n
@@ -185,4 +185,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Azure Event Grid topics.
+description: Manage topics.
