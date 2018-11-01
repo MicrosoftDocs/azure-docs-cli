@@ -13,6 +13,98 @@ ms.devlang: azure-cli
 
 # Azure CLI release notes
 
+## November 6, 2018
+
+Version 2.0.50
+
+### Core
+* auth: support service principal sn+issuer auth
+
+### ACR
+* Support commit and pull request git events for Task source trigger.
+* Use default Dockerfile if it's not specified in build command.
+
+### ACS
+* BREAKING CHANGE: Remove enable_cloud_console_aks_browse to enable 'az aks browse' by default
+
+### Advisor
+* GA release.
+
+### AMS
+* New command groups added:
+    `ams account-filter`
+    `ams asset-filter`
+    `ams content-key-policy`
+    `ams live-event`
+    `ams live-output`
+    `ams streaming-endpoint`
+    `ams mru`
+* New commands to existing groups added:
+    `ams account check-name`
+    `ams job update`
+    `ams asset get-encryption-key`
+    `ams asset get-streaming-locators`
+    `ams streaming-locator get-content-keys`
+* Encryption parameters support in `ams streaming-policy create` command added.
+* `ams transform output remove` now can be performed by passing the output index to remove.
+* `--correlation-data` and `--label` arguments added for `ams job` command group.
+* `--storage-account` and `--container` arguments added for `ams asset` command group.
+* Default values for expiry time (Now+23h) and permissions (Read) in `ams asset get-sas-url` command added.
+* BREAKING CHANGE: `ams streaming locator` base command replaced with `ams streaming-locator`.
+* BREAKING CHANGE: `--content-keys` argument from `ams streaming locator` command updated.
+* BREAKING CHANGE: `--content-policy-name` renamed to `--content-key-policy-name` in `ams streaming locator` command.
+* BREAKING CHANGE: `ams streaming policy` base command replaced with `ams streaming-policy`.
+* BREAKING CHANGE: `--preset-names` argument replaced with `--preset` in `ams transform` command group. Now you can only set 1 output/preset at a time (to add more you have to run `ams transform output add`). Also, you can set custom StandardEncoderPreset by passing the path to your custom JSON.
+* BREAKING CHANGE: `--output-asset-names ` renamed to `--output-assets` in `ams job start` command. Now it accepts a space-separated list of assets in 'assetName=label' format. An asset without label can be sent like this: 'assetName='.
+
+### AppService
+* webapp: fix a bug in `az webapp config backup update` that prevents setting a backup schedule if one is not already set
+
+### Configure
+* Add YAML to output format options.
+
+### Container
+* Show identity when exporting a container group to yaml
+
+### EventHub
+* eventhub namespace create/update: Added --enable-kafka flag to support Kafka.
+
+### Interactive
+* Interactive now installs the 'interactive' extension, which will allow for faster updates and support.
+
+### Monitor
+* `monitor metrics alert create/update`: `--condition` now supports metric names which include characters forward-slash (/) and period (.).
+
+### Network
+* Deprecated `network interface-endpoint` command names in favor of `network private-endpoint`.
+* `express-route peering connection create`: Fix issue where `--peer-circuit` would not accept an ID.
+* `public-ip create`: Fix issue where `--ip-tags` did not work correctly.
+
+### Profile
+* az login: expose --use-cert-sn-issuer flag for service principal login with cert auto-rolls
+
+### RDBMS
+* Add mysql replica commands
+
+### Resource
+* az policy definition/set-definition create/list/delete/show/update: add support for management groups and subscriptions
+
+### Role
+* support API permission management, signed-in-user, and application password & certificate credential management
+* `ad sp create-for-rbac`: clarify the confusion between displayName and service principal name
+* support grant permissions to AAD apps
+
+### Storage
+* Allow connection to storage services only with SAS and endpoints (without an account name or a key) as described in
+  `Configure Azure Storage connection strings <https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string>`_.
+
+### VM
+* `image create`: expose storage-sku argument for setting the image's default storage account type
+* `vm resize`: fix bug where `--no-wait` option causes command to crash
+* `vm encryption show`: table output format shows status
+* `vm secret format`: requires json/jsonc output. Warns user and defaults to json output if an undesired output format is selected.
+* `vm create --image`: improved validation of image argument
+
 ## October 23, 2018
 
 Version 2.0.49
