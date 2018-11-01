@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/31/2018
+ms.date: 11/01/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -48,7 +48,7 @@ az extension list-available --output table
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.8 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.1.6 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
-| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.1.6 | Provides a preview for upcoming storage features. | Yes |
+| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.1.7 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
