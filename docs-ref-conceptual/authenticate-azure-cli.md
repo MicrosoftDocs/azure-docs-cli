@@ -32,7 +32,7 @@ Provide your Azure user credentials on the command line.
 > [!Note]
 > This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
-```azurecli
+```azurecli-interactive
 az login -u <username> -p <password>
 ```
 
@@ -66,7 +66,7 @@ To sign in with a service principal, you need:
 * The service principal password, or the X509 certificate used to create the service principal in PEM format
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
-```azurecli
+```azurecli-interactive
 az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant>
 ```
 
@@ -92,7 +92,7 @@ az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant
 You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
 interactive and command-line sign in methods work with `--tenant`.
 
-```azurecli
+```azurecli-interactive
 az login --tenant <tenant>
 ```
 
@@ -100,7 +100,7 @@ az login --tenant <tenant>
 
 On resources configured for managed identities for Azure resources, you can sign in using the managed identity. Signing in with the resource's identity is done through the `--identity` flag.
 
-```azurecli
+```azurecli-interactive
 az login --identity
 ```
 

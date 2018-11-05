@@ -112,7 +112,7 @@ KBDemo020    RGDEMO001        westus
 
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
-```azurecli
+```azurecli-interactive
 az vm list --query "[].{resource:resourceGroup, name:name}" -o table
 ```
 
@@ -130,7 +130,7 @@ RGDEMO001   KBDemo020
 > Some keys are not printed in the table view by default. These are `id`, `type`, and `etag`. If you need to see these
 > in your output, you can use the JMESPath re-keying feature to change the key name and avoid filtering.
 >
-> ```azurecli
+> ```azurecli-interactive
 > az vm list --query "[].{objectID:id}" -o table
 > ```
 

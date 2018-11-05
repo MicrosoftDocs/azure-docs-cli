@@ -33,7 +33,7 @@ items:
         If you're using a local install of the CLI, you need to sign in before performing
         any other steps.
 
-        ```azurecli
+        ```azurecli-interactive
         az login
         ```
 
@@ -58,7 +58,7 @@ items:
 
         Create a new virtual machine running Ubuntu, which uses SSH authentication for login.
 
-        ```azurecli
+        ```azurecli-interactive
         az vm create --resource-group TutorialResources \
           --name TutorialVM1 \
           --image UbuntuLTS \
@@ -104,7 +104,7 @@ items:
         Now that a VM has been created, detailed information about it can be retrieved. The common command for getting information from a resource is
         `show`.
 
-        ```azurecli
+        ```azurecli-interactive
         az vm show --name TutorialVM1 --resource-group TutorialResources
         ```
 
@@ -116,7 +116,7 @@ items:
         In order to extract the object ID we want, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org). Start
         with getting the network interface controller (NIC) object ID.
 
-        ```azurecli
+        ```azurecli-interactive
         az vm show --name TutorialVM1 \
           --resource-group TutorialResources \
           --query 'networkProfile.networkInterfaces[].id' \
@@ -148,14 +148,14 @@ items:
       content: |-
         Now that you have the NIC ID, run `az network nic show` to get its information.
 
-        ```azurecli
+        ```azurecli-interactive
         az network nic show --ids $NIC_ID -g TutorialResources
         ```
 
         This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now
         the goal is to obtain the public IP address and subnet object IDs.
 
-        ```azurecli
+        ```azurecli-interactive
         az network nic show --ids $NIC_ID \
           -g TutorialResources \
           --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' 
@@ -234,7 +234,7 @@ items:
         can delete individual resources with the `delete` command, but the safest way to remove all resources
         in a resource group is with `group delete`.
 
-        ```azurecli
+        ```azurecli-interactive
         az group delete --name TutorialResources --no-wait
         ```
 
@@ -242,7 +242,7 @@ items:
         them in the correct order. The `--no-wait` parameter keeps the CLI from blocking while the
         deletion takes place. If you want to wait until the deletion is complete or watch it progress, use the `group wait` command.
 
-        ```azurecli
+        ```azurecli-interactive
         az group wait --name TutorialResources --deleted
         ```
 

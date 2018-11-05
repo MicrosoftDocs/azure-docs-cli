@@ -55,7 +55,7 @@ When displaying information in the `table` output format, dictionary display all
 > [!NOTE]
 > Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. If you need to see this information, you can change the key name and avoid filtering.
 >
-> ```azurecli
+> ```azurecli-interactive
 > az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
 > ```
 

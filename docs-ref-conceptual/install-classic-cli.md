@@ -68,7 +68,7 @@ docker run -it microsoft/azure-cli:0.10.17
 
 After the classic CLI is installed, run the `azure` command from your command-line user interface (Bash, Terminal, Command prompt, and so on). For example, to run the help command, type the following:
 
-```azurecli
+```azurecli-interactive
 azure help
 ```
 
@@ -81,7 +81,7 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 To see the version of the Azure classic CLI installed, type the following:
 
-```azurecli
+```azurecli-interactive
 azure --version
 ```
 
