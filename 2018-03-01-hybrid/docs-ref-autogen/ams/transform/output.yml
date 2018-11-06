@@ -15,6 +15,13 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Add an output with a custom Standard Encoder preset from a JSON file.
+    syntax:
+      content: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset "C:\MyPresets\CustomPreset.json"
+  - summary: Add an output with a VideoAnalyzer preset with es-ES as audio language and only with audio insights.
+    syntax:
+      content: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset VideoAnalyzer --audio-language es-ES --audio-insights-only
   parameters:
   - isRequired: true
     name: --account-name -a
@@ -25,13 +32,27 @@ items:
     summary: The name of the transform.
     description: ''
   - isRequired: true
-    name: --preset-names
-    parameterValueGroup: AACGoodQualityAudio, AdaptiveStreaming, AudioAnalyzer, H264MultipleBitrate1080p, H264MultipleBitrate720p, H264MultipleBitrateSD, VideoAnalyzer
-    summary: Space-separated list of built-in preset names.
+    name: --preset
+    summary: 'Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the transform output. Allowed values: H264SingleBitrateSD, H264SingleBitrate720p, H264SingleBitrate1080p, AdaptiveStreaming, AACGoodQualityAudio, H264MultipleBitrate1080p, H264MultipleBitrate720p, H264MultipleBitrateSD, AudioAnalyzer, VideoAnalyzer. In addition to the allowed values, you can also pass a path to a custom Standard Encoder preset JSON file. See <a href="https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset">https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset</a> for further details on the settings to use to build a custom preset.'
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --on-error
+    parameterValueGroup: ContinueJob, StopProcessingJob
+    summary: A Transform can define more than one output. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'.
+    description: ''
+  - name: --relative-priority
+    parameterValueGroup: High, Low, Normal
+    summary: Sets the relative priority of the transform outputs within a transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal.
+    description: ''
+  - name: --audio-language
+    summary: 'The language for the audio payload in the input using the BCP-47 format of "language tag-region" (e.g: en-US). If not specified, automatic language detection would be employed. This feature currently supports English, Chinese, French, German, Italian, Japanese, Spanish, Russian, and Portuguese. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to English. Allowed values: en-US, en-GB, es-ES, es-MX, fr-FR, it-IT, ja-JP, pt-BR, zh-CN, de-DE, ar-EG, ru-RU, hi-IN.'
+    description: ''
+  - name: --insights-to-extract
+    parameterValueGroup: AllInsights, AudioInsightsOnly, VideoInsightsOnly
+    summary: The type of insights to be extracted. If not set then the type will be selected based on the content type. If the content is audio only then only audio insights will be extracted and if it is video only video insights will be extracted.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -45,6 +66,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Remove the output element at the index specified with --output-index argument.
+    syntax:
+      content: az ams transform output remove -a myAmsAccount -n transformName -g myResourceGroup --output-index 1
   parameters:
   - isRequired: true
     name: --account-name -a
@@ -55,9 +80,8 @@ items:
     summary: The name of the transform.
     description: ''
   - isRequired: true
-    name: --preset-names
-    parameterValueGroup: AACGoodQualityAudio, AdaptiveStreaming, AudioAnalyzer, H264MultipleBitrate1080p, H264MultipleBitrate720p, H264MultipleBitrateSD, VideoAnalyzer
-    summary: Space-separated list of built-in preset names.
+    name: --output-index
+    summary: The element index of the output to remove.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -92,7 +116,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/c4936533f67fc0d3b3d33b868729bc998071739d/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+updated_at: 10/30/2018 9:53:27 PM
+ms.date: 10/30/2018
 description: Manage transform outputs for an Azure Media Services account.
