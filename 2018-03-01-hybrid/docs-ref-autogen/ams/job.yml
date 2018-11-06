@@ -12,6 +12,7 @@ items:
   - az_ams_job_list
   - az_ams_job_show
   - az_ams_job_start
+  - az_ams_job_update
 - uid: az_ams_job_cancel
   name: az ams job cancel
   summary: Cancel a job.
@@ -79,6 +80,13 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all the jobs of a transform with 'Normal' priority by name.
+    syntax:
+      content: az ams job list -a amsAccount -g resourceGroup -t transformName --query [?priority=='Normal'].{jobName:name}
+  - summary: List all the jobs of a transform by name and input.
+    syntax:
+      content: az ams job list -a amsAccount -g resourceGroup -t transformName --query [].{jobName:name,jobInput:input}
   parameters:
   - isRequired: true
     name: --account-name -a
@@ -152,8 +160,59 @@ items:
     summary: The name of the job.
     description: ''
   - isRequired: true
-    name: --output-asset-names
-    summary: Space-separated list of output asset names.
+    name: --output-assets
+    summary: "Space-separated assets in 'assetName=label' format. An asset without label can be sent like this: 'assetName='."
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --transform-name -t
+    summary: The name of the transform.
+    description: ''
+  - name: --correlation-data
+    summary: Space-separated correlation data in 'key[=value]' format. This customer provided data will be returned in Job and JobOutput state events.
+    description: ''
+  - name: --description
+    summary: The job description.
+    description: ''
+  - name: --files
+    summary: Space-separated list of files. It can be used to tell the service to only use the files specified from the input asset.
+    description: ''
+  - name: --label
+    summary: A label that is assigned to a Job Input, that is used to satisfy a reference used in the Transform. For example, a Transform can be authored so as to take an image file with the label 'xyz' and apply it as an overlay onto the input video before it is encoded. When submitting a Job, exactly one of the JobInputs should be the image file, and it should have the label 'xyz'.
+    description: ''
+  - name: --priority
+    parameterValueGroup: High, Low, Normal
+    summary: The priority with which the job should be processed.
+    description: ''
+  - name: --input-asset-name
+    summary: The name of the input asset.
+    description: ''
+  - name: --base-uri
+    summary: Base uri for http job input. It will be concatenated with provided file names. If no base uri is given, then the provided file list is assumed to be fully qualified uris.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_ams_job_update
+  name: az ams job update
+  summary: Update an existing job.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the job.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -166,18 +225,21 @@ items:
   - name: --description
     summary: The job description.
     description: ''
-  - name: --files
-    summary: Space-separated list of files. It can be used to tell the service to only use the files specified from the input asset.
-    description: ''
   - name: --priority
     parameterValueGroup: High, Low, Normal
     summary: The priority with which the job should be processed.
     description: ''
-  - name: --input-asset-name
-    summary: The name of the input asset.
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --base-uri
-    summary: Base uri for http job input. It will be concatenated with provided file names. If no base uri is given, then the provided file list is assumed to be fully qualified uris.
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -201,6 +263,9 @@ commands:
 - uid: az_ams_job_start
   name: az ams job start
   summary: Start a job.
+- uid: az_ams_job_update
+  name: az ams job update
+  summary: Update an existing job.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -217,7 +282,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/c4936533f67fc0d3b3d33b868729bc998071739d/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+updated_at: 10/30/2018 9:53:27 PM
+ms.date: 10/30/2018
 description: Manage jobs for a transform.

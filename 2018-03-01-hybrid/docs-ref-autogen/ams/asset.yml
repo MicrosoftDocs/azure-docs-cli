@@ -9,7 +9,9 @@ items:
   children:
   - az_ams_asset_create
   - az_ams_asset_delete
+  - az_ams_asset_get_encryption_key
   - az_ams_asset_get_sas_urls
+  - az_ams_asset_get_streaming_locators
   - az_ams_asset_list
   - az_ams_asset_show
   - az_ams_asset_update
@@ -35,8 +37,14 @@ items:
   - name: --alternate-id
     summary: The alternate id of the asset.
     description: ''
+  - name: --container
+    summary: The name of the asset blob container.
+    description: ''
   - name: --description
     summary: The asset description.
+    description: ''
+  - name: --storage-account
+    summary: The name of the storage account.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -69,9 +77,34 @@ items:
       branch: master
       path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_ams_asset_get_encryption_key
+  name: az ams asset get-encryption-key
+  summary: Get the asset storage encryption keys used to decrypt content created by version 2 of the Media Services API.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_ams_asset_get_sas_urls
   name: az ams asset get-sas-urls
-  summary: Lists the asset SAS URLs used for uploading and downloading asset content.
+  summary: Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
   description: ''
   langs:
   - azurecli
@@ -89,11 +122,38 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --expiry
+    defaultValue: 2018-11-07 16:50:50.523063
     summary: Specifies the UTC datetime (Y-m-d'T'H:M:S'Z') at which the SAS becomes invalid.
     description: ''
   - name: --permissions
+    defaultValue: Read
     parameterValueGroup: Read, ReadWrite, ReadWriteDelete
     summary: The permissions to set on the SAS URL.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+    remote:
+      branch: master
+      path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_ams_asset_get_streaming_locators
+  name: az ams asset get-streaming-locators
+  summary: List streaming locators which are associated with this asset.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -107,6 +167,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all the assets whose names start with the string 'Something'.
+    syntax:
+      content: az ams asset list -a amsAccount -g resourceGroup --query [?starts_with(name,'Something')]
   parameters:
   - isRequired: true
     name: --account-name -a
@@ -206,9 +270,15 @@ commands:
 - uid: az_ams_asset_delete
   name: az ams asset delete
   summary: Delete an asset.
+- uid: az_ams_asset_get_encryption_key
+  name: az ams asset get-encryption-key
+  summary: Get the asset storage encryption keys used to decrypt content created by version 2 of the Media Services API.
 - uid: az_ams_asset_get_sas_urls
   name: az ams asset get-sas-urls
-  summary: Lists the asset SAS URLs used for uploading and downloading asset content.
+  summary: Lists storage container URLs with shared access signatures (SAS) for uploading and downloading Asset content. The signatures are derived from the storage account keys.
+- uid: az_ams_asset_get_streaming_locators
+  name: az ams asset get-streaming-locators
+  summary: List streaming locators which are associated with this asset.
 - uid: az_ams_asset_list
   name: az ams asset list
   summary: List all the assets of an Azure Media Services account.
@@ -234,7 +304,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/c4936533f67fc0d3b3d33b868729bc998071739d/src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
+updated_at: 10/30/2018 9:53:27 PM
+ms.date: 10/30/2018
 description: Manage assets for an Azure Media Services account.
