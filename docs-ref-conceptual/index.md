@@ -23,6 +23,12 @@ The Azure CLI is simple to get started with, and best used for building automati
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 ```
 
+> [!NOTE]
+>
+> In scripts and on the Microsoft documentation site, Azure CLI examples are written for the `bash` shell. One-line examples will
+> run on any platform. Longer or more complicated examples which include line continutions (`\`) or variable
+> assignment will need to be modified to work on other shells, including PowerShell.
+
 ## Run or Install
 
 You can install the CLI locally, run it in the browser with Azure Cloud Shell, or run in a Docker container.
