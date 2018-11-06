@@ -39,9 +39,7 @@ for the Azure CLI. This package has been tested with:
 
    ```bash
    sudo apt-get update
-   sudo apt-get install -y libssl-dev libffi-dev
-   sudo apt-get install -y python-dev
-   sudo apt-get install apt-transport-https azure-cli
+   sudo apt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli
    ```
 
    > [!WARNING]
