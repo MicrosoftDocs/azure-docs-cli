@@ -26,7 +26,9 @@ for the Azure CLI. This package has been tested with:
     ```bash
     sudo apt-get install lsb-release software-properties-common -y
     AZ_REPO=$(lsb_release -cs)
-    sudo apt-add-repository "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" --keyserver=https://packages.microsoft.com/keys/microsoft.asc --update
+    sudo apt-add-repository "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" \
+        --keyserver=https://packages.microsoft.com/keys/microsoft.asc \
+        --update
     ```
 
 2. Install the CLI:
