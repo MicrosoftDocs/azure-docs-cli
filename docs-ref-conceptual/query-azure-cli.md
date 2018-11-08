@@ -165,7 +165,7 @@ az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType,
 When combined with the `--output table` output format, the column names match up with the `displayKey` value:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}' --output table
+az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
 ```
 
 ```output
@@ -176,7 +176,15 @@ TestVM   Linux    azureuser
 WinTest  Windows  winadmin
 ```
 
-Any array can be filtered, not just the top-level result returned by the command. In the last section, the expression
+> [!NOTE]
+>
+> Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. To see these values, you can change the key name.
+>
+> ```azurecli-interactive
+> az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
+> ```
+
+Any array can be flattened, not just the top-level result returned by the command. In the last section, the expression
 `osProfile.linuxConfiguration.ssh.publicKeys[0].keyData` was used to get the SSH public key for login. To get _every_
 SSH public key, the expression could instead be written as `osProfile.linuxConfiguration.ssh.publicKeys[].keyData`.
 This would flatten the `osProfile.linuxConfiguration.ssh.publicKeys` array, and then run the `keyData` subexpression on each
@@ -201,17 +209,93 @@ The other operation used to get data from an array is _filtering_. Filtering is 
 (__filter projection__). This operator takes a predicate as its contents. A predicate is any statement that can be evaluated
 to either `true` or `false`. Objects where the predicate evaluates to `true` are included in the output.
 
-JMESPath offers the standard comparison and logical operators. Since the JMESPath specification is subject to change, see the
-[JMESPath specification - Comparison Operators](http://jmespath.org/specification.html#filter-expressions) for the full list.
-JMESPath also supports AND (`&&`), OR (`||`), NOT (`!`) and parenthesized (`(...)`) expressions in filters.
+JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`. 
+JMESPath also supports logical and (`&&`), or (`||`), and not (`!`) as well as parenthesized expressions. For the full details
+on comparison and logical operators, see the [JMESPath specification](http://jmespath.org/specification.html).
 
+In the last section, we flattened an array to get the complete list of all VMs in a resource group. With filters, we can restrict
+this oputput to only VMs that meet a certain criteria. For example, we can get only Linux VMs:
 
+```azurecli-interactive
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
+```
 
-JMESPath also has built-in functions that can help with filtering. See the [JMESPath specification - Built-in Functions](http://jmespath.org/specification.html#built-in-functions) for the full list.
+```output
+Name    Admin
+------  ---------
+Test-2  sttramer
+TestVM  azureuser
+```
+
+> [!IMPORTANT]
+>
+> In JMESPath, strings are always surrounded by single quotes (`'`). If you use double quotes as part of a string in a filter predicate,
+> you'll get empty output.
+
+JMESPath also has built-in functions that can help with filtering. One of these is the `contains()` function,
+which checks to see if a node contains the given string. For example, we could find all VMs which are using
+some form of SSD storage for the OS disk.
+
+```azurecli-interactive
+az vm list -g QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}"
+```
+
+```output
+[
+  {
+    "Name": "TestVM",
+    "Storage": "StandardSSD_LRS"
+  },
+  {
+    "Name": "WinTest",
+    "Storage": "StandardSSD_LRS"
+  }
+]
+```
+
+This query is a little long. The `storageProfile.osDisk.managedDisk.storageAccountType` key
+is mentioned twice, and re-keyed in the output. One way to shorten it is to apply the filter
+after flattening and selecting data.
+
+```azurecli-interactive
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[?contains(Storage,'SSD')]"
+```
+
+```output
+[
+  {
+    "Name": "TestVM",
+    "Storage": "StandardSSD_LRS"
+  },
+  {
+    "Name": "WinTest",
+    "Storage": "StandardSSD_LRS"
+  }
+]
+```
+
+For large arrays, it may be faster to apply the filter before selecting data.
+
+See the [JMESPath specification - Built-in Functions](http://jmespath.org/specification.html#built-in-functions) for the full list of functions.
 
 ## Manipulate output
 
+JMESPath functions also have another purpose, which is to operate on the results of a query. Any function
+which returns a non-boolean value changes the output of the query or its subexpression. For example, you can sort data by a property value. JMESPath uses a special operator, `&`, for expressions which should be evaluated later as part of a function. The next example shows how to sort a VM list by the size of their OS disk:
 
+```azurecli-interactive
+az vm list -g QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
+```
+
+```output
+Name     Size
+-------  ------
+TestVM   30
+Test-2   32
+WinTest  127
+```
+
+See the [JMESPath specification - Built-in Functions](http://jmespath.org/specification.html#built-in-functions) for the full list of functions.
 
 ## Experiment with queries interactively
 
@@ -222,12 +306,3 @@ with queries. Data is piped as input, and then in-program queries are written an
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
-
-----
-> [!NOTE]
-> Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. If you need to see this information, you can change the key name and avoid filtering.
->
-> ```azurecli-interactive
-> az vm show -g QueryDemo -n TestVM --query "{objectID:id}" -o table
-> ```
-----
