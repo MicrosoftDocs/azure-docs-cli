@@ -35,11 +35,11 @@ for the Azure CLI. This package has been tested with:
    curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
    ```
 
-3. Install the CLI:
+3. Install the CLI and dependent libraries:
 
    ```bash
    sudo apt-get update
-   sudo apt-get install apt-transport-https azure-cli
+   sudo apt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli
    ```
 
    > [!WARNING]
