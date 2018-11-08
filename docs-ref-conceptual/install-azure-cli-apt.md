@@ -29,7 +29,7 @@ for the Azure CLI. This package has been tested with:
     sudo apt-add-repository "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" --keyserver=https://packages.microsoft.com/keys/microsoft.asc --update
     ```
 
-2. Install the CLI and dependent libraries:
+2. Install the CLI:
 
    ```bash
    sudo apt-get install azure-cli
