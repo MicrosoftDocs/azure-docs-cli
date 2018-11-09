@@ -24,20 +24,29 @@ for the Azure CLI. This package has been tested with:
 1. <div id="install-step-1"/>Modify your sources list:
 
     ```bash
-    sudo apt-get install lsb-release software-properties-common -y
     AZ_REPO=$(lsb_release -cs)
-    sudo apt-add-repository "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" \
-        --keyserver=https://packages.microsoft.com/keys/microsoft.asc \
-        --update
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+        sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
-2. Install the CLI:
+2. <div id="signingKey"/>Get the Microsoft signing key:
 
    ```bash
-   sudo apt-get install azure-cli
+   curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
    ```
 
-Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
+3. Install the CLI and dependent libraries:
+
+   ```bash
+   sudo apt-get update
+   sudo apt-get install libssl-dev libffi-dev python-dev apt-transport-https azure-cli
+   ```
+
+   > [!WARNING]
+   > The signing key was updated in May 2018, and has been replaced. If you receive
+   > signing key errors, please ensure that you have [acquired the latest signing key](#signingKey).
+
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
@@ -46,6 +55,20 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 ## Troubleshooting
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+
+### lsb_release fails with "Command not found"
+
+When running the `lsb_release` command, you may see output similar to the following error:
+
+```output
+-bash: lsb_release: command not found
+```
+
+The error is due to the `lsb_release` command not being installed. You can resolve it by installing the `lsb-release` package.
+
+```bash
+sudo apt-get install lsb-release
+```
 
 ### lsb_release does not return the base distribution version
 
