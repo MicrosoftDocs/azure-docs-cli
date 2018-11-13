@@ -18,15 +18,15 @@ for JSON, giving you the ability to select and modify data from CLI output. Quer
 The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath with a series of small,
 simple examples.
 
-## Dictionary output and list output
+## Dictionary and list CLI results
 
-Even when using an output format other than JSON, the results are first treated as JSON for querying with JMESPath. CLI output objects are either
-a JSON array or a dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are objects accessed with keys. Commands that
+Even when using an output format other than JSON, the results are first treated as JSON for querying with JMESPath. CLI results are either
+a JSON array or dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are unordered objects accessed with keys. Commands that
 _could_ return more than one object return an array, and commands that _always_ return _only_ a single object return a dictionary.
 
-## Accessing dictionary properties
+## Get properties in a dictionary
 
-Working with dictionary output, you can access properties directly from the top level with just the key. The `.` (__subexpression__) character is used to access
+Working with dictionary results, you can access properties directly from the top level with just the key. The `.` (__subexpression__) character is used to access
 properties of nested dictionaries. Before introducing queries, take a look at the unmodified output of the `az vm show` command:
 
 ```azurecli-interactive
@@ -103,9 +103,9 @@ az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osPro
 
 These values appear in the order that they were listed, but don't have any associated keys.
 
-## Rename properties in output
+## Rename properties in a query
 
-To solve the problem of multiselect list output not having keys, there's an alternative: Naming and rekeying values in braces `{ }`
+To solve the problem of multiselect list output not having keys, there's an alternative: Naming values in braces `{ }`
 (a __multiselect hash__). The format for listing a property in a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 `displayName` will be the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
 last section by changing the multiselect list to a hash:
@@ -122,12 +122,12 @@ az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUs
 }
 ```
 
-## Get properties of array objects
+## Get properties in an array
 
 An array has no properties of its own, but it can be indexed. This feature is shown in the last example with the expression
-`publicKeys[0]`, which gets the first element of the `publicKeys` array. Since the CLI has many commands that can return more than one result,
-output is often an array. To access the properties of elements in an array, you need to do one of two operations: _flattening_ and _filtering_.
-This section covers how to flatten an array.
+`publicKeys[0]`, which gets the first element of the `publicKeys` array. There's no guarantee CLI output is ordered, so avoid using
+indexing unless you're sure of the order or don't care what element you get. To access the properties of elements in an array,
+you do one of two operations: _flattening_ and _filtering_. This section covers how to flatten an array.
 
 Flattening an array is done with the `[]` JMESPath operator. All expressions after the `[]` operator are applied to each element in the current array.
 If `[]` appears at the start of the query, it flattens the CLI command result. The results of `az vm list` can be inspected with this feature.
@@ -157,7 +157,8 @@ az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType,
 ]
 ```
 
-When combined with the `--output table` output format, the column names match up with the `displayKey` value:
+When combined with the `--output table` output format, the column names match up with the `displayKey` value of the multiselect
+hash:
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
@@ -186,14 +187,14 @@ This query expression flattens the `osProfile.linuxConfiguration.ssh.publicKeys`
 element:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, ssh_keys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }' -o json
 ```
 
 ```json
 {
   "VMName": "TestVM",
   "admin": "azureuser",
-  "ssh_keys": [
+  "sshKeys": [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMobZNJTqgjWn/IB5xlilvE4Y+BMYpqkDnGRUcA0g9BYPgrGSQquCES37v2e3JmpfDPHFsaR+CPKlVr2GoVJMMHeRcMJhj50ZWq0hAnkJBhlZVWy8S7dwdGAqPyPmWM2iJDCVMVrLITAJCno47O4Ees7RCH6ku7kU86b1NOanvrNwqTHr14wtnLhgZ0gQ5GV1oLWvMEVg1YFMIgPRkTsSQKWCG5lLqQ45aU/4NMJoUxGyJTL9i8YxMavaB1Z2npfTQDQo9+womZ7SXzHaIWC858gWNl9e5UFyHDnTEDc14hKkf1CqnGJVcCJkmSfmrrHk/CkmF0ZT3whTHO1DhJTtV stramer@contoso\n"
   ]
 }
@@ -274,7 +275,7 @@ For large arrays, it may be faster to apply the filter before selecting data.
 
 See the [JMESPath specification - Built-in Functions](http://jmespath.org/specification.html#built-in-functions) for the full list of functions.
 
-## Manipulate output
+## Change output
 
 JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the output of the query or its subexpression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later as part of a function. The next example shows how to sort a VM list by the size of their OS disk:
 
