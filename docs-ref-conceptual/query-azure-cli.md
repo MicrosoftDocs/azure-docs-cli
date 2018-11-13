@@ -12,21 +12,22 @@ ms.devlang: azure-cli
 ---
 # Query Azure CLI command output
 
-The Azure CLI uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and modify data from CLI output. Queries are executed on the JSON output before any display formatting.
+The Azure CLI uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language
+for JSON, giving you the ability to select and modify data from CLI output. Queries are executed on the JSON output before any display formatting.
 
-The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath in a series of small, simple examples.
+The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath with a series of small,
+simple examples.
 
 ## Dictionary output and list output
 
 Even when using an output format other than JSON, the results are first treated as JSON for querying with JMESPath. CLI output objects are either
-a JSON array or a dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are objects accessed with keys. Commands that _could_ return more than one object return an array, and commands that _always_ return _only_ a single object
-return a dictionary.
+a JSON array or a dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are objects accessed with keys. Commands that
+_could_ return more than one object return an array, and commands that _always_ return _only_ a single object return a dictionary.
 
 ## Accessing dictionary properties
 
-Working with dictionary output, you can access properties directly from the top level with just the key name. By adding the `.` (__subexpression__)
-character after a property name, you can access properties in nested dictionaries. Before introducing queries, take a look at the unmodified output of the
-`az vm show` command:
+Working with dictionary output, you can access properties directly from the top level with just the key. The `.` (__subexpression__) character is used to access
+properties of nested dictionaries. Before introducing queries, take a look at the unmodified output of the `az vm show` command:
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM -o json
@@ -70,7 +71,7 @@ The command will output a dictionary. Some content has been omitted.
 }
 ```
 
-To get just one property, add a query expression. This command gets the SSH public keys authorized to connect to the VM:
+This command gets the SSH public keys authorized to connect to the VM by adding a query:
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
@@ -85,7 +86,8 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ]
 ```
 
-You get more than one property by putting expressions inside square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name, admin user, and SSH key all at once use the command:
+You get more than one property by putting expressions inside square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
+admin user, and SSH key all at once use the command:
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
@@ -120,18 +122,16 @@ az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUs
 }
 ```
 
-Using multiselect hashes with the `--output table` type is useful. By rekeying property names, you get new column names
-in your table output. The next section on arrays will go into more detail on using this feature.
-
 ## Get properties of array objects
 
 An array has no properties of its own, but it can be indexed. This feature is shown in the last example with the expression
 `publicKeys[0]`, which gets the first element of the `publicKeys` array. Since the CLI has many commands that can return more than one result,
-output is often an array. To access the properties of elements in an array, you need to do one of two operations: _filtering_ or _flattening_.
+output is often an array. To access the properties of elements in an array, you need to do one of two operations: _flattening_ and _filtering_.
 This section covers how to flatten an array.
 
-Flattening an array is done with the `[]` JMESPath operator. All expressions after the `[]` operator are applied to each element in the current array. If `[]` appears at the start of the query, it flattens the CLI command result.
-The results of `az vm list` can be inspected with this feature. To get the name, OS, and administrator name for each VM in a resource group:
+Flattening an array is done with the `[]` JMESPath operator. All expressions after the `[]` operator are applied to each element in the current array.
+If `[]` appears at the start of the query, it flattens the CLI command result. The results of `az vm list` can be inspected with this feature.
+To get the name, OS, and administrator name for each VM in a resource group:
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}' -o json
