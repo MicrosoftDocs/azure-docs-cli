@@ -20,13 +20,13 @@ simple examples.
 
 ## Dictionary and list CLI results
 
-Even when using an output format other than JSON, the results are first treated as JSON for querying with JMESPath. CLI results are either
+Even when using an output format other than JSON, CLI command results are first treated as JSON for queries. CLI results are either
 a JSON array or dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are unordered objects accessed with keys. Commands that
 _could_ return more than one object return an array, and commands that _always_ return _only_ a single object return a dictionary.
 
 ## Get properties in a dictionary
 
-Working with dictionary results, you can access properties directly from the top level with just the key. The `.` (__subexpression__) character is used to access
+Working with dictionary results, you can access properties from the top level with just the key. The `.` (__subexpression__) character is used to access
 properties of nested dictionaries. Before introducing queries, take a look at the unmodified output of the `az vm show` command:
 
 ```azurecli-interactive
@@ -71,7 +71,7 @@ The command will output a dictionary. Some content has been omitted.
 }
 ```
 
-This command gets the SSH public keys authorized to connect to the VM by adding a query:
+The following command gets the SSH public keys authorized to connect to the VM by adding a query:
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
@@ -86,7 +86,7 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ]
 ```
 
-You get more than one property by putting expressions inside square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
+To get more than one property, put expressions in square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
 admin user, and SSH key all at once use the command:
 
 ```azurecli-interactive
@@ -101,12 +101,13 @@ az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osPro
 ]
 ```
 
-These values appear in the order that they were listed, but don't have any associated keys.
+These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no
+keys associated with the results.
 
 ## Rename properties in a query
 
-To solve the problem of multiselect list output not having keys, there's an alternative: Naming values in braces `{ }`
-(a __multiselect hash__). The format for listing a property in a multiselect hash is `{displayName:JMESPathExpression, ...}`.
+To get a dictionary instead of an array when querying for multiple values, use the `{ }` (__multiselect hash__) operator.
+The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 `displayName` will be the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
 last section by changing the multiselect list to a hash:
 
@@ -277,7 +278,9 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 
 ## Change output
 
-JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the output of the query or its subexpression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later as part of a function. The next example shows how to sort a VM list by the size of their OS disk:
+JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the result of an expression.
+For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later
+as part of a function. The next example shows how to sort a VM list by OS disk size:
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
