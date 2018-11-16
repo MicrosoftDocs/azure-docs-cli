@@ -112,7 +112,7 @@ The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 last section by changing the multiselect list to a hash:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, ssh-key:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }' -o json
 ```
 
 ```json
@@ -208,8 +208,9 @@ This operator takes a predicate as its contents. A predicate is any statement th
 to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
 
 JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`. 
-JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). JMESPath also supports grouping expressions within parenthesis. For the full details
-on comparison and logical operators, see the [JMESPath specification](http://jmespath.org/specification.html).
+JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions can be grouped within parenthesis, allowing for more
+complex predicate expressions. For the full details on predicates and logical operations, see the
+[JMESPath specification](http://jmespath.org/specification.html).
 
 In the last section, we flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted
 to only Linux VMs:
@@ -231,8 +232,8 @@ TestVM  azureuser
 > you'll get empty output.
 
 JMESPath also has built-in functions that can help with filtering. One such function is `contains(string, substring)`,
-which checks to see if a string contains a substring. Before running the function any expressions are evaluated, so the first argument can be a full JMESPath expression. The next example finds all VMs using
-SSD storage for their OS disk:
+which checks to see if a string contains a substring. Expressions are evaluated before calling the function, so the first
+argument can be a full JMESPath expression. The next example finds all VMs using SSD storage for their OS disk:
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
