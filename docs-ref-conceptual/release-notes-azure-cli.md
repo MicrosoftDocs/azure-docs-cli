@@ -12,6 +12,60 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+## November 20, 2018
+
+Version 2.0.51
+### Core
+* msi login: do not reuse subscription name for identity info
+
+### ACR
+* Add context token to task step.
+* Add support for setting secrets in acr run to mirror acr task.
+* Better support of --top/--orderby in show-tags/show-manifests commands.
+
+### Appservice
+* webapp, functionapp: Zip deployment default timeout to poll for the status increased to 5 mins, also adding a timeout property to customize this value
+* webapp, functionapp: Default Node_version updated. Resetting slot swap action, during a two phase swap preserves all the appsettings & connection strings
+* remove client side sku check for linux app service plan create
+* minor fix to avoid key errors when trying to get zipdeploy status
+
+### CosmosDB
+* Use latest azure-mgmt-cosmosdb pypi package
+
+### IotCentral
+* Add subdomain availability check when creating an IoT Central application.
+
+### KeyVault
+* bug fix: do not drop legit exceptions 
+
+### Network
+* `application-gateway`: Added `root-cert` subcommands to handle trusted root certifcates.
+* `application-gateway create/update`:
+   Added `--min-capacity` for configuring autoscale on v2 app gateways.
+   Added `--custom-error-pages` for configuring custom error pages.
+* `application-gateway create`: Added `--zones` for availability zone support.
+* `application-gateway waf-config set`: Added arguments `--file-upload-limit`, `--max-request-body-size` and `--request-body-check`.
+
+### Rdbms
+* Add mariadb vnet commands
+
+### Rbac
+* `ad app update`: address a failure caused by updating immutable credentials
+* graph: output warnings to communicate breaking changes in the near future for "ad app/sp list" 
+
+### Storage
+* Improve handling of corner cases for storage copy commands.
+* Fix issue with `storage blob copy start-batch` not using login credentials when the destination and source accounts are the same.
+* `storage blob/file url`- fix bug with sas_token not being incorporated into url.
+* Warn users about future breaking change: `blob/container list` will output first 5000 results by default.
+
+### VM
+* `vm/vmss create --storage-sku`: can now specify the storage account sku for managed os and data disks separately.
+* `sig image-version`: Version names now consistently specified by  `--image-version -e`. `--image-version-name` deprecated.
+* `vm/vmss create --ephemeral-os-disk`: exposed parameter to create a vm/vmss with a local os disk.
+* `snapshot create/update`: Added support for `--no-wait`.
+* `snapshot`: Added `wait` command.
+* `vm/vmss extension set --extension-instance-name`: can now specify the instance name of an extension.
 
 ## November 6, 2018
 
