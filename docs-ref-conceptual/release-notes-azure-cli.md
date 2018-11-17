@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/06/2018
+ms.date: 11/20/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -16,56 +16,52 @@ ms.devlang: azure-cli
 
 Version 2.0.51
 ### Core
-* msi login: do not reuse subscription name for identity info
+* Changed MSI login to not reuse subscription name in identity
 
 ### ACR
-* Add context token to task step.
-* Add support for setting secrets in acr run to mirror acr task.
-* Better support of --top/--orderby in show-tags/show-manifests commands.
+* Added context token to task step
+* Added support for setting secrets in acr run to mirror acr task
+* Improved support for `--top` and `--orderby` for `show-tags` and `show-manifests` commands
 
 ### Appservice
-* webapp, functionapp: Zip deployment default timeout to poll for the status increased to 5 mins, also adding a timeout property to customize this value
-* webapp, functionapp: Default Node_version updated. Resetting slot swap action, during a two phase swap preserves all the appsettings & connection strings
-* remove client side sku check for linux app service plan create
-* minor fix to avoid key errors when trying to get zipdeploy status
-
-### CosmosDB
-* Use latest azure-mgmt-cosmosdb pypi package
+* Changed zip deployment default timeout to poll for the status increased to 5 mins, also adding a timeout property to customize this value
+* Updated the default `node_version`. Resetting slot swap action, during a two phase swap preserves all the appsettings & connection strings
+* Removed client-side SKU check for Linux app service plan create
+* Fixed error when trying to get zipdeploy status
 
 ### IotCentral
-* Add subdomain availability check when creating an IoT Central application.
+* Added subdomain availability check when creating an IoT Central application
 
 ### KeyVault
-* bug fix: do not drop legit exceptions 
+* Fixed bug where errors may have been ignored
 
 ### Network
-* `application-gateway`: Added `root-cert` subcommands to handle trusted root certifcates.
-* `application-gateway create/update`:
-   Added `--min-capacity` for configuring autoscale on v2 app gateways.
-   Added `--custom-error-pages` for configuring custom error pages.
-* `application-gateway create`: Added `--zones` for availability zone support.
-* `application-gateway waf-config set`: Added arguments `--file-upload-limit`, `--max-request-body-size` and `--request-body-check`.
+* Added `root-cert` subcommands to `application-gateway` to handle trusted root certifcates
+* Added `--min-capacity` and `--custom-error-pages` options to `application-gateway [create|update]`:
+* Added `--zones` for availability zone support to `application-gateway create` 
+* Added arguments `--file-upload-limit`, `--max-request-body-size` and `--request-body-check` to `application-gateway waf-config set`
 
 ### Rdbms
-* Add mariadb vnet commands
+* Added mariadb vnet commands
 
 ### Rbac
-* `ad app update`: address a failure caused by updating immutable credentials
-* graph: output warnings to communicate breaking changes in the near future for "ad app/sp list" 
+* Fixed an issue with attempting to update immutable credentials in `ad app update`
+* Added output warnings to communicate breaking changes in the near future for `ad [app|sp] list` 
 
 ### Storage
-* Improve handling of corner cases for storage copy commands.
-* Fix issue with `storage blob copy start-batch` not using login credentials when the destination and source accounts are the same.
-* `storage blob/file url`- fix bug with sas_token not being incorporated into url.
-* Warn users about future breaking change: `blob/container list` will output first 5000 results by default.
+* Improved handling of corner cases for storage copy commands
+* Fixed issue with `storage blob copy start-batch` not using login credentials when the destination and source accounts are the same
+* Fixed bug with`storage [blob|file] url` where `sas_token` wasn't incorporated into URL
+* Added breaking change warning to `[blob|container] list`: will soon output only first 5000 results by default
 
 ### VM
-* `vm/vmss create --storage-sku`: can now specify the storage account sku for managed os and data disks separately.
-* `sig image-version`: Version names now consistently specified by  `--image-version -e`. `--image-version-name` deprecated.
-* `vm/vmss create --ephemeral-os-disk`: exposed parameter to create a vm/vmss with a local os disk.
-* `snapshot create/update`: Added support for `--no-wait`.
-* `snapshot`: Added `wait` command.
-* `vm/vmss extension set --extension-instance-name`: can now specify the instance name of an extension.
+* Added support to `[vm|vmss] create --storage-sku` to specify the storage account SKU for managed OS and data disks separately
+* Changed version name parameters to `sig image-version` to be `--image-version -e`
+* Deprecated `sig image-version` argument `--image-version-name`, replaced by `--image-version`
+* Added support to use local OS disk to `[vm|vmss] create --ephemeral-os-disk`
+* Added support for `--no-wait` to `snapshot create/update`
+* Added `snapshot wait` command
+* Added support for using instance name with `[vm|vmss] extension set --extension-instance-name`
 
 ## November 6, 2018
 
