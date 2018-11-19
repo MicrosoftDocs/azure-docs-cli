@@ -82,11 +82,11 @@ You can execute a JMESPath query on the results of the last command that you exe
 For example, after you create a VM, you can make sure it has fully provisioned.
 
 ```azurecli
-az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait
+az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait -o json
 az>> ? [*].provisioningState
 ```
 
-```output
+```json
 [
   "Creating"
 ]

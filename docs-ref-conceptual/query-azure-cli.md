@@ -35,7 +35,7 @@ az vm show -g QueryDemo -n TestVM -o json
 
 The command will output a dictionary. Some content has been omitted.
 
-```JSON
+```json
 {
   "additionalCapabilities": null,
   "availabilitySet": null,
