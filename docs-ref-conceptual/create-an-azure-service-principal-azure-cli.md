@@ -50,7 +50,7 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
 
 If an argument indicating the authentication type isn't included, `--password` is used by default.
 
-The output of the `create-for-rbac` command is in the following format:
+The JSON output of the `create-for-rbac` command is in the following format:
 
 ```json
 {
