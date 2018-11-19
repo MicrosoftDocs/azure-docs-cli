@@ -40,7 +40,7 @@ The currently active cloud has `True` in the `IsActive` column. Only one cloud c
 az cloud show --name AzureChinaCloud --output json
 ```
 
-```output
+```json
 {
   "endpoints": {
     "activeDirectory": "https://login.chinacloudapi.cn",
