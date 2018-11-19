@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/08/2018
+ms.date: 11/19/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -17,7 +17,7 @@ This article is a complete list of the available extensions for the Azure CLI wh
 
 The list of extensions is also available  from the CLI. To get it, run [az extension list-available](/cli/azure/extension?view=azure-cli-latest#az-extension-list-available):
 
-```azurecli-interactive
+```azurecli
 az extension list-available --output table
 ```
 
@@ -53,4 +53,4 @@ az extension list-available --output table
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.15 | Additional commands for Azure AppService. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.16 | Additional commands for Azure AppService. | Yes |
