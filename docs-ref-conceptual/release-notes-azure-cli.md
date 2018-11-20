@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/06/2018
+ms.date: 11/20/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,56 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+## November 20, 2018
+
+Version 2.0.51
+### Core
+* Changed MSI login to not reuse subscription name in identity
+
+### ACR
+* Added context token to task step
+* Added support for setting secrets in acr run to mirror acr task
+* Improved support for `--top` and `--orderby` for `show-tags` and `show-manifests` commands
+
+### Appservice
+* Changed zip deployment default timeout to poll for the status increased to 5 mins, also adding a timeout property to customize this value
+* Updated the default `node_version`. Resetting slot swap action, during a two phase swap preserves all the appsettings & connection strings
+* Removed client-side SKU check for Linux app service plan create
+* Fixed error when trying to get zipdeploy status
+
+### IotCentral
+* Added subdomain availability check when creating an IoT Central application
+
+### KeyVault
+* Fixed bug where errors may have been ignored
+
+### Network
+* Added `root-cert` subcommands to `application-gateway` to handle trusted root certifcates
+* Added `--min-capacity` and `--custom-error-pages` options to `application-gateway [create|update]`:
+* Added `--zones` for availability zone support to `application-gateway create` 
+* Added arguments `--file-upload-limit`, `--max-request-body-size` and `--request-body-check` to `application-gateway waf-config set`
+
+### Rdbms
+* Added mariadb vnet commands
+
+### Rbac
+* Fixed an issue with attempting to update immutable credentials in `ad app update`
+* Added output warnings to communicate breaking changes in the near future for `ad [app|sp] list` 
+
+### Storage
+* Improved handling of corner cases for storage copy commands
+* Fixed issue with `storage blob copy start-batch` not using login credentials when the destination and source accounts are the same
+* Fixed bug with`storage [blob|file] url` where `sas_token` wasn't incorporated into URL
+* Added breaking change warning to `[blob|container] list`: will soon output only first 5000 results by default
+
+### VM
+* Added support to `[vm|vmss] create --storage-sku` to specify the storage account SKU for managed OS and data disks separately
+* Changed version name parameters to `sig image-version` to be `--image-version -e`
+* Deprecated `sig image-version` argument `--image-version-name`, replaced by `--image-version`
+* Added support to use local OS disk to `[vm|vmss] create --ephemeral-os-disk`
+* Added support for `--no-wait` to `snapshot create/update`
+* Added `snapshot wait` command
+* Added support for using instance name with `[vm|vmss] extension set --extension-instance-name`
 
 ## November 6, 2018
 
