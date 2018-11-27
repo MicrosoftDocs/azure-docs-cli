@@ -59,11 +59,17 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
-### lsb_release does not return the base distribution version
+### lsb_release does not return the correct base distribution version
 
 Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
 determine the package to install. If you know the name of the version your distribution is derived from, you can set the `AZ_REPO` value manually in
 [install step 1](#install-step-1). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
+
+### There's no package for my base distribution
+
+Sometimes it may be a while after an Ubuntu distribution is released before there's an Azure CLI package made available for it. The Azure CLI package is designed to be resilient and rely on as few dependencies as possible, so if there's no package available for your base distribution, you can use a package for a different distribution.
+
+To do this, set the value of `AZ_REPO` manually in [install step 1](#install-step-1). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`.
 
 ### apt-key fails with "No dirmngr"
 
@@ -94,6 +100,8 @@ sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
 ```
 
 To determine if you have a proxy, contact your system administrator. If your proxy does not require a login, then leave out the user and password information.
+
+[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Update
 
