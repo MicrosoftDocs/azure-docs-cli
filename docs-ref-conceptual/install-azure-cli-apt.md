@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/12/2018
+ms.date: 11/27/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -65,11 +65,11 @@ Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return t
 determine the package to install. If you know the name of the version your distribution is derived from, you can set the `AZ_REPO` value manually in
 [install step 1](#install-step-1). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
 
-### There's no package for my base distribution
+### No package for your distribution
 
-Sometimes it may be a while after an Ubuntu distribution is released before there's an Azure CLI package made available for it. The Azure CLI package is designed to be resilient and rely on as few dependencies as possible, so if there's no package available for your base distribution, you can use a package for a different distribution.
+Sometimes it may be a while after an Ubuntu distribution is released before there's an Azure CLI package made available for it. The Azure CLI designed to be resilient with regards to future versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually in [install step 1](#install-step-1). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`.
+To do this, set the value of `AZ_REPO` manually in [install step 1](#install-step-1). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
 
 ### apt-key fails with "No dirmngr"
 
