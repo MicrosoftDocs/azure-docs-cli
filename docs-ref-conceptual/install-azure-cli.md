@@ -21,7 +21,7 @@ The current version of the CLI is __2.0.51__. For information about the latest r
 
 * [Install on Windows](install-azure-cli-windows.md)
 * [Install on macOS](install-azure-cli-macos.md)
-* Install on Linux or Windows Subsystem for Linux (WSL)
+* Install on Linux or [Windows Subsystem for Linux (WSL)](/windows/wsl/about)
   * [Install with apt on Debian or Ubuntu](install-azure-cli-apt.md)
   * [Install with yum on RHEL, Fedora, or CentOS](install-azure-cli-yum.md)
   * [Install with zypper on openSUSE or SLE](install-azure-cli-zypper.md)

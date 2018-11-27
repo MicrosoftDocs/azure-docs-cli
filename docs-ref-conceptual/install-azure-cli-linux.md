@@ -74,6 +74,8 @@ of the `az` command is
 <install path>/bin
 ```
 
+[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+
 ## Uninstall
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]

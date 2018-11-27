@@ -44,6 +44,12 @@ You can then run the Azure CLI with the `az` command. To sign in, use [az login]
 
 To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
+## Troubleshooting
+
+Here are some common problems seen when installing with `yum`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+
+[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+
 ## Update
 
 Update the Azure CLI with the `yum update` command.
