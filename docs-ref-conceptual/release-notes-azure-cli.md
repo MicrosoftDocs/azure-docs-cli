@@ -20,7 +20,7 @@ Version 2.0.52
 * Fixed bug where ids piped from a command with tsv output was improperly parsed
 
 ### Appservice
-* webapp: adding support for az webapp up command (Preview) that helps in creating & deploying contents to app
+* [PREVIEW] Added `webapp up` command that helps in creating & deploying contents to app
 * Fixed a bug on container based windows app due to backend change
 
 ### Network
