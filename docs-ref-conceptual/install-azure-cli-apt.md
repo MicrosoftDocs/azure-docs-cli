@@ -87,6 +87,26 @@ The error is due to a missing component required by `apt-key`. You can resolve i
 sudo apt-get install dirmngr
 ```
 
+### apt-key fails with "IPC connect call failed"
+
+When running apt-key using Ubuntu 18.04 WSL, you may see outout similar to the following error:
+
+```output
+Executing: /tmp/apt-key-gpghome.laY7qfQWPR/gpg.1.sh --keyserver packages.microsoft.com --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
+gpg: connecting dirmngr at '/tmp/apt-key-gpghome.laY7qfQWPR/S.dirmngr' failed: IPC connect call failed
+gpg: keyserver receive failed: No dirmngr
+```
+
+This is due to a bug in WSL, which you can read more about here https://github.com/Microsoft/WSL/issues/3286
+
+To work around this, replace the `apt-key` command in step 2 with the following
+
+```bash
+curl -sL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xBC528686B50D79E339D3721CEB3E94ADBE1229CF" | sudo apt-key add
+```
+
+You should now be able to continue with step 3.
+
 ### apt-key hangs
 
 When behind a firewall blocking outgoing connections to port 11371, the `apt-key` command might hang indefinitely.
