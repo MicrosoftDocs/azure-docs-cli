@@ -35,8 +35,8 @@ items:
                                     --network-security-group MyNsg --application-security-groups Web App
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The network interface (NIC).
+    name: --network-interface-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -44,53 +44,58 @@ items:
     description: ''
   - isRequired: true
     name: --subnet
-    summary: Name or ID of an existing subnet. If name specified, also specify --vnet-name.
+    summary: ''
     description: ''
-  - name: --ip-forwarding
-    parameterValueGroup: false, true
-    summary: Enable IP forwarding.
+  - name: --app-gateway-backend-address-pools
+    summary: ''
+    description: ''
+  - name: --application-security-groups
+    summary: ''
+    description: ''
+  - name: --dns-servers
+    summary: ''
+    description: ''
+  - name: --enable-accelerated-networking
+    summary: ''
+    description: ''
+  - name: --enable-ip-forwarding
+    summary: ''
+    description: ''
+  - name: --internal-dns-name-label
+    summary: ''
+    description: ''
+  - name: --load-balancer-backend-address-pool-ids
+    summary: ''
+    description: ''
+  - name: --load-balancer-inbound-nat-rule-ids
+    summary: ''
+    description: ''
+  - name: --load-balancer-name
+    summary: ''
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - name: --network-security-group
-    summary: Name or ID of an existing network security group, or none by default.
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --private-ip-address
-    summary: Static private IP address to use.
+    summary: ''
+    description: ''
+  - name: --private-ip-address-version
+    summary: ''
     description: ''
   - name: --public-ip-address
-    summary: Name or ID of an existing public IP address, or none by default.
+    summary: ''
     description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: ''
     description: ''
-  - name: --vnet-name
-    summary: The virtual network (VNet) name.
-    description: ''
-  - name: --app-gateway-address-pools
-    summary: Space-separated list of names or IDs of application gateway backend address pools to associate with the NIC. If names are used, --gateway-name must be specified.
-    description: ''
-  - name: --gateway-name
-    summary: The name of the application gateway to use when adding address pools by name (ignored when IDs are specified).
-    description: ''
-  - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses.
-    description: ''
-  - name: --internal-dns-name
-    summary: The internal DNS name label.
-    description: ''
-  - name: --lb-address-pools
-    summary: Space-separated list of names or IDs of load balancer address pools to associate with the NIC. If names are used, --lb-name must be specified.
-    description: ''
-  - name: --lb-inbound-nat-rules
-    summary: Space-separated list of names or IDs of load balancer inbound NAT rules to associate with the NIC. If names are used, --lb-name must be specified.
-    description: ''
-  - name: --lb-name
-    summary: The name of the load balancer to use when adding NAT rules or address pools by name (ignored when IDs are specified).
+  - name: --virtual-network-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -110,8 +115,8 @@ items:
       content: az network nic delete -g MyResourceGroup -n MyNic
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The network interface (NIC).
+    name: --network-interface-name
+    summary: The name of the network interface.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -158,8 +163,8 @@ items:
       content: az network nic show -g MyResourceGroup -n MyNic --query "dnsSettings.internalDomainNameSuffix"
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The network interface (NIC).
+    name: --network-interface-name
+    summary: The name of the network interface.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -186,28 +191,30 @@ items:
       content: az network nic update -g MyResourceGroup -n MyNic --network-security-group MyNewNsg
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The network interface (NIC).
+    name: --network-interface-name
+    summary: The name of the network interface.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --ip-forwarding
-    parameterValueGroup: false, true
-    summary: Enable IP forwarding.
+  - name: --dns-servers
+    summary: ''
+    description: ''
+  - name: --enable-accelerated-networking
+    summary: ''
+    description: ''
+  - name: --enable-ip-forwarding
+    summary: ''
+    description: ''
+  - name: --internal-dns-name-label
+    summary: ''
     description: ''
   - name: --network-security-group
-    summary: Name or ID of the associated network security group.
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses. Use "" to revert to default Azure servers.
-    description: ''
-  - name: --internal-dns-name
-    summary: The internal DNS name label.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -239,8 +246,8 @@ items:
       content: az network nic wait -g MyResourceGroup -n MyNic --created
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The network interface (NIC).
+    name: --network-interface-name
+    summary: The name of the network interface.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -349,7 +356,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8698ea9900688a2d74b1a5cf0f3b29e5b22aee98/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 11/13/2018 6:34:14 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/a5f1fd6d2d2192ddfb6ff3ac3791fc4c8be92a41/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 12/4/2018 10:09:36 PM
+ms.date: 12/04/2018
 description: To learn more about network interfaces in Azure visit <a href="https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface">https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface</a>.

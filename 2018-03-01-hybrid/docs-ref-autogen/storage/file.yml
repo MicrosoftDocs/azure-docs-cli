@@ -28,8 +28,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of existing file.
     description: ''
   - isRequired: true
     name: --share-name -s
@@ -64,8 +68,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --source -s
-    summary: The source of the file delete operation. The source can be the file share URL or the share name.
+    name: --source
+    summary: ''
     description: ''
   - name: --dryrun
     summary: List the files and blobs to be deleted. No actual data deletion will occur.
@@ -102,15 +106,20 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of existing file.
+    description: ''
+  - isRequired: true
+    name: --file-path
+    summary: Path of file to write to.
     description: ''
   - isRequired: true
     name: --share-name -s
     summary: The file share name.
-    description: ''
-  - name: --dest
-    summary: Path of the file to write to. The source filename will be used if not specified.
     description: ''
   - name: --end-range
     summary: 'End of byte range to use for downloading a section of the file. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of file.'
@@ -118,9 +127,6 @@ items:
   - name: --max-connections
     defaultValue: "2"
     summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the file. If this is the entire file, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be valuable if the file is being concurrently modified to enforce atomicity or if many files are expected to be empty as an extra request is required for empty files if max_connections is greater than 1.
-    description: ''
-  - name: --no-progress
-    summary: Include this flag to disable progress reporting for the command.
     description: ''
   - name: --open-mode
     defaultValue: wb
@@ -164,18 +170,19 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --destination -d
-    summary: The local directory where the files are downloaded to. This directory must already exist.
+    name: --destination
+    summary: ''
     description: ''
   - isRequired: true
-    name: --source -s
-    summary: The source of the file download operation. The source can be the file share URL or the share name.
+    name: --source
+    summary: ''
     description: ''
   - name: --dryrun
     summary: List the files and blobs to be downloaded. No actual data transfer will occur.
     description: ''
-  - name: --no-progress
-    summary: Include this flag to disable progress reporting for the command.
+  - name: --max-connections
+    defaultValue: "1"
+    summary: The maximum number of parallel connections to use. Default value is 1.
     description: ''
   - name: --pattern
     summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
@@ -183,10 +190,6 @@ items:
   - name: --validate-content
     summary: If set, calculates an MD5 hash for each range of the file for validation.
     description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
-  - name: --max-connections
-    defaultValue: "1"
-    summary: The maximum number of parallel connections to use. Default value is 1.
-    description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -213,12 +216,14 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
-    description: ''
-  - isRequired: true
     name: --share-name -s
     summary: The file share name.
+    description: ''
+  - name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - name: --file-name
+    summary: Name of a file.
     description: ''
   - name: --snapshot
     summary: A string that represents the snapshot version, if applicable.
@@ -258,10 +263,6 @@ items:
                                 az storage file generate-sas -p path/file.txt -s MyShare --account-name MyStorageAccount --permissions rcdw --https-only --expiry $end
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
-    description: ''
-  - isRequired: true
     name: --share-name -s
     summary: The file share name.
     description: ''
@@ -280,23 +281,29 @@ items:
   - name: --content-type
     summary: Response header value for Content-Type when resource is accessed using this shared access signature.
     description: ''
-  - name: --expiry
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
+  - name: --directory-name -d
+    summary: The directory name.
     description: ''
-  - name: --https-only
-    summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
+  - name: --expiry
+    summary: The time at which the shared access signature becomes invalid. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
+    description: ''
+  - name: --file-name
+    summary: Name of file.
+    description: ''
+  - name: --id
+    summary: A unique value up to 64 characters in length that correlates to a stored access policy. To create a stored access policy, use set_file_service_properties.
     description: ''
   - name: --ip
-    summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
+    summary: Specifies an IP address or a range of IP addresses from which to accept requests. If the IP address from which the request originates does not match the IP address or address range specified on the SAS token, the request is not authenticated. For example, specifying sip=168.1.5.65 or sip=168.1.5.60-168.1.5.70 on the SAS restricts the request to those IP addresses.
     description: ''
-  - name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (c)reate (d)elete (r)ead (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
+  - name: --permission
+    summary: The permissions associated with the shared access signature. The user is restricted to operations allowed by the permissions. Permissions must be ordered read, create, write, delete, list. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy.
     description: ''
-  - name: --policy-name
-    summary: The name of a stored access policy within the container's ACL.
+  - name: --protocol
+    summary: Specifies the protocol permitted for a request made. Possible values are both HTTPS and HTTP (https,http) or HTTPS only (https). The default value is https,http. Note that HTTP only is not a permitted value.
     description: ''
   - name: --start
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
+    summary: The time at which the shared access signature becomes valid. If omitted, start time for this call is assumed to be the time when the storage service receives the request. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -327,11 +334,11 @@ items:
     name: --share-name -s
     summary: The file share name.
     description: ''
+  - name: --directory-name -d
+    summary: The directory name.
+    description: ''
   - name: --exclude-dir
     summary: List only files in the given share.
-    description: ''
-  - name: --path -p
-    summary: The directory path within the file share.
     description: ''
   - name: --snapshot
     summary: A string that represents the snapshot version, if applicable.
@@ -365,16 +372,20 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --content-length
+    summary: The length to resize the file to.
+    description: ''
+  - isRequired: true
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of existing file.
     description: ''
   - isRequired: true
     name: --share-name -s
     summary: The file share name.
-    description: ''
-  - isRequired: true
-    name: --size
-    summary: The length to resize the file to.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -405,8 +416,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of existing file.
     description: ''
   - isRequired: true
     name: --share-name -s
@@ -444,30 +459,20 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --content-settings
+    summary: ContentSettings object used to set the file properties.
+    description: ''
+  - isRequired: true
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of existing file.
     description: ''
   - isRequired: true
     name: --share-name -s
     summary: The file share name.
-    description: ''
-  - name: --content-cache-control
-    summary: The cache control string.
-    description: ''
-  - name: --content-disposition
-    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
-    description: ''
-  - name: --content-encoding
-    summary: The content encoding type.
-    description: ''
-  - name: --content-language
-    summary: The content language.
-    description: ''
-  - name: --content-md5
-    summary: The content's MD5 hash.
-    description: ''
-  - name: --content-type
-    summary: The content MIME type.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -502,30 +507,23 @@ items:
       content: az storage file upload -s MyShare -source /path/to/file
   parameters:
   - isRequired: true
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: Name of file to create or update.
+    description: ''
+  - isRequired: true
+    name: --local-file-path
+    summary: Path of the local file to upload as the file content.
+    description: ''
+  - isRequired: true
     name: --share-name -s
     summary: The file share name.
     description: ''
-  - isRequired: true
-    name: --source
-    summary: Path of the local file to upload as the file content.
-    description: ''
-  - name: --content-cache-control
-    summary: The cache control string.
-    description: ''
-  - name: --content-disposition
-    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
-    description: ''
-  - name: --content-encoding
-    summary: The content encoding type.
-    description: ''
-  - name: --content-language
-    summary: The content language.
-    description: ''
-  - name: --content-md5
-    summary: The content's MD5 hash.
-    description: ''
-  - name: --content-type
-    summary: The content MIME type.
+  - name: --content-settings
+    summary: ContentSettings object used for setting file properties.
     description: ''
   - name: --max-connections
     defaultValue: "2"
@@ -533,12 +531,6 @@ items:
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
-    description: ''
-  - name: --no-progress
-    summary: Include this flag to disable progress reporting for the command.
-    description: ''
-  - name: --path -p
-    summary: The path to the file within the file share. If the file name is omitted, the source file name will be used.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -572,12 +564,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --destination -d
-    summary: The destination of the upload operation.
-    description: The destination can be the file share URL or the share name. When the destination is the share URL, the storage account name is parsed from the URL.
+    name: --destination
+    summary: ''
+    description: ''
   - isRequired: true
-    name: --source -s
-    summary: The directory to upload files from.
+    name: --source
+    summary: ''
+    description: ''
+  - name: --content-settings
+    summary: ''
     description: ''
   - name: --destination-path
     summary: The directory where the source data is copied to. If omitted, data is copied to the root directory.
@@ -585,11 +580,12 @@ items:
   - name: --dryrun
     summary: List the files and blobs to be uploaded. No actual data transfer will occur.
     description: ''
+  - name: --max-connections
+    defaultValue: "1"
+    summary: The maximum number of parallel connections to use. Default value is 1.
+    description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
-    description: ''
-  - name: --no-progress
-    summary: Include this flag to disable progress reporting for the command.
     description: ''
   - name: --pattern
     summary: The pattern used for file globbing. The supported patterns are '*', '?', '[seq', and '[!seq]'.
@@ -597,28 +593,6 @@ items:
   - name: --validate-content
     summary: If set, calculates an MD5 hash for each range of the file for validation.
     description: The storage service checks the hash of the content that has arrived is identical to the hash that was sent. This is mostly valuable for detecting bitflips during transfer if using HTTP instead of HTTPS. This hash is not stored.
-  - name: --content-cache-control
-    summary: The cache control string.
-    description: ''
-  - name: --content-disposition
-    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
-    description: ''
-  - name: --content-encoding
-    summary: The content encoding type.
-    description: ''
-  - name: --content-language
-    summary: The content language.
-    description: ''
-  - name: --content-md5
-    summary: The content's MD5 hash.
-    description: ''
-  - name: --content-type
-    summary: The content MIME type.
-    description: ''
-  - name: --max-connections
-    defaultValue: "1"
-    summary: The maximum number of parallel connections to use. Default value is 1.
-    description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -645,17 +619,19 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --path -p
-    summary: The path to the file within the file share.
+    name: --directory-name -d
+    summary: The directory name.
+    description: ''
+  - isRequired: true
+    name: --file-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --share-name -s
     summary: The file share name.
     description: ''
   - name: --protocol
-    defaultValue: https
-    parameterValueGroup: http, https
-    summary: Protocol to use.
+    summary: ''
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -752,7 +728,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8947b1e11fcc83dce4860d8b0320fd92dbc501dd/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 11/13/2018 5:53:15 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/ce1d2a65a830e59ea9ef25733739990b8416f906/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 12/4/2018 10:09:31 PM
+ms.date: 12/04/2018
 description: Manage file shares that use the SMB 3.0 protocol.

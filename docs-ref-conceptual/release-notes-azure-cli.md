@@ -12,6 +12,29 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+## December 4, 2018
+
+Version 2.0.52
+### Core
+* Added support for cross tenant resource provisioning for multi-tenant service principal
+* Fixed bug where ids piped from a command with tsv output was improperly parsed
+
+### Appservice
+* [PREVIEW] Added `webapp up` command that helps in creating & deploying contents to app
+* Fixed a bug on container based windows app due to backend change
+
+### Network
+* Added `--exclusion` argument to `application-gateway waf-config set` to support WAF exclusions
+
+### Role
+* Added support for custom identifiers for password credential 
+
+### VM
+* [DEPRECATED] Deprecated `vm extension [show|wait] --expand` parameter
+* Added `--force` parameter to `vm restart` to redeploy unresponsive VMs
+* Changed `[vm|vmss] create --authentication-type` to accept "all" to create a VM with both password and ssh authentication
+* Added `image create --os-disk-caching` parameter to set os disk caching for an image
+
 ## November 20, 2018
 
 Version 2.0.51

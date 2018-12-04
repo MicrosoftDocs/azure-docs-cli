@@ -52,16 +52,16 @@ items:
                                 az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --vhd-name-prefix
     summary: The VHD name prefix specify for the VM disks.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
     description: ''
   - name: --overwrite
     defaultValue: "1"
@@ -92,12 +92,12 @@ items:
       content: az vm convert --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -153,180 +153,213 @@ items:
       content: az vm create -n MyVm -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the virtual machine.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
+    description: ''
+  - name: --accelerated-networking
+    summary: ''
+    description: ''
+  - name: --admin-password
+    summary: ''
+    description: ''
+  - name: --admin-username
+    summary: ''
+    description: ''
+  - name: --application-security-groups
+    summary: ''
+    description: ''
+  - name: --assign-identity
+    summary: ''
+    description: ''
   - name: --attach-data-disks
-    summary: Attach existing data disks to the VM. Can use the name or ID of a managed disk or the URI to an unmanaged disk VHD.
+    summary: ''
     description: ''
   - name: --attach-os-disk
-    summary: Attach an existing OS disk to the VM. Can use the name or ID of a managed disk or the URI to an unmanaged disk VHD.
+    summary: ''
+    description: ''
+  - name: --authentication-type
+    summary: ''
     description: ''
   - name: --availability-set
-    summary: Name or ID of an existing availability set to add the VM to. None by default.
+    summary: ''
     description: ''
   - name: --boot-diagnostics-storage
-    summary: Pre-existing storage account name or its blob uri to capture boot diagnostics. Its sku should be one of Standard_GRS, Standard_LRS and Standard_RAGRS.
+    summary: ''
     description: ''
   - name: --custom-data
-    summary: Custom init script file or text (cloud-init, cloud-config, etc..).
+    summary: ''
+    description: ''
+  - name: --data-caching
+    summary: ''
+    description: ''
+  - name: --data-disk-sizes-gb
+    summary: ''
+    description: ''
+  - name: --disk-info
+    summary: ''
+    description: ''
+  - name: --ephemeral-os-disk
+    summary: ''
+    description: ''
+  - name: --generate-ssh-keys
+    summary: ''
+    description: ''
+  - name: --identity-role
+    defaultValue: Contributor
+    summary: ''
+    description: ''
+  - name: --identity-role-id
+    summary: ''
+    description: ''
+  - name: --identity-scope
+    summary: ''
     description: ''
   - name: --image
     summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version".'
     description: ''
     valueFrom: az vm image list, az vm image show
   - name: --license-type
-    parameterValueGroup: None, Windows_Client, Windows_Server
-    summary: License type if the Windows image or disk used was licensed on-premises.
+    summary: ''
     description: ''
   - name: --location -l
-    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --nic-type
+    summary: ''
+    description: ''
+  - name: --nics
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --nsg
+    summary: ''
+    description: ''
+  - name: --nsg-rule
+    summary: ''
+    description: ''
+  - name: --nsg-type
+    summary: ''
+    description: ''
+  - name: --os-caching
+    summary: ''
+    description: ''
+  - name: --os-disk-name
+    summary: ''
+    description: ''
+  - name: --os-disk-size-gb
+    summary: ''
+    description: ''
+  - name: --os-offer
+    summary: ''
+    description: ''
+  - name: --os-publisher
+    summary: ''
+    description: ''
+  - name: --os-sku
+    summary: ''
+    description: ''
+  - name: --os-type
+    summary: ''
+    description: ''
+  - name: --os-version
+    summary: ''
+    description: ''
+  - name: --plan-name
+    summary: ''
+    description: ''
+  - name: --plan-product
+    summary: ''
+    description: ''
+  - name: --plan-promotion-code
+    summary: ''
+    description: ''
+  - name: --plan-publisher
+    summary: ''
+    description: ''
+  - name: --private-ip-address
+    summary: ''
+    description: ''
+  - name: --public-ip-address
+    summary: ''
+    description: ''
+  - name: --public-ip-address-allocation
+    defaultValue: dynamic
+    summary: ''
+    description: ''
+  - name: --public-ip-address-dns-name
+    summary: ''
+    description: ''
+  - name: --public-ip-address-type
+    summary: ''
+    description: ''
+  - name: --public-ip-sku
+    summary: ''
+    description: ''
   - name: --secrets
-    summary: 'One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
+    summary: ''
     description: ''
   - name: --size
     defaultValue: Standard_DS1_v2
-    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
-    description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --validate
-    summary: Generate and validate the ARM template without creating any resources.
-    description: ''
-  - name: --zone -z
-    parameterValueGroup: 1, 2, 3
-    summary: Availability zone into which to provision the resource.
-    description: ''
-  - name: --admin-password
-    summary: Password for the VM if authentication type is 'Password'.
-    description: ''
-  - name: --admin-username
-    defaultValue: VssAdministrator
-    summary: Username for the VM.
-    description: ''
-  - name: --authentication-type
-    parameterValueGroup: password, ssh
-    summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux.
-    description: ''
-  - name: --generate-ssh-keys
-    summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+    summary: ''
     description: ''
   - name: --ssh-dest-key-path
-    summary: Destination file path on the VM for the SSH key.
+    summary: ''
     description: ''
   - name: --ssh-key-value
     summary: The SSH public key or public key file path.
     description: ''
-  - name: --assign-identity
-    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
-    description: ''
-  - name: --role
-    defaultValue: Contributor
-    summary: Role name or id the system assigned identity will have.
-    description: ''
-  - name: --scope
-    summary: Scope that the system assigned identity can access.
-    description: ''
-  - name: --plan-name
-    summary: Plan name.
-    description: ''
-  - name: --plan-product
-    summary: Plan product.
-    description: ''
-  - name: --plan-promotion-code
-    summary: Plan promotion code.
-    description: ''
-  - name: --plan-publisher
-    summary: Plan publisher.
-    description: ''
-  - name: --accelerated-networking
-    parameterValueGroup: false, true
-    summary: Enable accelerated networking. Unless specified, CLI will enable it based on machine image and size.
-    description: ''
-  - name: --asgs
-    summary: Space-separated list of existing application security groups to associate with the VM.
-    description: ''
-  - name: --nics
-    summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.
-    description: ''
-  - name: --nsg
-    summary: The name to use when creating a new Network Security Group (default) or referencing an existing one. Can also reference an existing NSG by ID or specify "" for none.
-    description: ''
-  - name: --nsg-rule
-    parameterValueGroup: RDP, SSH
-    summary: NSG rule to create when creating a new NSG. Defaults to open ports for allowing RDP on Windows and allowing SSH on Linux.
-    description: ''
-  - name: --private-ip-address
-    summary: Static private IP address (e.g. 10.0.0.5).
-    description: ''
-  - name: --public-ip-address
-    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
-    description: ''
-  - name: --public-ip-address-allocation
-    parameterValueGroup: dynamic, static
+  - name: --storage-account
     summary: ''
     description: ''
-  - name: --public-ip-address-dns-name
-    summary: Globally unique DNS name for a newly created public IP.
+  - name: --storage-account-type
+    summary: ''
     description: ''
-  - name: --public-ip-sku
-    parameterValueGroup: Basic, Standard
-    summary: Sku.
+  - name: --storage-container-name
+    summary: ''
+    description: ''
+  - name: --storage-profile
+    summary: ''
+    description: ''
+  - name: --storage-sku
+    summary: ''
     description: ''
   - name: --subnet
-    summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
+    summary: ''
     description: ''
   - name: --subnet-address-prefix
     defaultValue: 10.0.0.0/24
-    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    summary: ''
+    description: ''
+  - name: --tags
+    summary: ''
+    description: ''
+  - name: --ultra-ssd-enabled
+    summary: ''
+    description: ''
+  - name: --use-unmanaged-disk
+    summary: ''
+    description: ''
+  - name: --validate
+    summary: ''
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
-    summary: The IP address prefix to use when creating a new VNet in CIDR format.
+    summary: ''
     description: ''
   - name: --vnet-name
-    summary: Name of the virtual network when creating a new one or referencing an existing one.
+    summary: ''
     description: ''
-  - name: --data-disk-caching
-    summary: Storage caching type for data disk(s), including 'None', 'ReadOnly', 'ReadWrite', etc. Use a singular value to apply on all disks, or use '<lun>=<vaule1> <lun>=<value2>' to configure individual disk.
+  - name: --vnet-type
+    summary: ''
     description: ''
-  - name: --data-disk-sizes-gb
-    summary: Space-separated empty managed data disk sizes in GB to create.
-    description: ''
-  - name: --os-disk-caching
-    parameterValueGroup: None, ReadOnly, ReadWrite
-    summary: 'Storage caching type for the VM OS disk. Default: ReadWrite.'
-    description: ''
-  - name: --os-disk-name
-    summary: The name of the new VM OS disk.
-    description: ''
-  - name: --os-disk-size-gb
-    summary: The size of the os disk in GB.
-    description: ''
-  - name: --os-type
-    parameterValueGroup: linux, windows
-    summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
-    description: ''
-  - name: --storage-account
-    summary: Only applicable when used with `--use-unmanaged-disk`. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
-    description: ''
-  - name: --storage-container-name
-    summary: 'Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.'
-    description: ''
-  - name: --storage-sku
-    summary: 'The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Standard_LRS, Premium_LRS.'
-    description: ''
-  - name: --use-unmanaged-disk
-    summary: Do not use managed disk to persist VM.
+  - name: --zone
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -356,12 +389,12 @@ items:
                                 az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -387,12 +420,12 @@ items:
       content: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -428,12 +461,12 @@ items:
                                 az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -459,12 +492,12 @@ items:
       content: az vm get-instance-view --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -492,8 +525,8 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --show-details -d
-    summary: Show public ip address, FQDN, and power states. command will run slow.
+  - name: --show-details
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -515,11 +548,11 @@ items:
     syntax:
       content: az vm list-ip-addresses --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
-  - name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --vm-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -568,21 +601,20 @@ items:
     syntax:
       content: az vm list-skus -l westus --resource-type availabilitySets
   parameters:
-  - name: --all
-    summary: Show all information including vm sizes not available under the current subscription.
-    description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
-  - name: --resource-type -r
-    summary: Resource types e.g. "availabilitySets", "snapshots", "disk", etc.
+  - name: --resource-type
+    summary: ''
     description: ''
-  - name: --size -s
-    summary: Size name, partial name is accepted.
+  - name: --show-all
+    summary: ''
     description: ''
-  - name: --zone -z
-    parameterValueGroup: false, true
-    summary: Show all vm size supporting availability zones.
+  - name: --size
+    summary: ''
+    description: ''
+  - name: --zone
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -626,12 +658,12 @@ items:
       content: az vm list-vm-resize-options --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -657,26 +689,26 @@ items:
       content: az vm open-port --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the virtual machine to open inbound traffic on.
-    description: ''
-  - isRequired: true
     name: --port
-    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '*' to allow traffic to all ports."
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --apply-to-subnet
-    summary: Allow inbound traffic on the subnet instead of the NIC.
+  - isRequired: true
+    name: --vm-name
+    summary: ''
     description: ''
-  - name: --nsg-name
-    summary: The name of the network security group to create if one does not exist. Ignored if an NSG already exists.
+  - name: --apply-to-subnet
+    summary: ''
+    description: ''
+  - name: --network-security-group-name
+    summary: ''
     description: ''
   - name: --priority
     defaultValue: "900"
-    summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -692,12 +724,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -720,12 +752,12 @@ items:
       content: az vm redeploy --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -751,10 +783,6 @@ items:
       content: az vm resize --size Standard_DS3_v2 --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
@@ -763,6 +791,10 @@ items:
     summary: The VM size.
     description: ''
     valueFrom: az vm list-vm-resize-options
+  - isRequired: true
+    name: --vm-name
+    summary: ''
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -787,12 +819,15 @@ items:
       content: az vm restart --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
+    description: ''
+  - name: --force
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -818,15 +853,15 @@ items:
       content: az vm show -d --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --show-details -d
-    summary: Show public ip address, FQDN, and power states. command will run slow.
+  - isRequired: true
+    name: --vm-name
+    summary: ''
+    description: ''
+  - name: --show-details
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -849,12 +884,12 @@ items:
       content: az vm start --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -880,12 +915,12 @@ items:
       content: az vm stop --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -920,22 +955,27 @@ items:
       content: az vm update -n name -g group --remove networkProfile.networkInterfaces 3
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
+    description: ''
   - name: --disk-caching
-    summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
+    summary: ''
     description: ''
   - name: --license-type
-    parameterValueGroup: None, Windows_Client, Windows_Server
-    summary: License type if the Windows image or disk used was licensed on-premises.
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --os-disk
+    summary: ''
+    description: ''
+  - name: --write-accelerator
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -970,12 +1010,12 @@ items:
       content: az vm wait --deleted --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: ''
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.

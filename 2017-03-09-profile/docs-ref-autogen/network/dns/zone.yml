@@ -26,28 +26,28 @@ items:
       content: az network dns zone create -g MyResourceGroup -n www.mysite.com
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --zone-name
+    summary: ''
     description: ''
   - name: --if-none-match
     summary: Only create a DNS zone if one doesn't exist that matches the given name.
     description: ''
+  - name: --registration-vnets
+    summary: ''
+    description: ''
+  - name: --resolution-vnets
+    summary: ''
+    description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: ''
     description: ''
   - name: --zone-type
     defaultValue: Public
-    summary: Type of DNS zone to create.
-    description: ''
-  - name: --registration-vnets
-    summary: Space-separated names or IDs of virtual networks that register hostnames in this DNS zone.
-    description: ''
-  - name: --resolution-vnets
-    summary: Space-separated names or IDs of virtual networks that resolve records in this DNS zone.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -67,12 +67,12 @@ items:
       content: az network dns zone delete -g MyResourceGroup -n www.mysite.com
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   - name: --if-match
     summary: The etag of the DNS zone. Omit this value to always delete the current zone. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes.
@@ -98,15 +98,15 @@ items:
       content: az network dns zone export -g MyResourceGroup -n www.mysite.com -o mysite_com_zone.tsv
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --file-name -f
-    summary: Path to the DNS zone file to save.
+  - isRequired: true
+    name: --zone-name
+    summary: ''
+    description: ''
+  - name: --file-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -126,16 +126,16 @@ items:
       content: az network dns zone import -g MyResourceGroup -n MyZone -f /path/to/zone/file
   parameters:
   - isRequired: true
-    name: --file-name -f
-    summary: Path to the DNS zone file to import.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
+    name: --file-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --zone-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -175,12 +175,12 @@ items:
       content: az network dns zone show -g MyResourceGroup -n www.mysite.com
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -200,27 +200,30 @@ items:
       content: az network dns zone update -g MyResourceGroup -n www.mysite.com --tags CostCenter=Marketing
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the zone.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   - name: --if-match
     summary: Update only if the resource with the same ETAG exists.
     description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --zone-type
-    summary: Type of DNS zone to create.
+  - name: --if-none-match
+    summary: Set to '*' to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored.
     description: ''
   - name: --registration-vnets
-    summary: Space-separated names or IDs of virtual networks that register hostnames in this DNS zone.
+    summary: ''
     description: ''
   - name: --resolution-vnets
-    summary: Space-separated names or IDs of virtual networks that resolve records in this DNS zone.
+    summary: ''
+    description: ''
+  - name: --tags
+    summary: ''
+    description: ''
+  - name: --zone-type
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -278,7 +281,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8698ea9900688a2d74b1a5cf0f3b29e5b22aee98/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 11/13/2018 6:34:14 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/a5f1fd6d2d2192ddfb6ff3ac3791fc4c8be92a41/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 12/4/2018 10:09:36 PM
+ms.date: 12/04/2018
 description: Manage DNS zones.
