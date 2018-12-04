@@ -29,11 +29,11 @@ items:
   parameters:
   - isRequired: true
     name: --flags
-    summary: Integer flags for the record.
+    summary: ''
     description: ''
   - isRequired: true
-    name: --record-set-name -n
-    summary: The name of the record set relative to the zone. Creates a new record set if one does not exist.
+    name: --record-set-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -41,15 +41,15 @@ items:
     description: ''
   - isRequired: true
     name: --tag
-    summary: Record tag.
+    summary: ''
     description: ''
   - isRequired: true
     name: --value
-    summary: Value of the CAA record.
+    summary: ''
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -69,32 +69,36 @@ items:
       content: az network dns record-set caa create -g MyResourceGroup -z www.mysite.com -n MyRecordSet
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the record set, relative to the name of the zone.
+    name: --record-set-name
+    summary: ''
+    description: ''
+  - isRequired: true
+    name: --record-set-type
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwritting any concurrent changes.
     description: ''
   - name: --if-none-match
-    summary: Create the record set only if it does not already exist.
+    summary: Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored.
     description: ''
   - name: --metadata
-    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    summary: ''
     description: ''
   - name: --target-resource
-    summary: ID of an Azure resource from which the DNS resource value is taken.
+    summary: ''
     description: ''
   - name: --ttl
     defaultValue: "3600"
-    summary: Record set TTL (time-to-live).
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -114,7 +118,11 @@ items:
       content: az network dns record-set caa delete -g MyResourceGroup -z www.mysite.com -n MyRecordSet
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --record-type
+    summary: The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted).
+    description: ''
+  - isRequired: true
+    name: --relative-record-set-name
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -122,8 +130,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes.
@@ -153,8 +161,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: ''
+    description: ''
+  - name: --record-type
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -177,11 +188,11 @@ items:
   parameters:
   - isRequired: true
     name: --flags
-    summary: Integer flags for the record.
+    summary: ''
     description: ''
   - isRequired: true
-    name: --record-set-name -n
-    summary: The name of the record set relative to the zone.
+    name: --record-set-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -189,18 +200,18 @@ items:
     description: ''
   - isRequired: true
     name: --tag
-    summary: Record tag.
+    summary: ''
     description: ''
   - isRequired: true
     name: --value
-    summary: Value of the CAA record.
+    summary: ''
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: ''
     description: ''
   - name: --keep-empty-record-set
-    summary: Keep the empty record set if the last record is removed.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -220,7 +231,11 @@ items:
       content: az network dns record-set caa show -g MyResourceGroup -z www.mysite.com -n MyRecordSet
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --record-type
+    summary: The type of DNS record in this record set.
+    description: ''
+  - isRequired: true
+    name: --relative-record-set-name
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -228,8 +243,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -251,7 +266,11 @@ items:
                                     -n MyRecordSet --metadata owner=WebTeam
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --record-type
+    summary: The type of DNS record in this record set. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).
+    description: ''
+  - isRequired: true
+    name: --relative-record-set-name
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -259,8 +278,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name -z
-    summary: The name of the zone.
+    name: --zone-name
+    summary: The name of the DNS zone (without a terminating dot).
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwritting any concurrent changes.
@@ -269,10 +288,10 @@ items:
     summary: Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored.
     description: ''
   - name: --metadata
-    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    summary: ''
     description: ''
   - name: --target-resource
-    summary: ID of an Azure resource from which the DNS resource value is taken.
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -330,7 +349,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8698ea9900688a2d74b1a5cf0f3b29e5b22aee98/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 11/13/2018 6:34:14 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/a5f1fd6d2d2192ddfb6ff3ac3791fc4c8be92a41/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 12/4/2018 10:09:36 PM
+ms.date: 12/04/2018
 description: Manage DNS CAA records.

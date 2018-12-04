@@ -27,31 +27,30 @@ items:
       content: az resource lock create --lock-type ReadOnly -n lockName --resource /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}
   parameters:
   - isRequired: true
-    name: --lock-type -t
-    parameterValueGroup: CanNotDelete, ReadOnly
+    name: --level
     summary: ''
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the lock.
+    name: --lock-name
+    summary: ''
     description: ''
   - name: --notes
     summary: Notes about this lock.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --parent-resource-path
+    summary: Path to a parent resource.
     description: ''
-  - name: --namespace
-    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+  - name: --resource-group
+    summary: ''
     description: ''
-  - name: --parent
-    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+  - name: --resource-name
+    summary: Name of a resource that has a lock.
     description: ''
-  - name: --resource --resource-name
-    summary: If an ID is given, other resource arguments should not be given.
+  - name: --resource-provider-namespace
+    summary: Name of a resource provider.
     description: ''
   - name: --resource-type
-    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    summary: The type for the resource with the lock.
     description: ''
   source:
     path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
@@ -74,25 +73,25 @@ items:
       content: az resource lock delete -n lockName --resource /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VMName}
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
+    summary: ''
     description: ''
-  - name: --name -n
-    summary: Name of the lock.
+  - name: --lock-name
+    summary: ''
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --parent-resource-path
+    summary: Path to a parent resource.
     description: ''
-  - name: --namespace
-    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+  - name: --resource-group
+    summary: ''
     description: ''
-  - name: --parent
-    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+  - name: --resource-name
+    summary: Name of a resource that has a lock.
     description: ''
-  - name: --resource --resource-name
-    summary: If an ID is given, other resource arguments should not be given.
+  - name: --resource-provider-namespace
+    summary: Name of a resource provider.
     description: ''
   - name: --resource-type
-    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    summary: The type for the resource with the lock.
     description: ''
   source:
     path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
@@ -114,20 +113,20 @@ items:
   - name: --filter-string
     summary: A query filter to use to restrict the results.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --parent-resource-path
+    summary: Path to a parent resource.
     description: ''
-  - name: --namespace
-    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+  - name: --resource-group
+    summary: ''
     description: ''
-  - name: --parent
-    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+  - name: --resource-name
+    summary: Name of a resource that has a lock.
     description: ''
-  - name: --resource --resource-name
-    summary: If an ID is given, other resource arguments should not be given.
+  - name: --resource-provider-namespace
+    summary: Name of a resource provider.
     description: ''
   - name: --resource-type
-    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    summary: The type for the resource with the lock.
     description: ''
   source:
     path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
@@ -147,25 +146,25 @@ items:
       content: az resource lock show -n lockname -g MyResourceGroup --resource myvnet --resource-type Microsoft.Network/virtualNetworks
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
+    summary: ''
     description: ''
-  - name: --name -n
-    summary: Name of the lock.
+  - name: --lock-name
+    summary: ''
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --parent-resource-path
+    summary: ''
     description: ''
-  - name: --namespace
-    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+  - name: --resource-group
+    summary: ''
     description: ''
-  - name: --parent
-    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+  - name: --resource-name
+    summary: ''
     description: ''
-  - name: --resource --resource-name
-    summary: If an ID is given, other resource arguments should not be given.
+  - name: --resource-provider-namespace
+    summary: ''
     description: ''
   - name: --resource-type
-    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
@@ -185,32 +184,31 @@ items:
       content: az resource lock update --name lockName -g MyResourceGroup --resource myvnet --resource-type Microsoft.Network/virtualNetworks --notes newNotesHere --lock-type CanNotDelete
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
-    description: ''
-  - name: --lock-type -t
-    parameterValueGroup: CanNotDelete, ReadOnly
     summary: ''
     description: ''
-  - name: --name -n
-    summary: Name of the lock.
+  - name: --level
+    summary: ''
+    description: ''
+  - name: --lock-name
+    summary: ''
     description: ''
   - name: --notes
-    summary: Notes about this lock.
+    summary: ''
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --parent-resource-path
+    summary: ''
     description: ''
-  - name: --namespace
-    summary: "Provider namespace (Ex: 'Microsoft.Provider')."
+  - name: --resource-group
+    summary: ''
     description: ''
-  - name: --parent
-    summary: "The parent path (Ex: 'resA/myA/resB/myB')."
+  - name: --resource-name
+    summary: ''
     description: ''
-  - name: --resource --resource-name
-    summary: If an ID is given, other resource arguments should not be given.
+  - name: --resource-provider-namespace
+    summary: ''
     description: ''
   - name: --resource-type
-    summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py

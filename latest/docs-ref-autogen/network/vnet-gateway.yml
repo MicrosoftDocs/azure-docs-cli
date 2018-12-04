@@ -37,25 +37,35 @@ items:
                                     --client-protocol IkeV2 SSTP --radius-secret 111_aaa --radius-server 30.1.1.15
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
-    name: --public-ip-addresses
-    summary: Specify a single public IP (name or ID) for an active-standby gateway. Specify two space-separated public IPs for an active-active gateway.
+    name: --public-ip-address
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --vnet
-    summary: Name or ID of an existing virtual network which has a subnet named 'GatewaySubnet'.
+    name: --virtual-network
+    summary: ''
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: ''
+    description: ''
+  - name: --address-prefixes
+    summary: ''
+    description: ''
+  - name: --asn
+    summary: ''
+    description: ''
+  - name: --bgp-peering-address
+    summary: ''
+    description: ''
+  - name: --client-protocol
+    summary: ''
     description: ''
   - name: --gateway-type
-    defaultValue: Vpn
-    parameterValueGroup: ExpressRoute, Vpn
-    summary: The gateway type.
+    summary: ''
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -63,40 +73,23 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --sku
-    defaultValue: Basic
-    parameterValueGroup: Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ
-    summary: VNet gateway SKU.
-    description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --vpn-type
-    defaultValue: RouteBased
-    parameterValueGroup: PolicyBased, RouteBased
-    summary: VPN routing type.
-    description: ''
-  - name: --asn
-    summary: Autonomous System Number to use for the BGP settings.
-    description: ''
-  - name: --bgp-peering-address
-    summary: IP address to use for BGP peering.
-    description: ''
   - name: --peer-weight
-    summary: Weight (0-100) added to routes learned through BGP peering.
-    description: ''
-  - name: --address-prefixes
-    summary: Space-separated list of CIDR prefixes representing the address space for the P2S client.
-    description: ''
-  - name: --client-protocol
-    parameterValueGroup: IkeV2, OpenVPN, SSTP
-    summary: Protocols to use for connecting.
+    summary: ''
     description: ''
   - name: --radius-secret
-    summary: Radius secret to use for authentication.
+    summary: ''
     description: ''
   - name: --radius-server
-    summary: Radius server address to connect to.
+    summary: ''
+    description: ''
+  - name: --sku
+    summary: ''
+    description: ''
+  - name: --tags
+    summary: ''
+    description: ''
+  - name: --vpn-type
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -120,12 +113,12 @@ items:
       content: az network vnet-gateway delete -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -169,16 +162,16 @@ items:
       content: az network vnet-gateway list-advertised-routes -g MyResourceGroup -n MyVnetGateway --peer 23.10.10.9
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --peer
     summary: The IP address of the peer.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -198,12 +191,12 @@ items:
       content: az network vnet-gateway list-bgp-peer-status -g MyResourceGroup -n MyVnetGateway --peer 23.10.10.9
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   - name: --peer
     summary: The IP address of the peer to retrieve the status of.
@@ -226,12 +219,12 @@ items:
       content: az network vnet-gateway list-learned-routes -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -254,12 +247,12 @@ items:
       content: az network vnet-gateway reset -g MyResourceGroup -n MyVnetGateway --gateway-vip MyGatewayIP
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   - name: --gateway-vip
     summary: Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway.
@@ -282,12 +275,12 @@ items:
       content: az network vnet-gateway show -g MyResourceGroup -n MyVnetGateway
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -307,62 +300,57 @@ items:
       content: az network vnet-gateway update -g MyResourceGroup -n MyVnetGateway --sku VpnGw2
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
+    description: ''
+  - name: --address-prefixes
+    summary: ''
+    description: ''
+  - name: --asn
+    summary: ''
+    description: ''
+  - name: --bgp-peering-address
+    summary: ''
+    description: ''
+  - name: --client-protocol
+    summary: ''
+    description: ''
+  - name: --enable-bgp
+    summary: ''
+    description: ''
   - name: --gateway-type
-    parameterValueGroup: ExpressRoute, Vpn
-    summary: The gateway type.
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --public-ip-addresses
-    summary: Specify a single public IP (name or ID) for an active-standby gateway. Specify two space-separated public IPs for an active-active gateway.
-    description: ''
-  - name: --sku
-    parameterValueGroup: Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ
-    summary: VNet gateway SKU.
-    description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --vnet
-    summary: Name or ID of a virtual network that contains a subnet named 'GatewaySubnet'.
-    description: ''
-  - name: --vpn-type
-    parameterValueGroup: PolicyBased, RouteBased
-    summary: VPN routing type.
-    description: ''
-  - name: --asn
-    summary: Autonomous System Number to use for the BGP settings.
-    description: ''
-  - name: --bgp-peering-address
-    summary: IP address to use for BGP peering.
-    description: ''
-  - name: --enable-bgp
-    parameterValueGroup: false, true
-    summary: Enable BGP (Border Gateway Protocol).
-    description: ''
   - name: --peer-weight
-    summary: Weight (0-100) added to routes learned through BGP peering.
+    summary: ''
     description: ''
-  - name: --address-prefixes
-    summary: Space-separated list of CIDR prefixes representing the address space for the P2S client.
-    description: ''
-  - name: --client-protocol
-    parameterValueGroup: IkeV2, OpenVPN, SSTP
-    summary: Protocols to use for connecting.
+  - name: --public-ip-address
+    summary: ''
     description: ''
   - name: --radius-secret
-    summary: Radius secret to use for authentication.
+    summary: ''
     description: ''
   - name: --radius-server
-    summary: Radius server address to connect to.
+    summary: ''
+    description: ''
+  - name: --sku
+    summary: ''
+    description: ''
+  - name: --tags
+    summary: ''
+    description: ''
+  - name: --virtual-network
+    summary: ''
+    description: ''
+  - name: --vpn-type
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -394,12 +382,12 @@ items:
       content: az network vnet-gateway wait -g MyResourceGroup -n MyVnetGateway --created
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the VNet gateway.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-gateway-name
+    summary: The name of the virtual network gateway.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -504,7 +492,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8698ea9900688a2d74b1a5cf0f3b29e5b22aee98/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 11/13/2018 6:34:14 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/a5f1fd6d2d2192ddfb6ff3ac3791fc4c8be92a41/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 12/4/2018 10:09:36 PM
+ms.date: 12/04/2018
 description: To learn more about Azure Virtual Network Gateways, visit <a href="https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli">https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli</a>.

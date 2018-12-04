@@ -25,47 +25,45 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: ''
+    description: ''
+  - name: --bypass
+    summary: ''
+    description: ''
+  - name: --default-action
+    summary: ''
+    description: ''
   - name: --enable-purge-protection
-    parameterValueGroup: false, true
-    summary: Prevents manual purging of deleted vault, and all contained entities.
+    summary: Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value.
     description: ''
   - name: --enable-soft-delete
-    parameterValueGroup: false, true
-    summary: Enable vault deletion recovery for the vault, and all contained entities.
+    summary: Property specifying whether recoverable deletion is enabled for this key vault. Setting this property to true activates the soft delete feature, whereby vaults or vault entities can be recovered after deletion. Enabling this functionality is irreversible - that is, the property does not accept false as its value.
     description: ''
   - name: --enabled-for-deployment
-    parameterValueGroup: false, true
-    summary: Allow Virtual Machines to retrieve certificates stored as secrets from the vault.
+    summary: Property to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault.
     description: ''
   - name: --enabled-for-disk-encryption
-    parameterValueGroup: false, true
-    summary: Allow Disk Encryption to retrieve secrets from the vault and unwrap keys.
+    summary: Property to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys.
     description: ''
   - name: --enabled-for-template-deployment
-    parameterValueGroup: false, true
-    summary: Allow Resource Manager to retrieve secrets from the vault.
+    summary: Property to specify whether Azure Resource Manager is permitted to retrieve secrets from the key vault.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - name: --no-self-perms
-    parameterValueGroup: false, true
-    summary: Don't add permissions for the current user/service principal in the new vault.
+    summary: ''
     description: ''
   - name: --sku
-    defaultValue: standard
-    parameterValueGroup: premium, standard
     summary: Required. SKU details.
     description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -81,11 +79,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
+  - isRequired: true
+    name: --vault-name
+    summary: The name of the vault to delete.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -101,20 +100,21 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: ''
     description: ''
   - name: --object-id
-    summary: A GUID that identifies the principal that will receive permissions.
-    description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
+    summary: ''
     description: ''
   - name: --spn
-    summary: Name of a service principal that will receive permissions.
+    summary: ''
     description: ''
   - name: --upn
-    summary: Name of a user principal that will receive permissions.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -163,8 +163,8 @@ items:
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --vault-name
+    summary: The name of the soft-deleted vault.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -184,11 +184,12 @@ items:
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
+  - isRequired: true
+    name: --vault-name
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -204,36 +205,33 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --object-id
-    summary: A GUID that identifies the principal that will receive permissions.
-    description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
-    description: ''
-  - name: --spn
-    summary: Name of a service principal that will receive permissions.
-    description: ''
-  - name: --upn
-    summary: Name of a user principal that will receive permissions.
+  - isRequired: true
+    name: --vault-name
+    summary: ''
     description: ''
   - name: --certificate-permissions
-    parameterValueGroup: create, delete, deleteissuers, get, getissuers, import, list, listissuers, managecontacts, manageissuers, purge, recover, setissuers, update
-    summary: Space-separated list of certificate permissions to assign.
+    summary: ''
     description: ''
   - name: --key-permissions
-    parameterValueGroup: backup, create, decrypt, delete, encrypt, get, import, list, purge, recover, restore, sign, unwrapKey, update, verify, wrapKey
-    summary: Space-separated list of key permissions to assign.
+    summary: ''
+    description: ''
+  - name: --object-id
+    summary: ''
     description: ''
   - name: --secret-permissions
-    parameterValueGroup: backup, delete, get, list, purge, recover, restore, set
-    summary: Space-separated list of secret permissions to assign.
+    summary: ''
+    description: ''
+  - name: --spn
+    summary: ''
     description: ''
   - name: --storage-permissions
-    parameterValueGroup: backup, delete, deletesas, get, getsas, list, listsas, purge, recover, regeneratekey, restore, set, setsas, update
-    summary: Space-separated list of storage permissions to assign.
+    summary: ''
+    description: ''
+  - name: --upn
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -249,11 +247,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
+  - isRequired: true
+    name: --vault-name
+    summary: The name of the vault.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -269,31 +268,33 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the key vault.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: ''
+    description: ''
+  - name: --bypass
+    summary: ''
+    description: ''
+  - name: --default-action
+    summary: ''
     description: ''
   - name: --enable-purge-protection
-    parameterValueGroup: false, true
-    summary: Prevents manual purging of deleted vault, and all contained entities.
+    summary: ''
     description: ''
   - name: --enable-soft-delete
-    parameterValueGroup: false, true
-    summary: Enable vault deletion recovery for the vault, and all contained entities.
+    summary: ''
     description: ''
   - name: --enabled-for-deployment
-    parameterValueGroup: false, true
-    summary: Allow Virtual Machines to retrieve certificates stored as secrets from the vault.
+    summary: ''
     description: ''
   - name: --enabled-for-disk-encryption
-    parameterValueGroup: false, true
-    summary: Allow Disk Encryption to retrieve secrets from the vault and unwrap keys.
+    summary: ''
     description: ''
   - name: --enabled-for-template-deployment
-    parameterValueGroup: false, true
-    summary: Allow Resource Manager to retrieve secrets from the vault.
-    description: ''
-  - name: --resource-group -g
-    summary: Proceed only if Key Vault belongs to the specified resource group.
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

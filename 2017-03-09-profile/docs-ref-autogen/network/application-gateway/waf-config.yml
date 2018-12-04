@@ -26,20 +26,30 @@ items:
       content: >-
         az network application-gateway waf-config set -g MyResourceGroup -n MyAppGateway \
                                     --enabled true --rule-set-type OWASP --rule-set-version 3.0 \
-                                    --disabled-rules 920130 920140 --disabled-rule-groups REQUEST-942-APPLICATION-ATTACK-SQLI
+                                    --disabled-rule-groups REQUEST-942-APPLICATION-ATTACK-SQLI \
+                                    --disabled-rules 920130 920140
+  - summary: Configure WAF on an application gateway with exclusions.
+    syntax:
+      content: >-
+        az network application-gateway waf-config set -g MyResourceGroup -n MyAppGateway \
+                                    --enabled true --firewall-mode Detection --rule-set-version 3.0 \
+                                    --exclusion "RequestHeaderNames StartsWith x-header" \
+                                    --exclusion "RequestArgNames Equals IgnoreThis"
   parameters:
   - isRequired: true
-    name: --enabled
-    parameterValueGroup: false, true
-    summary: Specify whether the application firewall is enabled.
+    name: --application-gateway-name
+    summary: ''
     description: ''
   - isRequired: true
-    name: --gateway-name
-    summary: The name of the application gateway.
+    name: --enabled
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --firewall-mode
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -62,8 +72,8 @@ items:
       content: az network application-gateway waf-config show -g MyResourceGroup --gateway-name MyAppGateway
   parameters:
   - isRequired: true
-    name: --gateway-name
-    summary: The name of the application gateway.
+    name: --application-gateway-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -98,7 +108,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8698ea9900688a2d74b1a5cf0f3b29e5b22aee98/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
-updated_at: 11/13/2018 6:34:14 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/a5f1fd6d2d2192ddfb6ff3ac3791fc4c8be92a41/src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
+updated_at: 12/4/2018 10:09:36 PM
+ms.date: 12/04/2018
 description: These commands are only applicable to application gateways with an SKU type of WAF. To learn more, visit <a href="https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-web-application-firewall-cli">https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-web-application-firewall-cli</a>.

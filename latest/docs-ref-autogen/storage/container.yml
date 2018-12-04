@@ -30,7 +30,7 @@ items:
       content: az storage container create -n MyStorageContainer --fail-on-exist
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -38,14 +38,13 @@ items:
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --fail-on-exist
-    summary: Throw an exception if the container already exists.
+    summary: Specify whether to throw an exception when the container exists.
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --public-access
-    parameterValueGroup: blob, container, off
-    summary: Specifies whether data in the container may be accessed publically. By default, container data is private ("off") to the account owner. Use "blob" to allow public read access for blobs. Use "container" to allow public read and list access to the entire container.
+    summary: 'Possible values include: container, blob.'
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -76,7 +75,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -84,13 +83,22 @@ items:
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --bypass-immutability-policy
-    summary: Bypasses upcoming service behavior that will block a container from being deleted if it has a immutability-policy. Specifying this will ignore arguments aside from those used to identify the container ("--name", "--account-name").
+    summary: ''
     description: ''
   - name: --fail-not-exist
-    summary: Throw an exception if the container does not exist.
+    summary: ''
     description: ''
   - name: --lease-id
-    summary: If specified, delete_container only succeeds if the container's lease is active and matches this ID. Required if the container has an active lease.
+    summary: ''
+    description: ''
+  - name: --mgmt-client
+    summary: ''
+    description: ''
+  - name: --processed-account-name
+    summary: ''
+    description: ''
+  - name: --processed-resource-group
+    summary: ''
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -127,12 +135,18 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --blob-name
+    summary: Name of a blob. If None, the container will be checked for existence.
+    description: ''
+  - name: --snapshot
+    summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the snapshot.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -170,7 +184,7 @@ items:
                                 az storage blob upload -n MyBlob -c MyContainer --account-name MyStorageAccount -f file.txt --sas-token $sas
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -193,22 +207,22 @@ items:
     summary: Response header value for Content-Type when resource is accessed using this shared access signature.
     description: ''
   - name: --expiry
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
+    summary: The time at which the shared access signature becomes invalid. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
     description: ''
-  - name: --https-only
-    summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
+  - name: --id
+    summary: A unique value up to 64 characters in length that correlates to a stored access policy. To create a stored access policy, use set_blob_service_properties.
     description: ''
   - name: --ip
-    summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
+    summary: Specifies an IP address or a range of IP addresses from which to accept requests. If the IP address from which the request originates does not match the IP address or address range specified on the SAS token, the request is not authenticated. For example, specifying sip=168.1.5.65 or sip=168.1.5.60-168.1.5.70 on the SAS restricts the request to those IP addresses.
     description: ''
-  - name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (d)elete (l)ist (r)ead (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
+  - name: --permission
+    summary: The permissions associated with the shared access signature. The user is restricted to operations allowed by the permissions. Permissions must be ordered read, write, delete, list. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy.
     description: ''
-  - name: --policy-name
-    summary: The name of a stored access policy within the container's ACL.
+  - name: --protocol
+    summary: Specifies the protocol permitted for a request made. The default value is https,http. See Protocol for possible values.
     description: ''
   - name: --start
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
+    summary: The time at which the shared access signature becomes valid. If omitted, start time for this call is assumed to be the time when the storage service receives the request. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -242,8 +256,11 @@ items:
   - name: --include-metadata
     summary: Specifies that container metadata be returned in the response.
     description: ''
+  - name: --marker
+    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
   - name: --num-results
-    summary: Specifies the maximum number of containers to return.
+    summary: Specifies the maximum number of containers to return. A single list request may return up to 1000 contianers and potentially a continuation token which should be followed to get additional resutls.
     description: ''
   - name: --prefix
     summary: Filters the results to return only containers whose names begin with the specified prefix.
@@ -277,7 +294,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -288,8 +305,10 @@ items:
     summary: If specified, set_container_acl only succeeds if the container's lease is active and matches this ID.
     description: ''
   - name: --public-access
-    parameterValueGroup: blob, container, off
-    summary: Specifies whether data in the container may be accessed publically. By default, container data is private ("off") to the account owner. Use "blob" to allow public read access for blobs. Use "container" to allow public read and list access to the entire container.
+    summary: 'Possible values include: container, blob.'
+    description: ''
+  - name: --signed-identifiers
+    summary: A dictionary of access policies to associate with the container. The dictionary may contain up to 5 elements. An empty dictionary will clear the access policies set on the service.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -326,7 +345,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -365,7 +384,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --container-name -c
     summary: The container name.
     description: ''
   - name: --auth-mode
@@ -512,7 +531,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/master/
 doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/master/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8947b1e11fcc83dce4860d8b0320fd92dbc501dd/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
-updated_at: 11/13/2018 5:53:15 PM
-ms.date: 11/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/ce1d2a65a830e59ea9ef25733739990b8416f906/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 12/4/2018 10:09:31 PM
+ms.date: 12/04/2018
 description: Manage blob storage containers.

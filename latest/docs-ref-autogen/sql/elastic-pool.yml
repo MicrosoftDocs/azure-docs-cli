@@ -35,48 +35,22 @@ items:
       content: az sql elastic-pool create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
   parameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the elastic pool.
+    name: --elastic-pool-name
+    summary: ''
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
-    description: ''
-  - name: --db-dtu-max --db-max-capacity --db-max-dtu
-    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
-    description: ''
-  - name: --db-dtu-min --db-min-capacity --db-min-dtu
-    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
-    description: ''
-  - name: --license-type
-    parameterValueGroup: BasePrice, LicenseIncluded
-    summary: The license type to apply for this elastic pool.
-    description: ''
-  - name: --max-size --storage
-    summary: The max storage size. If no unit is specified, defaults to bytes (B).
+    name: --server-name
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
-    description: ''
-  - name: --zone-redundant -z
-    parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy.
-    description: ''
-  - name: --capacity --dtu -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --edition --tier -e
-    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+  - name: --sku
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -92,7 +66,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --elastic-pool-name
     summary: The name of the elastic pool.
     description: ''
   - isRequired: true
@@ -100,8 +74,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    name: --server-name
+    summary: The name of the server.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -124,8 +98,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    name: --server-name
+    summary: The name of the server.
     description: ''
   - name: --skip
     summary: The number of elements in the collection to skip.
@@ -144,7 +118,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --elastic-pool-name
     summary: The name of the elastic pool.
     description: ''
   - isRequired: true
@@ -152,8 +126,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    name: --server-name
+    summary: The name of the server.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -185,21 +159,20 @@ items:
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
-  - name: --available -a
-    summary: If specified, show only results that are available in the specified region.
-    description: ''
-  - name: --show-details -d
-    parameterValueGroup: db-max-dtu, db-max-size, db-min-dtu, max-size
-    summary: List of additional details to include in output.
+  - name: --available
+    summary: ''
     description: ''
   - name: --dtu
-    summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
+    summary: ''
     description: ''
-  - name: --edition --tier -e
-    summary: Edition to search for. If unspecified, all editions are shown.
+  - name: --edition
+    summary: ''
+    description: ''
+  - name: --show-details
+    summary: ''
     description: ''
   - name: --vcores
-    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -215,7 +188,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --elastic-pool-name
     summary: The name of the elastic pool.
     description: ''
   - isRequired: true
@@ -223,8 +196,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    name: --server-name
+    summary: The name of the server.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -247,7 +220,7 @@ items:
       content: az sql elastic-pool update -g mygroup -s myserver -n mypool -z false
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --elastic-pool-name
     summary: The name of the elastic pool.
     description: ''
   - isRequired: true
@@ -255,33 +228,32 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    name: --server-name
+    summary: The name of the server.
     description: ''
-  - name: --db-dtu-max --db-max-capacity --db-max-dtu
-    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
+  - name: --capacity
+    summary: ''
     description: ''
-  - name: --db-dtu-min --db-min-capacity --db-min-dtu
-    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
+  - name: --family
+    summary: ''
     description: ''
-  - name: --max-size --storage
-    summary: The max storage size. If no unit is specified, defaults to bytes (B).
+  - name: --max-capacity
+    summary: ''
+    description: ''
+  - name: --max-size-bytes
+    summary: ''
+    description: ''
+  - name: --min-capacity
+    summary: ''
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --zone-redundant -z
-    parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy.
+  - name: --tier
+    summary: ''
     description: ''
-  - name: --capacity --dtu -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --edition --tier -e
-    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+  - name: --zone-redundant
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

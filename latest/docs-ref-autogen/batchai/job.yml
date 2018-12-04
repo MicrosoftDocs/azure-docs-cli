@@ -35,55 +35,55 @@ items:
                                     "/providers/Microsoft.BatchAI/workspaces/MyClusterWorkspace/clusters/MyCluster"
   parameters:
   - isRequired: true
-    name: --cluster -c
-    summary: Name or ARM ID of the cluster to run the job. You need to provide ARM ID if the cluster belongs to a different workspace.
+    name: --cluster
+    summary: ''
     description: ''
   - isRequired: true
-    name: --config-file -f
-    summary: A path to a json file containing job create parameters (json representation of azure.mgmt.batchai.models.JobCreateParameters).
+    name: --experiment-name
+    summary: ''
     description: ''
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --job-name
+    summary: ''
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of job.
+    name: --json-file
+    summary: ''
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --resource-group
+    summary: ''
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: ''
+    description: ''
+  - name: --account-key
+    summary: ''
+    description: ''
+  - name: --account-name
+    summary: ''
     description: ''
   - name: --afs-mount-path
     defaultValue: afs
-    summary: Relative mount path for Azure File Share. The File Share will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    summary: ''
     description: ''
-  - name: --afs-name
-    summary: Name of Azure File Share to mount during the job execution. The File Share will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name.  Multiple shares can be mounted using configuration file (see --config-file option).
+  - name: --azure-file-share
+    summary: ''
     description: ''
-  - name: --bfs-mount-path
+  - name: --container-mount-path
     defaultValue: bfs
-    summary: Relative mount path for Azure Storage Blob Container. The container will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    summary: ''
     description: ''
-  - name: --bfs-name
-    summary: Name of Azure Storage Blob Container to mount during the job execution. The container will be mounted only on the nodes which are executing the job. Must be used in conjunction with --storage-account-name. Multiple containers can be mounted using configuration file (see --config-file option).
-    description: ''
-  - name: --storage-account-key
-    summary: Storage account key. Required if the storage account belongs to a different subscription. Can be specified using AZURE_BATCHAI_STORAGE_KEY environment variable.
-    description: ''
-  - name: --storage-account-name
-    summary: Storage account name for Azure File Shares and/or Azure Storage Containers to be mounted on each cluster node. Can be specified using AZURE_BATCHAI_STORAGE_ACCOUNT environment variable.
+  - name: --container-name
+    summary: ''
     description: ''
   - name: --nfs
-    summary: Name or ARM ID of the file server to be mounted during the job execution. You need to provide ARM ID if the file server belongs to a different workspace. You can configure multiple file servers using job's  configuration file.
+    summary: ''
     description: ''
   - name: --nfs-mount-path
     defaultValue: nfs
-    summary: Relative mount path for NFS. The NFS will be available at $AZ_BATCHAI_JOB_MOUNT_ROOT/<relative_mount_path> folder.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -109,20 +109,20 @@ items:
       content: az batchai job delete -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob --no-wait
   parameters:
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --experiment-name
+    summary: The name of the experiment. Experiment names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of job.
+    name: --job-name
+    summary: The name of the job within the specified resource group. Job names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: The name of the workspace. Workspace names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -148,16 +148,19 @@ items:
       content: az batchai job list -g MyResourceGroup -w MyWorkspace -e MyExperiment -o table
   parameters:
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --experiment-name
+    summary: The name of the experiment. Experiment names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: The name of the workspace. Workspace names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
+    description: ''
+  - name: --jobs-list-by-experiment-options
+    summary: Additional parameters for the operation.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -180,20 +183,20 @@ items:
       content: az batchai job show -g MyResourceGroup -w MyWorkspace -e MyExperiment -n MyJob -o table
   parameters:
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --experiment-name
+    summary: The name of the experiment. Experiment names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of job.
+    name: --job-name
+    summary: The name of the job within the specified resource group. Job names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: The name of the workspace. Workspace names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py
@@ -221,20 +224,20 @@ items:
                                     --no-wait
   parameters:
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --experiment-name
+    summary: The name of the experiment. Experiment names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of job.
+    name: --job-name
+    summary: The name of the job within the specified resource group. Job names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: The name of the workspace. Workspace names can only contain a combination of alphanumeric characters along with dash (-) and underscore (_). The name must be from 1 through 64 characters long.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -260,24 +263,24 @@ items:
       content: az batchai job wait -g MyResourceGroup -w MyWorkspace -n MyJob
   parameters:
   - isRequired: true
-    name: --experiment -e
-    summary: Name of experiment.
+    name: --experiment-name
+    summary: ''
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of job.
+    name: --job-name
+    summary: ''
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --resource-group
+    summary: ''
     description: ''
   - isRequired: true
-    name: --workspace -w
-    summary: Name of workspace.
+    name: --workspace-name
+    summary: ''
     description: ''
-  - name: --interval
+  - name: --check-interval-sec
     defaultValue: "15"
-    summary: Polling interval in sec.
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-batchai/azure/cli/command_modules/batchai/_help.py

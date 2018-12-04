@@ -23,22 +23,22 @@ items:
   parameters:
   - isRequired: true
     name: --job-id
-    summary: The ID of the job containing the task.
+    summary: ''
     description: ''
   - name: --affinity-id
     summary: Required. An opaque string representing the location of a compute node or a task that has run previously. You can pass the affinityId of a compute node to indicate that this task needs to run on that compute node. Note that this is just a soft affinity. If the target node is busy or unavailable at the time the task is scheduled, then the task will be scheduled elsewhere.
     description: ''
   - name: --application-package-references
-    summary: The space-separated list of IDs specifying the application packages to be installed. Space-separated application IDs with optional version in 'id[#version]' format.
+    summary: A list of application packages that the Batch service will deploy to the compute node before running the command line. Application packages are downloaded and deployed to a shared directory, not the task working directory. Therefore, if a referenced package is already on the compute node, and is up to date, then it is not re-downloaded; the existing copy on the compute node is used. If a referenced application package cannot be installed, for example because the package has been deleted or because download failed, the task fails.
     description: ''
   - name: --command-line
-    summary: The command line of the task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+    summary: Required. The command line of the task. For multi-instance tasks, the command line is executed as the primary task, after the primary task and all subtasks have finished executing the coordination command line. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variable (<a href="https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables">https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables</a>).
     description: ''
   - name: --environment-settings
-    summary: A list of environment variable settings for the task. Space-separated values in 'key=value' format.
+    summary: A list of environment variable settings for the task.
     description: ''
   - name: --json-file
-    summary: The file containing the task(s) to create in JSON(formatted to match REST API request body). When submitting multiple tasks, accepts either an array of tasks or a TaskAddCollectionParamater. If this parameter is specified, all other parameters are ignored.
+    summary: ''
     description: ''
   - name: --max-task-retry-count
     summary: The maximum number of times the task may be retried. The Batch service retries a task if its exit code is nonzero. Note that this value specifically controls the number of retries for the task executable due to a nonzero exit code. The Batch service will try the task once, and may then retry up to this limit. For example, if the maximum retry count is 3, Batch tries the task up to 4 times (one initial try and 3 retries). If the maximum retry count is 0, the Batch service does not retry the task after the first attempt. If the maximum retry count is -1, the Batch service retries the task without limit. Resource files and application packages are only downloaded again if the task is retried on a new compute node.
@@ -47,22 +47,13 @@ items:
     summary: The maximum elapsed time that the task may run, measured from the time the task starts. If the task does not complete within the time limit, the Batch service terminates it. If this is not specified, there is no time limit on how long the task may run.
     description: ''
   - name: --resource-files
-    summary: A list of files that the Batch service will download to the compute node before running the command line. Space-separated resource references in filename=blobsource format.
+    summary: A list of files that the Batch service will download to the compute node before running the command line. For multi-instance tasks, the resource files will only be downloaded to the compute node on which the primary task is executed. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers.
     description: ''
   - name: --retention-time
     summary: The minimum time to retain the task directory on the compute node where it ran, from the time it completes execution. After this time, the Batch service may delete the task directory and all its contents. The default is infinite, i.e. the task directory will be retained until the compute node is removed or reimaged.
     description: ''
   - name: --task-id
-    summary: The ID of the task.
-    description: ''
-  - name: --account-endpoint
-    summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
-    description: ''
-  - name: --account-key
-    summary: 'The Batch account key. Alternatively, set by environment variable: AZURE_BATCH_ACCESS_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    summary: ''
     description: ''
   source:
     path: src/command_modules/azure-cli-batch/azure/cli/command_modules/batch/_help.py
