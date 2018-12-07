@@ -87,6 +87,21 @@ The error is due to a missing component required by `apt-key`. You can resolve i
 sudo apt-get install dirmngr
 ```
 
+### apt-key fails with "IPC connect call failed" message prior to "No dirmngr" message
+
+Due to [a previous issue in WSL](https://github.com/Microsoft/WSL/issues/3286), you may experience a variation of the following error:
+
+```output
+gpg: connecting dirmngr at '/tmp/apt-key-gpghome.nMumTfhiHO/S.dirmngr' failed: IPC connect call failed
+gpg: keyserver receive failed: No dirmngr
+```
+
+If that occurs, the following workaround should allow you to add the appropriate key to continue installation
+
+```bash
+curl -sL "http://packages.microsoft.com/keys/microsoft.asc" | sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg add
+```
+
 ### apt-key hangs
 
 When behind a firewall blocking outgoing connections to port 11371, the `apt-key` command might hang indefinitely.
