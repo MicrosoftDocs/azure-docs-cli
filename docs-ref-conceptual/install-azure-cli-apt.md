@@ -96,7 +96,7 @@ gpg: connecting dirmngr at '/tmp/apt-key-gpghome.nMumTfhiHO/S.dirmngr' failed: I
 gpg: keyserver receive failed: No dirmngr
 ```
 
-If that occurs, the following workaround should allow you to add the appropriate key to continue installation
+If that occurs, the following workaround should allow you to add the appropriate key to continue installation:
 
 ```bash
 curl -sL "http://packages.microsoft.com/keys/microsoft.asc" | sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg add
