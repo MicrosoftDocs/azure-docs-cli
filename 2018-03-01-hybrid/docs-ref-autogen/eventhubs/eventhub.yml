@@ -24,46 +24,51 @@ items:
       content: az eventhubs eventhub create --resource-group myresourcegroup --namespace-name mynamespace --name myeventhub --message-retention 4 ---partition-count 15
   parameters:
   - isRequired: true
-    name: --event-hub-name
-    summary: ''
+    name: --name -n
+    summary: Name of Eventhub.
     description: ''
   - isRequired: true
     name: --namespace-name
-    summary: ''
+    summary: Name of Namespace.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --archive-name-format
-    summary: ''
+  - name: --enable-capture
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates whether capture description is enabled.
     description: ''
-  - name: --blob-container
-    summary: ''
-    description: ''
-  - name: --capture-interval-seconds
-    summary: ''
-    description: ''
-  - name: --capture-size-limit-bytes
-    summary: ''
-    description: ''
-  - name: --destination-name
-    summary: ''
-    description: ''
-  - name: --enabled
-    summary: ''
-    description: ''
-  - name: --message-retention-in-days
-    summary: ''
+  - name: --message-retention
+    summary: Number of days to retain events for this Event Hub, value should be 1 to 7 days.
     description: ''
   - name: --partition-count
-    summary: ''
+    summary: Number of partitions created for the Event Hub. By default, allowed values are 2-32. Lower value of 1 is supported with Kafka enabled namespaces. In presence of a custom quota, the upper limit will match the upper limit of the quota.
     description: ''
   - name: --status
-    summary: ''
+    parameterValueGroup: Active, Disabled, ReceiveDisabled, SendDisabled
+    summary: Status of Eventhub.
     description: ''
-  - name: --storage-account-resource-id
-    summary: ''
+  - name: --capture-interval
+    summary: Allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds.
+    description: ''
+  - name: --capture-size-limit
+    summary: Defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes.
+    description: ''
+  - name: --archive-name-format
+    summary: Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order.
+    description: ''
+  - name: --blob-container
+    summary: Blob container Name.
+    description: ''
+  - name: --destination-name
+    summary: Name for capture destination.
+    description: ''
+  - name: --storage-account
+    summary: Name (if within same resource group and not of type Classic Storage) or ARM id of the storage account to be used to create the blobs.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-eventhubs/azure/cli/command_modules/eventhubs/_help.py
@@ -82,17 +87,20 @@ items:
     syntax:
       content: az eventhubs eventhub delete --resource-group myresourcegroup --namespace-name mynamespace --name myeventhub
   parameters:
-  - isRequired: true
-    name: --event-hub-name
-    summary: The Event Hub name.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --namespace-name
-    summary: The Namespace name.
+  - name: --name -n
+    summary: Name of Eventhub.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --namespace-name
+    summary: Name of Namespace.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-eventhubs/azure/cli/command_modules/eventhubs/_help.py
@@ -113,7 +121,7 @@ items:
   parameters:
   - isRequired: true
     name: --namespace-name
-    summary: The Namespace name.
+    summary: Name of Namespace.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -124,6 +132,9 @@ items:
     description: ''
   - name: --top
     summary: May be used to limit the number of results to the most recent N usageDetails.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-eventhubs/azure/cli/command_modules/eventhubs/_help.py
@@ -142,17 +153,20 @@ items:
     syntax:
       content: az eventhubs eventhub show --resource-group myresourcegroup --namespace-name mynamespace --name myeventhub
   parameters:
-  - isRequired: true
-    name: --event-hub-name
-    summary: The Event Hub name.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --namespace-name
-    summary: The Namespace name.
+  - name: --name -n
+    summary: Name of Eventhub.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --namespace-name
+    summary: Name of Namespace.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-eventhubs/azure/cli/command_modules/eventhubs/_help.py
@@ -171,47 +185,52 @@ items:
     syntax:
       content: az eventhubs eventhub update --resource-group myresourcegroup --namespace-name mynamespace --name myeventhub --message-retention 3 ---partition-count 12
   parameters:
-  - isRequired: true
-    name: --event-hub-name
-    summary: The Event Hub name.
+  - name: --enable-capture
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates whether capture description is enabled.
     description: ''
-  - isRequired: true
-    name: --namespace-name
-    summary: The Namespace name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --archive-name-format
-    summary: ''
-    description: ''
-  - name: --blob-container
-    summary: ''
-    description: ''
-  - name: --capture-interval-seconds
-    summary: ''
-    description: ''
-  - name: --capture-size-limit-bytes
-    summary: ''
-    description: ''
-  - name: --destination-name
-    summary: ''
-    description: ''
-  - name: --enabled
-    summary: ''
-    description: ''
-  - name: --message-retention-in-days
-    summary: ''
+  - name: --message-retention
+    summary: Number of days to retain events for this Event Hub, value should be 1 to 7 days.
     description: ''
   - name: --partition-count
-    summary: ''
+    summary: Number of partitions created for the Event Hub. By default, allowed values are 2-32. Lower value of 1 is supported with Kafka enabled namespaces. In presence of a custom quota, the upper limit will match the upper limit of the quota.
     description: ''
   - name: --status
-    summary: ''
+    parameterValueGroup: Active, Disabled, ReceiveDisabled, SendDisabled
+    summary: Status of Eventhub.
     description: ''
-  - name: --storage-account-resource-id
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of Eventhub.
+    description: ''
+  - name: --namespace-name
+    summary: Name of Namespace.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --capture-interval
+    summary: Allows you to set the frequency with which the capture to Azure Blobs will happen, value should between 60 to 900 seconds.
+    description: ''
+  - name: --capture-size-limit
+    summary: Defines the amount of data built up in your Event Hub before an capture operation, value should be between 10485760 to 524288000 bytes.
+    description: ''
+  - name: --archive-name-format
+    summary: Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order.
+    description: ''
+  - name: --blob-container
+    summary: Blob container Name.
+    description: ''
+  - name: --destination-name
+    summary: Name for capture destination.
+    description: ''
+  - name: --storage-account
+    summary: Name (if within same resource group and not of type Classic Storage) or ARM id of the storage account to be used to create the blobs.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

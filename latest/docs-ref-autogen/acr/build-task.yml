@@ -32,74 +32,83 @@ items:
       content: az acr build-task create -t hello-world:{{.Build.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git --git-access-token 0000000000000000000000000000000000000000
   parameters:
   - isRequired: true
-    name: --build-task-name
-    summary: ''
+    name: --context -c
+    summary: The full URL to the source code repository.
     description: ''
   - isRequired: true
     name: --git-access-token
-    summary: ''
+    summary: The access token used to access the source control provider.
     description: ''
   - isRequired: true
-    name: --image-names
-    summary: ''
+    name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the build task.
     description: ''
   - isRequired: true
-    name: --repository-url
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --alias
-    summary: ''
+    summary: The alternative name for build task. Default to the build task name.
     description: ''
   - name: --base-image-trigger
     defaultValue: Runtime
-    summary: ''
+    parameterValueGroup: All, None, Runtime
+    summary: The type of the auto trigger for base image dependency updates.
     description: ''
   - name: --branch
     defaultValue: master
-    summary: ''
+    summary: The source control branch name.
     description: ''
   - name: --build-arg
-    summary: ''
+    summary: Build argument in 'name[=value]' format.
     description: ''
   - name: --commit-trigger-enabled
     defaultValue: "1"
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the source control commit trigger is enabled.
     description: ''
   - name: --cpu
     defaultValue: "2"
-    summary: ''
+    summary: The CPU configuration in terms of number of cores required for the build.
     description: ''
-  - name: --docker-file-path
+  - name: --file -f
     defaultValue: Dockerfile
-    summary: ''
+    summary: The relative path of the the docker file to the source code root folder. Default to 'Dockerfile'.
     description: ''
   - name: --no-cache
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the image cache is enabled.
     description: ''
   - name: --no-push
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the image built should be pushed to the registry.
     description: ''
-  - name: --os-type
+  - name: --os
     defaultValue: Linux
-    summary: ''
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --secret-build-arg
-    summary: ''
+    summary: Secret build argument in 'name[=value]' format.
     description: ''
   - name: --status
     defaultValue: Enabled
-    summary: ''
+    parameterValueGroup: Disabled, Enabled
+    summary: The current status of build task.
     description: ''
   - name: --timeout
     defaultValue: "3600"
-    summary: ''
+    summary: The timeout in seconds.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -119,15 +128,18 @@ items:
       content: az acr build-task delete -n MyBuildTask -r MyRegistry
   parameters:
   - isRequired: true
-    name: --build-task-name
-    summary: ''
+    name: --name -n
+    summary: The name of the build task.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -147,11 +159,14 @@ items:
       content: az acr build-task list -r MyRegistry -o table
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -180,24 +195,28 @@ items:
       content: az acr build-task list-builds -r MyRegistry --image hello-world -o table
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --build-status
-    summary: ''
+    parameterValueGroup: Canceled, Error, Failed, Queued, Running, Started, Succeeded, Timeout
+    summary: The current status of build.
     description: ''
-  - name: --build-task-name
-    summary: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
-  - name: --image
-    summary: ''
+  - name: --name -n
+    summary: The name of the build task.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --top
     defaultValue: "15"
-    summary: ''
+    summary: Limit the number of latest builds in the results.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -226,23 +245,26 @@ items:
       content: az acr build-task logs -r MyRegistry --image hello-world
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --build-id
-    summary: ''
+    summary: The unique build identifier.
     description: ''
-  - name: --build-task-name
-    summary: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
-  - name: --image
-    summary: ''
+  - name: --name -n
+    summary: The name of the build task.
     description: ''
   - name: --no-format
-    summary: ''
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -262,21 +284,24 @@ items:
       content: az acr build-task run -n MyBuildTask -r MyRegistry
   parameters:
   - isRequired: true
-    name: --build-task-name
-    summary: ''
+    name: --name -n
+    summary: The name of the build task.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --no-format
-    summary: ''
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --no-logs
-    summary: ''
+    summary: Do not show logs after successfully queuing the build.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -299,18 +324,21 @@ items:
       content: az acr build-task show -n MyBuildTask -r MyRegistry --with-secure-properties
   parameters:
   - isRequired: true
-    name: --build-task-name
-    summary: ''
+    name: --name -n
+    summary: The name of the build task.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --with-secure-properties
-    summary: ''
+    summary: Indicates whether the secure properties of a build task should be returned.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -331,14 +359,17 @@ items:
   parameters:
   - isRequired: true
     name: --build-id
-    summary: ''
+    summary: The unique build identifier.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -358,63 +389,72 @@ items:
       content: az acr build-task update -n MyBuildTask -r MyRegistry --git-access-token 0000000000000000000000000000000000000000
   parameters:
   - isRequired: true
-    name: --build-task-name
-    summary: ''
+    name: --name -n
+    summary: The name of the build task.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --alias
-    summary: ''
+    summary: The alternative name for build task. Default to the build task name.
     description: ''
   - name: --base-image-trigger
-    summary: ''
+    parameterValueGroup: All, None, Runtime
+    summary: The type of the auto trigger for base image dependency updates.
     description: ''
   - name: --branch
-    summary: ''
+    summary: The source control branch name.
     description: ''
   - name: --build-arg
-    summary: ''
+    summary: Build argument in 'name[=value]' format.
     description: ''
   - name: --commit-trigger-enabled
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the source control commit trigger is enabled.
+    description: ''
+  - name: --context -c
+    summary: The full URL to the source code repository.
     description: ''
   - name: --cpu
-    summary: ''
+    summary: The CPU configuration in terms of number of cores required for the build.
     description: ''
-  - name: --docker-file-path
-    summary: ''
+  - name: --file -f
+    summary: The relative path of the the docker file to the source code root folder. Default to 'Dockerfile'.
     description: ''
   - name: --git-access-token
-    summary: ''
+    summary: The access token used to access the source control provider.
     description: ''
-  - name: --image-names
-    summary: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - name: --no-cache
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the image cache is enabled.
     description: ''
   - name: --no-push
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the image built should be pushed to the registry.
     description: ''
-  - name: --os-type
-    summary: ''
-    description: ''
-  - name: --repository-url
-    summary: ''
+  - name: --os
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --secret-build-arg
-    summary: ''
+    summary: Secret build argument in 'name[=value]' format.
     description: ''
   - name: --status
-    summary: ''
+    parameterValueGroup: Disabled, Enabled
+    summary: The current status of build task.
     description: ''
   - name: --timeout
-    summary: ''
+    summary: The timeout in seconds.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -435,17 +475,21 @@ items:
   parameters:
   - isRequired: true
     name: --build-id
-    summary: ''
+    summary: The unique build identifier.
     description: ''
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --no-archive
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the build should be archived.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py

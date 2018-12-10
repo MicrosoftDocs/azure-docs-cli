@@ -35,29 +35,33 @@ items:
     summary: Current active storage account key name.
     description: ''
   - isRequired: true
-    name: --auto-regenerate-key
-    summary: Whether keyvault should manage the storage account for the user.
-    description: ''
-  - isRequired: true
     name: --resource-id
     summary: Storage account resource id.
     description: ''
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --auto-regenerate-key
+    parameterValueGroup: false, true
+    summary: Whether keyvault should manage the storage account for the user.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
     description: ''
   - name: --regeneration-period
-    summary: The key regeneration time duration specified in ISO-8601 format.
-    description: ''
-  - name: --storage-account-attributes
-    summary: The attributes of the storage account.
+    summary: The key regeneration time duration specified in ISO-8601 format, such as "P30D" for rotation every 30 days.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name to identify the storage account in the vault.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -73,17 +77,20 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --file-path
-    summary: ''
+    name: --file -f
+    summary: Local file path in which to store storage account backup.
     description: ''
-  - name: --identifier
-    summary: ''
+  - name: --id
+    summary: Id of the storage account.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
     description: ''
-  - name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -98,12 +105,15 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -118,12 +128,15 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -139,12 +152,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+    name: --name -n
+    summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -160,12 +176,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+    name: --name -n
+    summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -184,13 +203,17 @@ items:
     name: --key-name
     summary: The storage account key name.
     description: ''
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --id
+    summary: Id of the storage account.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -205,13 +228,17 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --id
+    summary: Id of the storage account.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -231,8 +258,11 @@ items:
     summary: ''
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -247,13 +277,17 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --id
+    summary: Id of the storage account.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -269,12 +303,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+    name: --name -n
+    summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -289,28 +326,34 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --active-key-name
     summary: The current active storage account key name.
     description: ''
   - name: --auto-regenerate-key
+    parameterValueGroup: false, true
     summary: Whether keyvault should manage the storage account for the user.
     description: ''
-  - name: --regeneration-period
-    summary: The key regeneration time duration specified in ISO-8601 format.
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
     description: ''
-  - name: --storage-account-attributes
-    summary: The attributes of the storage account.
+  - name: --regeneration-period
+    summary: The key regeneration time duration specified in ISO-8601 format, such as "P30D" for rotation every 30 days.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --id
+    summary: Id of the storage account.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py

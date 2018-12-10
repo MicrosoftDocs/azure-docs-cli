@@ -40,53 +40,61 @@ items:
   parameters:
   - isRequired: true
     name: --backend-port
-    summary: ''
+    summary: Port number.
     description: ''
   - isRequired: true
     name: --frontend-port
-    summary: ''
+    summary: Port number.
     description: ''
   - isRequired: true
-    name: --item-name
-    summary: ''
+    name: --lb-name
+    summary: The load balancer name.
     description: ''
   - isRequired: true
-    name: --load-balancer-name
-    summary: ''
+    name: --name -n
+    summary: The name of the load balancing rule.
     description: ''
   - isRequired: true
     name: --protocol
-    summary: ''
+    parameterValueGroup: All, Tcp, Udp
+    summary: Network transport protocol.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --backend-address-pool-name
-    summary: ''
+  - name: --backend-pool-name
+    summary: The name of the backend address pool. If only one exists, omit to use as default.
     description: ''
   - name: --disable-outbound-snat
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule.
     description: ''
   - name: --enable-tcp-reset
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Receive bidirectional TCP reset on TCP flow idle timeout or unexpected connection termination. Only used when protocol is set to TCP.
     description: ''
   - name: --floating-ip
     defaultValue: "false"
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Enable floating IP.
     description: ''
   - name: --frontend-ip-name
-    summary: ''
+    summary: The name of the frontend IP configuration. If only one exists, omit to use as default.
     description: ''
   - name: --idle-timeout
-    summary: ''
+    summary: Idle timeout in minutes.
     description: ''
   - name: --load-distribution
     defaultValue: default
-    summary: ''
+    parameterValueGroup: Default, SourceIP, SourceIPProtocol
+    summary: Affinity rule settings.
     description: ''
   - name: --probe-name
-    summary: ''
+    summary: Name of an existing probe to associate with this rule.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -106,16 +114,19 @@ items:
       content: az network lb rule delete -g MyResourceGroup --lb-name MyLb -n MyLbRule
   parameters:
   - isRequired: true
-    name: --item-name
-    summary: ''
+    name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the load balancing rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -135,12 +146,15 @@ items:
       content: az network lb rule list -g MyResourceGroup --lb-name MyLb -o table
   parameters:
   - isRequired: true
+    name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -160,16 +174,19 @@ items:
       content: az network lb rule show -g MyResourceGroup --lb-name MyLb -n MyLbRule
   parameters:
   - isRequired: true
-    name: --item-name
-    summary: ''
+    name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the load balancing rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -191,51 +208,59 @@ items:
     syntax:
       content: az network lb rule update -g MyResourceGroup --lb-name MyLb -n MyLbRule \ --protocol All --frontend-port 0 --backend-port 0
   parameters:
-  - isRequired: true
-    name: --item-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --load-balancer-name
-    summary: The name of the load balancer.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --backend-address-pool-name
-    summary: ''
+  - name: --backend-pool-name
+    summary: The name of the backend address pool.
     description: ''
   - name: --backend-port
-    summary: ''
+    summary: Port number.
     description: ''
   - name: --disable-outbound-snat
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule.
     description: ''
   - name: --enable-tcp-reset
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Receive bidirectional TCP reset on TCP flow idle timeout or unexpected connection termination. Only used when protocol is set to TCP.
     description: ''
   - name: --floating-ip
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Enable floating IP.
     description: ''
   - name: --frontend-ip-name
-    summary: ''
+    summary: The name of the frontend IP configuration.
     description: ''
   - name: --frontend-port
-    summary: ''
+    summary: Port number.
     description: ''
   - name: --idle-timeout
-    summary: ''
+    summary: Idle timeout in minutes.
     description: ''
   - name: --load-distribution
     defaultValue: default
-    summary: ''
+    parameterValueGroup: Default, SourceIP, SourceIPProtocol
+    summary: Affinity rule settings.
     description: ''
   - name: --probe-name
-    summary: ''
+    summary: Name of an existing probe to associate with this rule.
     description: ''
   - name: --protocol
-    summary: ''
+    parameterValueGroup: All, Tcp, Udp
+    summary: Network transport protocol.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --lb-name
+    summary: The load balancer name.
+    description: ''
+  - name: --name -n
+    summary: The name of the load balancing rule.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

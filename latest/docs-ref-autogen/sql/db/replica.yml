@@ -26,26 +26,52 @@ items:
       content: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb -f Gen4 -c 1
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --name -n
+    summary: Name of the Azure SQL Database.
     description: ''
   - isRequired: true
-    name: --partner-server-name
-    summary: ''
+    name: --partner-server
+    summary: Name of the server to create the new replica in.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server-name
-    summary: ''
+    name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --partner-resource-group-name
-    summary: ''
+  - name: --partner-resource-group
+    summary: Name of the resource group to create the new replica in. If unspecified, defaults to the origin resource group.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -61,26 +87,29 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --partner-server
+    summary: Name of the server that the other replica is in.
     description: ''
-  - isRequired: true
-    name: --partner-server-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
-    description: ''
-  - name: --partner-resource-group-name
-    summary: ''
+  - name: --partner-resource-group
+    summary: Name of the resource group that the other replica is in. If unspecified, defaults to the first database's resource group.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -95,17 +124,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database to retrieve links for.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -120,20 +152,23 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
-    description: ''
   - name: --allow-data-loss
-    summary: ''
+    summary: If specified, the failover operation will allow data loss.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the database to fail over.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group containing the secondary replica that will become the new primary.
+    description: ''
+  - name: --server -s
+    summary: Name of the server containing the secondary replica that will become the new primary. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py

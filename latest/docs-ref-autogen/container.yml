@@ -24,16 +24,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name
-    summary: ''
+  - name: --container-name
+    summary: The container to attach to. If omitted, the first container in the container group will be chosen.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --container-name
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -98,133 +102,141 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --assign-identity
-    summary: ''
-    description: ''
-  - name: --azure-file-volume-account-key
-    summary: ''
-    description: ''
-  - name: --azure-file-volume-account-name
-    summary: ''
-    description: ''
-  - name: --azure-file-volume-mount-path
-    summary: ''
-    description: ''
-  - name: --azure-file-volume-share-name
-    summary: ''
-    description: ''
   - name: --command-line
-    summary: ''
+    summary: The command line to run when the container is started, e.g. '/bin/bash -c myscript.sh'.
     description: ''
   - name: --cpu
     defaultValue: "1"
-    summary: ''
+    summary: The required number of CPU cores of the containers, accurate to one decimal place.
     description: ''
   - name: --dns-name-label
-    summary: ''
+    summary: The dns name label for container group with public IP.
     description: ''
-  - name: --environment-variables
-    summary: ''
+  - name: --environment-variables -e
+    summary: A list of environment variable for the container. Space-separated values in 'key=value' format.
     description: ''
-  - name: --file
-    summary: ''
-    description: ''
-  - name: --gitrepo-dir
-    defaultValue: .
-    summary: ''
-    description: ''
-  - name: --gitrepo-mount-path
-    summary: ''
-    description: ''
-  - name: --gitrepo-revision
-    summary: ''
-    description: ''
-  - name: --gitrepo-url
-    summary: ''
-    description: ''
-  - name: --identity-role
-    defaultValue: Contributor
-    summary: ''
-    description: ''
-  - name: --identity-scope
-    summary: ''
+  - name: --file -f
+    summary: The path to the input file.
     description: ''
   - name: --image
-    summary: ''
+    summary: The container image name.
     description: ''
   - name: --ip-address
-    summary: ''
+    parameterValueGroup: Private, Public
+    summary: The IP address type of the container group.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
-  - name: --log-analytics-workspace
-    summary: ''
-    description: ''
-  - name: --log-analytics-workspace-key
-    summary: ''
-    description: ''
   - name: --memory
     defaultValue: "1.5"
-    summary: ''
+    summary: The required memory of the containers in GB, accurate to one decimal place.
     description: ''
-  - name: --name
-    summary: ''
-    description: ''
-  - name: --network-profile
-    summary: ''
+  - name: --name -n
+    summary: The name of the container group.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --os-type
     defaultValue: Linux
-    summary: ''
+    parameterValueGroup: Linux, Windows
+    summary: The OS type of the containers.
     description: ''
   - name: --ports
-    summary: ''
+    defaultValue: '[80]'
+    summary: The ports to open.
     description: ''
   - name: --protocol
-    summary: ''
-    description: ''
-  - name: --registry-login-server
-    summary: ''
-    description: ''
-  - name: --registry-password
-    summary: ''
-    description: ''
-  - name: --registry-username
-    summary: ''
+    parameterValueGroup: TCP, UDP
+    summary: The network protocol to use.
     description: ''
   - name: --restart-policy
     defaultValue: Always
-    summary: ''
+    parameterValueGroup: Always, Never, OnFailure
+    summary: Restart policy for all containers within the container group.
     description: ''
   - name: --secrets
-    summary: ''
+    summary: Space-separated secrets in 'key=value' format.
     description: ''
   - name: --secrets-mount-path
-    summary: ''
+    summary: The path within the container where the secrets volume should be mounted. Must not contain colon ':'.
     description: ''
   - name: --secure-environment-variables
-    summary: ''
+    summary: A list of secure environment variable for the container. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --azure-file-volume-account-key
+    summary: The storage account access key used to access the Azure File share.
+    description: ''
+  - name: --azure-file-volume-account-name
+    summary: The name of the storage account that contains the Azure File share.
+    description: ''
+  - name: --azure-file-volume-mount-path
+    summary: The path within the container where the azure file volume should be mounted. Must not contain colon ':'.
+    description: ''
+  - name: --azure-file-volume-share-name
+    summary: The name of the Azure File share to be mounted as a volume.
+    description: ''
+  - name: --gitrepo-dir
+    defaultValue: .
+    summary: The target directory path in the git repository. Must not contain '..'.
+    description: ''
+  - name: --gitrepo-mount-path
+    summary: The path within the container where the git repo volume should be mounted. Must not contain colon ':'.
+    description: ''
+  - name: --gitrepo-revision
+    summary: The commit hash for the specified revision.
+    description: ''
+  - name: --gitrepo-url
+    summary: The URL of a git repository to be mounted as a volume.
+    description: ''
+  - name: --registry-login-server
+    summary: The container image registry login server.
+    description: ''
+  - name: --registry-password
+    summary: The password to log in container image registry server.
+    description: ''
+  - name: --registry-username
+    summary: The username to log in container image registry server.
+    description: ''
+  - name: --log-analytics-workspace
+    summary: The Log Analytics workspace name or id. Use the current subscription or use --subscription flag to set the desired subscription.
+    description: ''
+  - name: --log-analytics-workspace-key
+    summary: The Log Analytics workspace key.
+    description: ''
+  - name: --assign-identity
+    summary: Space-separated list of assigned identities. Assigned identities are either user assigned identities (resource IDs) and / or the system assigned identity ('[system]'). See examples for more info.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --network-profile
+    summary: The network profile name or id.
     description: ''
   - name: --subnet
-    summary: ''
+    summary: The name of the subnet when creating a new VNET or referencing an existing one. Can also reference an existing subnet by ID.
     description: ''
   - name: --subnet-address-prefix
     defaultValue: 10.0.0.0/24
-    summary: ''
+    summary: The subnet IP address prefix to use when creating a new VNET in CIDR format.
     description: ''
   - name: --vnet
-    summary: ''
+    summary: The name of the VNET when creating a new one or referencing an existing one. Can also reference an existing vnet by ID. This allows using vnets from other resource groups.
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
-    summary: ''
+    summary: The IP address prefix to use when creating a new VNET in CIDR format.
     description: ''
   - name: --vnet-name
-    summary: ''
+    summary: The name of the VNET when creating a new one or referencing an existing one.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -239,16 +251,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -269,26 +285,30 @@ items:
   parameters:
   - isRequired: true
     name: --exec-command
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: The command to run from within the container.
     description: ''
   - name: --container-name
-    summary: ''
+    summary: The container name where to execute the command. Can be ommitted for container groups with only one container.
     description: ''
   - name: --terminal-col-size
     defaultValue: "80"
-    summary: ''
+    summary: The col size for the command output.
     description: ''
   - name: --terminal-row-size
     defaultValue: "20"
-    summary: ''
+    summary: The row size for the command output.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -308,16 +328,20 @@ items:
       content: az container export -g MyResourceGroup --name mynginx -f output.yaml
   parameters:
   - isRequired: true
-    name: --file
-    summary: ''
+    name: --file -f
+    summary: The file path to export the container group.
     description: ''
-  - isRequired: true
-    name: --name
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -335,6 +359,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
     remote:
@@ -348,19 +375,23 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --container-name
-    summary: ''
+    summary: The container name to tail the logs. If omitted, the first container in the container group will be chosen.
     description: ''
   - name: --follow
-    summary: ''
+    summary: Indicate to stream the tailing logs.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -376,12 +407,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --container-group-name
+    name: --name -n
     summary: The name of the container group.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -396,13 +430,17 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --name
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: The name of the container group.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py
@@ -418,12 +456,15 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --container-group-name
+    name: --name -n
     summary: The name of the container group.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-container/azure/cli/command_modules/container/_help.py

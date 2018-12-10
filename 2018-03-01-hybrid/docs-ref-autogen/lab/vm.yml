@@ -27,8 +27,8 @@ items:
     summary: Name of the Lab.
     description: ''
   - isRequired: true
-    name: --name
-    summary: The name of the virtual machine.
+    name: --name -n
+    summary: Name of the virtual machine.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -36,6 +36,9 @@ items:
     description: ''
   - name: --artifacts
     summary: JSON encoded array of artifacts to be applied. Use '@{file}' to load from a file.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -63,14 +66,20 @@ items:
                                     /subscriptions/{SubID}/resourcegroups/{ResourceGroup}/providers/microsoft.devtestlab/labs/{LabName}/virtualmachines/{VMName1} \
                                     /subscriptions/{SubID}/resourcegroups/{ResourceGroup}/providers/microsoft.devtestlab/labs/{LabName}/virtualmachines/{VMName2}
   parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
   - name: --lab-name
     summary: Name of the lab.
     description: ''
-  - name: --name
-    summary: ''
+  - name: --name -n
+    summary: Name of the virtual machine to claim.
     description: ''
   - name: --resource-group -g
     summary: Name of lab's resource group.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -112,35 +121,18 @@ items:
     summary: Name of the lab.
     description: ''
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the virtual machine.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --admin-password
-    summary: Password for the VM admin.
-    description: ''
-  - name: --admin-username
-    defaultValue: VssAdministrator
-    summary: Username for the VM admin.
     description: ''
   - name: --allow-claim
     summary: Flag indicating if the VM should be created as claimable.
     description: ''
   - name: --artifacts
     summary: JSON encoded array of artifacts to be applied. Use '@{file}' to load from a file.
-    description: ''
-  - name: --authentication-type
-    defaultValue: password
-    summary: 'Type of authentication allowed for the VM. Allowed values are: password, ssh.'
-    description: ''
-  - name: --custom-image-id
-    summary: ''
-    description: ''
-  - name: --disallow-public-ip-address
-    summary: ''
     description: ''
   - name: --disk-type
     summary: Storage type to use for virtual machine.
@@ -151,9 +143,6 @@ items:
   - name: --formula
     summary: Name of the formula. Use `az lab formula list` for available formulas.
     description: Use `az lab formula` with the `--export-artifacts` flag to export and update artifacts, then pass the results via the `--artifacts` argument.
-  - name: --gallery-image-reference
-    summary: ''
-    description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
     description: ''
@@ -163,41 +152,43 @@ items:
   - name: --image-type
     summary: 'Type of the image. Allowed values are: gallery, custom.'
     description: ''
-  - name: --ip-configuration
-    summary: 'Type of IP configuration to use for the VM. Allowed values are: shared, public, private.'
-    description: If omitted, will be selected based on the VM's vnet.
-  - name: --lab-virtual-network-id
-    summary: ''
-    description: ''
-  - name: --location -l
-    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
-    description: ''
-  - name: --network-interface
-    summary: ''
-    description: ''
   - name: --notes
     summary: Notes for the virtual machine.
     description: ''
-  - name: --os-type
-    summary: ''
-    description: ''
-  - name: --saved-secret
-    summary: Name of the saved secret to be used for authentication.
-    description: When this value is provided, it is used in the place of other authentication methods.
   - name: --size
     summary: The size of the VM to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
-    description: ''
-  - name: --ssh-key
-    summary: The SSH public key or public key file path. Use `--generate-ssh-keys` to generate SSH keys.
-    description: ''
-  - name: --subnet
-    summary: Name of the subnet to add the VM to.
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
     description: Tags may be cleared by assigning the empty value "" to them.
+  - name: --admin-password
+    summary: Password for the VM admin.
+    description: ''
+  - name: --admin-username
+    defaultValue: VssAdministrator
+    summary: Username for the VM admin.
+    description: ''
+  - name: --authentication-type
+    defaultValue: password
+    summary: 'Type of authentication allowed for the VM. Allowed values are: password, ssh.'
+    description: ''
+  - name: --saved-secret
+    summary: Name of the saved secret to be used for authentication.
+    description: When this value is provided, it is used in the place of other authentication methods.
+  - name: --ssh-key
+    summary: The SSH public key or public key file path. Use `--generate-ssh-keys` to generate SSH keys.
+    description: ''
+  - name: --ip-configuration
+    summary: 'Type of IP configuration to use for the VM. Allowed values are: shared, public, private.'
+    description: If omitted, will be selected based on the VM's vnet.
+  - name: --subnet
+    summary: Name of the subnet to add the VM to.
+    description: ''
   - name: --vnet-name
     summary: Name of the virtual network to add the VM to.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -223,6 +214,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -251,14 +245,8 @@ items:
   - name: --claimable
     summary: List only claimable virtual machines in the lab. Cannot be used with `--filters`.
     description: ''
-  - name: --environment
-    summary: Name or ID of the environment to list virtual machines in. Cannot be used with `--filters`.
-    description: ''
   - name: --expand
     summary: The expand query.
-    description: ''
-  - name: --filters
-    summary: The filter to apply.
     description: ''
   - name: --object-id
     summary: Object ID of the owner to list VMs for.
@@ -268,6 +256,15 @@ items:
     description: ''
   - name: --top
     summary: The maximum number of resources to return.
+    description: ''
+  - name: --environment
+    summary: Name or ID of the environment to list virtual machines in. Cannot be used with `--filters`.
+    description: ''
+  - name: --filters
+    summary: The filter to apply.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
@@ -297,6 +294,9 @@ items:
   - name: --expand
     summary: "Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'."
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
     remote:
@@ -322,6 +322,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py
     remote:
@@ -346,6 +349,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-lab/azure/cli/command_modules/lab/_help.py

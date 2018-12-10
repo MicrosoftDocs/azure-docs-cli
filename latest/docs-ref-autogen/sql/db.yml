@@ -36,29 +36,55 @@ items:
       content: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb -f Gen4 -c 1
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --dest-name
-    summary: ''
+    summary: Name of the database that will be created as the copy destination.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --dest-resource-group
+    summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+  - name: --dest-server
+    summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
     description: ''
-  - name: --dest-resource-group-name
-    summary: ''
-    description: ''
-  - name: --dest-server-name
-    summary: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -87,19 +113,61 @@ items:
       content: az sql db create -g mygroup -s myserver -n mydb -z false
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --name -n
+    summary: Name of the Azure SQL Database.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server-name
-    summary: ''
+    name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
+    description: ''
+  - name: --max-size
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --catalog-collation
+    parameterValueGroup: DATABASE_DEFAULT, SQL_Latin1_General_CP1_CI_AS
+    summary: Collation of the metadata catalog.
+    description: ''
+  - name: --collation
+    summary: The collation of the database.
+    description: ''
+  - name: --sample-name
+    summary: The name of the sample schema to apply when creating this database.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -114,23 +182,26 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -165,24 +236,44 @@ items:
                                     --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/myBacpac.bacpac
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --admin-password -p
+    summary: Required. The password of the SQL administrator.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+    name: --admin-user -u
+    summary: Required. The name of the SQL administrator.
     description: ''
   - isRequired: true
     name: --storage-key
-    summary: ''
+    summary: Required. The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - isRequired: true
     name: --storage-key-type
-    summary: ''
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+    summary: Required. The type of the storage key to use.
+    description: ''
+  - isRequired: true
+    name: --storage-uri
+    summary: Required. The storage uri to use.
+    description: ''
+  - name: --auth-type -a
+    parameterValueGroup: ADPassword, SQL
+    summary: The authentication type.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -217,24 +308,44 @@ items:
                                     --storage-uri https://mystorageaccount.blob.core.windows.net/bacpacs/myBacpac.bacpac
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --admin-password -p
+    summary: Required. The password of the SQL administrator.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+    name: --admin-user -u
+    summary: Required. The name of the SQL administrator.
     description: ''
   - isRequired: true
     name: --storage-key
-    summary: ''
+    summary: Required. The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a "?.".
     description: ''
   - isRequired: true
     name: --storage-key-type
-    summary: ''
+    parameterValueGroup: SharedAccessKey, StorageAccessKey
+    summary: Required. The type of the storage key to use.
+    description: ''
+  - isRequired: true
+    name: --storage-uri
+    summary: Required. The storage uri to use.
+    description: ''
+  - name: --auth-type -a
+    parameterValueGroup: ADPassword, SQL
+    summary: The authentication type.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -249,16 +360,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --elastic-pool
+    summary: If specified, lists only the databases in this elastic pool.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
     description: ''
-  - name: --elastic-pool-name
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -273,13 +388,17 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -308,23 +427,27 @@ items:
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
-  - name: --available
-    summary: ''
+  - name: --available -a
+    summary: If specified, show only results that are available in the specified region.
+    description: ''
+  - name: --show-details -d
+    parameterValueGroup: max-size
+    summary: List of additional details to include in output.
     description: ''
   - name: --dtu
-    summary: ''
+    summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
     description: ''
-  - name: --edition
-    summary: ''
+  - name: --edition --tier -e
+    summary: Edition to search for. If unspecified, all editions are shown.
     description: ''
   - name: --service-objective
-    summary: ''
-    description: ''
-  - name: --show-details
-    summary: ''
+    summary: Service objective to search for. If unspecified, all service objectives are shown.
     description: ''
   - name: --vcores
-    summary: ''
+    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -339,17 +462,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -365,20 +491,23 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --new-name
-    summary: ''
+    summary: The new name that the database will be renamed to.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -394,29 +523,58 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --dest-name
-    summary: ''
+    summary: Name of the database that will be created as the restore destination.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --restore-point-in-time
-    summary: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-  - name: --source-database-deletion-date
-    summary: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, BC_Gen5_2.'
+    description: ''
+  - name: --deleted-time
+    summary: If specified, restore from a deleted database instead of from an existing database. Must match the deleted time of a deleted database in the same server. Either --time or --deleted-time (or both) must be specified.
+    description: ''
+  - name: --time -t
+    summary: The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value. Either --time or --deleted-time (or both) must be specified.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -431,17 +589,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -461,20 +622,28 @@ items:
       content: az sql db show-connection-string -s myserver -n mydb -c ado.net
   parameters:
   - isRequired: true
-    name: --client-provider
-    summary: ''
+    name: --client -c
+    parameterValueGroup: ado.net, jdbc, odbc, php, php_pdo, sqlcmd
+    summary: Type of client connection provider.
     description: ''
-  - name: --auth-type
-    defaultValue: SqlPassword
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - name: --database-name
+  - name: --name -n
     defaultValue: <databasename>
-    summary: ''
+    summary: Name of the Azure SQL Database.
     description: ''
-  - name: --server-name
+  - name: --server -s
     defaultValue: <servername>
-    summary: ''
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --auth-type -a
+    defaultValue: SqlPassword
+    parameterValueGroup: ADIntegrated, ADPassword, SqlPassword
+    summary: Type of authentication.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -496,41 +665,45 @@ items:
     syntax:
       content: az sql db update -g mygroup -s myserver -n mypool -z false
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
-    description: ''
-  - name: --capacity
-    summary: ''
-    description: ''
-  - name: --elastic-pool-id
-    summary: ''
-    description: ''
-  - name: --family
-    summary: ''
-    description: ''
-  - name: --max-size-bytes
-    summary: ''
+  - name: --max-size
+    summary: The new maximum size of the database expressed in bytes.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to move the database into.
+    description: ''
   - name: --service-objective
-    summary: ''
-    description: ''
-  - name: --tier
-    summary: ''
-    description: ''
-  - name: --zone-redundant
-    summary: ''
+    summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

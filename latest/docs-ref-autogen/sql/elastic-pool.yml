@@ -35,22 +35,51 @@ items:
       content: az sql elastic-pool create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
   parameters:
   - isRequired: true
-    name: --elastic-pool-name
-    summary: ''
+    name: --name -n
+    summary: The name of the elastic pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --server-name
-    summary: ''
+    name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --db-dtu-max --db-max-capacity --db-max-dtu
+    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
+    description: ''
+  - name: --db-dtu-min --db-min-capacity --db-min-dtu
+    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
+    description: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this elastic pool.
+    description: ''
+  - name: --max-size --storage
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --sku
-    summary: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  - name: --capacity --dtu -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -65,20 +94,23 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --elastic-pool-name
-    summary: The name of the elastic pool.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the elastic pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -93,16 +125,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
-    description: ''
   - name: --skip
     summary: The number of elements in the collection to skip.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -117,17 +153,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --elastic-pool-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the elastic pool.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -159,20 +198,24 @@ items:
     name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
-  - name: --available
-    summary: ''
+  - name: --available -a
+    summary: If specified, show only results that are available in the specified region.
+    description: ''
+  - name: --show-details -d
+    parameterValueGroup: db-max-dtu, db-max-size, db-min-dtu, max-size
+    summary: List of additional details to include in output.
     description: ''
   - name: --dtu
-    summary: ''
+    summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
     description: ''
-  - name: --edition
-    summary: ''
-    description: ''
-  - name: --show-details
-    summary: ''
+  - name: --edition --tier -e
+    summary: Edition to search for. If unspecified, all editions are shown.
     description: ''
   - name: --vcores
-    summary: ''
+    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -187,17 +230,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --elastic-pool-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the elastic pool.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -219,41 +265,45 @@ items:
     syntax:
       content: az sql elastic-pool update -g mygroup -s myserver -n mypool -z false
   parameters:
-  - isRequired: true
-    name: --elastic-pool-name
-    summary: The name of the elastic pool.
+  - name: --db-dtu-max --db-max-capacity --db-max-dtu
+    summary: The maximum capacity (in DTUs or vcores) any one database can consume.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+  - name: --db-dtu-min --db-min-capacity --db-min-dtu
+    summary: The minumum capacity (in DTUs or vcores) each database is guaranteed.
     description: ''
-  - isRequired: true
-    name: --server-name
-    summary: The name of the server.
-    description: ''
-  - name: --capacity
-    summary: ''
-    description: ''
-  - name: --family
-    summary: ''
-    description: ''
-  - name: --max-capacity
-    summary: ''
-    description: ''
-  - name: --max-size-bytes
-    summary: ''
-    description: ''
-  - name: --min-capacity
-    summary: ''
+  - name: --max-size --storage
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --tier
-    summary: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
     description: ''
-  - name: --zone-redundant
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the elastic pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --capacity --dtu -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical.'
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

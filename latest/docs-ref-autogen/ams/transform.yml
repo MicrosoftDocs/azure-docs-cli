@@ -27,35 +27,41 @@ items:
       content: az ams transform create -a myAmsAccount -n transformName -g myResourceGroup --preset "C:\MyPresets\CustomPreset.json" --relative-priority Low
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: ''
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the transform.
     description: ''
   - isRequired: true
     name: --preset
-    summary: ''
+    summary: 'Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the transform output. Allowed values: H264SingleBitrateSD, H264SingleBitrate720p, H264SingleBitrate1080p, AdaptiveStreaming, AACGoodQualityAudio, H264MultipleBitrate1080p, H264MultipleBitrate720p, H264MultipleBitrateSD, AudioAnalyzer, VideoAnalyzer. In addition to the allowed values, you can also pass a path to a custom Standard Encoder preset JSON file. See <a href="https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset">https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset</a> for further details on the settings to use to build a custom preset.'
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --transform-name
-    summary: ''
-    description: ''
-  - name: --audio-language
-    summary: ''
-    description: ''
   - name: --description
-    summary: ''
-    description: ''
-  - name: --insights-to-extract
-    summary: ''
+    summary: The description of the transform.
     description: ''
   - name: --on-error
-    summary: ''
+    parameterValueGroup: ContinueJob, StopProcessingJob
+    summary: A Transform can define more than one output. This property defines what the service should do when one output fails - either continue to produce other outputs, or, stop the other outputs. The overall Job state will not reflect failures of outputs that are specified with 'ContinueJob'. The default is 'StopProcessingJob'.
     description: ''
   - name: --relative-priority
-    summary: ''
+    parameterValueGroup: High, Low, Normal
+    summary: Sets the relative priority of the transform outputs within a transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal.
+    description: ''
+  - name: --audio-language
+    summary: 'The language for the audio payload in the input using the BCP-47 format of "language tag-region" (e.g: en-US). If not specified, automatic language detection would be employed. This feature currently supports English, Chinese, French, German, Italian, Japanese, Spanish, Russian, and Portuguese. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to English. Allowed values: en-US, en-GB, es-ES, es-MX, fr-FR, it-IT, ja-JP, pt-BR, zh-CN, de-DE, ar-EG, ru-RU, hi-IN.'
+    description: ''
+  - name: --insights-to-extract
+    parameterValueGroup: AllInsights, AudioInsightsOnly, VideoInsightsOnly
+    summary: The type of insights to be extracted. If not set then the type will be selected based on the content type. If the content is audio only then only audio insights will be extracted and if it is video only video insights will be extracted.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -70,17 +76,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the transform.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --transform-name
-    summary: The Transform name.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -96,8 +105,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -112,6 +121,9 @@ items:
   - name: --top
     summary: Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
     remote:
@@ -125,17 +137,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the transform.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --transform-name
-    summary: The Transform name.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -154,20 +169,23 @@ items:
     syntax:
       content: az ams transform update -a myAmsAccount -n transformName -g myResourceGroup --set outputs[0].relativePriority=High
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: ''
+  - name: --description
+    summary: The description of the transform.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the transform.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --transform-name
-    summary: ''
-    description: ''
-  - name: --description
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

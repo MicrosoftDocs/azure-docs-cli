@@ -26,8 +26,8 @@ items:
                                     -local-gateway2 MyLocalGateway --shared-key Abc123
   parameters:
   - isRequired: true
-    name: --connection-name
-    summary: ''
+    name: --name -n
+    summary: Connection name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -40,11 +40,28 @@ items:
   - name: --authorization-key
     summary: The authorization key for the VPN connection.
     description: ''
-  - name: --connection-type
-    summary: ''
-    description: ''
   - name: --enable-bgp
     summary: Enable BGP for this VPN connection.
+    description: ''
+  - name: --location -l
+    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --routing-weight
+    defaultValue: "10"
+    summary: Connection routing weight.
+    description: ''
+  - name: --shared-key
+    summary: Shared IPSec key.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --use-policy-based-traffic-selectors
+    parameterValueGroup: false, true
+    summary: Enable policy-based traffic selectors.
+    description: ''
+  - name: --validate
+    summary: Display and validate the ARM template but do not create any resources.
     description: ''
   - name: --express-route-circuit2
     summary: Name or ID of the destination ExpressRoute to connect to using an 'ExpressRoute' connection.
@@ -52,27 +69,11 @@ items:
   - name: --local-gateway2
     summary: Name or ID of the destination local network gateway to connect to using an 'IPSec' connection.
     description: ''
-  - name: --location -l
-    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
-    description: ''
-  - name: --routing-weight
-    defaultValue: "10"
-    summary: ''
-    description: ''
-  - name: --shared-key
-    summary: ''
-    description: ''
-  - name: --tags
-    summary: ''
-    description: ''
-  - name: --use-policy-based-traffic-selectors
-    summary: ''
-    description: ''
-  - name: --validate
-    summary: Display and validate the ARM template but do not create any resources.
-    description: ''
   - name: --vnet-gateway2
     summary: Name or ID of the destination virtual network gateway to connect to using a 'Vnet2Vnet' connection.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -91,13 +92,17 @@ items:
     syntax:
       content: az network vpn-connection delete -g MyResourceGroup -n MyConnection
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Connection name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-connection-name
-    summary: The name of the virtual network gateway connection.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -120,6 +125,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -137,13 +145,17 @@ items:
     syntax:
       content: az network vpn-connection show -g MyResourceGroup -n MyConnection
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Connection name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-connection-name
-    summary: The name of the virtual network gateway connection.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -162,28 +174,34 @@ items:
     syntax:
       content: az network vpn-connection update -g MyResourceGroup -n MyConnection --enable-bgp True
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-connection-name
-    summary: The name of the virtual network gateway connection.
-    description: ''
   - name: --enable-bgp
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Enable BGP (Border Gateway Protocol).
     description: ''
   - name: --routing-weight
-    summary: ''
+    summary: Connection routing weight.
     description: ''
   - name: --shared-key
-    summary: ''
+    summary: Shared IPSec key.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --use-policy-based-traffic-selectors
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Enable policy-based traffic selectors.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Connection name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

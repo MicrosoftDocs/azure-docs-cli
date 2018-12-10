@@ -41,16 +41,16 @@ items:
                                     --origin www.example.com --no-http --enable-compression
   parameters:
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the CDN endpoint.
     description: ''
   - isRequired: true
-    name: --origins
-    summary: Required. The source of the content being delivered via CDN.
+    name: --origin
+    summary: 'Endpoint origin specified by the following space-delimited 3 tuple: `www.example.com http_port https_port`. The HTTP and HTTPsports are optional and will default to 80 and 443 respectively.'
     description: ''
   - isRequired: true
     name: --profile-name
-    summary: ''
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -59,17 +59,20 @@ items:
   - name: --content-types-to-compress
     summary: List of content types on which compression applies. The value should be a valid MIME type.
     description: ''
-  - name: --is-compression-enabled
-    summary: Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
-    description: ''
-  - name: --is-http-allowed
-    summary: Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
-    description: ''
-  - name: --is-https-allowed
-    summary: Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --no-http
+    parameterValueGroup: false, true
+    summary: Indicates whether HTTP traffic is not allowed on the endpoint. Default is to allow HTTP traffic.
+    description: ''
+  - name: --no-https
+    parameterValueGroup: false, true
+    summary: Indicates whether HTTPS traffic is not allowed on the endpoint. Default is to allow HTTPS traffic.
     description: ''
   - name: --origin-host-header
     summary: The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
@@ -77,11 +80,15 @@ items:
   - name: --origin-path
     summary: A directory path on the origin that CDN can use to retreive content from, e.g. contoso.cloudapp.net/originpath.
     description: ''
-  - name: --query-string-caching-behavior
+  - name: --query-string-caching
+    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --tags
-    summary: Resource tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -101,16 +108,20 @@ items:
       content: az cdn endpoint delete -g group -n endpoint --profile-name profile-name
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -137,6 +148,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
     remote:
@@ -161,16 +175,20 @@ items:
     summary: The path to the content to be loaded. Path should be a relative file URL of the origin.
     description: ''
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -196,16 +214,20 @@ items:
     summary: The path to the content to be purged. Can describe a file path or a wild card directory.
     description: ''
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -221,16 +243,20 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -250,16 +276,20 @@ items:
       content: az cdn endpoint start -g group -n endpoint --profile-name profile-name
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -279,16 +309,20 @@ items:
       content: az cdn endpoint stop -g group -n endpoint --profile-name profile-name
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py
@@ -313,28 +347,23 @@ items:
                                     --enable-compression
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --content-types-to-compress
     summary: List of content types on which compression applies. The value should be a valid MIME type.
     description: ''
-  - name: --is-compression-enabled
-    summary: Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB.
     description: ''
-  - name: --is-http-allowed
-    summary: Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
+  - name: --no-http
+    parameterValueGroup: false, true
+    summary: Indicates whether HTTP traffic is not allowed on the endpoint. Default is to allow HTTP traffic.
     description: ''
-  - name: --is-https-allowed
-    summary: Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed.
+  - name: --no-https
+    parameterValueGroup: false, true
+    summary: Indicates whether HTTPS traffic is not allowed on the endpoint. Default is to allow HTTPS traffic.
     description: ''
   - name: --origin-host-header
     summary: The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
@@ -342,11 +371,24 @@ items:
   - name: --origin-path
     summary: A directory path on the origin that CDN can use to retreive content from, e.g. contoso.cloudapp.net/originpath.
     description: ''
-  - name: --query-string-caching-behavior
+  - name: --query-string-caching
+    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --tags
-    summary: Endpoint tags.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -374,10 +416,6 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
     name: --host-name
     summary: The host name of the custom domain. Must be a domain name.
     description: ''
@@ -385,9 +423,17 @@ items:
     name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-cdn/azure/cli/command_modules/cdn/_help.py

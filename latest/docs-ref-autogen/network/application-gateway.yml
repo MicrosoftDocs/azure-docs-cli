@@ -31,104 +31,109 @@ items:
                                     --public-ip-address MyAppGatewayPublicIp --servers 10.0.0.4 10.0.0.5
   parameters:
   - isRequired: true
-    name: --application-gateway-name
-    summary: ''
+    name: --name -n
+    summary: The name of the application gateway.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --capacity
-    defaultValue: "2"
-    summary: ''
-    description: ''
-  - name: --cert-data
-    summary: ''
-    description: ''
-  - name: --cert-password
-    summary: ''
-    description: ''
-  - name: --connection-draining-timeout
-    summary: ''
-    description: ''
   - name: --custom-error-pages
-    summary: ''
-    description: ''
-  - name: --enable-http2
-    summary: ''
-    description: ''
-  - name: --frontend-port
-    summary: ''
-    description: ''
-  - name: --http-settings-cookie-based-affinity
-    defaultValue: disabled
-    summary: ''
-    description: ''
-  - name: --http-settings-port
-    defaultValue: "80"
-    summary: ''
-    description: ''
-  - name: --http-settings-protocol
-    defaultValue: Http
-    summary: ''
+    summary: Space-separated list of custom error pages in `STATUS_CODE=URL` format.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - name: --min-capacity
-    summary: ''
+    summary: Lower bound on the number of application gateway instances.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --private-ip-address
-    summary: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-  - name: --public-ip-address
-    summary: ''
+  - name: --validate
+    summary: Generate and validate the ARM template without creating any resources.
     description: ''
-  - name: --public-ip-address-allocation
-    summary: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones into which to provision the resource.
     description: ''
-  - name: --public-ip-address-type
-    summary: ''
+  - name: --capacity
+    defaultValue: "2"
+    summary: The number of instances to use with the application gateway.
+    description: ''
+  - name: --cert-file
+    summary: The path to the PFX certificate file.
+    description: ''
+  - name: --cert-password
+    summary: The certificate password.
+    description: ''
+  - name: --connection-draining-timeout
+    summary: 'The time in seconds after a backend server is removed during which on open connection remains active. Range: 0 (disabled) to 3600.'
+    description: ''
+  - name: --frontend-port
+    summary: The front end port number.
+    description: ''
+  - name: --http-settings-cookie-based-affinity
+    defaultValue: disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Enable or disable HTTP settings cookie-based affinity.
+    description: ''
+  - name: --http-settings-port
+    defaultValue: "80"
+    summary: The HTTP settings port.
+    description: ''
+  - name: --http-settings-protocol
+    defaultValue: Http
+    parameterValueGroup: Http, Https
+    summary: The HTTP settings protocol.
+    description: ''
+  - name: --http2
+    parameterValueGroup: Disabled, Enabled
+    summary: Use HTTP2 for the application gateway.
     description: ''
   - name: --routing-rule-type
     defaultValue: Basic
-    summary: ''
+    parameterValueGroup: Basic, PathBasedRouting
+    summary: The request routing rule type.
     description: ''
   - name: --servers
-    summary: ''
+    summary: Space-separated list of IP addresses or DNS names corresponding to backend servers.
     description: ''
   - name: --sku
-    summary: ''
+    defaultValue: Standard_Medium
+    parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2
+    summary: The name of the SKU.
+    description: ''
+  - name: --private-ip-address
+    summary: Static private IP address to use.
+    description: ''
+  - name: --public-ip-address
+    summary: Name or ID of a public IP address. Uses existing resource or creates new if specified, or none if omitted.
+    description: ''
+  - name: --public-ip-address-allocation
+    defaultValue: Dynamic
+    summary: The kind of IP allocation to use when creating a new public IP.
     description: ''
   - name: --subnet
     defaultValue: default
-    summary: ''
+    summary: Name or ID of the subnet. Will create resource if it does not exist. If name specified, also specify --vnet-name.
     description: ''
   - name: --subnet-address-prefix
     defaultValue: 10.0.0.0/24
-    summary: ''
-    description: ''
-  - name: --subnet-type
-    summary: ''
-    description: ''
-  - name: --tags
-    summary: ''
-    description: ''
-  - name: --validate
-    summary: ''
-    description: ''
-  - name: --virtual-network-name
-    summary: ''
+    summary: The CIDR prefix to use when creating a new subnet.
     description: ''
   - name: --vnet-address-prefix
     defaultValue: 10.0.0.0/16
-    summary: ''
+    summary: The CIDR prefix to use when creating a new VNet.
     description: ''
-  - name: --zones
-    summary: ''
+  - name: --vnet-name
+    summary: The virtual network (VNet) name.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -147,16 +152,20 @@ items:
     syntax:
       content: az network application-gateway delete -g MyResourceGroup -n MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
-    summary: The name of the application gateway.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the application gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -178,6 +187,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -195,13 +207,17 @@ items:
     syntax:
       content: az network application-gateway show -g MyResourceGroup -n MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the application gateway.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -220,16 +236,20 @@ items:
     syntax:
       content: az network application-gateway show-backend-health -g MyResourceGroup -n MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
-    summary: The name of the application gateway.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --expand
     summary: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the application gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -248,13 +268,17 @@ items:
     syntax:
       content: az network application-gateway start -g MyResourceGroup -n MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the application gateway.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -273,13 +297,17 @@ items:
     syntax:
       content: az network application-gateway stop -g MyResourceGroup -n MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the application gateway.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -300,34 +328,40 @@ items:
         az network application-gateway update -g MyResourceGroup -n MyAppGateway \
                                     --capacity 3 --servers 10.0.0.4 10.0.0.5 10.0.0.6
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
-    summary: The name of the application gateway.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --capacity
-    summary: ''
+    summary: The number of instances to use with the application gateway.
     description: ''
   - name: --custom-error-pages
-    summary: ''
+    summary: Space-separated list of custom error pages in `STATUS_CODE=URL` format.
     description: ''
-  - name: --enable-http2
-    summary: ''
+  - name: --http2
+    parameterValueGroup: Disabled, Enabled
+    summary: Use HTTP2 for the application gateway.
     description: ''
   - name: --min-capacity
-    summary: ''
+    summary: Lower bound on the number of application gateway instances.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku
-    summary: ''
+    parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2
+    summary: The name of the SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the application gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -358,13 +392,17 @@ items:
     syntax:
       content: az network application-gateway wait -g MyResourceGroup -n MyAppGateway --created
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the application gateway.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.

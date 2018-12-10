@@ -28,30 +28,31 @@ items:
       content: az sig image-version create --no-wait -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image imageInTheSameResourceGroup
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: ''
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-image-version
-    summary: ''
+    name: --gallery-image-version -e
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. <MajorVersion>.<MinorVersion>.<Patch>.
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: ''
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --managed-image
-    summary: ''
+    summary: Image name(if in the same resource group) or resource id.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --end-of-life-date
-    summary: ''
+    summary: The end of life date, e.g. '2020-12-31'.
     description: ''
   - name: --exclude-from-latest
-    summary: ''
+    parameterValueGroup: false, true
+    summary: The flag means that if it is set to true, people deploying VMs with version omitted will not use this version.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -60,13 +61,16 @@ items:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --replica-count
-    summary: ''
+    summary: Default replicate count. For region specific, use --target-regions.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --target-regions
-    summary: ''
+    summary: Space separated region list, use "<region>=<replicate count>" to apply region specific replicate count.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image_version_delete
   name: az sig image-version delete
@@ -76,20 +80,23 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: The name of the gallery Image Definition in which the Image Version resides.
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-image-version-name
+    name: --gallery-image-version -e
     summary: The name of the gallery Image Version to be deleted.
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: The name of the Shared Image Gallery in which the Image Definition resides.
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image_version_list
   name: az sig image-version list
@@ -99,16 +106,19 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: The name of the Shared Image Gallery Image Definition from which the Image Versions are to be listed.
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: The name of the Shared Image Gallery in which the Image Definition resides.
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image_version_show
   name: az sig image-version show
@@ -118,23 +128,26 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: The name of the gallery Image Definition in which the Image Version resides.
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-image-version-name
+    name: --gallery-image-version -e
     summary: The name of the gallery Image Version to be retrieved.
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: The name of the Shared Image Gallery in which the Image Definition resides.
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --expand
-    summary: The expand expression to apply on the operation.
+    summary: The expand expression to apply on the operation, e.g. 'ReplicationStatus'.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image_version_update
   name: az sig image-version update
@@ -151,16 +164,16 @@ items:
       content: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --add publishingProfile.targetRegions name=westcentralus
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: The name of the gallery Image Definition in which the Image Version is to be created.
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-image-version-name
+    name: --gallery-image-version -e
     summary: 'The name of the gallery Image Version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>.'
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: The name of the Shared Image Gallery in which the Image Definition resides.
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -170,7 +183,7 @@ items:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --target-regions
-    summary: ''
+    summary: Space separated region list, use "<region>=<replicate count>" to apply region specific replicate count.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -184,6 +197,9 @@ items:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_image_version_wait
   name: az sig image-version wait
   summary: Wait for image version related operation.
@@ -196,16 +212,16 @@ items:
       content: az sig image-version wait --updated -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0
   parameters:
   - isRequired: true
-    name: --gallery-image-name
-    summary: The name of the gallery Image Definition in which the Image Version resides.
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
     description: ''
   - isRequired: true
-    name: --gallery-image-version-name
+    name: --gallery-image-version -e
     summary: The name of the gallery Image Version to be retrieved.
     description: ''
   - isRequired: true
-    name: --gallery-name
-    summary: The name of the Shared Image Gallery in which the Image Definition resides.
+    name: --gallery-name -r
+    summary: Gallery name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -236,6 +252,9 @@ items:
     description: ''
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - uid: az_sig_image_version_create
