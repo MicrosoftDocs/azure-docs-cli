@@ -21,8 +21,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --queue-name
-    summary: The name of the queue to create. A queue name must be from 3 through 63 characters long and may only contain lowercase letters, numbers, and the dash (-) character. The first and last letters in the queue must be alphanumeric. The dash (-) character cannot be the first or last character. Consecutive dash characters are not permitted in the queue name.
+    name: --name -n
+    summary: The queue name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -49,6 +49,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -63,8 +66,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --queue-name
-    summary: The name of the queue to delete.
+    name: --name -n
+    summary: The queue name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -88,6 +91,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -102,8 +108,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --queue-name
-    summary: The name of queue to check for existence.
+    name: --name -n
+    summary: The queue name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -124,6 +130,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -138,30 +147,30 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --queue-name
-    summary: The name of the queue to create a SAS token for.
+    name: --name -n
+    summary: The queue name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --expiry
-    summary: The time at which the shared access signature becomes invalid. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
     description: ''
-  - name: --id
-    summary: A unique value up to 64 characters in length that correlates to a stored access policy. To create a stored access policy, use set_queue_acl().
+  - name: --https-only
+    summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
     description: ''
   - name: --ip
-    summary: Specifies an IP address or a range of IP addresses from which to accept requests. If the IP address from which the request originates does not match the IP address or address range specified on the SAS token, the request is not authenticated. For example, specifying sip='168.1.5.65' or sip='168.1.5.60-168.1.5.70' on the SAS restricts the request to those IP addresses.
+    summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
     description: ''
-  - name: --permission
-    summary: The permissions associated with the shared access signature. The user is restricted to operations allowed by the permissions. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy.
+  - name: --permissions
+    summary: 'The permissions the SAS grants. Allowed values: (a)dd (p)rocess (r)ead (u)pdate. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
     description: ''
-  - name: --protocol
-    summary: Specifies the protocol permitted for a request made. The default value is https,http. See Protocol for possible values.
+  - name: --policy-name
+    summary: The name of a stored access policy within the share's ACL.
     description: ''
   - name: --start
-    summary: The time at which the shared access signature becomes valid. If omitted, start time for this call is assumed to be the time when the storage service receives the request. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -174,6 +183,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -219,6 +231,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -250,6 +265,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py

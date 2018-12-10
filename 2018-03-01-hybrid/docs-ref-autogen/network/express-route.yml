@@ -31,28 +31,27 @@ items:
                                     -g --provider "Equinix" -l "West US" --sku-family MeteredData --sku-tier Standard
   parameters:
   - isRequired: true
-    name: --bandwidth-in-mbps
-    summary: ''
+    name: --bandwidth
+    summary: Bandwidth in Mbps of the circuit.
     description: ''
+    valueFrom: az network express-route list-service-providers
   - isRequired: true
-    name: --circuit-name
-    summary: ''
+    name: --name -n
+    summary: ExpressRoute circuit name.
     description: ''
   - isRequired: true
     name: --peering-location
-    summary: ''
+    summary: Name of the peering location.
+    description: ''
+    valueFrom: az network express-route list-service-providers
+  - isRequired: true
+    name: --provider
+    summary: Name of the ExpressRoute Service Provider.
     description: ''
     valueFrom: az network express-route list-service-providers
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --service-provider-name
-    summary: ''
-    description: ''
-  - name: --allow-global-reach
-    summary: ''
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -61,13 +60,20 @@ items:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku-family
-    summary: ''
+    defaultValue: MeteredData
+    parameterValueGroup: MeteredData, UnlimitedData
+    summary: Chosen SKU family of ExpressRoute circuit.
     description: ''
   - name: --sku-tier
-    summary: ''
+    defaultValue: Standard
+    parameterValueGroup: Premium, Standard
+    summary: SKU Tier of ExpressRoute circuit.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -86,16 +92,20 @@ items:
     syntax:
       content: az network express-route delete -n MyCircuit -g MyResourceGroup
   parameters:
-  - isRequired: true
-    name: --circuit-name
-    summary: The name of the express route circuit.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -114,13 +124,17 @@ items:
     syntax:
       content: az network express-route get-stats -g MyResourceGroup -n MyCircuit
   parameters:
-  - isRequired: true
-    name: --circuit-name
-    summary: The name of the express route circuit.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -142,6 +156,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -162,20 +179,25 @@ items:
                                     --path primary --peering-name AzurePrivatePeering
   parameters:
   - isRequired: true
-    name: --circuit-name
-    summary: The name of the express route circuit.
-    description: ''
-  - isRequired: true
-    name: --device-path
+    name: --path
+    parameterValueGroup: primary, secondary
     summary: The path of the device.
     description: ''
   - isRequired: true
     name: --peering-name
     summary: The name of the peering.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -197,20 +219,25 @@ items:
                                     --path primary --peering-name AzurePrivatePeering
   parameters:
   - isRequired: true
-    name: --circuit-name
-    summary: The name of the express route circuit.
-    description: ''
-  - isRequired: true
-    name: --device-path
+    name: --path
+    parameterValueGroup: primary, secondary
     summary: The path of the device.
     description: ''
   - isRequired: true
     name: --peering-name
     summary: The name of the peering.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -228,7 +255,10 @@ items:
   - summary: List available ExpressRoute service providers.
     syntax:
       content: az network express-route list-service-providers
-  parameters: []
+  parameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -246,13 +276,17 @@ items:
     syntax:
       content: az network express-route show -n MyCircuit -g MyResourceGroup
   parameters:
-  - isRequired: true
-    name: --circuit-name
-    summary: The name of express route circuit.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -271,37 +305,40 @@ items:
     syntax:
       content: az network express-route update -n MyCircuit -g MyResourceGroup --sku-tier Premium
   parameters:
-  - isRequired: true
-    name: --circuit-name
-    summary: The name of the circuit.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --allow-global-reach
-    summary: ''
-    description: ''
-  - name: --bandwidth-in-mbps
-    summary: ''
+  - name: --bandwidth
+    summary: Bandwidth in Mbps of the circuit.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --peering-location
-    summary: ''
+    summary: Name of the peering location.
     description: ''
-  - name: --service-provider-name
-    summary: ''
+  - name: --provider
+    summary: Name of the ExpressRoute Service Provider.
     description: ''
   - name: --sku-family
-    summary: ''
+    parameterValueGroup: MeteredData, UnlimitedData
+    summary: Chosen SKU family of ExpressRoute circuit.
     description: ''
   - name: --sku-tier
-    summary: ''
+    parameterValueGroup: Premium, Standard
+    summary: SKU Tier of ExpressRoute circuit.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -332,13 +369,17 @@ items:
     syntax:
       content: az network express-route wait -n MyCircuit --g MyResourceGroup --created
   parameters:
-  - isRequired: true
-    name: --circuit-name
-    summary: The name of express route circuit.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: ExpressRoute circuit name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.

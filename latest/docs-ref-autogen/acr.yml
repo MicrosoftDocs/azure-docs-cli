@@ -39,43 +39,46 @@ items:
       content: az acr build -r MyRegistry .
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
-  - isRequired: true
-    name: --source-location
-    summary: ''
+  - name: --build-arg
+    summary: Build argument in 'name[=value]' format.
     description: ''
-  - name: --arg
-    summary: ''
+  - name: --file -f
+    summary: The relative path of the the docker file to the source code root folder. Default to 'Dockerfile'.
     description: ''
-  - name: --docker-file-path
-    summary: ''
-    description: ''
-  - name: --image-names
-    summary: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
   - name: --no-format
-    summary: ''
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --no-logs
-    summary: ''
+    summary: Do not show logs after successfully queuing the build.
     description: ''
   - name: --no-push
-    summary: ''
+    summary: Indicates whether the image built should be pushed to the registry.
     description: ''
-  - name: --os-type
+  - name: --os
     defaultValue: Linux
-    summary: ''
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --secret-arg
-    summary: ''
+  - name: --secret-build-arg
+    summary: Secret build argument in 'name[=value]' format.
     description: ''
   - name: --timeout
-    summary: ''
+    summary: The timeout in seconds.
+    description: ''
+  - name: <SOURCE_LOCATION>
+    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -95,8 +98,11 @@ items:
       content: az acr check-name -n doesthisnameexist
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -119,8 +125,8 @@ items:
       content: az acr create -n MyRegistry -g MyResourceGroup --sku Classic
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -128,16 +134,21 @@ items:
     description: ''
   - isRequired: true
     name: --sku
-    summary: ''
+    parameterValueGroup: Basic, Classic, Premium, Standard
+    summary: The SKU of the container registry.
     description: ''
   - name: --admin-enabled
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the admin user is enabled.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
     description: ''
   - name: --storage-account-name
-    summary: ''
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Classic SKU.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -157,11 +168,14 @@ items:
       content: az acr delete -n MyRegistry
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -184,27 +198,30 @@ items:
       content: az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - isRequired: true
     name: --source
-    summary: ''
+    summary: The source identifier in the format '[registry.azurecr.io/]repository[:tag]' or '[registry.azurecr.io/]repository@digest'.
     description: ''
   - name: --force
-    summary: ''
+    summary: Overwrite the existing tag of the image to be imported.
+    description: ''
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag'.
+    description: ''
+  - name: --registry -r
+    summary: The source container registry can be name, login server or resource ID of the source registry.
     description: ''
   - name: --repository
-    summary: ''
+    summary: The repository name to do a manifest-only copy for images.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --source-registry
-    summary: ''
-    description: ''
-  - name: --target-tags
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -229,6 +246,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
     remote:
@@ -247,17 +267,20 @@ items:
       content: az acr login -n MyRegistry
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
-  - name: --password
-    summary: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --username
-    summary: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -280,44 +303,47 @@ items:
       content: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f hello-world.yaml
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --registry -r
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
-  - isRequired: true
-    name: --source-location
-    summary: ''
-    description: ''
-  - name: --file
+  - name: --file -f
     defaultValue: acb.yaml
-    summary: ''
+    summary: The task template/definition file path relative to the source context.
     description: ''
   - name: --no-format
-    summary: ''
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --no-logs
-    summary: ''
+    summary: Do not show logs after successfully queuing the build.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+    summary: Do not wait for the run to complete and return immediately after queuing the run.
     description: ''
-  - name: --os-type
+  - name: --os
     defaultValue: Linux
-    summary: ''
+    parameterValueGroup: Linux, Windows
+    summary: The operating system type required for the build.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --set-secret
-    summary: ''
+  - name: --set
+    summary: Value in 'name[=value]' format.
     description: ''
-  - name: --set-value
-    summary: ''
+  - name: --set-secret
+    summary: Secret value in 'name[=value]' format.
     description: ''
   - name: --timeout
-    summary: ''
+    summary: The timeout in seconds.
     description: ''
   - name: --values
-    summary: ''
+    summary: The task values file path relative to the source context.
+    description: ''
+  - name: <SOURCE_LOCATION>
+    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -337,11 +363,14 @@ items:
       content: az acr show -n MyRegistry --query loginServer
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -361,11 +390,14 @@ items:
       content: az acr show-usage -n MyRegistry
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
@@ -391,23 +423,25 @@ items:
       content: az acr update -n MyRegistry --admin-enabled true
   parameters:
   - isRequired: true
-    name: --registry-name
-    summary: ''
+    name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --admin-enabled
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Indicates whether the admin user is enabled.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --sku
-    summary: ''
+    parameterValueGroup: Basic, Classic, Premium, Standard
+    summary: The SKU of the container registry.
     description: ''
   - name: --storage-account-name
-    summary: ''
+    summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Classic SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -420,6 +454,9 @@ items:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py

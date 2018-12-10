@@ -24,11 +24,12 @@ items:
     syntax:
       content: az network traffic-manager profile check-dns -n mywebapp
   parameters:
-  - name: --name
-    summary: The name of the resource.
+  - isRequired: true
+    name: --name -n
+    summary: DNS prefix to verify availability for.
     description: ''
-  - name: --type
-    summary: The type of the resource.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -50,51 +51,57 @@ items:
                                     --unique-dns-name mywebapp --ttl 30 --protocol HTTP --port 80 --path "/"
   parameters:
   - isRequired: true
+    name: --name -n
+    summary: Traffic manager profile name.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --routing-method
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --traffic-manager-profile-name
-    summary: ''
+    parameterValueGroup: Geographic, Performance, Priority, Weighted
+    summary: Routing method.
     description: ''
   - isRequired: true
     name: --unique-dns-name
-    summary: ''
+    summary: Relative DNS name for the traffic manager profile. Resulting FQDN will be `&lt;unique-dns-name&gt;.trafficmanager.net` and must be globally unique.
     description: ''
-  - name: --interval
-    summary: ''
-    description: ''
-  - name: --max-failures
-    summary: ''
-    description: ''
-  - name: --monitor-path
-    summary: ''
-    description: ''
-  - name: --monitor-port
-    defaultValue: "80"
-    summary: ''
-    description: ''
-  - name: --monitor-protocol
-    defaultValue: HTTP
-    summary: ''
-    description: ''
-  - name: --profile-status
+  - name: --status
     defaultValue: Enabled
-    summary: ''
+    parameterValueGroup: Disabled, Enabled
+    summary: Status of the Traffic Manager profile.
     description: ''
   - name: --tags
-    summary: ''
-    description: ''
-  - name: --timeout
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --ttl
     defaultValue: "30"
-    summary: ''
+    summary: DNS config time-to-live in seconds.
+    description: ''
+  - name: --interval
+    summary: The interval in seconds at which health checks are conducted.
+    description: ''
+  - name: --max-failures
+    summary: The number of consecutive failed health checks tolerated before an endpoint is considered degraded.
+    description: ''
+  - name: --path
+    summary: Path to monitor. Use "" for none.
+    description: ''
+  - name: --port
+    defaultValue: "80"
+    summary: Port to monitor.
+    description: ''
+  - name: --protocol
+    defaultValue: HTTP
+    parameterValueGroup: HTTP, HTTPS, TCP
+    summary: Monitor protocol.
+    description: ''
+  - name: --timeout
+    summary: The time in seconds allowed for endpoints to response to a health check.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -113,13 +120,17 @@ items:
     syntax:
       content: az network traffic-manager profile delete -g MyResourceGroup -n MyTmProfile
   parameters:
-  - isRequired: true
-    name: --profile-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the Traffic Manager profile to be deleted.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -141,6 +152,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -158,13 +172,17 @@ items:
     syntax:
       content: az network traffic-manager profile show -g MyResourceGroup -n MyTmProfile
   parameters:
-  - isRequired: true
-    name: --profile-name
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
     summary: The name of the Traffic Manager profile.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -183,43 +201,50 @@ items:
     syntax:
       content: az network traffic-manager profile update -g MyResourceGroup -n MyTmProfile --ttl 300
   parameters:
-  - isRequired: true
-    name: --profile-name
-    summary: The name of the Traffic Manager profile.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --interval
-    summary: ''
-    description: ''
-  - name: --max-failures
-    summary: ''
-    description: ''
-  - name: --monitor-path
-    summary: ''
-    description: ''
-  - name: --monitor-port
-    summary: ''
-    description: ''
-  - name: --monitor-protocol
-    summary: ''
-    description: ''
-  - name: --profile-status
-    summary: ''
-    description: ''
   - name: --routing-method
-    summary: ''
+    parameterValueGroup: Geographic, Performance, Priority, Weighted
+    summary: Routing method.
+    description: ''
+  - name: --status
+    parameterValueGroup: Disabled, Enabled
+    summary: Status of the Traffic Manager profile.
     description: ''
   - name: --tags
-    summary: ''
-    description: ''
-  - name: --timeout
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --ttl
-    summary: ''
+    summary: DNS config time-to-live in seconds.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Traffic Manager profile.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --interval
+    summary: The interval in seconds at which health checks are conducted.
+    description: ''
+  - name: --max-failures
+    summary: The number of consecutive failed health checks tolerated before an endpoint is considered degraded.
+    description: ''
+  - name: --path
+    summary: Path to monitor. Use "" for none.
+    description: ''
+  - name: --port
+    summary: Port to monitor.
+    description: ''
+  - name: --protocol
+    parameterValueGroup: HTTP, HTTPS, TCP
+    summary: Monitor protocol.
+    description: ''
+  - name: --timeout
+    summary: The time in seconds allowed for endpoints to response to a health check.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

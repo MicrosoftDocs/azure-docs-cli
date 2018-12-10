@@ -27,48 +27,53 @@ items:
                                     -n MyEndpoint --type azureEndpoints --target-resource-id $MyWebApp1Id --endpoint-status enabled
   parameters:
   - isRequired: true
-    name: --endpoint-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --endpoint-type
-    summary: ''
+    name: --name -n
+    summary: Endpoint name.
     description: ''
   - isRequired: true
     name: --profile-name
-    summary: ''
+    summary: Name of parent profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - isRequired: true
+    name: --type -t
+    parameterValueGroup: azureEndpoints, externalEndpoints, nestedEndpoints
+    summary: Endpoint type.
+    description: ''
   - name: --endpoint-location
-    summary: ''
+    summary: Location of the external or nested endpoints when using the 'Performance' routing method.
     description: ''
   - name: --endpoint-monitor-status
-    summary: ''
+    summary: The monitoring status of the endpoint.
     description: ''
   - name: --endpoint-status
-    summary: ''
+    parameterValueGroup: Disabled, Enabled
+    summary: The status of the endpoint. If enabled the endpoint is probed for endpoint health and included in the traffic routing method.
     description: ''
   - name: --geo-mapping
-    summary: ''
+    summary: Space-separated list of country/region codes mapped to this endpoint when using the 'Geographic' routing method.
     description: ''
     valueFrom: az network traffic-manager endpoint show-geographic-hierarchy
   - name: --min-child-endpoints
-    summary: ''
+    summary: The minimum number of endpoints that must be available in the child profile for the parent profile to be considered available. Only applicable to an endpoint of type 'NestedEndpoints'.
     description: ''
   - name: --priority
-    summary: ''
+    summary: Priority of the endpoint when using the 'Priority' traffic routing method. Values range from 1 to 1000, with lower values representing higher priority.
     description: ''
   - name: --target
-    summary: ''
+    summary: Fully-qualified DNS name of the endpoint.
     description: ''
   - name: --target-resource-id
-    summary: ''
+    summary: The Azure Resource URI of the endpoint. Not applicable for endpoints of type 'ExternalEndpoints'.
     description: ''
   - name: --weight
-    summary: ''
+    summary: Weight of the endpoint when using the 'Weighted' traffic routing method. Values range from 1 to 1000.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -87,21 +92,24 @@ items:
     syntax:
       content: az network traffic-manager endpoint delete -g MyResourceGroup \ --profile-name MyTmProfile -n MyEndpoint --type azureEndpoints
   parameters:
-  - isRequired: true
-    name: --endpoint-name
-    summary: The name of the Traffic Manager endpoint to be deleted.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --endpoint-type
-    summary: The type of the Traffic Manager endpoint to be deleted.
+  - name: --name -n
+    summary: Endpoint name.
     description: ''
-  - isRequired: true
-    name: --profile-name
-    summary: The name of the Traffic Manager profile.
+  - name: --profile-name
+    summary: Name of parent profile.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: azureEndpoints, externalEndpoints, nestedEndpoints
+    summary: Endpoint type.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -122,14 +130,18 @@ items:
   parameters:
   - isRequired: true
     name: --profile-name
-    summary: ''
+    summary: Name of parent profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --endpoint-type
-    summary: ''
+  - name: --type -t
+    parameterValueGroup: azureEndpoints, externalEndpoints, nestedEndpoints
+    summary: Endpoint type.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -150,21 +162,24 @@ items:
         az network traffic-manager endpoint show -g MyResourceGroup \
                                     --profile-name MyTmProfile -n MyEndpoint --type azureEndpoints
   parameters:
-  - isRequired: true
-    name: --endpoint-name
-    summary: The name of the Traffic Manager endpoint.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --endpoint-type
-    summary: The type of the Traffic Manager endpoint.
+  - name: --name -n
+    summary: Endpoint name.
     description: ''
-  - isRequired: true
-    name: --profile-name
-    summary: The name of the Traffic Manager profile.
+  - name: --profile-name
+    summary: Name of parent profile.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: azureEndpoints, externalEndpoints, nestedEndpoints
+    summary: Endpoint type.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -182,7 +197,10 @@ items:
   - summary: Get the default geographic hierarchy used by the geographic traffic routing method.
     syntax:
       content: az network traffic-manager endpoint show-geographic-hierarchy
-  parameters: []
+  parameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -200,47 +218,52 @@ items:
     syntax:
       content: az network traffic-manager endpoint update -g MyResourceGroup --profile-name MyTmProfile \ -n MyEndpoint --weight 20 --type azureEndpoints
   parameters:
-  - isRequired: true
-    name: --endpoint-name
-    summary: The name of the Traffic Manager endpoint to be created or updated.
-    description: ''
-  - isRequired: true
-    name: --profile-name
-    summary: The name of the Traffic Manager profile.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --endpoint-location
-    summary: ''
+    summary: Location of the external or nested endpoints when using the 'Performance' routing method.
     description: ''
   - name: --endpoint-monitor-status
-    summary: ''
+    summary: The monitoring status of the endpoint.
     description: ''
   - name: --endpoint-status
-    summary: ''
-    description: ''
-  - name: --endpoint-type
-    summary: ''
+    parameterValueGroup: Disabled, Enabled
+    summary: The status of the endpoint. If enabled the endpoint is probed for endpoint health and included in the traffic routing method.
     description: ''
   - name: --geo-mapping
-    summary: ''
+    summary: Space-separated list of country/region codes mapped to this endpoint when using the 'Geographic' routing method.
     description: ''
   - name: --min-child-endpoints
-    summary: ''
+    summary: The minimum number of endpoints that must be available in the child profile for the parent profile to be considered available. Only applicable to an endpoint of type 'NestedEndpoints'.
     description: ''
   - name: --priority
-    summary: ''
+    summary: Priority of the endpoint when using the 'Priority' traffic routing method. Values range from 1 to 1000, with lower values representing higher priority.
     description: ''
   - name: --target
-    summary: ''
+    summary: Fully-qualified DNS name of the endpoint.
     description: ''
   - name: --target-resource-id
-    summary: ''
+    summary: The Azure Resource URI of the endpoint. Not applicable for endpoints of type 'ExternalEndpoints'.
     description: ''
   - name: --weight
-    summary: ''
+    summary: Weight of the endpoint when using the 'Weighted' traffic routing method. Values range from 1 to 1000.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Endpoint name.
+    description: ''
+  - name: --profile-name
+    summary: Name of parent profile.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: azureEndpoints, externalEndpoints, nestedEndpoints
+    summary: Endpoint type.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

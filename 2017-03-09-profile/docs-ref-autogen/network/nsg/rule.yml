@@ -43,48 +43,57 @@ items:
                                     --destination-asgs Web --access Allow --protocol Tcp --description "Allow Internet to Web ASG on ports 80,8080."
   parameters:
   - isRequired: true
-    name: --network-security-group-name
-    summary: ''
+    name: --name -n
+    summary: Name of the network security group rule.
+    description: ''
+  - isRequired: true
+    name: --nsg-name
+    summary: Name of the network security group.
     description: ''
   - isRequired: true
     name: --priority
-    summary: ''
+    summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --security-rule-name
-    summary: ''
-    description: ''
   - name: --access
+    defaultValue: Allow
+    parameterValueGroup: Allow, Deny
     summary: ''
     description: ''
   - name: --description
-    summary: ''
-    description: ''
-  - name: --destination-address-prefix
-    defaultValue: ''
-    summary: ''
-    description: ''
-  - name: --destination-port-range
-    defaultValue: "80"
-    summary: ''
+    summary: Rule description.
     description: ''
   - name: --direction
+    defaultValue: Inbound
+    parameterValueGroup: Inbound, Outbound
     summary: ''
     description: ''
   - name: --protocol
-    summary: ''
+    defaultValue: ''
+    parameterValueGroup: '*, Tcp, Udp'
+    summary: Network protocol this rule applies to.
+    description: ''
+  - name: --destination-address-prefix
+    defaultValue: ''
+    summary: CIDR prefix or IP range. Use '*' to match all IPs. Can also use 'VirtualNetwork', 'AzureLoadBalancer', and 'Internet'.
+    description: ''
+  - name: --destination-port-range
+    defaultValue: "80"
+    summary: Port or port range between 0-65535. Use '*' to match all ports.
     description: ''
   - name: --source-address-prefix
     defaultValue: ''
-    summary: ''
+    summary: CIDR prefix or IP range. Use '*' to match all IPs. Can also use 'VirtualNetwork', 'AzureLoadBalancer', and 'Internet'.
     description: ''
   - name: --source-port-range
     defaultValue: ''
-    summary: ''
+    summary: Port or port range between 0-65535. Use '*' to match all ports.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -103,17 +112,20 @@ items:
     syntax:
       content: az network nsg rule delete -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule
   parameters:
-  - isRequired: true
-    name: --network-security-group-name
-    summary: The name of the network security group.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the network security group rule.
+    description: ''
+  - name: --nsg-name
+    summary: Name of the network security group.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --security-rule-name
-    summary: The name of the security rule.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -133,15 +145,18 @@ items:
       content: az network nsg rule list -g MyResourceGroup --nsg-name MyNsg
   parameters:
   - isRequired: true
-    name: --network-security-group-name
-    summary: ''
+    name: --nsg-name
+    summary: Name of the network security group.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --include-default
-    summary: ''
+    summary: Include default security rules in the output.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -160,17 +175,20 @@ items:
     syntax:
       content: az network nsg rule show -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule
   parameters:
-  - isRequired: true
-    name: --network-security-group-name
-    summary: The name of the network security group.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the network security group rule.
+    description: ''
+  - name: --nsg-name
+    summary: Name of the network security group.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --security-rule-name
-    summary: The name of the security rule.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -189,44 +207,50 @@ items:
     syntax:
       content: az network nsg rule update -g MyResourceGroup --nsg-name MyNsg -n MyNsgRule --destination-address-prefix '*'
   parameters:
-  - isRequired: true
-    name: --network-security-group-name
-    summary: The name of the network security group.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --security-rule-name
-    summary: The name of the security rule.
-    description: ''
   - name: --access
-    summary: "Required. The network traffic is allowed or denied. Possible values are: 'Allow' and 'Deny'."
+    parameterValueGroup: Allow, Deny
+    summary: ''
     description: ''
   - name: --description
-    summary: A description for this rule. Restricted to 140 chars.
-    description: ''
-  - name: --destination-address-prefix
-    summary: Required. The destination address prefix. CIDR or source IP range. Asterix '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used.
-    description: ''
-  - name: --destination-port-range
-    summary: The destination port or range. Integer or range between 0 and 65535. Asterix '*' can also be used to match all ports.
+    summary: Rule description.
     description: ''
   - name: --direction
-    summary: "Required. The direction of the rule. The direction specifies if rule will be evaluated on incoming or outcoming traffic. Possible values are: 'Inbound' and 'Outbound'."
+    parameterValueGroup: Inbound, Outbound
+    summary: ''
     description: ''
   - name: --priority
-    summary: The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule.
+    summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
     description: ''
   - name: --protocol
-    summary: Required. Network protocol this rule applies to. Possible values are 'Tcp', 'Udp', and '*'.
+    parameterValueGroup: '*, Tcp, Udp'
+    summary: Network protocol this rule applies to.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the network security group rule.
+    description: ''
+  - name: --nsg-name
+    summary: Name of the network security group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --destination-address-prefix
+    summary: CIDR prefix or IP range. Use '*' to match all IPs. Can also use 'VirtualNetwork', 'AzureLoadBalancer', and 'Internet'.
+    description: ''
+  - name: --destination-port-range
+    summary: Port or port range between 0-65535. Use '*' to match all ports.
     description: ''
   - name: --source-address-prefix
-    summary: Required. The CIDR or source IP range. Asterix '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from.
+    summary: CIDR prefix or IP range. Use '*' to match all IPs. Can also use 'VirtualNetwork', 'AzureLoadBalancer', and 'Internet'.
     description: ''
   - name: --source-port-range
-    summary: The source port or range. Integer or range between 0 and 65535. Asterix '*' can also be used to match all ports.
+    summary: Port or port range between 0-65535. Use '*' to match all ports.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

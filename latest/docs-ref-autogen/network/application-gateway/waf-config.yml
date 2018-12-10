@@ -30,14 +30,17 @@ items:
     syntax:
       content: az network application-gateway waf-config list-rule-sets -o table
   parameters:
-  - name: '---type'
-    summary: ''
-    description: ''
   - name: --group
     summary: List rules for the specified rule group. Use `*` to list rules for all groups. Omit to suppress listing individual rules.
     description: ''
+  - name: --type
+    summary: Rule set type to list. Omit to list all types.
+    description: ''
   - name: --version
     summary: Rule set version to list. Omit to list all versions.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -73,16 +76,9 @@ items:
                                     --exclusion "RequestArgNames Equals IgnoreThis"
   parameters:
   - isRequired: true
-    name: --application-gateway-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --enabled
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    parameterValueGroup: false, true
+    summary: Specify whether the application firewall is enabled.
     description: ''
   - name: --disabled-rule-groups
     summary: Space-separated list of rule groups to disable. To disable individual rules, use `--disabled-rules`.
@@ -92,23 +88,26 @@ items:
     summary: Space-separated list of rule IDs to disable.
     description: ''
     valueFrom: az network application-gateway waf-config list-rule-sets
-  - name: --exclusions
-    summary: ''
-    description: ''
+  - name: --exclusion
+    summary: Add an exclusion expression to the WAF check.
+    description: "Usage:   --exclusion VARIABLE OPERATOR VALUE\n                                    \n                                    Multiple exclusions can be specified by using more than one `--exclusion` argument."
   - name: --file-upload-limit
-    summary: ''
+    summary: File upload size limit in MB.
     description: ''
   - name: --firewall-mode
-    summary: ''
+    defaultValue: Detection
+    parameterValueGroup: Detection, Prevention
+    summary: Web application firewall mode.
     description: ''
   - name: --max-request-body-size
-    summary: ''
+    summary: Max request body size in KB.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --request-body-check
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Allow WAF to check the request body.
     description: ''
   - name: --rule-set-type
     defaultValue: OWASP
@@ -119,6 +118,18 @@ items:
     summary: Rule set version.
     description: ''
     valueFrom: az network application-gateway waf-config list-rule-sets
+  - name: --gateway-name
+    summary: The name of the application gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -136,13 +147,17 @@ items:
     syntax:
       content: az network application-gateway waf-config show -g MyResourceGroup --gateway-name MyAppGateway
   parameters:
-  - isRequired: true
-    name: --application-gateway-name
-    summary: ''
+  - name: --gateway-name
+    summary: The name of the application gateway.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py

@@ -24,19 +24,25 @@ items:
       content: az sql midb create -g mygroup --mi myinstance -n mymanageddb --collation Latin1_General_100_CS_AS_SC
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
     description: ''
   - isRequired: true
-    name: --managed-instance-name
-    summary: ''
+    name: --name -n
+    summary: The name of the Azure SQL Managed Database.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --collation
+    summary: 'The collation of the Azure SQL Managed Database collation to use, e.g.: SQL_Latin1_General_CP1_CI_AS or Latin1_General_100_CS_AS_SC.'
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -55,23 +61,26 @@ items:
     syntax:
       content: az sql midb delete -g mygroup --mi myinstance -n mymanageddb --yes
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
-    description: ''
-  - isRequired: true
-    name: --managed-instance-name
-    summary: The name of the managed instance.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
+    description: ''
+  - name: --name -n
+    summary: The name of the Azure SQL Managed Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -91,12 +100,15 @@ items:
       content: az sql midb list -g mygroup --mi myinstance
   parameters:
   - isRequired: true
-    name: --managed-instance-name
-    summary: The name of the managed instance.
+    name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -116,29 +128,36 @@ items:
       content: az sql midb restore -g mygroup --mi myinstance -n mymanageddb --dest-name targetmidb --time "2018-05-20T05:34:22"
   parameters:
   - isRequired: true
-    name: --database-name
-    summary: ''
+    name: --dest-name
+    summary: Name of the managed database that will be created as the restore destination.
     description: ''
-  - isRequired: true
-    name: --managed-instance-name
-    summary: ''
+  - name: --dest-mi
+    summary: Name of the managed instance to restore managed database to. This can be same managed instance, or another managed instance on same subscription. When not specified it defaults to source managed instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --target-managed-database-name
-    summary: ''
+  - name: --dest-resource-group
+    summary: Name of the resource group of the managed instance to restore managed database to. When not specified it defaults to source resource group.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --target-managed-instance-name
-    summary: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - name: --target-resource-group-name
-    summary: ''
+  - name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
+    description: ''
+  - name: --name -n
+    summary: The name of the Azure SQL Managed Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - isRequired: true
+    name: --time -t
+    summary: "The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value. Time should be in following format: \"YYYY-MM-DDTHH:MM:SS\"."
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
@@ -157,17 +176,20 @@ items:
     syntax:
       content: az sql midb show -g mygroup --mi myinstance -n mymanageddb
   parameters:
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --managed-instance-name
-    summary: The name of the managed instance.
+  - name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: The name of the Azure SQL Managed Database.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py

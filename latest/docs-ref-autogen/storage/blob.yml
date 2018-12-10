@@ -34,18 +34,19 @@ items:
       content: az storage blob delete -c MyContainer -n MyBlob
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --delete-snapshots
+    parameterValueGroup: include, only
     summary: Required if the blob has associated snapshots.
     description: ''
   - name: --lease-id
@@ -81,6 +82,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -101,25 +105,22 @@ items:
                                 az storage blob delete-batch -s MyContainer --account-name MyStorageAccount --pattern *.py --if-unmodified-since $date
   parameters:
   - isRequired: true
-    name: --source
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --source-container-name
-    summary: ''
-    description: ''
+    name: --source -s
+    summary: The blob container from where the files will be deleted.
+    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --delete-snapshots
-    summary: ''
+    parameterValueGroup: include, only
+    summary: Required if the blob has associated snapshots.
     description: ''
   - name: --dryrun
     summary: Show the summary of the operations to be taken instead of actually deleting the file(s).
     description: ''
   - name: --lease-id
-    summary: ''
+    summary: Required if the blob has an active lease.
     description: ''
   - name: --pattern
     summary: The pattern used for globbing files or blobs in the source. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
@@ -151,6 +152,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -165,16 +169,16 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
     description: ''
   - isRequired: true
-    name: --file-path
+    name: --file -f
     summary: Path of file to write out to.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -190,12 +194,18 @@ items:
     defaultValue: "2"
     summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the blob. If this is the entire blob, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be useful if many blobs are expected to be empty as an extra request is required for empty blobs if max_connections is greater than 1.
     description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
   - name: --open-mode
     defaultValue: wb
     summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
     description: ''
   - name: --snapshot
     summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve.
+    description: ''
+  - name: --socket-timeout
+    summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
   - name: --start-range
     summary: 'Start of byte range to use for downloading a section of the blob. If no end_range is given, all bytes after the start_range will be downloaded. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of blob.'
@@ -230,6 +240,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -248,17 +261,13 @@ items:
       content: az storage blob download-batch -d . --pattern *.py -s MyContainer --account-name MyStorageAccount
   parameters:
   - isRequired: true
-    name: --destination
-    summary: ''
+    name: --destination -d
+    summary: The existing destination folder for this download operation.
     description: ''
   - isRequired: true
-    name: --source
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --source-container-name
-    summary: ''
-    description: ''
+    name: --source -s
+    summary: The blob container from where the files will be downloaded.
+    description: The source can be the container URL or the container name. When the source is the container URL, the storage account name will be parsed from the URL.
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
@@ -268,10 +277,16 @@ items:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: ''
+    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
+    description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
     description: ''
   - name: --pattern
     summary: The pattern used for globbing files or blobs in the source. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
+    description: ''
+  - name: --socket-timeout
+    summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -284,6 +299,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -302,12 +320,13 @@ items:
     name: --container-name -c
     summary: The container name.
     description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
+    description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
-    description: ''
-  - name: --blob-name
-    summary: Name of a blob. If None, the container will be checked for existence.
     description: ''
   - name: --snapshot
     summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the snapshot.
@@ -326,6 +345,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -347,12 +369,12 @@ items:
                                 az storage blob generate-sas --account-name MyStorageAccount -c MyContainer -n MyBlob --permissions r --expiry $end --https-only
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -374,22 +396,22 @@ items:
     summary: Response header value for Content-Type when resource is accessed using this shared access signature.
     description: ''
   - name: --expiry
-    summary: The time at which the shared access signature becomes invalid. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
     description: ''
-  - name: --id
-    summary: A unique value up to 64 characters in length that correlates to a stored access policy. To create a stored access policy, use set_container_acl().
+  - name: --https-only
+    summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
     description: ''
   - name: --ip
-    summary: Specifies an IP address or a range of IP addresses from which to accept requests. If the IP address from which the request originates does not match the IP address or address range specified on the SAS token, the request is not authenticated. For example, specifying sip=168.1.5.65 or sip=168.1.5.60-168.1.5.70 on the SAS restricts the request to those IP addresses.
+    summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
     description: ''
-  - name: --permission
-    summary: The permissions associated with the shared access signature. The user is restricted to operations allowed by the permissions. Permissions must be ordered read, write, delete, list. Required unless an id is given referencing a stored access policy which contains this field. This field must be omitted if it has been specified in an associated stored access policy.
+  - name: --permissions
+    summary: 'The permissions the SAS grants. Allowed values: (a)dd (c)reate (d)elete (r)ead (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
     description: ''
-  - name: --protocol
-    summary: Specifies the protocol permitted for a request made. The default value is https,http. See Protocol for possible values.
+  - name: --policy-name
+    summary: The name of a stored access policy within the container's ACL.
     description: ''
   - name: --start
-    summary: The time at which the shared access signature becomes valid. If omitted, start time for this call is assumed to be the time when the storage service receives the request. Azure will always convert values to UTC. If a date is passed in without timezone info, it is assumed to be UTC.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -402,6 +424,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -430,11 +455,8 @@ items:
   - name: --include
     summary: 'Specifies additional datasets to include: (c)opy-info, (m)etadata, (s)napshots, (d)eleted-soft. Can be combined.'
     description: ''
-  - name: --marker
-    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
-    description: ''
   - name: --num-results
-    summary: Specifies the maximum number of blobs to return, including all BlobPrefix elements. If the request does not specify num_results or specifies a value greater than 5,000, the server will return up to 5,000 items. Setting num_results to a value less than or equal to zero results in error response code 400 (Bad Request).
+    summary: Specifies the maximum number of blobs to return. If this parameter is not provided, all blobs will be returned.
     description: ''
   - name: --prefix
     summary: Filters the results to return only blobs whose names begin with the specified prefix.
@@ -454,6 +476,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -468,12 +493,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - isRequired: true
     name: --tier
@@ -483,12 +508,13 @@ items:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --blob-type
-    defaultValue: block
-    summary: ''
-    description: ''
   - name: --timeout
     summary: The timeout parameter is expressed in seconds. This method may make multiple calls to the Azure service and the timeout will apply to each call individually.
+    description: ''
+  - name: --type -t
+    defaultValue: block
+    parameterValueGroup: block, page
+    summary: The blob type.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -501,6 +527,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -520,12 +549,12 @@ items:
       content: az storage blob show -c MyContainer -n MyBlob
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -564,6 +593,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -578,12 +610,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -622,6 +654,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -636,12 +671,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
@@ -662,6 +697,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -676,19 +714,34 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of existing blob.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --content-settings
-    summary: ContentSettings object used to set blob properties.
+  - name: --content-cache-control
+    summary: The cache control string.
+    description: ''
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content's MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
@@ -719,6 +772,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
@@ -738,26 +794,38 @@ items:
       content: az storage blob upload -f /path/to/file -c MyContainer -n MyBlob
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: Name of blob to create or update.
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
     description: ''
   - isRequired: true
-    name: --file-path
+    name: --file -f
     summary: Path of the file to upload as the blob content.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --blob-type
-    summary: ''
+  - name: --content-cache-control
+    summary: The cache control string.
     description: ''
-  - name: --content-settings
-    summary: ContentSettings object used to set blob properties.
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content's MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
@@ -772,11 +840,22 @@ items:
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --socket-timeout
+    summary: The socket timeout(secs), used by the service to regulate data flow.
+    description: ''
   - name: --tier
+    parameterValueGroup: P10, P20, P30, P4, P40, P50, P6, P60
     summary: A page blob tier value to set the blob to. The tier correlates to the size of the blob and number of allowed IOPS. This is only applicable to page blobs on premium storage accounts.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: append, block, page
+    summary: Defaults to 'page' for *.vhd files, or 'block' otherwise.
     description: ''
   - name: --validate-content
     summary: Specifies that an MD5 hash shall be calculated for each chunk of the blob and verified by the service when the chunk has arrived.
@@ -805,6 +884,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -823,28 +905,19 @@ items:
       content: az storage blob upload-batch -d MyContainer --account-name MyStorageAccount -s directory_path --pattern *.py --if-unmodified-since 2018-08-27T20:51Z
   parameters:
   - isRequired: true
-    name: --destination
-    summary: ''
-    description: ''
+    name: --destination -d
+    summary: The blob container where the files will be uploaded.
+    description: The destination can be the container URL or the container name. When the destination is the container URL, the storage account name will be parsed from the URL.
   - isRequired: true
-    name: --source
-    summary: ''
+    name: --source -s
+    summary: The directory where the files to be uploaded are located.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --blob-type
-    summary: ''
-    description: ''
-  - name: --content-settings
-    summary: ''
-    description: ''
-  - name: --destination-container-name
-    summary: ''
-    description: ''
   - name: --destination-path
-    summary: ''
+    summary: The destination path that will be appended to the blob name.
     description: ''
   - name: --dryrun
     summary: Show the summary of the operations to be taken instead of actually uploading the file(s).
@@ -854,22 +927,47 @@ items:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: ''
-    description: ''
-  - name: --maxsize-condition
-    summary: The max length in bytes permitted for an append blob.
+    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
+  - name: --no-progress
+    summary: Include this flag to disable progress reporting for the command.
+    description: ''
   - name: --pattern
     summary: The pattern used for globbing files or blobs in the source. The supported patterns are '*', '?', '[seq]', and '[!seq]'.
     description: ''
-  - name: --source-files
-    summary: ''
+  - name: --socket-timeout
+    summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: append, block, page
+    summary: Defaults to 'page' for *.vhd files, or 'block' otherwise. The setting will override blob types for every file.
+    description: ''
+  - name: --content-cache-control
+    summary: The cache control string.
+    description: ''
+  - name: --content-disposition
+    summary: Conveys additional information about how to process the response payload, and can also be used to attach additional metadata.
+    description: ''
+  - name: --content-encoding
+    summary: The content encoding type.
+    description: ''
+  - name: --content-language
+    summary: The content language.
+    description: ''
+  - name: --content-md5
+    summary: The content's MD5 hash.
+    description: ''
+  - name: --content-type
+    summary: The content MIME type.
+    description: ''
+  - name: --maxsize-condition
+    summary: The max length in bytes permitted for an append blob.
     description: ''
   - name: --validate-content
     summary: Specifies that an MD5 hash shall be calculated for each chunk of the blob and verified by the service when the chunk has arrived.
@@ -898,6 +996,9 @@ items:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
     remote:
@@ -912,22 +1013,24 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --blob-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --container-name -c
     summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --protocol
-    summary: ''
+    defaultValue: https
+    parameterValueGroup: http, https
+    summary: Protocol to use.
     description: ''
   - name: --snapshot
-    summary: ''
+    summary: An string value that uniquely identifies the snapshot. The value ofthis query parameter indicates the snapshot version.
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -940,6 +1043,9 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py

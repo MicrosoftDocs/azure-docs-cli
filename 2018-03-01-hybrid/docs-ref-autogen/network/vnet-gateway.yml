@@ -37,35 +37,25 @@ items:
                                     --client-protocol IkeV2 SSTP --radius-secret 111_aaa --radius-server 30.1.1.15
   parameters:
   - isRequired: true
-    name: --public-ip-address
-    summary: ''
+    name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - isRequired: true
+    name: --public-ip-addresses
+    summary: Specify a single public IP (name or ID) for an active-standby gateway. Specify two space-separated public IPs for an active-active gateway.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --virtual-network
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: ''
-    description: ''
-  - name: --address-prefixes
-    summary: ''
-    description: ''
-  - name: --asn
-    summary: ''
-    description: ''
-  - name: --bgp-peering-address
-    summary: ''
-    description: ''
-  - name: --client-protocol
-    summary: ''
+    name: --vnet
+    summary: Name or ID of an existing virtual network which has a subnet named 'GatewaySubnet'.
     description: ''
   - name: --gateway-type
-    summary: ''
+    defaultValue: Vpn
+    parameterValueGroup: ExpressRoute, Vpn
+    summary: The gateway type.
     description: ''
   - name: --location -l
     summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
@@ -73,23 +63,43 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --peer-weight
-    summary: ''
-    description: ''
-  - name: --radius-secret
-    summary: ''
-    description: ''
-  - name: --radius-server
-    summary: ''
-    description: ''
   - name: --sku
-    summary: ''
+    defaultValue: Basic
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw2, VpnGw3
+    summary: VNet gateway SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --vpn-type
-    summary: ''
+    defaultValue: RouteBased
+    parameterValueGroup: PolicyBased, RouteBased
+    summary: VPN routing type.
+    description: ''
+  - name: --asn
+    summary: Autonomous System Number to use for the BGP settings.
+    description: ''
+  - name: --bgp-peering-address
+    summary: IP address to use for BGP peering.
+    description: ''
+  - name: --peer-weight
+    summary: Weight (0-100) added to routes learned through BGP peering.
+    description: ''
+  - name: --address-prefixes
+    summary: Space-separated list of CIDR prefixes representing the address space for the P2S client.
+    description: ''
+  - name: --client-protocol
+    parameterValueGroup: IkeV2, SSTP
+    summary: Protocols to use for connecting.
+    description: ''
+  - name: --radius-secret
+    summary: Radius secret to use for authentication.
+    description: ''
+  - name: --radius-server
+    summary: Radius server address to connect to.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -112,16 +122,20 @@ items:
     syntax:
       content: az network vnet-gateway delete -g MyResourceGroup -n MyVnetGateway
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -144,6 +158,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
     remote:
@@ -165,13 +182,17 @@ items:
     name: --peer
     summary: The IP address of the peer.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -190,16 +211,20 @@ items:
     syntax:
       content: az network vnet-gateway list-bgp-peer-status -g MyResourceGroup -n MyVnetGateway --peer 23.10.10.9
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
-    description: ''
   - name: --peer
     summary: The IP address of the peer to retrieve the status of.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -218,13 +243,17 @@ items:
     syntax:
       content: az network vnet-gateway list-learned-routes -g MyResourceGroup -n MyVnetGateway
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -246,16 +275,20 @@ items:
     syntax:
       content: az network vnet-gateway reset -g MyResourceGroup -n MyVnetGateway --gateway-vip MyGatewayIP
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
-    description: ''
   - name: --gateway-vip
     summary: Virtual network gateway vip address supplied to the begin reset of the active-active feature enabled gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -274,13 +307,17 @@ items:
     syntax:
       content: az network vnet-gateway show -g MyResourceGroup -n MyVnetGateway
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -299,58 +336,67 @@ items:
     syntax:
       content: az network vnet-gateway update -g MyResourceGroup -n MyVnetGateway --sku VpnGw2
   parameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
-    description: ''
-  - name: --address-prefixes
-    summary: ''
-    description: ''
-  - name: --asn
-    summary: ''
-    description: ''
-  - name: --bgp-peering-address
-    summary: ''
-    description: ''
-  - name: --client-protocol
-    summary: ''
-    description: ''
-  - name: --enable-bgp
-    summary: ''
-    description: ''
   - name: --gateway-type
-    summary: ''
+    parameterValueGroup: ExpressRoute, Vpn
+    summary: The gateway type.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --peer-weight
-    summary: ''
-    description: ''
-  - name: --public-ip-address
-    summary: ''
-    description: ''
-  - name: --radius-secret
-    summary: ''
-    description: ''
-  - name: --radius-server
-    summary: ''
+  - name: --public-ip-addresses
+    summary: Specify a single public IP (name or ID) for an active-standby gateway. Specify two space-separated public IPs for an active-active gateway.
     description: ''
   - name: --sku
-    summary: ''
+    parameterValueGroup: Basic, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw2, VpnGw3
+    summary: VNet gateway SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-  - name: --virtual-network
-    summary: ''
+  - name: --vnet
+    summary: Name or ID of a virtual network that contains a subnet named 'GatewaySubnet'.
     description: ''
   - name: --vpn-type
-    summary: ''
+    parameterValueGroup: PolicyBased, RouteBased
+    summary: VPN routing type.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --asn
+    summary: Autonomous System Number to use for the BGP settings.
+    description: ''
+  - name: --bgp-peering-address
+    summary: IP address to use for BGP peering.
+    description: ''
+  - name: --enable-bgp
+    parameterValueGroup: false, true
+    summary: Enable BGP (Border Gateway Protocol).
+    description: ''
+  - name: --peer-weight
+    summary: Weight (0-100) added to routes learned through BGP peering.
+    description: ''
+  - name: --address-prefixes
+    summary: Space-separated list of CIDR prefixes representing the address space for the P2S client.
+    description: ''
+  - name: --client-protocol
+    parameterValueGroup: IkeV2, SSTP
+    summary: Protocols to use for connecting.
+    description: ''
+  - name: --radius-secret
+    summary: Radius secret to use for authentication.
+    description: ''
+  - name: --radius-server
+    summary: Radius server address to connect to.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -381,13 +427,17 @@ items:
     syntax:
       content: az network vnet-gateway wait -g MyResourceGroup -n MyVnetGateway --created
   parameters:
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the VNet gateway.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-gateway-name
-    summary: The name of the virtual network gateway.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.

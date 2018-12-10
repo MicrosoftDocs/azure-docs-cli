@@ -27,7 +27,10 @@ items:
       content: az vm diagnostics get-default-config --is-windows-os
   parameters:
   - name: --is-windows-os
-    summary: ''
+    summary: For Windows VMs.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
@@ -47,25 +50,29 @@ items:
       content: "# Set the following 3 parameters first.\n                        my_resource_group=<Resource group name containing your Linux VM and the storage account>\n                        my_linux_vm=<Your Azure Linux VM name>\n                        my_diagnostic_storage_account=<Your Azure storage account for storing VM diagnostic data>\n                        \n                        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query \"id\" -o tsv)\n                        \n                        default_config=$(az vm diagnostics get-default-config \\\n                            | sed \"s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g\" \\\n                            | sed \"s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g\")\n                        \n                        storage_sastoken=$(az storage account generate-sas \\\n                            --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z \\\n                            --permissions wlacu --resource-types co --services bt -o tsv)\n                        \n                        protected_settings=\"{'storageAccountName': '{my_diagnostic_storage_account}', \\\n                            'storageAccountSasToken': '{storage_sastoken}'}\"\n                        \n                        az vm diagnostics set --settings \"{default_config}\" \\\n                            --protected-settings \"{protected_settings}\" \\\n                            --resource-group $my_resource_group --vm-name $my_linux_vm"
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
     name: --settings
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --vm-name
-    summary: ''
+    summary: Json string or a file path, which defines data to be collected.
     description: ''
   - name: --no-auto-upgrade
-    summary: ''
+    summary: By doing this, extension system will not pick the highest minor version for the specified version number, and will not auto update to the latest build/revision number on any scale set updates in future.
     description: ''
   - name: --protected-settings
-    summary: ''
+    summary: Json string or a file path containing private configurations such as storage account keys, etc.
     description: ''
   - name: --version
-    summary: ''
+    summary: Version of the diagnostics extension. Will use the latest if not specfied.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
     description: ''
   source:
     path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py

@@ -28,20 +28,23 @@ items:
                                     -n MyRecordSet -a MyIpv4Address
   parameters:
   - isRequired: true
-    name: --ipv4-address
-    summary: ''
+    name: --ipv4-address -a
+    summary: IPV4 address in string notation.
     description: ''
   - isRequired: true
-    name: --record-set-name
-    summary: ''
+    name: --record-set-name -n
+    summary: The name of the record set relative to the zone. Creates a new record set if one does not exist.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: ''
+    name: --zone-name -z
+    summary: The name of the zone.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -61,36 +64,32 @@ items:
       content: az network dns record-set a create -g MyResourceGroup -z www.mysite.com -n MyRecordSet
   parameters:
   - isRequired: true
-    name: --record-set-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --record-set-type
-    summary: ''
+    name: --name -n
+    summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: The name of the DNS zone (without a terminating dot).
+    name: --zone-name -z
+    summary: The name of the zone.
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwritting any concurrent changes.
     description: ''
   - name: --if-none-match
-    summary: Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored.
+    summary: Create the record set only if it does not already exist.
     description: ''
   - name: --metadata
-    summary: ''
-    description: ''
-  - name: --target-resource
-    summary: ''
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --ttl
     defaultValue: "3600"
-    summary: ''
+    summary: Record set TTL (time-to-live).
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -110,11 +109,7 @@ items:
       content: az network dns record-set a delete -g MyResourceGroup -z www.mysite.com -n MyRecordSet
   parameters:
   - isRequired: true
-    name: --record-type
-    summary: The type of DNS record in this record set. Record sets of type SOA cannot be deleted (they are deleted when the DNS zone is deleted).
-    description: ''
-  - isRequired: true
-    name: --relative-record-set-name
+    name: --name -n
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -122,14 +117,17 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: The name of the DNS zone (without a terminating dot).
+    name: --zone-name -z
+    summary: The name of the zone.
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always delete the current record set. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -153,11 +151,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: ''
+    name: --zone-name -z
+    summary: The name of the zone.
     description: ''
-  - name: --record-type
-    summary: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -179,23 +177,26 @@ items:
                                     -n MyRecordSet -a MyIpv4Address
   parameters:
   - isRequired: true
-    name: --ipv4-address
-    summary: ''
+    name: --ipv4-address -a
+    summary: IPV4 address in string notation.
     description: ''
   - isRequired: true
-    name: --record-set-name
-    summary: ''
+    name: --record-set-name -n
+    summary: The name of the record set relative to the zone.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: ''
+    name: --zone-name -z
+    summary: The name of the zone.
     description: ''
   - name: --keep-empty-record-set
-    summary: ''
+    summary: Keep the empty record set if the last record is removed.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -215,11 +216,7 @@ items:
       content: az network dns record-set a show -g MyResourceGroup -n MyRecordSet -z www.mysite.com
   parameters:
   - isRequired: true
-    name: --record-type
-    summary: The type of DNS record in this record set.
-    description: ''
-  - isRequired: true
-    name: --relative-record-set-name
+    name: --name -n
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -227,8 +224,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: The name of the DNS zone (without a terminating dot).
+    name: --zone-name -z
+    summary: The name of the zone.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py
@@ -250,11 +250,7 @@ items:
                                     -z www.mysite.com --metadata owner=WebTeam
   parameters:
   - isRequired: true
-    name: --record-type
-    summary: The type of DNS record in this record set. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).
-    description: ''
-  - isRequired: true
-    name: --relative-record-set-name
+    name: --name -n
     summary: The name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
@@ -262,8 +258,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --zone-name
-    summary: The name of the DNS zone (without a terminating dot).
+    name: --zone-name -z
+    summary: The name of the zone.
     description: ''
   - name: --if-match
     summary: The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwritting any concurrent changes.
@@ -272,10 +268,7 @@ items:
     summary: Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored.
     description: ''
   - name: --metadata
-    summary: ''
-    description: ''
-  - name: --target-resource
-    summary: ''
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -288,6 +281,9 @@ items:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-network/azure/cli/command_modules/network/_help.py

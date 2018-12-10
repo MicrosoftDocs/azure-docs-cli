@@ -30,34 +30,39 @@ items:
       content: "$sastoken = az storage blob generate-sas --account-name storageacct --account-key 00000000 \\ -c container1 -n blob1 --https-only --permissions rw\n                        $url = az storage blob url --account-name storageacct -c container1 -n blob1\n                        \n                        az keyvault storage sas-definition create --vault-name vault --account-name storageacct   \\ -n rwblobaccess --validity-period P2D --sas-type service --template-uri $url?$sastoken"
   parameters:
   - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
-    description: ''
-  - isRequired: true
     name: --sas-type
+    parameterValueGroup: account, service
     summary: The type of SAS token the SAS definition will create.
     description: ''
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
-    description: ''
-  - isRequired: true
     name: --template-uri
-    summary: The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template.
+    summary: The SAS definition token template signed with the key 00000000.  In the case of an account token this is only the sas token itself, for service tokens, the full service endpoint url along with the sas token.  Tokens created according to the SAS definition will have the same properties as the template.
     description: ''
   - isRequired: true
     name: --validity-period
-    summary: The validity period of SAS tokens created according to the SAS definition.
+    summary: The validity period of SAS tokens created according to the SAS definition in ISO-8601, such as "PT12H" for 12 hour tokens.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
-  - name: --sas-definition-attributes
-    summary: The attributes of the SAS definition.
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - isRequired: true
+    name: --account-name
+    summary: Name to identify the storage account in the vault.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name to identify the SAS definition in the vault.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -72,17 +77,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
+  - name: --account-name
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
     description: ''
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --id
+    summary: Id of the SAS definition.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name to identify the SAS definition in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -97,16 +105,19 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --account-name
+    summary: Name to identify the storage account in the vault.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -121,16 +132,19 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --account-name
+    summary: Name to identify the storage account in the vault.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -146,16 +160,19 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
+    name: --account-name
+    summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+    name: --name -n
+    summary: Name to identify the SAS definition in the vault.
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -170,17 +187,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
+  - name: --account-name
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
     description: ''
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+  - name: --id
+    summary: Id of the SAS definition.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name to identify the SAS definition in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -196,16 +216,19 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
+    name: --account-name
+    summary: Name to identify the storage account in the vault.
     description: ''
   - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
+    name: --name -n
+    summary: Name to identify the SAS definition in the vault.
     description: ''
   - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
@@ -220,32 +243,37 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --sas-definition-name
-    summary: The name of the SAS definition.
-    description: ''
-  - isRequired: true
-    name: --storage-account-name
-    summary: The name of the storage account.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
-  - name: --sas-definition-attributes
-    summary: The attributes of the SAS definition.
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Add the storage account in a disabled state.
     description: ''
   - name: --sas-type
+    parameterValueGroup: account, service
     summary: The type of SAS token the SAS definition will create.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --template-uri
-    summary: The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template.
+    summary: The SAS definition token template signed with the key 00000000.  In the case of an account token this is only the sas token itself, for service tokens, the full service endpoint url along with the sas token.  Tokens created according to the SAS definition will have the same properties as the template.
     description: ''
   - name: --validity-period
-    summary: The validity period of SAS tokens created according to the SAS definition.
+    summary: The validity period of SAS tokens created according to the SAS definition in ISO-8601, such as "PT12H" for 12 hour tokens.
+    description: ''
+  - name: --account-name
+    summary: Name to identify the storage account in the vault. Required if --id is not specified.
+    description: ''
+  - name: --id
+    summary: Id of the SAS definition.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name to identify the SAS definition in the vault. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py

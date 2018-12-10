@@ -23,72 +23,78 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: ''
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
   - isRequired: true
-    name: --ips
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: ''
+    name: --name -n
+    summary: The name of the live event.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --streaming-protocol
-    summary: ''
-    description: ''
-  - name: --access-token
-    summary: ''
-    description: ''
-  - name: --alternative-media-id
-    summary: ''
-    description: ''
   - name: --auto-start
-    summary: ''
-    description: ''
-  - name: --client-access-policy
-    summary: ''
-    description: ''
-  - name: --cross-domain-policy
-    summary: ''
+    summary: The flag indicates if the resource should be automatically started on creation.
     description: ''
   - name: --description
-    summary: ''
-    description: ''
-  - name: --encoding-type
-    summary: ''
-    description: ''
-  - name: --key-frame-interval-duration
-    summary: ''
+    summary: The live event description.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --preset-name
-    summary: ''
-    description: ''
-  - name: --preview-ips
-    summary: ''
-    description: ''
-  - name: --preview-locator
-    summary: ''
-    description: ''
   - name: --stream-options
-    summary: ''
-    description: ''
-  - name: --streaming-policy-name
-    summary: ''
+    parameterValueGroup: Default, LowLatency
+    summary: The options to use for the LiveEvent. This value is specified at creation time and cannot be updated.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --vanity-url
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Specifies whether to use a vanity url with the Live Event. This value is specified at creation time and cannot be updated.
+    description: ''
+  - name: --client-access-policy
+    summary: Filepath to the clientaccesspolicy.xml used by Silverlight. Use @{file} to load from a file.
+    description: ''
+  - name: --cross-domain-policy
+    summary: Filepath to the crossdomain.xml used by Silverlight. Use @{file} to load from a file.
+    description: ''
+  - name: --encoding-type
+    summary: 'The encoding type for live event. This value is specified at creation time and cannot be updated. Allowed values: Basic, None, Standard.'
+    description: ''
+  - name: --preset-name
+    summary: The encoding preset name. This value is specified at creation time and cannot be updated.
+    description: ''
+  - isRequired: true
+    name: --ips
+    summary: Space-separated IP addresses for access control. Allowed IP addresses can be specified as either a single IP address (e.g. "10.0.0.1") or as an IP range using an IP address and a CIDR subnet mask (e.g. "10.0.0.1/22"). Use "" to clear existing list. Use "AllowAll" to allow all IP addresses. Allowing all IPs is not recommended for production environments.
+    description: ''
+  - isRequired: true
+    name: --streaming-protocol
+    parameterValueGroup: FragmentedMP4, RTMP
+    summary: The streaming protocol for the live event. This value is specified at creation time and cannot be updated.
+    description: ''
+  - name: --access-token
+    summary: A unique identifier for a stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value.
+    description: ''
+  - name: --key-frame-interval-duration
+    summary: ISO 8601 timespan duration of the key frame interval duration.
+    description: ''
+  - name: --alternative-media-id
+    summary: An Alternative Media Identifier associated with the StreamingLocator created for the preview. This value is specified at creation time and cannot be updated. The identifier can be used in the CustomLicenseAcquisitionUrlTemplate or the CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in the StreamingPolicyName field.
+    description: ''
+  - name: --preview-ips
+    summary: Space-separated IP addresses for access control. Allowed IP addresses can be specified as either a single IP address (e.g. "10.0.0.1") or as an IP range using an IP address and a CIDR subnet mask (e.g. "10.0.0.1/22"). Use "" to clear existing list. Use "AllowAll" to allow all IP addresses. Allowing all IPs is not recommended for production environments.
+    description: ''
+  - name: --preview-locator
+    summary: The identifier of the preview locator in Guid format. Specifying this at creation time allows the caller to know the preview locator url before the event is created. If omitted, the service will generate a random identifier. This value cannot be updated once the live event is created.
+    description: ''
+  - name: --streaming-policy-name
+    summary: The name of streaming policy used for the live event preview. This can be specified at creation time but cannot be updated.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -103,17 +109,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: The name of the Live Event.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -133,12 +142,15 @@ items:
       content: az ams live-event list -a amsAccount -g resourceGroup --query [].{liveEventName:name,state:resourceState}
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+    name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -153,20 +165,23 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -181,17 +196,20 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: The Media Services account name.
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
     description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: The name of the Live Event.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -206,20 +224,23 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -234,23 +255,26 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove-outputs-on-stop
-    summary: ''
+    summary: Remove live outputs on stop.
+    description: ''
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
     path: src/command_modules/azure-cli-ams/azure/cli/command_modules/ams/_help.py
@@ -272,38 +296,41 @@ items:
     syntax:
       content: az ams live-event update -a amsAccount -g resourceGroup -n liveEventName --ips 1.2.3.4/22 5.6.7.8/30
   parameters:
-  - isRequired: true
-    name: --account-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --live-event-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --client-access-policy
-    summary: ''
-    description: ''
-  - name: --cross-domain-policy
-    summary: ''
-    description: ''
   - name: --description
-    summary: ''
-    description: ''
-  - name: --ips
-    summary: ''
-    description: ''
-  - name: --key-frame-interval-duration
-    summary: ''
-    description: ''
-  - name: --preview-ips
-    summary: ''
+    summary: The live event description.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --client-access-policy
+    summary: Filepath to the clientaccesspolicy.xml used by Silverlight. Use @{file} to load from a file.
+    description: ''
+  - name: --cross-domain-policy
+    summary: Filepath to the crossdomain.xml used by Silverlight. Use @{file} to load from a file.
+    description: ''
+  - name: --ips
+    summary: Space-separated IP addresses for access control. Allowed IP addresses can be specified as either a single IP address (e.g. "10.0.0.1") or as an IP range using an IP address and a CIDR subnet mask (e.g. "10.0.0.1/22"). Use "" to clear existing list. Use "AllowAll" to allow all IP addresses. Allowing all IPs is not recommended for production environments.
+    description: ''
+  - name: --key-frame-interval-duration
+    summary: ISO 8601 timespan duration of the key frame interval duration.
+    description: ''
+  - name: --preview-ips
+    summary: Space-separated IP addresses for access control. Allowed IP addresses can be specified as either a single IP address (e.g. "10.0.0.1") or as an IP range using an IP address and a CIDR subnet mask (e.g. "10.0.0.1/22"). Use "" to clear existing list. Use "AllowAll" to allow all IP addresses. Allowing all IPs is not recommended for production environments.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
