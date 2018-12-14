@@ -12,6 +12,55 @@ ms.devlang: azure-cli
 ---
 
 # Azure CLI release notes
+
+## December 18, 2018
+
+Version 2.0.53
+### ACR
+* Add support for image import from external Container Registries.
+* Condense the table layout for task list.
+* Add support for Azure DevOps URLs.
+
+### ACS
+* Add Virtual Nodes Preview
+* Remove "(PREVIEW)" from AAD arguments to "az aks create"
+* Mark "az acs" commands as deprecated (the ACS service will retire on January 31, 2020)
+* Add support of Network Policy when creating new AKS clusters
+* Don't require --nodepool-name in "az aks scale" if there's only one nodepool
+
+### Appservice
+* webapp: az webapp config container now honors --slot parameter
+
+### Botservice
+* Add support for .bot file parsing when calling `az bot show`
+* Fix AppInsights provisioning bug
+* Fix whitespace bug when dealing with file paths
+* Reduce Kudu network calls
+* Additional UX improvements
+
+### Consumption
+* Fixed bugs for budget API to show notifications.
+
+### CosmosDB
+* Added support for updating account from multi-master to single-master
+
+### Maps
+* Add support for the S1 SKU: `maps account create | update`: now supports `S1` as a valid value for the `--sku | -s` parameter.
+
+### Network
+* `watcher flow-log configure`: Add support for `--format` and `--log-version`.
+* `dns zone update`: Finished issue where using "" to clear resolution and registration VNets didn't work.
+
+### Resource
+* `policy assignment create/list/delete/show/update`: fix handling of scope parameter for management groups
+* add new command of `az resource wait`
+
+### Storage
+* `storage logging update`- Add ability to update log schema version for storage services.
+
+### VM
+* `vm identity remove`: does not crash if the specified vm has no assigned managed service identities.
+
 ## December 4, 2018
 
 Version 2.0.52
