@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/20/2018
+ms.date: 12/18/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -17,49 +17,49 @@ ms.devlang: azure-cli
 
 Version 2.0.53
 ### ACR
-* Add support for image import from external Container Registries.
-* Condense the table layout for task list.
-* Add support for Azure DevOps URLs.
+* Added support for image import from external Container Registries
+* Condensed the table layout for task list
+* Added support for Azure DevOps URLs
 
 ### ACS
-* Add Virtual Nodes Preview
-* Remove "(PREVIEW)" from AAD arguments to "az aks create"
-* Mark "az acs" commands as deprecated (the ACS service will retire on January 31, 2020)
-* Add support of Network Policy when creating new AKS clusters
-* Don't require --nodepool-name in "az aks scale" if there's only one nodepool
+* Added Virtual Nodes Preview
+* Removed "(PREVIEW)" from AAD arguments to `aks create`
+* [DEPRECATED] Deprecated `az acs` commands. The ACS service will retire on January 31, 2020
+* Added support of Network Policy when creating new AKS clusters
+* Removed requirement of `--nodepool-name` argument for `aks scale` if there's only one nodepool
 
 ### Appservice
-* webapp: az webapp config container now honors --slot parameter
+* Fixed issue where `webapp config container` did not honor `--slot` parameter
 
 ### Botservice
-* Add support for .bot file parsing when calling `az bot show`
-* Fix AppInsights provisioning bug
-* Fix whitespace bug when dealing with file paths
-* Reduce Kudu network calls
-* Additional UX improvements
+* Added support for `.bot` file parsing when calling `bot show`
+* Fixed AppInsights provisioning bug
+* Fixed whitespace bug when dealing with file paths
+* Reduced Kudu network calls
+* General command UX improvements
 
 ### Consumption
-* Fixed bugs for budget API to show notifications.
+* Fixed bugs for budget API to show notifications
 
 ### CosmosDB
 * Added support for updating account from multi-master to single-master
 
 ### Maps
-* Add support for the S1 SKU: `maps account create | update`: now supports `S1` as a valid value for the `--sku | -s` parameter.
+* Added support for the S1 SKU to `maps account [create|update]`
 
 ### Network
-* `watcher flow-log configure`: Add support for `--format` and `--log-version`.
-* `dns zone update`: Finished issue where using "" to clear resolution and registration VNets didn't work.
+* Added support for `--format` and `--log-version` to `watcher flow-log configure`
+* Fixed issue with `dns zone update` where using "" to clear resolution and registration VNets didn't work
 
 ### Resource
-* `policy assignment create/list/delete/show/update`: fix handling of scope parameter for management groups
-* add new command of `az resource wait`
+* Fixed handling of scope parameter for management groups in `policy assignment [create|list|delete|show|update]` 
+* Added new command `resource wait`
 
 ### Storage
-* `storage logging update`- Add ability to update log schema version for storage services.
+*  Added ability to update log schema version for storage services in `storage logging update`
 
 ### VM
-* `vm identity remove`: does not crash if the specified vm has no assigned managed service identities.
+* Fixed crash in `vm identity remove` when the specified vm has no assigned managed service identities
 
 ## December 4, 2018
 
