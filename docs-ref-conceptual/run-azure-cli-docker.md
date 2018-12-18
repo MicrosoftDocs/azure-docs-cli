@@ -8,7 +8,7 @@ ms.date: 01/29/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 
 # Run Azure CLI in a Docker container

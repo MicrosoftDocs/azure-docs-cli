@@ -7,7 +7,7 @@ manager: carmonm
 ms.date: 07/12/2018
 ms.topic: conceptual
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 
 # Differences between Azure CLI products

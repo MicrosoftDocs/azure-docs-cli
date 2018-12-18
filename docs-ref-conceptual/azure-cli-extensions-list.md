@@ -8,7 +8,7 @@ ms.date: 12/15/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 
 # Available extensions for the Azure CLI
