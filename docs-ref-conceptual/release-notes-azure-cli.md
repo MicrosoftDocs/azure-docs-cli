@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/20/2018
+ms.date: 12/18/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,55 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## December 18, 2018
+
+Version 2.0.53
+### ACR
+* Added support for image import from external Container Registries
+* Condensed the table layout for task list
+* Added support for Azure DevOps URLs
+
+### ACS
+* Added Virtual Nodes Preview
+* Removed "(PREVIEW)" from AAD arguments to `aks create`
+* [DEPRECATED] Deprecated `az acs` commands. The ACS service will retire on January 31, 2020
+* Added support of Network Policy when creating new AKS clusters
+* Removed requirement of `--nodepool-name` argument for `aks scale` if there's only one nodepool
+
+### Appservice
+* Fixed issue where `webapp config container` did not honor `--slot` parameter
+
+### Botservice
+* Added support for `.bot` file parsing when calling `bot show`
+* Fixed AppInsights provisioning bug
+* Fixed whitespace bug when dealing with file paths
+* Reduced Kudu network calls
+* General command UX improvements
+
+### Consumption
+* Fixed bugs for budget API to show notifications
+
+### CosmosDB
+* Added support for updating account from multi-master to single-master
+
+### Maps
+* Added support for the S1 SKU to `maps account [create|update]`
+
+### Network
+* Added support for `--format` and `--log-version` to `watcher flow-log configure`
+* Fixed issue with `dns zone update` where using "" to clear resolution and registration VNets didn't work
+
+### Resource
+* Fixed handling of scope parameter for management groups in `policy assignment [create|list|delete|show|update]` 
+* Added new command `resource wait`
+
+### Storage
+*  Added ability to update log schema version for storage services in `storage logging update`
+
+### VM
+* Fixed crash in `vm identity remove` when the specified vm has no assigned managed service identities
+
 ## December 4, 2018
 
 Version 2.0.52
