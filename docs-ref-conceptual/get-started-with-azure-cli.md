@@ -9,7 +9,7 @@ ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 # Get started with Azure CLI
 

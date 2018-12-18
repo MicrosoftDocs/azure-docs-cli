@@ -8,7 +8,7 @@ ms.date: 11/20/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 
 # Azure CLI release notes

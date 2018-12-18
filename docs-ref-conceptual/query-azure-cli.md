@@ -8,7 +8,7 @@ ms.date: 11/12/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 # Query Azure CLI command output
 

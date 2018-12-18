@@ -8,7 +8,7 @@ ms.date: 06/11/2018
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ---
 # Install the Azure classic CLI
 
