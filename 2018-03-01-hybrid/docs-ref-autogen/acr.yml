@@ -20,23 +20,26 @@ items:
   - az_acr_update
 - uid: az_acr_build
   name: az acr build
-  summary: Queues a quick build, providing streamed logs for an Azure Container Registry.
+  summary: Queues a quick build, providing streaming logs for an Azure Container Registry.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Queue a local context (folder), pushed to ACR when complete, with streaming logs.
+  - summary: Queue a local context as a Linux build, tag it, and push it to the registry.
     syntax:
       content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry .
-  - summary: Queue a local context, pushed to ACR without streaming logs.
+  - summary: Queue a local context as a Linux build, tag it, and push it to the registry without streaming logs.
     syntax:
       content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-logs .
-  - summary: Queue a local context to validate a build is successful, without pushing to the registry using the --no-push parameter.
+  - summary: Queue a local context as a Linux build without pushing it to the registry.
     syntax:
       content: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-push .
-  - summary: Queue a local context to validate a build is successful, without pushing to the registry. Removing the -t parameter defaults to --no-push
+  - summary: Queue a local context as a Linux build without pushing it to the registry.
     syntax:
       content: az acr build -r MyRegistry .
+  - summary: Queue a remote GitHub context as a Windows build, tag it, and push it to the registry.
+    syntax:
+      content: az acr build -r MyRegistry https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --os Windows
   parameters:
   - isRequired: true
     name: --registry -r
@@ -142,7 +145,7 @@ items:
     summary: Indicates whether the admin user is enabled.
     description: ''
   - name: --location -l
-    summary: Location. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - name: --storage-account-name
     summary: Provide the name of an existing storage account if you're recreating a container registry over a previous registry created storage account. Only applicable to Classic SKU.
@@ -196,6 +199,9 @@ items:
   - summary: Import an image from a registry in a different subscription.
     syntax:
       content: az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
+  - summary: Import an image from a public repository in Docker Hub
+    syntax:
+      content: az acr import -n MyRegistry --source docker.io/sourcerepository:sourcetag -t targetrepository:targettag
   parameters:
   - isRequired: true
     name: --name -n
@@ -211,6 +217,9 @@ items:
   - name: --image -t
     summary: The name of the image. May include a tag in the format 'name:tag'.
     description: ''
+  - name: --password -p
+    summary: The password of source container registry.
+    description: ''
   - name: --registry -r
     summary: The source container registry can be name, login server or resource ID of the source registry.
     description: ''
@@ -219,6 +228,9 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --username -u
+    summary: The username of source container registry.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -467,7 +479,7 @@ items:
 commands:
 - uid: az_acr_build
   name: az acr build
-  summary: Queues a quick build, providing streamed logs for an Azure Container Registry.
+  summary: Queues a quick build, providing streaming logs for an Azure Container Registry.
 - uid: az_acr_build_task
   name: az acr build-task
   summary: Manage build definitions, which can be triggered by git commits or base image updates for OS & Framework Patching.
@@ -694,7 +706,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/6d1ed376000fc9070eba5ba177b75c944f01bf55/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 11/15/2018 4:35:00 PM
-ms.date: 11/15/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/3776f9650c2e6ac64b8f0a29d8592390316a9e0b/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 12/13/2018 10:24:18 PM
+ms.date: 12/13/2018
 description: Manage private registries with Azure Container Registries.
