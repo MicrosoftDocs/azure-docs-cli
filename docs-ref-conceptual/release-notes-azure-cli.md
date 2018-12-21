@@ -13,6 +13,26 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## December 20, 2018 (HOTFIX)
+
+Version 2.0.54
+### Appservice
+* webapp: az webapp up reliability fixes, where using the command to redeploy code to a newly created app using the same command was failing
+* webapp: add support for listing and restoring webapp snapshots
+* functionapp: add support for --runtime flag in windows function apps
+
+### IoTCentral
+* Fix update command API call.
+
+### Role
+* BREAKING CHANGE: `az ad app/sp list` will by default output the first 100 objects instead of getting all of them. 
+
+### SQL
+* Support for custom collation on managed instance.
+
+### VM
+* `disk create`: expose --os-type parameter.
+
 ## December 18, 2018
 
 Version 2.0.53
