@@ -4,11 +4,11 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 12/15/2018
+ms.date: 12/21/2018
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azurecli
+ms.devlang: azure-cli
 ---
 
 # Available extensions for the Azure CLI
