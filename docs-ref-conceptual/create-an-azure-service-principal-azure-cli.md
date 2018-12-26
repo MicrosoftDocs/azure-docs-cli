@@ -18,10 +18,15 @@ associated with an account. Service principals are useful for working with appli
 
 Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command to create a service principal. The Service Principal's name isn't tied to any existing application or user name. You can create a service principal with your choice of authentication type.
 
-* `--password` is used for password-based authentication. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). If you don't specify a password, one is created for you.
+* `--password` is used for password-based authentication. If an argument indicating the authentication type isn't included, --password is used by default, and one is created for you. If you want to use password-based authentication, we recommend using this command, so the password is created for you.  
 
   ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --password PASSWORD
+  az ad sp create-for-rbac --name ServicePrincipalName 
+  ```
+  If you want to choose the password, instead of it being created for you (which is not recommended, for security reasons), you can use this command. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). The option to choose password leaves the chance of a weak password being chosen or password being re-used. This option is planned to be deprecated in a future version of Azure CLI. 
+
+  ```azurecli-interactive
+  az ad sp create-for-rbac --name ServicePrincipalName --password <Choose a strong password>
   ```
 
 * `--cert` is used for certificate-based authentication for an existing certificate, either as a PEM or DER public string, or `@{file}` to load a file.
@@ -116,5 +121,5 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password PAT
 In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) command. The same restrictions and options for creating a new service principal also apply here.
 
 ```azurecli-interactive
-az ad sp credential reset --name APP_ID --password NEW_PASSWORD
+az ad sp credential reset --name APP_ID 
 ```
