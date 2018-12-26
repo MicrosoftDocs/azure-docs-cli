@@ -1,6 +1,6 @@
 ---
 title: Overview of the Azure CLI 
-description: Overview of the Azure CLI.
+description: Overview of the Azure command-line interface (CLI).
 author: sptramer
 ms.author: sttramer
 manager: carmonm
@@ -11,13 +11,14 @@ ms.technology: azure-cli
 ms.devlang: azurecli
 ---
 
-# Azure CLI
+# Azure Command-Line Interface (CLI)
 
-The Azure CLI is Microsoft's cross-platform command-line experience for managing Azure resources.
-You can use it in your browser with [Azure Cloud Shell](/azure/cloud-shell/overview),
-or [install](install-azure-cli.md) it on macOS, Linux, or Windows and run it from the command line.
+The Azure command-line interface (CLI) is Microsoft's cross-platform command-line experience for managing Azure resources.
+Use it in your browser with [Azure Cloud Shell](/azure/cloud-shell/overview), or [install](install-azure-cli.md) it on macOS,
+Linux, or Windows and run it from the command line.
 
-The Azure CLI is simple to get started with, and best used for building automation scripts that work against the Azure Resource Manager. Using the Azure CLI, you can create VMs within Azure as easily as typing the following command:
+The Azure CLI is easy to get started with, and best used for building automation scripts that work with the Azure Resource Manager.
+Using the Azure CLI, you can create VMs within Azure as easily as typing the following command:
 
 ```azurecli-interactive
 az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
@@ -26,8 +27,8 @@ az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 > [!NOTE]
 >
 > In scripts and on the Microsoft documentation site, Azure CLI examples are written for the `bash` shell. One-line examples will
-> run on any platform. Longer or more complicated examples which include line continutions (`\`) or variable
-> assignment will need to be modified to work on other shells, including PowerShell.
+> run on any platform. Longer examples which include line continutions (`\`) or variable assignment need to be modified to work
+> on other shells, including PowerShell.
 
 ## Run or Install
 
