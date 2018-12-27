@@ -21,16 +21,21 @@ for the Azure CLI. This package has been tested with:
 
 ## Install
 
-1. <div id="install-step-1"/>Modify your sources list:
+1. Install prerequisite packages:
 
     ```bash
     sudo apt-get install apt-transport-https lsb-release software-properties-common -y
+    ```
+
+2. <div id="set-release"/>Modify your sources list:
+
+    ```bash
     AZ_REPO=$(lsb_release -cs)
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
-2. <div id="signingKey"/>Get the Microsoft signing key:
+3. <div id="signingKey"/>Get the Microsoft signing key:
 
    ```bash
    sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
@@ -38,7 +43,7 @@ for the Azure CLI. This package has been tested with:
         --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
    ```
 
-3. Install the CLI:
+4. Install the CLI:
 
    ```bash
    sudo apt-get update
@@ -63,7 +68,7 @@ Here are some common problems seen when installing with `apt`. If you experience
 
 Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
 determine the package to install. If you know the name of the version your distribution is derived from, you can set the `AZ_REPO` value manually in
-[install step 1](#install-step-1). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
+[install step 2](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
 
 ### No package for your distribution
 
@@ -86,6 +91,9 @@ The error is due to a missing component required by `apt-key`. You can resolve i
 ```bash
 sudo apt-get install dirmngr
 ```
+
+If you are on Windows Subsystem for Linux (WSL), this error also appears on versions of Windows prior to Windows 10 1809. To resolve the issue,
+update your version of Windows.
 
 ### apt-key hangs
 
