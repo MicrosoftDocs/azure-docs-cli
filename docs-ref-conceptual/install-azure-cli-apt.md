@@ -24,7 +24,7 @@ for the Azure CLI. This package has been tested with:
 1. Install prerequisite packages:
 
     ```bash
-    sudo apt-get install apt-transport-https lsb-release software-properties-common -y
+    sudo apt-get install apt-transport-https lsb-release software-properties-common dirmngr -y
     ```
 
 2. <div id="set-release"/>Modify your sources list:
