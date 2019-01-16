@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/06/2019
+ms.date: 01/16/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
