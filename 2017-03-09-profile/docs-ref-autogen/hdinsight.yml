@@ -2,7 +2,7 @@
 items:
 - uid: az_hdinsight
   name: az hdinsight
-  summary: Manage HDInsight clusters.
+  summary: Manage HDInsight resources.
   description: ''
   langs:
   - azurecli
@@ -10,6 +10,7 @@ items:
   - az_hdinsight_create
   - az_hdinsight_delete
   - az_hdinsight_list
+  - az_hdinsight_list_usage
   - az_hdinsight_resize
   - az_hdinsight_show
   - az_hdinsight_wait
@@ -23,7 +24,7 @@ items:
   - summary: Create a cluster with an existing storage account.
     syntax:
       content: >-
-        az hdinsight create -n MyCluster -g MyResourceGroup \
+        az hdinsight create -t spark -n MyCluster -g MyResourceGroup \
                                 -p <HTTP password> \
                                 --storage-account MyStorageAccount.blob.core.windows.net \
                                 --storage-account-key <key>
@@ -45,6 +46,10 @@ items:
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
+  - isRequired: true
+    name: --type -t
+    summary: 'Type of HDInsight cluster, like: hadoop, interactivehive, hbase, kafka, storm, spark, rserver, mlservices. See also: <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types</a>.'
+    description: ''
   - name: --cluster-configurations
     summary: Extra configurations of various components, in JSON.
     description: ''
@@ -58,10 +63,6 @@ items:
   - name: --size -s
     defaultValue: "3"
     summary: The number of worker nodes in the cluster.
-    description: ''
-  - name: --type -t
-    defaultValue: spark
-    summary: 'Type of HDInsight cluster, like: hadoop, interactivehive, hbase, kafka, storm, spark, rserver, mlservices. See also: <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types</a>.'
     description: ''
   - name: --version -v
     defaultValue: default
@@ -183,6 +184,26 @@ items:
       branch: dev
       path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_hdinsight_list_usage
+  name: az hdinsight list-usage
+  summary: Lists the usages for the specified location.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_resize
   name: az hdinsight resize
   summary: Resizes the specified HDInsight cluster to the specified size.
@@ -285,6 +306,24 @@ items:
       path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
+- uid: az_hdinsight_application
+  name: az hdinsight application
+  summary: Manage HDInsight applications.
+- uid: az_hdinsight_application_create
+  name: az hdinsight application create
+  summary: Create an application for a HDInsight cluster.
+- uid: az_hdinsight_application_delete
+  name: az hdinsight application delete
+  summary: Deletes the specified application on the HDInsight cluster.
+- uid: az_hdinsight_application_list
+  name: az hdinsight application list
+  summary: Lists all of the applications for the HDInsight cluster.
+- uid: az_hdinsight_application_show
+  name: az hdinsight application show
+  summary: Gets properties of the specified application.
+- uid: az_hdinsight_application_wait
+  name: az hdinsight application wait
+  summary: Place the CLI in a waiting state until an operation is complete.
 - uid: az_hdinsight_create
   name: az hdinsight create
   summary: Creates a new cluster.
@@ -294,9 +333,42 @@ commands:
 - uid: az_hdinsight_list
   name: az hdinsight list
   summary: List clusters in the resource group or subscription.
+- uid: az_hdinsight_list_usage
+  name: az hdinsight list-usage
+  summary: Lists the usages for the specified location.
+- uid: az_hdinsight_oms
+  name: az hdinsight oms
+  summary: Manage HDInsight Operations Management Suite (OMS).
+- uid: az_hdinsight_oms_disable
+  name: az hdinsight oms disable
+  summary: Disables the Operations Management Suite (OMS) on the HDInsight cluster.
+- uid: az_hdinsight_oms_enable
+  name: az hdinsight oms enable
+  summary: Enables the Operations Management Suite (OMS) on the HDInsight cluster.
+- uid: az_hdinsight_oms_show
+  name: az hdinsight oms show
+  summary: Gets the status of Operations Management Suite (OMS) on the HDInsight cluster.
 - uid: az_hdinsight_resize
   name: az hdinsight resize
   summary: Resizes the specified HDInsight cluster to the specified size.
+- uid: az_hdinsight_script_action
+  name: az hdinsight script-action
+  summary: Manage HDInsight script actions.
+- uid: az_hdinsight_script_action_delete
+  name: az hdinsight script-action delete
+  summary: Deletes a specified persisted script action of the cluster.
+- uid: az_hdinsight_script_action_execute
+  name: az hdinsight script-action execute
+  summary: Executes script actions on the specified HDInsight cluster.
+- uid: az_hdinsight_script_action_list
+  name: az hdinsight script-action list
+  summary: Lists script actions for the specified cluster.
+- uid: az_hdinsight_script_action_promote
+  name: az hdinsight script-action promote
+  summary: Promotes the specified ad-hoc script execution to a persisted script.
+- uid: az_hdinsight_script_action_show
+  name: az hdinsight script-action show
+  summary: Gets the script execution detail for the given script execution ID.
 - uid: az_hdinsight_show
   name: az hdinsight show
   summary: Gets the specified cluster.
@@ -319,7 +391,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/7ad2d44cd51c19e7d57db846908a2ba8508e5180/src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
-updated_at: 10/3/2018 5:12:00 PM
-ms.date: 10/03/2018
-description: Manage HDInsight clusters.
+gitcommit: https://github.com/Azure/azure-cli/blob/1f851cd2bedbea075f6756dbb004d4e79028c105/src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+updated_at: 12/26/2018 6:32:17 PM
+ms.date: 12/26/2018
+description: Manage HDInsight resources.
