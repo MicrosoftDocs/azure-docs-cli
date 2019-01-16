@@ -14,22 +14,28 @@ ms.devlang: azurecli
 If you want to create a separate sign-in with access restrictions, you can do so through a service principal. Service principals are separate identities that can be
 associated with an account. Service principals are useful for working with applications and tasks that must be automated. This article runs you through the steps for creating a service principal.
 
-## Create the service principal
+## Create a service principal
 
 Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command to create a service principal. The Service Principal's name isn't tied to any existing application or user name. You can create a service principal with your choice of authentication type.
 
-* `--password` is used for password-based authentication. If an argument indicating the authentication type isn't included, --password is used by default, and one is created for you. If you want to use password-based authentication, we recommend using this command, so the password is created for you.  
+* Creating a service principal without an authentication type implicitly uses password authentication. A secure and random password is generated for you. If you want to use password-based authentication for your service principal, this is the recommended method.
 
   ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName 
+  az ad sp create-for-rbac --name ServicePrincipalName
   ```
-  If you want to choose the password, instead of it being created for you (which is not recommended, for security reasons), you can use this command. Make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). The option to choose password leaves the chance of a weak password being chosen or password being re-used. This option is planned to be deprecated in a future version of Azure CLI. 
+
+* `--password` assigns a user-supplied password for password-based authentication. If you create your own password, make sure that you create a strong password by following the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). Don't use a weak password or re-use a password.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --password <Choose a strong password>
   ```
 
-* `--cert` is used for certificate-based authentication for an existing certificate, either as a PEM or DER public string, or `@{file}` to load a file.
+  > [!IMPORTANT]
+  >
+  > For security reasons, the `--password` argument for service principal creation will be deprecated in a future release. If you want to use password-based authentication,
+  > we recommend avoiding `--password` and letting the CLI generate a secure password for you during service principal creation.
+
+* `--cert` is used for certificate-based authentication for an existing certificate. Either PEM or DER certificates are allowed. Pass the certificate as a string, or use the `@{path}` argument to load a file, where `path` is the path to the file.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --cert {CertStringOrFile}
@@ -41,19 +47,17 @@ Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) co
   az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
   ```
 
-* `--create-cert` creates a _self-signed_ certificate for authentication. If the `--cert` argument isn't provided, a random certificate name is generated.
+* `--create-cert` creates a _self-signed_ certificate for authentication. Add the `--cert` argument to name the certificate. If the `--cert` argument isn't provided, a random certificate name is generated.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert
   ```
 
-  The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is also required.
+  The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is required.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
   ```
-
-If an argument indicating the authentication type isn't included, `--password` is used by default.
 
 The JSON output of the `create-for-rbac` command is in the following format:
 
@@ -71,6 +75,16 @@ The `appId`, `tenant`, and `password` values are used for authentication. The `d
 
 > [!NOTE]
 > If your account does not have sufficient permissions to create a service principal, you see an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
+
+## Get an existing service principal
+
+Once a service principal is created, you may need to retrieve the credentials. This is done with the [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) command. This command
+allows you to filter on display names (`--display-name`), service principal names (`--spn`), or service principals created by the signed-in user (`--show-mine`).
+Filtering the results of the `az ad sp list` command with one of these methods is recommended. By default the list contains the first 100 entries, or the `--all`
+parameter is used to retrieve all service principals within an organization. Because of the volume of service principals for some tenants, these
+commands may take a long time to complete.
+
+
 
 ## Manage service principal roles
 
@@ -100,7 +114,7 @@ az role assignment list --assignee APP_ID
 > [!NOTE]
 > If your account doesn't have the permissions to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write' over scope '/subscriptions/{guid}'." Contact your Azure Active Directory admin to manage roles.
 
-## Sign in using the service principal
+## Sign in using a service principal
 
 You can test the new service principal's credentials and permissions by signing in under it within the Azure CLI. Sign in as the new service principal using the `appId`, `tenant`, and credentials values. Use the authentication type that the service principal was created with.
 
@@ -118,7 +132,7 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password PAT
 
 ## Reset credentials
 
-In the event that you forget the credentials for a service principal, they can be reset with the [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) command. The same restrictions and options for creating a new service principal also apply here.
+If you forget the credentials for a service principal, reset them with the [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) command. The same restrictions and options for creating a new service principal apply here.
 
 ```azurecli-interactive
 az ad sp credential reset --name APP_ID 
