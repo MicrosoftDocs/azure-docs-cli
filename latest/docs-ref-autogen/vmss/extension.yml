@@ -72,6 +72,14 @@ items:
   description: Get extension details from `az vmss extension image list`.
   langs:
   - azurecli
+  examples:
+  - summary: Set an extension which depends on two previously set extensions. That is, When a VMSS instance is created or reimaged, the customScript extension will be provisioned only after all extensions that it depends on have been provisioned. The extension need not depend on the other extensions for pre-requisite configurations.
+    syntax:
+      content: >-
+        az vmss extension set --vmss-name my-vmss --name customScript --resource-group my-group \
+                                    --version 2.0 --publisher Microsoft.Azure.Extensions \
+                                    --provision-after-extensions NetworkWatcherAgentLinux VMAccessForLinux  \
+                                    --settings '{"commandToExecute": "echo testing"}'
   parameters:
   - isRequired: true
     name: --name -n
@@ -97,13 +105,17 @@ items:
     summary: Force to update even if the extension configuration has not changed.
     description: ''
   - name: --no-auto-upgrade
-    summary: By doing this, extension system will not pick the highest minor version for the specified version number, and will not auto update to the latest build/revision number on any scale set updates in future.
+    parameterValueGroup: false, true
+    summary: If set, the extension service will not automatically pick or upgrade to the latest minor version, even if the extension is redeployed.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --protected-settings
     summary: Protected settings in JSON format for sensitive information like credentials. A JSON file path is also accepted.
+    description: ''
+  - name: --provision-after-extensions
+    summary: Space-separated list of extension names after which this extension should be provisioned. These extensions must already be set on the vm.
     description: ''
   - name: --settings
     summary: Extension settings in JSON format. A JSON file path is also accepted.
@@ -192,7 +204,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8dd069e222ea8d44652282a521943990af47aca/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 12/13/2018 10:18:52 PM
-ms.date: 12/13/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/01bd26cfc0a6de96a627ee4e9a455bc5dc85aa20/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 1/9/2019 11:03:25 PM
+ms.date: 01/09/2019
 description: Manage extensions on a VM scale set.

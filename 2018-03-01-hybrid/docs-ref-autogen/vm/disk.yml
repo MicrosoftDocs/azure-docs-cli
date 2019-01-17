@@ -3,11 +3,7 @@ items:
 - uid: az_vm_disk
   name: az vm disk
   summary: Manage the managed data disks attached to a VM.
-  description: >-
-    Just like any other computer, virtual machines in Azure use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.
-                                Operating System Disk Every virtual machine has one attached operating system disk. It's registered as a SATA drive and is labeled /dev/sda by default. This disk has a maximum capacity of 1023 gigabytes (GB).
-                                Temporary disk The temporary disk is automatically created for you. On Linux virtual machines, the disk is typically /dev/sdb and is formatted and mounted to /mnt/resource by the Azure Linux Agent. The size of the temporary disk varies, based on the size of the virtual machine.
-                                Data disk A data disk is a VHD that's attached to a virtual machine to store application data, or other data you need to keep. Data disks are registered as SCSI drives and are labeled by the creator. Each data disk has a maximum capacity of 1023 GB. The size of the virtual machine determines how many data disks can be attached and the type of storage that can be used to host the disks.
+  description: "Azure Virtual Machines use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.\n                            \n                            Azure Managed and Unmanaged Data Disks have a maximum size of 4095 GB (with the exception of larger disks in preview). Azure Unmanaged Disks also have a maximum capacity of 4095 GB.\n                            \n                            For more information, see:\n                            - Azure Disks - <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/linux/about-disks-and-vhds\">https://docs.microsoft.com/en-us/azure/virtual-machines/linux/about-disks-and-vhds</a> and <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/windows/about-disks-and-vhds\">https://docs.microsoft.com/en-us/azure/virtual-machines/windows/about-disks-and-vhds</a>.\n                            - Larger Managed Disks in Public Preview - <a href=\"https://azure.microsoft.com/en-us/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/\">https://azure.microsoft.com/en-us/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/</a>\n                            - Ultra SSD Managed Disks in Public Preview - <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-ultra-ssd\">https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-ultra-ssd</a>."
   langs:
   - azurecli
   children:
@@ -22,16 +18,8 @@ items:
   examples:
   - summary: Attach a new default sized (1023 GB) managed data disk to a VM.
     syntax:
-      content: az vm disk attach -g MyResourceGroup --vm-name MyVm --disk disk_name --new
+      content: az vm disk attach -g MyResourceGroup --vm-name MyVm --name disk_name --new
   parameters:
-  - isRequired: true
-    name: --disk
-    summary: Disk name or ID.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - isRequired: true
     name: --vm-name
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
@@ -47,11 +35,21 @@ items:
     summary: Create a new disk.
     description: ''
   - name: --size-gb -z
-    summary: Size in GB.
+    defaultValue: "1023"
+    summary: 'Size in GB. Max size: 4095 GB (certain preview disks can be larger).'
     description: ''
   - name: --sku
     parameterValueGroup: Premium_LRS, Standard_LRS
     summary: Underlying storage SKU.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name or ID of the managed disk.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -71,7 +69,7 @@ items:
   examples:
   - summary: Detach a data disk from a VM.
     syntax:
-      content: az vm disk detach -g MyResourceGroup --vm-name MyVm -n disk_name
+      content: az vm disk detach -g MyResourceGroup --vm-name MyVm --name disk_name
   parameters:
   - isRequired: true
     name: --name -n
@@ -117,11 +115,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8dd069e222ea8d44652282a521943990af47aca/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 12/13/2018 10:18:52 PM
-ms.date: 12/13/2018
-description: >-
-  Just like any other computer, virtual machines in Azure use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.
-                              Operating System Disk Every virtual machine has one attached operating system disk. It's registered as a SATA drive and is labeled /dev/sda by default. This disk has a maximum capacity of 1023 gigabytes (GB).
-                              Temporary disk The temporary disk is automatically created for you. On Linux virtual machines, the disk is typically /dev/sdb and is formatted and mounted to /mnt/resource by the Azure Linux Agent. The size of the temporary disk varies, based on the size of the virtual machine.
-                              Data disk A data disk is a VHD that's attached to a virtual machine to store application data, or other data you need to keep. Data disks are registered as SCSI drives and are labeled by the creator. Each data disk has a maximum capacity of 1023 GB. The size of the virtual machine determines how many data disks can be attached and the type of storage that can be used to host the disks.
+gitcommit: https://github.com/Azure/azure-cli/blob/01bd26cfc0a6de96a627ee4e9a455bc5dc85aa20/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 1/9/2019 11:03:25 PM
+ms.date: 01/09/2019
+description: "Azure Virtual Machines use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.\n                            \n                            Azure Managed and Unmanaged Data Disks have a maximum size of 4095 GB (with the exception of larger disks in preview). Azure Unmanaged Disks also have a maximum capacity of 4095 GB.\n                            \n                            For more information, see:\n                            - Azure Disks - <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/linux/about-disks-and-vhds\">https://docs.microsoft.com/en-us/azure/virtual-machines/linux/about-disks-and-vhds</a> and <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/windows/about-disks-and-vhds\">https://docs.microsoft.com/en-us/azure/virtual-machines/windows/about-disks-and-vhds</a>.\n                            - Larger Managed Disks in Public Preview - <a href=\"https://azure.microsoft.com/en-us/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/\">https://azure.microsoft.com/en-us/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/</a>\n                            - Ultra SSD Managed Disks in Public Preview - <a href=\"https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-ultra-ssd\">https://docs.microsoft.com/en-us/azure/virtual-machines/windows/disks-ultra-ssd</a>."
