@@ -11,7 +11,7 @@ ms.technology: azure-cli
 ms.devlang: azurecli
 ---
 
-# Select clouds with the Azure CLI 
+# Select clouds with the Azure CLI
 
 If you work across different regions or use [Azure Stack](https://docs.microsoft.com/azure/azure-stack/user/), you may need to use more than one cloud. Microsoft provides clouds for compliance with regional laws, which are available for your use. This article shows you how to get information on clouds, change the current cloud, and register or unregister new clouds.
 
