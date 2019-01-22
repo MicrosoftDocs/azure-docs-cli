@@ -6,7 +6,7 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 09/09/2018
 ms.topic: conceptual
-ms.produdct: azure
+ms.product: azure
 ms.technology: azure-cli
 ms.devlang: azurecli
 ---
@@ -31,7 +31,7 @@ Directory tenant, see
 [How to add an Azure subscription to Azure Active Directory](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli).
 
-## Change the active subscription 
+## Change the active subscription
 
 To access the resources for a subscription, switch your active subscription or use the `--subscription` argument. Switching your subscription
 for all commands is done with [az account set](/cli/azure/account#az-account-set).

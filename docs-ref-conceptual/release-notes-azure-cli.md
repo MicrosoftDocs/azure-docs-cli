@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 12/18/2018
+ms.date: 01/15/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
-## January 15, 2018
+## January 15, 2019
 
 Version 2.0.55
 

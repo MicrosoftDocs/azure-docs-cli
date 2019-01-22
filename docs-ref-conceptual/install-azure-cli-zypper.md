@@ -56,7 +56,6 @@ Here are some common problems seen when installing with `zypper`. If you experie
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
-
 ## Update
 
 You can update the package with the `zypper update` command.
@@ -88,7 +87,8 @@ sudo zypper update azure-cli
    MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
    sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
    ```
-   ## Next Steps
+
+## Next Steps
 
 Now that you've installed the Azure CLI, take a short tour of its features and common commands.
 

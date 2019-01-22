@@ -27,7 +27,7 @@ az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 > [!NOTE]
 >
 > In scripts and on the Microsoft documentation site, Azure CLI examples are written for the `bash` shell. One-line examples will
-> run on any platform. Longer examples which include line continutions (`\`) or variable assignment need to be modified to work
+> run on any platform. Longer examples which include line continuations (`\`) or variable assignment need to be modified to work
 > on other shells, including PowerShell.
 
 ## Run or Install
