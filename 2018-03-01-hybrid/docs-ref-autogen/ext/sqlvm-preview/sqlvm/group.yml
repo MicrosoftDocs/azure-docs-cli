@@ -24,56 +24,57 @@ items:
       content: az sqlvm group create -n sqlvmgroup -l eastus -g myresourcegroup --image-offer SQL2016-WS2016 --image-sku Enterprise --domain-fqdn Domain.com --operator-acc testop@Domain.com --service-acc testservice@Domain.com --sa-key '<PublicKey>' --sa-url 'https://storacc.blob.core.windows.net/'
   parameters:
   - isRequired: true
-    name: --cluster-operator-account
-    summary: ''
+    name: --image-offer -i
+    summary: SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016.
     description: ''
   - isRequired: true
-    name: --domain-fqdn
-    summary: ''
+    name: --image-sku -s
+    parameterValueGroup: Developer, Enterprise
+    summary: SQL image sku.
     description: ''
   - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - isRequired: true
+    name: --name -n
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --sql-image-offer
-    summary: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - isRequired: true
-    name: --sql-image-sku
-    summary: ''
+    name: --domain-fqdn -f
+    summary: Fully qualified name of the domain.
     description: ''
   - isRequired: true
-    name: --sql-service-account
-    summary: ''
+    name: --operator-acc -p
+    summary: Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: ''
+    name: --sa-key -k
+    summary: Primary key of the witness storage account.
     description: ''
   - isRequired: true
-    name: --storage-account-key
-    summary: ''
+    name: --sa-url -u
+    summary: Fully qualified ARM resource id of the witness storage account.
     description: ''
   - isRequired: true
-    name: --storage-account-url
-    summary: ''
+    name: --service-acc -e
+    summary: Account name under which SQL service will run on all participating SQL virtual machines in the cluster.
     description: ''
-  - name: --cluster-bootstrap-account
-    summary: ''
+  - name: --bootstrap-acc
+    summary: Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain).
     description: ''
-  - name: --file-share-witness-path
-    summary: ''
+  - name: --fsw-path
+    summary: Optional path for fileshare witness.
     description: ''
   - name: --ou-path
-    summary: ''
-    description: ''
-  - name: --tags
-    summary: ''
+    summary: Organizational Unit path in which the nodes and cluster will be present.
     description: ''
 - uid: ext_sqlvm-preview_az_sqlvm_group_delete
   name: az sqlvm group delete
@@ -83,12 +84,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the SQL virtual machine group.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -111,12 +112,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the SQL virtual machine group.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 - uid: ext_sqlvm-preview_az_sqlvm_group_update
   name: az sqlvm group update
@@ -130,45 +131,46 @@ items:
       content: az sqlvm group update -n sqlvmgroup -g myresourcegroup -s Developer
   parameters:
   - isRequired: true
+    name: --name -n
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
+  - name: --image-offer -i
+    summary: SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016.
     description: ''
-  - name: --cluster-bootstrap-account
-    summary: ''
-    description: ''
-  - name: --cluster-operator-account
-    summary: ''
-    description: ''
-  - name: --domain-fqdn
-    summary: ''
-    description: ''
-  - name: --file-share-witness-path
-    summary: ''
-    description: ''
-  - name: --ou-path
-    summary: ''
-    description: ''
-  - name: --sql-image-offer
-    summary: ''
-    description: ''
-  - name: --sql-image-sku
-    summary: ''
-    description: ''
-  - name: --sql-service-account
-    summary: ''
-    description: ''
-  - name: --storage-account-key
-    summary: ''
-    description: ''
-  - name: --storage-account-url
-    summary: ''
+  - name: --image-sku -s
+    parameterValueGroup: Developer, Enterprise
+    summary: SQL image sku.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --bootstrap-acc
+    summary: Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain).
+    description: ''
+  - name: --domain-fqdn -f
+    summary: Fully qualified name of the domain.
+    description: ''
+  - name: --fsw-path
+    summary: Optional path for fileshare witness.
+    description: ''
+  - name: --operator-acc -p
+    summary: Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster.
+    description: ''
+  - name: --ou-path
+    summary: Organizational Unit path in which the nodes and cluster will be present.
+    description: ''
+  - name: --sa-key -k
+    summary: Primary key of the witness storage account.
+    description: ''
+  - name: --sa-url -u
+    summary: Fully qualified ARM resource id of the witness storage account.
+    description: ''
+  - name: --service-acc -e
+    summary: Account name under which SQL service will run on all participating SQL virtual machines in the cluster.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

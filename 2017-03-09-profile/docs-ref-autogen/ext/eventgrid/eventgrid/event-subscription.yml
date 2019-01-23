@@ -110,11 +110,11 @@ items:
   parameters:
   - isRequired: true
     name: --endpoint
-    summary: ''
+    summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
     description: ''
   - isRequired: true
-    name: --event-subscription-name
-    summary: ''
+    name: --name -n
+    summary: Name of the event subscription.
     description: ''
   - name: --advanced-filter
     summary: An advanced filter enables filtering of events based on a specific event property.
@@ -138,36 +138,35 @@ items:
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
   - name: --endpoint-type
     defaultValue: webhook
+    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --event-delivery-schema
-    summary: ''
+    parameterValueGroup: cloudeventv01schema, custominputschema, eventgridschema
+    summary: The schema in which events should be delivered for this event subscription. By default, events will be delivered in the same schema in which they are published (based on the corresponding topic's input schema).
     description: ''
   - name: --event-ttl
     defaultValue: "1440"
-    summary: ''
+    summary: Event time to live (in minutes). Must be a number between 1 and 1440.
     description: ''
   - name: --expiration-date
-    summary: ''
+    summary: Date or datetime (in UTC, e.g. '2018-11-30T11:59:59+00:00' or '2018-11-30') after which the event subscription would expire. By default, there is no expiration for the event subscription.
     description: ''
   - name: --included-event-types
-    summary: ''
-    description: ''
-  - name: --is-subject-case-sensitive
-    summary: ''
+    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
     description: ''
   - name: --labels
-    summary: ''
+    summary: A space-separated list of labels to associate with this event subscription.
     description: ''
   - name: --max-delivery-attempts
     defaultValue: "30"
-    summary: ''
+    summary: Maximum number of delivery attempts. Must be a number between 1 and 30.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: ''
+    summary: Fully qualified identifier of the Azure resource.
     description: ''
   - name: --source-resource-id
     summary: Fully qualified identifier of the Azure resource to which the event subscription needs to be created.
@@ -180,13 +179,17 @@ items:
                                           For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
                                           For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with
-    summary: ''
+    summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
+    description: ''
+  - name: --subject-case-sensitive
+    parameterValueGroup: false, true
+    summary: Specify to indicate whether the subject fields should be compared in a case sensitive manner. True if flag present.
     description: ''
   - name: --subject-ends-with
-    summary: ''
+    summary: An optional string to filter events for an event subscription based on a suffix. Wildcard characters are not supported.
     description: ''
   - name: --topic-name
-    summary: ''
+    summary: Name of Event Grid topic.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_event_subscription_delete
   name: az eventgrid event-subscription delete
@@ -227,14 +230,14 @@ items:
                                     --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/microsoft.storage/storageaccounts/kalsegblob
   parameters:
   - isRequired: true
-    name: --event-subscription-name
-    summary: ''
+    name: --name -n
+    summary: Name of the event subscription.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: ''
+    summary: Fully qualified identifier of the Azure resource.
     description: ''
   - name: --source-resource-id
     summary: Fully qualified identifier of the Azure resource whose event subscription needs to be deleted.
@@ -247,7 +250,7 @@ items:
                                           For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
                                           For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
-    summary: ''
+    summary: Name of Event Grid topic.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_event_subscription_list
   name: az eventgrid event-subscription list
@@ -304,7 +307,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: ''
+    summary: Fully qualified identifier of the Azure resource.
     description: ''
   - name: --source-resource-id
     summary: Fully qualified identifier of the Azure resource whose event subscription needs to be listed.
@@ -317,7 +320,7 @@ items:
                                           For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
                                           For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
-    summary: ''
+    summary: Name of Event Grid topic.
     description: ''
   - name: --topic-type-name
     summary: Name of the topic-type whose event subscriptions need to be listed. When this is specified, you must also specify --location.
@@ -355,17 +358,18 @@ items:
                                     --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/microsoft.storage/storageaccounts/kalsegblob
   parameters:
   - isRequired: true
-    name: --event-subscription-name
-    summary: ''
+    name: --name -n
+    summary: Name of the event subscription.
     description: ''
   - name: --include-full-endpoint-url
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Specify to indicate whether the full endpoint URL should be returned. True if flag present.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: ''
+    summary: Fully qualified identifier of the Azure resource.
     description: ''
   - name: --source-resource-id
     summary: Fully qualified identifier of the Azure resource whose event subscription needs to be shown.
@@ -378,7 +382,7 @@ items:
                                           For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
                                           For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
-    summary: ''
+    summary: Name of Event Grid topic.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_event_subscription_update
   name: az eventgrid event-subscription update
@@ -420,30 +424,31 @@ items:
                                     --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/blobcontainer1
   parameters:
   - isRequired: true
-    name: --event-subscription-name
-    summary: ''
+    name: --name -n
+    summary: Name of the event subscription.
     description: ''
   - name: --deadletter-endpoint
-    summary: ''
+    summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: ''
   - name: --endpoint
-    summary: ''
+    summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
+    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --included-event-types
-    summary: ''
+    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
     description: ''
   - name: --labels
-    summary: ''
+    summary: A space-separated list of labels to associate with this event subscription.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --resource-id
-    summary: ''
+    summary: Fully qualified identifier of the Azure resource.
     description: ''
   - name: --source-resource-id
     summary: Fully qualified identifier of the Azure resource whose event subscription needs to be updated.
@@ -456,13 +461,13 @@ items:
                                           For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
                                           For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with
-    summary: ''
+    summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
     description: ''
   - name: --subject-ends-with
-    summary: ''
+    summary: An optional string to filter events for an event subscription based on a suffix. Wildcard characters are not supported.
     description: ''
   - name: --topic-name
-    summary: ''
+    summary: Name of Event Grid topic.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

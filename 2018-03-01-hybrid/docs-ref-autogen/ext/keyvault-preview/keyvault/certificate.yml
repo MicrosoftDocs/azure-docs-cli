@@ -32,25 +32,26 @@ items:
       content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate.
-    description: ''
-  - isRequired: true
-    name: --certificate-policy
-    summary: The management policy for the certificate.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+    name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
     description: ''
   - name: --disabled
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Create certificate in disabled state.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --validity
-    summary: ''
+    summary: Number of months the certificate is valid for. Overrides the value specified with --policy/-p.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_delete
   name: az keyvault certificate delete
@@ -59,13 +60,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate.
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_download
   name: az keyvault certificate download
@@ -82,24 +84,25 @@ items:
       content: az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && \ openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
   parameters:
   - isRequired: true
-    name: --file-path
-    summary: ''
+    name: --file -f
+    summary: File to receive the binary certificate contents.
     description: ''
-  - name: --certificate-name
-    summary: ''
-    description: ''
-  - name: --certificate-version
-    summary: ''
-    description: ''
-  - name: --encoding
+  - name: --encoding -e
     defaultValue: PEM
-    summary: ''
+    parameterValueGroup: DER, PEM
+    summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
     description: ''
-  - name: --identifier
-    summary: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - name: --vault-base-url
-    summary: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_get_default_policy
   name: az keyvault certificate get-default-policy
@@ -129,28 +132,29 @@ items:
       content: "service_principal=$(az ad sp create-for-rbac --create-cert) \n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n                        \n                        az keyvault create -g my-group -n vaultname \n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_file \n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\") \n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
   parameters:
   - isRequired: true
-    name: --certificate-data
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --certificate-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: ''
-    description: ''
-  - name: --certificate-policy
-    summary: ''
+    name: --file -f
+    summary: PKCS12 file or PEM file containing the certificate and private key.
     description: ''
   - name: --disabled
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Import the certificate in disabled state.
     description: ''
   - name: --password
-    summary: ''
+    summary: If the private key in certificate is encrypted, the password used for encryption.
+    description: ''
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_list
   name: az keyvault certificate list
@@ -159,15 +163,15 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --include-pending
     summary: Specifies whether to include certificates which are not completely provisioned.
     description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_list_deleted
   name: az keyvault certificate list-deleted
@@ -176,15 +180,15 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --include-pending
     summary: Specifies whether to include certificates which are not completely provisioned.
     description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_list_versions
   name: az keyvault certificate list-versions
@@ -193,16 +197,16 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_purge
   name: az keyvault certificate purge
@@ -211,13 +215,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate.
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_recover
   name: az keyvault certificate recover
@@ -226,13 +231,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the deleted certificate.
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_set_attributes
   name: az keyvault certificate set-attributes
@@ -241,26 +247,27 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate in the given key vault.
+  - name: --enabled
+    parameterValueGroup: false, true
+    summary: Enable the certificate.
     description: ''
-  - isRequired: true
-    name: --certificate-version
-    summary: The version of the certificate.
-    description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
-    description: ''
-  - name: --certificate-attributes
-    summary: The attributes of the certificate (optional).
-    description: ''
-  - name: --certificate-policy
-    summary: The management policy for the certificate.
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
     description: ''
   - name: --tags
-    summary: Application specific metadata in the form of key-value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_show
   name: az keyvault certificate show
@@ -269,17 +276,17 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate in the given vault.
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --certificate-version
-    summary: The version of the certificate.
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
     description: ''
 - uid: ext_keyvault-preview_az_keyvault_certificate_show_deleted
   name: az keyvault certificate show-deleted
@@ -288,13 +295,14 @@ items:
   langs:
   - azurecli
   parameters:
-  - isRequired: true
-    name: --certificate-name
-    summary: The name of the certificate.
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
     description: ''
-  - isRequired: true
-    name: --vault-base-url
-    summary: The vault name, for example <a href="https://myvault.vault.azure.net">https://myvault.vault.azure.net</a>.
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
     description: ''
 commands:
 - uid: ext_keyvault-preview_az_keyvault_certificate_contact

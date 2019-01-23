@@ -28,27 +28,27 @@ items:
                                 az sqlvm add-to-group -n sqlvm -g myresourcegroup --sqlvm-group-rid $sqlvmgroup.id --boostrap-acc-pwd '<boostrappassword>' --operator-acc-pwd '<operatorpassword>' --service-acc-pwd '<servicepassword>'
   parameters:
   - isRequired: true
-    name: --cluster-operator-account-password
-    summary: ''
+    name: --name -n
+    summary: Name of the SQL virtual machine.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --sql-service-account-password
-    summary: ''
+    name: --sqlvm-group-rid -r
+    summary: ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-resource-id
-    summary: ''
+    name: --operator-acc-pwd -p
+    summary: Cluster operator account password.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: Name of the SQL virtual machine.
+    name: --service-acc-pwd -s
+    summary: SQL service account password.
     description: ''
-  - name: --cluster-bootstrap-account-password
-    summary: ''
+  - name: --boostrap-acc-pwd -b
+    summary: Cluster bootstrap account password.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -92,112 +92,122 @@ items:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - isRequired: true
+    name: --name -n
+    summary: Name of the SQL virtual machine. The name of the new SQL virtual machine must be equal to the underlying virtual machine created from SQL marketplace image.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: ''
-    description: ''
-  - name: --azure-key-vault-url
-    summary: ''
-    description: ''
-  - name: --backup-password
-    summary: ''
-    description: ''
-  - name: --backup-schedule-type
-    summary: ''
-    description: ''
-  - name: --backup-system-dbs
-    summary: ''
-    description: ''
-  - name: --cluster-bootstrap-account-password
-    summary: ''
-    description: ''
-  - name: --cluster-operator-account-password
-    summary: ''
-    description: ''
-  - name: --connectivity-type
-    summary: ''
-    description: ''
-  - name: --credential-name
-    summary: ''
-    description: ''
-  - name: --day-of-week
-    summary: ''
-    description: ''
-  - name: --enable-auto-backup
-    summary: ''
-    description: ''
-  - name: --enable-auto-patching
-    summary: ''
-    description: ''
-  - name: --enable-encryption
-    summary: ''
-    description: ''
-  - name: --enable-key-vault-credential
-    summary: ''
-    description: ''
-  - name: --enable-r-services
-    summary: ''
-    description: ''
-  - name: --full-backup-frequency
-    summary: ''
-    description: ''
-  - name: --full-backup-start-time
-    summary: ''
-    description: ''
-  - name: --full-backup-window-hours
-    summary: ''
-    description: ''
-  - name: --log-backup-frequency
-    summary: ''
-    description: ''
-  - name: --maintenance-window-duration
-    summary: ''
-    description: ''
-  - name: --maintenance-window-starting-hour
-    summary: ''
-    description: ''
-  - name: --port
-    summary: ''
-    description: ''
-  - name: --retention-period
-    summary: ''
-    description: ''
-  - name: --service-principal-name
-    summary: ''
-    description: ''
-  - name: --service-principal-secret
-    summary: ''
-    description: ''
-  - name: --sql-auth-update-password
-    summary: ''
-    description: ''
-  - name: --sql-auth-update-username
-    summary: ''
-    description: ''
-  - name: --sql-server-license-type
+  - name: --license-type
     defaultValue: PAYG
-    summary: ''
+    parameterValueGroup: AHUB, PAYG
+    summary: SQL Server license type.
     description: ''
-  - name: --sql-service-account-password
-    summary: ''
-    description: ''
-  - name: --sql-virtual-machine-group-resource-id
-    summary: ''
-    description: ''
-  - name: --sql-workload-type
-    summary: ''
-    description: ''
-  - name: --storage-access-key
-    summary: ''
-    description: ''
-  - name: --storage-account-url
-    summary: ''
+  - name: --sqlvm-group-rid
+    summary: ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --enable-r-services
+    parameterValueGroup: false, true
+    summary: Enable or disable R services (SQL 2016 onwards).
+    description: ''
+  - name: --backup-password
+    summary: Password for encryption on backup.
+    description: ''
+  - name: --backup-schedule-type
+    parameterValueGroup: Automated, Manual
+    summary: Backup schedule type.
+    description: ''
+  - name: --backup-system-dbs
+    summary: Include system databases on backup.
+    description: ''
+  - name: --enable-auto-backup
+    parameterValueGroup: false, true
+    summary: Enable or disable autobackup on SQL virtual machine. If any backup settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --enable-encryption
+    summary: Enable encryption for backup on SQL virtual machine.
+    description: ''
+  - name: --full-backup-frequency
+    parameterValueGroup: Daily, Weekly
+    summary: Frequency of full backups. In both cases, full backups begin during the next scheduled time window.
+    description: ''
+  - name: --full-backup-start-time
+    summary: Start time of a given day during which full backups can take place. 0-23 hours.
+    description: ''
+  - name: --full-backup-window-hours
+    summary: Duration of the time window of a given day during which full backups can take place. 1-23 hours.
+    description: ''
+  - name: --log-backup-frequency
+    summary: Frequency of log backups. 5-60 minutes.
+    description: ''
+  - name: --retention-period
+    summary: Retention period of backup.
+    description: ''
+  - name: --storage-access-key
+    summary: Storage account key where backup will be taken to.
+    description: ''
+  - name: --storage-account-url
+    summary: Storage account url where backup will be taken to.
+    description: ''
+  - name: --day-of-week
+    parameterValueGroup: Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    summary: Day of week to apply the patch on.
+    description: ''
+  - name: --enable-auto-patching
+    parameterValueGroup: false, true
+    summary: Enable or disable autopatching on SQL virtual machine. If any autopatching settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --maintenance-window-duration
+    summary: Duration of patching. 30-180 minutes.
+    description: ''
+  - name: --maintenance-window-starting-hour
+    summary: Hour of the day when patching is initiated. Local VM time 0-23 hours.
+    description: ''
+  - name: --azure-key-vault-url
+    summary: Azure Key Vault url.
+    description: ''
+  - name: --credential-name
+    summary: Credential name.
+    description: ''
+  - name: --enable-key-vault-credential
+    parameterValueGroup: false, true
+    summary: Enable or disable key vault credential setting. If any key vault settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --service-principal-name
+    summary: Service principal name to access key vault.
+    description: ''
+  - name: --service-principal-secret
+    summary: Service principal name secret to access key vault.
+    description: ''
+  - name: --connectivity-type
+    parameterValueGroup: LOCAL, PRIVATE, PUBLIC
+    summary: SQL Server connectivity option.
+    description: ''
+  - name: --port
+    summary: SQL Server port.
+    description: ''
+  - name: --sql-auth-update-password
+    summary: SQL Server sysadmin login password.
+    description: ''
+  - name: --sql-auth-update-username
+    summary: SQL Server sysadmin login to create.
+    description: ''
+  - name: --sql-workload-type
+    parameterValueGroup: DW, GENERAL, OLTP
+    summary: SQL Server workload type.
+    description: ''
+  - name: --boostrap-acc-pwd
+    summary: Cluster bootstrap account password.
+    description: ''
+  - name: --operator-acc-pwd
+    summary: Cluster operator account password.
+    description: ''
+  - name: --service-acc-pwd
+    summary: SQL service account password.
     description: ''
 - uid: ext_sqlvm-preview_az_sqlvm_delete
   name: az sqlvm delete
@@ -207,12 +217,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the SQL virtual machine.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: Name of the SQL virtual machine.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -239,12 +249,12 @@ items:
       content: az sqlvm remove-from-group -n sqlvm -g myresourcegroup
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the SQL virtual machine.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: Name of the SQL virtual machine.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -266,12 +276,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the SQL virtual machine.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: Name of the SQL virtual machine.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --expand
     summary: The child resources to include in the response.
@@ -306,93 +316,103 @@ items:
       content: az sqlvm update -n sqlvm -g myresourcegroup --license-type AHUB
   parameters:
   - isRequired: true
+    name: --name -n
+    summary: Name of the SQL virtual machine.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --sql-virtual-machine-name
-    summary: Name of the SQL virtual machine.
-    description: ''
-  - name: --azure-key-vault-url
-    summary: ''
-    description: ''
-  - name: --backup-password
-    summary: ''
-    description: ''
-  - name: --backup-schedule-type
-    summary: ''
-    description: ''
-  - name: --backup-system-dbs
-    summary: ''
-    description: ''
-  - name: --connectivity-type
-    summary: ''
-    description: ''
-  - name: --credential-name
-    summary: ''
-    description: ''
-  - name: --day-of-week
-    summary: ''
-    description: ''
-  - name: --enable-auto-backup
-    summary: ''
-    description: ''
-  - name: --enable-auto-patching
-    summary: ''
-    description: ''
-  - name: --enable-encryption
-    summary: ''
-    description: ''
-  - name: --enable-key-vault-credential
-    summary: ''
-    description: ''
-  - name: --enable-r-services
-    summary: ''
-    description: ''
-  - name: --full-backup-frequency
-    summary: ''
-    description: ''
-  - name: --full-backup-start-time
-    summary: ''
-    description: ''
-  - name: --full-backup-window-hours
-    summary: ''
-    description: ''
-  - name: --log-backup-frequency
-    summary: ''
-    description: ''
-  - name: --maintenance-window-duration
-    summary: ''
-    description: ''
-  - name: --maintenance-window-starting-hour
-    summary: ''
-    description: ''
-  - name: --port
-    summary: ''
-    description: ''
-  - name: --retention-period
-    summary: ''
-    description: ''
-  - name: --service-principal-name
-    summary: ''
-    description: ''
-  - name: --service-principal-secret
-    summary: ''
-    description: ''
-  - name: --sql-server-license-type
-    summary: ''
-    description: ''
-  - name: --sql-workload-type
-    summary: ''
-    description: ''
-  - name: --storage-access-key
-    summary: ''
-    description: ''
-  - name: --storage-account-url
-    summary: ''
+  - name: --license-type
+    parameterValueGroup: AHUB, PAYG
+    summary: SQL Server license type.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --enable-r-services
+    parameterValueGroup: false, true
+    summary: Enable or disable R services (SQL 2016 onwards).
+    description: ''
+  - name: --backup-password
+    summary: Password for encryption on backup.
+    description: ''
+  - name: --backup-schedule-type
+    parameterValueGroup: Automated, Manual
+    summary: Backup schedule type.
+    description: ''
+  - name: --backup-system-dbs
+    summary: Include system databases on backup.
+    description: ''
+  - name: --enable-auto-backup
+    parameterValueGroup: false, true
+    summary: Enable or disable autobackup on SQL virtual machine. If any backup settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --enable-encryption
+    summary: Enable encryption for backup on SQL virtual machine.
+    description: ''
+  - name: --full-backup-frequency
+    parameterValueGroup: Daily, Weekly
+    summary: Frequency of full backups. In both cases, full backups begin during the next scheduled time window.
+    description: ''
+  - name: --full-backup-start-time
+    summary: Start time of a given day during which full backups can take place. 0-23 hours.
+    description: ''
+  - name: --full-backup-window-hours
+    summary: Duration of the time window of a given day during which full backups can take place. 1-23 hours.
+    description: ''
+  - name: --log-backup-frequency
+    summary: Frequency of log backups. 5-60 minutes.
+    description: ''
+  - name: --retention-period
+    summary: Retention period of backup.
+    description: ''
+  - name: --storage-access-key
+    summary: Storage account key where backup will be taken to.
+    description: ''
+  - name: --storage-account-url
+    summary: Storage account url where backup will be taken to.
+    description: ''
+  - name: --day-of-week
+    parameterValueGroup: Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    summary: Day of week to apply the patch on.
+    description: ''
+  - name: --enable-auto-patching
+    parameterValueGroup: false, true
+    summary: Enable or disable autopatching on SQL virtual machine. If any autopatching settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --maintenance-window-duration
+    summary: Duration of patching. 30-180 minutes.
+    description: ''
+  - name: --maintenance-window-starting-hour
+    summary: Hour of the day when patching is initiated. Local VM time 0-23 hours.
+    description: ''
+  - name: --azure-key-vault-url
+    summary: Azure Key Vault url.
+    description: ''
+  - name: --credential-name
+    summary: Credential name.
+    description: ''
+  - name: --enable-key-vault-credential
+    parameterValueGroup: false, true
+    summary: Enable or disable key vault credential setting. If any key vault settings provided, parameter automatically sets to true.
+    description: ''
+  - name: --service-principal-name
+    summary: Service principal name to access key vault.
+    description: ''
+  - name: --service-principal-secret
+    summary: Service principal name secret to access key vault.
+    description: ''
+  - name: --connectivity-type
+    parameterValueGroup: LOCAL, PRIVATE, PUBLIC
+    summary: SQL Server connectivity option.
+    description: ''
+  - name: --port
+    summary: SQL Server port.
+    description: ''
+  - name: --sql-workload-type
+    parameterValueGroup: DW, GENERAL, OLTP
+    summary: SQL Server workload type.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

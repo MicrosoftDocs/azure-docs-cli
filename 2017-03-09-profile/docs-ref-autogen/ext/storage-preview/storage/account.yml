@@ -24,7 +24,7 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: The storage account name.
     description: ''
 - uid: ext_storage-preview_az_storage_account_create
@@ -39,51 +39,62 @@ items:
       content: az storage account create -n MyStorageAccount -g MyResourceGroup -l westus --sku Standard_LRS
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: ''
+    name: --name -n
+    summary: The storage account name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --access-tier
-    summary: ''
+    parameterValueGroup: Cool, Hot
+    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --assign-identity
-    summary: ''
-    description: ''
-  - name: --bypass
-    summary: ''
+    summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
     description: ''
   - name: --custom-domain
-    summary: ''
-    description: ''
-  - name: --default-action
-    summary: ''
+    summary: User domain assigned to the storage account. Name is the CNAME source.
     description: ''
   - name: --encryption-services
-    summary: ''
+    parameterValueGroup: blob, file, queue, table
+    summary: Specifies which service(s) to encrypt.
     description: ''
   - name: --file-aad
-    summary: ''
+    parameterValueGroup: false, true
+    summary: 'Allows Azure File Active Directory integration, which will support SMB access to azure files using AAD. Requires AAD domain service setup: "<a href="https://docs.microsoft.com/en-us/azure/storage/files/storage-files-active-directory-enable">https://docs.microsoft.com/en-us/azure/storage/files/storage-files-active-directory-enable</a>".'
     description: ''
   - name: --hierarchical-namespace
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Allows the blob service to exhibit filesystem semantics.
     description: ''
   - name: --https-only
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Allows https traffic only to storage service.
     description: ''
   - name: --kind
-    summary: ''
+    defaultValue: Storage
+    parameterValueGroup: BlobStorage, BlockBlobStorage, FileStorage, Storage, StorageV2
+    summary: Indicates the type of storage account.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - name: --sku
-    summary: ''
+    defaultValue: Standard_RAGRS
+    parameterValueGroup: Premium_LRS, Premium_ZRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
+    summary: The storage account SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --bypass
+    parameterValueGroup: AzureServices, Logging, Metrics, None
+    summary: Bypass traffic for space-separated uses.
+    description: ''
+  - name: --default-action
+    parameterValueGroup: Allow, Deny
+    summary: Default action to apply when no rule matches.
     description: ''
 - uid: ext_storage-preview_az_storage_account_delete
   name: az storage account delete
@@ -100,11 +111,10 @@ items:
       content: az storage account delete -n MyStorageAccount -g MyResourceGroup
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+    name: --name -n
+    summary: The storage account name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --yes -y
@@ -118,15 +128,14 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: The storage account name.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -163,15 +172,15 @@ items:
       content: az storage account show -g MyResourceGroup -n MyStorageAccount
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: The storage account name.
     description: ''
   - name: --expand
+    parameterValueGroup: geoReplicationStats
     summary: May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 - uid: ext_storage-preview_az_storage_account_show_connection_string
   name: az storage account show-connection-string
@@ -185,32 +194,33 @@ items:
       content: az storage account show-connection-string -g MyResourceGroup -n MyStorageAccount
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: The storage account name.
     description: ''
   - name: --blob-endpoint
-    summary: ''
+    summary: Custom endpoint for blobs.
     description: ''
   - name: --file-endpoint
-    summary: ''
+    summary: Custom endpoint for files.
     description: ''
-  - name: --key-name
+  - name: --key
     defaultValue: primary
-    summary: ''
+    parameterValueGroup: primary, secondary
+    summary: The key to use.
     description: ''
   - name: --protocol
     defaultValue: https
-    summary: ''
+    parameterValueGroup: http, https
+    summary: The default endpoint protocol.
     description: ''
   - name: --queue-endpoint
-    summary: ''
+    summary: Custom endpoint for queues.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --table-endpoint
-    summary: ''
+    summary: Custom endpoint for tables.
     description: ''
 - uid: ext_storage-preview_az_storage_account_show_usage
   name: az storage account show-usage
@@ -231,51 +241,66 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: The storage account name.
     description: ''
   - name: --access-tier
-    summary: ''
+    parameterValueGroup: Cool, Hot
+    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --assign-identity
-    summary: ''
-    description: ''
-  - name: --bypass
-    summary: ''
+    summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
     description: ''
   - name: --custom-domain
-    summary: ''
-    description: ''
-  - name: --default-action
-    summary: ''
-    description: ''
-  - name: --encryption-key-source
-    summary: ''
-    description: ''
-  - name: --encryption-key-vault-properties
-    summary: ''
+    summary: User domain assigned to the storage account. Name is the CNAME source. Use "" to clear existing value.
     description: ''
   - name: --encryption-services
-    summary: ''
+    parameterValueGroup: blob, file, queue, table
+    summary: Specifies which service(s) to encrypt.
     description: ''
   - name: --file-aad
-    summary: ''
+    parameterValueGroup: false, true
+    summary: 'Allows Azure File Active Directory integration, which will support SMB access to azure files using AAD. Requires AAD domain service setup: "<a href="https://docs.microsoft.com/en-us/azure/storage/files/storage-files-active-directory-enable">https://docs.microsoft.com/en-us/azure/storage/files/storage-files-active-directory-enable</a>".'
     description: ''
   - name: --https-only
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Allows https traffic only to storage service.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --sku
-    summary: ''
+    parameterValueGroup: Premium_LRS, Premium_ZRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
+    summary: The storage account SKU.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --use-subdomain
-    summary: ''
+    parameterValueGroup: false, true
+    summary: Specify whether to use indirect CNAME validation.
+    description: ''
+  - name: --encryption-key-name
+    summary: The name of the KeyVault key.
+    description: ''
+  - name: --encryption-key-source
+    defaultValue: Microsoft.Storage
+    parameterValueGroup: Microsoft.Keyvault, Microsoft.Storage
+    summary: The default encryption service.
+    description: ''
+  - name: --encryption-key-vault
+    summary: The Uri of the KeyVault.
+    description: ''
+  - name: --encryption-key-version
+    summary: The version of the KeyVault key.
+    description: ''
+  - name: --bypass
+    parameterValueGroup: AzureServices, Logging, Metrics, None
+    summary: Bypass traffic for space-separated uses.
+    description: ''
+  - name: --default-action
+    parameterValueGroup: Allow, Deny
+    summary: Default action to apply when no rule matches.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

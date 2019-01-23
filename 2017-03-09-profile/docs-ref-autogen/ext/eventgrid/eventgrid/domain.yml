@@ -30,29 +30,30 @@ items:
       content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema cloudeventv01schema
   parameters:
   - isRequired: true
-    name: --domain-name
-    summary: ''
-    description: ''
-  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --input-mapping-default-values
-    summary: ''
+    summary: When input-schema is specified as customeventschema, this parameter can be used to specify input mappings based on default values. You can use this parameter when your custom schema does not include a field that corresponds to one of the three fields supported by this parameter. Specify space separated mappings in 'key=value' format. Allowed key names are 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the default values to be used for the mapping and they will be used only when the published event doesn't have a valid mapping for a particular field.
     description: ''
   - name: --input-mapping-fields
-    summary: ''
+    summary: When input-schema is specified as customeventschema, this parameter is used to specify input mappings based on field names. Specify space separated mappings in 'key=value' format. Allowed key names are 'id', 'topic', 'eventtime', 'subject', 'eventtype', 'dataversion'. The corresponding value names should specify the names of the fields in the custom input schema. If a mapping for either 'id' or 'eventtime' is not provided, Event Grid will auto-generate a default value for these two fields.
     description: ''
   - name: --input-schema
-    defaultValue: EventGridSchema
-    summary: ''
+    defaultValue: eventgridschema
+    parameterValueGroup: cloudeventv01schema, customeventschema, eventgridschema
+    summary: Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
     description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_domain_delete
   name: az eventgrid domain delete
@@ -66,7 +67,7 @@ items:
       content: az eventgrid domain delete -g rg1 --name domain1
   parameters:
   - isRequired: true
-    name: --domain-name
+    name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
@@ -105,7 +106,7 @@ items:
       content: az eventgrid domain show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1
   parameters:
   - isRequired: true
-    name: --domain-name
+    name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
@@ -124,7 +125,7 @@ items:
       content: az eventgrid domain update -g rg1 --name domain1 --tags Dept=IT
   parameters:
   - isRequired: true
-    name: --domain-name
+    name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
@@ -132,7 +133,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --tags
-    summary: Tags of the domains resource.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
