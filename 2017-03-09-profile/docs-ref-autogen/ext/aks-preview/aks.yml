@@ -34,16 +34,12 @@ items:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.11.2 --node-count 3 --enable-cluster-autoscaler --min-count 1 --max-count 5
   parameters:
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --ssh-key-value
-    summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
     description: ''
   - name: --aad-client-app-id
     summary: (PREVIEW) The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
@@ -57,9 +53,9 @@ items:
   - name: --aad-tenant-id
     summary: (PREVIEW) The ID of an Azure Active Directory tenant.
     description: ''
-  - name: --admin-username
+  - name: --admin-username -u
     defaultValue: azureuser
-    summary: ''
+    summary: User account to create on node VMs for SSH access.
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
@@ -67,8 +63,8 @@ items:
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
     description: ''
-  - name: --dns-name-prefix
-    summary: ''
+  - name: --dns-name-prefix -p
+    summary: Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
     description: ''
   - name: --dns-service-ip
     summary: An IP address assigned to the Kubernetes DNS service.
@@ -76,52 +72,56 @@ items:
   - name: --docker-bridge-address
     summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
     description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
-  - name: --enable-addons
-    summary: ''
-    description: ''
+  - name: --enable-addons -a
+    summary: Enable the Kubernetes addons in a comma-separated list.
+    description: >-
+      These addons are available:
+                                              http_application_routing - configure ingress with automatic public DNS name creation.
+                                              monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
-  - name: --enable-rbac
-    summary: ''
+  - name: --enable-rbac -r
+    summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
     description: ''
-  - name: --kubernetes-version
-    summary: ''
+  - name: --kubernetes-version -k
+    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
     description: ''
+    valueFrom: '`az aks get-versions`'
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - name: --max-count
     summary: Maximum nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
     description: ''
-  - name: --max-pods
-    summary: ''
-    description: ''
+  - name: --max-pods -m
+    summary: The maximum number of pods deployable to a node.
+    description: If not specified, defaults to 110, or 30 for advanced networking configurations.
   - name: --min-count
     summary: Minimun nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
     description: ''
   - name: --network-plugin
     summary: The Kubernetes network plugin to use.
     description: Specify "azure" for advanced networking configurations. Defaults to "kubenet".
-  - name: --no-ssh-key
-    summary: ''
-    description: ''
+  - name: --no-ssh-key -x
+    summary: Do not use or create a local SSH key.
+    description: To access nodes after creating a cluster with this option, use the Azure Portal.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --node-count
+  - name: --node-count -c
     defaultValue: "3"
-    summary: ''
+    summary: Number of nodes in the Kubernetes node pool. It is required when --enable-cluster-autoscaler specified. After creating a cluster, you can change the size of its node pool with `az aks scale`.
     description: ''
   - name: --node-osdisk-size
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
     description: ''
-  - name: --node-vm-size
+  - name: --node-vm-size -s
     defaultValue: Standard_DS2_v2
-    summary: ''
+    summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
@@ -135,8 +135,12 @@ items:
   - name: --skip-subnet-role-assignment
     summary: Skip role assignment for subnet (advanced networking).
     description: If specified, please make sure your service principal has the access to your subnet.
+  - name: --ssh-key-value
+    defaultValue: ~\.ssh\id_rsa.pub
+    summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
+    description: ''
   - name: --tags
-    summary: ''
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -152,12 +156,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
-    name: --node-count
-    summary: ''
+    name: --node-count -c
+    summary: Number of nodes in the Kubernetes node pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -174,8 +178,8 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -199,18 +203,18 @@ items:
       content: az aks update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n MyManagedCluster
   parameters:
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --disable-cluster-autoscaler
-    summary: ''
+  - name: --disable-cluster-autoscaler -d
+    summary: Disable cluster autoscaler.
     description: ''
-  - name: --enable-cluster-autoscaler
-    summary: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
     description: ''
   - name: --max-count
     summary: Maximum nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
@@ -221,8 +225,8 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --update-cluster-autoscaler
-    summary: ''
+  - name: --update-cluster-autoscaler -u
+    summary: Update min-count or max-count for cluser auto-scaler.
     description: ''
 - uid: ext_aks-preview_az_aks_upgrade
   name: az aks upgrade
@@ -232,12 +236,13 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --kubernetes-version
-    summary: ''
+    name: --kubernetes-version -k
+    summary: Version of Kubernetes to upgrade the cluster to, such as "1.11.12".
     description: ''
+    valueFrom: '`az aks get-upgrades`'
   - isRequired: true
-    name: --name
-    summary: ''
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -261,12 +266,12 @@ items:
       content: az aks wait -g MyResourceGroup -n MyManagedCluster --updated --interval 60 --timeout 1800
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --name -n
+    summary: Name of the managed cluster.
     description: ''
   - isRequired: true
-    name: --resource-name
-    summary: The name of the managed cluster resource.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.

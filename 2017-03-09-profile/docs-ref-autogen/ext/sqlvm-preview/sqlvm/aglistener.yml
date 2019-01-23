@@ -27,7 +27,11 @@ items:
                                 az sqlvm aglistener add-sqlvm -n aglistener -g myresourcegroup --group-name sqlvmgroup --sqlvm-rid $sqlvm.id
   parameters:
   - isRequired: true
-    name: --availability-group-listener-name
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
+    name: --name -n
     summary: Name of the availability group listener.
     description: ''
   - isRequired: true
@@ -35,12 +39,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
-    description: ''
-  - isRequired: true
-    name: --sqlvm-resource-id
-    summary: ''
+    name: --sqlvm-rid -s
+    summary: Resource id of the SQL virtual machine.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -69,47 +69,47 @@ items:
                                 az sqlvm aglistener create -n aglistenertest -g myresourcegroup --ag-name agname --group-name sqlvmgroup --ip-address 10.0.0.11 --lb-rid '/subscriptions/<yoursubscription>/resourceGroups/<yourrg>/providers/Microsoft.Network/loadBalancers/<lbname>' --probe-port 59999 --subnet-rid '/subscriptions/<yoursubscription>/resourceGroups/<yourrg>/providers/Microsoft.Network/virtualNetworks/<vnname>/subnets/<subnetname>' --sqlvm-rids $sqlvm1.id $sqlvm2.id
   parameters:
   - isRequired: true
-    name: --availability-group-listener-name
-    summary: ''
+    name: --ag-name -a
+    summary: Name of the availability group.
     description: ''
   - isRequired: true
-    name: --availability-group-name
-    summary: ''
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
     description: ''
   - isRequired: true
-    name: --ip-address
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --load-balancer-resource-id
-    summary: ''
-    description: ''
-  - isRequired: true
-    name: --probe-port
-    summary: ''
+    name: --name -n
+    summary: Name of the availability group listener.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: ''
+    name: --ip-address -i
+    summary: Private IP address bound to the availability group listener.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-instances
-    summary: ''
+    name: --lb-rid -b
+    summary: Resource id of the load balancer.
     description: ''
   - isRequired: true
-    name: --subnet-resource-id
-    summary: ''
+    name: --probe-port -e
+    summary: Probe port.
     description: ''
-  - name: --port
+  - isRequired: true
+    name: --sqlvm-rids -l
+    summary: Space-separated list of SQL virtual machine instance resource id's that are enrolled into the availability group listener.
+    description: ''
+  - isRequired: true
+    name: --subnet-rid -u
+    summary: Subnet used to include private IP.
+    description: ''
+  - name: --public-ip-rid -c
+    summary: Resource id of the public IP.
+    description: ''
+  - name: --port -p
     defaultValue: "1433"
-    summary: ''
-    description: ''
-  - name: --public-ip-address-resource-id
-    summary: ''
+    summary: Listener port.
     description: ''
 - uid: ext_sqlvm-preview_az_sqlvm_aglistener_delete
   name: az sqlvm aglistener delete
@@ -119,16 +119,16 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --availability-group-listener-name
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
+    name: --name -n
     summary: Name of the availability group listener.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -141,12 +141,12 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 - uid: ext_sqlvm-preview_az_sqlvm_aglistener_remove_sqlvm
   name: az sqlvm aglistener remove-sqlvm
@@ -162,7 +162,11 @@ items:
                                 az sqlvm aglistener remove-sqlvm -n aglistener -g myresourcegroup --group-name sqlvmgroup --sqlvm-rid $sqlvm.id
   parameters:
   - isRequired: true
-    name: --availability-group-listener-name
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
+    name: --name -n
     summary: Name of the availability group listener.
     description: ''
   - isRequired: true
@@ -170,12 +174,8 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
-    description: ''
-  - isRequired: true
-    name: --sqlvm-resource-id
-    summary: ''
+    name: --sqlvm-rid -s
+    summary: Resource id of the SQL virtual machine.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -197,16 +197,16 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --availability-group-listener-name
+    name: --group-name -r
+    summary: Name of the SQL virtual machine group.
+    description: ''
+  - isRequired: true
+    name: --name -n
     summary: Name of the availability group listener.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --sql-virtual-machine-group-name
-    summary: Name of the SQL virtual machine group.
     description: ''
 commands:
 - uid: ext_sqlvm-preview_az_sqlvm_aglistener_add_sqlvm
