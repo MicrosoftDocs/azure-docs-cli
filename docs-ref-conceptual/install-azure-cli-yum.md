@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Install Azure CLI with yum
 
-For Linux distributions with  `yum` such as RHEL, Fedora, or CentOS, there's a package 
+For Linux distributions with  `yum` such as RHEL, Fedora, or CentOS, there's a package
 for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
 
 [!INCLUDE [linux-install-requirements.md](includes/linux-install-requirements.md)]

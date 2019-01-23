@@ -207,7 +207,7 @@ The other operation used to get data from an array is _filtering_. Filtering is 
 This operator takes a predicate as its contents. A predicate is any statement that can be evaluated
 to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
 
-JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`. 
+JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`.
 JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions can be grouped within parenthesis, allowing for more
 complex predicate expressions. For the full details on predicates and logical operations, see the
 [JMESPath specification](http://jmespath.org/specification.html).
