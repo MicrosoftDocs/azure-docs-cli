@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/16/2019
+ms.date: 01/25/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -24,13 +24,14 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.1.0 | Provides a preview for upcoming AKS features | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.2.0 | Provides a preview for upcoming AKS features | Yes |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.5.1 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.6.1 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
-| [azure-devops](https://github.com/Microsoft/vsts-cli/tree/azuredevopscli-dev) | 0.1.0 | Tools for managing Azure DevOps. | Yes |
+| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.2.0 | Tools for managing Azure DevOps. | Yes |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.1 | Manage Azure Firewall resources. | Yes |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.4.3 | Bug fixes for issues in the native botservice cli command module. | Yes |
+| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.1 | Additional commands to simplify Azure Database workflows. | Yes |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.6.0 | Support for new Database Migration Service scenarios. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
@@ -48,10 +49,10 @@ az extension list-available --output table
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.2 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [rdbms-vnet](https://github.com/Azure/azure-cli-extensions) | 10.0.0 | Support for Virtual Network rules in Azure MySQL and Azure PostgreSQL resources |  |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.8 | Support for querying Azure resources with Resource Graph. | Yes |
-| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.1.6 | Additional commands for working with SAP HanaOnAzure instances. |  |
+| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.0 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [sqlvm-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/sqlvm-preview) | 0.1.0 | Tools for managing SQL virtual machines, groups and availability group listeners. | Yes |
-| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.1 | Provides a preview for upcoming storage features. | Yes |
+| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.2 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
