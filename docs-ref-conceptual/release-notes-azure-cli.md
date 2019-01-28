@@ -1,3 +1,4 @@
+
 ---
 title: Azure CLI release notes
 description: Learn about the latest updates to Azure CLI
@@ -12,6 +13,80 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## January 28, 2019
+
+Version 2.0.56
+
+### ACR
+* Add support for VNet/IP rules.
+
+### ACS
+* Add Virtual Nodes Preview
+* Add Managed OpenShift commands
+* Support Service Principal updating operation using "az aks update-credentials -reset-service-principal"
+
+### AMS
+* BREAKING CHANGE: asset group command `ams asset get-streaming-locators` renamed `ams asset list-streaming-locators`.
+* BREAKING CHANGE: streaming-locator group command `ams streaming-locator get-content-keys` renamed `ams streaming-locator list-content-keys`.
+
+### Appservice
+* functionapp: add support for app insights on functionapp create
+* functionapp: add support for app service plan creation (including Elastic Premium)
+* functionapp: fix app setting issues with Elastic Premium plans
+
+### Container
+* Adding 'az container start' command
+* Allow using decimal values for CPU during container creation
+
+### EventGrid
+* `event-subscription create/update`: Added `--deadletter-endpoint` parameter.
+* 'event-subscription create/update`: Added storagequeue and hybridconnection as new values for the `--endpoint-type` parameter.
+* `event-subscription create`: Added `--max-delivery-attempts` and `--event-ttl` parameters to specify the retry policy for events.
+* `event-subscription create/update`: Added a warning message for manual handshake validation when Webhook as destination is used for an event subscription.
+* Added source-resource-id parameter for all event subscription related commands and mark all other source resource related parameters as deprecated.
+
+### HDInsight
+* BREAKING CHANGE: 
+  - `create`, `application create`: Removed the `--virtual-network` and `--subnet-name` parameters.
+  - `create`: Change the `--storage-account` to accept name or id of storage account instead of blob endpoints.
+* `create`: added the `--vnet-name` and `--subnet-name` parameters.
+* `create`: added support for Enterprise Security Package and disk encryption
+* Added `rotate-disk-encryption-key` command
+* Added `update` command
+
+### IoT
+* Increment IotHub mgmt SDK requirement.
+* Minor fixes
+* Update test recordings.
+* Add encoding format to routing-endpoint command.
+
+### Kusto
+* Preview release
+
+### Monitor
+* Make ID comparison case insensitive.
+
+### Profile
+* az login: enable tenant level account for managed service identity
+
+### Network
+* `express-route update`: Fix issue where `--bandwidth` argument was ignored.
+* `ddos-protection update`: Fix issue with set comprehension causing stack trace.
+
+### Resource
+* `group deployment create`: support uri based parameters file 
+* `policy assignment create/list/show`: support managed identity on policy assignments
+
+### SQL Virtual Machine
+* Preview release of module.
+
+### Storage
+* Changed fix to update only properties that are changed on the same object
+* Fixed #8021, binary data is encoded in base 64 when returned
+
+### VM
+* `vm encryption enable`: now validates --disk encryption keyvault and that key encryption keyvault exists, in line with `vmss encryption enable`. Exposes --force. For more info: see issues #8111 and #8110
 
 ## January 15, 2019
 
