@@ -19,74 +19,71 @@ ms.devlang: azurecli
 Version 2.0.56
 
 ### ACR
-* Add support for VNet/IP rules.
+* Added support for VNet/IP rules
 
 ### ACS
-* Add Virtual Nodes Preview
-* Add Managed OpenShift commands
-* Support Service Principal updating operation using "az aks update-credentials -reset-service-principal"
+* Added Virtual Nodes Preview
+* Added Managed OpenShift commands
+* Added support for service principal updates operation with `aks update-credentials -reset-service-principal`
 
 ### AMS
-* BREAKING CHANGE: asset group command `ams asset get-streaming-locators` renamed `ams asset list-streaming-locators`.
-* BREAKING CHANGE: streaming-locator group command `ams streaming-locator get-content-keys` renamed `ams streaming-locator list-content-keys`.
+* [BREAKING CHANGE] Renamed `ams asset get-streaming-locators` to `ams asset list-streaming-locators`
+* [BREAKING CHANGE] Renamed `ams streaming-locator get-content-keys` to `ams streaming-locator list-content-keys`
 
 ### Appservice
-* functionapp: add support for app insights on functionapp create
-* functionapp: add support for app service plan creation (including Elastic Premium)
-* functionapp: fix app setting issues with Elastic Premium plans
+* Added support for app insights on `functionapp create`
+* Added support for app service plan creation (including Elastic Premium) to Function Apps
+* Fixed app setting issues with Elastic Premium plans
 
 ### Container
-* Adding 'az container start' command
-* Allow using decimal values for CPU during container creation
+* Added `container start` command
+* Changed to allow using decimal values for CPU during container creation
 
 ### EventGrid
-* `event-subscription create/update`: Added `--deadletter-endpoint` parameter.
-* 'event-subscription create/update`: Added storagequeue and hybridconnection as new values for the `--endpoint-type` parameter.
-* `event-subscription create`: Added `--max-delivery-attempts` and `--event-ttl` parameters to specify the retry policy for events.
-* `event-subscription create/update`: Added a warning message for manual handshake validation when Webhook as destination is used for an event subscription.
-* Added source-resource-id parameter for all event subscription related commands and mark all other source resource related parameters as deprecated.
+* Added `--deadletter-endpoint` parameter to `event-subscription [create|update]`
+* Added storagequeue and hybridconnection as new values for 'event-subscription [create|update] --endpoint-type`
+* Added `--max-delivery-attempts` and `--event-ttl` parameters to `event-subscription create` to specify the retry policy for events
+* Added a warning message to `event-subscription [create|update]` when webhook as destination is used for an event subscription
+* Added source-resource-id parameter for all event subscription related commands and mark all other source resource related parameters as deprecated
 
 ### HDInsight
-* BREAKING CHANGE: 
-  - `create`, `application create`: Removed the `--virtual-network` and `--subnet-name` parameters.
-  - `create`: Change the `--storage-account` to accept name or id of storage account instead of blob endpoints.
-* `create`: added the `--vnet-name` and `--subnet-name` parameters.
-* `create`: added support for Enterprise Security Package and disk encryption
-* Added `rotate-disk-encryption-key` command
-* Added `update` command
+* [BREAKING CHANGE] Removed the `--virtual-network` and `--subnet-name` parameters from `hdinsight [application] create`
+* [BREAKING CHANGE] Changed `hdinsight create --storage-account` to accept name or id of storage account instead of blob endpoints
+* Added `--vnet-name` and `--subnet-name` parameters to `hdinsight create`
+* Added support for Enterprise Security Package and disk encryption to `hdinsight create` 
+* Added `hdinsight rotate-disk-encryption-key` command
+* Added `hdinsight update` command
 
 ### IoT
-* Increment IotHub mgmt SDK requirement.
-* Minor fixes
-* Update test recordings.
-* Add encoding format to routing-endpoint command.
+* Added encoding format to routing-endpoint command
 
 ### Kusto
 * Preview release
 
 ### Monitor
-* Make ID comparison case insensitive.
+* Changed ID comparison to be case insensitive
 
 ### Profile
-* az login: enable tenant level account for managed service identity
+* Enable tenant level account for managed service identity for `login`
 
 ### Network
-* `express-route update`: Fix issue where `--bandwidth` argument was ignored.
-* `ddos-protection update`: Fix issue with set comprehension causing stack trace.
+* Fixed issue with `express-route update`: where `--bandwidth` argument was ignored
+* Fixed issue with `ddos-protection update` where set comprehension caused stack trace
 
 ### Resource
-* `group deployment create`: support uri based parameters file 
-* `policy assignment create/list/show`: support managed identity on policy assignments
+* Added support for URI parameters file to `group deployment create`
+* Added support for managed identity to `policy assignment [create|list|show]`
 
 ### SQL Virtual Machine
-* Preview release of module.
+* Preview release
 
 ### Storage
 * Changed fix to update only properties that are changed on the same object
 * Fixed #8021, binary data is encoded in base 64 when returned
 
 ### VM
-* `vm encryption enable`: now validates --disk encryption keyvault and that key encryption keyvault exists, in line with `vmss encryption enable`. Exposes --force. For more info: see issues #8111 and #8110
+* Changed `vm encryption enable` to validate disk encryption keyvault and that key encryption keyvault exists
+* Added `--force` flag to `vm encryption enable`
 
 ## January 15, 2019
 
