@@ -1,3 +1,4 @@
+
 ---
 title: Azure CLI release notes
 description: Learn about the latest updates to Azure CLI
@@ -12,6 +13,77 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## January 28, 2019
+
+Version 2.0.56
+
+### ACR
+* Added support for VNet/IP rules
+
+### ACS
+* Added Virtual Nodes Preview
+* Added Managed OpenShift commands
+* Added support for service principal updates operation with `aks update-credentials -reset-service-principal`
+
+### AMS
+* [BREAKING CHANGE] Renamed `ams asset get-streaming-locators` to `ams asset list-streaming-locators`
+* [BREAKING CHANGE] Renamed `ams streaming-locator get-content-keys` to `ams streaming-locator list-content-keys`
+
+### Appservice
+* Added support for app insights on `functionapp create`
+* Added support for app service plan creation (including Elastic Premium) to Function Apps
+* Fixed app setting issues with Elastic Premium plans
+
+### Container
+* Added `container start` command
+* Changed to allow using decimal values for CPU during container creation
+
+### EventGrid
+* Added `--deadletter-endpoint` parameter to `event-subscription [create|update]`
+* Added storagequeue and hybridconnection as new values for 'event-subscription [create|update] --endpoint-type`
+* Added `--max-delivery-attempts` and `--event-ttl` parameters to `event-subscription create` to specify the retry policy for events
+* Added a warning message to `event-subscription [create|update]` when webhook as destination is used for an event subscription
+* Added source-resource-id parameter for all event subscription related commands and mark all other source resource related parameters as deprecated
+
+### HDInsight
+* [BREAKING CHANGE] Removed the `--virtual-network` and `--subnet-name` parameters from `hdinsight [application] create`
+* [BREAKING CHANGE] Changed `hdinsight create --storage-account` to accept name or id of storage account instead of blob endpoints
+* Added `--vnet-name` and `--subnet-name` parameters to `hdinsight create`
+* Added support for Enterprise Security Package and disk encryption to `hdinsight create` 
+* Added `hdinsight rotate-disk-encryption-key` command
+* Added `hdinsight update` command
+
+### IoT
+* Added encoding format to routing-endpoint command
+
+### Kusto
+* Preview release
+
+### Monitor
+* Changed ID comparison to be case insensitive
+
+### Profile
+* Enable tenant level account for managed service identity for `login`
+
+### Network
+* Fixed issue with `express-route update`: where `--bandwidth` argument was ignored
+* Fixed issue with `ddos-protection update` where set comprehension caused stack trace
+
+### Resource
+* Added support for URI parameters file to `group deployment create`
+* Added support for managed identity to `policy assignment [create|list|show]`
+
+### SQL Virtual Machine
+* Preview release
+
+### Storage
+* Changed fix to update only properties that are changed on the same object
+* Fixed #8021, binary data is encoded in base 64 when returned
+
+### VM
+* Changed `vm encryption enable` to validate disk encryption keyvault and that key encryption keyvault exists
+* Added `--force` flag to `vm encryption enable`
 
 ## January 15, 2019
 
