@@ -1,4 +1,3 @@
-
 ---
 title: Azure CLI release notes
 description: Learn about the latest updates to Azure CLI
@@ -13,6 +12,13 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## January 31, 2019
+
+Version 2.0.57
+
+### Core
+
+* Hot Fix for [issue 8399](https://github.com/Azure/azure-cli/issues/8399).
 
 ## January 28, 2019
 
