@@ -1,4 +1,3 @@
-
 ---
 title: Azure CLI release notes
 description: Learn about the latest updates to Azure CLI
