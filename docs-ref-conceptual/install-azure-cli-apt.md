@@ -42,6 +42,11 @@ for the Azure CLI. This package has been tested with:
         --keyserver packages.microsoft.com \
         --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
    ```
+   
+   Alternative approach if you get an error from the command above:
+   ```bash
+   curl -sL "https://packages.microsoft.com/keys/microsoft.asc" | sudo apt-key add -
+   ```  
 
 4. Install the CLI:
 
