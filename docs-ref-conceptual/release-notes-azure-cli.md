@@ -12,6 +12,89 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## February 12, 2019
+
+Version 2.0.58
+
+### Core
+
+* `az --version` now displays a notification if you have packages that can be updated.
+* Fixes regression where `--ids` could no longer be used with JSON output.
+
+### ACR
+* BREAKING CHANGE: Remove 'acr build-task' command group.
+* BREAKING CHANGE: Remove --tag/--manifest from 'acr repository delete' command.
+
+### ACS
+* az aks enable-addons /disable-addons: support case insensitive name
+* support Azure Active Directory updating operation using "az aks update-credentials --reset-aad"
+* clarify that "--output" is ignored for "az aks get-credentials"
+
+### AMS
+* ams streaming-endpoint [start | stop | create | update] : added 'wait' command
+* ams live-event [create | start | stop | reset] : added 'wait' command
+
+### Appservice
+* functionapp: add ability to create and configure functions using ACR containers
+* webapp: add support for updating configurations through json
+* appservice plan: Updating help for appservice-plan-update command
+* functionapp: add support for app insights on functionapp create
+* webapp: bugfixes for webapp ssh
+
+### Botservice
+* Improve UX around `az bot publish`
+* Add warning for timeouts when running `npm install` during `az bot publish`
+* Remove invalid char "." from `--name`  in `az bot create`
+* Stop randomizing resource names when creating Azure Storage, App Service Plan, Function/Web App and Application Insights
+* Code cleanup in BotTemplateDeployer
+* Deprecate `--proj-name` argument for `--proj-file-path`
+* Update old `--proj-file` messages to instead use `--proj-file-path`
+* `az bot publish` now removes fetched IIS Node.js deployment files if they did not already exist
+  * The command does not remove any local IIS Node.js files if detected when command is initiated.
+* Add `--keep-node-modules` to `az bot publish` to not delete node_modules folder on App Service
+* Add `"publishCommand"` key-value pair to output from `az bot create` when creating an Azure Function or Web App bot.
+  * The value of `"publishCommand"` is an `az bot publish` command prepopulated with the required parameters to publish the newly created bot.
+* Update `"WEBSITE_NODE_DEFAULT_VERSION"` in ARM template for v4 SDK bots to use 10.14.1 instead of 8.9.4
+
+### Key Vault
+* keyvault secret backup: Fixes issue where some users received an 'unexpected_keyword' error when using --id.
+
+### Monitor
+* `monitor metrics alert create/update`: Allow dimension value '*'.
+
+### Network
+* `dns zone export`: Ensure exported CNAMEs are FQDNs.
+* `nic ip-config address-pool add/remove`: Add `--gateway-name` to support application gateway backend address pools.
+* `network watcher flow-log configure`: Add arguments `--traffic-analytics`, `--workspace` to support traffic analytics through a Log Analytics workspace.
+* `lb inbound-nat-pool create/update`: Add arguments `--idle-timeout`, `--floating-ip`.
+
+### Policy Insights
+* Add `policy remediation` commands to support resource policy remediation features.
+
+### RDBMS
+* Improve help message and command parameters
+
+### Redis
+* Added commands for managing firewall-rules (create, update, delete, show, list)
+* Added commands for managing server-link (create, delete, show, list)
+* Added commands for managing patch-schedule (create, update, delete, show)
+* `az redis create` : Support for Availability Zones and Minimum TLS Version
+* BREAKING CHANGE: Removed 'az redis update-settings' and 'az redis list-all' command
+* BREAKING CHANGE: Parameter for redis create: 'tenant settings' is not accepted in key[=value] format
+* Added warning message for deprecating 'az redis import-method' command.
+
+### Role
+* `az identity` moved here from inside of the `azure-cli-vm` command_module.
+
+### SQL VM
+* Deprecates the argument --boostrap-acc-pwd for typo.
+
+### VM
+* vm list-skus: Allow use of `--all` in place of `--all true`.
+* Add `vmss run-command [invoke / list / show]`.
+* vmss encryption enable: Fixed bug where command fails if it was ran previously.
+* Moving `az identity` command tree to `azure-cli-role`.
+
 ## January 31, 2019
 
 Version 2.0.57
