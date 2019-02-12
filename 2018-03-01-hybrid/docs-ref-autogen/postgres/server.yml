@@ -22,21 +22,16 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Create a PostgreSQL server with a Standard performance tier and 2 vcore in North Europe.
+  - summary: Create a PostgreSQL server in North Europe with sku GP_Gen5_2 (General Purpose, Gen 5 hardware, 2 vCores).
     syntax:
-      content: >-
-        az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \
-                                    --sku-name "GP_Gen4_2"
+      content: az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \ --sku-name GP_Gen5_2
   - summary: Create a PostgreSQL server with all paramaters set.
     syntax:
-      content: >-
-        az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \
-                                    --sku-name "B_Gen4_2" --ssl-enforcement Disabled \
-                                    --storage-size 51200 --tags "key=value" --version {server-version}
+      content: az postgres server create -l northeurope -g testgroup -n testsvr -u username -p password \ --sku-name B_Gen5_1 --ssl-enforcement Disabled \ --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 --tags "key=value" --version {server-version}
   parameters:
   - isRequired: true
     name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -44,36 +39,38 @@ items:
     description: ''
   - isRequired: true
     name: --sku-name
-    summary: The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+    summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --backup-retention
-    summary: The number of days a backup is retained.
+    summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --geo-redundant-backup
-    summary: Enable Geo-redundant or not for server backup.
+    parameterValueGroup: Disabled, Enabled
+    summary: Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - name: --ssl-enforcement
     parameterValueGroup: Disabled, Enabled
-    summary: Enable ssl enforcement or not when connect to server.
+    summary: Enable or disable ssl enforcement for connections to server. Default is Enabled.
     description: ''
   - name: --storage-size
-    summary: The max storage size of the server. Unit is megabytes.
+    summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --version
-    summary: Server version.
+    summary: Server major version.
+    description: ''
+  - isRequired: true
+    name: --admin-password -p
+    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - isRequired: true
     name: --admin-user -u
-    summary: ''
-    description: ''
-  - name: --admin-password -p
-    summary: The password of the administrator login.
+    summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -84,6 +81,10 @@ items:
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Delete a server.
+    syntax:
+      content: az postgres server delete -g testgroup -n testsvr
   parameters:
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -92,7 +93,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -102,20 +103,23 @@ items:
     description: ''
 - uid: az_postgres_server_georestore
   name: az postgres server georestore
-  summary: Georestore a server from backup.
+  summary: Geo-restore a server from backup.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Georestore 'testsvr' as 'testsvrnew' where 'testsvrnew' is in same resource group as 'testsvr'.
+  - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
     syntax:
       content: az postgres server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
-  - summary: Georestore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in the different resource group as the original server.
+  - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2 with sku GP_Gen5_2.
+    syntax:
+      content: az postgres server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
+  - summary: Geo-restore 'testsvr2' into a new server 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
     syntax:
       content: >-
         az postgres server georestore -g testgroup -n testsvrnew \
                                     -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforPostgreSQL/servers/testsvr2" \
-                                    -l westus2 --sku-name GP_Gen4_2
+                                    -l westus2
   parameters:
   - isRequired: true
     name: --location -l
@@ -126,22 +130,22 @@ items:
     summary: The name or ID of the source server to restore from.
     description: ''
   - name: --backup-retention
-    summary: The max days of retention, unit is days.
+    summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --geo-redundant-backup
-    summary: Enable Geo-redundant or not for server backup.
+    summary: Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku-name
-    summary: The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+    summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -176,10 +180,10 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Restore 'testsvr' as 'testsvrnew'.
+  - summary: Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
     syntax:
       content: az postgres server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
-  - summary: Restore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in a different resource group than the backup.
+  - summary: Restore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
     syntax:
       content: >-
         az postgres server restore -g testgroup -n testsvrnew \
@@ -192,7 +196,7 @@ items:
     description: ''
   - isRequired: true
     name: --source-server -s
-    summary: The name or ID of the source server to restore from.
+    summary: The name or resource ID of the source server to restore from.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -201,7 +205,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -220,7 +224,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -243,20 +247,20 @@ items:
       content: az postgres server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
   parameters:
   - name: --admin-password -p
-    summary: The password of the administrator login.
+    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --backup-retention
-    summary: The number of days a backup is retained.
+    summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --sku-name
-    summary: The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+    summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --ssl-enforcement
     parameterValueGroup: Disabled, Enabled
-    summary: Enable ssl enforcement or not when connect to server.
+    summary: Enable or disable ssl enforcement for connections to server. Default is Enabled.
     description: ''
   - name: --storage-size
-    summary: The max storage size of the server. Unit is megabytes.
+    summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -265,7 +269,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -296,7 +300,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -357,7 +361,7 @@ commands:
   summary: Update a firewall rule.
 - uid: az_postgres_server_georestore
   name: az postgres server georestore
-  summary: Georestore a server from backup.
+  summary: Geo-restore a server from backup.
 - uid: az_postgres_server_list
   name: az postgres server list
   summary: List available servers.

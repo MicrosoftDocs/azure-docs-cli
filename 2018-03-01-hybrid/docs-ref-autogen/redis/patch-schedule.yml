@@ -7,24 +7,28 @@ items:
   langs:
   - azurecli
   children:
+  - az_redis_patch_schedule_create
   - az_redis_patch_schedule_delete
-  - az_redis_patch_schedule_set
   - az_redis_patch_schedule_show
-- uid: az_redis_patch_schedule_delete
-  name: az redis patch-schedule delete
-  summary: Deletes the patching schedule of a redis cache (requires Premium SKU).
-  description: ''
+  - az_redis_patch_schedule_update
+- uid: az_redis_patch_schedule_create
+  name: az redis patch-schedule create
+  summary: Create patching schedule for Redis cache.
+  description: Usage example - az redis patch-schedule create --name testCacheName --resource-group testResourceGroup --schedule-entries '[{"dayOfWeek":"Tuesday","startHourUtc":"00","maintenanceWindow":"PT5H"}]'.
   langs:
   - azurecli
   parameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
+  - isRequired: true
+    name: --name -n
     summary: Name of the Redis cache.
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --schedule-entries
+    summary: List of Patch schedule entries. Example Value:[{"dayOfWeek":"Monday","startHourUtc":"00","maintenanceWindow":"PT5H"}].
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -35,24 +39,19 @@ items:
       branch: dev
       path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_redis_patch_schedule_set
-  name: az redis patch-schedule set
-  summary: Create or replace the patching schedule for Redis cache (requires Premium SKU).
+- uid: az_redis_patch_schedule_delete
+  name: az redis patch-schedule delete
+  summary: Deletes the patching schedule of a redis cache (requires Premium SKU).
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
-    name: --schedule-entries
-    summary: List of patch schedules for a Redis cache.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
+    name: --name -n
     summary: Name of the Redis cache.
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
@@ -71,14 +70,41 @@ items:
   langs:
   - azurecli
   parameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
-    description: ''
-  - name: --name -n
+  - isRequired: true
+    name: --name -n
     summary: Name of the Redis cache.
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_redis_patch_schedule_update
+  name: az redis patch-schedule update
+  summary: Update the patching schedule for Redis cache.
+  description: Usage example - az redis patch-schedule update --name testCacheName --resource-group testResourceGroup --schedule-entries '[{"dayOfWeek":"Tuesday","startHourUtc":"00","maintenanceWindow":"PT5H"}]'.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Redis cache.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --schedule-entries
+    summary: List of Patch schedule entries. Example Value:[{"dayOfWeek":"Monday","startHourUtc":"00","maintenanceWindow":"PT5H"}].
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -90,15 +116,18 @@ items:
       path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
+- uid: az_redis_patch_schedule_create
+  name: az redis patch-schedule create
+  summary: Create patching schedule for Redis cache.
 - uid: az_redis_patch_schedule_delete
   name: az redis patch-schedule delete
   summary: Deletes the patching schedule of a redis cache (requires Premium SKU).
-- uid: az_redis_patch_schedule_set
-  name: az redis patch-schedule set
-  summary: Create or replace the patching schedule for Redis cache (requires Premium SKU).
 - uid: az_redis_patch_schedule_show
   name: az redis patch-schedule show
   summary: Gets the patching schedule of a redis cache (requires Premium SKU).
+- uid: az_redis_patch_schedule_update
+  name: az redis patch-schedule update
+  summary: Update the patching schedule for Redis cache.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -115,7 +144,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b3d52ca0e6f11ef377d830612d1131ca24127004/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
-updated_at: 6/28/2018 6:01:13 PM
-ms.date: 06/28/2018
+gitcommit: https://github.com/Azure/azure-cli/blob/3ba5b6dda266a17563bad4004548cc932cec3381/src/command_modules/azure-cli-redis/azure/cli/command_modules/redis/_help.py
+updated_at: 2/6/2019 10:30:14 PM
+ms.date: 02/06/2019
 description: Manage Redis patch schedules.
