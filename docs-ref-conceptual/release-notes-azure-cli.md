@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/15/2019
+ms.date: 02/15/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,86 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## February 12, 2019
+
+Version 2.0.58
+
+### Core
+
+* `az --version` now displays a notification if you have packages that can be updated
+* Fixed regression where `--ids` could no longer be used with JSON output
+
+### ACR
+* [BREAKING CHANGE] Removed `acr build-task` command group
+* [BREAKING CHANGE] Removed `--tag` and `--manifest` options from from `acr repository delete`
+
+### ACS
+* Added support for case-insensitive names to `aks [enable-addons|disable-addons]`
+* Added support for Azure Active Directory updating operation using `aks update-credentials --reset-aad`
+* Added clarification that `--output` is ignored for `aks get-credentials`
+
+### AMS
+* Added `ams streaming-endpoint [start | stop | create | update] wait` commands
+* Added `ams live-event [create | start | stop | reset] wait` commands
+
+### Appservice
+* Added ability to create and configure functions using ACR containers
+* Added support for updating webapp configurations through json
+* Improved help for `appservice-plan-update`
+* Added support for app insights on functionapp create
+* Fixed issues with webapp SSH
+
+### Botservice
+* Improved UX for `bot publish`
+* Added warning for timeouts when running `npm install` during `az bot publish`
+* Removed invalid char `.` from `--name`  in `az bot create`
+* Changed to stop randomizing resource names when creating Azure Storage, App Service Plan, Function/Web App and Application Insights
+* [DEPRECATED] Deprecated `--proj-name` argument in favor of `--proj-file-path`
+* Changed `az bot publish` to remove fetched IIS Node.js deployment files if they did not already exist
+* Added `--keep-node-modules` argument to `az bot publish` to not delete `node_modules` folder on App Service
+* Added `"publishCommand"` key-value pair to output from `az bot create` when creating an Azure Function or Web App bot
+  * The value of `"publishCommand"` is an `az bot publish` command prepopulated with the required parameters to publish the newly created bot
+* Updated `"WEBSITE_NODE_DEFAULT_VERSION"` in ARM template for v4 SDK bots to use 10.14.1 instead of 8.9.4
+
+### Key Vault
+* Fixed issue with `keyvault secret backup` where some users received an `unexpected_keyword` error when using `--id`
+
+### Monitor
+* Changed `monitor metrics alert [create|update]` to allow dimension value `*`
+
+### Network
+* Changed `dns zone export` to ensure exported CNAMEs are FQDNs
+* Added `--gateway-name` parameter to `nic ip-config address-pool [add|remove]` to support application gateway backend address pools
+* Added `--traffic-analytics` and `--workspace` arguments to `network watcher flow-log configure` to support traffic analytics through a Log Analytics workspace
+* Added `--idle-timeout` and `--floating-ip` to `lb inbound-nat-pool [create|update]`
+
+### Policy Insights
+* Added `policy remediation` commands to support resource policy remediation features
+
+### RDBMS
+* Improved help message and command parameters
+
+### Redis
+* Added commands for managing firewall-rules (create, update, delete, show, list)
+* Added commands for managing server-link (create, delete, show, list)
+* Added commands for managing patch-schedule (create, update, delete, show)
+* Added support for Availability Zones and Minimum TLS Version to `redis create
+* [BREAKING CHANGE] Removed `redis update-settings` and `redis list-all` commands
+* [BREAKING CHANGE] Parameter for `redis create`: 'tenant settings' is not accepted in key[=value] format
+* [DEPRECATED] Added warning message for deprecating `redis import-method` command
+
+### Role
+* [BREAKING CHANGE] Moved `az identity` command here from `vm` commands
+
+### SQL VM
+* [DEPRECATED] Deprecated `--boostrap-acc-pwd` argument due to typo
+
+### VM
+* Changed `vm list-skus` to allow use of `--all` in place of `--all true`
+* Added `vmss run-command [invoke | list | show]`
+* Fixed bug where `vmss encryption enable` would fail if run previously
+* [BREAKING CHANGE] Moved `az identity` command to `role` commands
+
 ## January 31, 2019
 
 Version 2.0.57
