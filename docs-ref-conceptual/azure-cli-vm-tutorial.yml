@@ -147,18 +147,18 @@ items:
     - durationInMinutes: 4
       title: Set environment variables from CLI output
       content: |-
-        Now that you have the NIC ID, run `az network nic show` to get its information.
+        Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
 
         ```azurecli-interactive
-        az network nic show --ids $NIC_ID -g TutorialResources
+        az network nic show --ids $NIC_ID
         ```
+
 
         This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now
         the goal is to obtain the public IP address and subnet object IDs.
 
         ```azurecli-interactive
         az network nic show --ids $NIC_ID \
-          -g TutorialResources \
           --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
           -o json
         ```
@@ -183,7 +183,7 @@ items:
 
         ```bash
         read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
-          --ids $NIC_ID -g TutorialResources \
+          --ids $NIC_ID \
           --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
           -o tsv)
         ```
@@ -193,7 +193,6 @@ items:
 
         ```bash
         VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
-          -g TutorialResources \
           --query ipAddress \
           -o tsv)
         ```
