@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 01/15/2019
+ms.date: 02/15/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -18,82 +18,79 @@ Version 2.0.58
 
 ### Core
 
-* `az --version` now displays a notification if you have packages that can be updated.
-* Fixes regression where `--ids` could no longer be used with JSON output.
+* `az --version` now displays a notification if you have packages that can be updated
+* Fixed regression where `--ids` could no longer be used with JSON output
 
 ### ACR
-* BREAKING CHANGE: Remove 'acr build-task' command group.
-* BREAKING CHANGE: Remove --tag/--manifest from 'acr repository delete' command.
+* [BREAKING CHANGE] Removed `acr build-task` command group
+* [BREAKING CHANGE] Removed `--tag` and `--manifest` options from from `acr repository delete`
 
 ### ACS
-* az aks enable-addons /disable-addons: support case insensitive name
-* support Azure Active Directory updating operation using "az aks update-credentials --reset-aad"
-* clarify that "--output" is ignored for "az aks get-credentials"
+* Added support for case-insensitive names to `aks [enable-addons|disable-addons]`
+* Added support for Azure Active Directory updating operation using `aks update-credentials --reset-aad`
+* Added clarification that `--output` is ignored for `aks get-credentials`
 
 ### AMS
-* ams streaming-endpoint [start | stop | create | update] : added 'wait' command
-* ams live-event [create | start | stop | reset] : added 'wait' command
+* Added `ams streaming-endpoint [start | stop | create | update] wait` commands
+* Added `ams live-event [create | start | stop | reset] wait` commands
 
 ### Appservice
-* functionapp: add ability to create and configure functions using ACR containers
-* webapp: add support for updating configurations through json
-* appservice plan: Updating help for appservice-plan-update command
-* functionapp: add support for app insights on functionapp create
-* webapp: bugfixes for webapp ssh
+* Added ability to create and configure functions using ACR containers
+* Added support for updating webapp configurations through json
+* Improved help for `appservice-plan-update`
+* Added support for app insights on functionapp create
+* Fixed issues with webapp SSH
 
 ### Botservice
-* Improve UX around `az bot publish`
-* Add warning for timeouts when running `npm install` during `az bot publish`
-* Remove invalid char "." from `--name`  in `az bot create`
-* Stop randomizing resource names when creating Azure Storage, App Service Plan, Function/Web App and Application Insights
-* Code cleanup in BotTemplateDeployer
-* Deprecate `--proj-name` argument for `--proj-file-path`
-* Update old `--proj-file` messages to instead use `--proj-file-path`
-* `az bot publish` now removes fetched IIS Node.js deployment files if they did not already exist
-  * The command does not remove any local IIS Node.js files if detected when command is initiated.
-* Add `--keep-node-modules` to `az bot publish` to not delete node_modules folder on App Service
-* Add `"publishCommand"` key-value pair to output from `az bot create` when creating an Azure Function or Web App bot.
-  * The value of `"publishCommand"` is an `az bot publish` command prepopulated with the required parameters to publish the newly created bot.
-* Update `"WEBSITE_NODE_DEFAULT_VERSION"` in ARM template for v4 SDK bots to use 10.14.1 instead of 8.9.4
+* Improved UX for `bot publish`
+* Added warning for timeouts when running `npm install` during `az bot publish`
+* Removed invalid char `.` from `--name`  in `az bot create`
+* Changed to stop randomizing resource names when creating Azure Storage, App Service Plan, Function/Web App and Application Insights
+* [DEPRECATED] Deprecated `--proj-name` argument in favor of `--proj-file-path`
+* Changed `az bot publish` to remove fetched IIS Node.js deployment files if they did not already exist
+* Added `--keep-node-modules` argument to `az bot publish` to not delete `node_modules` folder on App Service
+* Added `"publishCommand"` key-value pair to output from `az bot create` when creating an Azure Function or Web App bot
+  * The value of `"publishCommand"` is an `az bot publish` command prepopulated with the required parameters to publish the newly created bot
+* Updated `"WEBSITE_NODE_DEFAULT_VERSION"` in ARM template for v4 SDK bots to use 10.14.1 instead of 8.9.4
 
 ### Key Vault
-* keyvault secret backup: Fixes issue where some users received an 'unexpected_keyword' error when using --id.
+* Fixed issue with `keyvault secret backup` where some users received an `unexpected_keyword` error when using `--id`
 
 ### Monitor
-* `monitor metrics alert create/update`: Allow dimension value '*'.
+* Changed `monitor metrics alert [create|update]` to allow dimension value `*`
 
 ### Network
-* `dns zone export`: Ensure exported CNAMEs are FQDNs.
-* `nic ip-config address-pool add/remove`: Add `--gateway-name` to support application gateway backend address pools.
-* `network watcher flow-log configure`: Add arguments `--traffic-analytics`, `--workspace` to support traffic analytics through a Log Analytics workspace.
-* `lb inbound-nat-pool create/update`: Add arguments `--idle-timeout`, `--floating-ip`.
+* Changed `dns zone export` to ensure exported CNAMEs are FQDNs
+* Added `--gateway-name` parameter to `nic ip-config address-pool [add|remove]` to support application gateway backend address pools
+* Added `--traffic-analytics` and `--workspace` arguments to `network watcher flow-log configure` to support traffic analytics through a Log Analytics workspace
+* Added `--idle-timeout` and `--floating-ip` to `lb inbound-nat-pool [create|update]`
 
 ### Policy Insights
-* Add `policy remediation` commands to support resource policy remediation features.
+* Added `policy remediation` commands to support resource policy remediation features
 
 ### RDBMS
-* Improve help message and command parameters
+* Improved help message and command parameters
 
 ### Redis
 * Added commands for managing firewall-rules (create, update, delete, show, list)
 * Added commands for managing server-link (create, delete, show, list)
 * Added commands for managing patch-schedule (create, update, delete, show)
-* `az redis create` : Support for Availability Zones and Minimum TLS Version
-* BREAKING CHANGE: Removed 'az redis update-settings' and 'az redis list-all' command
-* BREAKING CHANGE: Parameter for redis create: 'tenant settings' is not accepted in key[=value] format
-* Added warning message for deprecating 'az redis import-method' command.
+* Added support for Availability Zones and Minimum TLS Version to `redis create
+* [BREAKING CHANGE] Removed `redis update-settings` and `redis list-all` commands
+* [BREAKING CHANGE] Parameter for `redis create`: 'tenant settings' is not accepted in key[=value] format
+* [DEPRECATED] Added warning message for deprecating `redis import-method` command
 
 ### Role
-* `az identity` moved here from inside of the `azure-cli-vm` command_module.
+* [BREAKING CHANGE] Moved `az identity` command here from `vm` commands
 
 ### SQL VM
-* Deprecates the argument --boostrap-acc-pwd for typo.
+* [DEPRECATED] Deprecated `--boostrap-acc-pwd` argument due to typo
 
 ### VM
-* vm list-skus: Allow use of `--all` in place of `--all true`.
-* Add `vmss run-command [invoke / list / show]`.
-* vmss encryption enable: Fixed bug where command fails if it was ran previously.
-* Moving `az identity` command tree to `azure-cli-role`.
+* Changed `vm list-skus` to allow use of `--all` in place of `--all true`
+* Added `vmss run-command [invoke | list | show]`
+* Fixed bug where `vmss encryption enable` would fail if run previously
+* [BREAKING CHANGE] Moved `az identity` command to `role` commands
 
 ## January 31, 2019
 
