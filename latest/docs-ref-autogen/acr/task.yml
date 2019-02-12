@@ -59,15 +59,15 @@ items:
   - summary: Create a Linux task from a public GitHub repository which builds the hello-world image without triggers
     syntax:
       content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false
-  - summary: Create a Linux task using a private GitHub repository which builds the hello-world image without triggers
+  - summary: Create a Linux task using a private GitHub repository which builds the hello-world image without triggers on Arm architecture (V7 variant)
     syntax:
-      content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --git-access-token 0000000000000000000000000000000000000000
+      content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --git-access-token 0000000000000000000000000000000000000000 --platform linux/arm/v7
   - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with a git commit trigger
     syntax:
       content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --git-access-token 0000000000000000000000000000000000000000
-  - summary: Create a Windows task from a public GitHub repository which builds the Azure Container Builder image.
+  - summary: Create a Windows task from a public GitHub repository which builds the Azure Container Builder image on Amd64 architecture.
     syntax:
-      content: az acr task create -t acb:{{.Run.ID}} -n acb-win -r MyRegistry -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --os Windows
+      content: az acr task create -t acb:{{.Run.ID}} -n acb-win -r MyRegistry -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --platform Windows/amd64
   parameters:
   - isRequired: true
     name: --context -c
@@ -130,9 +130,10 @@ items:
     summary: Indicates whether the image built should be pushed to the registry.
     description: ''
   - name: --os
-    defaultValue: Linux
-    parameterValueGroup: Linux, Windows
     summary: The operating system type required for the build.
+    description: ''
+  - name: --platform
+    summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
     description: ''
   - name: --pull-request-trigger-enabled
     defaultValue: "1"
@@ -450,6 +451,9 @@ items:
   - summary: Update base image updates to trigger on all dependent images of a multi-stage dockerfile, and status of a task in an Azure Container Registry.
     syntax:
       content: az acr task update -n MyTask -r MyRegistry --base-image-trigger-type All --status Disabled
+  - summary: Update platform for the Build step of your Task to Windows (prev Linux).
+    syntax:
+      content: az acr task update -n MyTask -r MyRegistry --platform Windows
   parameters:
   - isRequired: true
     name: --name -n
@@ -501,8 +505,10 @@ items:
     summary: Indicates whether the image built should be pushed to the registry.
     description: ''
   - name: --os
-    parameterValueGroup: Linux, Windows
     summary: The operating system type required for the build.
+    description: ''
+  - name: --platform
+    summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
     description: ''
   - name: --pull-request-trigger-enabled
     parameterValueGroup: false, true
@@ -624,7 +630,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/55580002cfd2c433c81e35f79b0ed86ee2d580cc/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 1/17/2019 5:32:31 PM
-ms.date: 01/17/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/6fc40e0de8ed7b95fa377caa8692eb9eadc17be4/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 2/7/2019 11:12:44 PM
+ms.date: 02/07/2019
 description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
