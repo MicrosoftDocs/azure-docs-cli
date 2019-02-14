@@ -14,7 +14,7 @@ ms.devlang: azurecli
 Automated tools that use Azure services should always have restricted permissions. Instead of having
 applications sign in as a fully privileged user, Azure offers service principals. Service principals are user identities created in Azure associated with an existing account. Service principals can have their access roles customized and restricted to only read or write from specific resources.
 
-This article runs you through the steps for creating, getting information about, and resetting a service principal.
+This article runs you through the steps for creating, getting information about, and resetting a service principal with the Azure CLI.
 
 ## Create a service principal
 
