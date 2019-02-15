@@ -30,17 +30,15 @@ for the Azure CLI. This package has been tested with:
 2. <div id="set-release"/>Modify your sources list:
 
     ```bash
-    AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | \
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
 3. <div id="signingKey"/>Get the Microsoft signing key:
 
    ```bash
-   sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-        --keyserver packages.microsoft.com \
-        --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
+   wget -NP /tmp https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
+   sudo dpkg -i /tmp/packages-microsoft-prod.deb
    ```
 
 4. Install the CLI:
