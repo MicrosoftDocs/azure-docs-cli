@@ -25,7 +25,7 @@ to format CLI output. The argument values and types of output are:
 
 ## JSON output format
 
-The following example displays the list of virtual machines in your subscriptions in the default json format.
+The following example displays the list of virtual machines in your subscriptions in the default JSON format.
 
 ```azurecli-interactive
 az vm list --output json
@@ -186,10 +186,12 @@ Your current configuration is as follows:
 Do you wish to change your settings? (y/N): y
 
 What default output format would you like?
- [1] json - JSON formatted output that most closely matches API responses
- [2] jsonc - Colored JSON formatted output that most closely matches API responses
- [3] table - Human-readable output format
- [4] tsv - Tab- and Newline-delimited, great for GREP, AWK, etc.
+ [1] json - JSON formatted output that most closely matches API responses.
+ [2] jsonc - Colored JSON formatted output that most closely matches API responses.
+ [3] table - Human-readable output format.
+ [4] tsv - Tab- and Newline-delimited. Great for GREP, AWK, etc.
+ [5] yaml - YAML formatted output. An alternative to JSON. Great for configuration files.
+ [6] none - No output, except for errors and warnings.
 Please enter a choice [1]:
 ```
 
