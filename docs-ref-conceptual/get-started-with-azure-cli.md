@@ -22,6 +22,8 @@ The easiest way to get started with the Azure CLI is by running it in an Azure C
 
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
+After installing the CLI for the first time, check that it's installed and you've got the correct version by running `az --version`.
+
 ## Sign in
 
 Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
@@ -71,10 +73,9 @@ There are some arguments that are available for every command.
 * `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
   commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
-  Values), and `table` (human-readable ASCII tables). By default the CLI outputs `json`. To learn more about the available
+  Values), `table` (human-readable ASCII tables), and `yaml`. By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI](format-output-azure-cli.md).
-* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn
-  To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
@@ -112,7 +113,7 @@ There are also quickstarts for other popular services.
 
 ## Give feedback
 
-We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on Github](https://github.com/azure/azure-cli/issues) or use the built-in
+We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on GitHub](https://github.com/azure/azure-cli/issues) or use the built-in
 features of the CLI to leave general feedback with the [az feedback](/cli/azure/reference-index#az-feedback) command.
 
 ```azurecli-interactive
