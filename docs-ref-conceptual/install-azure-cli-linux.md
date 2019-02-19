@@ -15,6 +15,8 @@ ms.devlang: azurecli
 
 If there's no package for the Azure CLI for you your distribution, install the CLI manually by running a script.
 
+[!INCLUDE [current-version](includes/current-version.md)]
+
 > [!NOTE]
 > It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
 > and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
@@ -24,9 +26,14 @@ If there's no package for the Azure CLI for you your distribution, install the C
 
 The CLI requires the following software:
 
-* [Python 2.7 or Python 3.x](https://www.python.org/downloads/)
+* [Python 3.6.x or 3.7.x](https://www.python.org/downloads/). 
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
+
+> [!IMPORTANT]
+>
+> The CLI is also compatible with Python 2.7.x, which is being end-of-lifed on January 1, 2020. For this
+> reason we recommend that you install Python 3 to run the CLI.
 
 ## Install or update
 

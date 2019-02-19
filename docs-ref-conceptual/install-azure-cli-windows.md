@@ -17,6 +17,8 @@ For Windows the Azure CLI is installed via an MSI, which gives you access to the
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
+[!INCLUDE [current-version](includes/current-version.md)]
+
 ## Install or update
 
 The MSI distributable is used for installing, updating, and uninstalling the `az` command on Windows.

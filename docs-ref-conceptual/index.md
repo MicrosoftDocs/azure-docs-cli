@@ -32,7 +32,7 @@ az vm create -n MyLinuxVM -g MyResourceGroup --image UbuntuLTS
 
 ## Run or Install
 
-You can install the CLI locally, run it in the browser with Azure Cloud Shell, or run in a Docker container.
+You can install the CLI locally, run it in the browser with Azure Cloud Shell, or run in a Docker container. To get the current version of the CLI, run `az --version`.
 
 * To run in your browser with Azure Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart) or [Quickstart for PowerShell in Azure Cloud Shell](/azure/cloud-shell/quickstart-powershell).
 * To install the CLI, see [Install the Azure CLI](install-azure-cli.md).
