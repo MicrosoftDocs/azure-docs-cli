@@ -17,7 +17,7 @@ ms.devlang: azurecli
 The Azure CLI is a command-line tool providing a great experience for managing Azure resources. The CLI is designed
 to make scripting easy, query data, support long-running operations, and more. Try it today and find out what the CLI has to offer!
 
-The current version of the CLI is __2.0.58__. For information about the latest release, see the [release notes](release-notes-azure-cli.md).
+[!INCLUDE [current-version](../includes/current-version.md)]
 
 * [Install on Windows](install-azure-cli-windows.md)
 * [Install on macOS](install-azure-cli-macos.md)

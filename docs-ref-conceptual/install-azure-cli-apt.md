@@ -19,6 +19,13 @@ for the Azure CLI. This package has been tested with:
 * Ubuntu trusty, xenial, artful, and bionic
 * Debian wheezy, jessie, and stretch
 
+[!INCLUDE [current-version](../includes/current-version.md)]
+
+> [!NOTE]
+>
+> The `.deb` package for Azure CLI installs its own Python interpreter, and does not use the
+> system Python, so there is no explicit requirement for a local Python version.
+
 ## Install
 
 1. Install prerequisite packages:
