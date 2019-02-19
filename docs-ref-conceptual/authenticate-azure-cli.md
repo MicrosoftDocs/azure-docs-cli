@@ -1,5 +1,5 @@
 ---
-title: Sign in with Azure CLI
+title: Sign in with the Azure CLI
 description: Sign in with the Azure CLI interactively or with local credentials 
 author: sptramer
 ms.author: sttramer
