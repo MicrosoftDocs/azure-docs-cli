@@ -16,9 +16,9 @@ ms.devlang: azurecli
 For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
 for the Azure CLI. This package has been tested with openSUSE 42.2 and SLES 12 SP 2.
 
-[!INCLUDE [current-version](../includes/current-version.md)]
+[!INCLUDE [current-version](includes/current-version.md)]
 
-[!INCLUDE [rpm-warning](../includes/rpm-warning.md)]
+[!INCLUDE [rpm-warning](includes/rpm-warning.md)]
 
 ## Install
 

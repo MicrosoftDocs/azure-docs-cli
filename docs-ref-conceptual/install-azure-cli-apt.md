@@ -19,7 +19,7 @@ for the Azure CLI. This package has been tested with:
 * Ubuntu trusty, xenial, artful, and bionic
 * Debian wheezy, jessie, and stretch
 
-[!INCLUDE [current-version](../includes/current-version.md)]
+[!INCLUDE [current-version](includes/current-version.md)]
 
 > [!NOTE]
 >

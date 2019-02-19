@@ -16,9 +16,9 @@ ms.devlang: azurecli
 For Linux distributions with  `yum` such as RHEL, Fedora, or CentOS, there's a package
 for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
 
-[!INCLUDE [current-version](../includes/current-version.md)]
+[!INCLUDE [current-version](includes/current-version.md)]
 
-[!INCLUDE [rpm-warning](../includes/rpm-warning.md)]
+[!INCLUDE [rpm-warning](includes/rpm-warning.md)]
 
 ## Install
 

@@ -16,7 +16,7 @@ ms.devlang: azurecli
 For the macOS platform, you can install the Azure CLI with [homebrew package manager](https://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
 
-[!INCLUDE [current-version](../includes/current-version.md)]
+[!INCLUDE [current-version](includes/current-version.md)]
 
 ## Install
 

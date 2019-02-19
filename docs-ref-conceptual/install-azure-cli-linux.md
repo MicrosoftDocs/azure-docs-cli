@@ -15,7 +15,7 @@ ms.devlang: azurecli
 
 If there's no package for the Azure CLI for you your distribution, install the CLI manually by running a script.
 
-[!INCLUDE [current-version](../includes/current-version.md)]
+[!INCLUDE [current-version](includes/current-version.md)]
 
 > [!NOTE]
 > It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
