@@ -33,15 +33,17 @@ Create a service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#
 > If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing
 > "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
-The available types of authentication, and details about them, are:
+There are two types of authentication available for service principals: Password-based authentication, and certificate-based authentication.
 
-* Without any authentication parameters, password-based authentication is used with a random password created for you. If you want password-based authentication, this method is recommended.
+### Password-based authentication
+
+Without any authentication parameters, password-based authentication is used with a random password created for you. If you want password-based authentication, this method is recommended.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName
   ```
 
-* The `--password` argument uses a user-supplied password for password authentication. When creating a password, make sure you follow the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). Don't use a weak password or reuse a password.
+For a user-supplied password, use the `--password` argument. When creating a password, make sure you follow the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). Don't use a weak password or reuse a password.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName --password <Choose a strong password>
@@ -54,35 +56,40 @@ The available types of authentication, and details about them, are:
 
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
 
-* Use the `--cert` argument for certificate-based authentication. This method requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
+The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
+Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
 
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --cert "-----BEGIN CERTIFICATE-----
-  ...
-  -----END CERTIFICATE-----"
-  ```
+### Certificate-based authentication
 
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --cert @/path/to/cert.pem
-  ```
+For certificate-based authentication, use the `--cert` argument. This argument requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
 
-  The `--keyvault` argument can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
+```azurecli-interactive
+az ad sp create-for-rbac --name ServicePrincipalName --cert "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"
+```
 
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
-  ```
+```azurecli-interactive
+az ad sp create-for-rbac --name ServicePrincipalName --cert @/path/to/cert.pem
+```
 
-* `--create-cert` creates a _self-signed_ certificate for authentication.
+The `--keyvault` argument can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
 
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --create-cert
-  ```
+```azurecli-interactive
+az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
+```
 
-  The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
+To create a _self-signed_ certificate for authentication, use the `--create-cert` argument:
 
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
-  ```
+```azurecli-interactive
+az ad sp create-for-rbac --name ServicePrincipalName --create-cert
+```
+
+The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
+
+```azurecli-interactive
+az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
+```
 
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
