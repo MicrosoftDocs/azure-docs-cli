@@ -83,7 +83,7 @@ az cloud set --name AzureChinaCloud
 
 Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [az cloud register](/cli/azure/cloud#az-cloud-register) command. This command requires a name and a set of service endpoints. To learn how to register a cloud for use with Azure Stack, see [Use API version profiles with Azure CLI in Azure Stack](/azure/azure-stack/user/azure-stack-version-profiles-azurecli2#connect-to-azure-stack).
 
-You do don't to register your own cloud for the China, US Government, or German regions. These clouds are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud#az-cloud-register).
+You don't need to register information for the China, US Government, or German regions. These clouds are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud#az-cloud-register).
 
 Registering a cloud doesn't automatically switch to it. Use the `az cloud set` command to select the newly created cloud.
 
