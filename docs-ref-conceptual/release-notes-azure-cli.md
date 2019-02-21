@@ -12,6 +12,71 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## February 26, 2019
+
+Version 2.0.59
+
+### Core
+
+* Fix issue where in some instances using `--subscription NAME` would throw an exception.
+
+### ACR
+
+* Add '--target' parameter for 'az acr build', 'az acr task create' and 'az acr task update' commands.
+* Improve error handling for runtime commands when not logged into Azure.
+
+### ACS
+
+* add listen-address option to "az aks port-forward"
+
+### AppService
+
+* functionapp: az functionapp devops-build, new command created
+
+### Batch
+* Updated to Batch SDK and Batch Management Plane SDK to 6.0.0
+* **[Breaking]** Removed `OSDisk` property from `VirtualMachineConfiguration`. This property is no longer supported.
+* **[Breaking]** Removed support for the 'az batch pool upgrade os'
+* **[Breaking]** `TargetOsVersion` is now `OsVersion`, and `CurrentOsVersion` is no longer supported on `CloudServiceConfiguration`.
+* **[Breaking]** `Application` no longer has a `Packages` property, instead the packages can be retrieved via the new  `az batch application package list`.
+* **[Breaking]** On `az batch application` commands, `application_id` has been changed to `application_name`
+* See the HISTORY.rst for the `azure-batch <https://github.com/Azure/azure-sdk-for-python/blob/master/azure-batch/HISTORY.rst>`_. and `azure-mgmt-batch <https://github.com/Azure/azure-sdk-for-python/blob/master/azure-mgmt-batch/HISTORY.rst>`_. for further information on non-breaking changes related to this release.
+* Update validation logic to automatically include "https://" in all references of account_endpoint if not specified. This was already being done by `az batch login`.
+
+### CosmosDB
+
+* Introduce `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account
+
+### Kusto
+
+* **[Breaking]** Changed hot_cache_period and soft_delete_period types for database to ISO8601 duration format.
+
+### Network
+
+* `vpn-connection create/update`: Add `--express-route-gateway-bypass` argument.
+* `express-route`: Port command groups from `express-route` extensions.
+* `express-route`: Added `express-route gateway` and `express-route port` command groups.
+* `express-route peering create/update`: Added argument `--legacy-mode`.
+* `express-route create/update`: Added argument `--allow-classic-operations` and `--express-route-port`.
+* `vnet-gateway create/update`: Add `--gateway-default-site` argument.
+* `vnet-gateway`: Added `ipsec-policy` commands.
+
+### Resource
+
+* `deployment create`: Fix issue where type field was case-sensitive.
+* `policy assignment create`: support uri based parameters file
+* `policy set-definition update`: support uri based parameters and definitions files
+* `policy definition update`: fix handling of parameters and rules files
+* `resource show/update/delete/tag/invoke-action`: Fix issue where cross-subscription IDs did not properly honor the subscription ID.
+
+### Role
+
+* `az ad app create/update`: support app roles
+
+### VM
+
+* vm create: Fixed issue where --accelerated-networking was not enabled by default for Ubuntu 18.0.
+
 ## February 12, 2019
 
 Version 2.0.58
