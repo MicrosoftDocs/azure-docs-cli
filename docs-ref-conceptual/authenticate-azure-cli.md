@@ -1,10 +1,10 @@
 ---
-title: Sign in with Azure CLI
+title: Sign in with the Azure CLI
 description: Sign in with the Azure CLI interactively or with local credentials 
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/07/2018
+ms.date: 02/22/2019
 ms.topic: conceptual
 ms.technology: azure-cli
 ms.devlang: azurecli
@@ -67,6 +67,12 @@ To sign in with a service principal, you need:
 * The URL or name associated with the service principal
 * The service principal password, or the X509 certificate used to create the service principal in PEM format
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
+
+> [!IMPORTANT]
+>
+> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key
+> must be available without signing in to Azure. To retrieve a private key for use offline,
+> use [az keyvault secret show](/cli/azure/keyvault/secret).
 
 ```azurecli-interactive
 az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant>
