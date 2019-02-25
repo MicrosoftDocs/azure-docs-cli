@@ -34,11 +34,12 @@ Version 2.0.59
 * Added `functionapp devops-build` command
 
 ### Batch
-* **[Breaking]** Removed support for the 'az batch pool upgrade os'
-* **[Breaking]** `Application` no longer has a `Packages` property, instead the packages can be retrieved via the new  `az batch application package list`
-* **[Breaking]** On `az batch application` commands, `--application-id` has been changed to `--application-name`
-* Several commands added support for `--json-file` to supply the raw API request body via JSON file.
-* Update validation logic to automatically include "https://" in all references of account_endpoint if not specified. This was already being done by `az batch login`
+* [BREAKING CHANGE] Removed the `batch pool upgrade os` command
+* [BREAKING CHANGE] Removed the `Pacakges` property from `Application` responses
+* Added the `batch application package list` command to list packages of an application
+* [BREAKING CHANGE] Changed `--application-id` to `--application-name` in all `batch application` commands, 
+* Added the `--json-file` argument to commands for requesting the raw API response
+* Updated validation to automatically include `https://` in all endpoints if missing
 
 ### CosmosDB
 
