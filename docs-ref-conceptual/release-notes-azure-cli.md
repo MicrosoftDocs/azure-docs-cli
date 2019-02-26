@@ -12,6 +12,69 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## February 26, 2019
+
+Version 2.0.59
+
+### Core
+
+* Fixed issue where in some instances using `--subscription NAME` would throw an exception
+
+### ACR
+
+* Added `--target` parameter for `acr build`, `acr task create` and `acr task update` commands
+* Improved error handling for runtime commands when not logged into Azure
+
+### ACS
+
+* Added `--listen-address` option to `aks port-forward`
+
+### AppService
+
+* Added `functionapp devops-build` command
+
+### Batch
+* [BREAKING CHANGE] Removed the `batch pool upgrade os` command
+* [BREAKING CHANGE] Removed the `Pacakges` property from `Application` responses
+* Added the `batch application package list` command to list packages of an application
+* [BREAKING CHANGE] Changed `--application-id` to `--application-name` in all `batch application` commands, 
+* Added the `--json-file` argument to commands for requesting the raw API response
+* Updated validation to automatically include `https://` in all endpoints if missing
+
+### CosmosDB
+
+* Added `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account
+
+### Kusto
+
+* [BREAKING CHANGE] Changed `hot_cache_period` and `soft_delete_period` types for database to ISO8601 duration format
+
+### Network
+
+* Added `--express-route-gateway-bypass` argument to `vpn-connection [create|update]`
+* Added command groups from `express-route` extensions
+* Added `express-route gateway` and `express-route port` command groups
+* Added argument `--legacy-mode` to `express-route peering [create|update]` 
+* Added arguments `--allow-classic-operations` and `--express-route-port` to `express-route [create|update]`
+* Added `--gateway-default-site` argument to `vnet-gateway [create|update]`
+* Added `ipsec-policy` commands to `vnet-gateway`
+
+### Resource
+
+* Fixed issue with `deployment create` where type field was case-sensitive
+* Added support for URI-based parameters file to `policy assignment create`
+* Added support for URI-based parameters and definitions to `policy set-definition update`
+* Fixed handling of parameters and rules for `policy definition update`
+* Fixed issue with `resource show/update/delete/tag/invoke-action` where cross-subscription IDs did not properly honor the subscription ID
+
+### Role
+
+* Added support for app roles to `ad app [create|update]`
+
+### VM
+
+* Fixed issue with `vm create where `--accelerated-networking` was not enabled by default for Ubuntu 18.0
+
 ## February 12, 2019
 
 Version 2.0.58
