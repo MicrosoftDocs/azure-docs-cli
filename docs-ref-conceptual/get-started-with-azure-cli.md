@@ -30,6 +30,8 @@ Before using any CLI commands with a local install, you need to sign in with [az
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
+After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
+
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Common commands
