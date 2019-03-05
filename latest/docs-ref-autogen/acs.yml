@@ -3,7 +3,7 @@ items:
 - uid: az_acs
   name: az acs
   summary: Manage Azure Container Services.
-  description: ''
+  description: "ACS will be retired as a standalone service on January 31, 2020.\n                            \n                            If you use the Kubernetes orchestrator, please migrate to AKS by January 31, 2020."
   langs:
   - azurecli
   children:
@@ -47,14 +47,40 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acs_create
   name: az acs create
-  summary: Create a container service.
+  summary: Create a new container service.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create a Kubernetes container service and generate SSH keys to connect to it.
+  - summary: Create a DCOS cluster with an existing SSH key.
     syntax:
-      content: az acs create -g MyResourceGroup -n MyContainerService --orchestrator-type kubernetes --generate-ssh-keys
+      content: >-
+        az acs create --orchestrator-type DCOS -g MyResourceGroup -n MyContainerService \
+                                  --ssh-key-value /path/to/publickey
+  - summary: Create a DCOS cluster with two agent pools.
+    syntax:
+      content: >-
+        az acs create -g MyResourceGroup -n MyContainerService --agent-profiles '[ \
+                                  { \
+                                    "name": "agentpool1" \
+                                  }, \
+                                  { \
+                                    "name": "agentpool2" \
+                                  }]'
+  - summary: Create a DCOS cluster where the second agent pool has a vmSize specified.
+    syntax:
+      content: >-
+        az acs create -g MyResourceGroup -n MyContainerService --agent-profiles '[ \
+                                  { \
+                                    "name": "agentpool1" \
+                                  }, \
+                                  { \
+                                    "name": "agentpool2", \
+                                    "vmSize": "Standard_D2" \
+                                  }]'
+  - summary: Create a DCOS cluster with agent-profiles specified from a file.
+    syntax:
+      content: az acs create -g MyResourceGroup -n MyContainerService --agent-profiles MyAgentProfiles.json
   parameters:
   - isRequired: true
     name: --name -n
@@ -73,8 +99,8 @@ items:
     description: ''
   - name: --agent-count
     defaultValue: "3"
-    summary: ''
-    description: ''
+    summary: Set the default number of agents for the agent pools.
+    description: Note that DC/OS clusters will have 1 or 2 additional public agents.
   - name: --agent-osdisk-size
     summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Set the default disk size for agent pools vms. Unit in GB. Default: corresponding vmsize disk size.'
     description: ''
@@ -99,7 +125,7 @@ items:
     summary: 'Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Use API version of ACS to perform az acs operations. Available options: 2017-01-31, 2017-07-01. Default: the latest version for the location.'
     description: ''
   - name: --client-secret
-    summary: ''
+    summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
   - name: --dns-prefix -d
     summary: Sets the Domain name prefix for the cluster. The concatenation of the domain name and the regionalized DNS zone make up the fully qualified domain name associated with the public IP address.
@@ -147,8 +173,8 @@ items:
     summary: Feature in preview, only in canadacentral, canadaeast, centralindia, koreasouth, koreacentral, southindia, uksouth, ukwest, westcentralus, westindia, westus2. Use Orchestrator Version to specify the semantic version for your choice of orchestrator.
     description: ''
   - name: --service-principal
-    summary: ''
-    description: ''
+    summary: Service principal used for authentication to Azure APIs.
+    description: If not specified, a new service principal with the contributor role is created and cached at $HOME.azureacsServicePrincipal.json to be used by subsequent `az acs` commands.
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
     summary: Configure all linux machines with the SSH RSA public key string.  Your key should include three parts, for example 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm.
@@ -246,7 +272,7 @@ items:
     description: ''
   - isRequired: true
     name: --new-agent-count
-    summary: ''
+    summary: The number of agents for the container service.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -263,7 +289,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acs_show
   name: az acs show
-  summary: Get the details for a container service.
+  summary: Show the details for a container service.
   description: ''
   langs:
   - azurecli
@@ -338,7 +364,7 @@ commands:
   summary: Show the dashboard for a service container's orchestrator in a web browser.
 - uid: az_acs_create
   name: az acs create
-  summary: Create a container service.
+  summary: Create a new container service.
 - uid: az_acs_dcos
   name: az acs dcos
   summary: Commands to manage a DC/OS-orchestrated Azure Container Service.
@@ -374,7 +400,7 @@ commands:
   summary: Change the private agent count of a container service.
 - uid: az_acs_show
   name: az acs show
-  summary: Get the details for a container service.
+  summary: Show the details for a container service.
 - uid: az_acs_wait
   name: az acs wait
   summary: Wait for a container service to reach a desired state.
@@ -394,7 +420,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e8128352837b011c1af655847994585ccdb3dc10/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
-updated_at: 2/6/2019 11:36:45 PM
-ms.date: 02/06/2019
-description: Manage Azure Container Services.
+gitcommit: https://github.com/Azure/azure-cli/blob/4a513462cdcf30c358e754f9c4f5206b66ce31e0/src/command_modules/azure-cli-acs/azure/cli/command_modules/acs/_help.py
+updated_at: 2/19/2019 4:27:48 PM
+ms.date: 02/19/2019
+description: "ACS will be retired as a standalone service on January 31, 2020.\n                            \n                            If you use the Kubernetes orchestrator, please migrate to AKS by January 31, 2020."
