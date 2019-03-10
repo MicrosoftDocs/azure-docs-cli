@@ -18,37 +18,37 @@ Version 2.0.60
 
 ### Core
 
-* cloud set: fix a bogus error about subscription not found
+* Fixed an incorrect error in `cloud set` about subscription not found
 
 ### ACR
 
-* Fix redundant sources in image import.
+* Fixed redundant sources in image import
 
 ### ACS
 
-* ignore listen-address argument to "az aks browse" if kubectl doesn't support it
+* Changed to ignore `--listen-address` argument to `aks browse` if `kubectl` doesn't support it
 
 ### AppService
 
-* webapp, functionapp: az webapp/functionapp deployment list-publishing-credentials, get the Kudu (scm) url and its credentials
-* Remove erroneous print statement for `az webapp auth update`
-* functionapp: fix setting the correct image for runtime in Linux App Service plans
-* webapp: remove preview tag for az webapp up and other improvements to the command
+* Added `[webapp|functionapp] deployment list-publishing-credentials` to get the Kudu publishing url and its credentials
+* Removed erroneous print statement for `webapp auth update`
+* Fixed `functionapp` to set the correct image for runtime in Linux App Service plans
+* Removed preview tag for `webapp up` and added improvements to the command
 
 ### Botservice
 
-* Add "SCM_DO_BUILD_DURING_DEPLOYMENT" to ARM template's Application Settings for v4 Web App Bots
-* Add "Microsoft-BotFramework-AppId" and "Microsoft-BotFramework-AppPassword" to ARM template's Application Settings for v4 Web App Bots
-* Remove single quotes from `az bot publish` command output at end of `az bot create`
-* Use async zipdeploy API for deploying bots via `az bot publish`
+* Added `SCM_DO_BUILD_DURING_DEPLOYMENT` to ARM template's Application Settings for v4 Web App Bots
+* Added `Microsoft-BotFramework-AppId` and `Microsoft-BotFramework-AppPassword` to ARM template's Application Settings for v4 Web App Bots
+* Removed single quotes from `bot publish` command output at end of `bot create`
+* Changed `bot publish` to be asynchronous
 
 ### Container
 
-* `container start/restart`: Added `--no-wait` argument.
+* Added `--no-wait` argument to `container [start|restart]`
 
 ### EventHub
 
-* eventhubs eventhub create/update: Added --skip-empty-archives flag to support empty archives in capture.
+* Added `--skip-empty-archives` flag to `eventhub create|update` to support empty archives in capture
 
 ### Find
 
@@ -56,24 +56,24 @@ Version 2.0.60
 
 ### HDInsight
 
-* `create`: added the `--storage-account-managed-identity` parameter to support ADLS Gen2 MSI.
+* Added the `--storage-account-managed-identity` parameter to `hdinsight create` to support ADLS Gen2 MSI
 
 ### Network
 
-* `vpn-connection update`: Fix issue where updating a VPN connection between gateways in different subscriptions would fail.
+* Fixed issue with `vpn-connection update` where updating a VPN connection between gateways in different subscriptions would fail
 
 ### Rdbms
 
-* Minor fixes: Get default location from resource group when not provided for creating servers and add validation for retention days.
+* Minor fixes to get default location from resource group when not provided for creating servers and add validation for retention days
 
 ### Role
 
-* `role definition update`: use id to resolve definition correctly
-* `ad app credential reset`: drop the assumption that app's service principal always exists
+* Fixed `role definition update` to use ID to resolve definition correctly
+* Changed `ad app credential reset` to remove the assumption that app's service principal always exists
 
 ### Service Fabric
 
-* sf cluster list: Fix issue 'ClusterListResult is not iterable.
+* Fixed issue with `sf cluster list` was not iterable
 
 ## February 26, 2019
 
