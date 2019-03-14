@@ -14,7 +14,6 @@ items:
   - ext_azure-cli-iot-ext_az_iot_hub_monitor_events
   - ext_azure-cli-iot-ext_az_iot_hub_monitor_feedback
   - ext_azure-cli-iot-ext_az_iot_hub_query
-  - ext_azure-cli-iot-ext_az_iot_hub_show_connection_string
 - uid: ext_azure-cli-iot-ext_az_iot_hub_apply_configuration
   name: az iot hub apply-configuration
   summary: Apply a deployment manifest to a single device.
@@ -24,7 +23,7 @@ items:
   examples:
   - summary: Test modules while in development.
     syntax:
-      content: az iot hub apply-configuration --hub-name [IoTHub Name] --device-id [Device ID] --content ../mycontent.json
+      content: az iot hub apply-configuration --hub-name {iothub_name} --device-id {device_id} --content ../mycontent.json
   parameters:
   - isRequired: true
     name: --content -k
@@ -52,16 +51,16 @@ items:
   examples:
   - summary: Generate an IoT Hub SAS token using the iothubowner policy and primary key.
     syntax:
-      content: az iot hub generate-sas-token -n [IoTHub Name]
+      content: az iot hub generate-sas-token -n {iothub_name}
   - summary: Generate an IoT Hub SAS token using the registryRead policy and secondary key.
     syntax:
-      content: az iot hub generate-sas-token -n [IoTHub Name] --policy registryRead --key-type secondary
-  - summary: Generate a device SAS token using the iothubowner policy to access the [IoTHub Name] device registry.
+      content: az iot hub generate-sas-token -n {iothub_name} --policy registryRead --key-type secondary
+  - summary: Generate a device SAS token using the iothubowner policy to access the {iothub_name} device registry.
     syntax:
-      content: az iot hub generate-sas-token -d [Device ID] -n [IoTHub Name]
+      content: az iot hub generate-sas-token -d {device_id} -n {iothub_name}
   - summary: Generate a device SAS token using an IoT Hub connection string (with registry access)
     syntax:
-      content: az iot hub generate-sas-token -d [Device ID] --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+      content: az iot hub generate-sas-token -d {device_id} --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
   parameters:
   - name: --device-id -d
     summary: Target Device.
@@ -80,6 +79,9 @@ items:
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --module-id -m
+    summary: Target Module.
     description: ''
   - name: --pn --policy-name
     defaultValue: iothubowner
@@ -168,28 +170,34 @@ items:
   examples:
   - summary: Basic usage
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name]
+      content: az iot hub monitor-events -n {iothub_name}
   - summary: Basic usage with an IoT Hub connection string
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+      content: az iot hub monitor-events -n {iothub_name} --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
   - summary: Basic usage when filtering on target device
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] -d [Device ID]
+      content: az iot hub monitor-events -n {iothub_name} -d {device_id}
+  - summary: Basic usage when filtering targeted devices with a wildcard in the ID
+    syntax:
+      content: az iot hub monitor-events -n {iothub_name} -d Device*
+  - summary: Filter devices using IoT Hub query language
+    syntax:
+      content: az iot hub monitor-events -n {iothub_name} -q "select * from devices where tags.location.region = 'US'"
   - summary: Filter device and specify an Event Hub consumer group to bind to.
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] -d [Device ID] --cg [Consumer Group Name]
+      content: az iot hub monitor-events -n {iothub_name} -d {device_id} --cg {consumer_group_name}
   - summary: Receive message annotations (message headers)
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] -d [Device ID] --properties anno
+      content: az iot hub monitor-events -n {iothub_name} -d {device_id} --properties anno
   - summary: Receive message annotations + system properties. Never time out.
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] -d [Device ID] --properties anno sys --timeout 0
+      content: az iot hub monitor-events -n {iothub_name} -d {device_id} --properties anno sys --timeout 0
   - summary: Receive all message attributes from all device messages
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] --props all
+      content: az iot hub monitor-events -n {iothub_name} --props all
   - summary: Receive all messages and parse message payload as JSON
     syntax:
-      content: az iot hub monitor-events -n [IoTHub Name] --content-type application/json
+      content: az iot hub monitor-events -n {iothub_name} --content-type application/json
   parameters:
   - name: --cg --consumer-group -c
     defaultValue: $Default
@@ -200,6 +208,9 @@ items:
     description: ''
   - name: --device-id -d
     summary: Target Device.
+    description: ''
+  - name: --device-query -q
+    summary: Specify a custom query to filter devices.
     description: ''
   - name: --enqueued-time --et -e
     summary: Indicates the time that should be used as a starting point to read messages from the partitions. Units are milliseconds since unix epoch. If no time is indicated "now" is used.
@@ -241,16 +252,16 @@ items:
   examples:
   - summary: Basic usage
     syntax:
-      content: az iot hub monitor-feedback -n [IoTHub Name]
+      content: az iot hub monitor-feedback -n {iothub_name}
   - summary: Basic usage with an IoT Hub connection string
     syntax:
-      content: az iot hub monitor-feedback -n [IoTHub Name] --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+      content: az iot hub monitor-feedback -n {iothub_name} --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
   - summary: Basic usage when filtering on target device
     syntax:
-      content: az iot hub monitor-feedback -n [IoTHub Name] -d [Device ID]
+      content: az iot hub monitor-feedback -n {iothub_name} -d {device_id}
   - summary: Exit feedback monitor upon receiving a message with specific id (uuid)
     syntax:
-      content: az iot hub monitor-feedback -n [IoTHub Name] -d [Device ID] -w [Message Id]
+      content: az iot hub monitor-feedback -n {iothub_name} -d {device_id} -w {message_id}
   parameters:
   - name: --device-id -d
     summary: Target Device.
@@ -284,10 +295,10 @@ items:
   examples:
   - summary: Query all device twin data in an Azure IoT Hub.
     syntax:
-      content: az iot hub query -n [IoTHub Name] -q "select * from devices"
+      content: az iot hub query -n {iothub_name} -q "select * from devices"
   - summary: Query all module twin data on target device.
     syntax:
-      content: az iot hub query -n [IoTHub Name] -q "select * from devices.modules where devices.deviceId = '[Device ID]'"
+      content: az iot hub query -n {iothub_name} -q "select * from devices.modules where devices.deviceId = '{device_id}'"
   parameters:
   - isRequired: true
     name: --query-command -q
@@ -304,29 +315,6 @@ items:
     description: ''
   - name: --top
     summary: Maximum number of elements to return. By default query has no cap.
-    description: ''
-- uid: ext_azure-cli-iot-ext_az_iot_hub_show_connection_string
-  name: az iot hub show-connection-string
-  summary: Show a target IoT Hub Connection String.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --key-type --kt
-    defaultValue: primary
-    parameterValueGroup: primary, secondary
-    summary: Shared access policy key type for auth.
-    description: ''
-  - name: --pn --policy-name
-    defaultValue: iothubowner
-    summary: Shared access policy with operation permissions for target IoT Hub entity.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_apply_configuration
@@ -356,6 +344,9 @@ commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity
   name: az iot hub device-identity
   summary: Manage IoT devices.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_add_children
+  name: az iot hub device-identity add-children
+  summary: Add specified comma-separated list of non edge device ids as children of specified edge device.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_create
   name: az iot hub device-identity create
   summary: Create a device in an IoT Hub.
@@ -365,12 +356,24 @@ commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_export
   name: az iot hub device-identity export
   summary: Export all device identities from an IoT Hub to an Azure Storage blob container.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_get_parent
+  name: az iot hub device-identity get-parent
+  summary: Get the parent device of the specified device.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_import
   name: az iot hub device-identity import
   summary: Import device identities to an IoT Hub from a blob.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_list
   name: az iot hub device-identity list
   summary: List devices in an IoT Hub.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_list_children
+  name: az iot hub device-identity list-children
+  summary: Print comma-separated list of assigned child devices.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_remove_children
+  name: az iot hub device-identity remove-children
+  summary: Remove non edge devices as children from specified edge device.
+- uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_set_parent
+  name: az iot hub device-identity set-parent
+  summary: Set the parent device of the specified non-edge device.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_device_identity_show
   name: az iot hub device-identity show
   summary: Get the details of an IoT Hub device.
@@ -443,9 +446,6 @@ commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_query
   name: az iot hub query
   summary: Query an IoT Hub using a powerful SQL-like language.
-- uid: ext_azure-cli-iot-ext_az_iot_hub_show_connection_string
-  name: az iot hub show-connection-string
-  summary: Show a target IoT Hub Connection String.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
