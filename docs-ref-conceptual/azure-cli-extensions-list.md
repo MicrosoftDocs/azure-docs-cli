@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/14/2019
+ms.date: 03/17/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -34,7 +34,7 @@ az extension list-available --output table
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.3.0 | Tools for managing Azure DevOps. | Yes |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.1 | Manage Azure Firewall resources. | Yes |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.4.3 | Bug fixes for issues in the native botservice cli command module. | Yes |
-| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.7 | Additional commands to simplify Azure Database workflows. | Yes |
+| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.8 | Additional commands to simplify Azure Database workflows. | Yes |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.6.0 | Support for new Database Migration Service scenarios. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
@@ -49,7 +49,7 @@ az extension list-available --output table
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.3 | Support for Azure Log Analytics query capabilities. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
-| [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.2 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
+| [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.4 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [rdbms-vnet](https://github.com/Azure/azure-cli-extensions) | 10.0.0 | Support for Virtual Network rules in Azure MySQL and Azure PostgreSQL resources |  |

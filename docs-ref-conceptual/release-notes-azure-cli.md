@@ -12,6 +12,69 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## March 12, 2019
+
+Version 2.0.60
+
+### Core
+
+* Fixed an incorrect error in `cloud set` about subscription not found
+
+### ACR
+
+* Fixed redundant sources in image import
+
+### ACS
+
+* Changed to ignore `--listen-address` argument to `aks browse` if `kubectl` doesn't support it
+
+### AppService
+
+* Added `[webapp|functionapp] deployment list-publishing-credentials` to get the Kudu publishing url and its credentials
+* Removed erroneous print statement for `webapp auth update`
+* Fixed `functionapp` to set the correct image for runtime in Linux App Service plans
+* Removed preview tag for `webapp up` and added improvements to the command
+
+### Botservice
+
+* Added `SCM_DO_BUILD_DURING_DEPLOYMENT` to ARM template's Application Settings for v4 Web App Bots
+* Added `Microsoft-BotFramework-AppId` and `Microsoft-BotFramework-AppPassword` to ARM template's Application Settings for v4 Web App Bots
+* Removed single quotes from `bot publish` command output at end of `bot create`
+* Changed `bot publish` to be asynchronous
+
+### Container
+
+* Added `--no-wait` argument to `container [start|restart]`
+
+### EventHub
+
+* Added `--skip-empty-archives` flag to `eventhub create|update` to support empty archives in capture
+
+### Find
+
+* Major functionality update
+
+### HDInsight
+
+* Added the `--storage-account-managed-identity` parameter to `hdinsight create` to support ADLS Gen2 MSI
+
+### Network
+
+* Fixed issue with `vpn-connection update` where updating a VPN connection between gateways in different subscriptions would fail
+
+### Rdbms
+
+* Minor fixes to get default location from resource group when not provided for creating servers and add validation for retention days
+
+### Role
+
+* Fixed `role definition update` to use ID to resolve definition correctly
+* Changed `ad app credential reset` to remove the assumption that app's service principal always exists
+
+### Service Fabric
+
+* Fixed issue with `sf cluster list` was not iterable
+
 ## February 26, 2019
 
 Version 2.0.59
