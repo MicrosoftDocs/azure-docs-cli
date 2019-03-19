@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/27/2018
+ms.date: 03/19/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Install Azure CLI with apt
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's a 64-bit package available
+If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
 for the Azure CLI. This package has been tested with:
 
 * Ubuntu trusty, xenial, artful, and bionic
@@ -23,18 +23,26 @@ for the Azure CLI. This package has been tested with:
 
 > [!NOTE]
 >
-> The `.deb` package for Azure CLI installs its own Python interpreter, and does not use the
-> system Python, so there is no explicit requirement for a local Python version.
+> The package for Azure CLI installs its own Python interpreter, and does not use the
+> system Python.
 
 ## Install
 
-1. Install prerequisite packages:
+1. Install the prerequisite packages to follow the instructions:
 
     ```bash
-    sudo apt-get install apt-transport-https lsb-release software-properties-common dirmngr -y
+    sudo apt-get update
+    sudo apt-get install curl apt-transport-https lsb-release
     ```
 
-2. <div id="set-release"/>Modify your sources list:
+2. Download and install the Microsoft signing key:
+
+    ```bash
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
+        sudo gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+    ```
+
+3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
@@ -42,26 +50,14 @@ for the Azure CLI. This package has been tested with:
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
-3. <div id="signingKey"/>Get the Microsoft signing key:
+4. Update repository information and install the `azure-cli` package:
 
-   ```bash
-   sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-        --keyserver packages.microsoft.com \
-        --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
-   ```
+    ```bash
+    sudo apt-get update
+    sudo apt-get install azure-cli
+    ```
 
-4. Install the CLI:
-
-   ```bash
-   sudo apt-get update
-   sudo apt-get install azure-cli
-   ```
-
-   > [!WARNING]
-   > The signing key was updated in May 2018, and has been replaced. If you receive
-   > signing errors, make sure you have [the latest signing key](#signingKey).
-
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
+Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
@@ -126,10 +122,6 @@ Use `apt-get upgrade` to update the CLI package.
    sudo apt-get update && sudo apt-get upgrade
    ```
 
-> [!WARNING]
-> The signing key was updated in May 2018, and has been replaced. If you receive
-> signing errors, make sure you have [the latest signing key](#signingKey).
->
 > [!NOTE]
 > This command upgrades all of the installed packages on your system that have not had a dependency change.
 > To upgrade the CLI only, use `apt-get install`.
