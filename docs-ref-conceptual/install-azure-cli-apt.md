@@ -28,7 +28,7 @@ for the Azure CLI. This package has been tested with:
 
 ## Install
 
-1. Install the prerequisite packages to follow the instructions:
+1. Get packages needed for the install process:
 
     ```bash
     sudo apt-get update
