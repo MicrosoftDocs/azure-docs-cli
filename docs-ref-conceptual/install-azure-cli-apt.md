@@ -32,14 +32,15 @@ for the Azure CLI. This package has been tested with:
 
     ```bash
     sudo apt-get update
-    sudo apt-get install curl apt-transport-https lsb-release
+    sudo apt-get install curl apt-transport-https lsb-release gpg
     ```
 
 2. Download and install the Microsoft signing key:
 
     ```bash
     curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
-        sudo gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+        gpg --dearmor | \
+        sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
     ```
 
 3. <div id="set-release"/>Add the Azure CLI software repository:
