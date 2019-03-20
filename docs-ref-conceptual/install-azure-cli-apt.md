@@ -80,39 +80,6 @@ Sometimes it may be a while after an Ubuntu distribution is released before ther
 
 To do this, set the value of `AZ_REPO` manually in [install step 1](#install-step-1). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
 
-### apt-key fails with "No dirmngr"
-
-When running the `apt-key` command, you may see output similar to the following error:
-
-```output
-gpg: failed to start the dirmngr '/usr/bin/dirmngr': No such file or directory
-gpg: connecting dirmngr at '/tmp/apt-key-gpghome.kt5zo27tp1/S.dirmngr' failed: No such file or directory
-gpg: keyserver receive failed: No dirmngr
-```
-
-The error is due to a missing component required by `apt-key`. You can resolve it by installing the `dirmngr` package.
-
-```bash
-sudo apt-get install dirmngr
-```
-
-If you are on Windows Subsystem for Linux (WSL), this error also appears on versions of Windows prior to Windows 10 1809. To resolve the issue,
-update your version of Windows.
-
-### apt-key hangs
-
-When behind a firewall blocking outgoing connections to port 11371, the `apt-key` command might hang indefinitely.
-Your firewall may require an HTTP proxy for outgoing connections:
-
-```bash
-sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-    --keyserver-options http-proxy=http://<USER>:<PASSWORD>@<PROXY-HOST>:<PROXY-PORT>/ \
-    --keyserver packages.microsoft.com \
-    --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
-```
-
-To determine if you have a proxy, contact your system administrator. If your proxy does not require a login, then leave out the user and password information.
-
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Update
