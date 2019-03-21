@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/27/2018
+ms.date: 03/19/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Install Azure CLI with apt
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's a 64-bit package available
+If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
 for the Azure CLI. This package has been tested with:
 
 * Ubuntu trusty, xenial, artful, and bionic
@@ -23,18 +23,27 @@ for the Azure CLI. This package has been tested with:
 
 > [!NOTE]
 >
-> The `.deb` package for Azure CLI installs its own Python interpreter, and does not use the
-> system Python, so there is no explicit requirement for a local Python version.
+> The package for Azure CLI installs its own Python interpreter, and does not use the
+> system Python.
 
 ## Install
 
-1. Install prerequisite packages:
+1. Get packages needed for the install process:
 
     ```bash
-    sudo apt-get install apt-transport-https lsb-release software-properties-common dirmngr -y
+    sudo apt-get update
+    sudo apt-get install curl apt-transport-https lsb-release gpg
     ```
 
-2. <div id="set-release"/>Modify your sources list:
+2. Download and install the Microsoft signing key:
+
+    ```bash
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc | \
+        gpg --dearmor | \
+        sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+    ```
+
+3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
@@ -42,26 +51,14 @@ for the Azure CLI. This package has been tested with:
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
-3. <div id="signingKey"/>Get the Microsoft signing key:
+4. Update repository information and install the `azure-cli` package:
 
-   ```bash
-   sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-        --keyserver packages.microsoft.com \
-        --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
-   ```
+    ```bash
+    sudo apt-get update
+    sudo apt-get install azure-cli
+    ```
 
-4. Install the CLI:
-
-   ```bash
-   sudo apt-get update
-   sudo apt-get install azure-cli
-   ```
-
-   > [!WARNING]
-   > The signing key was updated in May 2018, and has been replaced. If you receive
-   > signing errors, make sure you have [the latest signing key](#signingKey).
-
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
+Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
@@ -74,47 +71,14 @@ Here are some common problems seen when installing with `apt`. If you experience
 ### lsb_release does not return the correct base distribution version
 
 Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
-determine the package to install. If you know the name of the version your distribution is derived from, you can set the `AZ_REPO` value manually in
-[install step 2](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution name and set `AZ_REPO` to the correct value.
+determine the package to install. If you know the code name of the Ubuntu or Debian version your distribution is derived from, you can set the `AZ_REPO` value manually when 
+[adding the repository](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution code name and set `AZ_REPO` to the correct value.
 
 ### No package for your distribution
 
-Sometimes it may be a while after an Ubuntu distribution is released before there's an Azure CLI package made available for it. The Azure CLI designed to be resilient with regards to future versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
+Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually in [install step 1](#install-step-1). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
-
-### apt-key fails with "No dirmngr"
-
-When running the `apt-key` command, you may see output similar to the following error:
-
-```output
-gpg: failed to start the dirmngr '/usr/bin/dirmngr': No such file or directory
-gpg: connecting dirmngr at '/tmp/apt-key-gpghome.kt5zo27tp1/S.dirmngr' failed: No such file or directory
-gpg: keyserver receive failed: No dirmngr
-```
-
-The error is due to a missing component required by `apt-key`. You can resolve it by installing the `dirmngr` package.
-
-```bash
-sudo apt-get install dirmngr
-```
-
-If you are on Windows Subsystem for Linux (WSL), this error also appears on versions of Windows prior to Windows 10 1809. To resolve the issue,
-update your version of Windows.
-
-### apt-key hangs
-
-When behind a firewall blocking outgoing connections to port 11371, the `apt-key` command might hang indefinitely.
-Your firewall may require an HTTP proxy for outgoing connections:
-
-```bash
-sudo apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-    --keyserver-options http-proxy=http://<USER>:<PASSWORD>@<PROXY-HOST>:<PROXY-PORT>/ \
-    --keyserver packages.microsoft.com \
-    --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
-```
-
-To determine if you have a proxy, contact your system administrator. If your proxy does not require a login, then leave out the user and password information.
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
@@ -126,10 +90,6 @@ Use `apt-get upgrade` to update the CLI package.
    sudo apt-get update && sudo apt-get upgrade
    ```
 
-> [!WARNING]
-> The signing key was updated in May 2018, and has been replaced. If you receive
-> signing errors, make sure you have [the latest signing key](#signingKey).
->
 > [!NOTE]
 > This command upgrades all of the installed packages on your system that have not had a dependency change.
 > To upgrade the CLI only, use `apt-get install`.
@@ -157,7 +117,7 @@ Use `apt-get upgrade` to update the CLI package.
 3. Remove the signing key:
 
     ```bash
-    sudo rm /etc/apt/trusted.gpg.d/Microsoft.gpg
+    sudo rm /etc/apt/trusted.gpg.d/microsoft.asc.gpg
     ```
 
 4. Remove any unneeded packages:
