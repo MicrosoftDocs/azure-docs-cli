@@ -55,10 +55,10 @@ items:
   examples:
   - summary: Create and start a SQL Task which performs no validation checks.
     syntax:
-      content: "az dms project task create --database-options-json C:\\CLI Files\\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json '{'dataSource': 'myserver', 'authentication': 'SqlAuthentication', 'encryptConnection': 'true', 'trustServerCertificate': 'true'}' --target-connection-json C:\\CLI Files\\targetConnection.json --source-platform sql --target-platform sqldb --task-type offlinemigration"
+      content: "az dms project task create --database-options-json C:\\CliFiles\\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json '{'dataSource': 'myserver', 'authentication': 'SqlAuthentication', 'encryptConnection': 'true', 'trustServerCertificate': 'true'}' --target-connection-json C:\\CliFiles\\targetConnection.json --task-type offlinemigration"
   - summary: Create and start a SQL Task which performs all validation checks.
     syntax:
-      content: az dms project task create --database-options-json C:\CLI Files\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json C:\CLI Files\sourceConnection.json --target-connection-json C:\CLI Files\targetConnection.json --enable-data-integrity-validation=True --enable-query-analysis-validation --enable-schema-validation --source-platform sql --target-platform sqldb --task-type offlinemigration
+      content: az dms project task create --database-options-json C:\CliFiles\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json C:\CliFiles\sourceConnection.json --target-connection-json C:\CliFiles\targetConnection.json --enable-data-integrity-validation --enable-query-analysis-validation --enable-schema-validation --task-type offlinemigration
   - summary: For SQL, the format of the database options JSON object.
     syntax:
       content: >-
@@ -124,7 +124,7 @@ items:
                                                         "fields": [
                                                             {
                                                                 "name": "field_name",
-                                                                // accepts "Forward", "Reverse", or "Hashed"
+                                                                // accepts "Forward", "Reverse", or "Hashed" but CosmosDB only accepts a single-field, hashed shard key
                                                                 "order": "Forward"
                                                             },
                                                             ...n
@@ -222,7 +222,10 @@ items:
     summary: (For SQL only) Whether to compare the schema information between source and target.
     description: ''
   - name: --validate-only
-    summary: (For MongoDB to Cosmos DB only) Whether to run validation only and NOT run migration. This is useful for verifying connections, shard keys, RU settings, etc.
+    summary: (For MongoDB to Cosmos DB only) Whether to run validation only and NOT run migration. It is mandatory to run a 'validate only' task before attempting an actual migration. Once the validation is complete, pass the name of this 'validate only' task to a new task's 'validated task name' argument.
+    description: ''
+  - name: --validated-task-name
+    summary: (For MongoDB to Cosmos DB only) When running a migration it is neceaary to pass in the name of a previously run 'validate only' task.
     description: ''
 - uid: ext_dms-preview_az_dms_project_task_cutover
   name: az dms project task cutover
