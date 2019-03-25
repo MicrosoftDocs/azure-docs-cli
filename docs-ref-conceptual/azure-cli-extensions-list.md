@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/20/2019
+ms.date: 03/24/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -34,15 +34,15 @@ az extension list-available --output table
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.3.0 | Tools for managing Azure DevOps. | Yes |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.1 | Manage Azure Firewall resources. | Yes |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.4.3 | Bug fixes for issues in the native botservice cli command module. | Yes |
-| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.9 | Additional commands to simplify Azure Database workflows. | Yes |
+| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.10 | Additional commands to simplify Azure Database workflows. | Yes |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
-| [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.6.0 | Support for new Database Migration Service scenarios. | Yes |
+| [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.8.0 | Support for new Database Migration Service scenarios. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Support for Azure EventGrid 2018-09-15-preview features | Yes |
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.0 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.3.0 | Intelligent querying for CLI information. | Yes |
-| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.2 | Manage networking Front Doors. | Yes |
+| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.3 | Manage networking Front Doors. | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.9 | Support for copying managed vm images between regions |  |
 | [interactive](https://github.com/Azure/azure-cli) | 0.4.1 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
@@ -57,7 +57,7 @@ az extension list-available --output table
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.4 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [sqlvm-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/sqlvm-preview) | 0.1.0 | Tools for managing SQL virtual machines, groups and availability group listeners. | Yes |
-| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.2 | Provides a preview for upcoming storage features. | Yes |
+| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.3 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
