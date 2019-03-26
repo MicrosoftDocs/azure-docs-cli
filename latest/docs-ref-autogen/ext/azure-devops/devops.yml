@@ -14,6 +14,7 @@ items:
   children:
   - ext_azure-devops_az_devops_configure
   - ext_azure-devops_az_devops_feedback
+  - ext_azure-devops_az_devops_invoke
   - ext_azure-devops_az_devops_login
   - ext_azure-devops_az_devops_logout
 - uid: ext_azure-devops_az_devops_configure
@@ -40,6 +41,73 @@ items:
   langs:
   - azurecli
   parameters: []
+- uid: ext_azure-devops_az_devops_invoke
+  name: az devops invoke
+  summary: This command will invoke request for any DevOps area and resource. Please use only json output as the response of this command is not fixed. Helpful docs - <a href="https://docs.microsoft.com/en-us/rest/api/azure/devops/">https://docs.microsoft.com/en-us/rest/api/azure/devops/</a>.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Discover areas related to 'Wiki'
+    syntax:
+      content: az devops invoke --query "[?contains(area,'wiki')]"
+  - summary: Get all wikis in a project
+    syntax:
+      content: >-
+        az devops invoke --area wiki --resource wikis --route-parameters project={Project Name} -o json
+                                az devops invoke --area wiki --resource wikis --route-parameters project=WikiIssue -o json
+  - summary: Add page to a wiki
+    syntax:
+      content: >-
+        az devops invoke --area wiki --resource pages --route-parameters project={Project Name}
+                                wikiIdentifier={Wiki Id} --in-file {Full File Path containing text to add to wiki}
+                                --query-parameters path={Page Path In Wiki} --http-method PUT --api-version 5.1-preview -o json
+                                az devops invoke --area wiki --resource pages --route-parameters project=WikiIssue
+                                wikiIdentifier=e479f402-2be8-4953-bb0b-3a0209cbc2d2 --in-file D:/temp/createWikiRequestBody.txt
+                                --query-parameters path=sample738 --http-method PUT --api-version 5.1-preview -o json
+  parameters:
+  - name: --accept-media-type
+    defaultValue: application/json
+    summary: Specifies the content type of the response.
+    description: ''
+  - name: --api-version
+    defaultValue: "5.0"
+    summary: The version of the API to target.
+    description: ''
+  - name: --area
+    summary: The area to find the resource.
+    description: ''
+  - name: --detect
+    parameterValueGroup: off, on
+    summary: Automatically detect organization. Default is "on".
+    description: ''
+  - name: --http-method
+    defaultValue: GET
+    parameterValueGroup: DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT
+    summary: Specifies the method used for the request.
+    description: ''
+  - name: --in-file
+    summary: Path and file name to the file that contains the contents of the request.
+    description: ''
+  - name: --media-type
+    defaultValue: application/json
+    summary: Specifies the content type of the request.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --out-file
+    summary: Path and file name to the file  for which this function saves the response body.
+    description: ''
+  - name: --query-parameters
+    summary: Specifies the list of query parameters.
+    description: ''
+  - name: --resource
+    summary: The name of the resource to operate on.
+    description: ''
+  - name: --route-parameters
+    summary: Specifies the list of route parameters.
+    description: ''
 - uid: ext_azure-devops_az_devops_login
   name: az devops login
   summary: Set the credential (PAT) to use for a particular organization.
@@ -85,9 +153,36 @@ commands:
 - uid: ext_azure-devops_az_devops_configure
   name: az devops configure
   summary: Configure the Azure DevOps CLI or view your configuration.
+- uid: ext_azure-devops_az_devops_extension
+  name: az devops extension
+  summary: Manage extensions.
+- uid: ext_azure-devops_az_devops_extension_disable
+  name: az devops extension disable
+  summary: Disable an extension.
+- uid: ext_azure-devops_az_devops_extension_enable
+  name: az devops extension enable
+  summary: Enable an extension.
+- uid: ext_azure-devops_az_devops_extension_install
+  name: az devops extension install
+  summary: Install an extension.
+- uid: ext_azure-devops_az_devops_extension_list
+  name: az devops extension list
+  summary: List extensions installed in an organization.
+- uid: ext_azure-devops_az_devops_extension_search
+  name: az devops extension search
+  summary: Search extensions from marketplace.
+- uid: ext_azure-devops_az_devops_extension_show
+  name: az devops extension show
+  summary: Get detail of single extension.
+- uid: ext_azure-devops_az_devops_extension_uninstall
+  name: az devops extension uninstall
+  summary: Uninstall an extension.
 - uid: ext_azure-devops_az_devops_feedback
   name: az devops feedback
   summary: Displays information on how to provide feedback to the Azure DevOps CLI team.
+- uid: ext_azure-devops_az_devops_invoke
+  name: az devops invoke
+  summary: This command will invoke request for any DevOps area and resource. Please use only json output as the response of this command is not fixed. Helpful docs - <a href="https://docs.microsoft.com/en-us/rest/api/azure/devops/">https://docs.microsoft.com/en-us/rest/api/azure/devops/</a>.
 - uid: ext_azure-devops_az_devops_login
   name: az devops login
   summary: Set the credential (PAT) to use for a particular organization.
@@ -142,6 +237,24 @@ commands:
 - uid: ext_azure-devops_az_devops_team_update
   name: az devops team update
   summary: Update a team's name and/or description.
+- uid: ext_azure-devops_az_devops_user
+  name: az devops user
+  summary: Manage users.
+- uid: ext_azure-devops_az_devops_user_add
+  name: az devops user add
+  summary: Add user.
+- uid: ext_azure-devops_az_devops_user_list
+  name: az devops user list
+  summary: List users in an organization [except for users which are added via AAD groups].
+- uid: ext_azure-devops_az_devops_user_remove
+  name: az devops user remove
+  summary: Remove user from an organization.
+- uid: ext_azure-devops_az_devops_user_show
+  name: az devops user show
+  summary: Show user details.
+- uid: ext_azure-devops_az_devops_user_update
+  name: az devops user update
+  summary: Update license type for a user.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
