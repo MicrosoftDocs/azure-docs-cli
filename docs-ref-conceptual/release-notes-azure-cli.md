@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/15/2019
+ms.date: 03/26/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -15,71 +15,71 @@ ms.devlang: azurecli
 ## March 26, 2019
 
 ### Core
-* Fix issues with dev extension incompatibility.
-* Error handling now points customers to issues page.
+* Fixed issues with dev extension incompatibility
+* Error handling now points customers to issues page
 
 ### Cloud
-cloud set: fix a bogus error about subscription not found.
+* Fixed a 'subscription not found' error in `cloud set`
 
 ### ACR
-* Fix redundant sources in image import.
-* Add '--auth-mode' for 'az acr build', 'az acr run', 'az acr task create', and 'az acr task update' commands.
-* Add 'acr task credential' command group for managing credentials for a Task.
-* Add '--no-wait' for 'az acr build' command.
+* Fixed redundant sources in image import
+* Added `--auth-mode` to `acr build`, `acr run`, `acr task create`, and `acr task update` commands
+* Added 'acr task credential' command group for managing credentials for a Task
+* Added '--no-wait' to `acr build` command
 
 ### AppService
-* webapp: az webapp up was not handling running from empty directory or unknown code scenario correctly.
-* webapp, functionapp: az webapp config ssl bind command was failing for slots.
+* Fixed bug where `webapp up` was not handling running from empty directory or unknown code scenario correctly
+* Fixed bug where slots didn't work for `[webapp|functionapp] config ssl bind`
 
 ### BOT Service
-* Add `az bot prepare-deploy` to prepare for deploying bots via `az webapp`.
-* Have `az bot create --kind registration` show password if the password is not provided.
-* Have `--endpoint` in `az bot create --kind registration` default empty string instead of being required.
-* Add "SCM_DO_BUILD_DURING_DEPLOYMENT" to ARM template's Application Settings for v4 Web App Bots.
+* Added `bot prepare-deploy` to prepare for deploying bots via `webapp`
+* Changed `bot create --kind registration` to show password if the password is not provided
+* [BREAKING CHANGE] Changed `--endpoint` in `bot create --kind registration` to default to an empty string instead of being required
+* Added `SCM_DO_BUILD_DURING_DEPLOYMENT` to ARM template's Application Settings for v4 Web App Bots
 
 ### CDN
-* `cdn endpoint create/update/start/stop/delete/load/purge`: Added support for `--no-wait`.
-* BREAKING CHANGE: `cdn endpoint create`'s default query string caching behaviour no longer defaults to "IgnoreQueryString". It is now set by the service.
+* Added support for `--no-wait` to `cdn endpoint [create|update|start|stop|delete|load|purge]`  
+* [BREAKING CHANGE]: Changed `cdn endpoint create` default query string caching behaviour. No longer defaults to "IgnoreQueryString". It is now set by the service
 
 ### Cosmosdb
-* Introducing support for --enable-multiple-write-locations on account update.
-* Introduce `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account.
+* Added support for `--enable-multiple-write-locations` on account update
+* Added `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account
 
 ### Interactive
-* Fix incompatibility with Interactive extension installed through azdev.
+* Fixed incompatibility with Interactive extension installed through azdev
 
 ### Monitor
-* `monitor metrics alert create/update`: Allow dimension value '*'.
+* Changed to allow dimension value `*` for `monitor metrics alert [create|update]`
 
 ### Network
-* `application-gateway`: Add `rewrite-rule` command group.
+* Added `rewrite-rule` command group to `application-gateway`
 
 ### Profile
-* az login: enable tenant level account for managed service identity.
+* Added tenant level account support for managed service identity to `login`
 
 ### Postgres 
-* Add postgresql replica commands and restart server command.
-* Get default location from resource group when not provided for creating servers and add validation for retention days.
+* Added postgresql `replica` commands and `restart server` command
+* Changed to get default location from resource group when not provided for creating servers and add validation for retention days
 
 ### Resource
-* `deployment create/list/show`: improve table output.
-* `deployment create/validate`: fix issue where type secureObject was not recognized.
+* Improved table output for `deployment [create|list|show]`
+* Fixed issue with `deployment [create|validate]` where type secureObject was not recognized
 
 ### Graph
-* `ad app/sp credential reset`: support --end-date.
-* `ad app permission add`: support to add permissions on existing api.
-* `ad app permission list`: fix a bad error when there is no permissions.
-* `ad sp delete`: skip role assignment delete if the current account has no subscription.
-* `ad app create`: make --identifier-uris default to empty list if not provided.
+* Added support for `--end-date` to `ad [app|sp] credential reset`
+* Added support to add permissions with `ad app permission add`
+* Fixed a bug with `ad app permission list` when there were no permissions
+* Changed `ad sp delete` to skip role assignment delete if the current account has no subscription
+* Changed `ad app create` to have `--identifier-uris` default to empty list if not provided
 
 ### storage
-* `storage file download-batch`: add `--snapshot` to download from a share snapshot.
-* `storage blob download-batch/upload-batch`- adjust progress bar to be less verbose and indicate current blob.
-* `storage account update`- Fix faulty logic for updating of encryption parameters.
-* `storage blob show`- Fix failing command when using oauth (`--auth-mode=login`).
+* Added `--snapshot` to `storage file download-batch` to download from a share snapshot
+* Changed `storage blob [download-batch|upload-batch]` progress bar to be less verbose and indicate current blob
+* Fixed issue with `storage account update` when updating encryption parameters
+* Fixed issue where `storage blob show` would fail when using oauth (`--auth-mode=login`)
 
 ### VM
-* Added `image update` command.
+* Added `image update` command
 
 ## March 12, 2019
 
