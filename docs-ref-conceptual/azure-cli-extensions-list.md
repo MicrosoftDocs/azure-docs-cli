@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/24/2019
+ms.date: 03/26/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -31,7 +31,7 @@ az extension list-available --output table
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.0 | Support for querying Azure Application Insights metrics, events, and logs. | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 3.0.3 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.7.0 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
-| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.3.0 | Tools for managing Azure DevOps. | Yes |
+| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.4.0 | Tools for managing Azure DevOps. | Yes |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.1 | Manage Azure Firewall resources. | Yes |
 | [botservice](https://github.com/Azure/azure-cli-extensions) | 0.4.3 | Bug fixes for issues in the native botservice cli command module. | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.10 | Additional commands to simplify Azure Database workflows. | Yes |
