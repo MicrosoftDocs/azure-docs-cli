@@ -12,6 +12,75 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## March 26, 2019
+
+### Core
+* Fix issues with dev extension incompatibility.
+* Error handling now points customers to issues page.
+
+### Cloud
+cloud set: fix a bogus error about subscription not found.
+
+### ACR
+* Fix redundant sources in image import.
+* Add '--auth-mode' for 'az acr build', 'az acr run', 'az acr task create', and 'az acr task update' commands.
+* Add 'acr task credential' command group for managing credentials for a Task.
+* Add '--no-wait' for 'az acr build' command.
+
+### AppService
+* webapp: az webapp up was not handling running from empty directory or unknown code scenario correctly.
+* webapp, functionapp: az webapp config ssl bind command was failing for slots.
+
+### BOT Service
+* Add `az bot prepare-deploy` to prepare for deploying bots via `az webapp`.
+* Have `az bot create --kind registration` show password if the password is not provided.
+* Have `--endpoint` in `az bot create --kind registration` default empty string instead of being required.
+* Add "SCM_DO_BUILD_DURING_DEPLOYMENT" to ARM template's Application Settings for v4 Web App Bots.
+
+### CDN
+* `cdn endpoint create/update/start/stop/delete/load/purge`: Added support for `--no-wait`.
+* BREAKING CHANGE: `cdn endpoint create`'s default query string caching behaviour no longer defaults to "IgnoreQueryString". It is now set by the service.
+
+### Cosmosdb
+* Introducing support for --enable-multiple-write-locations on account update.
+* Introduce `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account.
+
+### Interactive
+* Fix incompatibility with Interactive extension installed through azdev.
+
+### Monitor
+* `monitor metrics alert create/update`: Allow dimension value '*'.
+
+### Network
+* `application-gateway`: Add `rewrite-rule` command group.
+
+### Profile
+* az login: enable tenant level account for managed service identity.
+
+### Postgres 
+* Add postgresql replica commands and restart server command.
+* Get default location from resource group when not provided for creating servers and add validation for retention days.
+
+### Resource
+* `deployment create/list/show`: improve table output.
+* `deployment create/validate`: fix issue where type secureObject was not recognized.
+
+### Graph
+* `ad app/sp credential reset`: support --end-date.
+* `ad app permission add`: support to add permissions on existing api.
+* `ad app permission list`: fix a bad error when there is no permissions.
+* `ad sp delete`: skip role assignment delete if the current account has no subscription.
+* `ad app create`: make --identifier-uris default to empty list if not provided.
+
+### storage
+* `storage file download-batch`: add `--snapshot` to download from a share snapshot.
+* `storage blob download-batch/upload-batch`- adjust progress bar to be less verbose and indicate current blob.
+* `storage account update`- Fix faulty logic for updating of encryption parameters.
+* `storage blob show`- Fix failing command when using oauth (`--auth-mode=login`).
+
+### VM
+* Added `image update` command.
+
 ## March 12, 2019
 
 Version 2.0.60
