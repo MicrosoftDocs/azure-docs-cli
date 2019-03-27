@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/15/2019
+ms.date: 03/26/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,75 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## March 26, 2019
+
+### Core
+* Fixed issues with dev extension incompatibility
+* Error handling now points customers to issues page
+
+### Cloud
+* Fixed a 'subscription not found' error in `cloud set`
+
+### ACR
+* Fixed redundant sources in image import
+* Added `--auth-mode` to `acr build`, `acr run`, `acr task create`, and `acr task update` commands
+* Added 'acr task credential' command group for managing credentials for a Task
+* Added '--no-wait' to `acr build` command
+
+### AppService
+* Fixed bug where `webapp up` was not handling running from empty directory or unknown code scenario correctly
+* Fixed bug where slots didn't work for `[webapp|functionapp] config ssl bind`
+
+### BOT Service
+* Added `bot prepare-deploy` to prepare for deploying bots via `webapp`
+* Changed `bot create --kind registration` to show password if the password is not provided
+* [BREAKING CHANGE] Changed `--endpoint` in `bot create --kind registration` to default to an empty string instead of being required
+* Added `SCM_DO_BUILD_DURING_DEPLOYMENT` to ARM template's Application Settings for v4 Web App Bots
+
+### CDN
+* Added support for `--no-wait` to `cdn endpoint [create|update|start|stop|delete|load|purge]`  
+* [BREAKING CHANGE]: Changed `cdn endpoint create` default query string caching behaviour. No longer defaults to "IgnoreQueryString". It is now set by the service
+
+### Cosmosdb
+* Added support for `--enable-multiple-write-locations` on account update
+* Added `network-rule` subgroup with commands `add`, `remove`, and `list` for managing VNET rules of a Cosmos DB account
+
+### Interactive
+* Fixed incompatibility with Interactive extension installed through azdev
+
+### Monitor
+* Changed to allow dimension value `*` for `monitor metrics alert [create|update]`
+
+### Network
+* Added `rewrite-rule` command group to `application-gateway`
+
+### Profile
+* Added tenant level account support for managed service identity to `login`
+
+### Postgres 
+* Added postgresql `replica` commands and `restart server` command
+* Changed to get default location from resource group when not provided for creating servers and add validation for retention days
+
+### Resource
+* Improved table output for `deployment [create|list|show]`
+* Fixed issue with `deployment [create|validate]` where type secureObject was not recognized
+
+### Graph
+* Added support for `--end-date` to `ad [app|sp] credential reset`
+* Added support to add permissions with `ad app permission add`
+* Fixed a bug with `ad app permission list` when there were no permissions
+* Changed `ad sp delete` to skip role assignment delete if the current account has no subscription
+* Changed `ad app create` to have `--identifier-uris` default to empty list if not provided
+
+### storage
+* Added `--snapshot` to `storage file download-batch` to download from a share snapshot
+* Changed `storage blob [download-batch|upload-batch]` progress bar to be less verbose and indicate current blob
+* Fixed issue with `storage account update` when updating encryption parameters
+* Fixed issue where `storage blob show` would fail when using oauth (`--auth-mode=login`)
+
+### VM
+* Added `image update` command
+
 ## March 12, 2019
 
 Version 2.0.60
