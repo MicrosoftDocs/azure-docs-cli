@@ -8,9 +8,11 @@ items:
   - azurecli
   children:
   - az_ad_app_permission_add
+  - az_ad_app_permission_admin_consent
   - az_ad_app_permission_delete
   - az_ad_app_permission_grant
   - az_ad_app_permission_list
+  - az_ad_app_permission_list_grants
 - uid: az_ad_app_permission_add
   name: az ad app permission add
   summary: Add an API permission.
@@ -30,6 +32,26 @@ items:
     name: --api-permissions
     summary: Space seperated list of <resource-access-id>=<type>.
     description: ''
+  - isRequired: true
+    name: --id
+    summary: Identifier uri, application id, or object id.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_ad_app_permission_admin_consent
+  name: az ad app permission admin-consent
+  summary: Grant Application & Delegated permissions through admin-consent.
+  description: You must login as a directory administrator.
+  langs:
+  - azurecli
+  parameters:
   - isRequired: true
     name: --id
     summary: Identifier uri, application id, or object id.
@@ -73,8 +95,8 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_ad_app_permission_grant
   name: az ad app permission grant
-  summary: Grant the app an API permission.
-  description: ''
+  summary: Grant the app an API Delegated permissions.
+  description: For Application permissions, please use "ad app permission admin-consent".
   langs:
   - azurecli
   examples:
@@ -90,13 +112,21 @@ items:
     name: --id
     summary: Identifier uri, application id, or object id.
     description: ''
+  - name: --consent-type
+    defaultValue: AllPrincipals
+    parameterValueGroup: AllPrincipals, Principal
+    summary: Indicates if consent was provided by the administrator (on behalf of the organization) or by an individual.
+    description: ''
   - name: --expires
     defaultValue: "1"
     summary: Expiry date for the permissions in years. e.g. 1, 2 or "never".
     description: ''
+  - name: --principal-id
+    summary: If --consent-type is "Principal", this argument specifies the object of the user that granted consent and applies only for that user.
+    description: ''
   - name: --scope
     defaultValue: user_impersonation
-    summary: Oauth scope.
+    summary: Specifies the value of the scope claim that the resource application should expect in the OAuth 2.0 access token, e.g. User.Read.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -131,19 +161,55 @@ items:
       branch: dev
       path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_ad_app_permission_list_grants
+  name: az ad app permission list-grants
+  summary: List Oauth2 permission grants.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: list oauth2 permissions granted to the service principal
+    syntax:
+      content: az ad app permission list-grants --id e042ec79-34cd-498f-9d9f-1234234123456
+  parameters:
+  - name: --filter
+    summary: OData filter.
+    description: ''
+  - name: --id
+    summary: Identifier uri, application id, or object id.
+    description: ''
+  - name: --show-resource-name -r
+    parameterValueGroup: false, true
+    summary: Show resource's display name.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_ad_app_permission_add
   name: az ad app permission add
   summary: Add an API permission.
+- uid: az_ad_app_permission_admin_consent
+  name: az ad app permission admin-consent
+  summary: Grant Application & Delegated permissions through admin-consent.
 - uid: az_ad_app_permission_delete
   name: az ad app permission delete
   summary: Remove an API permission.
 - uid: az_ad_app_permission_grant
   name: az ad app permission grant
-  summary: Grant the app an API permission.
+  summary: Grant the app an API Delegated permissions.
 - uid: az_ad_app_permission_list
   name: az ad app permission list
   summary: List API permissions the application has requested.
+- uid: az_ad_app_permission_list_grants
+  name: az ad app permission list-grants
+  summary: List Oauth2 permission grants.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -160,7 +226,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/cbbfe37322f163ee300def6458d2c6345fa2f4ee/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
-updated_at: 3/5/2019 6:22:24 PM
-ms.date: 03/05/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/aee0d6d9752da983bf0a494507a0b7c9971e7823/src/command_modules/azure-cli-role/azure/cli/command_modules/role/_help.py
+updated_at: 3/19/2019 6:35:21 PM
+ms.date: 03/19/2019
 description: Manage an application's OAuth2 permissions.
