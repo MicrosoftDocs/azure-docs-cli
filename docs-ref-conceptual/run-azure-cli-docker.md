@@ -18,10 +18,14 @@ with an isolated environment to run the CLI in. The image can also be used as a 
 
 ## Run in a Docker container
 
+> [!NOTE]
+> The Azure CLI has migrated to [Microsoft Container Registry](https://azure.microsoft.com/services/container-registry). 
+> Existing tags on Docker Hub are still supported, but new releases will only be available as mcr.microsoft.com/azure-cli.
+
 Install the CLI using `docker run`.
 
    ```bash
-   docker run -it microsoft/azure-cli
+   docker run -it mcr.microsoft.com/azure-cli
    ```
 
 > [!NOTE]
@@ -29,7 +33,7 @@ Install the CLI using `docker run`.
 > use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
-> docker run -it -v ${HOME}/.ssh:/root/.ssh microsoft/azure-cli
+> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli
 > ```
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
@@ -46,7 +50,7 @@ try to avoid using a container that hosts the CLI as a data store.
 Update your local image with `docker pull`.
 
 ```bash
-docker pull microsoft/azure-cli
+docker pull mcr.microsoft.com/azure-cli
 ```
 
 ## Uninstall Docker image
@@ -56,7 +60,7 @@ docker pull microsoft/azure-cli
 After halting any containers running the CLI image, remove it.
 
 ```bash
-docker rmi microsoft/azure-cli
+docker rmi mcr.microsoft.com/azure-cli
 ```
 
 ## Next Steps
