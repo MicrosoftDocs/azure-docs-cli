@@ -12,7 +12,69 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## April 9, 2019
+
+### Core
+* Fix issue where some extensions showed a version of "Unknown" and could not be updated.
+
+### ACR
+* Support running an image contextlessly.
+
+### AMS
+* The `account-filter` and `asset-filter` parameter `--bitrate` has been deprecated and will be removed in a future release.
+  It has been renamed to `--first-quality`.
+* New encryption parameters support in `ams streaming-policy create` command added.
+* New paramter `filters` added to ams streaming-locator create.
+
+### AppService
+* webapp: Adding --logs support to az webapp up and other improvements to the up command
+* functionapp: fix `az functionapp devops-build create` command azure-pipelines.yml generation issues
+* functionapp: improve `az functionapp devops-build create` error handlings and error indications
+* functionapp: remove `--local_git` flag in devops-build command, local git detection and handling are compulsory for creating Azure DevOps pipelines
+* functionapp: add support for linux functions plan creation
+* webapp, functionapp: Updating to use the new Python SDK version
+* appservice: adminSiteName property of SKU object is deprecated
+* functionapp: add ability to switch a plan underneath a function app using `az functionapp update --plan`
+* functionapp: add support for azure functions premium plan scale out settings
+
+### CDN
+* Add support for Microsoft_Standard and Standard_ChinaCdn
+
+### Feedback
+* `az feedback` now shows metadata on recently run commands
+* `az feedback` prompts user to assist in issue creation process. Opens browser to issue url and copies auto-generated issue
+  text containing command and system related information to clipboard. Prints out issue body when run with '--verbose'
+
+### Monitor
+* `metrics alert create/update`: Fixed issue where "count" was not a permitted value.
+
+### Network
+* `vnet-gateway list-bgp-peer-status`: Fix table format not displaying.
+* `application-gateway rewrite-rule`: Add `list-request-headers` and `list-response-headers` commands.
+* `application-gateway rewrite-rule condition`: Add `list-server-variables` command.
+* `express-route port update`: Fixed an issue where updating link state on an express-route port would throw an unknown attribute exception.
+
+### PrivateDNS
+* az network private-dns: CLI for Private DNS zones.
+
+### Resource
+* `deployment create`/`group deployment create`: Fixed issue where parameters file with an empty set of parameters would not work.
+
+### Role
+* create-for-rbac: handle --years correctly
+* [BREAKING CHANGE] `role assignment delete`: prompt when delete all assignments under the subscription unconditionally
+
+### SQL
+* Updating az sql mi create and update with two new properties (proxyOverride and publicDataEndpointEnabled)
+
+### Storage
+* BREAKING CHANGE: `storage blob delete`: remove the return result of command
+* `storage blob generate-sas`: add `--full-uri` to create the full uri for the blob with sas
+* `storage file copy start`: add `--file-snapshot` to copy file from snapshot
+* `storage blob copy cancel` - only show the error instead of exception for NoPendingCopyOperation.
+
 ## March 26, 2019
+
 
 ### Core
 * Fixed issues with dev extension incompatibility
