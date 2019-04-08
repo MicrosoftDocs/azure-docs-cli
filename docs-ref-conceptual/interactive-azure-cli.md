@@ -79,29 +79,20 @@ az>>
 ## Query
 
 You can execute a JMESPath query on the results of the last command that you executed by using `??`followed by a JMESPath query.
-For example, after you create a VM, you can make sure it has fully provisioned.
+For example, after you created a group, you can retrieve the id of the new group.
+
+```azurecli
+az>> group create -n myRG -l westEurope
+az>> "?? id"
+```
+
+You can also use this syntax to use the result of the previous command as an argument for your next command.*
+For instance after having listed all groups, list all the resources of type `virtualMachine`on the first group whose location is westeurope. 
 
 ```azurecli
 az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait -o json
-az>> "?? [*].provisioningState"
-```
-
-```json
-[
-  "Creating"
-]
-```
-You can also use this syntax to use the result of the previous command as an argument for your next command.
-
-```azurecli
 az>> group list -o json
-az>> resource list -g "?? [2].name" --query "[?type=='Microsoft.Compute/virtualMachines'].name
-```
-
-```json
-[
-  "myVM"
-]
+az>> resource list -g "?? [?location=='westeurope'].name | [0]" --query "[?type=='Microsoft.Compute/virtualMachines'].name
 ```
 
 To learn more about querying the results of your commands,
