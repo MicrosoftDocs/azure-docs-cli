@@ -56,7 +56,7 @@ To search for commands, use [az find](/cli/azure/reference-index#az-find). For e
 use the following command:
 
 ```azurecli-interactive
-az find -q secret
+az find secret
 ```
 
 Use the `--help` argument to get a complete list of commands and subgroups of a group. For example, to find the CLI commands for working with
