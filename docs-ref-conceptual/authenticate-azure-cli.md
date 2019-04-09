@@ -90,7 +90,7 @@ az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant
 >
 > ```powershell
 > $AzCred = Get-Credential -UserName <app-url>
-> az login -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
+> az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
 ## Sign in with a different tenant
