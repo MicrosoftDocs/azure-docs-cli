@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/26/2019
+ms.date: 04/09/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,7 +12,67 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## April 9, 2019
+
+### Core
+* Fixed issue where some extensions showed a version of `Unknown` and could not be updated
+
+### ACR
+* Added support running an image contextlessly
+
+### AMS
+* [DEPRECATED]: Deprecated the `--bitrate` parameter of `account-filter` and `asset-filter`
+* [BREAKING CHANGE]: Renamed the `--bitrate` parameter to `--first-quality`
+* Added new encryption parameters support in `ams streaming-policy create`
+* Added new paramter `--filters` to `ams streaming-locator create`
+
+### AppService
+* Added `--logs` support to `webapp up`
+* Fixed `functionapp devops-build create` command `azure-pipelines.yml` generation issues
+* Improved `unctionapp devops-build create` error handling and indicators
+* [BREAKING CHANGE] Removed the `--local-git` flag for `devops-build` command, local git detection and handling are compulsory for creating Azure DevOps pipelines
+* Added support for Linux functions plan creation
+* Added ability to switch a plan underneath a function app using `functionapp update --plan`
+* Added support for Azure Functions premium plan scale out settings
+
+### CDN
+* Added support for `Microsoft_Standard` and `Standard_ChinaCdn`
+
+### Feedback
+* Changed `feedback` to show metadata on recently run commands
+* Changed `feedback` to prompt user to assist in issue creation process by opening a brower and using an issue template
+* Changed `feedback` to print out issue body when run with '--verbose'
+
+### Monitor
+* Fixed issue where "count" was not a permitted value with `metrics alert [create|update]` 
+
+### Network
+* Fixed table format not displaying with `vnet-gateway list-bgp-peer-status`
+* Added `list-request-headers` and `list-response-headers` commands to `application-gateway rewrite-rule`
+* Added `list-server-variables` command to `application-gateway rewrite-rule condition`
+* Fixed an issue where updating link state on an express-route port would throw an unknown attribute exception `express-route port update`
+
+### PrivateDNS
+* Added `network private-dns` for Private DNS zones
+
+### Resource
+* Fixed issue with `deployment create` and `group deployment create` where a parameters file with an empty set of parameters would not work
+
+### Role
+* Fixed `create-for-rbac` to handle `--years` correctly
+* [BREAKING CHANGE] Changed `role assignment delete` to prompt when deleting all assignments under the subscription unconditionally
+
+### SQL
+* Updated `sql mi [create|update]` with the properties proxyOverride and publicDataEndpointEnabled
+
+### Storage
+* [BREAKING CHANGE] Removed result of `storage blob delete`
+* Added `--full-uri` to `storage blob generate-sas` to create the full uri for the blob with sas
+* Added `--file-snapshot` to `storage file copy start` to copy file from snapshot
+* Changed `storage blob copy cancel` to only show the error instead of exception for NoPendingCopyOperation
+
 ## March 26, 2019
+
 
 ### Core
 * Fixed issues with dev extension incompatibility
