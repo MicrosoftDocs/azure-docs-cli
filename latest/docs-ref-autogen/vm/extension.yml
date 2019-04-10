@@ -1,0 +1,284 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_vm_extension
+  name: az vm extension
+  summary: Manage extensions on VMs.
+  description: Extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. For example, if a virtual machine requires software installation, anti-virus protection, or Docker configuration, a VM extension can be used to complete these tasks. Extensions can be bundled with a new virtual machine deployment or run against any existing system.
+  langs:
+  - azurecli
+  children:
+  - az_vm_extension_delete
+  - az_vm_extension_list
+  - az_vm_extension_set
+  - az_vm_extension_show
+  - az_vm_extension_wait
+- uid: az_vm_extension_delete
+  name: az vm extension delete
+  summary: Remove an extension attached to a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Use a VM name and extension to delete an extension from a VM.
+    syntax:
+      content: az vm extension delete -g MyResourceGroup --vm-name MyVm -n extension_name
+  - summary: Delete extensions with IDs containing the string "MyExtension" from a VM.
+    syntax:
+      content: >-
+        az vm extension delete --ids \
+                                    $(az resource list --query "[?contains(name, 'MyExtension')].id" -o tsv)
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the extension.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_extension_list
+  name: az vm extension list
+  summary: List the extensions attached to a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List attached extensions to a named VM.
+    syntax:
+      content: az vm extension list -g MyResourceGroup --vm-name MyVm
+  parameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_extension_set
+  name: az vm extension set
+  summary: Set extensions for a VM.
+  description: Get extension details from `az vm extension image list`.
+  langs:
+  - azurecli
+  examples:
+  - summary: Add a user account to a Linux VM.
+    syntax:
+      content: >-
+        az vm extension set -n VMAccessForLinux --publisher Microsoft.OSTCExtensions --version 1.4 \
+                                    --vm-name MyVm --resource-group MyResourceGroup \
+                                    --protected-settings '{"username":"user1", "ssh_key":"ssh_rsa ..."}'
+  parameters:
+  - isRequired: true
+    name: --publisher
+    summary: The name of the extension publisher.
+    description: ''
+  - name: --force-update
+    summary: Force to update even if the extension configuration has not changed.
+    description: ''
+  - name: --no-auto-upgrade
+    parameterValueGroup: false, true
+    summary: If set, the extension service will not automatically pick or upgrade to the latest minor version, even if the extension is redeployed.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --protected-settings
+    summary: Protected settings in JSON format for sensitive information like credentials. A JSON file path is also accepted.
+    description: ''
+  - name: --settings
+    summary: Extension settings in JSON format. A JSON file path is also accepted.
+    description: ''
+  - name: --version
+    summary: The version of the extension.
+    description: ''
+  - name: --extension-instance-name
+    summary: "Name of the vm's instance of the extension. Default: name of the extension."
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the extension.
+    description: ''
+    valueFrom: az vm extension image list
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_extension_show
+  name: az vm extension show
+  summary: Display information about extensions attached to a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Use VM name and extension name to show the extensions attached to a VM.
+    syntax:
+      content: az vm extension show -g MyResourceGroup --vm-name MyVm -n extension_name
+  parameters:
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the extension.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_extension_wait
+  name: az vm extension wait
+  summary: Place the CLI in a waiting state until a condition of a virtual machine extension is met.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the extension.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_vm_extension_delete
+  name: az vm extension delete
+  summary: Remove an extension attached to a VM.
+- uid: az_vm_extension_image
+  name: az vm extension image
+  summary: Find the available VM extensions for a subscription and region.
+- uid: az_vm_extension_image_list
+  name: az vm extension image list
+  summary: List the information on available extensions.
+- uid: az_vm_extension_image_list_names
+  name: az vm extension image list-names
+  summary: List the names of available extensions.
+- uid: az_vm_extension_image_list_versions
+  name: az vm extension image list-versions
+  summary: List the versions for available extensions.
+- uid: az_vm_extension_image_show
+  name: az vm extension image show
+  summary: Display information for an extension.
+- uid: az_vm_extension_list
+  name: az vm extension list
+  summary: List the extensions attached to a VM.
+- uid: az_vm_extension_set
+  name: az vm extension set
+  summary: Set extensions for a VM.
+- uid: az_vm_extension_show
+  name: az vm extension show
+  summary: Display information about extensions attached to a VM.
+- uid: az_vm_extension_wait
+  name: az vm extension wait
+  summary: Place the CLI in a waiting state until a condition of a virtual machine extension is met.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/a84f4307109230b2fc820fc6f037df00561c118f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 3/21/2019 5:04:51 PM
+ms.date: 03/21/2019
+description: Extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. For example, if a virtual machine requires software installation, anti-virus protection, or Docker configuration, a VM extension can be used to complete these tasks. Extensions can be bundled with a new virtual machine deployment or run against any existing system.

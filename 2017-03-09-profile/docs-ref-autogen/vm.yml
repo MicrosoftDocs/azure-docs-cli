@@ -1,0 +1,1241 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_vm
+  name: az vm
+  summary: Manage Linux or Windows virtual machines.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_vm_capture
+  - az_vm_create
+  - az_vm_deallocate
+  - az_vm_delete
+  - az_vm_generalize
+  - az_vm_get_instance_view
+  - az_vm_list
+  - az_vm_list_ip_addresses
+  - az_vm_list_sizes
+  - az_vm_list_usage
+  - az_vm_list_vm_resize_options
+  - az_vm_open_port
+  - az_vm_redeploy
+  - az_vm_resize
+  - az_vm_restart
+  - az_vm_show
+  - az_vm_start
+  - az_vm_stop
+  - az_vm_update
+  - az_vm_wait
+- uid: az_vm_capture
+  name: az vm capture
+  summary: Capture information for a stopped VM.
+  description: For an end-to-end tutorial, see <a href="https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image">https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Deallocate, generalize, and capture a stopped virtual machine.
+    syntax:
+      content: >-
+        az vm deallocate -g MyResourceGroup -n MyVm
+                                az vm generalize -g MyResourceGroup -n MyVm
+                                az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
+  - summary: Deallocate, generalize, and capture multiple stopped virtual machines.
+    syntax:
+      content: >-
+        vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+  parameters:
+  - isRequired: true
+    name: --vhd-name-prefix
+    summary: The VHD name prefix specify for the VM disks.
+    description: ''
+  - name: --overwrite
+    defaultValue: "1"
+    summary: Overwrite the existing disk file.
+    description: ''
+  - name: --storage-container
+    defaultValue: vhds
+    summary: The storage account container name in which to save the disks.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_create
+  name: az vm create
+  summary: Create an Azure Virtual Machine.
+  description: For an end-to-end tutorial, see <a href="https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-quick-create-cli">https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-quick-create-cli</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a default Ubuntu VM with automatic SSH authentication.
+    syntax:
+      content: az vm create -n MyVm -g MyResourceGroup --image UbuntuLTS
+  - summary: Create a default RedHat VM with automatic SSH authentication using an image URN.
+    syntax:
+      content: az vm create -n MyVm -g MyResourceGroup --image RedHat:RHEL:7-RAW:7.4.2018010506
+  - summary: Create a default Windows Server VM with a private IP address.
+    syntax:
+      content: az vm create -n MyVm -g MyResourceGroup --public-ip-address "" --image Win2012R2Datacenter
+  - summary: Create a VM from a custom managed image.
+    syntax:
+      content: az vm create -g MyResourceGroup -n MyVm --image MyImage
+  - summary: Create a VM by attaching to a managed operating system disk.
+    syntax:
+      content: az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux
+  - summary: 'Create an Ubuntu Linux VM using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init.'
+    syntax:
+      content: az vm create -g MyResourceGroup -n MyVm --image debian --custom-data MyCloudInitScript.yml
+  - summary: Create a Debian VM with SSH key authentication and a public DNS entry, located on an existing virtual network and availability set.
+    syntax:
+      content: >-
+        az vm create -n MyVm -g MyResourceGroup --image debian --vnet-name MyVnet --subnet subnet1 \
+                                    --availability-set MyAvailabilitySet --public-ip-address-dns-name MyUniqueDnsName \
+                                    --ssh-key-value @key-file
+  - summary: Create a simple Ubuntu Linux VM with a public IP address, DNS entry, two data disks (10GB and 20GB), and then generate ssh key pairs.
+    syntax:
+      content: >-
+        az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName \
+                                    --image ubuntults --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 \
+                                    --generate-ssh-keys
+  - summary: Create a Debian VM using Key Vault secrets.
+    syntax:
+      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+  - summary: Create a CentOS VM with a system assigned identity. The VM will have a 'Contributor' role with access to a storage account.
+    syntax:
+      content: az vm create -n MyVm -g rg1 --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+  - summary: Create a debian VM with a user assigned identity.
+    syntax:
+      content: az vm create -n MyVm -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a debian VM with both system and user assigned identity.
+    syntax:
+      content: az vm create -n MyVm -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the virtual machine.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --attach-data-disks
+    summary: Attach existing data disks to the VM. Can use the name or ID of a managed disk or the URI to an unmanaged disk VHD.
+    description: ''
+  - name: --attach-os-disk
+    summary: Attach an existing OS disk to the VM. Can use the name or ID of a managed disk or the URI to an unmanaged disk VHD.
+    description: ''
+  - name: --availability-set
+    summary: Name or ID of an existing availability set to add the VM to. None by default.
+    description: ''
+  - name: --boot-diagnostics-storage
+    summary: Pre-existing storage account name or its blob uri to capture boot diagnostics. Its sku should be one of Standard_GRS, Standard_LRS and Standard_RAGRS.
+    description: ''
+  - name: --custom-data
+    summary: Custom init script file or text (cloud-init, cloud-config, etc..).
+    description: ''
+  - name: --image
+    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version".'
+    description: ''
+    valueFrom: az vm image list, az vm image show
+  - name: --license-type
+    parameterValueGroup: None, Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    description: ''
+  - name: --location -l
+    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --public-ip-sku
+    summary: ''
+    description: ''
+  - name: --secrets
+    summary: 'One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
+    description: ''
+  - name: --size
+    defaultValue: Standard_DS1_v2
+    summary: The VM size to be created. See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validate
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
+  - name: --admin-password
+    summary: Password for the VM if authentication type is 'Password'.
+    description: ''
+  - name: --admin-username
+    defaultValue: your_system_user_login_name
+    summary: Username for the VM.
+    description: ''
+  - name: --authentication-type
+    parameterValueGroup: all, password, ssh
+    summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux. "all" enables both ssh and password authentication.
+    description: ''
+  - name: --generate-ssh-keys
+    summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+    description: ''
+  - name: --ssh-dest-key-path
+    summary: Destination file path on the VM for the SSH key.
+    description: ''
+  - name: --ssh-key-value
+    summary: The SSH public key or public key file path.
+    description: ''
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --plan-name
+    summary: Plan name.
+    description: ''
+  - name: --plan-product
+    summary: Plan product.
+    description: ''
+  - name: --plan-promotion-code
+    summary: Plan promotion code.
+    description: ''
+  - name: --plan-publisher
+    summary: Plan publisher.
+    description: ''
+  - name: --nics
+    summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.
+    description: ''
+  - name: --nsg
+    summary: The name to use when creating a new Network Security Group (default) or referencing an existing one. Can also reference an existing NSG by ID or specify "" for none.
+    description: ''
+  - name: --nsg-rule
+    parameterValueGroup: RDP, SSH
+    summary: NSG rule to create when creating a new NSG. Defaults to open ports for allowing RDP on Windows and allowing SSH on Linux.
+    description: ''
+  - name: --private-ip-address
+    summary: Static private IP address (e.g. 10.0.0.5).
+    description: ''
+  - name: --public-ip-address
+    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
+    description: ''
+  - name: --public-ip-address-allocation
+    parameterValueGroup: dynamic, static
+    summary: ''
+    description: ''
+  - name: --public-ip-address-dns-name
+    summary: Globally unique DNS name for a newly created public IP.
+    description: ''
+  - name: --subnet
+    summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
+    description: ''
+  - name: --subnet-address-prefix
+    defaultValue: 10.0.0.0/24
+    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+  - name: --vnet-address-prefix
+    defaultValue: 10.0.0.0/16
+    summary: The IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+  - name: --vnet-name
+    summary: Name of the virtual network when creating a new one or referencing an existing one.
+    description: ''
+  - name: --data-disk-caching
+    summary: Storage caching type for data disk(s), including 'None', 'ReadOnly', 'ReadWrite', etc. Use a singular value to apply on all disks, or use '<lun>=<vaule1> <lun>=<value2>' to configure individual disk.
+    description: ''
+  - name: --data-disk-sizes-gb
+    summary: Space-separated empty managed data disk sizes in GB to create.
+    description: ''
+  - name: --os-disk-caching
+    parameterValueGroup: None, ReadOnly, ReadWrite
+    summary: 'Storage caching type for the VM OS disk. Default: ReadWrite.'
+    description: ''
+  - name: --os-disk-name
+    summary: The name of the new VM OS disk.
+    description: ''
+  - name: --os-disk-size-gb
+    summary: The size of the os disk in GB.
+    description: ''
+  - name: --os-type
+    parameterValueGroup: linux, windows
+    summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    description: ''
+  - name: --storage-account
+    summary: Only applicable when used with `--use-unmanaged-disk`. The name to use when creating a new storage account or referencing an existing one. If omitted, an appropriate storage account in the same resource group and location will be used, or a new one will be created.
+    description: ''
+  - name: --storage-container-name
+    summary: 'Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.'
+    description: ''
+  - name: --storage-sku
+    summary: 'The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Premium_LRS, Standard_LRS.'
+    description: ''
+  - name: --use-unmanaged-disk
+    summary: Do not use managed disk to persist VM.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_deallocate
+  name: az vm deallocate
+  summary: Deallocate a VM.
+  description: For an end-to-end tutorial, see <a href="https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image">https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Deallocate, generalize, and capture a stopped virtual machine.
+    syntax:
+      content: >-
+        az vm deallocate -g MyResourceGroup -n MyVm
+                                az vm generalize -g MyResourceGroup -n MyVm
+                                az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
+  - summary: Deallocate, generalize, and capture multiple stopped virtual machines.
+    syntax:
+      content: >-
+        vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_delete
+  name: az vm delete
+  summary: Delete a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete a VM without a prompt for confirmation.
+    syntax:
+      content: az vm delete -g MyResourceGroup -n MyVm --yes
+  - summary: Delete all VMs in a resource group.
+    syntax:
+      content: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_generalize
+  name: az vm generalize
+  summary: Mark a VM as generalized, allowing it to be imaged for multiple deployments.
+  description: For an end-to-end tutorial, see <a href="https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image">https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Deallocate, generalize, and capture a stopped virtual machine.
+    syntax:
+      content: >-
+        az vm deallocate -g MyResourceGroup -n MyVm
+                                az vm generalize -g MyResourceGroup -n MyVm
+                                az vm capture -g MyResourceGroup -n MyVm --vhd-name-prefix MyPrefix
+  - summary: Deallocate, generalize, and capture multiple stopped virtual machines.
+    syntax:
+      content: >-
+        vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+                                az vm deallocate --ids {vms_ids}
+                                az vm generalize --ids {vms_ids}
+                                az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_get_instance_view
+  name: az vm get-instance-view
+  summary: Get instance information about a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Use a resource group and name to get instance view information of a VM.
+    syntax:
+      content: az vm get-instance-view -g MyResourceGroup -n MyVm
+  - summary: Get instance views for all VMs in a resource group.
+    syntax:
+      content: az vm get-instance-view --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list
+  name: az vm list
+  summary: List details of Virtual Machines.
+  description: For more information on querying information about Virtual Machines, see <a href="https://docs.microsoft.com/en-us/cli/azure/query-az-cli2">https://docs.microsoft.com/en-us/cli/azure/query-az-cli2</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: List all VMs.
+    syntax:
+      content: az vm list
+  - summary: List all VMs by resource group.
+    syntax:
+      content: az vm list -g MyResourceGroup
+  - summary: List all VMs by resource group with details.
+    syntax:
+      content: az vm list -g MyResourceGroup -d
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --show-details -d
+    summary: Show public ip address, FQDN, and power states. command will run slow.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list_ip_addresses
+  name: az vm list-ip-addresses
+  summary: List IP addresses associated with a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the IP addresses for a VM.
+    syntax:
+      content: az vm list-ip-addresses -g MyResourceGroup -n MyVm
+  - summary: Get IP addresses for all VMs in a resource group.
+    syntax:
+      content: az vm list-ip-addresses --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list_sizes
+  name: az vm list-sizes
+  summary: List available sizes for VMs.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List the available VM sizes in the West US region.
+    syntax:
+      content: az vm list-sizes -l westus
+  parameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list_usage
+  name: az vm list-usage
+  summary: List available usage resources for VMs.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the compute resource usage for the West US region.
+    syntax:
+      content: az vm list-usage -l westus
+  parameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_list_vm_resize_options
+  name: az vm list-vm-resize-options
+  summary: List available resizing options for VMs.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List all available VM sizes for resizing.
+    syntax:
+      content: az vm list-vm-resize-options -g MyResourceGroup -n MyVm
+  - summary: List available sizes for all VMs in a resource group.
+    syntax:
+      content: az vm list-vm-resize-options --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_open_port
+  name: az vm open-port
+  summary: Opens a VM to inbound traffic on specified ports.
+  description: Adds a security rule to the network security group (NSG) that is attached to the VM's network interface (NIC) or subnet. The existing NSG will be used or a new one will be created. The rule name is 'open-port-{port}' and will overwrite an existing rule with this name. For multi-NIC VMs, or for more fine-grained control, use the appropriate network commands directly (nsg rule create, etc).
+  langs:
+  - azurecli
+  examples:
+  - summary: Open all ports on a VM to inbound traffic.
+    syntax:
+      content: az vm open-port -g MyResourceGroup -n MyVm --port '*'
+  - summary: Open a range of ports on a VM to inbound traffic with the highest priority.
+    syntax:
+      content: az vm open-port -g MyResourceGroup -n MyVm --port 80-100 --priority 100
+  - summary: Open all ports for all VMs in a resource group.
+    syntax:
+      content: az vm open-port --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv) --port '*'
+  parameters:
+  - isRequired: true
+    name: --port
+    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '*' to allow traffic to all ports."
+    description: ''
+  - name: --apply-to-subnet
+    summary: Allow inbound traffic on the subnet instead of the NIC.
+    description: ''
+  - name: --nsg-name
+    summary: The name of the network security group to create if one does not exist. Ignored if an NSG already exists.
+    description: ''
+  - name: --priority
+    defaultValue: "900"
+    summary: Rule priority, between 100 (highest priority) and 4096 (lowest priority). Must be unique for each rule in the collection.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the virtual machine to open inbound traffic on.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_redeploy
+  name: az vm redeploy
+  summary: Redeploy an existing VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Redeploy a VM.
+    syntax:
+      content: az vm redeploy -g MyResourceGroup -n MyVm
+  - summary: Redeploy all VMs in a resource group.
+    syntax:
+      content: az vm redeploy --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_resize
+  name: az vm resize
+  summary: Update a VM's size.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Resize a VM.
+    syntax:
+      content: az vm resize -g MyResourceGroup -n MyVm --size Standard_DS3_v2
+  - summary: Resize all VMs in a resource group.
+    syntax:
+      content: az vm resize --size Standard_DS3_v2 --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - isRequired: true
+    name: --size
+    summary: The VM size.
+    description: ''
+    valueFrom: az vm list-vm-resize-options
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_restart
+  name: az vm restart
+  summary: Restart VMs.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Restart a VM.
+    syntax:
+      content: az vm restart -g MyResourceGroup -n MyVm
+  - summary: Restart all VMs in a resource group.
+    syntax:
+      content: az vm restart --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --force
+    summary: Force the VM to restart by redeploying it. Use if the VM is unresponsive.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_show
+  name: az vm show
+  summary: Get the details of a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Show information about a VM.
+    syntax:
+      content: az vm show -g MyResourceGroup -n MyVm -d
+  - summary: Get the details for all VMs in a resource group.
+    syntax:
+      content: az vm show -d --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --show-details -d
+    summary: Show public ip address, FQDN, and power states. command will run slow.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_start
+  name: az vm start
+  summary: Start a stopped VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Start a stopped VM.
+    syntax:
+      content: az vm start -g MyResourceGroup -n MyVm
+  - summary: Start all VMs in a resource group.
+    syntax:
+      content: az vm start --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_stop
+  name: az vm stop
+  summary: Power off (stop) a running VM.
+  description: The VM will continue to be billed. To avoid this, you can deallocate the VM through "az vm deallocate".
+  langs:
+  - azurecli
+  examples:
+  - summary: Power off (stop) a running VM.
+    syntax:
+      content: az vm stop -g MyResourceGroup -n MyVm
+  - summary: Stop all VMs in a resource group.
+    syntax:
+      content: az vm stop --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_update
+  name: az vm update
+  summary: Update the properties of a VM.
+  description: Update VM objects and properties using paths that correspond to 'az vm show'.
+  langs:
+  - azurecli
+  examples:
+  - summary: Add or update a tag.
+    syntax:
+      content: az vm update -n name -g group --set tags.tagName=tagValue
+  - summary: Remove a tag.
+    syntax:
+      content: az vm update -n name -g group --remove tags.tagName
+  - summary: Set the primary NIC of a VM.
+    syntax:
+      content: az vm update -n name -g group --set networkProfile.networkInterfaces[1].primary=false networkProfile.networkInterfaces[0].primary=true
+  - summary: Add a new non-primary NIC to a VM.
+    syntax:
+      content: az vm update -n name -g group --add networkProfile.networkInterfaces primary=false id={NIC_ID}
+  - summary: Remove the fourth NIC from a VM.
+    syntax:
+      content: az vm update -n name -g group --remove networkProfile.networkInterfaces 3
+  parameters:
+  - name: --disk-caching
+    summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
+    description: ''
+  - name: --license-type
+    parameterValueGroup: None, Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_wait
+  name: az vm wait
+  summary: Place the CLI in a waiting state until a condition of the VM is met.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Wait until a VM is created.
+    syntax:
+      content: az vm wait -g MyResourceGroup -n MyVm --created
+  - summary: Wait until all VMs in a resource group are deleted.
+    syntax:
+      content: az vm wait --deleted --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_vm_availability_set
+  name: az vm availability-set
+  summary: Group resources into availability sets.
+- uid: az_vm_availability_set_create
+  name: az vm availability-set create
+  summary: Create an Azure Availability Set.
+- uid: az_vm_availability_set_delete
+  name: az vm availability-set delete
+  summary: Delete an availability set.
+- uid: az_vm_availability_set_list
+  name: az vm availability-set list
+  summary: List availability sets.
+- uid: az_vm_availability_set_list_sizes
+  name: az vm availability-set list-sizes
+  summary: List VM sizes for an availability set.
+- uid: az_vm_availability_set_show
+  name: az vm availability-set show
+  summary: Get information for an availability set.
+- uid: az_vm_availability_set_update
+  name: az vm availability-set update
+  summary: Update an Azure Availability Set.
+- uid: az_vm_boot_diagnostics
+  name: az vm boot-diagnostics
+  summary: Troubleshoot the startup of an Azure Virtual Machine.
+- uid: az_vm_boot_diagnostics_disable
+  name: az vm boot-diagnostics disable
+  summary: Disable the boot diagnostics on a VM.
+- uid: az_vm_boot_diagnostics_enable
+  name: az vm boot-diagnostics enable
+  summary: Enable the boot diagnostics on a VM.
+- uid: az_vm_boot_diagnostics_get_boot_log
+  name: az vm boot-diagnostics get-boot-log
+  summary: Get the boot diagnostics log from a VM.
+- uid: az_vm_capture
+  name: az vm capture
+  summary: Capture information for a stopped VM.
+- uid: az_vm_create
+  name: az vm create
+  summary: Create an Azure Virtual Machine.
+- uid: az_vm_deallocate
+  name: az vm deallocate
+  summary: Deallocate a VM.
+- uid: az_vm_delete
+  name: az vm delete
+  summary: Delete a VM.
+- uid: az_vm_diagnostics
+  name: az vm diagnostics
+  summary: Configure the Azure Virtual Machine diagnostics extension.
+- uid: az_vm_diagnostics_get_default_config
+  name: az vm diagnostics get-default-config
+  summary: Get the default configuration settings for a VM.
+- uid: az_vm_diagnostics_set
+  name: az vm diagnostics set
+  summary: Configure the Azure VM diagnostics extension.
+- uid: az_vm_encryption
+  name: az vm encryption
+  summary: Manage encryption of VM disks.
+- uid: az_vm_encryption_disable
+  name: az vm encryption disable
+  summary: Disable disk encryption on the OS disk and/or data disks. Decrypt mounted disks.
+- uid: az_vm_encryption_enable
+  name: az vm encryption enable
+  summary: Enable disk encryption on the OS disk and/or data disks. Encrypt mounted disks.
+- uid: az_vm_encryption_show
+  name: az vm encryption show
+  summary: Show encryption status.
+- uid: az_vm_extension
+  name: az vm extension
+  summary: Manage extensions on VMs.
+- uid: az_vm_extension_delete
+  name: az vm extension delete
+  summary: Remove an extension attached to a VM.
+- uid: az_vm_extension_image
+  name: az vm extension image
+  summary: Find the available VM extensions for a subscription and region.
+- uid: az_vm_extension_image_list
+  name: az vm extension image list
+  summary: List the information on available extensions.
+- uid: az_vm_extension_image_list_names
+  name: az vm extension image list-names
+  summary: List the names of available extensions.
+- uid: az_vm_extension_image_list_versions
+  name: az vm extension image list-versions
+  summary: List the versions for available extensions.
+- uid: az_vm_extension_image_show
+  name: az vm extension image show
+  summary: Display information for an extension.
+- uid: az_vm_extension_list
+  name: az vm extension list
+  summary: List the extensions attached to a VM.
+- uid: az_vm_extension_set
+  name: az vm extension set
+  summary: Set extensions for a VM.
+- uid: az_vm_extension_show
+  name: az vm extension show
+  summary: Display information about extensions attached to a VM.
+- uid: az_vm_extension_wait
+  name: az vm extension wait
+  summary: Place the CLI in a waiting state until a condition of a virtual machine extension is met.
+- uid: az_vm_generalize
+  name: az vm generalize
+  summary: Mark a VM as generalized, allowing it to be imaged for multiple deployments.
+- uid: az_vm_get_instance_view
+  name: az vm get-instance-view
+  summary: Get instance information about a VM.
+- uid: az_vm_identity
+  name: az vm identity
+  summary: Manage service identities of a VM.
+- uid: az_vm_identity_assign
+  name: az vm identity assign
+  summary: Enable managed service identity on a VM.
+- uid: az_vm_identity_show
+  name: az vm identity show
+  summary: Display VM's managed identity info.
+- uid: az_vm_image
+  name: az vm image
+  summary: Information on available virtual machine images.
+- uid: az_vm_image_accept_terms
+  name: az vm image accept-terms
+  summary: Accept Azure Marketplace term so that the image can be used to create VMs.
+- uid: az_vm_image_list
+  name: az vm image list
+  summary: List the VM/VMSS images available in the Azure Marketplace.
+- uid: az_vm_image_list_offers
+  name: az vm image list-offers
+  summary: List the VM image offers available in the Azure Marketplace.
+- uid: az_vm_image_list_publishers
+  name: az vm image list-publishers
+  summary: List the VM image publishers available in the Azure Marketplace.
+- uid: az_vm_image_list_skus
+  name: az vm image list-skus
+  summary: List the VM image SKUs available in the Azure Marketplace.
+- uid: az_vm_image_show
+  name: az vm image show
+  summary: Get the details for a VM image available in the Azure Marketplace.
+- uid: az_vm_list
+  name: az vm list
+  summary: List details of Virtual Machines.
+- uid: az_vm_list_ip_addresses
+  name: az vm list-ip-addresses
+  summary: List IP addresses associated with a VM.
+- uid: az_vm_list_sizes
+  name: az vm list-sizes
+  summary: List available sizes for VMs.
+- uid: az_vm_list_usage
+  name: az vm list-usage
+  summary: List available usage resources for VMs.
+- uid: az_vm_list_vm_resize_options
+  name: az vm list-vm-resize-options
+  summary: List available resizing options for VMs.
+- uid: az_vm_nic
+  name: az vm nic
+  summary: Manage network interfaces. See also `az network nic`.
+- uid: az_vm_nic_add
+  name: az vm nic add
+  summary: Add existing NICs to a VM.
+- uid: az_vm_nic_list
+  name: az vm nic list
+  summary: List the NICs available on a VM.
+- uid: az_vm_nic_remove
+  name: az vm nic remove
+  summary: Remove NICs from a VM.
+- uid: az_vm_nic_set
+  name: az vm nic set
+  summary: Configure settings of a NIC attached to a VM.
+- uid: az_vm_nic_show
+  name: az vm nic show
+  summary: Display information for a NIC attached to a VM.
+- uid: az_vm_open_port
+  name: az vm open-port
+  summary: Opens a VM to inbound traffic on specified ports.
+- uid: az_vm_redeploy
+  name: az vm redeploy
+  summary: Redeploy an existing VM.
+- uid: az_vm_resize
+  name: az vm resize
+  summary: Update a VM's size.
+- uid: az_vm_restart
+  name: az vm restart
+  summary: Restart VMs.
+- uid: az_vm_secret
+  name: az vm secret
+  summary: Manage VM secrets.
+- uid: az_vm_secret_add
+  name: az vm secret add
+  summary: Add a secret to a VM.
+- uid: az_vm_secret_format
+  name: az vm secret format
+  summary: Transform secrets into a form that can be used by VMs and VMSSes.
+- uid: az_vm_secret_list
+  name: az vm secret list
+  summary: List secrets on a VM.
+- uid: az_vm_secret_remove
+  name: az vm secret remove
+  summary: Remove a secret from a VM.
+- uid: az_vm_show
+  name: az vm show
+  summary: Get the details of a VM.
+- uid: az_vm_start
+  name: az vm start
+  summary: Start a stopped VM.
+- uid: az_vm_stop
+  name: az vm stop
+  summary: Power off (stop) a running VM.
+- uid: az_vm_unmanaged_disk
+  name: az vm unmanaged-disk
+  summary: Manage the unmanaged data disks attached to a VM.
+- uid: az_vm_unmanaged_disk_attach
+  name: az vm unmanaged-disk attach
+  summary: Attach an unmanaged persistent disk to a VM.
+- uid: az_vm_unmanaged_disk_detach
+  name: az vm unmanaged-disk detach
+  summary: Detach an unmanaged disk from a VM.
+- uid: az_vm_unmanaged_disk_list
+  name: az vm unmanaged-disk list
+  summary: List unmanaged disks of a VM.
+- uid: az_vm_update
+  name: az vm update
+  summary: Update the properties of a VM.
+- uid: az_vm_user
+  name: az vm user
+  summary: Manage user accounts for a VM.
+- uid: az_vm_user_delete
+  name: az vm user delete
+  summary: Delete a user account from a VM.
+- uid: az_vm_user_reset_ssh
+  name: az vm user reset-ssh
+  summary: Reset the SSH configuration on a VM.
+- uid: az_vm_user_update
+  name: az vm user update
+  summary: Update a user account.
+- uid: az_vm_wait
+  name: az vm wait
+  summary: Place the CLI in a waiting state until a condition of the VM is met.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/a84f4307109230b2fc820fc6f037df00561c118f/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 3/21/2019 5:04:51 PM
+ms.date: 03/21/2019
+description: Manage Linux or Windows virtual machines.
