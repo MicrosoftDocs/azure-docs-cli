@@ -155,7 +155,7 @@ Version 2.0.60
 
 ### ACS
 
-* Changed to ignore `--listen-address` argument to `aks browse` if `kubectl` doesn't support it
+* Changed to ignore the `--listen-address` parameter for `aks browse` if it is not supported by kubectl 
 
 ### AppService
 
