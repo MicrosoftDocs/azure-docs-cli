@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 04/10/2019
+ms.date: 04/11/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -44,7 +44,7 @@ az extension list-available --output table
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.3.0 | Intelligent querying for CLI information. | Yes |
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.5 | Manage networking Front Doors. | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.0.9 | Support for copying managed vm images between regions |  |
-| [interactive](https://github.com/Azure/azure-cli) | 0.4.1 | Microsoft Azure Command-Line Interactive Shell | Yes |
+| [interactive](https://github.com/Azure/azure-cli) | 0.4.2 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.3 | Support for Azure Log Analytics query capabilities. | Yes |
 | [managementgroups](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | An Azure CLI Extension for Management Groups |  |
