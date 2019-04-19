@@ -1,0 +1,541 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_keyvault_certificate
+  name: az keyvault certificate
+  summary: Manage certificates.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_keyvault_certificate_create
+  - az_keyvault_certificate_delete
+  - az_keyvault_certificate_download
+  - az_keyvault_certificate_get_default_policy
+  - az_keyvault_certificate_import
+  - az_keyvault_certificate_list
+  - az_keyvault_certificate_list_deleted
+  - az_keyvault_certificate_list_versions
+  - az_keyvault_certificate_purge
+  - az_keyvault_certificate_recover
+  - az_keyvault_certificate_set_attributes
+  - az_keyvault_certificate_show
+  - az_keyvault_certificate_show_deleted
+- uid: az_keyvault_certificate_create
+  name: az keyvault certificate create
+  summary: Create a Key Vault certificate.
+  description: Certificates can be used as a secrets for provisioned virtual machines.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a self-signed certificate with the default policy and add it to a virtual machine.
+    syntax:
+      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+  parameters:
+  - isRequired: true
+    name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Create certificate in disabled state.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --validity
+    summary: Number of months the certificate is valid for. Overrides the value specified with --policy/-p.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_delete
+  name: az keyvault certificate delete
+  summary: Deletes a certificate from a specified key vault.
+  description: Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_download
+  name: az keyvault certificate download
+  summary: Download the public portion of a Key Vault certificate.
+  description: The certificate formatted as either PEM or DER. PEM is the default.
+  langs:
+  - azurecli
+  examples:
+  - summary: Download a certificate as PEM and check its fingerprint in openssl.
+    syntax:
+      content: >-
+        az keyvault certificate download --vault-name vault -n cert-name -f cert.pem && \
+                                openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
+  - summary: Download a certificate as DER and check its fingerprint in openssl.
+    syntax:
+      content: >-
+        az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && \
+                                openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
+  parameters:
+  - isRequired: true
+    name: --file -f
+    summary: File to receive the binary certificate contents.
+    description: ''
+  - name: --encoding -e
+    defaultValue: PEM
+    parameterValueGroup: DER, PEM
+    summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
+    description: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_get_default_policy
+  name: az keyvault certificate get-default-policy
+  summary: Get the default policy for self-signed certificates.
+  description: "This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate.\n                            The default policy can also be used as a starting point to create derivative policies.\n                            \n                            For more details, see: <a href=\"https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>."
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a self-signed certificate with the default policy
+    syntax:
+      content: >-
+        az keyvault certificate create --vault-name vaultname -n cert1 \
+                                  -p "$(az keyvault certificate get-default-policy)"
+  parameters:
+  - name: --scaffold
+    summary: Create a fully formed policy structure with default values.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_import
+  name: az keyvault certificate import
+  summary: Import a certificate into KeyVault.
+  description: Certificates can also be used as a secrets in provisioned virtual machines.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
+    syntax:
+      content: "service_principal=$(az ad sp create-for-rbac --create-cert)\n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r)\n                        \n                        az keyvault create -g my-group -n vaultname\n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_name -f cert_file\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+  parameters:
+  - isRequired: true
+    name: --file -f
+    summary: PKCS12 file or PEM file containing the certificate and private key.
+    description: ''
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Import the certificate in disabled state.
+    description: ''
+  - name: --password
+    summary: If the private key in certificate is encrypted, the password used for encryption.
+    description: ''
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_list
+  name: az keyvault certificate list
+  summary: List certificates in a specified key vault.
+  description: The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --include-pending
+    summary: Specifies whether to include certificates which are not completely provisioned.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_list_deleted
+  name: az keyvault certificate list-deleted
+  summary: Lists the deleted certificates in the specified vault currently available for recovery.
+  description: The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
+  langs:
+  - azurecli
+  parameters:
+  - name: --include-pending
+    summary: Specifies whether to include certificates which are not completely provisioned.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_list_versions
+  name: az keyvault certificate list-versions
+  summary: List the versions of a certificate.
+  description: The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_purge
+  name: az keyvault certificate purge
+  summary: Permanently deletes the specified deleted certificate.
+  description: The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify 'Purgeable'. This operation requires the certificate/purge permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_recover
+  name: az keyvault certificate recover
+  summary: Recovers the deleted certificate back to its current version under /certificates.
+  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_set_attributes
+  name: az keyvault certificate set-attributes
+  summary: Updates the specified attributes associated with the given certificate.
+  description: The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate's attributes. This operation requires the certificates/update permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --enabled
+    parameterValueGroup: false, true
+    summary: Enable the certificate.
+    description: ''
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_show
+  name: az keyvault certificate show
+  summary: Gets information about a certificate.
+  description: Gets information about a specific certificate. This operation requires the certificates/get permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_certificate_show_deleted
+  name: az keyvault certificate show-deleted
+  summary: Retrieves information about the specified deleted certificate.
+  description: The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission.
+  langs:
+  - azurecli
+  parameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_keyvault_certificate_contact
+  name: az keyvault certificate contact
+  summary: Manage contacts for certificate management.
+- uid: az_keyvault_certificate_contact_add
+  name: az keyvault certificate contact add
+  summary: Add a contact to the specified vault to receive notifications of certificate operations.
+- uid: az_keyvault_certificate_contact_delete
+  name: az keyvault certificate contact delete
+  summary: Remove a certificate contact from the specified vault.
+- uid: az_keyvault_certificate_contact_list
+  name: az keyvault certificate contact list
+  summary: Lists the certificate contacts for a specified key vault.
+- uid: az_keyvault_certificate_create
+  name: az keyvault certificate create
+  summary: Create a Key Vault certificate.
+- uid: az_keyvault_certificate_delete
+  name: az keyvault certificate delete
+  summary: Deletes a certificate from a specified key vault.
+- uid: az_keyvault_certificate_download
+  name: az keyvault certificate download
+  summary: Download the public portion of a Key Vault certificate.
+- uid: az_keyvault_certificate_get_default_policy
+  name: az keyvault certificate get-default-policy
+  summary: Get the default policy for self-signed certificates.
+- uid: az_keyvault_certificate_import
+  name: az keyvault certificate import
+  summary: Import a certificate into KeyVault.
+- uid: az_keyvault_certificate_issuer
+  name: az keyvault certificate issuer
+  summary: Manage certificate issuer information.
+- uid: az_keyvault_certificate_issuer_admin
+  name: az keyvault certificate issuer admin
+  summary: Manage admin information for certificate issuers.
+- uid: az_keyvault_certificate_issuer_admin_add
+  name: az keyvault certificate issuer admin add
+  summary: Add admin details for a specified certificate issuer.
+- uid: az_keyvault_certificate_issuer_admin_delete
+  name: az keyvault certificate issuer admin delete
+  summary: Remove admin details for the specified certificate issuer.
+- uid: az_keyvault_certificate_issuer_admin_list
+  name: az keyvault certificate issuer admin list
+  summary: List admins for a specified certificate issuer.
+- uid: az_keyvault_certificate_issuer_create
+  name: az keyvault certificate issuer create
+  summary: Create a certificate issuer record.
+- uid: az_keyvault_certificate_issuer_delete
+  name: az keyvault certificate issuer delete
+  summary: Deletes the specified certificate issuer.
+- uid: az_keyvault_certificate_issuer_list
+  name: az keyvault certificate issuer list
+  summary: List certificate issuers for a specified key vault.
+- uid: az_keyvault_certificate_issuer_show
+  name: az keyvault certificate issuer show
+  summary: Lists the specified certificate issuer.
+- uid: az_keyvault_certificate_issuer_update
+  name: az keyvault certificate issuer update
+  summary: Update a certificate issuer record.
+- uid: az_keyvault_certificate_list
+  name: az keyvault certificate list
+  summary: List certificates in a specified key vault.
+- uid: az_keyvault_certificate_list_deleted
+  name: az keyvault certificate list-deleted
+  summary: Lists the deleted certificates in the specified vault currently available for recovery.
+- uid: az_keyvault_certificate_list_versions
+  name: az keyvault certificate list-versions
+  summary: List the versions of a certificate.
+- uid: az_keyvault_certificate_pending
+  name: az keyvault certificate pending
+  summary: Manage pending certificate creation operations.
+- uid: az_keyvault_certificate_pending_delete
+  name: az keyvault certificate pending delete
+  summary: Deletes the creation operation for a specific certificate.
+- uid: az_keyvault_certificate_pending_merge
+  name: az keyvault certificate pending merge
+  summary: Merges a certificate or a certificate chain with a key pair existing on the server.
+- uid: az_keyvault_certificate_pending_show
+  name: az keyvault certificate pending show
+  summary: Gets the creation operation of a certificate.
+- uid: az_keyvault_certificate_purge
+  name: az keyvault certificate purge
+  summary: Permanently deletes the specified deleted certificate.
+- uid: az_keyvault_certificate_recover
+  name: az keyvault certificate recover
+  summary: Recovers the deleted certificate back to its current version under /certificates.
+- uid: az_keyvault_certificate_set_attributes
+  name: az keyvault certificate set-attributes
+  summary: Updates the specified attributes associated with the given certificate.
+- uid: az_keyvault_certificate_show
+  name: az keyvault certificate show
+  summary: Gets information about a certificate.
+- uid: az_keyvault_certificate_show_deleted
+  name: az keyvault certificate show-deleted
+  summary: Retrieves information about the specified deleted certificate.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/489bfb145dd245e5dd82abed2d9d8b4812b07f9e/src/command_modules/azure-cli-keyvault/azure/cli/command_modules/keyvault/_help.py
+updated_at: 4/3/2019 2:59:03 PM
+ms.date: 04/03/2019
+description: Manage certificates.

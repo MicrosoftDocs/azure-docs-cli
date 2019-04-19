@@ -1,0 +1,281 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_storage_container_lease
+  name: az storage container lease
+  summary: Manage blob storage container leases.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_storage_container_lease_acquire
+  - az_storage_container_lease_break
+  - az_storage_container_lease_change
+  - az_storage_container_lease_release
+  - az_storage_container_lease_renew
+- uid: az_storage_container_lease_acquire
+  name: az storage container lease acquire
+  summary: Requests a new lease.
+  description: If the container does not have an active lease, the Blob service creates a lease on the container and returns a new lease ID.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --lease-duration
+    defaultValue: "-1"
+    summary: Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. Default is -1 (infinite lease).
+    description: ''
+  - name: --proposed-lease-id
+    summary: Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_container_lease_break
+  name: az storage container lease break
+  summary: Break the lease, if the container has an active lease.
+  description: Once a lease is broken, it cannot be renewed. Any authorized request can break the lease; the request is not required to specify a matching lease ID. When a lease is broken, the lease break period is allowed to elapse, during which time no lease operation except break and release can be performed on the container. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --lease-break-period
+    summary: This is the proposed duration of seconds that the lease should continue before it is broken, between 0 and 60 seconds. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_container_lease_change
+  name: az storage container lease change
+  summary: Change the lease ID of an active lease.
+  description: A change must include the current lease ID and a new lease ID.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --lease-id
+    summary: Lease ID for active lease.
+    description: ''
+  - isRequired: true
+    name: --proposed-lease-id
+    summary: Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_container_lease_release
+  name: az storage container lease release
+  summary: Release the lease.
+  description: The lease may be released if the lease_id specified matches that associated with the container. Releasing the lease allows another client to immediately acquire the lease for the container as soon as the release is complete.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --lease-id
+    summary: Lease ID for active lease.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_container_lease_renew
+  name: az storage container lease renew
+  summary: Renews the lease.
+  description: The lease can be renewed if the lease ID specified matches that associated with the container. Note that the lease may be renewed even if it has expired as long as the container has not been leased again since the expiration of that lease. When you renew a lease, the lease duration clock resets.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --lease-id
+    summary: Lease ID for active lease.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_storage_container_lease_acquire
+  name: az storage container lease acquire
+  summary: Requests a new lease.
+- uid: az_storage_container_lease_break
+  name: az storage container lease break
+  summary: Break the lease, if the container has an active lease.
+- uid: az_storage_container_lease_change
+  name: az storage container lease change
+  summary: Change the lease ID of an active lease.
+- uid: az_storage_container_lease_release
+  name: az storage container lease release
+  summary: Release the lease.
+- uid: az_storage_container_lease_renew
+  name: az storage container lease renew
+  summary: Renews the lease.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/9ae2e577c6d22086f780b5b0bd10a46baab07408/src/command_modules/azure-cli-storage/azure/cli/command_modules/storage/_help.py
+updated_at: 3/29/2019 9:35:46 PM
+ms.date: 03/29/2019
+description: Manage blob storage container leases.

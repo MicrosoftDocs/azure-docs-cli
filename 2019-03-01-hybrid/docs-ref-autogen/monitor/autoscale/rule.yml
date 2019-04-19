@@ -1,0 +1,217 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_monitor_autoscale_rule
+  name: az monitor autoscale rule
+  summary: Manage autoscale scaling rules.
+  description: 'For more information on autoscaling, visit: <a href="https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings">https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings</a>.'
+  langs:
+  - azurecli
+  children:
+  - az_monitor_autoscale_rule_copy
+  - az_monitor_autoscale_rule_create
+  - az_monitor_autoscale_rule_delete
+  - az_monitor_autoscale_rule_list
+- uid: az_monitor_autoscale_rule_copy
+  name: az monitor autoscale rule copy
+  summary: Copy autoscale rules from one profile to another.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --autoscale-name
+    summary: Name of the autoscale settings.
+    description: ''
+  - isRequired: true
+    name: --dest-schedule
+    summary: Name of the profile to copy rules to.
+    description: ''
+  - isRequired: true
+    name: --index
+    summary: Space-separated list of rule indices to copy, or '*' to copy all rules.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --source-schedule
+    defaultValue: default
+    summary: Name of the profile to copy rules from.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_monitor_autoscale_rule_create
+  name: az monitor autoscale rule create
+  summary: Add a new autoscale rule.
+  description: 'For more information on autoscaling, visit: <a href="https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings">https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings</a>.'
+  langs:
+  - azurecli
+  examples:
+  - summary: Scale to 5 instances when the CPU Percentage across instances is greater than 75 averaged over 10 minutes.
+    syntax:
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale to 5 --condition "Percentage CPU > 75 avg 10m"
+  - summary: Scale up 2 instances when the CPU Percentage across instances is greater than 75 averaged over 5 minutes.
+    syntax:
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale out 2 --condition "Percentage CPU > 75 avg 5m"
+  - summary: Scale down 50% when the CPU Percentage across instances is less than 25 averaged over 15 minutes.
+    syntax:
+      content: >-
+        az monitor autoscale rule create -g {myrg} --autoscale-name {myvmss} \
+                                  --scale in 50% --condition "Percentage CPU < 25 avg 15m"
+  parameters:
+  - isRequired: true
+    name: --autoscale-name
+    summary: Name of the autoscale settings.
+    description: ''
+  - isRequired: true
+    name: --condition
+    summary: The condition which triggers the scaling action.
+    description: The form of a condition is "METRIC {==,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD {avg,min,max,total,count} PERIOD". Values for METRIC and appropriate THRESHOLD values can be obtained from the `az monitor metric` command. Format of PERIOD is "##h##m##s".
+  - isRequired: true
+    name: --scale
+    summary: The direction and amount to scale.
+    description: >-
+      Usage:          --scale {to,in,out} VAL[%]
+                                          Fixed Count:    --scale to 5
+                                          In by Count:    --scale in 2
+                                          Out by Percent: --scale out 10%.
+  - name: --cooldown
+    defaultValue: "5"
+    summary: The number of minutes that must elapse before another scaling event can occur.
+    description: ''
+  - name: --profile-name
+    defaultValue: default
+    summary: Name of the autoscale profile.
+    description: ''
+  - name: --timegrain
+    defaultValue: avg 1m
+    summary: The way metrics are polled across instances.
+    description: The form of the timegrain is {avg,min,max,sum} VALUE. Values can be obtained from the `az monitor metric` command. Format of VALUE is "##h##m##s".
+  - name: --resource
+    summary: Name or ID of the target resource.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --resource-namespace
+    summary: Target resource provider namespace.
+    description: ''
+  - name: --resource-parent
+    summary: Target resource parent path, if applicable.
+    description: ''
+  - name: --resource-type
+    summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines')."
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_monitor_autoscale_rule_delete
+  name: az monitor autoscale rule delete
+  summary: Remove autoscale rules from a profile.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --autoscale-name
+    summary: Name of the autoscale settings.
+    description: ''
+  - isRequired: true
+    name: --index
+    summary: Space-separated list of rule indices to remove, or '*' to clear all rules.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --profile-name
+    defaultValue: default
+    summary: Name of the autoscale profile.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_monitor_autoscale_rule_list
+  name: az monitor autoscale rule list
+  summary: List autoscale rules for a profile.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --autoscale-name
+    summary: Name of the autoscale settings.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --profile-name
+    defaultValue: default
+    summary: Name of the autoscale profile.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_monitor_autoscale_rule_copy
+  name: az monitor autoscale rule copy
+  summary: Copy autoscale rules from one profile to another.
+- uid: az_monitor_autoscale_rule_create
+  name: az monitor autoscale rule create
+  summary: Add a new autoscale rule.
+- uid: az_monitor_autoscale_rule_delete
+  name: az monitor autoscale rule delete
+  summary: Remove autoscale rules from a profile.
+- uid: az_monitor_autoscale_rule_list
+  name: az monitor autoscale rule list
+  summary: List autoscale rules for a profile.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/7cac8ed5eba20025e89d0df78f8359473822d5bb/src/command_modules/azure-cli-monitor/azure/cli/command_modules/monitor/_help.py
+updated_at: 4/3/2019 2:59:25 PM
+ms.date: 04/03/2019
+description: 'For more information on autoscaling, visit: <a href="https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings">https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-understanding-autoscale-settings</a>.'

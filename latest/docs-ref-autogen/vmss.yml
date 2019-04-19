@@ -1,0 +1,1152 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_vmss
+  name: az vmss
+  summary: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_vmss_create
+  - az_vmss_deallocate
+  - az_vmss_delete
+  - az_vmss_delete_instances
+  - az_vmss_get_instance_view
+  - az_vmss_get_os_upgrade_history
+  - az_vmss_list
+  - az_vmss_list_instance_connection_info
+  - az_vmss_list_instance_public_ips
+  - az_vmss_list_instances
+  - az_vmss_list_skus
+  - az_vmss_perform_maintenance
+  - az_vmss_reimage
+  - az_vmss_restart
+  - az_vmss_scale
+  - az_vmss_show
+  - az_vmss_start
+  - az_vmss_stop
+  - az_vmss_update
+  - az_vmss_update_instances
+  - az_vmss_wait
+- uid: az_vmss_create
+  name: az vmss create
+  summary: Create an Azure Virtual Machine Scale Set.
+  description: For an end-to-end tutorial, see <a href="https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-linux-create-cli">https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-linux-create-cli</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a Windows VM scale set with 5 instances, a load balancer, a public IP address, and a 2GB data disk.
+    syntax:
+      content: az vmss create -n MyVmss -g MyResourceGroup --instance-count 5 --image Win2016Datacenter --data-disk-sizes-gb 2
+  - summary: Create a Linux VM scale set with an auto-generated ssh key pair, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
+    syntax:
+      content: >-
+        az vmss create -n MyVmss -g MyResourceGroup --public-ip-address-dns-name my-globally-dns-name \
+                                    --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS \
+                                    --generate-ssh-keys
+  - summary: Create a Linux VM scale set from a custom image using the default existing public SSH key.
+    syntax:
+      content: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
+  - summary: Create a Linux VM scale set with a load balancer and custom DNS servers. Each VM has a public-ip address and a custom domain name.
+    syntax:
+      content: >-
+        az vmss create -n MyVmss -g MyResourceGroup --image centos \
+                                    --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
+  - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init'
+    syntax:
+      content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
+  - summary: Create a Debian VM scaleset using Key Vault secrets.
+    syntax:
+      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+  - summary: Create a VM scaleset with system assigned identity. The VM will have a 'Contributor' Role with access to a storage account.
+    syntax:
+      content: az vmss create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+  - summary: Create a debian VM scaleset with a user assigned identity.
+    syntax:
+      content: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a debian VM scaleset with both system and user assigned identity.
+    syntax:
+      content: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a single zone VM scaleset in the current resource group's region
+    syntax:
+      content: az vmss create -n MyVmss -g MyResourceGroup --image Centos --zones 1
+  parameters:
+  - isRequired: true
+    name: --image
+    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. Valid URN format: "Publisher:Offer:Sku:Version".'
+    description: ''
+    valueFrom: az vm image list, az vm image show
+  - isRequired: true
+    name: --name -n
+    summary: Name of the virtual machine scale set.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --custom-data
+    summary: Custom init script file or text (cloud-init, cloud-config, etc..).
+    description: ''
+  - name: --disable-overprovision
+    summary: Overprovision option (see <a href="https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/">https://azure.microsoft.com/en-us/documentation/articles/virtual-machine-scale-sets-overview/</a> for details).
+    description: ''
+  - name: --eviction-policy
+    parameterValueGroup: Deallocate, Delete
+    summary: (PREVIEW) The eviction policy for virtual machines in a low priority scale set.
+    description: ''
+  - name: --health-probe
+    summary: (Preview) probe name from the existing load balancer, mainly used for rolling upgrade.
+    description: ''
+  - name: --instance-count
+    defaultValue: "2"
+    summary: Number of VMs in the scale set.
+    description: ''
+  - name: --license-type
+    parameterValueGroup: None, Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    description: ''
+  - name: --location -l
+    summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --platform-fault-domain-count
+    summary: Fault Domain count for each placement group in the availability zone.
+    description: ''
+  - name: --priority
+    parameterValueGroup: Low, Regular
+    summary: Priority. Use 'Low' to run short-lived workloads in a cost-effective way.
+    description: ''
+  - name: --secrets
+    summary: 'One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
+    description: ''
+  - name: --single-placement-group
+    parameterValueGroup: false, true
+    summary: Enable replicate using fault domains within the same cluster. Default to 'false' for any zonals, or with 100+ instances See <a href="https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups">https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-placement-groups</a> for details.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --upgrade-policy-mode
+    defaultValue: manual
+    parameterValueGroup: Automatic, Manual, Rolling
+    summary: ''
+    description: ''
+  - name: --validate
+    summary: Generate and validate the ARM template without creating any resources.
+    description: ''
+  - name: --vm-sku
+    summary: Size of VMs in the scale set. Default to "Standard_DS1_v2". See <a href="https://azure.microsoft.com/en-us/pricing/details/virtual-machines/">https://azure.microsoft.com/en-us/pricing/details/virtual-machines/</a> for size info.
+    description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones into which to provision the resource.
+    description: ''
+  - name: --admin-password
+    summary: Password for the VM if authentication type is 'Password'.
+    description: ''
+  - name: --admin-username
+    defaultValue: your_system_user_login_name
+    summary: Username for the VM.
+    description: ''
+  - name: --authentication-type
+    parameterValueGroup: all, password, ssh
+    summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux. "all" enables both ssh and password authentication.
+    description: ''
+  - name: --generate-ssh-keys
+    summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+    description: ''
+  - name: --ssh-dest-key-path
+    summary: Destination file path on the VM for the SSH key.
+    description: ''
+  - name: --ssh-key-value
+    summary: SSH public key or public key file path.
+    description: ''
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --plan-name
+    summary: Plan name.
+    description: ''
+  - name: --plan-product
+    summary: Plan product.
+    description: ''
+  - name: --plan-promotion-code
+    summary: Plan promotion code.
+    description: ''
+  - name: --plan-publisher
+    summary: Plan publisher.
+    description: ''
+  - name: --accelerated-networking
+    parameterValueGroup: false, true
+    summary: Enable accelerated networking. Unless specified, CLI will enable it based on machine image and size.
+    description: ''
+  - name: --asgs
+    summary: Space-separated list of existing application security groups to associate with the VM.
+    description: ''
+  - name: --dns-servers
+    summary: Space-separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
+    description: ''
+  - name: --nsg
+    summary: Name or ID of an existing Network Security Group.
+    description: ''
+  - name: --public-ip-address
+    summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None.
+    description: ''
+  - name: --public-ip-address-allocation
+    parameterValueGroup: dynamic, static
+    summary: ''
+    description: ''
+  - name: --public-ip-address-dns-name
+    summary: Globally unique DNS name for a newly created public IP.
+    description: ''
+  - name: --public-ip-per-vm
+    summary: Each VM instance will have a public ip. For security, you can use '--nsg' to apply appropriate rules.
+    description: ''
+  - name: --subnet
+    summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
+    description: ''
+  - name: --subnet-address-prefix
+    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+  - name: --vm-domain-name
+    summary: Domain name of VM instances, once configured, the FQDN is 'vm<vm-index>.<vm-domain-name>.<..rest..>'.
+    description: ''
+  - name: --vnet-address-prefix
+    defaultValue: 10.0.0.0/16
+    summary: The IP address prefix to use when creating a new VNet in CIDR format.
+    description: ''
+  - name: --vnet-name
+    summary: Name of the virtual network when creating a new one or referencing an existing one.
+    description: ''
+  - name: --app-gateway
+    summary: Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
+    description: ''
+  - name: --app-gateway-capacity
+    defaultValue: "10"
+    summary: The number of instances to use when creating a new application gateway.
+    description: ''
+  - name: --app-gateway-sku
+    defaultValue: Standard_Large
+    summary: SKU when creating a new application gateway.
+    description: ''
+  - name: --app-gateway-subnet-address-prefix
+    summary: The subnet IP address prefix to use when creating a new application gateway in CIDR format.
+    description: ''
+  - name: --backend-pool-name
+    summary: Name to use for the backend pool when creating a new load balancer or application gateway.
+    description: ''
+  - name: --backend-port
+    summary: When creating a new load balancer, backend port to open with NAT rules (Defaults to 22 on Linux and 3389 on Windows). When creating an application gateway, the backend port to use for the backend HTTP settings.
+    description: ''
+  - name: --lb --load-balancer
+    summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
+    description: ''
+  - name: --lb-nat-pool-name --nat-pool-name
+    summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --lb-sku
+    parameterValueGroup: Basic, Standard
+    summary: Sku of the Load Balancer to create. Default to 'Standard' when single placement group is turned off; otherwise, default to 'Basic'.
+    description: ''
+  - name: --data-disk-caching
+    summary: Storage caching type for data disk(s), including 'None', 'ReadOnly', 'ReadWrite', etc. Use a singular value to apply on all disks, or use '<lun>=<vaule1> <lun>=<value2>' to configure individual disk.
+    description: ''
+  - name: --data-disk-sizes-gb
+    summary: Space-separated empty managed data disk sizes in GB to create.
+    description: ''
+  - name: --ephemeral-os-disk
+    parameterValueGroup: false, true
+    summary: (Preview) Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
+    description: ''
+  - name: --os-disk-caching
+    parameterValueGroup: None, ReadOnly, ReadWrite
+    summary: 'Storage caching type for the VM OS disk. Default: ReadWrite.'
+    description: ''
+  - name: --os-disk-name
+    summary: The name of the new VM OS disk.
+    description: ''
+  - name: --os-type
+    parameterValueGroup: linux, windows
+    summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    description: ''
+  - name: --storage-container-name
+    defaultValue: vhds
+    summary: 'Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.'
+    description: ''
+  - name: --storage-sku
+    summary: 'The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS.'
+    description: ''
+  - name: --ultra-ssd-enabled
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
+    description: ''
+  - name: --use-unmanaged-disk
+    summary: Do not use managed disk to persist VM.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_deallocate
+  name: az vmss deallocate
+  summary: Deallocate VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Deallocate VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss deallocate --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_delete
+  name: az vmss delete
+  summary: Deletes a VM scale set.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_delete_instances
+  name: az vmss delete-instances
+  summary: Delete VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss delete-instances --instance-ids 0 --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances.'
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_get_instance_view
+  name: az vmss get-instance-view
+  summary: View an instance of a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: View an instance of a VMSS. (autogenerated)
+    syntax:
+      content: az vmss get-instance-view --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --instance-id
+    summary: A VM instance ID or "*" to list instance view for all VMs in a scale set.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_get_os_upgrade_history
+  name: az vmss get-os-upgrade-history
+  summary: Gets list of OS upgrades on a VM scale set instance.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_list
+  name: az vmss list
+  summary: List VMSS.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_list_instance_connection_info
+  name: az vmss list-instance-connection-info
+  summary: Get the IP address and port number used to connect to individual VM instances within a set.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get the IP address and port number used to connect to individual VM instances within a set. (autogenerated)
+    syntax:
+      content: az vmss list-instance-connection-info --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_list_instance_public_ips
+  name: az vmss list-instance-public-ips
+  summary: List public IP addresses of VM instances within a set.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List public IP addresses of VM instances within a set. (autogenerated)
+    syntax:
+      content: az vmss list-instance-public-ips --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_list_instances
+  name: az vmss list-instances
+  summary: Gets a list of all virtual machines in a VM scale sets.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --expand
+    summary: The expand expression to apply to the operation.
+    description: ''
+  - name: --filter
+    summary: The filter to apply to the operation.
+    description: ''
+  - name: --select
+    summary: The list parameters.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_list_skus
+  name: az vmss list-skus
+  summary: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_perform_maintenance
+  name: az vmss perform-maintenance
+  summary: Perform maintenance on one or more virtual machines in a VM scale set.
+  description: 'Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: <a href="https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications">https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications</a>.'
+  langs:
+  - azurecli
+  parameters:
+  - name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_reimage
+  name: az vmss reimage
+  summary: Reimage VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Reimage VMs within a VMSS
+    syntax:
+      content: az vmss reimage --instance-id instanceId --name MyScaleSet --no-wait --resource-group MyResourceGroup
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --instance-id
+    summary: VM instance ID. If missing, reimage all instances.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_restart
+  name: az vmss restart
+  summary: Restart VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Restart VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss restart --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_scale
+  name: az vmss scale
+  summary: Change the number of VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Change the number of VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss scale --name MyScaleSet --new-capacity 6 --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --new-capacity
+    summary: Number of VMs in the VMSS.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_show
+  name: az vmss show
+  summary: Get details on VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get details on VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss show --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-id
+    summary: VM instance ID. If missing, show the VMSS.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_start
+  name: az vmss start
+  summary: Start VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Start VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss start --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_stop
+  name: az vmss stop
+  summary: Power off (stop) VMs within a VMSS.
+  description: The VMs will continue to be billed. To avoid this, you can deallocate VM instances within a VMSS through "az vmss deallocate".
+  langs:
+  - azurecli
+  examples:
+  - summary: Power off (stop) VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss stop --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_update
+  name: az vmss update
+  summary: Update a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update a VMSS. (autogenerated)
+    syntax:
+      content: az vmss update --name MyScaleSet --resource-group MyResourceGroup --set virtualMachineProfile.storageProfile.imageReference.version=16.04.201801090
+  parameters:
+  - name: --license-type
+    parameterValueGroup: None, Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_update_instances
+  name: az vmss update-instances
+  summary: Upgrade VMs within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Upgrade VMs within a VMSS. (autogenerated)
+    syntax:
+      content: az vmss update-instances --instance-ids 1 --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --instance-ids
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances.'
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_wait
+  name: az vmss wait
+  summary: Place the CLI in a waiting state until a condition of a scale set is met.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Place the CLI in a waiting state until a condition of a scale set is met. (autogenerated)
+    syntax:
+      content: az vmss wait --created --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_vmss_create
+  name: az vmss create
+  summary: Create an Azure Virtual Machine Scale Set.
+- uid: az_vmss_deallocate
+  name: az vmss deallocate
+  summary: Deallocate VMs within a VMSS.
+- uid: az_vmss_delete
+  name: az vmss delete
+  summary: Deletes a VM scale set.
+- uid: az_vmss_delete_instances
+  name: az vmss delete-instances
+  summary: Delete VMs within a VMSS.
+- uid: az_vmss_diagnostics
+  name: az vmss diagnostics
+  summary: Configure the Azure Virtual Machine Scale Set diagnostics extension.
+- uid: az_vmss_diagnostics_get_default_config
+  name: az vmss diagnostics get-default-config
+  summary: Show the default config file which defines data to be collected.
+- uid: az_vmss_diagnostics_set
+  name: az vmss diagnostics set
+  summary: Enable diagnostics on a VMSS.
+- uid: az_vmss_disk
+  name: az vmss disk
+  summary: Manage data disks of a VMSS.
+- uid: az_vmss_disk_attach
+  name: az vmss disk attach
+  summary: Attach managed data disks to a scale set or its instances.
+- uid: az_vmss_disk_detach
+  name: az vmss disk detach
+  summary: Detach managed data disks from a scale set or its instances.
+- uid: az_vmss_encryption
+  name: az vmss encryption
+  summary: (PREVIEW) Manage encryption of VMSS.
+- uid: az_vmss_encryption_disable
+  name: az vmss encryption disable
+  summary: Disable the encryption on a VMSS with managed disks.
+- uid: az_vmss_encryption_enable
+  name: az vmss encryption enable
+  summary: Encrypt a VMSS with managed disks.
+- uid: az_vmss_encryption_show
+  name: az vmss encryption show
+  summary: Show encryption status.
+- uid: az_vmss_extension
+  name: az vmss extension
+  summary: Manage extensions on a VM scale set.
+- uid: az_vmss_extension_delete
+  name: az vmss extension delete
+  summary: Delete an extension from a VMSS.
+- uid: az_vmss_extension_image
+  name: az vmss extension image
+  summary: Find the available VM extensions for a subscription and region.
+- uid: az_vmss_extension_image_list
+  name: az vmss extension image list
+  summary: List the information on available extensions.
+- uid: az_vmss_extension_image_list_names
+  name: az vmss extension image list-names
+  summary: Gets a list of virtual machine extension image types.
+- uid: az_vmss_extension_image_list_versions
+  name: az vmss extension image list-versions
+  summary: Gets a list of virtual machine extension image versions.
+- uid: az_vmss_extension_image_show
+  name: az vmss extension image show
+  summary: Gets a virtual machine extension image.
+- uid: az_vmss_extension_list
+  name: az vmss extension list
+  summary: List extensions associated with a VMSS.
+- uid: az_vmss_extension_set
+  name: az vmss extension set
+  summary: Add an extension to a VMSS or update an existing extension.
+- uid: az_vmss_extension_show
+  name: az vmss extension show
+  summary: Show details on a VMSS extension.
+- uid: az_vmss_get_instance_view
+  name: az vmss get-instance-view
+  summary: View an instance of a VMSS.
+- uid: az_vmss_get_os_upgrade_history
+  name: az vmss get-os-upgrade-history
+  summary: Gets list of OS upgrades on a VM scale set instance.
+- uid: az_vmss_identity
+  name: az vmss identity
+  summary: Manage service identities of a VM scaleset.
+- uid: az_vmss_identity_assign
+  name: az vmss identity assign
+  summary: Enable managed service identity on a VMSS.
+- uid: az_vmss_identity_remove
+  name: az vmss identity remove
+  summary: (PREVIEW) Remove user assigned identities from a VM scaleset.
+- uid: az_vmss_identity_show
+  name: az vmss identity show
+  summary: Display VM scaleset's managed identity info.
+- uid: az_vmss_list
+  name: az vmss list
+  summary: List VMSS.
+- uid: az_vmss_list_instance_connection_info
+  name: az vmss list-instance-connection-info
+  summary: Get the IP address and port number used to connect to individual VM instances within a set.
+- uid: az_vmss_list_instance_public_ips
+  name: az vmss list-instance-public-ips
+  summary: List public IP addresses of VM instances within a set.
+- uid: az_vmss_list_instances
+  name: az vmss list-instances
+  summary: Gets a list of all virtual machines in a VM scale sets.
+- uid: az_vmss_list_skus
+  name: az vmss list-skus
+  summary: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
+- uid: az_vmss_nic
+  name: az vmss nic
+  summary: Manage network interfaces of a VMSS.
+- uid: az_vmss_nic_list
+  name: az vmss nic list
+  summary: Gets all network interfaces in a virtual machine scale set.
+- uid: az_vmss_nic_list_vm_nics
+  name: az vmss nic list-vm-nics
+  summary: Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
+- uid: az_vmss_nic_show
+  name: az vmss nic show
+  summary: Get the specified network interface in a virtual machine scale set.
+- uid: az_vmss_perform_maintenance
+  name: az vmss perform-maintenance
+  summary: Perform maintenance on one or more virtual machines in a VM scale set.
+- uid: az_vmss_reimage
+  name: az vmss reimage
+  summary: Reimage VMs within a VMSS.
+- uid: az_vmss_restart
+  name: az vmss restart
+  summary: Restart VMs within a VMSS.
+- uid: az_vmss_rolling_upgrade
+  name: az vmss rolling-upgrade
+  summary: (PREVIEW) Manage rolling upgrades.
+- uid: az_vmss_rolling_upgrade_cancel
+  name: az vmss rolling-upgrade cancel
+  summary: Cancels the current virtual machine scale set rolling upgrade.
+- uid: az_vmss_rolling_upgrade_get_latest
+  name: az vmss rolling-upgrade get-latest
+  summary: Gets the status of the latest virtual machine scale set rolling upgrade.
+- uid: az_vmss_rolling_upgrade_start
+  name: az vmss rolling-upgrade start
+  summary: Starts a rolling upgrade to move all virtual machine scale set instances to the latest available Platform Image OS version.
+- uid: az_vmss_run_command
+  name: az vmss run-command
+  summary: Manage run commands on a Virtual Machine Scale Set.
+- uid: az_vmss_run_command_invoke
+  name: az vmss run-command invoke
+  summary: Execute a specific run command on a Virtual Machine Scale Set instance.
+- uid: az_vmss_run_command_list
+  name: az vmss run-command list
+  summary: Lists all available run commands for a subscription in a location.
+- uid: az_vmss_run_command_show
+  name: az vmss run-command show
+  summary: Gets specific run command for a subscription in a location.
+- uid: az_vmss_scale
+  name: az vmss scale
+  summary: Change the number of VMs within a VMSS.
+- uid: az_vmss_show
+  name: az vmss show
+  summary: Get details on VMs within a VMSS.
+- uid: az_vmss_start
+  name: az vmss start
+  summary: Start VMs within a VMSS.
+- uid: az_vmss_stop
+  name: az vmss stop
+  summary: Power off (stop) VMs within a VMSS.
+- uid: az_vmss_update
+  name: az vmss update
+  summary: Update a VMSS.
+- uid: az_vmss_update_instances
+  name: az vmss update-instances
+  summary: Upgrade VMs within a VMSS.
+- uid: az_vmss_wait
+  name: az vmss wait
+  summary: Place the CLI in a waiting state until a condition of a scale set is met.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/489bfb145dd245e5dd82abed2d9d8b4812b07f9e/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+updated_at: 4/3/2019 2:59:03 PM
+ms.date: 04/03/2019
+description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
