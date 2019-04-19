@@ -12,6 +12,60 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## April 23, 2019
+
+Version 2.0.63
+
+### ACS
+* "az aks get-credentials" will prompt to overwrite duplicated values
+* Remove "(PREVIEW)" from Dev Spaces commands, "az aks use-dev-spaces" and "az aks remove-dev-spaces".
+
+### AMS
+* Bug fix for asset and account filters update.
+
+### AppService
+* webapp: az webapp ssh now support ASE and a timeout parameter
+* functionapp: add feature for establishing CI CD to an Azure DevOps pipeline from a Github repository
+* functionapp: in `az functionapp devops-build create`, added `--github-pat` flag to accept Github personal access token
+* functionapp: in `az functionapp devops-build create`, added `--github-repository` flag to accept Github repository that contains a functionapp source code
+* webapp: az webapp up --logs was failing with a error and updating default .NETCORE version to 2.1
+* functionapp: remove unnecessary app settings while creating a function app with consumption plan
+* webapp: az webapp up default asp string now appends number at the end to create a new ASP based on SKU options
+* webapp: az webapp up support -b as an option to launch the app in the browser
+* webapp: az webapp deployment source config zip handles 'AZURE_CLI_DISABLE_CONNECTION_VERIFICATION' environment variable
+
+### Deployment Manager
+* Preview release. Create and manage artifacts that support rollouts.
+
+### Lab
+* Fixed error: 'ObjectsOperations' object has no attribute 'get_current_user'
+
+### Network
+* `dns zone create`: Add auto name server delegation in parent during child zone creation
+
+### Resource
+* `resource link`: Deprecate `--link-id`, `--target-id` and `--filter-string` in favor of
+                   `--link`, `--target`, and `--filter` respectively.
+* `resource link create/update`: Fix issue where these commands would not work.
+* `resource delete`: Fix issue where deleting using a resource ID could crash on error.
+
+### Role
+* [BREAKING CHANGE] 'group create'/'app create'/'sp create-for-rbac': supports idempotent, hence confliction error will not be surfaced
+
+### SQL
+* Support for custom time zone on managed instance.
+* Allow elastic pool name (as an alternative to elastic pool id) to be specified for az sql db update.
+* `sql server create/update`: Added `--no-wait` support.
+* `sql server`: Added new command `wait`.
+
+### Storage
+* `storage blob generate-sas`: Fix double url-encoded sas token
+
+### VM
+* vm/vmss stop: expose --skip-shutdown. If used, the VM will be powered-off without shutting down. This is helpful if a VM crashes and/or cannot properly shutdown.
+* sig image-version create: expose --storage-account-type. Can now set the publishing profile's general storage account type to Standard_LRS or Standard_ZRS
+* sig image-version create: --target-regions updated to allow for setting region-specific storage account types
+
 ## April 9, 2019
 
 ### Core
