@@ -79,6 +79,13 @@ items:
                                     --source-resource-id /subscriptions/{SubID} \
                                     --endpoint-type storagequeue \
                                     --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/sa1/queueservices/default/queues/q1
+  - summary: Create a new event subscription for an Azure subscription, using default filters, and an Azure ServiceBusQueue as a destination.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es2 \
+                                    --source-resource-id /subscriptions/{SubID} \
+                                    --endpoint-type servicebusqueue \
+                                    --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.ServiceBus/namespaces/ns1/queues/queue1
   - summary: Create a new event subscription for an Event Grid domain, using default filters, and CloudEventV01 as the delivery schema.
     syntax:
       content: >-
@@ -138,8 +145,8 @@ items:
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
-    summary: The type of the destination endpoint.
+    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
+    summary: The type of the destination endpoint. It is expected that the destination endpoint be created and available for use before executing any Event Grid command.
     description: ''
   - name: --event-delivery-schema
     parameterValueGroup: cloudeventv01schema, custominputschema, eventgridschema
@@ -153,7 +160,7 @@ items:
     summary: Date or datetime (in UTC, e.g. '2018-11-30T11:59:59+00:00' or '2018-11-30') after which the event subscription would expire. By default, there is no expiration for the event subscription.
     description: ''
   - name: --included-event-types
-    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
+    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all default event types, do not specify any value for this argument.'
     description: ''
   - name: --labels
     summary: A space-separated list of labels to associate with this event subscription.
@@ -282,7 +289,7 @@ items:
       content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1
   - summary: List all event subscriptions for an Event Grid domain topic.
     syntax:
-      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1/topics/topic1"
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1/topics/topic1
   - summary: List all Storage event subscriptions (under the currently selected Azure subscription) in westus2.
     syntax:
       content: az eventgrid event-subscription list --topic-type Microsoft.Storage.StorageAccounts --location westus2
@@ -302,6 +309,9 @@ items:
   parameters:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --odata-query
+    summary: The query used to filter the results using OData syntax.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -435,11 +445,11 @@ items:
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
+    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --included-event-types
-    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
+    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all default event types, do not specify any value for this argument.'
     description: ''
   - name: --labels
     summary: A space-separated list of labels to associate with this event subscription.
