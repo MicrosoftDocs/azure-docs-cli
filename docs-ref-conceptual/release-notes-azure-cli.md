@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 04/09/2019
+ms.date: 04/23/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -17,54 +17,54 @@ ms.devlang: azurecli
 Version 2.0.63
 
 ### ACS
-* "az aks get-credentials" will prompt to overwrite duplicated values
-* Remove "(PREVIEW)" from Dev Spaces commands, "az aks use-dev-spaces" and "az aks remove-dev-spaces".
+* Changed `aks get-credentials` to prompt to overwrite duplicated values
+* Removed `(PREVIEW)` from Dev Spaces commands "aks use-dev-spaces" and "aks remove-dev-spaces"
 
 ### AMS
-* Bug fix for asset and account filters update.
+* Fixed bug with asset and account filters update
 
 ### AppService
-* webapp: az webapp ssh now support ASE and a timeout parameter
-* functionapp: add feature for establishing CI CD to an Azure DevOps pipeline from a Github repository
-* functionapp: in `az functionapp devops-build create`, added `--github-pat` flag to accept Github personal access token
-* functionapp: in `az functionapp devops-build create`, added `--github-repository` flag to accept Github repository that contains a functionapp source code
-* webapp: az webapp up --logs was failing with a error and updating default .NETCORE version to 2.1
-* functionapp: remove unnecessary app settings while creating a function app with consumption plan
-* webapp: az webapp up default asp string now appends number at the end to create a new ASP based on SKU options
-* webapp: az webapp up support -b as an option to launch the app in the browser
-* webapp: az webapp deployment source config zip handles 'AZURE_CLI_DISABLE_CONNECTION_VERIFICATION' environment variable
+* Added support for ASE and timeout to `webapp ssh`
+* Added support for establishing CI CD to an Azure DevOps pipeline from a Github repository to Function apps
+* Added `--github-pat` argument to `functionapp devops-build create` to accept Github personal access token
+* Added `--github-repository` argument to `functionapp devops-build create` to accept Github repository that contains a functionapp source code
+* Fixed issue where `az webapp up --logs` was failing with a error and updating default .NETCORE version to 2.1
+* Removed unnecessary functionapp settings when creating a function app with consumption plan
+* Changed `webapp up` so the default asp string now appends number at the end to create a new ASP based on SKU options
+* Added `-b` as an option to `webapp up` to launch the app in the browser
+* Changed `webapp deployment source config zip` to handle `AZURE_CLI_DISABLE_CONNECTION_VERIFICATION` environment variable
 
 ### Deployment Manager
-* Preview release. Create and manage artifacts that support rollouts.
+* [PREVIEW] Create and manage artifacts that support rollouts
 
 ### Lab
-* Fixed error: 'ObjectsOperations' object has no attribute 'get_current_user'
+* Fixed bug which would cause an early exit
 
 ### Network
-* `dns zone create`: Add auto name server delegation in parent during child zone creation
+* Added auto name server delegation to `dns zone create` in parent during child zone creation
 
 ### Resource
-* `resource link`: Deprecate `--link-id`, `--target-id` and `--filter-string` in favor of
-                   `--link`, `--target`, and `--filter` respectively.
-* `resource link create/update`: Fix issue where these commands would not work.
-* `resource delete`: Fix issue where deleting using a resource ID could crash on error.
+* [DEPRECATED] Deprecated `--link-id`, `--target-id` and `--filter-string` arguments of `resource link`
+  * Use the arguments `--link`, `--target`, and `--filter` instead
+* Fixed issue where `resource link [create|update]` commands would not work
+* Fixed an issue where deleting using a resource ID could crash on error
 
 ### Role
 * [BREAKING CHANGE] 'group create'/'app create'/'sp create-for-rbac': supports idempotent, hence confliction error will not be surfaced
 
 ### SQL
-* Support for custom time zone on managed instance.
-* Allow elastic pool name (as an alternative to elastic pool id) to be specified for az sql db update.
-* `sql server create/update`: Added `--no-wait` support.
-* `sql server`: Added new command `wait`.
+* Added support for custom time zone on managed instances
+* Changed to allow elastic pool name to be used with `sql db update`
+* Added `--no-wait` support to `sql server [create|update]`
+* Added command `sql server wait`
 
 ### Storage
-* `storage blob generate-sas`: Fix double url-encoded sas token
+* Fixed issue with double-encoded SAS tokens in `storage blob generate-sas`
 
 ### VM
-* vm/vmss stop: expose --skip-shutdown. If used, the VM will be powered-off without shutting down. This is helpful if a VM crashes and/or cannot properly shutdown.
-* sig image-version create: expose --storage-account-type. Can now set the publishing profile's general storage account type to Standard_LRS or Standard_ZRS
-* sig image-version create: --target-regions updated to allow for setting region-specific storage account types
+* Added `--skip-shutdown` flag to `vm|vmss stop` to power-off VMs without shutdown
+* Added `--storage-account-type` argument to `sig image-version create` to set the publishing profile's account type
+* Added `--target-regions` argument to `sig image-version create` to allow setting region-specific storage account types
 
 ## April 9, 2019
 
