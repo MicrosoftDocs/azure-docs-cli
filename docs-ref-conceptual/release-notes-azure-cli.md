@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 04/09/2019
+ms.date: 04/23/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,57 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+## April 23, 2019
+
+Version 2.0.63
+
+### ACS
+* Changed `aks get-credentials` to prompt to overwrite duplicated values
+* Removed `(PREVIEW)` from Dev Spaces commands "aks use-dev-spaces" and "aks remove-dev-spaces"
+
+### AMS
+* Fixed bug with asset and account filters update
+
+### AppService
+* Added support for ASE and timeout to `webapp ssh`
+* Added support for establishing CI CD to an Azure DevOps pipeline from a Github repository to Function apps
+* Added `--github-pat` argument to `functionapp devops-build create` to accept Github personal access token
+* Added `--github-repository` argument to `functionapp devops-build create` to accept Github repository that contains a functionapp source code
+* Fixed issue where `az webapp up --logs` was failing with a error and updating default .NETCORE version to 2.1
+* Removed unnecessary functionapp settings when creating a function app with consumption plan
+* Changed `webapp up` so the default asp string now appends number at the end to create a new ASP based on SKU options
+* Added `-b` as an option to `webapp up` to launch the app in the browser
+* Changed `webapp deployment source config zip` to handle `AZURE_CLI_DISABLE_CONNECTION_VERIFICATION` environment variable
+
+### Deployment Manager
+* [PREVIEW] Create and manage artifacts that support rollouts
+
+### Lab
+* Fixed bug which would cause an early exit
+
+### Network
+* Added auto name server delegation to `dns zone create` in parent during child zone creation
+
+### Resource
+* [DEPRECATED] Deprecated `--link-id`, `--target-id` and `--filter-string` arguments of `resource link`
+  * Use the arguments `--link`, `--target`, and `--filter` instead
+* Fixed issue where `resource link [create|update]` commands would not work
+* Fixed an issue where deleting using a resource ID could crash on error
+
+### SQL
+* Added support for custom time zone on managed instances
+* Changed to allow elastic pool name to be used with `sql db update`
+* Added `--no-wait` support to `sql server [create|update]`
+* Added command `sql server wait`
+
+### Storage
+* Fixed issue with double-encoded SAS tokens in `storage blob generate-sas`
+
+### VM
+* Added `--skip-shutdown` flag to `vm|vmss stop` to power-off VMs without shutdown
+* Added `--storage-account-type` argument to `sig image-version create` to set the publishing profile's account type
+* Added `--target-regions` argument to `sig image-version create` to allow setting region-specific storage account types
+
 ## April 9, 2019
 
 ### Core
