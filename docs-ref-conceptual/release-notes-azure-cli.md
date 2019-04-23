@@ -49,9 +49,6 @@ Version 2.0.63
 * Fixed issue where `resource link [create|update]` commands would not work
 * Fixed an issue where deleting using a resource ID could crash on error
 
-### Role
-* [BREAKING CHANGE] 'group create'/'app create'/'sp create-for-rbac': supports idempotent, hence confliction error will not be surfaced
-
 ### SQL
 * Added support for custom time zone on managed instances
 * Changed to allow elastic pool name to be used with `sql db update`
