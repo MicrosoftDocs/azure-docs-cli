@@ -3,7 +3,7 @@ items:
 - uid: az_resource_link
   name: az resource link
   summary: Manage links between resources.
-  description: Linking is a feature of the Resource Manager. It enables declaring relationships between resources even if they do not reside in the same resource group. Linking has no impact on resource usage, no impact on billing, and no impact on role-based access. It allows for managing multiple resources across groups as a single unit.
+  description: Linking is a feature of the Resource Manager. It enables declaring relationships between resources even if they do not reside in the same resource group. Linking has no impact on resource usage, billing, or role-based access. It allows for managing multiple resources across groups as a single unit.
   langs:
   - azurecli
   children:
@@ -15,24 +15,24 @@ items:
 - uid: az_resource_link_create
   name: az resource link create
   summary: Create a new link between resources.
-  description: A link-id is of the form /subscriptions/{SubID}/resourceGroups/{ResourceGroupID}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Create a link from {SourceID} to {ResourceID} with notes
     syntax:
-      content: az resource link create --link-id {SourceID} --target-id {ResourceID} --notes "SourceID depends on ResourceID"
+      content: az resource link create --link {SourceID} --target {ResourceID} --notes "SourceID depends on ResourceID"
   parameters:
   - isRequired: true
-    name: --link-id
-    summary: ''
-    description: ''
+    name: --link
+    summary: Fully-qualified resource ID of the resource link.
+    description: 'Format: /subscriptions/{SubID}/resourceGroups/{ResourceGroupID}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.'
   - isRequired: true
-    name: --target-id
-    summary: The id of the resource link target.
+    name: --target
+    summary: Fully-qualified resource ID of the resource link target.
     description: ''
   - name: --notes
-    summary: Notes for this link.
+    summary: Notes for the link.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -46,18 +46,18 @@ items:
 - uid: az_resource_link_delete
   name: az resource link delete
   summary: Delete a link between resources.
-  description: A link-id is of the form /subscriptions/{SubID}/resourceGroups/{ResourceGroupID}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Delete link {LinkID}
     syntax:
-      content: az resource link delete --link-id {LinkID}
+      content: az resource link delete --link {LinkID}
   parameters:
   - isRequired: true
-    name: --link-id
-    summary: The fully qualified ID of the resource link. Use the format, /subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/{provider-namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink.
-    description: ''
+    name: --link
+    summary: Fully-qualified resource ID of the resource link.
+    description: 'Format: /subscriptions/{SubID}/resourceGroups/{ResourceGroupID}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.'
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -81,11 +81,11 @@ items:
     syntax:
       content: az resource link list --scope /subscriptions/{SubID}/resourceGroups/{ResourceGroup}
   parameters:
-  - name: --filter-string
-    summary: A filter for restricting the results.
+  - name: --filter
+    summary: Filter string for limiting results.
     description: ''
   - name: --scope
-    summary: The scope for the links.
+    summary: Fully-qualified scope for retrieving links.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -98,18 +98,14 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_resource_link_show
   name: az resource link show
-  summary: Get details for a resource link.
-  description: A link-id is of the form /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.
+  summary: Gets a resource link with the specified ID.
+  description: ''
   langs:
   - azurecli
-  examples:
-  - summary: Get details for a resource link
-    syntax:
-      content: az resource link show --link-id {link-id}
   parameters:
   - isRequired: true
-    name: --link-id
-    summary: The fully qualified Id of the resource link. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink.
+    name: --link
+    summary: Fully-qualified resource ID of the resource link.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -123,23 +119,23 @@ items:
 - uid: az_resource_link_update
   name: az resource link update
   summary: Update link between resources.
-  description: A link-id is of the form /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Update the notes for {LinkID} notes "some notes to explain this link"
     syntax:
-      content: az resource link update --link-id {LinkID} --notes "some notes to explain this link"
+      content: az resource link update --link {LinkID} --notes "some notes to explain this link"
   parameters:
   - isRequired: true
-    name: --link-id
-    summary: ''
-    description: ''
+    name: --link
+    summary: Fully-qualified resource ID of the resource link.
+    description: 'Format: /subscriptions/{SubID}/resourceGroups/{ResourceGroupID}/providers/{ProviderNamespace}/{ResourceType}/{ResourceName}/providers/Microsoft.Resources/links/{LinkName}.'
   - name: --notes
-    summary: Notes for this link.
+    summary: Notes for the link.
     description: ''
-  - name: --target-id
-    summary: The id of the resource link target.
+  - name: --target
+    summary: Fully-qualified resource ID of the resource link target.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -162,7 +158,7 @@ commands:
   summary: List resource links.
 - uid: az_resource_link_show
   name: az resource link show
-  summary: Get details for a resource link.
+  summary: Gets a resource link with the specified ID.
 - uid: az_resource_link_update
   name: az resource link update
   summary: Update link between resources.
@@ -182,7 +178,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/489bfb145dd245e5dd82abed2d9d8b4812b07f9e/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
-updated_at: 4/3/2019 2:59:03 PM
-ms.date: 04/03/2019
-description: Linking is a feature of the Resource Manager. It enables declaring relationships between resources even if they do not reside in the same resource group. Linking has no impact on resource usage, no impact on billing, and no impact on role-based access. It allows for managing multiple resources across groups as a single unit.
+gitcommit: https://github.com/Azure/azure-cli/blob/d0ba89912325f2409217db61e87cad0ee718c147/src/command_modules/azure-cli-resource/azure/cli/command_modules/resource/_help.py
+updated_at: 4/16/2019 6:53:05 PM
+ms.date: 04/16/2019
+description: Linking is a feature of the Resource Manager. It enables declaring relationships between resources even if they do not reside in the same resource group. Linking has no impact on resource usage, billing, or role-based access. It allows for managing multiple resources across groups as a single unit.
