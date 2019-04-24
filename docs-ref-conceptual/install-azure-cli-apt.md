@@ -32,7 +32,7 @@ for the Azure CLI. This package has been tested with:
 
     ```bash
     sudo apt-get update
-    sudo apt-get install curl apt-transport-https lsb-release gpg
+    sudo apt-get install curl apt-transport-https lsb-release gnupg
     ```
 
 2. Download and install the Microsoft signing key:

@@ -35,6 +35,13 @@ items:
         az sig image-version create --no-wait -g MyResourceGroup --gallery-name MyGallery \
                                 --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
                                 --managed-image imageInTheSameResourceGroup
+  - summary: Add a new image version with target regions that have different storage account types and replica counts
+    syntax:
+      content: >-
+        az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 \
+                                --target-regions westus=2=standard_lrs eastus=3=standard_zrs \
+                                --gallery-name MyGallery --gallery-image-definition MyImage \
+                                --managed-image imageInTheSameResourceGroup
   parameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -72,11 +79,15 @@ items:
   - name: --replica-count
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
+  - name: --storage-account-type
+    parameterValueGroup: Standard_LRS, Standard_ZRS
+    summary: The default storage account type to be used per region. To set regional storage account types, use --target-regions.
+    description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --target-regions
-    summary: Space-separated list of regions and their replica counts. Use "<region>=<replica count>" to set the replica count for each region. If only the region is specified, the default replica count will be used.
+    summary: Space-separated list of regions and their replica counts. Use "<region>[=<replica count>][=<storage account type>]" to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -195,7 +206,7 @@ items:
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
   - name: --target-regions
-    summary: Space-separated list of regions and their replica counts. Use "<region>=<replica count>" to set the replica count for each region. If only the region is specified, the default replica count will be used.
+    summary: Space-separated list of regions and their replica counts. Use "<region>[=<replica count>][=<storage account type>]" to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
