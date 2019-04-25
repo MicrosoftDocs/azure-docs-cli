@@ -15,16 +15,11 @@ ms.devlang: azurecli
 
 The Azure command-line interface (CLI) is Microsoft's cross-platform command-line experience for managing Azure resources. The Azure CLI is easy to learn and the perfect tool for building custom automation that works with Azure resources.
 
-| ![Windows logo](./media/Windows_logo_-_2012.png)<br/>Windows 10 | ![Ubuntu logo](./media/cof_orange_hex.png)<br/>Ubuntu 16.04+ | ![macOS logo](./media/Apple_logo_black.png)<br/>macOS | ![Azure Cloud Shell logo](./media/cloud-check.png)<br/>Azure Cloud Shell |
+| <center>![Windows logo](./media/Windows_logo_-_2012.png)<br/>Windows 10</center> | <center>![Ubuntu logo](./media/cof_orange_hex.png)<br/>Ubuntu 16.04+</center> | <center>![macOS logo](./media/Apple_logo_black.png)<br/>macOS</center> | <center>![Azure Cloud Shell logo](./media/cloud-check.png)<br/>Azure Cloud Shell</center> |
 |---|---|---|---|
-| [!div class="nextstepaction"][Download the MSI installer](https://aka.ms/installazurecliwindows) | [Ubuntu install instructions](./install-azure-cli-apt.md) | [macOS install instructions](./install-azure-cli-macos.md) | [Run in your browser on Azure Cloud Shell](https://shell.azure.com) |
+| [Download the MSI installer](https://aka.ms/installazurecliwindows) | [Ubuntu install instructions](./install-azure-cli-apt.md) | [macOS install instructions](./install-azure-cli-macos.md) | [Run in your browser on Azure Cloud Shell](https://shell.azure.com) |
 
 [See all of the supported installation platforms.](./install-azure-cli.md)
-
-> [!NOTE]
-> If you use the previous version of the CLI (Azure classic CLI), you can continue to use it.
-> However, we recommend updating to use the latest version of the Azure CLI for the best experience.
-> If you use both CLIs, remember that `azure` is the classic CLI and that `az` is the most recent CLI.
 
 ## Azure CLI Resources
 
