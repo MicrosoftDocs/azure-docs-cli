@@ -33,6 +33,6 @@ The Azure command-line interface (CLI) is Microsoft's cross-platform command-lin
 |-------------|----------------------------------------|------------|
 | [Get Started with the Azure CLI](get-started-with-azure-cli.md) | [Manage virtual machines with the Azure CLI](/learn/modules/manage-virtual-machines-with-azure-cli/) | [Request features](https://github.com/Azure/azure-cli/issues/new?template=Feature_request.md) |
 | [Deploy a web application from GitHub](/azure/app-service/scripts/cli-deploy-github?toc=%2fcli%2fazure%2ftoc.json) | [Control Azure services with the CLI](/learn/modules/control-azure-services-with-cli/) | [Get help on StackOverflow](https://stackoverflow.com/questions/tagged/azure-cli) |
-| [Create a Postgres database](/azure/postgresql/quickstart-create-server-up-azure-cli?toc=%2fcli%2fazure%2ftoc.json) | [More interactive learning...](/learn/browse/?products=azure-clis) | [Report issues](https://github.com/Azure/azure-cli/issues/new?template=Bug_report.md) |
-| [Create a Kubernetes cluster](/azure/aks/kubernetes-walkthrough?toc=%2fcli%2fazure%2ftoc.json) | | |
+| [Create a Postgres database](/azure/postgresql/quickstart-create-server-up-azure-cli?toc=%2fcli%2fazure%2ftoc.json) |  [Connect an application to Azure Storage](/learn/modules/connect-an-app-to-azure-storage/) | [Report issues](https://github.com/Azure/azure-cli/issues/new?template=Bug_report.md) |
+| [Create a Kubernetes cluster](/azure/aks/kubernetes-walkthrough?toc=%2fcli%2fazure%2ftoc.json) | [More interactive learning...](/learn/browse/?products=azure-clis) | |
 | [Create a virtual machine](/cli/azure/azure-cli-vm-tutorial) | | |

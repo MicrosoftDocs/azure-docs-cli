@@ -41,7 +41,7 @@ We offer and maintain a script which runs all of the installation commands in on
 > any necessary troubleshooting.
 
 ```bash
-sudo curl -L https://aka.ms/InstallAzCLIDeb | bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
 ### Manual install instructions
