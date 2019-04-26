@@ -28,6 +28,26 @@ for the Azure CLI. This package has been tested with:
 
 ## Install
 
+We offer two ways to install the Azure CLI with distributions that support `apt`: As an all-in-one script that
+runs the install commands for you, and instructions that you can run as a step-by-step process on your own.
+
+### Install with one command
+
+We offer and maintain a script which runs all of the installation commands in one step. Run it by using `curl` and pipe directly to `bash`, or download the script to a file and inspect it before running.
+
+> [!IMPORTANT]
+> This script is only verified for Ubuntu 16.04+ and Debian 8+. It may not work on other distributions.
+> If you're using a derived distribution such as Mint, follow the manual install instructions and perform
+> any necessary troubleshooting.
+
+```bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+### Manual install instructions
+
+If you don't want to run a script as superuser, follow these manual steps to install the Azure CLI.
+
 1. Get packages needed for the install process:
 
     ```bash
