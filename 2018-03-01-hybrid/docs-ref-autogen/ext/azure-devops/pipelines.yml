@@ -7,10 +7,82 @@ items:
   langs:
   - azurecli
   children:
+  - ext_azure-devops_az_pipelines_create
   - ext_azure-devops_az_pipelines_delete
   - ext_azure-devops_az_pipelines_list
   - ext_azure-devops_az_pipelines_run
   - ext_azure-devops_az_pipelines_show
+  - ext_azure-devops_az_pipelines_update
+- uid: ext_azure-devops_az_pipelines_create
+  name: az pipelines create
+  summary: Create a new Azure Pipeline (YAML based).
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create an Azure Pipeline from local checkout repository context
+    syntax:
+      content: >-
+        Repository name/url (--repository), type (--repository-type) and branch name (--branch) will be detected from the local git repository
+                                az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+  - summary: Create an Azure Pipeline for a repository hosted on Github using clone url
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository https://github.com/SampleOrg/SampleRepo --branch master
+  - summary: Create an Azure Pipeline for a repository hosted on Github organization SampleOrg, repository name SampleRepo
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository SampleOrg/SampleRepoName --branch master --repository-type github
+  - summary: Create an Azure Pipeline for a repository hosted in a Azure Repo in the same project
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository SampleRepoName --branch master --type tfsgit
+  - summary: Create an Azure Pipeline for a repository with the pipeline yaml already checked in into the repository
+    syntax:
+      content: >-
+        Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
+                                az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository https://github.com/SampleOrg/SampleRepo --branch master --yml-path azure-pipelines.yml [--service-connection SERVICE_CONNECTION]
+  parameters:
+  - isRequired: true
+    name: --name
+    summary: Name of the new pipeline.
+    description: ''
+  - name: --branch
+    summary: Branch name for which the pipeline will be configured. If omitted, it will be auto-detected from local repository.
+    description: ''
+  - name: --description
+    summary: Description for the new pipeline.
+    description: ''
+  - name: --detect
+    parameterValueGroup: off, on
+    summary: Automatically detect organization. Default is "on".
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --queue-id
+    summary: Id of the queue in the available agent pools. Will be auto detected if not specified.
+    description: ''
+  - name: --repository
+    summary: Repository for which the pipeline needs to be configured. Can be clone url of the git repository or name of the repository for a Azure Repos or Owner/RepoName in case of GitHub repository. If omitted it will be auto-detected from the remote url of local git repository. If name is mentioned instead of url, --repository-type argument is also required.
+    description: ''
+  - name: --repository-type
+    parameterValueGroup: github, tfsgit
+    summary: Type of repository. If omitted, it will be auto-detected from remote url of local repository. 'tfsgit' for Azure Repos, 'github' for GitHub repository.
+    description: ''
+  - name: --service-connection
+    summary: Id of the Service connection created for the repository for GitHub repository. Use command az devops service-endpoint -h for creating/listing service_connections. Not required for Azure Repos.
+    description: ''
+  - name: --yml-path
+    summary: Path of the pipelines yml file in the repo (if yml is already present in the repo).
+    description: ''
 - uid: ext_azure-devops_az_pipelines_delete
   name: az pipelines delete
   summary: Delete a pipeline.
@@ -130,6 +202,44 @@ items:
   - name: --project -p
     summary: Name or ID of the project.
     description: ''
+- uid: ext_azure-devops_az_pipelines_update
+  name: az pipelines update
+  summary: Update a pipeline.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --branch
+    summary: Branch name for which the pipeline will be configured.
+    description: ''
+  - name: --description
+    summary: Description to be updated for the pipeline.
+    description: ''
+  - name: --detect
+    parameterValueGroup: off, on
+    summary: Automatically detect organization. Default is "on".
+    description: ''
+  - name: --id
+    summary: Id of the pipeline to update.
+    description: ''
+  - name: --name
+    summary: Name of the pipeline to update.
+    description: ''
+  - name: --new-name
+    summary: New updated name of the pipeline.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --queue-id
+    summary: Queue id of the agent pool where the pipeline needs to run.
+    description: ''
+  - name: --yml-path
+    summary: Path of the pipelines yml file in the repo.
+    description: ''
 commands:
 - uid: ext_azure-devops_az_pipelines_build
   name: az pipelines build
@@ -164,6 +274,9 @@ commands:
 - uid: ext_azure-devops_az_pipelines_build_tag_list
   name: az pipelines build tag list
   summary: Get tags for a build.
+- uid: ext_azure-devops_az_pipelines_create
+  name: az pipelines create
+  summary: Create a new Azure Pipeline (YAML based).
 - uid: ext_azure-devops_az_pipelines_delete
   name: az pipelines delete
   summary: Delete a pipeline.
@@ -230,6 +343,9 @@ commands:
 - uid: ext_azure-devops_az_pipelines_show
   name: az pipelines show
   summary: Get the details of a pipeline.
+- uid: ext_azure-devops_az_pipelines_update
+  name: az pipelines update
+  summary: Update a pipeline.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
