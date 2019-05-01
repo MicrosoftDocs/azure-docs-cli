@@ -4,7 +4,7 @@ description: How to install the Azure CLI on Windows
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/09/2018
+ms.date: 05/01/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -21,7 +21,8 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
-The MSI distributable is used for installing, updating, and uninstalling the `az` command on Windows.
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall any current versions
+before using the MSI installer.
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/installazurecliwindows)
@@ -39,10 +40,14 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
 
-Uninstalling can be done by running the MSI again, and choosing the "Uninstall" option.
+You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninstall:
 
-> [!div class="nextstepaction"]
-> [Download the MSI installer](https://aka.ms/installazurecliwindows)
+| Platform | Instructions |
+|---|---|
+| Windows 10 | Start > Settings > Apps |
+| Windows 8<br/>Windows 7 | Start > Control Panel > Programs > Uninstall a program |
+
+Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.
 
 ## Next Steps
 
