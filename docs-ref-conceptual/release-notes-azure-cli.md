@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 04/23/2019
+ms.date: 05/06/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -18,18 +18,19 @@ ms.devlang: azurecli
 Version 2.0.64
 
 ### Appservice
-* functionapp: deprecate `az functionapp devops-build` command. Rename it to `az functionapp devops-pipeline`
-* webapp: Fixing getting the correct username for cloudshell which was causing az webapp up to fail
-* appservice plan: az appservice plan --sku documentation updated to reflect the supported appserviceplans
-* webapp: az webapp up supports optional arguments resourcegroup & plan to override the defaults offered by the command
-* webapp: az webapp ssh handles 'AZURE_CLI_DISABLE_CONNECTION_VERIFICATION' environment variable
-* appserviceplan: az appserviceplan create support for Linux FREE sku
-* webapp: az webapp up now has a 30s sleep after setting SCM_DO_BUILD_DURING_DEPLOYMENT=true appsetting to handle kudu cold start
-* functionapp: `az functionapp create` supports a runtime of `powershell` on Windows
-* webapp: add create-remote-connection command
+* Deprecated `functionapp devops-build` command
+  * Renamed to `functionapp devops-pipeline`
+* Fixed getting the correct username for cloudshell which was causing `webapp up` to fail
+* Updated `appservice plan --sku` documentation updated to reflect the supported appserviceplans
+* Added optional arguments for resource group and plan to `webapp up`
+* Added support to `webapp ssh` to respect `AZURE_CLI_DISABLE_CONNECTION_VERIFICATION` environment variable
+* Added `appserviceplan create` support for Linux Free SKU
+* Changed `webapp up` to have a 30s sleep after setting `SCM_DO_BUILD_DURING_DEPLOYMENT=true` appsetting to handle kudu cold start
+* Added support for `powershell` runtime to `functionapp create` on Windows
+* Added `create-remote-connection` command
 
 ### Role
-* create-for-rbac: hide '--password' as the preparations to pull the plug completely in 2019 May
+* [DEPRECATED] Changed `create-for-rbac` hide '--password' argument - support will be removed in May 2019
 
 ## April 23, 2019
 
