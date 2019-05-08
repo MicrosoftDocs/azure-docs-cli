@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 03/19/2019
+ms.date: 05/08/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -14,9 +14,9 @@ ms.devlang: azurecli
 # Install Azure CLI with apt
 
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
-for the Azure CLI. This package has been tested with:
+for the Azure CLI. This package has been tested with and is supported for:
 
-* Ubuntu trusty, xenial, artful, and bionic
+* Ubuntu trusty, xenial, artful, bionic, and disco
 * Debian wheezy, jessie, and stretch
 
 [!INCLUDE [current-version](includes/current-version.md)]
@@ -33,11 +33,12 @@ runs the install commands for you, and instructions that you can run as a step-b
 
 ### Install with one command
 
-We offer and maintain a script which runs all of the installation commands in one step. Run it by using `curl` and pipe directly to `bash`, or download the script to a file and inspect it before running.
+We offer and maintain a script which runs all of the installation commands in one step. Run it by using `curl`
+and pipe directly to `bash`, or download the script to a file and inspect it before running.
 
 > [!IMPORTANT]
 > This script is only verified for Ubuntu 16.04+ and Debian 8+. It may not work on other distributions.
-> If you're using a derived distribution such as Mint, follow the manual install instructions and perform
+> If you're using a derived distribution such as Linux Mint, follow the manual install instructions and perform
 > any necessary troubleshooting.
 
 ```bash
@@ -96,9 +97,11 @@ determine the package to install. If you know the code name of the Ubuntu or Deb
 
 ### No package for your distribution
 
-Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
+Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
+versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `disco` repository, and for Debian distributions
+use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
