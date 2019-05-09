@@ -23,6 +23,10 @@ items:
   - azurecli
   parameters:
   - isRequired: true
+    name: --appid
+    summary: The Microsoft account ID (MSA ID) to be used with the bot.
+    description: ''
+  - isRequired: true
     name: --kind -k
     parameterValueGroup: function, registration, webapp
     summary: The kind of the bot.
@@ -32,18 +36,16 @@ items:
     summary: The resource name of the bot. Bot name must be between 4 and 42 characters in length. Bot name can only have the following characters -, a - z, A - Z, 0 - 9, and _.
     description: ''
   - isRequired: true
+    name: --password -p
+    summary: The Microsoft account (MSA) password for the bot. Used to authorize messages being sent to the bot.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --appid
-    summary: The Microsoft account ID (MSA ID) to be used with the bot.
     description: ''
   - name: --location -l
     defaultValue: Central US
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
-    description: ''
-  - name: --password -p
-    summary: The Microsoft account (MSA) password for the bot.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -62,21 +64,23 @@ items:
     parameterValueGroup: F0, S1
     summary: The Sku of the bot.
     description: ''
+  - name: --echo
+    parameterValueGroup: false, true
+    summary: Deploy an Echo Bot template to the newly created v4 Web App Bot.
+    description: ''
   - name: --insights-location
-    defaultValue: South Central US
-    parameterValueGroup: East US, North Europe, South Central US, Southeast Asia, West Europe, West US 2
-    summary: The location for the app insights to be used with the bot.
+    parameterValueGroup: Australia East, Canada Central, Central India, East Asia, East US, East US 2, France Central, Japan East, Korea Central, North Europe, South Central US, Southeast Asia, UK South, West Europe, West US 2
+    summary: 'WARNING: Not used in V4 bot creation. The location for the app insights to be used with the bot.  Default: South Central US.'
     description: ''
   - name: --lang
-    defaultValue: Csharp
-    parameterValueGroup: Csharp, Node
+    parameterValueGroup: Csharp, Javascript
     summary: The language to be used to create the bot.
     description: ''
   - name: --storage -s
-    summary: Storage account name to be used with the bot. If not provided, a new account will be created.
+    summary: 'WARNING: Not used in V4 bot creation. Storage account name to be used with the bot. If not provided, a new account will be created.'
     description: ''
   - name: --version -v
-    defaultValue: v3
+    defaultValue: v4
     parameterValueGroup: v3, v4
     summary: The Microsoft Bot Builder SDK version to be used to create the bot.
     description: ''
@@ -142,18 +146,21 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_bot_prepare_deploy
   name: az bot prepare-deploy
-  summary: Add scripts and configuration files to your local source code directory to be able to publish back using `az webapp deployment source`.
-  description: ''
+  summary: Add scripts/config files for publishing with `az webapp deployment`.
+  description: Add scripts or configuration files to the root of your local source code directory to be able to publish using `az webapp deployment`. When your code is deployed to your App Service, the generated scripts or configuration files should be appear in D:homesitewwwroot on App Service's Kudu web page.
   langs:
   - azurecli
   examples:
-  - summary: Prepare to use `az webapp` to deploy a Node.js bot by fetching a necessary file.
+  - summary: Prepare to use `az webapp` to deploy a Javascript bot by fetching a Node.js IIS web.config file.
     syntax:
-      content: az bot prepare-deploy --lang Node --code-dir "MyBotCode"
+      content: az bot prepare-deploy --lang Javascript --code-dir "MyBotCode"
+  - summary: Prepare to use `az webapp` to deploy a Csharp bot by creating a .deployment file.
+    syntax:
+      content: az bot prepare-deploy --lang Csharp --code-dir "." --proj-file-path "MyBot.csproj"
   parameters:
   - isRequired: true
     name: --lang
-    parameterValueGroup: Csharp, Node
+    parameterValueGroup: Csharp, Javascript, Typescript
     summary: The language or runtime of the bot.
     description: ''
   - name: --code-dir
@@ -214,7 +221,7 @@ items:
 - uid: az_bot_publish
   name: az bot publish
   summary: Publish to a bot's associated app service.
-  description: Publish your source code to your bot's associated app service.
+  description: Publish your source code to your bot's associated app service. This is DEPRECATED for v4 bots and no longer recommended for publishing v4 bots to Azure. Instead use `az bot prepare-deploy` and `az webapp deployment` to deploy your v4 bot. For more information see <a href="https://aka.ms/deploy-your-bot">https://aka.ms/deploy-your-bot</a>.
   langs:
   - azurecli
   examples:
@@ -244,7 +251,7 @@ items:
     summary: Configurable timeout in seconds for checking the status of deployment.
     description: ''
   - name: --version -v
-    defaultValue: v3
+    defaultValue: v4
     summary: The Microsoft Bot Builder SDK version of the bot.
     description: ''
   - name: --subscription
@@ -297,7 +304,7 @@ items:
   examples:
   - summary: Update description on a bot
     syntax:
-      content: az bot update -n botName -g MyResourceGroup --set properties.description="some description"
+      content: az bot update -n botName -g MyResourceGroup --endpoint "https://bing.com/api/messages" --display-name "Hello World"
   parameters:
   - isRequired: true
     name: --name -n
@@ -307,35 +314,30 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --etag
-    summary: Entity Tag.
+  - name: --description
+    summary: The bot's new description.
     description: ''
-  - name: --kind
-    summary: Required. Gets or sets the Kind of the resource.
+  - name: --display-name -d
+    summary: The bot's new display name.
     description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
-    description: ''
-  - name: --properties
-    summary: The set of properties specific to bot resource.
+  - name: --endpoint -e
+    summary: The new endpoint of the bot. Must start with "https://".
     description: ''
   - name: --sku
-    summary: Gets or sets the SKU of the resource.
+    parameterValueGroup: F0, S1
+    summary: The Sku of the bot.
     description: ''
   - name: --tags
-    summary: Contains resource tags defined as key/value pairs.
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+  - name: --ai-api-key --app-insights-api-key
+    summary: Azure Application Insights API Key used to read bot analytics data. Provide a key if you want to view analytics about your bot in the Analytics blade.
     description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ai-app-id --app-insights-app-id
+    summary: Azure Application Insights Application ID used to read bot analytics data. Provide an Id if you want to view analytics about your bot in the Analytics blade.
     description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  - name: --ai-key --app-insights-key
+    summary: Azure Application Insights Key used to write bot analytics data. Provide a key if you want to receive bot analytics.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -436,7 +438,7 @@ commands:
   summary: Get details of the Microsoft Teams Channel on a bot.
 - uid: az_bot_prepare_deploy
   name: az bot prepare-deploy
-  summary: Add scripts and configuration files to your local source code directory to be able to publish back using `az webapp deployment source`.
+  summary: Add scripts/config files for publishing with `az webapp deployment`.
 - uid: az_bot_prepare_publish
   name: az bot prepare-publish
   summary: Add scripts to your local source code directory to be able to publish back using `az bot publish`.
@@ -519,7 +521,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-botservice/azure/cli/command_modules/botservice/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-botservice/azure/cli/command_modules/botservice/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/be31c83350a7ef50f2ca22606652a36c65e6197a/src/command_modules/azure-cli-botservice/azure/cli/command_modules/botservice/_help.py
-updated_at: 3/21/2019 4:18:42 PM
-ms.date: 03/21/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/5c55e8807245b5649abbfcf847067083980cf9d7/src/command_modules/azure-cli-botservice/azure/cli/command_modules/botservice/_help.py
+updated_at: 4/29/2019 10:23:10 PM
+ms.date: 04/29/2019
 description: Manage Microsoft Bot Services.
