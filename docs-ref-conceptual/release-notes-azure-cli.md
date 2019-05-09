@@ -17,6 +17,12 @@ ms.devlang: azurecli
 
 Version 2.0.64
 
+### ACS
+* BREAKING CHANGE: Removing `--fqdn` flag on az openshift commands
+* Using Azure Red Hat Openshift GA API Version
+* adding customer-admin-group-id flag to "az openshift create"
+* Remove "(PREVIEW)" from "az aks create" option "--network-policy".
+
 ### Appservice
 * Deprecated `functionapp devops-build` command
   * Renamed to `functionapp devops-pipeline`
@@ -29,8 +35,60 @@ Version 2.0.64
 * Added support for `powershell` runtime to `functionapp create` on Windows
 * Added `create-remote-connection` command
 
+### Batch
+* Fix bug in validator for --application-package-references options.
+
+### Botservice
+* [Breaking Change]: `az bot create -v v4 -k webapp` now creates an empty Web App Bot by default (i.e. no bot is deployed to the App Service).
+    * To use the Echo Bot template that was always deployed in the past, use the new `--echo` flag when creating a v4 Web App Bot.
+    * `v3` bot creation does not support using the `--echo` flag.
+* [Breaking Change]: The default value for `--version` is now `v4`, not `v3` (except for `az bot prepare-publish`).
+* [Breaking Change]: `--lang` no longer defaults to `Csharp`. If the command requires `--lang` and it is not provided, the command will error out.
+* [Breaking Change]: The `--appid` and `--password` args for `az bot create` are now required and can be created via `az ad app create`.
+    * Add `--appid` and `--password` validations
+* [Breaking Change]: `az bot create -v v4` does not create or use a Storage Account or Application Insights.
+* [Breaking Change]: Instead of mapping Application Insights regions for `az bot create -v v3`, the command only accepts regions where Application Insights is creatable.
+* [Breaking Change]: `az bot update` is no longer a generic update command, but instead can affect specific properties of a bot.
+* [Breaking Change]: All --lang flags now accept `Javascript` instead of `Node`. `Node` as a `--lang` value is no longer supported.
+* [Breaking Change]: `az bot create -v v4 -k webapp` no longer sets `SCM_DO_BUILD_DURING_DEPLOYMENT` to true. All deployments through Kudu will act according to their default behavior.
+* `az bot download` for bots without .bot files now create the language-specific configuration file with values from the Application Settings for the bot.
+* Add `Typescript` support to `az bot prepare-deploy`
+* Add warning message to `az bot prepare-deploy` for `Javascript` and `Typescript` bots.
++    * This message only appears if the `--code-dir` doesn't contain a package.json.
+* `az bot prepare-deploy` returns `true` if successful and has helpful verbose logging.
+* Add more available Application Insights regions to `az bot create -v v3`
+
+### Configure
+* Support folder based argument default value configurations
+
+### Eventhubs
+* namespace: Added network-rule commands.
+* namespace create/update: Added --default-action argument for network rules.
+
+### Network
+* [BREAKING CHANGE] `vnet create/update`: Replaced `--cache` arugment with `--defer`.
+
+### Policy Insights
+* Add support for `--expand PolicyEvaluationDetails` to query policy evaluation details on the resource.
+
 ### Role
 * [DEPRECATED] Changed `create-for-rbac` hide '--password' argument - support will be removed in May 2019
+
+### Service Bus
+* namespace: Added network-rule commands.
+* namespace create/update: Added --default-action argument for network rules.
+* topic create/update: fixed the command for parameter --max-size to support 10, 20, 40 and 80GB values with premium sku
+
+### SQL
+* Added commands sql virtual-cluster list/show/delete
+
+### VM
+* vmss update: add `--protect-from-scale-in` and `--protect-from-scale-set-actions` to enable updates to the protection policy of VMSS VM instances.
+* vmss update: add `--instance-id` to enable generic update of VMSS VM instances.
+* vmss wait: add `--instance-id`.
+* [new command group] ppg: add `ppg create / delete / list / show / update` for managing Proximity Placement Groups.
+* ppg: add `--ppg` to `vm create`, `vmss create` and `vm availability-set create`
+* image create: expose `--hyper-v-generation` parameter.
 
 ## April 23, 2019
 
