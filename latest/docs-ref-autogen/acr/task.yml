@@ -65,9 +65,12 @@ items:
   - summary: Create a task with the definition from the pipe.
     syntax:
       content: cat task.yaml | az acr task create -n hello-world -r MyRegistry -f - -c /dev/null
-  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image without triggers
+  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image without triggers.
     syntax:
       content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false
+  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image without triggers and uses a build argument.
+    syntax:
+      content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure/acr-builder.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --arg DOCKER_CLI_BASE_IMAGE=docker:18.03.0-ce-git
   - summary: Create a Linux task using a private GitHub repository which builds the hello-world image without triggers on Arm architecture (V7 variant)
     syntax:
       content: az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile --commit-trigger-enabled false --pull-request-trigger-enabled false --git-access-token 0000000000000000000000000000000000000000 --platform linux/arm/v7
@@ -91,7 +94,7 @@ items:
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --arg
-    summary: Build argument in 'name[=value]' format.
+    summary: Build argument in 'name[=value]' format. Multiple --arg can be fed.
     description: ''
   - name: --auth-mode
     parameterValueGroup: Default, None
@@ -134,7 +137,7 @@ items:
     summary: The access token used to access the source control provider.
     description: ''
   - name: --image -t
-    summary: The name of the image. May include a tag in the format 'name:tag'.
+    summary: The name of the image. May include a tag in the format 'name:tag'. Multiple --image or -t can be fed.
     description: ''
   - name: --no-cache
     parameterValueGroup: false, true
@@ -159,13 +162,13 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --secret-arg
-    summary: Secret build argument in 'name[=value]' format.
+    summary: Secret build argument in 'name[=value]' format. Multiple --secret-arg can be fed.
     description: ''
   - name: --set
-    summary: Task value in 'name[=value]' format.
+    summary: Task value in 'name[=value]' format. Multiple --set can be fed.
     description: ''
   - name: --set-secret
-    summary: Secret task value in 'name[=value]' format.
+    summary: Secret task value in 'name[=value]' format. Multiple --set-secret can be fed.
     description: ''
   - name: --source-trigger-name
     defaultValue: defaultSourceTriggerName
@@ -377,10 +380,10 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --set
-    summary: Task value in 'name[=value]' format.
+    summary: Task value in 'name[=value]' format. Multiple --set can be fed.
     description: ''
   - name: --set-secret
-    summary: Secret task value in 'name[=value]' format.
+    summary: Secret task value in 'name[=value]' format. Multiple --set-secret can be fed.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -485,7 +488,7 @@ items:
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
   - name: --arg
-    summary: Build argument in 'name[=value]' format.
+    summary: Build argument in 'name[=value]' format. Multiple --arg can be fed.
     description: ''
   - name: --auth-mode
     parameterValueGroup: Default, None
@@ -519,7 +522,7 @@ items:
     summary: The access token used to access the source control provider.
     description: ''
   - name: --image -t
-    summary: The name of the image. May include a tag in the format 'name:tag'.
+    summary: The name of the image. May include a tag in the format 'name:tag'. Multiple --image or -t can be fed.
     description: ''
   - name: --no-cache
     parameterValueGroup: false, true
@@ -543,13 +546,13 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --secret-arg
-    summary: Secret build argument in 'name[=value]' format.
+    summary: Secret build argument in 'name[=value]' format. Multiple --secret-arg can be fed.
     description: ''
   - name: --set
-    summary: Task value in 'name[=value]' format.
+    summary: Task value in 'name[=value]' format. Multiple --set can be fed.
     description: ''
   - name: --set-secret
-    summary: Secret task value in 'name[=value]' format.
+    summary: Secret task value in 'name[=value]' format. Multiple --set-secret can be fed.
     description: ''
   - name: --status
     parameterValueGroup: Disabled, Enabled
@@ -673,7 +676,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/7ab63862f18da7faf2777849a8cae4dace71d0c3/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 4/4/2019 5:38:59 PM
-ms.date: 04/04/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/10c84b14843b225f971497a5bb733e6cfdcd59c6/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 4/29/2019 6:06:59 PM
+ms.date: 04/29/2019
 description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
