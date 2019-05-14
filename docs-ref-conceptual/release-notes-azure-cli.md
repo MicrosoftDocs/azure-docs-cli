@@ -17,8 +17,14 @@ ms.devlang: azurecli
 
 Version 2.0.64
 
+### ACS
+* [BREAKING CHANGE] Removed `--fqdn` flag on `openshift` commands
+* Changed to use Azure Red Hat Openshift GA API Version
+* Added `customer-admin-group-id` flag to `openshift create`
+* [GA] Removed `(PREVIEW)` from `aks create` option `--network-policy`
+
 ### Appservice
-* Deprecated `functionapp devops-build` command
+* [DEPRECATED] Deprecated `functionapp devops-build` command
   * Renamed to `functionapp devops-pipeline`
 * Fixed getting the correct username for cloudshell which was causing `webapp up` to fail
 * Updated `appservice plan --sku` documentation updated to reflect the supported appserviceplans
@@ -29,8 +35,61 @@ Version 2.0.64
 * Added support for `powershell` runtime to `functionapp create` on Windows
 * Added `create-remote-connection` command
 
+### Batch
+* Fixed bug in validator for `--application-package-references` options
+
+### Botservice
+* [BREAKING CHANGE] Changed `bot create -v v4 -k webapp` to create an empty Web App Bot by default (i.e. no bot is deployed to the App Service)
+* Added `--echo` flag to `bot create` to use the old behavior with `-v v4`
+* [BREAKING CHANGE] Changed the default value of  `--version` to `v4`
+  * __NOTE:__ `bot prepare-publish` still uses the its old default
+* [BREAKING CHANGE] Changed `--lang` to no longer default to `Csharp`. If the command requires `--lang` and it is not provided, the command will now error out
+* [BREAKING CHANGE] Changed the `--appid` and `--password` args for `bot create` to be required and can now be created via `ad app create`
+* Added `--appid` and `--password` validation
+* [BREAKING CHANGE] Changed `bot create -v v4` to not create or use a Storage Account or Application Insights
+* [BREAKING CHANGE] Changed `bot create -v v3` to require a region where Application Insights is available
+* [BREAKING CHANGE] Changed `bot update` to now affect only specific properties of a bot
+* [BREAKING CHANGE] Changed `--lang` flags to accept `Javascript` instead of `Node`
+* [BREAKING CHANGE] Removed `Node` as an allowed `--lang` value
+* [BREAKING CHANGE] Changed `bot create -v v4 -k webapp` to no longer set `SCM_DO_BUILD_DURING_DEPLOYMENT` to true. All deployments through Kudu will act according to their default behavior
+* Changed `bot download` for bots without `.bot` files to create the language-specific configuration file with values from the Application Settings for the bot
+* Added `Typescript` support to `bot prepare-deploy`
+* Added warning message to `bot prepare-deploy` for `Javascript` and `Typescript` bots for when `--code-dir` does not contain `package.json`
+* Changed `bot prepare-deploy` to return `true` if successful
+* Added verbose logging to `bot prepare-deploy`
+* Added more available Application Insights regions to `az bot create -v v3`
+
+### Configure
+* Added support for folder based argument default value configurations
+
+### Eventhubs
+* Added `namespace network-rule` commands
+* Added `--default-action` argument for network rules to `namespace [create|update]`
+
+### Network
+* [BREAKING CHANGE] Replaced `--cache` arugment with `--defer` for `vnet [create|update]` 
+
+### Policy Insights
+* Added support for `--expand PolicyEvaluationDetails` to query policy evaluation details on the resource
+
 ### Role
 * [DEPRECATED] Changed `create-for-rbac` hide '--password' argument - support will be removed in May 2019
+
+### Service Bus
+* Added `namespace network-rule` commands
+* Added `--default-action` argument for network rules to `namespace [create|update]`
+* Fixed `topic [create|update]` to allow `--max-size` support for 10, 20, 40 and 80GB values with premium SKU
+
+### SQL
+* Added `sql virtual-cluster [list|show|delete]` commands
+
+### VM
+* Added `--protect-from-scale-in` and `--protect-from-scale-set-actions` to `vmss update` to enable updates to the protection policy of VMSS VM instances
+* Added `--instance-id` to `vmss update` to enable generic update of VMSS VM instances
+* Added `--instance-id` to `vmss wait`
+* Added new `ppg` command group for manging Proximity Placement Groups
+* Added `--ppg` to `[vm|vmss] create` and `vm availability-set create` for managing PPGs
+* Added `--hyper-v-generation` parameter to `image create`
 
 ## April 23, 2019
 
