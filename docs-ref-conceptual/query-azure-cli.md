@@ -104,6 +104,46 @@ az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osPro
 These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no
 keys associated with the results.
 
+## Get a single value
+
+A common case is that you need to only get _one_ value out of a CLI command, such as an Azure resource ID, a resource name, a username, or a password. In that case, you also often want to store the value in a local environment variable. To get a single property, first make
+sure that you're only getting one property out of the query. Modifying the last example to get only the admin username:
+
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
+```
+
+```JSON
+"azureuser"
+```
+
+This looks like a valid single value, but note that the `"` characters are returned as part of the output. This indicates
+that the object is a JSON string. It's important to note that when you assign this value directly as output from the command
+to an environment variable, the quotes may __not__ be interpreted by the shell:
+
+```bash
+USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
+echo $USER
+```
+
+```output
+"azureuser"
+```
+
+This is almost certainly not what you want. In this case, you want to use an output format which doesn't enclose returned values with
+type information. The best output option that the CLI offers for this purpose is `tsv`, tab-separated values. In particular, when retrieving
+a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unqoted.
+
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o tsv
+```
+
+```output
+azureuser
+```
+
+For more information about the `tsv` output format, see [Output formats - TSV output format](format-output-azure-cli.md#tsv-output-format)
+
 ## Rename properties in a query
 
 To get a dictionary instead of an array when querying for multiple values, use the `{ }` (__multiselect hash__) operator.
