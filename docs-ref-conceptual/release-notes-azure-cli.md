@@ -17,18 +17,18 @@ ms.devlang: azurecli
 
 Version 2.0.65
 
-###Core
+### Core
 * auth: polish common AAD service errors with actionables to overcome
 * Fixed issue where the CLI would load extensions that were not compatible with its core version.
 * Fix issue if clouds.config is corrupt
 
-###ACR
+### ACR
 * Support Managed Identities for Task
 
-###ACS
+### ACS
 * Fix 'az openshift create' command when used with customer aad client
 
-###AppService
+### AppService
 * functionapp: deprecated `az functionapp devops-build` command will be removed in next release
 * functionapp: `az functionapp devops-pipeline` fetches building log from Azure DevOps in verbose mode
 * functionapp: `az functionapp devops-pipeline` removes `--use_local_settings` flag, since it does not change Azure DevOps release definition
@@ -38,32 +38,32 @@ Version 2.0.65
 * webapp: Fixed an issue where for Linux Free SKU ASP creation use Free as SKU value was not working
 * Upgrade azure-mgmt-storage from 3.1.1 to 3.3.0
 
-###BotService
+### BotService
 * Allow all casing for `--lang` parameters for commands
 * Update description for command module
 
-###Consumption
+### Consumption
 * Added missing required parameter when running az consumption usage list --billing-period-name
 
-###IoT
+### IoT
 * Add support to list all keys
 
-###Network
+### Network
 * [BREAKING CHANGE]: previously deprecated command group `network interface-endpoints` has been removed. Use `network private-endpoints` instead.
 * `network vnet subnet create/update`: Added `--nat-gateway` argument for attaching to a NAT gateway.
 * `dns zone import`: Fix issue where record names could not match a record type.
 
-###RDBMS
+### RDBMS
 * Add postgres and mysql support for geo replication
 
-###RBAC
+### RBAC
 * role assignment: support scope of management group
 
-###Storage
+### Storage
 * `storage blob sync`: add sync command for storage blob
 * Upgrade azure-mgmt-storage from 3.1.1 to 3.3.0
 
-###Compute
+### Compute
 * vm create: Added --computer-name for setting a vm's computer name.
 * vm/vmss create: `--ssh-key-value` renamed to `--ssh-key-values` and can now accept multiple ssh public key values or paths.
   Note: this is **not** a breaking change. `--ssh-key-value` will be parsed correctly as it matches only `--ssh-key-values`
