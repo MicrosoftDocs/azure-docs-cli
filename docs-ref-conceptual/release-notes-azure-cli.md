@@ -18,56 +18,54 @@ ms.devlang: azurecli
 Version 2.0.65
 
 ### Core
-* auth: polish common AAD service errors with actionables to overcome
-* Fixed issue where the CLI would load extensions that were not compatible with its core version.
-* Fix issue if clouds.config is corrupt
+* Added better feedback for authentication errors
+* Fixed issue where the CLI would load extensions that were not compatible with its core version
+* Fixed issue with launching when `clouds.config` is corrupted
 
 ### ACR
-* Support Managed Identities for Task
+* Added support for Managed Identities to Tasks
 
 ### ACS
-* Fix 'az openshift create' command when used with customer aad client
+* Fixed `openshift create` command when used with customer AAD client
 
 ### AppService
-* functionapp: deprecated `az functionapp devops-build` command will be removed in next release
-* functionapp: `az functionapp devops-pipeline` fetches building log from Azure DevOps in verbose mode
-* functionapp: `az functionapp devops-pipeline` removes `--use_local_settings` flag, since it does not change Azure DevOps release definition
-* webapp: webapp up returns a json output if --logs is not used
-* webapp: webapp up supports writing the default resources to local configuration
-* webapp: webapp up supports redeploying an app without using the --location argument
-* webapp: Fixed an issue where for Linux Free SKU ASP creation use Free as SKU value was not working
-* Upgrade azure-mgmt-storage from 3.1.1 to 3.3.0
+* [DEPRECATED] Deprecated `functionapp devops-build` command - will be removed in next release
+* Changed `functionapp devops-pipeline` to fetch build log from Azure DevOps in verbose mode
+* [BREAKING CHANGE] Removed `--use_local_settings` flag from `functionapp devops-pipeline` command - was a no-op
+* Changed `webapp up` to return JSON output if `--logs` is not used
+* Added support for writing default resources to local config for `webapp up`
+* Added support to `webapp up` for redeploying an app without using the `--location` argument
+* Fixed an issue where for Linux Free SKU ASP creation use Free as SKU value was not working
 
 ### BotService
-* Allow all casing for `--lang` parameters for commands
-* Update description for command module
+* Changed to allow all casing for `--lang` parameters for commands
+* Updated description for command module
 
 ### Consumption
-* Added missing required parameter when running az consumption usage list --billing-period-name
+* Added missing required parameter when running `consumption usage list --billing-period-name`
 
 ### IoT
-* Add support to list all keys
+* Added support to list all keys
 
 ### Network
-* [BREAKING CHANGE]: previously deprecated command group `network interface-endpoints` has been removed. Use `network private-endpoints` instead.
-* `network vnet subnet create/update`: Added `--nat-gateway` argument for attaching to a NAT gateway.
-* `dns zone import`: Fix issue where record names could not match a record type.
+* [BREAKING CHANGE]: Removed `network interface-endpoints` command group - use `network private-endpoints` 
+* Added `--nat-gateway` argument to `network vnet subnet [create|update]` for attaching to a NAT gateway
+* Fixed issue with `dns zone import` where record names could not match a record type
 
 ### RDBMS
-* Add postgres and mysql support for geo replication
+* Added postgres and mysql support for geo replication
 
 ### RBAC
-* role assignment: support scope of management group
+* Added support for mangement group scope to `role assignment`
 
 ### Storage
 * `storage blob sync`: add sync command for storage blob
-* Upgrade azure-mgmt-storage from 3.1.1 to 3.3.0
 
 ### Compute
-* vm create: Added --computer-name for setting a vm's computer name.
-* vm/vmss create: `--ssh-key-value` renamed to `--ssh-key-values` and can now accept multiple ssh public key values or paths.
-  Note: this is **not** a breaking change. `--ssh-key-value` will be parsed correctly as it matches only `--ssh-key-values`
-* ppg create: `--type`, the proximity placement group type, is now optional.
+* Added `--computer-name` to `vm create` for setting a VM's computer name
+* Renamed `--ssh-key-value` renamed to `--ssh-key-values` for `[vm|vmss] create` - can now accept multiple ssh public key values or paths
+  * __Note__: This is **not** a breaking change - `--ssh-key-value` will be parsed correctly as it matches only `--ssh-key-values`
+* Changed the `--type` argument of `ppg create` to be optional
 
 ## May 6, 2019
 
