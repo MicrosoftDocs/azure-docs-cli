@@ -56,6 +56,23 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
+### Proxy blocks connection
+
+[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+
+You may also want to explicitly configure `zypper` (via `yast2`) to use this proxy at all times. To do so,
+run the `yast2 proxy` command as superuser, and fill in the information presented in the form. If you have a window
+manager available on your system, you can also use the `Network Services > Proxy` pane in the `YaST Control Center`.
+
+For advanced configuration or more information, see the
+[OpenSUSE Proxy configuration documentation](https://www.suse.com/documentation/slms1/book_slms/data/sec_wy_config_updates_proxy.html)
+
+In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
+allow HTTPS connections to the following addresses:
+
+* `https://packages.microsoft.com`
+* `https://download.opensuse.org`
+
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Update
