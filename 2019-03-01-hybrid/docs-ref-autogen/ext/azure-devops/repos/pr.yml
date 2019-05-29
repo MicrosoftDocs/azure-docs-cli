@@ -7,33 +7,12 @@ items:
   langs:
   - azurecli
   children:
-  - ext_azure-devops_az_repos_pr_abandon
   - ext_azure-devops_az_repos_pr_checkout
-  - ext_azure-devops_az_repos_pr_complete
   - ext_azure-devops_az_repos_pr_create
   - ext_azure-devops_az_repos_pr_list
-  - ext_azure-devops_az_repos_pr_reactivate
   - ext_azure-devops_az_repos_pr_set_vote
   - ext_azure-devops_az_repos_pr_show
   - ext_azure-devops_az_repos_pr_update
-- uid: ext_azure-devops_az_repos_pr_abandon
-  name: az repos pr abandon
-  summary: Abandon a pull request.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --id
-    summary: ID of the pull request to abandon.
-    description: ''
-  - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
-    description: ''
-  - name: --org --organization
-    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
-    description: ''
 - uid: ext_azure-devops_az_repos_pr_checkout
   name: az repos pr checkout
   summary: Checkout the PR source branch locally, if no local changes are present.
@@ -48,24 +27,6 @@ items:
   - name: --remote-name
     defaultValue: origin
     summary: Name of git remote against which PR is raised.
-    description: ''
-- uid: ext_azure-devops_az_repos_pr_complete
-  name: az repos pr complete
-  summary: Complete a pull request.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --id
-    summary: ID of the pull request to complete.
-    description: ''
-  - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
-    description: ''
-  - name: --org --organization
-    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
     description: ''
 - uid: ext_azure-devops_az_repos_pr_create
   name: az repos pr create
@@ -93,8 +54,8 @@ items:
     summary: 'Description for the new pull request. Can include markdown. Each value sent to this arg will be a new line. For example: --description "First Line" "Second Line".'
     description: ''
   - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
     description: ''
   - name: --draft
     parameterValueGroup: false, true
@@ -149,8 +110,8 @@ items:
     summary: Limit results to pull requests created by this user.
     description: ''
   - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
     description: ''
   - name: --include-links
     summary: Include _links for each pull request.
@@ -183,24 +144,6 @@ items:
   - name: --top
     summary: Maximum number of pull requests to list.
     description: ''
-- uid: ext_azure-devops_az_repos_pr_reactivate
-  name: az repos pr reactivate
-  summary: Reactivate an abandoned pull request.
-  description: ''
-  langs:
-  - azurecli
-  parameters:
-  - isRequired: true
-    name: --id
-    summary: ID of the pull request to reactivate.
-    description: ''
-  - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
-    description: ''
-  - name: --org --organization
-    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
-    description: ''
 - uid: ext_azure-devops_az_repos_pr_set_vote
   name: az repos pr set-vote
   summary: Vote on a pull request.
@@ -218,8 +161,8 @@ items:
     summary: New vote value for the pull request.
     description: ''
   - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
     description: ''
   - name: --org --organization
     summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
@@ -236,8 +179,8 @@ items:
     summary: ID of the pull request.
     description: ''
   - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
     description: ''
   - name: --open
     summary: Open the pull request in your web browser.
@@ -275,8 +218,8 @@ items:
     summary: 'New description for the pull request.  Can include markdown.  Each value sent to this arg will be a new line. For example: --description "First Line" "Second Line".'
     description: ''
   - name: --detect
-    parameterValueGroup: off, on
-    summary: Automatically detect organization. Default is "on".
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
     description: ''
   - name: --draft
     parameterValueGroup: false, true
@@ -292,6 +235,10 @@ items:
     parameterValueGroup: false, true
     summary: Squash the commits in the source branch when merging into the target branch.
     description: ''
+  - name: --status
+    parameterValueGroup: abandoned, active, completed
+    summary: Set the new state of pull request.
+    description: ''
   - name: --title
     summary: New title for the pull request.
     description: ''
@@ -300,15 +247,9 @@ items:
     summary: Transition any work items linked to the pull request into the next logical state. (e.g. Active -> Resolved).
     description: ''
 commands:
-- uid: ext_azure-devops_az_repos_pr_abandon
-  name: az repos pr abandon
-  summary: Abandon a pull request.
 - uid: ext_azure-devops_az_repos_pr_checkout
   name: az repos pr checkout
   summary: Checkout the PR source branch locally, if no local changes are present.
-- uid: ext_azure-devops_az_repos_pr_complete
-  name: az repos pr complete
-  summary: Complete a pull request.
 - uid: ext_azure-devops_az_repos_pr_create
   name: az repos pr create
   summary: Create a pull request.
@@ -324,9 +265,6 @@ commands:
 - uid: ext_azure-devops_az_repos_pr_policy_queue
   name: az repos pr policy queue
   summary: Queue an evaluation of a policy for a pull request.
-- uid: ext_azure-devops_az_repos_pr_reactivate
-  name: az repos pr reactivate
-  summary: Reactivate an abandoned pull request.
 - uid: ext_azure-devops_az_repos_pr_reviewer
   name: az repos pr reviewer
   summary: Manage pull request reviewers.
