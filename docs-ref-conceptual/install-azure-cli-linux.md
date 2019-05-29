@@ -81,6 +81,18 @@ of the `az` command is
 <install path>/bin
 ```
 
+### Proxy blocks connection
+
+[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+
+In order to get the installation scripts, your proxy needs to allow HTTPS connections to the
+following addresses:
+
+* `https://aka.ms/`
+* `https://azurecliprod.blob.core.windows.net/`
+* `https://pypi.python.org`
+* Endpoints used by your distribution's package manager (if any) for core packages
+
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Uninstall

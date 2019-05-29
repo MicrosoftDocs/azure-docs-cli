@@ -50,6 +50,26 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `yum`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
+### Proxy blocks connection
+
+[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+
+You may also want to explicitly configure `yum` to use this proxy at all times. Make sure that the following
+lines appear under the `[main]` section of `/etc/yum.conf`:
+
+```yum.conf
+[main]
+# ...
+proxy=http://[proxy]:[port] # If your proxy requires https, change http->https
+proxy_username=[username] # Only required for basic auth
+proxy_password=[password] # Only required for basic auth
+```
+
+In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
+allow HTTPS connections to the following address:
+
+* `https://packages.microsoft.com`
+
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Update
