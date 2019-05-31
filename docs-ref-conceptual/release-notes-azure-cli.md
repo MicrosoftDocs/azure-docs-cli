@@ -13,6 +13,41 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## June 4, 2019
+
+Version 2.0.66
+
+### Core
+* output: Fix bug where commands fail if `--output yaml` is used with `--query`
+
+### ACR
+* Add 'acr pack' command group for creating quick build Tasks using Buildpacks.
+
+### ACS
+* Allow enabling/disabling AKS kube-dashboard addon
+* Print a friendly message when the subscription is not whitelisted to use Azure Red Hat OpenShift
+
+### Batch
+* Improve error handling in `az batch account show` when not logged in to an account. see #9180
+* Improve general error handling when not logged in to an account. see #9180
+
+### IoT
+* Add support for manual-failover
+
+### Network
+* `application-gateway`: Added `waf-policy` commands to support custom WAF rules.
+* `application-gateway create/update`: Added `--waf-policy` and `--max-capacity` arguments.
+
+### Resource
+* `deployment create`: Improve error message when there is no TTY available
+
+### Role
+* Minor fixes. Updated help text (is this necessary).
+
+### Compute
+* vm create: can now create a vm from a managed image with data-disk luns that do not start from 0 or that skip numbers.
+  Does not assume data-disk lun from the number of data disks in source managed image.
+
 ## May 21, 2019
 
 Version 2.0.65
