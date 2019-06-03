@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/31/2019
+ms.date: 06/03/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -30,7 +30,7 @@ az extension list-available --output table
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.1 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 3.0.4 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.7.0 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
-| [azure-cli-ml](https://docs.microsoft.com/en-us/azure/machine-learning/service/) | 1.0.41 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
+| [azure-cli-ml](https://docs.microsoft.com/en-us/azure/machine-learning/service/) | 1.0.41.1 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.10.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.2 | Manage Azure Firewall resources. | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.11 | Additional commands to simplify Azure Database workflows. | Yes |
@@ -51,7 +51,7 @@ az extension list-available --output table
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.4 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
-| [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.2.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
+| [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [rdbms-vnet](https://github.com/Azure/azure-cli-extensions) | 10.0.0 | Support for Virtual Network rules in Azure MySQL and Azure PostgreSQL resources |  |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.8 | Support for querying Azure resources with Resource Graph. | Yes |
