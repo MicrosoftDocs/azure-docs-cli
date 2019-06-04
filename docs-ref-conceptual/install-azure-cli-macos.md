@@ -59,6 +59,22 @@ brew link --overwrite python3
 
 If an out-of-date version was installed, it could be because of a stale homebrew cache. Follow the [update](#Update) instructions.
 
+### Proxy blocks connection
+
+You may be unable to get resources from Homebrew unless you have correctly configured it to
+use your proxy. Follow the [Homebrew proxy configuration instructions](https://docs.brew.sh/Manpage#using-homebrew-behind-a-proxy).
+
+> [!IMPORTANT]
+> If you are behind a proxy, `HTTP_PROXY` and `HTTPS_PROXY` must be set to connect to Azure services with the CLI.
+> If you are not using basic auth, it's recommended to export these variables in your `.bashrc` file.
+> Always follow your business' security policies and the requirements of your system administrator.
+
+In order to get the bottle resources from Homebrew, your proxy needs to allow HTTPS connections to
+the following addresses:
+
+* `https://formulae.brew.sh`
+* `https://homebrew.bintray.com`
+
 ## Update
 
 The CLI is regularly updated with bug fixes, improvements, new features, and preview functionality. A new release is available roughly every

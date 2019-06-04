@@ -100,8 +100,34 @@ determine the package to install. If you know the code name of the Ubuntu or Deb
 Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
 versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `disco` repository, and for Debian distributions
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
 use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+
+### Proxy blocks connection
+
+[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+
+You may also want to explicitly configure `apt` to use this proxy at all times. Make sure that the
+following lines appear in an `apt` configuration file in `/etc/apt/apt.conf.d/`. We recommend using
+either your existing global configuration file, an existing proxy configuration file, `40proxies`,
+or `99local`, but follow your system administration requirements.
+
+```apt.conf
+Acquire {
+    http::proxy "http://[username]:[password]@[proxy]:[port]";
+    https::proxy "https://[username]:[password]@[proxy]:[port]";
+}
+```
+
+If your proxy does not use basic auth, __remove__ the `[username]:[password]@` portion of the proxy URI. If you require more information for proxy configuration, see the official Ubuntu documentation:
+
+* [apt.conf manpage](http://manpages.ubuntu.com/manpages/bionic/en/man5/apt.conf.5.html)
+* [Ubuntu wiki - apt-get howto](https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy)
+
+In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
+allow HTTPS connections to the following address:
+
+* `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 

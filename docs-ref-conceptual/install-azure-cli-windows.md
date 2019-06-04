@@ -36,6 +36,31 @@ not available from Windows Command Prompt. To sign in, run the [az login](/cli/a
 
 To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
+## Troubleshooting
+
+Here are some common problems seen when installing on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+### Proxy blocks connection
+
+If you can't download the MSI installer because your proxy is blocking the connection, make sure that
+you have your proxy properly configured. For Windows 10, these settings are managed in the
+`Settings > Network & Internet > Proxy` pane. Contact your system administrator for the required settings,
+or for situations where your machine may be configuration-managed or require advanced setup.
+
+> [!IMPORTANT]
+> These settings are also required to be able to access Azure services with the CLI, from both
+> PowerShell or the Command Prompt. In PowerShell, you do this with the following command:
+>
+> ```powershell
+> (New-Object System.Net.WebClient).Proxy.Credentials = `
+>   [System.Net.CredentialCache]::DefaultNetworkCredentials
+> ```
+
+In order to get the MSI, your proxy needs to allow HTTPS connections to the following addresses:
+
+* `https://aka.ms/`
+* `https://azurecliprod.blob.core.windows.net/`
+
 ## Uninstall
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
