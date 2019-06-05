@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/21/2019
+ms.date: 06/05/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,39 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## June 4, 2019
+
+Version 2.0.66
+
+### Core
+* Fixed bug where commands fail if `--output yaml` is used with `--query`
+
+### ACR
+* Added 'acr pack' command group for creating quick build Tasks using Buildpacks.
+
+### ACS
+* Allow enabling/disabling AKS kube-dashboard addon
+* Print a friendly message when the subscription is not whitelisted to use Azure Red Hat OpenShift
+
+### Batch
+* Improved error handling when not logged in to an account \[[#9165](https://github.com/Azure/azure-cli/issues/9165)\]\[[#8978](https://github.com/Azure/azure-cli/issues/8978)\]
+
+### IoT
+* Added support for manual failover
+
+### Network
+* Added `network application-gateway waf-policy` commands to support custom WAF rules.
+* Added `--waf-policy` and `--max-capacity` arguments to `network application-gateway [create|update]` 
+
+### Resource
+* Improved error message from `deployment create` when there is no TTY available
+
+### Role
+* Updated help text.
+
+### Compute
+* Added support to `vm create` for VMs from a managed image with data-disk luns that do not start from 0 or that skip numbers
 
 ## May 21, 2019
 
