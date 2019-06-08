@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/04/2019
+ms.date: 06/08/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -33,7 +33,7 @@ az extension list-available --output table
 | [azure-cli-ml](https://docs.microsoft.com/en-us/azure/machine-learning/service/) | 1.0.41.1 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.10.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.2 | Manage Azure Firewall resources. | Yes |
-| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.11 | Additional commands to simplify Azure Database workflows. | Yes |
+| [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.12 | Additional commands to simplify Azure Database workflows. | Yes |
 | [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.1 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.8.1 | Support for new Database Migration Service scenarios. | Yes |
@@ -54,7 +54,7 @@ az extension list-available --output table
 | [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [rdbms-vnet](https://github.com/Azure/azure-cli-extensions) | 10.0.0 | Support for Virtual Network rules in Azure MySQL and Azure PostgreSQL resources |  |
-| [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.8 | Support for querying Azure resources with Resource Graph. | Yes |
+| [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.10 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.7 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [signalr](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Support for signalr management preview. | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.6 | Provides a preview for upcoming storage features. | Yes |
