@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/11/2019
+ms.date: 06/12/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -51,13 +51,12 @@ az extension list-available --output table
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.5 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
-| [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.10 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.7 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.6 | Provides a preview for upcoming storage features. | Yes |
-| [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for subscription management preview. |  |
+| [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
 | [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.1.0 | Auto repair commands to fix VMs. |  |
-| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.17 | Additional commands for Azure AppService. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions) | 0.2.18 | Additional commands for Azure AppService. | Yes |
