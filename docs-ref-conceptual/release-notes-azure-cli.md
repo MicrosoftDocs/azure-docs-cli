@@ -13,6 +13,100 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## June 18, 2019
+
+Version 2.0.67
+
+### Core
+* BREAKING CHANGE: `min_profile` kwarg is no longer supported. Use `resource_type` instead.
+* Introduced a new [Preview] status to tag to more clearly communicate to customers
+  when a command group, command or argument is in preview status. This was previously
+  called out in help text or communicated implicitly by the command module version number.
+  The CLI will be removing version numbers for individual packages in the future, so this
+  mechanism will be the sole way to communicate that a feature is in preview. Items which
+  are not labeled as being in preview can be considered to be GA. Not that if a command is
+  in preview, all of its arguments are as well, and, by extension, if a command group is
+  labeled as being in preview, then all commands and arguments are considered to be in
+  preview as well.
+
+  As a result of this change, several command groups may seem to "suddenly" appear to be
+  in a preview status with this release. What actually happened is that most packages were
+  in a preview status, but are being deemed GA with this release.
+
+### ACR
+* Add 'az acr check-health' command.
+* Improve error handling for AAD tokens and for retrieving external commands.
+
+### ACS
+* Deprecated ACS commands are now hidden from help view.
+
+### AMS
+* Return ISO 8601 time strings for archive-window-length and key-frame-interval-duration.
+
+### AppService
+* webapp: add location based routing for `az webapp deleted list` and `az webapp deleted restore`
+* webapp: webapp up logged target URL ("You can launch the app at...") is now properly clickable in Azure Cloud Shell
+* webapp: Fixing an issue where creating apps with the some sku's was failing with AlwaysOn error
+* webapp, appserviceplan: adding pre-validation to the ASP and webapp create
+* webapp, functionapp: traffic-routing set fixed to use the correct actionHostName
+* functionapp: add slot support to functionapps
+
+### Batch
+* Fix AAD auth regression caused by over-aggressive error reporting for Shared Key Auth.
+
+### BatchAI
+* BatchAI commands are now deprecated and hidden.
+
+### BotService
+* Add "discontinued support"/"maintenance mode"-warning messages for commands that support the v3 SDK
+
+### CosmosDB
+* Added command `keys list` and deprecated `list-keys`.
+* `cosmsodb create/update`: Added new format for --location to allow setting "isZoneRedundant" property. Deprecated old format.
+
+### EventGrid
+* `domain create/update/delete/get/list`: Added new commands for the domain CRUD operations.
+* `domain topic create/update/delete/get/list`: Added new commands for the domain topics CRUD operations.
+* `topic list`: Added --odata-query for filtering the results using OData syntax.
+* `event-subscription list`: Added --odata-query for filtering the results using OData syntax.
+* `event-subscription create/update`: Added servicebusqueue as new values for the `--endpoint-type` parameter.
+* `event-subscription create/update`: Disallow usage of All for --included-event-types.
+
+### HDInsight
+* Support for using `--ssh-public-key` parameter in `hdinsight create` command.
+
+### IoT
+* Add support to regenerate authorization policy keys
+* Add SDK and support for DigitalTwin Repository Provisioning Service.
+
+### Network
+* Add Zone support for Nat Gateway
+* Added command `list-service-tags`.
+* `dns zone import`: Fix issue where users could not import wildcard A records.
+* `watcher flow-log configure`: Fixed issue where flow logging could not be enabled in certain regions.
+
+### Resource
+* 'az rest': new command for making REST calls
+* `policy assignment list`: Fix error when using a resource group or subscription level `--scope`.
+
+### ServiceBus
+* Fix for #9319 - az servicebus topic create --max-size
+
+### SQL
+* az sql server create, az sql mi create: make location optional. If unspecified, use resource group location.
+* Fixed "'NoneType' object is not iterable" error for `az sql db list-editions --available`.
+
+### SQLVm
+* Breaking change: --license-type is a required parameter for sql vm create.
+* Customer can set sql image sku type when creating or updating a sql vm.
+
+### Storage
+* `storage container generate-sas`: Fix missing account key
+* `storage blob sync`: Fix issue for Linux
+
+### VM
+* [New Command Group]. image template: added image builder support via `image template`. These commands are in preview.
+
 ## June 4, 2019
 
 Version 2.0.66
