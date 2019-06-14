@@ -12,6 +12,7 @@ items:
   - ext_aks-preview_az_aks_nodepool_list
   - ext_aks-preview_az_aks_nodepool_scale
   - ext_aks-preview_az_aks_nodepool_show
+  - ext_aks-preview_az_aks_nodepool_update
   - ext_aks-preview_az_aks_nodepool_upgrade
 - uid: ext_aks-preview_az_aks_nodepool_add
   name: az aks nodepool add
@@ -32,13 +33,22 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
+    description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
     description: ''
     valueFrom: '`az aks get-versions`'
+  - name: --max-count
+    summary: Maximum nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
+    description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
     description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+  - name: --min-count
+    summary: Minimun nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -145,6 +155,53 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+- uid: ext_aks-preview_az_aks_nodepool_update
+  name: az aks nodepool update
+  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Enable cluster-autoscaler within node count range [1,5]
+    syntax:
+      content: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: Disable cluster-autoscaler for an existing cluster
+    syntax:
+      content: az aks nodepool update --disable-cluster-autoscaler -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: Update min-count or max-count for cluster auto-scaler.
+    syntax:
+      content: az aks nodepool update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  parameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --disable-cluster-autoscaler -d
+    summary: Disable cluster autoscaler.
+    description: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
+    description: ''
+  - name: --max-count
+    summary: Maximum nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
+    description: ''
+  - name: --min-count
+    summary: Minimun nodes count used for auto scaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --update-cluster-autoscaler -u
+    summary: Update min-count or max-count for cluser auto-scaler.
+    description: ''
 - uid: ext_aks-preview_az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: Upgrade the node pool in a managed Kubernetes cluster.
@@ -187,6 +244,9 @@ commands:
 - uid: ext_aks-preview_az_aks_nodepool_show
   name: az aks nodepool show
   summary: Show the details for a node pool in the managed Kubernetes cluster.
+- uid: ext_aks-preview_az_aks_nodepool_update
+  name: az aks nodepool update
+  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
 - uid: ext_aks-preview_az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: Upgrade the node pool in a managed Kubernetes cluster.
