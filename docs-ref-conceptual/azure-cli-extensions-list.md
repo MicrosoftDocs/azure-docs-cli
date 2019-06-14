@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/12/2019
+ms.date: 06/14/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -53,7 +53,7 @@ az extension list-available --output table
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.10 | Support for querying Azure resources with Resource Graph. | Yes |
-| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.7 | Additional commands for working with SAP HanaOnAzure instances. |  |
+| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.3.8 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.6 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
