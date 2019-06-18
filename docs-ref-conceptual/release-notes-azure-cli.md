@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/05/2019
+ms.date: 06/18/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,98 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## June 18, 2019
+
+Version 2.0.67
+
+### Core
+
+This release introduces a new [Preview] tag to more clearly communicate to customers
+when a command group, command or argument is in preview status. This was previously
+called out in help text or communicated implicitly by the command module version number.
+The CLI will be removing version numbers for individual packages in the future. If a command is
+in preview, all of its arguments are as well. If a command group is
+labeled as being in preview, then all commands and arguments are considered to be in
+preview as well.
+
+As a result of this change, several command groups may seem to "suddenly" appear to be
+in a preview status with this release. What actually happened is that most packages were
+in a preview status, but are being deemed GA with this release
+
+### ACR
+* Added 'acr check-health' command
+* Improved error handling for AAD tokens and for retrieving external commands
+
+### ACS
+* Deprecated ACS commands are now hidden from help view
+
+### AMS
+* [BREAKING CHANGE] Changed to return ISO 8601 time strings for archive-window-length and key-frame-interval-duration
+
+### AppService
+* Added location based routing for `webapp deleted list` and `webapp deleted restore`
+* Fixed issue where webapp up logged target URL ("You can launch the app at...") was not clickable in Azure Cloud Shell
+* Fixed an issue where creating apps with the some SKUs was failing with an AlwaysOn error
+* Added pre-validation to `[appservice|webapp] create`
+* Fixed `[webapp|functionapp] traffic-routing` to use the correct actionHostName
+* Added slot support to `functionapp` commands
+
+### Batch
+* Fixed AAD auth regression caused by over-aggressive error reporting for Shared Key Auth
+
+### BatchAI
+* BatchAI commands are now deprecated and hidden
+
+### BotService
+* Added "discontinued support"/"maintenance mode" warning messages for commands that support the v3 SDK
+
+### CosmosDB
+* [DEPRECATED] Deprecated the `cosmosdb list-keys` command
+* Added the `cosmosdb keys list` command - replaces `cosmosdb list-keys`
+* `cosmsodb create/update`: Added new format for --location to allow setting "isZoneRedundant" property. Deprecated old format
+
+### EventGrid
+* Added `eventgrid domain` commands for domain CRUD operations
+* Added `eventgrid domain topic` commands for domain topics CRUD operations
+* Added `--odata-query` argument to `eventgrid [topic|event-subscription] list` for filtering results using OData syntax
+* `event-subscription create/update`: Added servicebusqueue as new values for the `--endpoint-type` parameter
+* [BREAKING CHANGE] Removed support for `--included-event-types All` with `eventgrid event-subscription [create|update]`
+
+### HDInsight
+* Added support for `--ssh-public-key` parameter in `hdinsight create` command
+
+### IoT
+* Added support to regenerate authorization policy keys
+* Added SDK and support for DigitalTwin Repository Provisioning Service
+
+### Network
+* Added Zone support for Nat Gateway
+* Added command `network list-service-tags`
+* Fixed issue with `dns zone import` where users could not import wildcard A records
+* Fixed issue with `watcher flow-log configure` where flow logging could not be enabled in certain regions
+
+### Resource
+* Added `az rest` command for making REST calls
+* Fixed error when using `policy assignment list` with a resource group or subscription level `--scope`
+
+### ServiceBus
+* Fixed issue with `servicebus topic create --max-size` [#9319](https://github.com/azure/azure-cli/issues/9319)
+
+### SQL
+* Changed `--location` to be optional for `sql [server|mi] create` - uses resource group location if not specified
+* Fixed "'NoneType' object is not iterable" error for `sql db list-editions --available`
+
+### SQLVm
+* [BREAKING CHNAGE] Changed `sql vm create` to require `--license-type` parameter
+* Changed to allow setting SQL image SKU when creating or updating a sql vm
+
+### Storage
+* Fixed issue with missing account key for `storage container generate-sas`
+* Fixed issue with `storage blob sync` on Linux
+
+### VM
+* [PREVIEW] Added `vm image template` commands to build VM images
 
 ## June 4, 2019
 

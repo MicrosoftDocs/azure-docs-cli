@@ -132,7 +132,7 @@ echo $USER
 
 This is almost certainly not what you want. In this case, you want to use an output format which doesn't enclose returned values with
 type information. The best output option that the CLI offers for this purpose is `tsv`, tab-separated values. In particular, when retrieving
-a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unqoted.
+a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unquoted.
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o tsv
