@@ -2,8 +2,8 @@
 items:
 - uid: az_eventgrid_event_subscription
   name: az eventgrid event-subscription
-  summary: Manage event subscriptions for an Event Grid topic or for an Azure resource.
-  description: Manage event subscriptions for an Event Grid topic, Azure subscription, resource group or for any other Azure resource that supports event notifications.
+  summary: Manage event subscriptions.
+  description: Manage event subscriptions for an Event Grid topic, domain, domain topic, Azure subscription, resource group or for any other Azure resource that supports event notifications.
   langs:
   - azurecli
   children:
@@ -14,7 +14,7 @@ items:
   - az_eventgrid_event_subscription_update
 - uid: az_eventgrid_event_subscription_create
   name: az eventgrid event-subscription create
-  summary: Create a new event subscription for an Event Grid topic or for an Azure resource.
+  summary: Create a new event subscription.
   description: ''
   langs:
   - azurecli
@@ -43,6 +43,14 @@ items:
         az eventgrid event-subscription create --name es3 \
                                     --source-resource-id "/subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Storage/storageaccounts/s1"  \
                                     --endpoint https://contoso.azurewebsites.net/api/f1?code=code
+  - summary: Create a new event subscription for a storage account, using advanced filters.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create  --name es3 \
+                                    --source-resource-id "/subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Storage/storageaccounts/s1" \
+                                    --endpoint https://contoso.azurewebsites.net/api/f1?code=code
+                                    --advanced-filter data.blobType StringIn BlockBlob
+                                    --advanced-filter data.url StringBeginsWith https://myaccount.blob.core.windows.net
   - summary: Create a new event subscription for an Azure subscription, with a filter specifying a subject prefix.
     syntax:
       content: >-
@@ -71,6 +79,13 @@ items:
                                     --source-resource-id /subscriptions/{SubID} \
                                     --endpoint-type storagequeue \
                                     --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/sa1/queueservices/default/queues/q1
+  - summary: Create a new event subscription for an Azure subscription, using default filters, and an Azure ServiceBusQueue as a destination.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es2 \
+                                    --source-resource-id /subscriptions/{SubID} \
+                                    --endpoint-type servicebusqueue \
+                                    --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.ServiceBus/namespaces/ns1/queues/queue1
   - summary: Create a new event subscription for a storage account, with a deadletter destination and custom retry policy of maximum 10 delivery attempts and an Event TTL of 2 hours (whichever happens earlier).
     syntax:
       content: >-
@@ -79,6 +94,19 @@ items:
                                     --endpoint https://contoso.azurewebsites.net/api/f1?code=code \
                                     --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/s2/blobServices/default/containers/blobcontainer1 \
                                     --max-delivery-attempts 10 --event-ttl 120
+  - summary: Create a new event subscription for a domain topic.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es2 \
+                                    --source-resource-id "/subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1/topics/t1" \
+                                    --endpoint https://contoso.azurewebsites.net/api/f1?code=code
+  - summary: Create a new event subscription (for a storage account) with an expiration date.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es2 \
+                                    --source-resource-id "/subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Storage/storageaccounts/sa1" \
+                                    --endpoint https://contoso.azurewebsites.net/api/f1?code=code
+                                    --expiration-date "2018-10-31"
   parameters:
   - isRequired: true
     name: --endpoint
@@ -88,20 +116,40 @@ items:
     name: --name -n
     summary: Name of the event subscription.
     description: ''
+  - name: --advanced-filter
+    summary: An advanced filter enables filtering of events based on a specific event property.
+    description: >-
+      Usage:                     --advanced-filter KEY[.INNERKEY] FILTEROPERATOR VALUE [VALUE ...]
+                                          StringIn:                  --advanced-filter data.Color StringIn Blue Red Orange Yellow
+                                          StringNotIn:               --advanced-filter data.Color StringNotIn Blue Red Orange Yellow
+                                          StringContains:            --advanced-filter subject StringContains Blue Red
+                                          StringBeginsWith:          --advanced-filter subject StringBeginsWith Blue Red
+                                          StringEndsWith:            --advanced-filter subject StringEndsWith img png jpg
+                                          NumberIn:                  --advanced-filter data.property1 NumberIn 5 10 20
+                                          NumberNotIn:               --advanced-filter data.property2 NumberNotIn 100 200 300
+                                          NumberLessThan:            --advanced-filter data.property3 NumberLessThan 100
+                                          NumberLessThanOrEquals:    --advanced-filter data.property2 NumberLessThanOrEquals 100
+                                          NumberGreaterThan:         --advanced-filter data.property3 NumberGreaterThan 100
+                                          NumberGreaterThanOrEquals: --advanced-filter data.property2 NumberGreaterThanOrEquals 100
+                                          BoolEquals:                --advanced-filter data.property3 BoolEquals true
+                                          Multiple advanced filters can be specified by using more than one `--advanced-filter` argument.
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
+    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: The type of the destination endpoint. It is expected that the destination endpoint be created and available for use before executing any Event Grid command.
   - name: --event-ttl
     defaultValue: "1440"
     summary: Event time to live (in minutes). Must be a number between 1 and 1440.
     description: ''
+  - name: --expiration-date
+    summary: Date or datetime (in UTC, e.g. '2018-11-30T11:59:59+00:00' or '2018-11-30') after which the event subscription would expire. By default, there is no expiration for the event subscription.
+    description: ''
   - name: --included-event-types
-    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
+    summary: A space-separated list of event types (e.g., Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted). To subscribe to all default event types, do not specify this argument. For event grid topics, event types are customer defined. For Azure events, e.g., Storage Accounts, IoT Hub, etc., you can query their event types using this CLI command 'az eventgrid topic-type list-event-types'.
     description: ''
   - name: --labels
     summary: A space-separated list of labels to associate with this event subscription.
@@ -123,7 +171,9 @@ items:
                                           For Azure subscription:     --source-resource-id /subscriptions/{SubID}
                                           For resource group:         --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1
                                           For EventGrid topic:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/t1
-                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1.
+                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
+                                          For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
+                                          For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with
     summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
     description: ''
@@ -158,6 +208,16 @@ items:
       content: >-
         az eventgrid event-subscription delete --name es1 \
                                     --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1
+  - summary: Delete an event subscription for an Event Grid domain topic.
+    syntax:
+      content: >-
+        az eventgrid event-subscription delete --name es1 \
+                                    --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1/topics/topic1
+  - summary: Delete an event subscription for an Event Grid domain.
+    syntax:
+      content: >-
+        az eventgrid event-subscription delete --name es1 \
+                                    --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1
   - summary: Delete an event subscription for an Azure subscription.
     syntax:
       content: >-
@@ -191,7 +251,9 @@ items:
                                           For Azure subscription:     --source-resource-id /subscriptions/{SubID}
                                           For resource group:         --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1
                                           For EventGrid topic:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/t1
-                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1.
+                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
+                                          For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
+                                          For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
     summary: Name of Event Grid topic.
     description: ''
@@ -229,6 +291,12 @@ items:
   - summary: List all event subscriptions created for a resource group.
     syntax:
       content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}
+  - summary: List all event subscriptions for an Event Grid domain.
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1
+  - summary: List all event subscriptions for an Event Grid domain topic.
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1/topics/topic1
   - summary: List all Storage event subscriptions (under the currently selected Azure subscription) in westus2.
     syntax:
       content: az eventgrid event-subscription list --topic-type Microsoft.Storage.StorageAccounts --location westus2
@@ -245,9 +313,18 @@ items:
       content: >-
         az eventgrid event-subscription list --location westus2 --resource-group {RG}
                                 az eventgrid event-subscription list --location global --resource-group {RG}
+  - summary: List all event subscriptions for an Event Grid domain whose name contains the pattern "XYZ"
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1 --odata-query "Contains(name, 'XYZ')"
+  - summary: List all event subscriptions for an Event Grid domain except the event subscription with name "name1"
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1 --odata-query "NOT (name eq 'name1')"
   parameters:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --odata-query
+    summary: 'The OData query used for filtering the list results. Filtering is currently allowed on the Name property only. The supported operations include: CONTAINS, eq (for equal), ne (for not equal), AND, OR and NOT.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -262,7 +339,9 @@ items:
                                           For Azure subscription:     --source-resource-id /subscriptions/{SubID}
                                           For resource group:         --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1
                                           For EventGrid topic:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/t1
-                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1.
+                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
+                                          For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
+                                          For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
     summary: Name of Event Grid topic.
     description: ''
@@ -331,7 +410,9 @@ items:
                                           For Azure subscription:     --source-resource-id /subscriptions/{SubID}
                                           For resource group:         --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1
                                           For EventGrid topic:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/t1
-                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1.
+                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
+                                          For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
+                                          For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
     summary: Name of Event Grid topic.
     description: ''
@@ -395,11 +476,11 @@ items:
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, storagequeue, webhook
+    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --included-event-types
-    summary: 'A space-separated list of event types. Example: Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted. To subscribe to all event types, the string "All" should be specified.'
+    summary: A space-separated list of event types (e.g., Microsoft.Storage.BlobCreated Microsoft.Storage.BlobDeleted). To subscribe to all default event types, do not specify this argument. For event grid topics, event types are customer defined. For Azure events, e.g., Storage Accounts, IoT Hub, etc., you can query their event types using this CLI command 'az eventgrid topic-type list-event-types'.
     description: ''
   - name: --labels
     summary: A space-separated list of labels to associate with this event subscription.
@@ -417,7 +498,9 @@ items:
                                           For Azure subscription:     --source-resource-id /subscriptions/{SubID}
                                           For resource group:         --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1
                                           For EventGrid topic:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/topics/t1
-                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1.
+                                          For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
+                                          For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
+                                          For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with
     summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
     description: ''
@@ -451,7 +534,7 @@ items:
 commands:
 - uid: az_eventgrid_event_subscription_create
   name: az eventgrid event-subscription create
-  summary: Create a new event subscription for an Event Grid topic or for an Azure resource.
+  summary: Create a new event subscription.
 - uid: az_eventgrid_event_subscription_delete
   name: az eventgrid event-subscription delete
   summary: Delete an event subscription.
@@ -480,7 +563,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-eventgrid/azure/cli/command_modules/eventgrid/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-eventgrid/azure/cli/command_modules/eventgrid/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b44b7963de8defb3e4d3abe9927590d1ef56874e/src/command_modules/azure-cli-eventgrid/azure/cli/command_modules/eventgrid/_help.py
-updated_at: 4/12/2019 2:53:01 PM
-ms.date: 04/12/2019
-description: Manage event subscriptions for an Event Grid topic, Azure subscription, resource group or for any other Azure resource that supports event notifications.
+gitcommit: https://github.com/Azure/azure-cli/blob/2954c3a0cd56ca042d9219936e316b9635911863/src/command_modules/azure-cli-eventgrid/azure/cli/command_modules/eventgrid/_help.py
+updated_at: 6/5/2019 2:32:05 PM
+ms.date: 06/05/2019
+description: Manage event subscriptions for an Event Grid topic, domain, domain topic, Azure subscription, resource group or for any other Azure resource that supports event notifications.
