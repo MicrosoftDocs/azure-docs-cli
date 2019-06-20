@@ -1,0 +1,323 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_image_template
+  name: az image template
+  summary: Manage and build image builder templates.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_image_template_create
+  - az_image_template_delete
+  - az_image_template_list
+  - az_image_template_run
+  - az_image_template_show
+  - az_image_template_show_runs
+  - az_image_template_update
+  - az_image_template_wait
+- uid: az_image_template_create
+  name: az image template create
+  summary: Create an image builder template.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create an image builder template from an UbuntuLTS 18.04 image. Distribute it as a managed image and a shared image gallery image version
+    syntax:
+      content: "scripts=\"https://my-script-url.net/customize_script.sh\"\n                        imagesource=\"Canonical:UbuntuServer:18.04-LTS:18.04.201903060\"\n                        \n                        az image template create --image-source $imagesource -n mytemplate -g my-group \\\n                            --scripts $scripts --managed-image-destinations image_1=westus \\\n                            --shared-image-destinations my_shared_gallery/linux_image_def=westus,brazilsouth"
+  - summary: "[Advanced] Create an image template with multiple customizers and distributors using the CLI's object cache via --defer. Supports features such as: customizer and output names, powershell exit codes, inline scripts, windows restart, file customizers, artifact tags and vhd output distributors."
+    syntax:
+      content: "script=\"https://my-script-url.com/customize_script.ps1\"\n                        imagesource=\"MicrosoftWindowsServer:WindowsServer:2019-Datacenter:2019.0.20190214\"\n                        \n                        # create and update template object in local cli cache. Defers put request to ARM\n                        # Cache object ttl set via az configure.\n                        az image template create --image-source $imagesource -n mytemplate \\\n                            -g my-group --scripts $script --defer\n                        \n                        # add customizers\n                        az image template customizer add -n mytemplate -g my-group  \\\n                            --customizer-name my-pwsh-script --exit-codes 0 1 --inline-script \\\n                            \"mkdir c:\\buildActions\" \"echo Azure-Image-Builder-Was-Here \\\n                             > c:\\buildActions\\Output.txt\" --type powershell --defer\n                        \n                        az image template customizer add -n mytemplate -g my-group \\\n                            --customizer-name my-file-customizer --type file \\\n                            --file-source \"https://my-file-source.net/file.txt\"  \\\n                            --dest-path \"c:\\buildArtifacts\\file.txt\" --defer\n                        \n                        # add distributors\n                        az image template output add -n mytemplate -g my-group --is-vhd \\\n                            --output-name my-win-image-vhd --artifact-tags \"is_vhd=True\" --defer\n                        \n                        az image template output add -n mytemplate -g my-group \\\n                            --output-name my-win-image-managed --managed-image winImage \\\n                            --managed-image-location eastus \\\n                            --artifact-tags \"is_vhd=False\" --defer\n                        \n                        # Stop deferring put request to ARM. Create the template from the object cache.\n                        # Cache object will be deleted.\n                        az image template update -n mytemplate -g my-group"
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --build-timeout
+    summary: The Maximum duration to wait while building the image template, in minutes. Default is 60.
+    description: ''
+  - name: --defer
+    summary: Temporarily store the object in the local cache instead of sending to Azure. Use `az cache` commands to view/clear.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --scripts
+    summary: "Space-separated list of shell or powershell scripts to customize the image with. Each script must be a publicly accessible URL. Infers type of script from file extension ('.sh' or'.ps1') or from source type. More more customizer options and flexibility, see: 'az image template customizer add'."
+    description: ''
+  - name: --checksum
+    summary: The SHA256 checksum of the Red Hat ISO image.
+    description: ''
+  - name: --image-source -i
+    summary: The base image to customize. Must be a valid platform image URN, platform image alias, Red Hat ISO image URI, managed image name/ID, or shared image version ID.
+    description: ''
+    valueFrom: az vm image list, az vm image show
+  - name: --managed-image-destinations
+    summary: Managed image output distributor information. Space-separated list of key-value pairs. E.g "image_1=westus2 image_2=westus". Each key is the name or resource ID of the managed image to be created. Each value is the location of the image.
+    description: ''
+  - name: --shared-image-destinations
+    summary: Shared image gallery (sig) output distributor information. Space-separated list of key-value pairs. E.g "my_gallery_1/image_def_1=eastus,westus  my_gallery_2/image_def_2=uksouth,canadaeast,francesouth." Each key is the sig image definition ID or sig gallery name and sig image definition delimited by a "/". Each value is a comma-delimited list of replica locations.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_delete
+  name: az image template delete
+  summary: Delete image builder template.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_list
+  name: az image template list
+  summary: List image builder templates.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_run
+  name: az image template run
+  summary: Build an image builder template.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Start a template build run and then wait for it to finish.
+    syntax:
+      content: "az image template run -n mytemplate -g my-group --no-wait\n                        \n                        az image template wait -n mytemplate -g aibmdi \\\n                            --custom \"lastRunStatus.runState!='running'\"\n                        \n                        az image template show -n mytemplate -g my-group"
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_show
+  name: az image template show
+  summary: Show an image builder template.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_show_runs
+  name: az image template show-runs
+  summary: Show an image builder template's run outputs.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Run a template build run and then view its run outputs.
+    syntax:
+      content: "az image template run -n mytemplate -g my-group --no-wait\n                        \n                        az image template wait -n mytemplate -g aibmdi \\\n                            --custom \"lastRunStatus.runState!='running'\"\n                        \n                        az image template show-runs -n mytemplate -g my-group"
+  parameters:
+  - name: --output-name
+    summary: Name of the image builder run output.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_image_template_update
+  name: az image template update
+  summary: Update an image builder template.
+  description: Updating an image builder templates is currently unsupported. This command can be used in conjunction with --defer to update an image template object within the CLI cache. Without --defer it retrieves the specified image template from the cache and sends a request to Azure to create the image template.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a template resource from a template object in the cli cache.
+    syntax:
+      content: "# create and write template object to local cli cache\n                        az image template create --image-source {image_source} -n mytemplate -g my-group \\\n                            --scripts {script} --managed-image-destinations image_1=westus --defer\n                        \n                        # add customizers and outputs to local cache template object via az image template output / customizer add\n                        # one can also update cache object properties through generic update options, such as: --set\n                        az image template output add -n mytemplate -g my-group --output-name my-win-image-managed \\\n                            --artifact-tags \"is_vhd=False\"  --managed-image winImage --managed-image-location eastus --defer\n                        \n                        # send template create request to azure to create template resource\n                        az image template update -n mytemplate -g my-group"
+  parameters:
+  - name: --defer
+    summary: Temporarily store the object in the local cache instead of sending to Azure. Use `az cache` commands to view/clear.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+- uid: az_image_template_wait
+  name: az image template wait
+  summary: Place the CLI in a waiting state until a condition of the template is met.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Start a template build run and then wait for it to finish.
+    syntax:
+      content: "az image template run -n mytemplate -g my-group --no-wait\n                        \n                        az image template wait -n mytemplate -g aibmdi \\\n                            --custom \"lastRunStatus.runState!='running'\"\n                        \n                        az image template show -n mytemplate -g my-group"
+  parameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The name of the image template.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+commands:
+- uid: az_image_template_create
+  name: az image template create
+  summary: Create an image builder template.
+- uid: az_image_template_customizer
+  name: az image template customizer
+  summary: Manage image builder template customizers.
+- uid: az_image_template_customizer_add
+  name: az image template customizer add
+  summary: Add an image builder customizer to an image builder template.
+- uid: az_image_template_customizer_clear
+  name: az image template customizer clear
+  summary: Remove all image builder customizers from an image builder template.
+- uid: az_image_template_customizer_remove
+  name: az image template customizer remove
+  summary: Remove an image builder customizer from an image builder template.
+- uid: az_image_template_delete
+  name: az image template delete
+  summary: Delete image builder template.
+- uid: az_image_template_list
+  name: az image template list
+  summary: List image builder templates.
+- uid: az_image_template_output
+  name: az image template output
+  summary: Manage image builder template output distributors.
+- uid: az_image_template_output_add
+  name: az image template output add
+  summary: Add an image builder output distributor to an image builder template.
+- uid: az_image_template_output_clear
+  name: az image template output clear
+  summary: Remove all image builder output distributors from an image builder template.
+- uid: az_image_template_output_remove
+  name: az image template output remove
+  summary: Remove an image builder output distributor from an image builder template.
+- uid: az_image_template_run
+  name: az image template run
+  summary: Build an image builder template.
+- uid: az_image_template_show
+  name: az image template show
+  summary: Show an image builder template.
+- uid: az_image_template_show_runs
+  name: az image template show-runs
+  summary: Show an image builder template's run outputs.
+- uid: az_image_template_update
+  name: az image template update
+  summary: Update an image builder template.
+- uid: az_image_template_wait
+  name: az image template wait
+  summary: Place the CLI in a waiting state until a condition of the template is met.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage and build image builder templates.

@@ -69,18 +69,21 @@ items:
   - summary: Create a SQL virtual machine with AHUB billing tag.
     syntax:
       content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type AHUB
+  - summary: Create a SQL virtual machine with specific sku type and license type.
+    syntax:
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --image-sku Enterprise --license-type AHUB
   - summary: Enable R services in SQL2016 onwards.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --enable-r-services true
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --enable-r-services true
   - summary: Create SQL virtual machine and configure auto backup settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
   - summary: Create SQL virtual machine and configure auto patching settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --day-of-week sunday --maintenance-window-duration 60 --maintenance-window-start-hour 2
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --day-of-week sunday --maintenance-window-duration 60 --maintenance-window-start-hour 2
   - summary: Create SQL virtual machine and configure SQL connectivity settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --connectivity-type private --port 1433 --sql-auth-update-username {newlogin} --sql-auth-update-pwd {sqlpassword}
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --connectivity-type private --port 1433 --sql-auth-update-username {newlogin} --sql-auth-update-pwd {sqlpassword}
   parameters:
   - isRequired: true
     name: --name -n
@@ -184,9 +187,14 @@ items:
   - name: --sql-auth-update-username
     summary: SQL Server sysadmin login to create.
     description: ''
-  - name: --license-type
+  - isRequired: true
+    name: --license-type -i
     parameterValueGroup: AHUB, PAYG
     summary: SQL Server license type.
+    description: ''
+  - name: --image-sku
+    parameterValueGroup: Developer, Enterprise, Express, Standard, Web
+    summary: SQL image sku.
     description: ''
   - name: --sql-workload-type
     parameterValueGroup: DW, GENERAL, OLTP
@@ -319,6 +327,9 @@ items:
   - summary: Remove a tag.
     syntax:
       content: az sql vm update -n sqlvm -g myresourcegroup --remove tags.tagName
+  - summary: Update a SQL virtual machine with specific sku type.
+    syntax:
+      content: az sql vm update -n sqlvm -g myresourcegroup --image-sku Enterprise
   - summary: Update SQL virtual machine auto backup settings.
     syntax:
       content: az sql vm update -n sqlvm -g myresourcegroup --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
@@ -432,7 +443,11 @@ items:
   - name: --port
     summary: SQL Server port.
     description: ''
-  - name: --license-type
+  - name: --image-sku
+    parameterValueGroup: Developer, Enterprise, Express, Standard, Web
+    summary: SQL image sku.
+    description: ''
+  - name: --license-type -i
     parameterValueGroup: AHUB, PAYG
     summary: SQL Server license type.
     description: ''

@@ -8,13 +8,13 @@ items:
   - azurecli
   children:
   - az_acr_build
+  - az_acr_check_health
   - az_acr_check_name
   - az_acr_create
   - az_acr_delete
   - az_acr_import
   - az_acr_list
   - az_acr_login
-  - az_acr_pack
   - az_acr_run
   - az_acr_show
   - az_acr_show_usage
@@ -91,6 +91,38 @@ items:
     description: ''
   - name: <SOURCE_LOCATION>
     summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    remote:
+      branch: dev
+      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_acr_check_health
+  name: az acr check-health
+  summary: Gets health information on the environment and optionally a target registry.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Gets health state with target registry 'MyRegistry', skipping confirmation for pulling image.
+    syntax:
+      content: az acr check-health -n MyRegistry -y
+  - summary: Gets health state of the environment, without stopping on first error.
+    syntax:
+      content: az acr check-health --ignore-errors
+  parameters:
+  - name: --ignore-errors
+    summary: Ignore errors, displaying them only at the final.
+    description: ''
+  - name: --name -n
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -214,7 +246,9 @@ items:
       content: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag
   - summary: Import an image from a registry in a different subscription.
     syntax:
-      content: az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
+      content: >-
+        az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag \
+                                    -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
   - summary: Import an image from a public repository in Docker Hub
     syntax:
       content: az acr import -n MyRegistry --source docker.io/library/hello-world:latest -t targetrepository:targettag
@@ -309,66 +343,6 @@ items:
     description: ''
   - name: --username -u
     summary: The username used to log into a container registry.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_acr_pack
-  name: az acr pack
-  summary: Queues a task that builds an app and pushes it into an Azure Container Registry.
-  description: ''
-  langs:
-  - azurecli
-  examples:
-  - summary: Queue a build for the current directory with the default Oryx-based buildpack.
-    syntax:
-      content: az acr pack -r MyRegistry -t {{.Run.Registry}}/node-app:{{.Run.ID}} .
-  parameters:
-  - isRequired: true
-    name: --image -t
-    summary: "The name and tag of the image using the format: '-t repo/image:tag'."
-    description: ''
-  - isRequired: true
-    name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: Default, None
-    summary: Auth mode of the source registry.
-    description: ''
-  - name: --builder -b
-    defaultValue: mcr.microsoft.com/oryx/pack-builder:stable
-    summary: The name and tag of a Buildpack builder image.
-    description: ''
-  - name: --no-format
-    summary: Indicates whether the logs should be displayed in raw format.
-    description: ''
-  - name: --no-logs
-    summary: Do not show logs after successfully queuing the build.
-    description: ''
-  - name: --no-wait
-    summary: Do not wait for the run to complete and return immediately after queuing the run.
-    description: ''
-  - name: --platform
-    summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
-    description: ''
-  - name: --pull
-    summary: Pull the latest builder and run images before use.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --timeout
-    summary: The timeout in seconds.
-    description: ''
-  - name: <SOURCE_LOCATION>
-    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -582,6 +556,9 @@ commands:
 - uid: az_acr_build
   name: az acr build
   summary: Queues a quick build, providing streaming logs for an Azure Container Registry.
+- uid: az_acr_check_health
+  name: az acr check-health
+  summary: Gets health information on the environment and optionally a target registry.
 - uid: az_acr_check_name
   name: az acr check-name
   summary: Checks if an Azure Container Registry name is valid and available for use.
@@ -656,7 +633,10 @@ commands:
   summary: Remove a network rule.
 - uid: az_acr_pack
   name: az acr pack
-  summary: Queues a task that builds an app and pushes it into an Azure Container Registry.
+  summary: Manage Azure Container Registry Tasks that use Cloud Native Buildpacks.
+- uid: az_acr_pack_build
+  name: az acr pack build
+  summary: Queues a quick build task that builds an app and pushes it into an Azure Container Registry.
 - uid: az_acr_replication
   name: az acr replication
   summary: Manage geo-replicated regions of Azure Container Registries.
@@ -817,7 +797,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/a93391639134617536190e7eca57710fa6ce524b/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 5/24/2019 10:02:25 PM
-ms.date: 05/24/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/fc1b74205eb9f3c0c00cbc2866e1b1695ec0c6d3/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+updated_at: 6/6/2019 4:27:53 PM
+ms.date: 06/06/2019
 description: Manage private registries with Azure Container Registries.
