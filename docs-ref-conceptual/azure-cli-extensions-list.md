@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/19/2019
+ms.date: 06/20/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -32,13 +32,13 @@ az extension list-available --output table
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.7.1 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [azure-cli-ml](https://docs.microsoft.com/en-us/azure/machine-learning/service/) | 1.0.43 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.11.0 | Tools for managing Azure DevOps. |  |
-| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.2 | Manage Azure Firewall resources. | Yes |
+| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.3 | Manage Azure Firewall resources. | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.13 | Additional commands to simplify Azure Database workflows. | Yes |
-| [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.1 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
+| [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.3 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.8.1 | Support for new Database Migration Service scenarios. | Yes |
 | [dns](https://github.com/Azure/azure-cli-extensions) | 0.0.2 | An Azure CLI Extension for DNS zones |  |
-| [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.2 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
+| [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.3 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.3.0 | Intelligent querying for CLI information. | Yes |
@@ -51,6 +51,7 @@ az extension list-available --output table
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.5 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
+| [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.1 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.11 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.4.1 | Additional commands for working with SAP HanaOnAzure instances. |  |
