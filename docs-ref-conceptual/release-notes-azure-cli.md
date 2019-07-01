@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/18/2019
+ms.date: 07/02/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,17 +19,19 @@ Version 2.0.68
 
 ### Core
 
-* Command modules consolidated into a single Python distributable. This deprecates direct use of many `azure-cli-` packages on PyPI.
+* Command modules are now consolidated into a single Python distributable. This deprecates direct use of many `azure-cli-` packages on PyPI.
+  This should reduce install size and only affect users who have directly installed via `pip`.
 
 ### ACR
 
-* Support Timer Triggers for Task.
+* Added support for Timer Triggers to Task
 
 ### Appservice
 
-* functionapp: `az functionapp create` enables application insights by default
-* BREAKING CHANGE: (functionapp) removes deprecated `az functionapp devops-build` command. Please use the new command `az functionapp devops-pipeline` instead.
-* functionapp: `az functionapp deployment config-zip` now works for Linux Consumption Function app plans
+* Changed `functionapp create` to enable application insights by default
+* [BREAKING CHANGE] Removed deprecated `functionapp devops-build` command.
+  *  Use the new command `az functionapp devops-pipeline` instead
+* Added Linux Consumption function app plan support to `functionapp deployment config-zip`
 
 ### Cosmos DB
 
@@ -37,60 +39,58 @@ Version 2.0.68
 
 ### DLS
 
-* Update ADLS version (0.0.45).
+* Updated ADLS version (0.0.45)
 
 ### Feedback
 
 * When reporting a failed extension command, `az feedback` now attempts to open the browser to the project/repo url of the
-  extension from the index.
+  extension from the index
 
 ### HDInsight
 
-* BREAKING CHANGE: Changed "oms" command group name to "monitor"
-* BREAKING CHANGE: Made "--http-password/-p" a required parameter 
-* Added completers for "--cluster-admin-account" and "cluster-users-group-dns" parameters completer 
-* "cluster-users-group-dns" parameter is now required when "—esp" is present
+* [BREAKING CHANGE] Changed `oms` command group name to `monitor`
+* [BREAKING CHANGE] Made `--http-password/-p` a required parameter 
+* Added completers for `--cluster-admin-account` and `cluster-users-group-dns` parameters completer 
+* Changed `cluster-users-group-dns` parameter to be required when `—esp` is present
 * Added a timeout for all existing argument auto-completers
 * Added a timeout for transforming resource name to resource id
-* Auto-completers can now select resources from any resource group. It can be a different resource group than the one specified with "-g"
-* Added support for "--sub-domain-suffix" and "--disable_gateway_auth" parameters in the "az hdinsight application create" command
+* Changed Auto-completers to select resources from any resource group. It can be a different resource group than the one specified with `-g`
+* Added support for `--sub-domain-suffix` and `--disable_gateway_auth` parameters in the `hdinsight application create` command
 
 ### Managed Services
 
-* Introducing managed service command module in preview.
+* Introducing managed service command module in preview
 
 ### Profile
-* Suppress `--subscription` argument for logout command.
+* Suppress `--subscription` argument for logout command
 
 ### RBAC
 
-* [BREAKING CHANGE] create-for-rbac: remove --password
-* role assignment: expose --assignee-principal-type from create command to avoid intermittent
-                   failures caused by AAD graph server replication latency
-* ad signed-in-user: fix a crash on listing owned objects
-* ad sp: use the right approach to find the application from a service principal 
+* [BREAKING CHANGE] Removed `--password` argument for `create-for-rbac`
+* Added `--assignee-principal-type` parameter to `create` command to avoid intermittent failures caused by AAD graph server replication latency
+* Fixed a crash in `ad signed-in-user` when listing owned objects
+* Fixed issue where `ad sp` would not find the right application from a service principal
 
 ### RDBMS
 
-* Support replication for MariaDB.
+* Added support for replication for MariaDB
 
 ### SQL
 
-* Document allowed values for sql db create --sample-name
+* Documented allowed values for `sql db create --sample-name`
 
 ### Storage
 
-* storage blob generate-sas: User delegation SAS token support with --as-user
-* storage container generate-sas: User delegation SAS token support with --as-user
+* Added user delegation SAS token support with `--as-user` to `storage blob generate-sas` 
+* Added user delegation SAS token support with `--as-user` to `storage container generate-sas` 
 
 ### VM
 
-* vmss create: Fix bug where command returns an error message when run with `--no-wait`. The command succesfully sends
-  the request but returns failure status code and returns an error mesage.
-* vmss create `--single-placement-group`: Removed client-side validation. Does not fail if `--single-placement-group` is
-  set to true and`--instance-count` is greater than 100 or availability zones are specified, but leaves this validation
-  to the compute service.
-* vm/vmss extension image list: Fix bug where command fails when used with --latest
+* Fixed bug where `vmss create` returns an error message when run with `--no-wait`
+* Removed client-side validation for `vmss create --single-placement-group`. Does not fail if `--single-placement-group` is
+  set to `true` and`--instance-count` is greater than 100 or availability zones are specified, but leaves this validation
+  to the compute service
+* Fixed bug where `[vm|vmss] extension image list` fails when used with `--latest`
 
 
 ## June 18, 2019
