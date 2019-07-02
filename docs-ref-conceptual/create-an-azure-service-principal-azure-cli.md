@@ -37,22 +37,15 @@ There are two types of authentication available for service principals: Password
 
 ### Password-based authentication
 
-Without any authentication parameters, password-based authentication is used with a random password created for you. If you want password-based authentication, this method is recommended.
+Without any authentication parameters, password-based authentication is used with a random password created for you.
 
   ```azurecli-interactive
   az ad sp create-for-rbac --name ServicePrincipalName
   ```
 
-For a user-supplied password, use the `--password` argument. When creating a password, make sure you follow the [Azure Active Directory password rules and restrictions](/azure/active-directory/active-directory-passwords-policy). Don't use a weak password or reuse a password.
-
-  ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName --password <Choose a strong password>
-  ```
-
-  > [!IMPORTANT]
-  >
-  > For security reasons, the `--password` argument for service principal creation will be deprecated in a future release. If you want to use password-based authentication,
-  > avoid `--password` and let the CLI generate a secure password for you.
+> [!IMPORTANT]
+> As of Azure CLI 2.0.68, the `--password` parameter to create a service principal with a user-defined password
+>  is __no longer supported__ to prevent the accidental use of weak passwords.
 
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
 
