@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 06/18/2019
+ms.date: 07/02/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,86 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## July 2, 2019
+
+Version 2.0.68
+
+### Core
+
+* Command modules are now consolidated into a single Python distributable. This deprecates direct use of many `azure-cli-` packages on PyPI.
+  This should reduce install size and only affect users who have directly installed via `pip`.
+
+### ACR
+
+* Added support for Timer Triggers to Task
+
+### Appservice
+
+* Changed `functionapp create` to enable application insights by default
+* [BREAKING CHANGE] Removed deprecated `functionapp devops-build` command.
+  *  Use the new command `az functionapp devops-pipeline` instead
+* Added Linux Consumption function app plan support to `functionapp deployment config-zip`
+
+### Cosmos DB
+
+* Added support for disabling TTL
+
+### DLS
+
+* Updated ADLS version (0.0.45)
+
+### Feedback
+
+* When reporting a failed extension command, `az feedback` now attempts to open the browser to the project/repo url of the
+  extension from the index
+
+### HDInsight
+
+* [BREAKING CHANGE] Changed `oms` command group name to `monitor`
+* [BREAKING CHANGE] Made `--http-password/-p` a required parameter 
+* Added completers for `--cluster-admin-account` and `cluster-users-group-dns` parameters completer 
+* Changed `cluster-users-group-dns` parameter to be required when `—esp` is present
+* Added a timeout for all existing argument auto-completers
+* Added a timeout for transforming resource name to resource id
+* Changed Auto-completers to select resources from any resource group. It can be a different resource group than the one specified with `-g`
+* Added support for `--sub-domain-suffix` and `--disable_gateway_auth` parameters in the `hdinsight application create` command
+
+### Managed Services
+
+* Introducing managed service command module in preview
+
+### Profile
+* Suppress `--subscription` argument for logout command
+
+### RBAC
+
+* [BREAKING CHANGE] Removed `--password` argument for `create-for-rbac`
+* Added `--assignee-principal-type` parameter to `create` command to avoid intermittent failures caused by AAD graph server replication latency
+* Fixed a crash in `ad signed-in-user` when listing owned objects
+* Fixed issue where `ad sp` would not find the right application from a service principal
+
+### RDBMS
+
+* Added support for replication for MariaDB
+
+### SQL
+
+* Documented allowed values for `sql db create --sample-name`
+
+### Storage
+
+* Added user delegation SAS token support with `--as-user` to `storage blob generate-sas` 
+* Added user delegation SAS token support with `--as-user` to `storage container generate-sas` 
+
+### VM
+
+* Fixed bug where `vmss create` returns an error message when run with `--no-wait`
+* Removed client-side validation for `vmss create --single-placement-group`. Does not fail if `--single-placement-group` is
+  set to `true` and`--instance-count` is greater than 100 or availability zones are specified, but leaves this validation
+  to the compute service
+* Fixed bug where `[vm|vmss] extension image list` fails when used with `--latest`
+
 
 ## June 18, 2019
 
