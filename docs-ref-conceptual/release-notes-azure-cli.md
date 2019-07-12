@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/02/2019
+ms.date: 07/16/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,51 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## July 16, 2019
+
+Version 2.0.69
+
+**Appservice**
+
+* az webapp identity commands will return a proper error message if ResourceGroupName or App name are invalid.
+* az webapp list fixed to return the correct value for numberOfSites if no ResourceGroup was provided.
+* restore the idempotency of "appservice plan create" and "webapp create"
+
+**Core**
+
+* Fixed issue where `--subscription` would appear despite being not applicable.
+
+**BATCH**
+
+* Updated to Batch SDK and Batch Management Plane SDK to 7.0.0
+* [Breaking] Replaced az batch pool node-agent-skus list with az batch pool supported-images list. The new command contains all of the same information originally available, but in a clearer format. New non-verified images are also now returned. Additional information about capabilities and batchSupportEndOfLife is accessible on the imageInformation object returned.
+* When using --json-file option of az batch pool create network security rules blocking network access to a pool based on the source port of the traffic is now supported. This is done via the SourcePortRanges property on NetworkSecurityGroupRule.
+* When using --json-file option of az batch task create and running a container, Batch now supports executing the task in the container working directory or in the Batch task working directory. This is controlled by the WorkingDirectory property on TaskContainerSettings.
+* Fix error in --application-package-references option of `az batch pool create` where it would only work with defaults. Now it will properly accept specific versions as well.
+
+**Eventhubs**
+
+* Fix for issue #5824 - added validation for parameter --rights of authorizationrule commands
+
+**RDBMS**
+
+* Add optional parameter to specify replica SKU for create replica command.
+* Fix the issue with CI test failure with creating MySQL replica.
+
+**Relay**
+
+* Fixed issue #8775 : Cannot create hybrid connection with disabled client authroization
+* Added parameter "--requires-transport-security" to az relay wcfrelay create
+
+**Servicebus**
+
+* Fix for issue #5824 - added validation for parameter --rights of authorizationrule commands
+
+**Storage**
+
+* Enable Files AADDS for storage account update.
+* Fixed issue `storage blob service-properties update --set`.
 
 ## July 2, 2019
 
