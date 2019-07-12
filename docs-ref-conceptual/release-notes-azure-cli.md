@@ -17,46 +17,45 @@ ms.devlang: azurecli
 
 Version 2.0.69
 
-**Appservice**
+### Appservice
 
-* az webapp identity commands will return a proper error message if ResourceGroupName or App name are invalid.
-* az webapp list fixed to return the correct value for numberOfSites if no ResourceGroup was provided.
-* restore the idempotency of "appservice plan create" and "webapp create"
+* Changed `webapp identity` commands to return a proper error message if ResourceGroupName or App name are invalid
+* Fixed `webapp list` to return the correct value for numberOfSites if no ResourceGroup was provided
+* Fixed side-effects of `appservice plan create` and `webapp create`
 
-**Core**
+### Core
 
-* Fixed issue where `--subscription` would appear despite being not applicable.
+* Fixed issue where `--subscription` would appear despite being not applicable
 
-**BATCH**
+### Batch
 
-* Updated to Batch SDK and Batch Management Plane SDK to 7.0.0
-* [Breaking] Replaced az batch pool node-agent-skus list with az batch pool supported-images list. The new command contains all of the same information originally available, but in a clearer format. New non-verified images are also now returned. Additional information about capabilities and batchSupportEndOfLife is accessible on the imageInformation object returned.
-* When using --json-file option of az batch pool create network security rules blocking network access to a pool based on the source port of the traffic is now supported. This is done via the SourcePortRanges property on NetworkSecurityGroupRule.
-* When using --json-file option of az batch task create and running a container, Batch now supports executing the task in the container working directory or in the Batch task working directory. This is controlled by the WorkingDirectory property on TaskContainerSettings.
-* Fix error in --application-package-references option of `az batch pool create` where it would only work with defaults. Now it will properly accept specific versions as well.
+* [BREAKING CHANGE] Replaced `batch pool node-agent-skus list` with `batch pool supported-images list`
+* Added support for security rules blocking network access to a pool based on the source port of the traffic when using the `--json-file` option of `batch pool create network`
+* Added support for executing the task in the container working directory or in the Batch task working directory when using the `--json-file` option of `batch task create`
+* Fixed error in `--application-package-references` option of `batch pool create` where it would only work with defaults
 
-**Eventhubs**
+### Eventhubs
 
-* Fix for issue #5824 - added validation for parameter --rights of authorizationrule commands
+* Added validation for parameter `--rights` of `authorizationrule` commands
 
-**RDBMS**
+### RDBMS
 
-* Add optional parameter to specify replica SKU for create replica command.
-* Fix the issue with CI test failure with creating MySQL replica.
+* Added optional parameter to specify replica SKU for create replica command
+* Fixed the issue with CI test failure with creating MySQL replica
 
-**Relay**
+### Relay
 
-* Fixed issue #8775 : Cannot create hybrid connection with disabled client authroization
-* Added parameter "--requires-transport-security" to az relay wcfrelay create
+* Fixed issue with hybrid connection when client authroization disabled [#8775](https://github.com/azure/azure-cli/issues/8775)
+* Added parameter `--requires-transport-security` to `relay wcfrelay create`
 
-**Servicebus**
+### Servicebus
 
-* Fix for issue #5824 - added validation for parameter --rights of authorizationrule commands
+* Added validation for parameter `--rights` of `authorizationrule` commands
 
-**Storage**
+### Storage
 
-* Enable Files AADDS for storage account update.
-* Fixed issue `storage blob service-properties update --set`.
+* Enable Files AADDS for storage account update
+* Fixed issue `storage blob service-properties update --set`
 
 ## July 2, 2019
 
