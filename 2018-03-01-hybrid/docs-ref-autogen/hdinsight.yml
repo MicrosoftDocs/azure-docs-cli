@@ -32,13 +32,14 @@ items:
   - summary: Create a cluster with Enterprise Security Package.
     syntax:
       content: >-
-        az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+        az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
                                 -p "HttpPassword1234!" \
                                 --storage-account MyStorageAccount \
                                 --subnet "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/subnet1" \
                                 --domain "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.AAD/domainServices/MyDomain.onmicrosoft.com" \
                                 --assign-identity "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/MyMsiRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyMSI" \
-                                --cluster-admin-account MyAdminAccount@MyDomain.onmicrosoft.com
+                                --cluster-admin-account MyAdminAccount@MyDomain.onmicrosoft.com \
+                                --cluster-users-group-dns MyGroup
   - summary: Create a Kafka cluster with disk encryption. See https://docs.microsoft.com/en-us/azure/hdinsight/kafka/apache-kafka-byok.
     syntax:
       content: >-
@@ -67,6 +68,10 @@ items:
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --no-validation-timeout
+    parameterValueGroup: false, true
+    summary: Do not report timeout error during argument validation phase.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -126,7 +131,7 @@ items:
     summary: A space-delimited list of LDAPS protocol URLs to communicate with the Active Directory. Required only when create cluster with Enterprise Security Package.
     description: ''
   - name: --http-password -p
-    summary: HTTP password for the cluster.
+    summary: HTTP password for the cluster. Will prompt if not given.
     description: ''
   - name: --http-user -u
     summary: 'HTTP username for the cluster.  Default: admin.'
@@ -197,10 +202,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_delete
   name: az hdinsight delete
@@ -227,10 +232,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_list
   name: az hdinsight list
@@ -246,10 +251,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_list_usage
   name: az hdinsight list-usage
@@ -266,10 +271,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_resize
   name: az hdinsight resize
@@ -296,10 +301,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_rotate_disk_encryption_key
   name: az hdinsight rotate-disk-encryption-key
@@ -335,10 +340,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_show
   name: az hdinsight show
@@ -359,10 +364,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_update
   name: az hdinsight update
@@ -389,10 +394,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_wait
   name: az hdinsight wait
@@ -436,10 +441,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_hdinsight_application
@@ -472,18 +477,18 @@ commands:
 - uid: az_hdinsight_list_usage
   name: az hdinsight list-usage
   summary: Lists the usages for the specified location.
-- uid: az_hdinsight_oms
-  name: az hdinsight oms
-  summary: Manage HDInsight Operations Management Suite (OMS).
-- uid: az_hdinsight_oms_disable
-  name: az hdinsight oms disable
-  summary: Disables the Operations Management Suite (OMS) on the HDInsight cluster.
-- uid: az_hdinsight_oms_enable
-  name: az hdinsight oms enable
-  summary: Enables the Operations Management Suite (OMS) on the HDInsight cluster.
-- uid: az_hdinsight_oms_show
-  name: az hdinsight oms show
-  summary: Gets the status of Operations Management Suite (OMS) on the HDInsight cluster.
+- uid: az_hdinsight_monitor
+  name: az hdinsight monitor
+  summary: Manage Azure Monitor logs integration on the HDInsight cluster.
+- uid: az_hdinsight_monitor_disable
+  name: az hdinsight monitor disable
+  summary: Disables the Azure Monitor logs integration on the HDInsight cluster.
+- uid: az_hdinsight_monitor_enable
+  name: az hdinsight monitor enable
+  summary: Enables the Azure Monitor logs integration on the HDInsight cluster.
+- uid: az_hdinsight_monitor_show
+  name: az hdinsight monitor show
+  summary: Gets the status of Azure Monitor logs integration on the HDInsight cluster.
 - uid: az_hdinsight_resize
   name: az hdinsight resize
   summary: Resizes the specified HDInsight cluster to the specified size.
@@ -531,9 +536,9 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/3c7f8e2302e9ef72b36b895187f7388008d80978/src/command_modules/azure-cli-hdinsight/azure/cli/command_modules/hdinsight/_help.py
-updated_at: 2/26/2019 6:35:26 PM
-ms.date: 02/26/2019
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/b37a3aed3ae73ee9cbb20d6151ecc12d0575fe0c/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+updated_at: 6/24/2019 7:10:07 PM
+ms.date: 06/24/2019
 description: Manage HDInsight resources.

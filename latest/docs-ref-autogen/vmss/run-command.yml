@@ -13,22 +13,32 @@ items:
 - uid: az_vmss_run_command_invoke
   name: az vmss run-command invoke
   summary: Execute a specific run command on a Virtual Machine Scale Set instance.
-  description: ''
+  description: "`az vmss run-command show` returns helpful information on each run-command. Discover Run command-id's via `az vmss run-command list`."
   langs:
   - azurecli
   examples:
-  - summary: install nginx on a VMSS instance
+  - summary: Install nginx on a VMSS instance.
     syntax:
       content: az vmss run-command invoke -g MyResourceGroup -n MyVMSS --command-id RunShellScript \ --instance-id 0 --scripts "sudo apt-get update && sudo apt-get install -y nginx"
-  - summary: invoke a run-command with parameters on a VMSS instance
+  - summary: Invoke a run-command with parameters on a VMSS instance.
     syntax:
       content: az vmss run-command invoke -g MyResourceGroup -n MyVMSS --command-id RunShellScript \ --instance-id 4 --scripts 'echo $1 $2' --parameters hello world
-  - summary: 'invoke command on all VMSS instances using the VMSS instance resource IDs. Note: "@-" expands to stdin.'
+  - summary: 'Invoke command on all VMSS instances using the VMSS instance resource IDs. Note: "@-" expands to stdin.'
     syntax:
       content: >-
         az vmss list-instances -n MyVMSS -g ova-test --query "[].id" --output tsv | \
                                 az vmss run-command invoke --scripts 'echo $1 $2' --parameters hello world  \
                                     --command-id RunShellScript --ids @-
+  - summary: Run powershell script on a windows VMSS instance with parameters. Script supplied inline. Be wary of single-quoting in CMD.exe.
+    syntax:
+      content: >-
+        az vmss run-command invoke  --command-id RunPowerShellScript -n tosin-win-vm -g ova-test \
+                                    --scripts 'param([string]$arg1,[string]$arg2)' \
+                                    'Write-Host This is a sample script with parameters $arg1 and $arg2' \
+                                    --parameters 'arg1=somefoo' 'arg2=somebar' --instance-id 2
+  - summary: Run powershell script on a windows VMSS instance with parameters. Script supplied from file.
+    syntax:
+      content: "# script.ps1\n                        #   param(\n                        #       [string]$arg1,\n                        #       [string]$arg2\n                        #   )\n                        #   Write-Host This is a sample script with parameters $arg1 and $arg2\n                        \n                        az vmss run-command invoke  --command-id RunPowerShellScript -n tosin-win-vm -g ova-test \\\n                            --scripts @script.ps1 --parameters \"arg1=somefoo\" \"arg2=somebar\" --instance-id 5"
   parameters:
   - isRequired: true
     name: --command-id
@@ -39,7 +49,7 @@ items:
     summary: Space-separated parameters in the format of '[name=]value'.
     description: ''
   - name: --scripts
-    summary: Script lines separated by whites spaces. Use @{file} to load from a file.
+    summary: Space-separated script lines. Use @{file} to load script from a file.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
@@ -57,10 +67,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_run_command_list
   name: az vmss run-command list
@@ -77,10 +87,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_vmss_run_command_show
   name: az vmss run-command show
@@ -106,10 +116,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_vmss_run_command_invoke
@@ -135,9 +145,9 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c4b26547b45176e62526e458ea6dae22a1125af0/src/command_modules/azure-cli-vm/azure/cli/command_modules/vm/_help.py
-updated_at: 6/13/2019 3:33:42 PM
-ms.date: 06/13/2019
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/5c7ddcb1066236c3d6a634c50428fc0f2a94fce3/src/azure-cli/azure/cli/command_modules/vm/_help.py
+updated_at: 6/21/2019 10:50:06 PM
+ms.date: 06/21/2019
 description: For more information, see <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/run-command">https://docs.microsoft.com/en-us/azure/virtual-machines/windows/run-command</a> or <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/run-command">https://docs.microsoft.com/en-us/azure/virtual-machines/linux/run-command</a>.

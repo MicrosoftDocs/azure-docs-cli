@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/02/2019
+ms.date: 07/16/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,50 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## July 16, 2019
+
+Version 2.0.69
+
+### Appservice
+
+* Changed `webapp identity` commands to return a proper error message if ResourceGroupName or App name are invalid
+* Fixed `webapp list` to return the correct value for numberOfSites if no ResourceGroup was provided
+* Fixed side-effects of `appservice plan create` and `webapp create`
+
+### Core
+
+* Fixed issue where `--subscription` would appear despite being not applicable
+
+### Batch
+
+* [BREAKING CHANGE] Replaced `batch pool node-agent-skus list` with `batch pool supported-images list`
+* Added support for security rules blocking network access to a pool based on the source port of the traffic when using the `--json-file` option of `batch pool create network`
+* Added support for executing the task in the container working directory or in the Batch task working directory when using the `--json-file` option of `batch task create`
+* Fixed error in `--application-package-references` option of `batch pool create` where it would only work with defaults
+
+### Eventhubs
+
+* Added validation for parameter `--rights` of `authorizationrule` commands
+
+### RDBMS
+
+* Added optional parameter to specify replica SKU for create replica command
+* Fixed the issue with CI test failure with creating MySQL replica
+
+### Relay
+
+* Fixed issue with hybrid connection when client authroization disabled [#8775](https://github.com/azure/azure-cli/issues/8775)
+* Added parameter `--requires-transport-security` to `relay wcfrelay create`
+
+### Servicebus
+
+* Added validation for parameter `--rights` of `authorizationrule` commands
+
+### Storage
+
+* Enable Files AADDS for storage account update
+* Fixed issue `storage blob service-properties update --set`
 
 ## July 2, 2019
 

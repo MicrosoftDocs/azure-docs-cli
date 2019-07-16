@@ -44,10 +44,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_create
   name: az acr task create
@@ -59,6 +59,9 @@ items:
   - summary: Create a task without the source location.
     syntax:
       content: az acr task create -n hello-world -r MyRegistry --cmd MyImage -c /dev/null
+  - summary: Create a task without the source location and with a timer trigger that runs the image `MyImage` at the top of every hour using the default trigger name.
+    syntax:
+      content: az acr task create -n hello-world -r MyRegistry --cmd MyImage -c /dev/null --schedule "0 */1 * * *"
   - summary: Create a task with the definition from the standard input. Either 'Ctrl + Z'(Windows) or 'Ctrl + D'(Linux) terminates the input stream.
     syntax:
       content: az acr task create -n hello-world -r MyRegistry -f - -c /dev/null
@@ -93,26 +96,39 @@ items:
     syntax:
       content: >-
         az acr task create -t acb:{{.Run.ID}} -n acb-win -r MyRegistry \
-                                    -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --commit-trigger-enabled false \
-                                    --pull-request-trigger-enabled false --platform Windows/amd64
-  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with a git commit trigger and with the system-assigned managed identity
+                                    -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile \
+                                    --commit-trigger-enabled false --pull-request-trigger-enabled false --platform Windows/amd64
+  - summary: Create a Linux multi-step task from a public GitHub repository with a git commit trigger and with the system-assigned managed identity
     syntax:
       content: >-
         az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
-                                    -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile \
+                                    -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
                                     --assign-identity
-  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with a git commit trigger and with a user-assigned managed identity
+  - summary: Create a Linux multi-step task from a public GitHub repository with a git commit trigger and with a user-assigned managed identity
     syntax:
       content: >-
         az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
-                                    -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile \
+                                    -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
                                     --assign-identity "/subscriptions/<SUBSCRIPTON ID>/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentitiy"
-  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with a git commit trigger and with both system-assigned and user-assigned managed identities
+  - summary: Create a Linux multi-step task from a public GitHub repository with a git commit trigger and with both system-assigned and user-assigned managed identities
+    syntax:
+      content: >-
+        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
+                                    -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
+                                    --assign-identity [system] "/subscriptions/<SUBSCRIPTON ID>/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentitiy"
+  - summary: Create a Linux multi-step task from a public GitHub repository with a system-assigned managed identity and a timer trigger that runs that task at noon on Mondays through Fridays using the default trigger name.
+    syntax:
+      content: >-
+        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
+                                    -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
+                                    --commit-trigger-enabled false --pull-request-trigger-enabled false \
+                                    --assign-identity --schedule "0 12 * * Mon-Fri"
+  - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with a git commit trigger and a timer trigger that runs that task at noon on Mondays through Fridays with the trigger name provided.
     syntax:
       content: >-
         az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
                                     -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile \
-                                    --assign-identity [system] "/subscriptions/<SUBSCRIPTON ID>/resourcegroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentitiy"
+                                    --schedule "dailyTimer:0 12 * * Mon-Fri"
   parameters:
   - isRequired: true
     name: --context -c
@@ -194,6 +210,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --schedule
+    summary: Schedule for a timer trigger represented as a cron expression. An optional trigger name can be specified using `--schedule name:schedule` format. Multiples supported by passing --schedule multiple times.
+    description: ''
   - name: --secret-arg
     summary: Secret build argument in '--secret-arg name[=value]' format. Multiples supported by passing --secret-arg multiple times.
     description: ''
@@ -226,10 +245,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_delete
   name: az acr task delete
@@ -257,10 +276,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_list
   name: az acr task list
@@ -284,10 +303,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_list_runs
   name: az acr task list-runs
@@ -334,10 +353,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_logs
   name: az acr task logs
@@ -379,10 +398,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_run
   name: az acr task run
@@ -422,10 +441,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_show
   name: az acr task show
@@ -459,10 +478,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_show_run
   name: az acr task show-run
@@ -490,10 +509,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_update
   name: az acr task update
@@ -601,10 +620,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_task_update_run
   name: az acr task update-run
@@ -636,10 +655,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
+      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_acr_task_cancel_run
@@ -696,6 +715,21 @@ commands:
 - uid: az_acr_task_show_run
   name: az acr task show-run
   summary: Get the properties of a specified run of an Azure Container Registry Task.
+- uid: az_acr_task_timer
+  name: az acr task timer
+  summary: Manage timer triggers for a task.
+- uid: az_acr_task_timer_add
+  name: az acr task timer add
+  summary: Add a timer trigger to a task.
+- uid: az_acr_task_timer_list
+  name: az acr task timer list
+  summary: List all timer triggers for a task.
+- uid: az_acr_task_timer_remove
+  name: az acr task timer remove
+  summary: Remove a timer trigger from a task.
+- uid: az_acr_task_timer_update
+  name: az acr task timer update
+  summary: Update the timer trigger for a task.
 - uid: az_acr_task_update
   name: az acr task update
   summary: Update a task for an Azure Container Registry.
@@ -716,9 +750,9 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/fc1b74205eb9f3c0c00cbc2866e1b1695ec0c6d3/src/command_modules/azure-cli-acr/azure/cli/command_modules/acr/_help.py
-updated_at: 6/6/2019 4:27:53 PM
-ms.date: 06/06/2019
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/acr/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/124bf43346e1cea2e893e1d4697e47e60b451334/src/azure-cli/azure/cli/command_modules/acr/_help.py
+updated_at: 6/26/2019 4:16:56 PM
+ms.date: 06/26/2019
 description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
