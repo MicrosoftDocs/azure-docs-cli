@@ -41,9 +41,6 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --boostrap-acc-pwd
-    summary: Password for the cluster bootstrap account if provided in the SQL virtual machine group.
-    description: ''
   - name: --bootstrap-acc-pwd -b
     summary: Password for the cluster bootstrap account if provided in the SQL virtual machine group.
     description: ''
@@ -54,10 +51,10 @@ items:
     summary: Password for the SQL service account provided in the SQL virtual machine group.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_create
   name: az sql vm create
@@ -72,18 +69,21 @@ items:
   - summary: Create a SQL virtual machine with specific sku type and license type.
     syntax:
       content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --image-sku Enterprise --license-type AHUB
+  - summary: Create a SQL virtual machine with NoAgent type, only valid for EOS SQL 2008 and SQL 2008 R2.
+    syntax:
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type AHUB --sql-mgmt-type NoAgent --image-sku Enterprise --image-offer SQL2008-WS2008R2
   - summary: Enable R services in SQL2016 onwards.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --enable-r-services true
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --sql-mgmt-type Full --enable-r-services true
   - summary: Create SQL virtual machine and configure auto backup settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --sql-mgmt-type Full --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
   - summary: Create SQL virtual machine and configure auto patching settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --day-of-week sunday --maintenance-window-duration 60 --maintenance-window-start-hour 2
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --sql-mgmt-type Full --day-of-week sunday --maintenance-window-duration 60 --maintenance-window-start-hour 2
   - summary: Create SQL virtual machine and configure SQL connectivity settings.
     syntax:
-      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --connectivity-type private --port 1433 --sql-auth-update-username {newlogin} --sql-auth-update-pwd {sqlpassword}
+      content: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type PAYG --sql-mgmt-type Full --connectivity-type private --port 1433 --sql-auth-update-username {newlogin} --sql-auth-update-pwd {sqlpassword}
   parameters:
   - isRequired: true
     name: --name -n
@@ -95,6 +95,11 @@ items:
     description: ''
   - name: --location -l
     summary: Location. If not provided, virtual machine should be in the same region of resource group.You can configure the default location using `az configure --defaults location=&lt;location&gt;`.
+    description: ''
+  - name: --sql-mgmt-type
+    defaultValue: LightWeight
+    parameterValueGroup: Full, LightWeight, NoAgent
+    summary: SQL Server management type. If NoAgent selected, please provide --image-sku and --offer-type.
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -192,6 +197,9 @@ items:
     parameterValueGroup: AHUB, PAYG
     summary: SQL Server license type.
     description: ''
+  - name: --image-offer
+    summary: SQL image offer. Examples include SQL2008R2-WS2008, SQL2008-WS2008.
+    description: ''
   - name: --image-sku
     parameterValueGroup: Developer, Enterprise, Express, Standard, Web
     summary: SQL image sku.
@@ -204,10 +212,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_delete
   name: az sql vm delete
@@ -232,10 +240,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_list
   name: az sql vm list
@@ -251,10 +259,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_remove_from_group
   name: az sql vm remove-from-group
@@ -280,10 +288,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_show
   name: az sql vm show
@@ -309,10 +317,10 @@ items:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_sql_vm_update
   name: az sql vm update
@@ -330,6 +338,9 @@ items:
   - summary: Update a SQL virtual machine with specific sku type.
     syntax:
       content: az sql vm update -n sqlvm -g myresourcegroup --image-sku Enterprise
+  - summary: Update a SQL virtual machine manageability from LightWeight to Full.
+    syntax:
+      content: az sql vm update -n sqlvm -g myresourcegroup --sql-mgmt-type Full --yes
   - summary: Update SQL virtual machine auto backup settings.
     syntax:
       content: az sql vm update -n sqlvm -g myresourcegroup --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
@@ -346,8 +357,16 @@ items:
     syntax:
       content: az sql vm update -n sqlvm -g myresourcegroup --license-type AHUB
   parameters:
+  - name: --sql-mgmt-type
+    parameterValueGroup: Full
+    summary: SQL Server management type. Updates from LightWeight to Full.
+    description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --yes -y
+    defaultValue: "1"
+    summary: Do not prompt for confirmation. Requires --sql-mgmt-type.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
@@ -468,10 +487,10 @@ items:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   source:
-    path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
     remote:
       branch: dev
-      path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
+      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_sql_vm_add_to_group
@@ -545,9 +564,9 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/826e9535765c6cae4c073f819c5e46354d8e213c/src/command_modules/azure-cli-sql/azure/cli/command_modules/sql/_help.py
-updated_at: 5/2/2019 3:18:27 PM
-ms.date: 05/02/2019
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/sql/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/14eb143685754752e27e5d5e0b8675a5d00fb259/src/azure-cli/azure/cli/command_modules/sql/_help.py
+updated_at: 6/7/2019 12:25:14 AM
+ms.date: 06/07/2019
 description: Manage SQL virtual machines.
