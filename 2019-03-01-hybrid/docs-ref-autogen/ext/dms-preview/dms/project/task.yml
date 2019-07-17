@@ -1,0 +1,228 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_dms-preview_az_dms_project_task
+  name: az dms project task
+  summary: Manage Tasks for a Data Migration Service instance's Project.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_dms-preview_az_dms_project_task_cancel
+  - ext_dms-preview_az_dms_project_task_create
+  - ext_dms-preview_az_dms_project_task_cutover
+  - ext_dms-preview_az_dms_project_task_restart
+  - ext_dms-preview_az_dms_project_task_stop
+- uid: ext_dms-preview_az_dms_project_task_cancel
+  name: az dms project task cancel
+  summary: This command is being deprecated. Use the stop command instead.
+  description: >-
+    To keep a more consistent experience with Azure's portal UI use:
+                                    az dms project task stop.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - name: --object-name
+    summary: Supported by MongoDB migrations only. The qualified name of the database or collection you wish to stop. Leave blank to stop the entire migration.
+    description: ''
+- uid: ext_dms-preview_az_dms_project_task_create
+  name: az dms project task create
+  summary: Create and start a migration Task.
+  description: >-
+    The following task configurations are supported:
+                                    -) source -> target :: task type
+                                    1) SQL -> SQLDB :: OfflineMigration
+                                    2) MySQL -> AzureDbForMySql :: OnlineMigration
+                                    3) PostgreSQL -> AzureDbForPostgreSQL :: OnlineMigration
+                                    4) MongoDB -> MongoDB (for migrating to Cosmos DB via their MongoDB API) :: OfflineMigration.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create and start a SQL Task which performs no validation checks.
+    syntax:
+      content: "az dms project task create --database-options-json C:\\CliFiles\\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json '{'dataSource': 'myserver', 'authentication': 'SqlAuthentication', 'encryptConnection': 'true', 'trustServerCertificate': 'true'}' --target-connection-json C:\\CliFiles\\targetConnection.json --task-type offlinemigration"
+  - summary: Create and start a SQL Task which performs all validation checks.
+    syntax:
+      content: az dms project task create --database-options-json C:\CliFiles\databaseOptions.json -n mytask --project-name myproject -g myresourcegroup --service-name mydms --source-connection-json C:\CliFiles\sourceConnection.json --target-connection-json C:\CliFiles\targetConnection.json --enable-data-integrity-validation --enable-query-analysis-validation --enable-schema-validation --task-type offlinemigration
+  parameters:
+  - isRequired: true
+    name: --database-options-json
+    summary: Database and table information. This can be either a JSON-formatted string or the location to a file containing the JSON object. See examples below for the format.
+    description: "For SQL we support per table migrations. To use this, specify the tables names in the 'table_map' as below. You can also set the source as read only.\n                                      [\n                                          {\n                                              \"name\": \"source database\",\n                                              \"target_database_name\": \"target database\",\n                                              \"make_source_db_read_only\": false|true,\n                                              \"table_map\": {\n                                                  \"schema.SourceTableName1\": \"schema.TargetTableName1\",\n                                                  \"schema.SourceTableName2\": \"schema.TargetTableName2\",\n                                                  ...n\n                                              }\n                                          },\n                                          ...n\n                                      ]\n                                    \n                                    For MySQL and PostgreSQL, the format of the database options JSON object.\n                                      [\n                                          {\n                                              \"name\": \"source database\",\n                                              \"target_database_name\": \"target database\"\n                                          },\n                                          ...n\n                                      ]\n                                    \n                                    For MongoDB we support per collection migrations. To use this, specify the collections inside the database object as below.\n                                      {\n                                          // set to zero to get the default boost during migration (recommended)\n                                          \"boostRUs\": 0,\n                                          // \"OneTime\" or \"Continuous\", only \"OneTime\" is currently supported\n                                          \"replication\": \"OneTime\",\n                                          // Set to null to use maximum resources available.\n                                          \"throttling\": {\n                                              // percentage of the CPU to try to avoid using\n                                              \"minFreeCpu\": 25,\n                                              // amount of RAM (in MBs) to try to avoid using\n                                              \"minFreeMemoryMb\": 1024,\n                                              // max number of collections to migrate at a time\n                                              \"maxParallelism\": 2\n                                          },\n                                          \"databases\": {\n                                              \"database_name\": {\n                                                  // see <a href=\"https://docs.microsoft.com/th-th/azure/cosmos-db/request-units\">https://docs.microsoft.com/th-th/azure/cosmos-db/request-units</a>,     ||\n                                                  // set to null to use default\n                                                  // or 0 if throughput should not be provisioned at the database level\n                                                  \"targetRUs\": 0,\n                                                  \"collections\": {\n                                                      \"collection_name_1\": {\n                                                          // Whether the target database/collection will be deleted if exists\n                                                          \"canDelete\": true,\n                                                          // set to null if target should not be sharded\n                                                          // or to copy the shard key from source (if exists)\n                                                          \"shardKey\": null,\n                                                          // set to null to use default (recommended)\n                                                          \"targetRUs\": null\n                                                      },\n                                                      \"collection_name_2\": {\n                                                          \"canDelete\": true,\n                                                          \"shardKey\": {\n                                                              \"fields\": [\n                                                                  {\n                                                                      \"name\": \"field_name\",\n                                                                      // accepts \"Forward\", \"Reverse\", or \"Hashed\" but CosmosDB only accepts a single-field, hashed shard key\n                                                                      \"order\": \"Forward\"\n                                                                  },\n                                                                  ...n\n                                                              ],\n                                                              // whether shard key is unique\n                                                              // see <a href=\"https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data\">https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data</a>\n                                                              \"isUnique\": false\n                                                          },\n                                                          \"targetRUs\": 10000\n                                                      },\n                                                      ...n\n                                                  }\n                                              },\n                                              ...n\n                                          }\n                                      }."
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - isRequired: true
+    name: --source-connection-json
+    summary: The connection information to the source server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See examples below for the format.
+    description: "The format of the connection JSON object for SQL connections.\n                                      {\n                                          \"userName\": \"user name\",    // if this is missing or null, you will be prompted\n                                          \"password\": null,           // if this is missing or null (highly recommended) you will be prompted\n                                          \"dataSource\": \"server name[,port]\",\n                                          \"authentication\": \"SqlAuthentication|WindowsAuthentication\",\n                                          \"encryptConnection\": true,      // highly recommended to leave as true\n                                          \"trustServerCertificate\": true  // highly recommended to leave as true\n                                      }\n                                    \n                                    The format of the connection JSON object for MySql connections.\n                                      {\n                                          \"userName\": \"user name\",    // if this is missing or null, you will be prompted\n                                          \"password\": null,           // if this is missing or null (highly recommended) you will be prompted\n                                          \"serverName\": \"server name\",\n                                          \"port\": 3306                // if this is missing, it will default to 3306\n                                      }\n                                    \n                                    The format of the connection JSON object for PostgreSQL connections.\n                                      {\n                                          \"userName\": \"user name\",    // if this is missing or null, you will be prompted\n                                          \"password\": null,           // if this is missing or null (highly recommended) you will be prompted\n                                          \"serverName\": \"server name\",\n                                          \"databaseName\": \"database name\", // if this is missing, it will default to the 'postgres' database\n                                          \"port\": 5432                // if this is missing, it will default to 5432\n                                      }\n                                    \n                                    The format of the connection JSON object for MongoDB connections.\n                                      {\n                                          \"userName\": null,   // if this is missing or null, you will be prompted\n                                          \"password\": null,   // if this is missing or null (highly recommended) you will be prompted\n                                          \"connectionString\": \"mongodb://hostOrIp:port\"\n                                      }."
+  - isRequired: true
+    name: --target-connection-json
+    summary: The connection information to the target server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See examples below for the format.
+    description: See 'source-connection-json' for examples of connection formats.
+  - isRequired: true
+    name: --task-type
+    summary: 'The type of data movement the task will support. The supported types are: OnlineMigration, OfflineMigration.'
+    description: ''
+  - name: --enable-data-integrity-validation
+    summary: (For SQL only) Whether to perform a checksum based data integrity validation between source and target for the selected database and tables.
+    description: ''
+  - name: --enable-query-analysis-validation
+    summary: (For SQL only) Whether to perform a quick and intelligent query analysis by retrieving queries from the source database and executing them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries.
+    description: ''
+  - name: --enable-schema-validation
+    summary: (For SQL only) Whether to compare the schema information between source and target.
+    description: ''
+  - name: --validate-only
+    summary: (For MongoDB to Cosmos DB only) Whether to run validation only and NOT run migration. It is mandatory to run a 'validate only' task before attempting an actual migration. Once the validation is complete, pass the name of this 'validate only' task to a new task's 'validated task name' argument.
+    description: ''
+  - name: --validated-task-name
+    summary: (For MongoDB to Cosmos DB only) When running a migration it is neceaary to pass in the name of a previously run 'validate only' task.
+    description: ''
+- uid: ext_dms-preview_az_dms_project_task_cutover
+  name: az dms project task cutover
+  summary: For an online migration task, complete the migration by performing a cutover.
+  description: >-
+    To see the result of the request, please use the 'task show' command:
+                                    az dms project task show ... --expand command.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - name: --immediate
+    summary: For MongoDB migrations, whether to cutover immediately or to let the currently loaded events get migrated. For all other migration types, this has no effect.
+    description: ''
+  - name: --object-name
+    summary: For MongoDB migrations, the qualified name of the database or collection you wish to cutover. Leave blank to cutover the entire migration. For all other migration types, the name of the database on the source you wish to cutover.
+    description: ''
+- uid: ext_dms-preview_az_dms_project_task_restart
+  name: az dms project task restart
+  summary: ''
+  description: >-
+    To see the result of the request, please use the 'task show' command:
+                                    az dms project task show ... --expand command.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - name: --object-name
+    summary: The qualified name of the database or collection you wish to restart. Leave blank to restart the entire migration.
+    description: ''
+- uid: ext_dms-preview_az_dms_project_task_stop
+  name: az dms project task stop
+  summary: Stops the task, or stops migration on the specified object (MongoDB migrations only).
+  description: >-
+    To see the result of the request, please use the 'task show' command:
+                                    az dms project task show ... --expand command.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    description: ''
+  - isRequired: true
+    name: --project-name
+    summary: The name of the Project. DMS Project is a logical grouping that encompasses source database connection, target database connection and a list of databases to migrate.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the Service. DMS Service is an Azure instance that performs database migrations.
+    description: ''
+  - name: --object-name
+    summary: Supported by MongoDB migrations only. The qualified name of the database or collection you wish to stop. Leave blank to stop the entire migration.
+    description: ''
+commands:
+- uid: ext_dms-preview_az_dms_project_task_cancel
+  name: az dms project task cancel
+  summary: This command is being deprecated. Use the stop command instead.
+- uid: ext_dms-preview_az_dms_project_task_create
+  name: az dms project task create
+  summary: Create and start a migration Task.
+- uid: ext_dms-preview_az_dms_project_task_cutover
+  name: az dms project task cutover
+  summary: For an online migration task, complete the migration by performing a cutover.
+- uid: ext_dms-preview_az_dms_project_task_restart
+  name: az dms project task restart
+  summary: >-
+    To see the result of the request, please use the 'task show' command:
+                                    az dms project task show ... --expand command.
+- uid: ext_dms-preview_az_dms_project_task_stop
+  name: az dms project task stop
+  summary: Stops the task, or stops migration on the specified object (MongoDB migrations only).
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage Tasks for a Data Migration Service instance's Project.
