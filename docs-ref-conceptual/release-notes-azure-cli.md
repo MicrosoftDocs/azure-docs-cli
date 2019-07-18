@@ -19,7 +19,7 @@ Version 2.0.69
 
 ### Appservice
 
-* Changed `webapp identity` commands to return a proper error message if ResourceGroupName or App name are invalid
+* Changed `webapp identity` commands to return a correct error message if ResourceGroupName or App name are invalid
 * Fixed `webapp list` to return the correct value for numberOfSites if no ResourceGroup was provided
 * Fixed side-effects of `appservice plan create` and `webapp create`
 
