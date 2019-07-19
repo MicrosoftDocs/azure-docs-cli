@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/17/2019
+ms.date: 07/19/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -42,7 +42,7 @@ az extension list-available --output table
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.3.0 | Intelligent querying for CLI information. | Yes |
-| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 0.1.8 | Manage networking Front Doors. | Yes |
+| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.0 | Manage networking Front Doors. |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Support for copying managed vm images between regions |  |
 | [interactive](https://github.com/Azure/azure-cli) | 0.4.3 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
