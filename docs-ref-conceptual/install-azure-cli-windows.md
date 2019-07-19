@@ -29,6 +29,11 @@ before using the MSI installer.
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
+For Server Core, use the following to download the MSI package:
+```powershell
+Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -UseBasicParsing -OutFile .\azure-cli.msi
+```
+
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
 not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
 
