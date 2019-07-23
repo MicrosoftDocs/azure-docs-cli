@@ -47,13 +47,13 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 ### Manual install instructions
 
-If you don't want to run a script as superuser, follow these manual steps to install the Azure CLI.
+If you don't want to run a script as superuser or the all-in-one script fails, follow these steps to install the Azure CLI.
 
 1. Get packages needed for the install process:
 
     ```bash
     sudo apt-get update
-    sudo apt-get install curl apt-transport-https lsb-release gnupg
+    sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
     ```
 
 2. Download and install the Microsoft signing key:
