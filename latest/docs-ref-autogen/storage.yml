@@ -6,7 +6,83 @@ items:
   description: ''
   langs:
   - azurecli
-  children: []
+  children:
+  - az_storage_remove
+- uid: az_storage_remove
+  name: az storage remove
+  summary: Delete blobs or files from Azure Storage.
+  description: To delete blobs, both the source must either be public or be authenticated by using a shared access signature.
+  langs:
+  - azurecli
+  examples:
+  - summary: Remove a single blob.
+    syntax:
+      content: az storage remove -c MyContainer -n MyBlob
+  - summary: Remove an entire virtual directory.
+    syntax:
+      content: az storage remove -c MyContainer -n path/to/directory --recursive
+  - summary: Remove only the top blobs inside a virtual directory but not its sub-directories.
+    syntax:
+      content: az storage remove -c MyContainer -n path/to/directory
+  - summary: Remove a subset of blobs in a virtual directory (For example, only jpg and pdf files, or if the blob name is "exactName").
+    syntax:
+      content: az storage remove -c MyContainer -n path/to/directory --recursive --include "*.jpg;*.pdf;exactName"
+  - summary: Remove an entire virtual directory but exclude certain blobs from the scope (For example, every blob that starts with foo or ends with bar).
+    syntax:
+      content: az storage remove -c MyContainer -n path/to/directory --recursive --include "foo*;*bar"
+  - summary: Remove a single file.
+    syntax:
+      content: az storage remove -s MyShare -p MyFile
+  - summary: Remove an entire directory.
+    syntax:
+      content: az storage remove -s MyShare -p path/to/directory --recursive
+  parameters:
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --exclude
+    summary: Exclude files whose name matches the pattern list.
+    description: ''
+  - name: --include
+    summary: Only include files whose name matches the pattern list.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
+    description: ''
+  - name: --path -p
+    summary: The path to the file within the file share.
+    description: ''
+  - name: --recursive -r
+    summary: Look into sub-directories recursively when deleting between directories.
+    description: ''
+  - name: --share-name -s
+    summary: The file share name.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 commands:
 - uid: az_storage_account
   name: az storage account
@@ -503,6 +579,9 @@ commands:
 - uid: az_storage_queue_stats
   name: az storage queue stats
   summary: Retrieves statistics related to replication for the Queue service.
+- uid: az_storage_remove
+  name: az storage remove
+  summary: Delete blobs or files from Azure Storage.
 - uid: az_storage_share
   name: az storage share
   summary: Manage file shares.
@@ -618,7 +697,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c83710e4176cf598fccd57180263a4c5b0fc561e/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 7/6/2019 2:55:49 PM
-ms.date: 07/06/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/cfb8d72075e667ec78c2f2bc989a4a37b0689f56/src/azure-cli/azure/cli/command_modules/storage/_help.py
+updated_at: 7/23/2019 8:50:56 AM
+ms.date: 07/23/2019
 description: Manage Azure Cloud Storage resources.

@@ -8,6 +8,7 @@ items:
   - azurecli
   children:
   - ext_azure-cli-ml_az_ml_service_delete
+  - ext_azure-cli-ml_az_ml_service_get_access_token
   - ext_azure-cli-ml_az_ml_service_get_keys
   - ext_azure-cli-ml_az_ml_service_get_logs
   - ext_azure-cli-ml_az_ml_service_list
@@ -34,6 +35,29 @@ items:
     description: ''
   - name: --workspace-name -w
     summary: Name of the workspace containing the service to delete.
+    description: ''
+  - name: -v
+    summary: Verbosity flag.
+    description: ''
+- uid: ext_azure-cli-ml_az_ml_service_get_access_token
+  name: az ml service get-access-token
+  summary: Get a token to issue requests a service.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Service Name.
+    description: ''
+  - name: --path
+    summary: 'Path to a project folder. Default: current directory.'
+    description: ''
+  - name: --resource-group -g
+    summary: Resource group corresponding to the provided workspace.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the workspace containing the service to show.
     description: ''
   - name: -v
     summary: Verbosity flag.
@@ -206,10 +230,6 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --dc --deploy-config-file
-    summary: Path to a JSON file containing deployment metadata.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The service name to update.
     description: ''
@@ -219,11 +239,89 @@ items:
   - name: --add-tag
     summary: Key/value tag to add (e.g. key=value ). Multiple tags can be specified with multiple --add-tag options.
     description: ''
+  - name: --ae --auth-enabled
+    summary: Whether or not to enable key auth for this Webservice. Defaults to False.
+    description: ''
+  - name: --ai --enable-app-insights
+    summary: Whether or not to enable AppInsights for this Webservice. Defaults to False.
+    description: ''
+  - name: --ar --autoscale-refresh-seconds
+    summary: How often the autoscaler should attempt to scale this Webservice. Defaults to 1.
+    description: ''
+  - name: --as --autoscale-enabled
+    summary: Whether or not to enable autoscaling for this Webservice. Defaults to True if num_replicas is None.
+    description: ''
+  - name: --at --autoscale-target-utilization
+    summary: The target utilization (in percent out of 100) the autoscaler should attempt to maintain for this Webservice. Defaults to 70.
+    description: ''
+  - name: --autoscale-max-replicas --ma
+    summary: The maximum number of containers to use when autoscaling this Webservice. Defaults to 10.
+    description: ''
+  - name: --autoscale-min-replicas --mi
+    summary: The minimum number of containers to use when autoscaling this Webservice. Defaults to 1.
+    description: ''
+  - name: --base-image --bi
+    summary: A custom image to be used as base image. If no base image is given then the base image will be used based off of given runtime parameter.
+    description: ''
+  - name: --base-image-registry --ir
+    summary: Image registry that contains the base image.
+    description: ''
+  - name: --cc --cpu-cores
+    summary: The number of cpu cores to allocate for this Webservice. Can be a decimal. Defaults to 0.1.
+    description: ''
+  - name: --cf --conda-file
+    summary: Path to local file containing a conda environment definition to use for the image.
+    description: ''
+  - name: --collect-model-data --md
+    summary: Whether or not to enable model data collection for this Webservice. Defaults to False.
+    description: ''
+  - name: --cuda-version --cv
+    summary: Version of CUDA to install for images that need GPU support. The GPU image must be used on Microsoft Azure Services such as Azure Container Instances, Azure Machine Learning Compute, Azure Virtual Machines, and Azure Kubernetes Service. Supported versions are 9.0, 9.1, and 10.0. If 'enable_gpu' is set, this defaults to '9.1'.
+    description: ''
+  - name: --dc --deploy-config-file
+    summary: Path to a JSON file containing deployment metadata.
+    description: ''
   - name: --description -d
     summary: Description of the service.
     description: ''
+  - name: --dn --dns-name-label
+    summary: The dns name for this Webservice.
+    description: ''
+  - name: --ds --extra-docker-file-steps
+    summary: Path to local file containing additional Docker steps to run when setting up image.
+    description: ''
+  - name: --eg --enable-gpu
+    summary: Whether or not to enable GPU support in the image. The GPU image must be used on Microsoft Azure Services such as Azure Container Instances, Azure Machine Learning Compute, Azure Virtual Machines, and Azure Kubernetes Service. Defaults to False.
+    description: ''
+  - name: --entry-script --es
+    summary: Path to local file that contains the code to run for service (relative path from source_directory if one is provided).
+    description: ''
+  - name: --failure-threshold --ft
+    summary: When a Pod starts and the liveness probe fails, Kubernetes will try --failure-threshold times before giving up. Defaults to 3. Minimum value is 1.
+    description: ''
+  - name: --gb --memory-gb
+    summary: The amount of memory (in GB) to allocate for this Webservice. Can be a decimal.
+    description: ''
+  - name: --gc --gpu-cores
+    summary: The number of gpu cores to allocate for this Webservice. Default is 1.
+    description: ''
   - name: --ic --inference-config-file
     summary: Path to a JSON or YAML file containing inference configuration.
+    description: ''
+  - name: --id --initial-delay-seconds
+    summary: Number of seconds after the container has started before liveness probes are initiated. Defaults to 310.
+    description: ''
+  - name: --kp --primary-key
+    summary: A primary auth key to use for this Webservice.
+    description: ''
+  - name: --ks --secondary-key
+    summary: A secondary auth key to use for this Webservice.
+    description: ''
+  - name: --lo --location
+    summary: 'The Azure region to deploy this Webservice to. If not specified the Workspace location will be used. More details on available regions can be found here: <a href="https://azure.microsoft.com/en-us/global-infrastructure/services/?regions=all&amp;products=container-instances">https://azure.microsoft.com/en-us/global-infrastructure/services/?regions=all&amp;products=container-instances</a>.'
+    description: ''
+  - name: --max-request-wait-time --mr
+    summary: The maximum amount of time a request will stay in the queue (in milliseconds) before returning a 503 error. Defaults to 500.
     description: ''
   - name: --model -m
     summary: The ID of the model to be deployed. Multiple models can be specified with additional -m arguments. Models need to be registered first.
@@ -234,14 +332,56 @@ items:
   - name: --no-wait
     summary: Flag to not wait for asynchronous calls.
     description: ''
+  - name: --nr --num-replicas
+    summary: The number of containers to allocate for this Webservice. No default, if this parameter is not set then the autoscaler is enabled by default.
+    description: ''
   - name: --path
     summary: 'Path to a project folder. Default: current directory.'
+    description: ''
+  - name: --period-seconds --ps
+    summary: How often (in seconds) to perform the liveness probe. Default to 10 seconds. Minimum value is 1.
+    description: ''
+  - name: --po --port
+    summary: The local port on which to expose the service's HTTP endpoint.
     description: ''
   - name: --remove-tag
     summary: Key of tag to remove. Multiple tags can be specified with multiple --remove-tag options.
     description: ''
+  - name: --replica-max-concurrent-requests --rm
+    summary: The number of maximum concurrent requests per node to allow for this Webservice. Defaults to 1.
+    description: ''
   - name: --resource-group -g
     summary: Resource group corresponding to the provided workspace.
+    description: ''
+  - name: --rt --runtime
+    summary: Which runtime to use for image. Current supported runtimes are 'spark-py' and 'python'spark-py|python|python-slim.
+    description: ''
+  - name: --sc --ssl-cname
+    summary: The cname for if SSL is enabled.
+    description: ''
+  - name: --scoring-timeout-ms --tm
+    summary: A timeout to enforce for scoring calls to this Webservice. Defaults to 60000.
+    description: ''
+  - name: --sd --source-directory
+    summary: Path to folders that contain all files to create the image.
+    description: ''
+  - name: --se --ssl-enabled
+    summary: Whether or not to enable SSL for this Webservice. Defaults to False.
+    description: ''
+  - name: --sk --ssl-key-pem-file
+    summary: The key file needed if SSL is enabled.
+    description: ''
+  - name: --sp --ssl-cert-pem-file
+    summary: The cert file needed if SSL is enabled.
+    description: ''
+  - name: --st --success-threshold
+    summary: Minimum consecutive successes for the liveness probe to be considered successful after having failed. Defaults to 1. Minimum value is 1.
+    description: ''
+  - name: --timeout-seconds --ts
+    summary: Number of seconds after which the liveness probe times out. Defaults to 2 second. Minimum value is 1.
+    description: ''
+  - name: --token-auth-enabled
+    summary: Whether or not to enable token auth for this Webservice. Only available for AKS web services. Defaults to False.
     description: ''
   - name: --workspace-name -w
     summary: Name of the workspace containing the service to update.
@@ -253,6 +393,9 @@ commands:
 - uid: ext_azure-cli-ml_az_ml_service_delete
   name: az ml service delete
   summary: Delete a service from the workspace.
+- uid: ext_azure-cli-ml_az_ml_service_get_access_token
+  name: az ml service get-access-token
+  summary: Get a token to issue requests a service.
 - uid: ext_azure-cli-ml_az_ml_service_get_keys
   name: az ml service get-keys
   summary: Get keys to issue requests against a service.

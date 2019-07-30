@@ -1,0 +1,407 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_pipelines
+  name: az pipelines
+  summary: Manage Azure Pipelines.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_pipelines_create
+  - az_pipelines_delete
+  - az_pipelines_list
+  - az_pipelines_run
+  - az_pipelines_show
+  - az_pipelines_update
+- uid: az_pipelines_create
+  name: az pipelines create
+  summary: (PREVIEW) Create a new Azure Pipeline (YAML based).
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create an Azure Pipeline from local checkout repository context
+    syntax:
+      content: >-
+        Repository name/url (--repository), type (--repository-type) and branch name (--branch) will be detected from the local git repository
+                                az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+  - summary: Create an Azure Pipeline for a repository hosted on Github using clone url
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository https://github.com/SampleOrg/SampleRepo --branch master
+  - summary: Create an Azure Pipeline for a repository hosted on Github organization SampleOrg, repository name SampleRepo
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository SampleOrg/SampleRepoName --branch master --repository-type github
+  - summary: Create an Azure Pipeline for a repository hosted in a Azure Repo in the same project
+    syntax:
+      content: >-
+        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository SampleRepoName --branch master --repository-type tfsgit
+  - summary: Create an Azure Pipeline for a repository with the pipeline yaml already checked in into the repository
+    syntax:
+      content: >-
+        Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
+                                az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+                                --repository https://github.com/SampleOrg/SampleRepo --branch master --yml-path azure-pipelines.yml [--service-connection SERVICE_CONNECTION]
+  parameters:
+  - isRequired: true
+    name: --name
+    summary: Name of the new pipeline.
+    description: ''
+  - name: --branch
+    summary: Branch name for which the pipeline will be configured. If omitted, it will be auto-detected from local repository.
+    description: ''
+  - name: --description
+    summary: Description for the new pipeline.
+    description: ''
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --queue-id
+    summary: Id of the queue in the available agent pools. Will be auto detected if not specified.
+    description: ''
+  - name: --repository
+    summary: Repository for which the pipeline needs to be configured. Can be clone url of the git repository or name of the repository for a Azure Repos or Owner/RepoName in case of GitHub repository. If omitted it will be auto-detected from the remote url of local git repository. If name is mentioned instead of url, --repository-type argument is also required.
+    description: ''
+  - name: --repository-type
+    parameterValueGroup: github, tfsgit
+    summary: Type of repository. If omitted, it will be auto-detected from remote url of local repository. 'tfsgit' for Azure Repos, 'github' for GitHub repository.
+    description: ''
+  - name: --service-connection
+    summary: Id of the Service connection created for the repository for GitHub repository. Use command az devops service-endpoint -h for creating/listing service_connections. Not required for Azure Repos.
+    description: ''
+  - name: --yml-path
+    summary: Path of the pipelines yml file in the repo (if yml is already present in the repo).
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_pipelines_delete
+  name: az pipelines delete
+  summary: (PREVIEW) Delete a pipeline.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --id
+    summary: ID of the pipeline.
+    description: ''
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_pipelines_list
+  name: az pipelines list
+  summary: (PREVIEW) List pipelines.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --name
+    summary: 'Limit results to pipelines with this name or starting with this name. Examples: "FabCI" or "Fab*".'
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --query-order
+    parameterValueGroup: ModifiedAsc, ModifiedDesc, NameAsc, NameDesc, None
+    summary: Order of the results.
+    description: ''
+  - name: --repository
+    summary: Limit results to pipelines associated with this repository.
+    description: ''
+  - name: --repository-type
+    parameterValueGroup: bitbucket, git, github, githubenterprise, svn, tfsgit, tfsversioncontrol
+    summary: Limit results to pipelines associated with this repository type. It is mandatory to pass 'repository' argument along with this argument.
+    description: ''
+  - name: --top
+    summary: Maximum number of pipelines to list.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_pipelines_run
+  name: az pipelines run
+  summary: (PREVIEW) Queue (run) a pipeline.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --branch
+    summary: Name of the branch on which the pipeline run is to be queued.
+    description: ''
+  - name: --commit-id
+    summary: Commit-id on which the pipeline run is to be queued.
+    description: ''
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --id
+    summary: ID of the pipeline to queue. Required if --name is not supplied.
+    description: ''
+  - name: --name
+    summary: Name of the pipeline to queue. Ignored if --id is supplied.
+    description: ''
+  - name: --open
+    summary: Open the pipeline results page in your web browser.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --variables
+    summary: Space separated "name=value" pairs for the variables you would like to set.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_pipelines_show
+  name: az pipelines show
+  summary: (PREVIEW) Get the details of a pipeline.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --id
+    summary: ID of the pipeline.
+    description: ''
+  - name: --name
+    summary: Name of the pipeline. Ignored if --id is supplied.
+    description: ''
+  - name: --open
+    summary: Open the pipeline summary page in your web browser.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_pipelines_update
+  name: az pipelines update
+  summary: (PREVIEW) Update a pipeline.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --branch
+    summary: Branch name for which the pipeline will be configured.
+    description: ''
+  - name: --description
+    summary: Description to be updated for the pipeline.
+    description: ''
+  - name: --detect
+    parameterValueGroup: false, true
+    summary: Automatically detect organization.
+    description: ''
+  - name: --id
+    summary: Id of the pipeline to update.
+    description: ''
+  - name: --name
+    summary: Name of the pipeline to update.
+    description: ''
+  - name: --new-name
+    summary: New updated name of the pipeline.
+    description: ''
+  - name: --org --organization
+    summary: 'Azure Devops organization URL. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
+    description: ''
+  - name: --project -p
+    summary: Name or ID of the project.
+    description: ''
+  - name: --queue-id
+    summary: Queue id of the agent pool where the pipeline needs to run.
+    description: ''
+  - name: --yml-path
+    summary: Path of the pipelines yml file in the repo.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+commands:
+- uid: az_pipelines_agent
+  name: az pipelines agent
+  summary: (PREVIEW) Manage agents.
+- uid: az_pipelines_agent_list
+  name: az pipelines agent list
+  summary: (PREVIEW) Get a list of agents in a pool.
+- uid: az_pipelines_agent_show
+  name: az pipelines agent show
+  summary: (PREVIEW) Show agent details.
+- uid: az_pipelines_build
+  name: az pipelines build
+  summary: Manage builds.
+- uid: az_pipelines_build_definition
+  name: az pipelines build definition
+  summary: Manage build definitions.
+- uid: az_pipelines_build_definition_list
+  name: az pipelines build definition list
+  summary: List build definitions.
+- uid: az_pipelines_build_definition_show
+  name: az pipelines build definition show
+  summary: Get the details of a build definition.
+- uid: az_pipelines_build_list
+  name: az pipelines build list
+  summary: List build results.
+- uid: az_pipelines_build_queue
+  name: az pipelines build queue
+  summary: Request (queue) a build.
+- uid: az_pipelines_build_show
+  name: az pipelines build show
+  summary: Get the details of a build.
+- uid: az_pipelines_build_tag
+  name: az pipelines build tag
+  summary: Manage build tags.
+- uid: az_pipelines_build_tag_add
+  name: az pipelines build tag add
+  summary: Add tag(s) for a build.
+- uid: az_pipelines_build_tag_delete
+  name: az pipelines build tag delete
+  summary: Delete a build tag.
+- uid: az_pipelines_build_tag_list
+  name: az pipelines build tag list
+  summary: Get tags for a build.
+- uid: az_pipelines_create
+  name: az pipelines create
+  summary: (PREVIEW) Create a new Azure Pipeline (YAML based).
+- uid: az_pipelines_delete
+  name: az pipelines delete
+  summary: (PREVIEW) Delete a pipeline.
+- uid: az_pipelines_list
+  name: az pipelines list
+  summary: (PREVIEW) List pipelines.
+- uid: az_pipelines_pool
+  name: az pipelines pool
+  summary: (PREVIEW) Manage agent pools.
+- uid: az_pipelines_pool_list
+  name: az pipelines pool list
+  summary: (PREVIEW) List agent pools.
+- uid: az_pipelines_pool_show
+  name: az pipelines pool show
+  summary: (PREVIEW) Show agent pool details.
+- uid: az_pipelines_queue
+  name: az pipelines queue
+  summary: (PREVIEW) Manage agent queues.
+- uid: az_pipelines_queue_list
+  name: az pipelines queue list
+  summary: (PREVIEW) List agent queues.
+- uid: az_pipelines_queue_show
+  name: az pipelines queue show
+  summary: (PREVIEW) Show details of agent queue.
+- uid: az_pipelines_release
+  name: az pipelines release
+  summary: Manage releases.
+- uid: az_pipelines_release_create
+  name: az pipelines release create
+  summary: Request (create) a release.
+- uid: az_pipelines_release_definition
+  name: az pipelines release definition
+  summary: Manage release definitions.
+- uid: az_pipelines_release_definition_list
+  name: az pipelines release definition list
+  summary: List release definitions.
+- uid: az_pipelines_release_definition_show
+  name: az pipelines release definition show
+  summary: Get the details of a release definition.
+- uid: az_pipelines_release_list
+  name: az pipelines release list
+  summary: List release results.
+- uid: az_pipelines_release_show
+  name: az pipelines release show
+  summary: Get the details of a release.
+- uid: az_pipelines_run
+  name: az pipelines run
+  summary: (PREVIEW) Queue (run) a pipeline.
+- uid: az_pipelines_runs
+  name: az pipelines runs
+  summary: (PREVIEW) Manage pipeline runs.
+- uid: az_pipelines_runs_artifact
+  name: az pipelines runs artifact
+  summary: (PREVIEW) Manage pipeline run artifacts.
+- uid: az_pipelines_runs_artifact_download
+  name: az pipelines runs artifact download
+  summary: (PREVIEW) Download a pipeline artifact.
+- uid: az_pipelines_runs_artifact_list
+  name: az pipelines runs artifact list
+  summary: (PREVIEW) List artifacts associated with a run.
+- uid: az_pipelines_runs_artifact_upload
+  name: az pipelines runs artifact upload
+  summary: (PREVIEW) Upload a pipeline artifact.
+- uid: az_pipelines_runs_list
+  name: az pipelines runs list
+  summary: (PREVIEW) List the pipeline runs in a project.
+- uid: az_pipelines_runs_show
+  name: az pipelines runs show
+  summary: (PREVIEW) Show details of a pipeline run.
+- uid: az_pipelines_runs_tag
+  name: az pipelines runs tag
+  summary: (PREVIEW) Manage pipeline run tags.
+- uid: az_pipelines_runs_tag_add
+  name: az pipelines runs tag add
+  summary: (PREVIEW) Add tag(s) for a pipeline run.
+- uid: az_pipelines_runs_tag_delete
+  name: az pipelines runs tag delete
+  summary: (PREVIEW) Delete a pipeline run tag.
+- uid: az_pipelines_runs_tag_list
+  name: az pipelines runs tag list
+  summary: (PREVIEW) Get tags for a pipeline run.
+- uid: az_pipelines_show
+  name: az pipelines show
+  summary: (PREVIEW) Get the details of a pipeline.
+- uid: az_pipelines_update
+  name: az pipelines update
+  summary: (PREVIEW) Update a pipeline.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Manage Azure Pipelines.

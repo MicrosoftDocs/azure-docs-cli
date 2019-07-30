@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/16/2019
+ms.date: 07/30/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,51 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## July 30, 2019
+
+Version 2.0.70
+
+### ACR
+
+* Fixed issue #9952 (a regression in the `acr pack build` command)
+* Removed the default builder image name in `acr pack build`
+
+### Appservice
+
+* Changed `webapp config ssl` to show a message if a resource is not found
+* Fixed issue where `functionapp create` does not accept `Standard_RAGRS` storage account type
+* Fixed an issue where `webapp up` would fail if run using older versions of python
+
+### Network
+
+* Removed invalid parameter `--ids` from `network nic ip-config add` (fixes #9861)
+* Fixes #9604. Added `--root-certs` parameter to `network application-gateway http-settings [create|update]` to support user associate trusted root certificates.
+* Fixed arguent `--subscription` for `network dns record-set ns create` (#9965)
+
+### RBAC
+
+* Added `user update` command
+* [DEPRECATED] Deprecated `--upn-or-object-id` from user-related commands
+    * Use replacement argument `--id`
+* Added `--id` argument to user-related commands
+
+### SQL
+
+* Added management commands for managed instance keys and TDE protector
+
+### Storage
+
+* Added `storage remove` command
+* Fixed an issue with `storage blob update`
+
+### VM
+
+* Changed `list-skus` to use newer api-version to output zone details
+* Changed default of `--single-placement-group` to `false` for `vmss create`
+* Added ability to select ZRS storage SKUs for `[snapshot|disk] create`
+* Added new command group `vm host` to support dedicated hosts
+* Added parameters `--host` and `--host-group` on `vm create` to set VM dedicated host
 
 ## July 16, 2019
 
