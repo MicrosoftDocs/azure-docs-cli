@@ -19,78 +19,78 @@ Version 2.0.71
 
 ### AppService
 
-* az webapp webjob continuous group commands were failing for slots
+* Fixed issue where `webapp webjob continuous` commands were failing for slots
 
 ### BotService
 
-* BREAKING CHANGE:
-    create:
-        - Removed support for creating v3 SDK bots
-        - Remove `az bot publish` example when creating a Web App bot
+* [BREAKING CHANGE] Removed support for creating v3 SDK bots
 
 ### CognitiveServices
 
-* Add "cognitiveservices account network-rule" commands.
+* Added `cognitiveservices account network-rule` commands
 
 ### Cosmos DB
 
-* Remove warning when updating multiple write locations
-* Add CRUD commands for CosmosDB SQL, MongoDB, Cassandra, Gremlin and Table resources and resource's throughput.
+* Removed warning when updating multiple write locations
+* Added CRUD commands for CosmosDB SQL, MongoDB, Cassandra, Gremlin and Table resources and resource's throughput
 
 ### HDInsight
 
-* BREAKING CHANGE:
-    - create:
-        - Renamed --storage-default-container to --storage-container and --storage-default-filesystem to --storage-filesystem
-    - application create:
-        - Changed the --name/-n argument to represent the application name instead of the cluster name and added a separate --cluster-name argument
-        - Renamed --application-type to --type/-t
-        - Renamed --marketplace-identifier to --marketplace-id
-        - Renamed --https-endpoint-access-mode to --access-mode and --https-endpoint-destination-port to --destination-port
-        - Removed --https-endpoint-location, --https-endpoint-public-port, --ssh-endpoint-destination-port, --ssh-endpoint-location and --ssh-endpoint-public-port
-    - resize:
-        - Renamed --target-instance-count to --workernode-count/-c
-    - script-action
-        - Changed --name/-n to represent the name of the script action and added the --cluster-name argument to represent the cluster name
-        - Changed --script-execution-id to --execution-id
-        - Renamed the "show" command to "show-execution-details"
-    - script-action execute:
-        - Made parameters for the --roles argument space separated instead of comma separated
-    - script-action list:
-        - Removed the --persisted parameter
-* create:
-    Enabled the --cluster-configurations argument to accept a path to a local JSON file or a JSON string as the parameter
-* script-action list-execution-history:
-    Added this command to list the execution history for all script action executions
-* monitor enable:
-    Enabled the --workspace argument to accept a Log Analytics workspace ID or workspace name as the parameter
-    Added the --primary-key argument, which is needed if a workspace ID is provided as the parameter
+This release contains a large number of breaking changes.
+
+* [BREAKING CHANGE] Renamed parameters for `hdinsight create`:
+  * Renamed `--storage-default-container` to `--storage-container`
+  * Renamed `--storage-default-filesystem` to `--storage-filesystem`
+* [BREAKING CHANGE] Changed the `--name` argument of `application create` to represent the application name instead of the cluster name
+* Added `--cluster-name` argument to `application create` to replace old `--name` functionality
+* [BREAKING CHANGE] Renamed parameters for `application create`:
+  * Renamed `--application-type` to `--type`
+  * Renamed `--marketplace-identifier` to `--marketplace-id`
+  * Renamed `--https-endpoint-access-mode` to `--access-mode`
+  * Renamed  `--https-endpoint-destination-port` to `--destination-port`
+* [BREAKING CHANGE] Removed parameters for `application create`:
+  * `--https-endpoint-location`
+  * `--https-endpoint-public-port`
+  * `--ssh-endpoint-destination-port`
+  * `--ssh-endpoint-location`
+  * `--ssh-endpoint-public-port`
+* [BREAKING CHNAGE] Renamed `--target-instance-count` to `--workernode-count` for `hdinsight resize`
+* [BREAKING CHANGE] Changed all commands in the `hdinsight script-action` group to use the `--name` parameter as the name of the script action.
+* Added `--cluster-name` argument to all `hdinsight script-action` commands to replace old `--name` functionality
+* [BREAKING CHANGE] Renamed `--script-execution-id` to `--execution-id` for all `hdinsight script-action` commands
+* [BREAKING CHANGE] Renamed `hdinsight script-action show` to `hdinsight script-action show-execution-details`
+* [BREAKING CHNAGE] Changed parameters to `hdinsight script-action execute --roles` to be space-separated instead of comma-separated
+* [BREAKING CHANGE] Removed the `--persisted` parameter of `hdinsight script-action list`
+* Changed the `hdinsight create --cluster-configurations` parameter to accept a path to a local JSON file or a JSON string
+* Added command `hdinsight script-action list-execution-history`
+* Changed `hdinsight monitor enable --workspace` to accept a Log Analytics workspace ID or workspace name
+* Added the `hdinsight monitor enable --primary-key` argument, which is needed if a workspace ID is provided as the parameter
 * Added more examples and updated descriptions for help messages
 
-### interactive
+### Interactive
 
-* Fix a loading error on 2.0.70
+* Fixed a loading error
 
 ### Kubernetes
 
-* Use https if dashboard container port is using https
+* Changed to use `https` if dashboard container port is using `https`
 
 ### Network
 
-* az network dns record-set cname delete: Fixes #10166. Support `--yes` argument to align the behavior with other dns type.
+* Added `--yes` argument `network dns record-set cname delete`
 
 ### Profile
 
-* Add get-access-token --resource-type enum for convenience of getting access tokens for well-known resources.
+* Added `--resource-type` argument to `account get-access-token` to get resource access tokens
 
 ### ServiceFabric
 
-* Fix for issue #6112 - added all supported os version for sf cluster create
-* Fix for issue #6536 - primary certificate validation bug
+* Added all supported os version for sf cluster create
+* Fixed primary certificate validation bug
 
 ### Storage
 
-* `storage copy`: add copy command for storage
+* Added command `storage copy`
 
 ## July 30, 2019
 
