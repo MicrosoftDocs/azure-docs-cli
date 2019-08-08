@@ -71,6 +71,10 @@ Version 2.0.71
 
 * Fix a loading error on 2.0.70
 
+### Kubernetes
+
+* Use https if dashboard container port is using https
+
 ### Network
 
 * az network dns record-set cname delete: Fixes #10166. Support `--yes` argument to align the behavior with other dns type.
@@ -87,10 +91,6 @@ Version 2.0.71
 ### Storage
 
 * `storage copy`: add copy command for storage
-
-### Kubernetes
-
-* Use https if dashboard container port is using https
 
 ## July 30, 2019
 
