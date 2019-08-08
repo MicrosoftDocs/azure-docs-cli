@@ -40,23 +40,23 @@ Version 2.0.71
 ### HDInsight
 
 * BREAKING CHANGE:
-    create:
+    - create:
         - Renamed --storage-default-container to --storage-container and --storage-default-filesystem to --storage-filesystem
-    application create:
+    - application create:
         - Changed the --name/-n argument to represent the application name instead of the cluster name and added a separate --cluster-name argument
         - Renamed --application-type to --type/-t
         - Renamed --marketplace-identifier to --marketplace-id
         - Renamed --https-endpoint-access-mode to --access-mode and --https-endpoint-destination-port to --destination-port
         - Removed --https-endpoint-location, --https-endpoint-public-port, --ssh-endpoint-destination-port, --ssh-endpoint-location and --ssh-endpoint-public-port
-    resize:
+    - resize:
         - Renamed --target-instance-count to --workernode-count/-c
-    script-action
+    - script-action
         - Changed --name/-n to represent the name of the script action and added the --cluster-name argument to represent the cluster name
         - Changed --script-execution-id to --execution-id
         - Renamed the "show" command to "show-execution-details"
-    script-action execute:
+    - script-action execute:
         - Made parameters for the --roles argument space separated instead of comma separated
-    script-action list:
+    - script-action list:
         - Removed the --persisted parameter
 * create:
     Enabled the --cluster-configurations argument to accept a path to a local JSON file or a JSON string as the parameter
