@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 07/30/2019
+ms.date: 08/13/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,85 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## August 13, 2019
+
+Version 2.0.71
+
+### AppService
+
+* az webapp webjob continuous group commands were failing for slots
+
+### BotService
+
+* BREAKING CHANGE:
+    create:
+        - Removed support for creating v3 SDK bots
+        - Remove `az bot publish` example when creating a Web App bot
+
+### CognitiveServices
+
+* Add "cognitiveservices account network-rule" commands.
+
+### Cosmos DB
+
+* Remove warning when updating multiple write locations
+* Add CRUD commands for CosmosDB SQL, MongoDB, Cassandra, Gremlin and Table resources and resource's throughput.
+
+### HDInsight
+
+* BREAKING CHANGE:
+    create:
+        - Renamed --storage-default-container to --storage-container and --storage-default-filesystem to --storage-filesystem
+    application create:
+        - Changed the --name/-n argument to represent the application name instead of the cluster name and added a separate --cluster-name argument
+        - Renamed --application-type to --type/-t
+        - Renamed --marketplace-identifier to --marketplace-id
+        - Renamed --https-endpoint-access-mode to --access-mode and --https-endpoint-destination-port to --destination-port
+        - Removed --https-endpoint-location, --https-endpoint-public-port, --ssh-endpoint-destination-port, --ssh-endpoint-location and --ssh-endpoint-public-port
+    resize:
+        - Renamed --target-instance-count to --workernode-count/-c
+    script-action
+        - Changed --name/-n to represent the name of the script action and added the --cluster-name argument to represent the cluster name
+        - Changed --script-execution-id to --execution-id
+        - Renamed the "show" command to "show-execution-details"
+    script-action execute:
+        - Made parameters for the --roles argument space separated instead of comma separated
+    script-action list:
+        - Removed the --persisted parameter
+* create:
+    Enabled the --cluster-configurations argument to accept a path to a local JSON file or a JSON string as the parameter
+* script-action list-execution-history:
+    Added this command to list the execution history for all script action executions
+* monitor enable:
+    Enabled the --workspace argument to accept a Log Analytics workspace ID or workspace name as the parameter
+    Added the --primary-key argument, which is needed if a workspace ID is provided as the parameter
+* Added more examples and updated descriptions for help messages
+
+### interactive
+
+* Fix a loading error on 2.0.70
+
+### Network
+
+* az network dns record-set cname delete: Fixes #10166. Support `--yes` argument to align the behavior with other dns type.
+
+### Profile
+
+* Add get-access-token --resource-type enum for convenience of getting access tokens for well-known resources.
+
+### ServiceFabric
+
+* Fix for issue #6112 - added all supported os version for sf cluster create
+* Fix for issue #6536 - primary certificate validation bug
+
+### Storage
+
+* `storage copy`: add copy command for storage
+
+### Kubernetes
+
+* Use https if dashboard container port is using https
 
 ## July 30, 2019
 
