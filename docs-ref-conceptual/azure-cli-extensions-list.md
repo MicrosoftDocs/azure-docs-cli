@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/06/2019
+ms.date: 08/09/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -53,8 +53,8 @@ az extension list-available --output table
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
 | [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.2 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Commands to manage Private DNS Zones | Yes |
-| [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 0.1.11 | Support for querying Azure resources with Resource Graph. | Yes |
-| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.5.1 | Additional commands for working with SAP HanaOnAzure instances. |  |
+| [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.0.0 | Support for querying Azure resources with Resource Graph. |  |
+| [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.5.3 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.8 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |

@@ -18,7 +18,7 @@ items:
   - az_hdinsight_wait
 - uid: az_hdinsight_create
   name: az hdinsight create
-  summary: Creates a new cluster.
+  summary: Create a new cluster.
   description: ''
   langs:
   - azurecli
@@ -29,7 +29,7 @@ items:
         az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
                                 -p "HttpPassword1234!" \
                                 --storage-account MyStorageAccount
-  - summary: Create a cluster with Enterprise Security Package.
+  - summary: Create a cluster with the Enterprise Security Package (ESP).
     syntax:
       content: >-
         az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
@@ -57,6 +57,20 @@ items:
                                 -p "HttpPassword1234!" \
                                 --storage-account MyStorageAccount \
                                 --storage-account-managed-identity MyMSI
+  - summary: Create a cluster with configuration from JSON string.
+    syntax:
+      content: >-
+        az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+                                -p "HttpPassword1234!" \
+                                --storage-account MyStorageAccount \
+                                --cluster-configuration {'gateway':{'restAuthCredential.username':'admin'}}
+  - summary: Create a cluster with configuration from a local file.
+    syntax:
+      content: >-
+        az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+                                -p "HttpPassword1234!" \
+                                --storage-account MyStorageAccount \
+                                --cluster-configuration @config.json
   parameters:
   - isRequired: true
     name: --name -n
@@ -70,8 +84,7 @@ items:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
   - name: --no-validation-timeout
-    parameterValueGroup: false, true
-    summary: Do not report timeout error during argument validation phase.
+    summary: Permit timeout error during argument validation phase. If omitted, validation timeout error will be permitted.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -84,7 +97,7 @@ items:
     summary: 'Type of HDInsight cluster, like: hadoop, interactivehive, hbase, kafka, storm, spark, rserver, mlservices. See also: <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#cluster-types</a>.'
     description: ''
   - name: --cluster-configurations
-    summary: Extra configurations of various components, in JSON.
+    summary: 'Extra configurations of various components. Configurations may be supplied from a file using the `@{path}` syntax or a JSON string. See also: <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-bootstrap">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-bootstrap</a>.'
     description: ''
   - name: --cluster-tier
     parameterValueGroup: Premium, Standard
@@ -94,8 +107,7 @@ items:
     summary: "The versions of various Hadoop components, in space-separated versions in 'component=version' format. Example: Spark=2.0 Hadoop=2.7.3 See also: <a href=\"https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions\">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions</a>."
     description: ''
   - name: --esp
-    parameterValueGroup: false, true
-    summary: Specify to create cluster with Enterprise Security Package.
+    summary: Specify to create cluster with Enterprise Security Package. If omitted, creating cluster with Enterprise Security Package will not not allowed.
     description: ''
   - name: --version -v
     defaultValue: default
@@ -152,7 +164,7 @@ items:
     defaultValue: large
     summary: 'The size of the node. See also: <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size">https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size</a>.'
     description: ''
-  - name: --size -s
+  - name: --workernode-count -c
     defaultValue: "3"
     summary: The number of worker nodes in the cluster.
     description: ''
@@ -192,11 +204,11 @@ items:
   - name: --storage-account-managed-identity
     summary: User-assigned managed identity with access to the storage account filesystem. Only required when storage account type is Azure Data Lake Storage Gen2.
     description: ''
-  - name: --storage-default-container
+  - name: --storage-container
     summary: The storage container the cluster will use. Uses the cluster name if none was specified. (WASB only).
     description: ''
-  - name: --storage-default-filesystem
-    summary: The storage filesystem the cluster will use. (DFS only).
+  - name: --storage-filesystem
+    summary: The storage filesystem the cluster will use. Uses the cluster name if none was specified. (DFS only).
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -239,7 +251,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_list
   name: az hdinsight list
-  summary: List clusters in the resource group or subscription.
+  summary: List HDInsight clusters in a resource group or subscription.
   description: ''
   langs:
   - azurecli
@@ -294,8 +306,8 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --target-instance-count
-    summary: The target instance count for the operation.
+  - name: --workernode-count -c
+    summary: The target worker node instance count for the operation.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -308,7 +320,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_rotate_disk_encryption_key
   name: az hdinsight rotate-disk-encryption-key
-  summary: Rotate disk encryption key of the specified HDInsight cluster.
+  summary: Rotate the disk encryption key of the specified HDInsight cluster.
   description: ''
   langs:
   - azurecli
@@ -467,34 +479,34 @@ commands:
   summary: Place the CLI in a waiting state until an operation is complete.
 - uid: az_hdinsight_create
   name: az hdinsight create
-  summary: Creates a new cluster.
+  summary: Create a new cluster.
 - uid: az_hdinsight_delete
   name: az hdinsight delete
   summary: Deletes the specified HDInsight cluster.
 - uid: az_hdinsight_list
   name: az hdinsight list
-  summary: List clusters in the resource group or subscription.
+  summary: List HDInsight clusters in a resource group or subscription.
 - uid: az_hdinsight_list_usage
   name: az hdinsight list-usage
   summary: Lists the usages for the specified location.
 - uid: az_hdinsight_monitor
   name: az hdinsight monitor
-  summary: Manage Azure Monitor logs integration on the HDInsight cluster.
+  summary: Manage Azure Monitor logs integration on an HDInsight cluster.
 - uid: az_hdinsight_monitor_disable
   name: az hdinsight monitor disable
-  summary: Disables the Azure Monitor logs integration on the HDInsight cluster.
+  summary: Disable the Azure Monitor logs integration on an HDInsight cluster.
 - uid: az_hdinsight_monitor_enable
   name: az hdinsight monitor enable
-  summary: Enables the Azure Monitor logs integration on the HDInsight cluster.
+  summary: Enable the Azure Monitor logs integration on an HDInsight cluster.
 - uid: az_hdinsight_monitor_show
   name: az hdinsight monitor show
-  summary: Gets the status of Azure Monitor logs integration on the HDInsight cluster.
+  summary: Get the status of Azure Monitor logs integration on an HDInsight cluster.
 - uid: az_hdinsight_resize
   name: az hdinsight resize
   summary: Resizes the specified HDInsight cluster to the specified size.
 - uid: az_hdinsight_rotate_disk_encryption_key
   name: az hdinsight rotate-disk-encryption-key
-  summary: Rotate disk encryption key of the specified HDInsight cluster.
+  summary: Rotate the disk encryption key of the specified HDInsight cluster.
 - uid: az_hdinsight_script_action
   name: az hdinsight script-action
   summary: Manage HDInsight script actions.
@@ -503,15 +515,18 @@ commands:
   summary: Deletes a specified persisted script action of the cluster.
 - uid: az_hdinsight_script_action_execute
   name: az hdinsight script-action execute
-  summary: Executes script actions on the specified HDInsight cluster.
+  summary: Execute script actions on the specified HDInsight cluster.
 - uid: az_hdinsight_script_action_list
   name: az hdinsight script-action list
-  summary: Lists script actions for the specified cluster.
+  summary: Lists all the persisted script actions for the specified cluster.
+- uid: az_hdinsight_script_action_list_execution_history
+  name: az hdinsight script-action list-execution-history
+  summary: Lists all scripts' execution history for the specified cluster.
 - uid: az_hdinsight_script_action_promote
   name: az hdinsight script-action promote
   summary: Promotes the specified ad-hoc script execution to a persisted script.
-- uid: az_hdinsight_script_action_show
-  name: az hdinsight script-action show
+- uid: az_hdinsight_script_action_show_execution_details
+  name: az hdinsight script-action show-execution-details
   summary: Gets the script execution detail for the given script execution ID.
 - uid: az_hdinsight_show
   name: az hdinsight show
@@ -538,7 +553,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b37a3aed3ae73ee9cbb20d6151ecc12d0575fe0c/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-updated_at: 6/24/2019 7:10:07 PM
-ms.date: 06/24/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/c25c9c2774dc6036492c97c8b0c6c35543ebbb80/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+updated_at: 8/2/2019 4:35:31 PM
+ms.date: 08/02/2019
 description: Manage HDInsight resources.
