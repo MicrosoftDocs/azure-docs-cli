@@ -10,8 +10,9 @@ items:
   - az_hdinsight_script_action_delete
   - az_hdinsight_script_action_execute
   - az_hdinsight_script_action_list
+  - az_hdinsight_script_action_list_execution_history
   - az_hdinsight_script_action_promote
-  - az_hdinsight_script_action_show
+  - az_hdinsight_script_action_show_execution_details
 - uid: az_hdinsight_script_action_delete
   name: az hdinsight script-action delete
   summary: Deletes a specified persisted script action of the cluster.
@@ -20,16 +21,16 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name
     summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the script.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --script-action-name
-    summary: The name of the script action.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -42,14 +43,27 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_script_action_execute
   name: az hdinsight script-action execute
-  summary: Executes script actions on the specified HDInsight cluster.
+  summary: Execute script actions on the specified HDInsight cluster.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Execute a script action and persist on success.
+    syntax:
+      content: >-
+        az hdinsight script-action execute -g MyResourceGroup -n MyScriptActionName \
+                                --cluster-name MyCluster \
+                                --script-uri https://hdiconfigactions.blob.core.windows.net/linuxgiraphconfigactionv01/giraph-installer-v01.sh \
+                                --roles headnode workernode \
+                                --persist-on-success
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name
     summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the script action.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -57,11 +71,7 @@ items:
     description: ''
   - isRequired: true
     name: --roles
-    summary: A comma-delimited list of roles (nodes) where the script will be executed. Valid roles are headnode, workernode, zookeepernode, edgenode.
-    description: ''
-  - isRequired: true
-    name: --script-action-name
-    summary: The name of the script action.
+    summary: A space-delimited list of roles (nodes) where the script will be executed. Valid roles are headnode, workernode, zookeepernode, edgenode.
     description: ''
   - isRequired: true
     name: --script-uri
@@ -84,28 +94,42 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_hdinsight_script_action_list
   name: az hdinsight script-action list
-  summary: Lists script actions for the specified cluster.
+  summary: Lists all the persisted script actions for the specified cluster.
   description: ''
   langs:
   - azurecli
-  examples:
-  - summary: Lists all the persisted script actions for the specified cluster.
-    syntax:
-      content: az hdinsight script-action list -n MyCluster -g MyResourceGroup --persisted
-  - summary: Lists all scripts' execution history for the specified cluster.
-    syntax:
-      content: az hdinsight script-action list -n MyCluster -g MyResourceGroup
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name
     summary: The name of the cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --persisted
-    summary: If only list persisted script actions.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_hdinsight_script_action_list_execution_history
+  name: az hdinsight script-action list-execution-history
+  summary: Lists all scripts' execution history for the specified cluster.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -124,16 +148,16 @@ items:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name
     summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --execution-id
+    summary: The script execution id.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --script-execution-id
-    summary: The script execution Id.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -144,24 +168,24 @@ items:
       branch: dev
       path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
       repo: https://github.com/Azure/azure-cli.git
-- uid: az_hdinsight_script_action_show
-  name: az hdinsight script-action show
+- uid: az_hdinsight_script_action_show_execution_details
+  name: az hdinsight script-action show-execution-details
   summary: Gets the script execution detail for the given script execution ID.
   description: ''
   langs:
   - azurecli
   parameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name
     summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --execution-id
+    summary: The script execution id.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --script-execution-id
-    summary: The script execution Id.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -178,15 +202,18 @@ commands:
   summary: Deletes a specified persisted script action of the cluster.
 - uid: az_hdinsight_script_action_execute
   name: az hdinsight script-action execute
-  summary: Executes script actions on the specified HDInsight cluster.
+  summary: Execute script actions on the specified HDInsight cluster.
 - uid: az_hdinsight_script_action_list
   name: az hdinsight script-action list
-  summary: Lists script actions for the specified cluster.
+  summary: Lists all the persisted script actions for the specified cluster.
+- uid: az_hdinsight_script_action_list_execution_history
+  name: az hdinsight script-action list-execution-history
+  summary: Lists all scripts' execution history for the specified cluster.
 - uid: az_hdinsight_script_action_promote
   name: az hdinsight script-action promote
   summary: Promotes the specified ad-hoc script execution to a persisted script.
-- uid: az_hdinsight_script_action_show
-  name: az hdinsight script-action show
+- uid: az_hdinsight_script_action_show_execution_details
+  name: az hdinsight script-action show-execution-details
   summary: Gets the script execution detail for the given script execution ID.
 globalParameters:
 - name: --debug
@@ -204,7 +231,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b37a3aed3ae73ee9cbb20d6151ecc12d0575fe0c/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-updated_at: 6/24/2019 7:10:07 PM
-ms.date: 06/24/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/c25c9c2774dc6036492c97c8b0c6c35543ebbb80/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+updated_at: 8/2/2019 4:35:31 PM
+ms.date: 08/02/2019
 description: Manage HDInsight script actions.
