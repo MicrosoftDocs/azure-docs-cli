@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/13/2019
+ms.date: 08/27/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,52 +19,51 @@ Version 2.0.72
 
 ### ACR
 
-* Move to 2019-05-01 api-version, which follows replace semantics for ACR resource creation.
-* Breaking change: Classic SKU no longer supported.
+* [BREAKING CHNAGE] Removed support for the `classic` SKU
 
 ### API Management
 
-* Introduced initial impementation of API Management preview commands (az apim)
+* [PREVIEW] Added `apim` command group
 
 ### AppService
 
-* Fixed az webapp webjob continuous start command when specifying a slot.
-
-### AppService
-
-* az webapp up detects env folder and removes it from compressed file used for deployment
+* Fixed issue with `webapp webjob continuous start` command when specifying a slot
+* Changed `webapp up` to detect `env` folder and remove it from the file used for deployment
 
 ### Keyvault
 
-* Fix the bug in secret set command that igores the expires argument
+* Fixed a bug in `keyvault secret set` that igored the `--expires` argument
 
 ### Network
 
-* az network lb create/frontend-ip create: Fixes #10018. Support `--private-ip-address-version` argument to create IPv6 based private-ip-address.
-* az network private-endpoint create/update/list-types: Fixes #9474. Support create/update/list-types commands for private endpoint.
-* az network private-link-service: Fixes #9475. Onboard commands for private link service.
-* az network vnet subnet update: Support `--private-endpoint-network-policies` and `--private-link-service-network-policies` arguments for update command.
+* Added support for IPv6 addresses to `--private-ip-address-version` arguments
+* Added new commands `network private-endpoint [create|update|list-types]` for private endpoint management
+* Added command group `network private-link-service`
+* Added `--private-endpoint-network-policies` and `--private-link-service-network-policies` arguments to `network vnet subnet update`
 
 ### RBAC
 
-* Fix #10151 - `az ad app update --homepage` not updating homepage.
+* Fixed issue with `ad app update --homepage` where homepage would not be updated
 
 ### ServiceFabric
 
-* Fix for issues #7145,  #7880 and #7889 - fix for key vault and cert issues when creating a cluster.
-* Fix for issue #7130 - fix add cert command. Using the cluster resource group when the key vault resource group is not specified.
-* Fix for issue #9711 - fix command 'cluster setting set' command. Using named parameters for SettingsSectionDescription constructor.
+* Added support for mixed-case Key Vault names
+* Fixed issue when using certificates in Key Vault
+* Fixed issue with using PFX certificate files
+* Fixed issue with `sf cluster certificate add` when Key Vault resource group wasn't specified
+* Fixed issue with `sf cluster set` not working
 
 ### SignalR
 
-* signalr cors: New command to manage SignalR CORS
-* az signalr create: --service-mode: new service mode argument
-* signalr restart: new command to restart the service
-* signalr update: new command to update the service
+* Added new commands:
+  * `signalr cors`: Manage SignalR CORS
+  * `signalr restart`: Restart a SignalR service
+  * `signalr update`: Update a SignalR service
+* Added `--service-mode` argument to `signalr create`
 
 ### Storage
 
-* Add `revoke-delegation-keys` command for storage account
+* Added `storage account revoke-delegation-keys` command
 
 ## August 13, 2019
 
