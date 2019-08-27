@@ -61,13 +61,31 @@ items:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
   - summary: Create a Kubernetes cluster with a specific version.
     syntax:
-      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.11.2
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.13.9
   - summary: Create a Kubernetes cluster with a larger node pool.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --node-count 7
-  - summary: Create a kubernetes cluster with preview api version and cluster autosclaler enabled.
+  - summary: Create a kubernetes cluster with cluster autosclaler enabled.
     syntax:
-      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.11.2 --node-count 3 --enable-cluster-autoscaler --min-count 1 --max-count 5 --enable-vmss
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.13.9 --node-count 3 --enable-cluster-autoscaler --min-count 1 --max-count 5
+  - summary: Create a kubernetes cluster with k8s 1.13.9 but use vmas.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.13.9 --vm-set-type AvailabilitySet
+  - summary: Create a kubernetes cluster with default kubernetes vesrion, default SKU load balancer(standard) and default vm set type(VirtualMachineScaleSets).
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster
+  - summary: Create a kubernetes cluster with standard SKU load balancer and two AKS created IPs for the load balancer outbound connection usage.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
+  - summary: Create a kubernetes cluster with standard SKU load balancer and use the provided public IPs for the load balancer outbound connection usage.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
+  - summary: Create a kubernetes cluster with standard SKU load balancer and use the provided public IP prefixes for the load balancer outbound connection usage.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
+  - summary: Create a kubernetes cluster with basic SKU load balancer and AvailabilitySet vm set type.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku basic --vm-set-type AvailabilitySet
   parameters:
   - isRequired: true
     name: --name -n
@@ -131,9 +149,6 @@ items:
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
     description: ''
-  - name: --enable-vmss
-    summary: (PREVIEW) Enable VMSS agent type.
-    description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
     description: ''
@@ -141,8 +156,16 @@ items:
     summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
     description: ''
     valueFrom: '`az aks get-versions`'
+  - name: --load-balancer-managed-outbound-ip-count
+    summary: Load balancer managed outbound IP count.
+    description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ip-prefixes
+    summary: Load balancer outbound IP prefix resource IDs.
+    description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ips
+    summary: Load balancer outbound IP resource IDs.
+    description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-sku
-    defaultValue: basic
     summary: Azure Load Balancer SKU selection for your cluster. Basic or Standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --location -l
@@ -212,6 +235,9 @@ items:
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --vm-set-type
+    summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -420,6 +446,15 @@ items:
   - summary: Disable pod security policy.
     syntax:
       content: az aks update --disable-pod-security-policy -g MyResourceGroup -n MyManagedCluster
+  - summary: Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
+  - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IPs for the load balancer outbound connection usage.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
+  - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
   parameters:
   - isRequired: true
     name: --name -n
@@ -453,6 +488,15 @@ items:
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
     description: ''
+  - name: --load-balancer-managed-outbound-ip-count
+    summary: Load balancer managed outbound IP count.
+    description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ip-prefixes
+    summary: Load balancer outbound IP prefix resource IDs.
+    description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ips
+    summary: Load balancer outbound IP resource IDs.
+    description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
     description: ''
