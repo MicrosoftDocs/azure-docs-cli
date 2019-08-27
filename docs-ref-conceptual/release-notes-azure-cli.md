@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/13/2019
+ms.date: 08/27/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,58 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## August 27, 2019
+
+Version 2.0.72
+
+### ACR
+
+* [BREAKING CHNAGE] Removed support for the `classic` SKU
+
+### API Management
+
+* [PREVIEW] Added `apim` command group
+
+### AppService
+
+* Fixed issue with `webapp webjob continuous start` command when specifying a slot
+* Changed `webapp up` to detect `env` folder and remove it from the file used for deployment
+
+### Keyvault
+
+* Fixed a bug in `keyvault secret set` that igored the `--expires` argument
+
+### Network
+
+* Added support for IPv6 addresses to `--private-ip-address-version` arguments
+* Added new commands `network private-endpoint [create|update|list-types]` for private endpoint management
+* Added command group `network private-link-service`
+* Added `--private-endpoint-network-policies` and `--private-link-service-network-policies` arguments to `network vnet subnet update`
+
+### RBAC
+
+* Fixed issue with `ad app update --homepage` where homepage would not be updated
+
+### ServiceFabric
+
+* Added support for mixed-case Key Vault names
+* Fixed issue when using certificates in Key Vault
+* Fixed issue with using PFX certificate files
+* Fixed issue with `sf cluster certificate add` when Key Vault resource group wasn't specified
+* Fixed issue with `sf cluster set` not working
+
+### SignalR
+
+* Added new commands:
+  * `signalr cors`: Manage SignalR CORS
+  * `signalr restart`: Restart a SignalR service
+  * `signalr update`: Update a SignalR service
+* Added `--service-mode` argument to `signalr create`
+
+### Storage
+
+* Added `storage account revoke-delegation-keys` command
 
 ## August 13, 2019
 
