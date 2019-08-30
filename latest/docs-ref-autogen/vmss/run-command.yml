@@ -27,18 +27,34 @@ items:
     syntax:
       content: >-
         az vmss list-instances -n MyVMSS -g my-rg --query "[].id" --output tsv | \
-                                az vmss run-command invoke --scripts 'echo $1 $2' --parameters hello world  \
-                                    --command-id RunShellScript --ids @-
+
+        az vmss run-command invoke --scripts 'echo $1 $2' --parameters hello world  \
+            --command-id RunShellScript --ids @-
   - summary: Run powershell script on a windows VMSS instance with parameters. Script supplied inline. Be wary of single-quoting in CMD.exe.
     syntax:
       content: >-
         az vmss run-command invoke  --command-id RunPowerShellScript --name win-vm -g my-resource-group \
-                                    --scripts 'param([string]$arg1,[string]$arg2)' \
-                                    'Write-Host This is a sample script with parameters $arg1 and $arg2' \
-                                    --parameters 'arg1=somefoo' 'arg2=somebar' --instance-id 2
+            --scripts 'param([string]$arg1,[string]$arg2)' \
+            'Write-Host This is a sample script with parameters $arg1 and $arg2' \
+            --parameters 'arg1=somefoo' 'arg2=somebar' --instance-id 2
   - summary: Run powershell script on a windows VMSS instance with parameters. Script supplied from file.
     syntax:
-      content: "# script.ps1\n                        #   param(\n                        #       [string]$arg1,\n                        #       [string]$arg2\n                        #   )\n                        #   Write-Host This is a sample script with parameters $arg1 and $arg2\n                        \n                        az vmss run-command invoke  --command-id RunPowerShellScript --name win-vm -g my-resource-group \\\n                            --scripts @script.ps1 --parameters \"arg1=somefoo\" \"arg2=somebar\" --instance-id 5"
+      content: >-
+        # script.ps1
+
+        #   param(
+
+        #       [string]$arg1,
+
+        #       [string]$arg2
+
+        #   )
+
+        #   Write-Host This is a sample script with parameters $arg1 and $arg2
+
+
+        az vmss run-command invoke  --command-id RunPowerShellScript --name win-vm -g my-resource-group \
+            --scripts @script.ps1 --parameters "arg1=somefoo" "arg2=somebar" --instance-id 5
   parameters:
   - isRequired: true
     name: --command-id

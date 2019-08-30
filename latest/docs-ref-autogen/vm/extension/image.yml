@@ -28,8 +28,8 @@ items:
     syntax:
       content: >-
         az vm extension image list --query \
-                                    "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher" \
-                                    -o tsv | sort -u | xargs -I{} az vm extension image list-names --publisher {} -l westus
+            "[?starts_with(publisher, 'Microsoft.Azure.App')].publisher" \
+            -o tsv | sort -u | xargs -I{} az vm extension image list-names --publisher {} -l westus
   parameters:
   - name: --latest
     summary: Show the latest version only.
@@ -66,12 +66,12 @@ items:
     syntax:
       content: >-
         az vm extension image list-names --publisher Microsoft.Azure.Extensions \
-                                    -l westus --query "[?starts_with(name, 'Docker')]"
+            -l westus --query "[?starts_with(name, 'Docker')]"
   - summary: Find CustomScript extensions by publisher and location.
     syntax:
       content: >-
         az vm extension image list-names --publisher Microsoft.Azure.Extensions \
-                                    -l westus --query "[?starts_with(name, 'Custom')]"
+            -l westus --query "[?starts_with(name, 'Custom')]"
   parameters:
   - isRequired: true
     name: --location -l
@@ -101,7 +101,7 @@ items:
     syntax:
       content: >-
         az vm extension image list-versions --publisher Microsoft.Azure.Extensions \
-                                    -l westus -n DockerExtension -otable
+            -l westus -n DockerExtension -otable
   parameters:
   - isRequired: true
     name: --location -l
@@ -144,10 +144,23 @@ items:
     syntax:
       content: >-
         az vm extension image show -l westus -n CustomScript \
-                                  --publisher Microsoft.Azure.Extensions --version 2.0.2
+          --publisher Microsoft.Azure.Extensions --version 2.0.2
   - summary: Show the latest version of the Docker extension.
     syntax:
-      content: "publisher=Microsoft.Azure.Extensions\n                        extension=DockerExtension\n                        location=westus\n                        \n                        latest=$(az vm extension image list-versions \\\n                          --publisher {publisher} -l {location} -n {extension} \\\n                          --query \"[].name\" -o tsv | sort | tail -n 1)\n                        \n                        az vm extension image show -l {location} \\\n                          --publisher {publisher} -n {extension} --version {latest}"
+      content: >-
+        publisher=Microsoft.Azure.Extensions
+
+        extension=DockerExtension
+
+        location=westus
+
+
+        latest=$(az vm extension image list-versions \
+          --publisher {publisher} -l {location} -n {extension} \
+          --query "[].name" -o tsv | sort | tail -n 1)
+
+        az vm extension image show -l {location} \
+          --publisher {publisher} -n {extension} --version {latest}
   parameters:
   - isRequired: true
     name: --location -l

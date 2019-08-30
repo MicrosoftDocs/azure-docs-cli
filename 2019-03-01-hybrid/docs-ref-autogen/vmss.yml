@@ -41,8 +41,8 @@ items:
     syntax:
       content: >-
         az vmss create -n MyVmss -g MyResourceGroup --public-ip-address-dns-name my-globally-dns-name \
-                                    --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS \
-                                    --generate-ssh-keys
+            --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS \
+            --generate-ssh-keys
   - summary: Create a Linux VM scale set from a custom image using the default existing public SSH key.
     syntax:
       content: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
@@ -50,13 +50,24 @@ items:
     syntax:
       content: >-
         az vmss create -n MyVmss -g MyResourceGroup --image centos \
-                                    --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
+            --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init'
     syntax:
       content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vmss create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+      content: >-
+        az keyvault certificate create --vault-name vaultname -n cert1 \
+          -p "$(az keyvault certificate get-default-policy)"
+
+        secrets=$(az keyvault secret list-versions --vault-name vaultname \
+          -n cert1 --query "[?attributes.enabled].id" -o tsv)
+
+        vm_secrets=$(az vm secret format -s "$secrets")
+
+
+        az vmss create -g group-name -n vm-name --admin-username deploy  \
+          --image debian --secrets "$vm_secrets"
   - summary: Create a VM scaleset with system assigned identity. The VM will have a 'Contributor' Role with access to a storage account.
     syntax:
       content: az vmss create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
@@ -306,7 +317,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -361,7 +372,7 @@ items:
   parameters:
   - isRequired: true
     name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances.'
     description: ''
   - isRequired: true
     name: --name -n
@@ -398,7 +409,7 @@ items:
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --instance-id
-    summary: A VM instance ID or "*" to list instance view for all VMs in a scale set.
+    summary: A VM instance ID or "\*" to list instance view for all VMs in a scale set.
     description: ''
   - name: --name -n
     summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
@@ -559,7 +570,7 @@ items:
   - azurecli
   parameters:
   - name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
@@ -634,7 +645,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -735,7 +746,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -772,7 +783,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -859,7 +870,7 @@ items:
   parameters:
   - isRequired: true
     name: --instance-ids
-    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances.'
+    summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or \* for all instances.'
     description: ''
   - isRequired: true
     name: --name -n
