@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/29/2019
+ms.date: 08/30/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -24,7 +24,7 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.11 | Provides a preview for upcoming AKS features | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.12 | Provides a preview for upcoming AKS features | Yes |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [appconfig](https://github.com/Azure/azure-cli-extensions) | 0.5.0 | Provides a preview for upcoming App Configuration features. | Yes |
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.1 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
@@ -60,5 +60,5 @@ az extension list-available --output table
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Support for subscription management preview. |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
-| [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.1.2 | Auto repair commands to fix VMs. |  |
+| [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.2.0 | Auto repair commands to fix VMs. |  |
 | [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.2.24 | Additional commands for Azure AppService. | Yes |
