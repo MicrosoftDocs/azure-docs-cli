@@ -71,7 +71,7 @@ items:
   - summary: Create a kubernetes cluster with k8s 1.13.9 but use vmas.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.13.9 --vm-set-type AvailabilitySet
-  - summary: Create a kubernetes cluster with default kubernetes vesrion, default SKU load balancer(standard) and default vm set type(VirtualMachineScaleSets).
+  - summary: Create a kubernetes cluster with default kubernetes vesrion, default SKU load balancer(basic) and default vm set type(AvailabilitySet).
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster
   - summary: Create a kubernetes cluster with standard SKU load balancer and two AKS created IPs for the load balancer outbound connection usage.
@@ -136,10 +136,10 @@ items:
     summary: Enable the Kubernetes addons in a comma-separated list.
     description: >-
       These addons are available:
-                                              http_application_routing - configure ingress with automatic public DNS name creation.
-                                              monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
-                                              virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-                                              azure-policy - enable Azure policy (PREVIEW).
+          http_application_routing - configure ingress with automatic public DNS name creation.
+          monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+          virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+          azure-policy - enable Azure policy (PREVIEW).
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
@@ -148,6 +148,9 @@ items:
     description: ''
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
+    description: ''
+  - name: --enable-vmss
+    summary: To be deprecated. Use vm_set_type instead.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
@@ -166,7 +169,8 @@ items:
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-sku
-    summary: Azure Load Balancer SKU selection for your cluster. Basic or Standard.
+    defaultValue: basic
+    summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
@@ -187,8 +191,10 @@ items:
     summary: (PREVIEW) The Kubernetes network policy to use.
     description: >-
       Using together with "azure" network plugin.
-                                          Specify "azure" for Azure network policy manager and "calico" for calico network policy controller.
-                                          Defaults to "" (network policy disabled).
+
+      Specify "azure" for Azure network policy manager and "calico" for calico network policy controller.
+
+      Defaults to "" (network policy disabled).
   - name: --no-ssh-key -x
     summary: Do not use or create a local SSH key.
     description: To access nodes after creating a cluster with this option, use the Azure Portal.
@@ -282,10 +288,10 @@ items:
   summary: Enable Kubernetes addons.
   description: >-
     These addons are available:
-                                    http_application_routing - configure ingress with automatic public DNS name creation.
-                                    monitoring - turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-                                    virtual-node - enable AKS Virtual Node (PREVIEW). Requires "--subnet-name".
-                                    azure-policy - enable Azure policy (PREVIEW).
+        http_application_routing - configure ingress with automatic public DNS name creation.
+        monitoring - turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+        virtual-node - enable AKS Virtual Node (PREVIEW). Requires "--subnet-name".
+        azure-policy - enable Azure policy (PREVIEW).
   langs:
   - azurecli
   examples:

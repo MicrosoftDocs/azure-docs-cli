@@ -8,7 +8,9 @@ items:
   - azurecli
   children:
   - ext_vm-repair_az_vm_repair_create
+  - ext_vm-repair_az_vm_repair_list_scripts
   - ext_vm-repair_az_vm_repair_restore
+  - ext_vm-repair_az_vm_repair_run
 - uid: ext_vm-repair_az_vm_repair_create
   name: az vm repair create
   summary: Create a new repair VM and attach the source VM's copied OS disk as a data disk.
@@ -46,6 +48,23 @@ items:
   - name: --repair-vm-name
     summary: Name of repair VM.
     description: ''
+- uid: ext_vm-repair_az_vm_repair_list_scripts
+  name: az vm repair list-scripts
+  summary: List available scripts. Located <a href="https://github.com/Azure/repair-script-library">https://github.com/Azure/repair-script-library</a>.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List scripts
+    syntax:
+      content: az vm repair list-scripts --verbose
+  - summary: List windows scripts only.
+    syntax:
+      content: az vm repair list-scripts --query "[?starts_with(id, 'win')]"
+  - summary: List scripts with test in its description.
+    syntax:
+      content: az vm repair list-scripts --query "[?contains(description, 'test')]"
+  parameters: []
 - uid: ext_vm-repair_az_vm_repair_restore
   name: az vm repair restore
   summary: Replace source VM's OS disk with data disk from repair VM.
@@ -77,13 +96,62 @@ items:
   - name: --yes
     summary: Deletes the repair resources without confirmation.
     description: ''
+- uid: ext_vm-repair_az_vm_repair_run
+  name: az vm repair run
+  summary: Run verified scripts from GitHub on a VM. 'az vm repair list-scripts' to view available scripts.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Run the script with <run-id> directly on the VM.
+    syntax:
+      content: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --verbose
+  - summary: Run the script with <run-id> on the linked repair VM.
+    syntax:
+      content: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --run-on-repair --verbose
+  - summary: Run a script with parameters on the VM.
+    syntax:
+      content: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --parameters hello=hi world=earth --verbose
+  - summary: Run a local custom script on the VM.
+    syntax:
+      content: az vm repair run -g MyResourceGroup -n MySourceWinVM --custom-script-file ./file.ps1 --verbose
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --custom-script-file
+    summary: Custom script file to run on VM. Script should be PowerShell for windows, Bash for Linux.
+    description: ''
+  - name: --parameters
+    summary: Space-separated parameters in the format of '[name=]value'. Positional for bash scripts.
+    description: ''
+  - name: --repair-vm-id
+    summary: Repair VM resource id.
+    description: ''
+  - name: --run-id
+    summary: Unique run id for run scripts.
+    description: ''
+  - name: --run-on-repair
+    summary: Script will be run on the linked repair VM.
+    description: ''
 commands:
 - uid: ext_vm-repair_az_vm_repair_create
   name: az vm repair create
   summary: Create a new repair VM and attach the source VM's copied OS disk as a data disk.
+- uid: ext_vm-repair_az_vm_repair_list_scripts
+  name: az vm repair list-scripts
+  summary: List available scripts. Located <a href="https://github.com/Azure/repair-script-library">https://github.com/Azure/repair-script-library</a>.
 - uid: ext_vm-repair_az_vm_repair_restore
   name: az vm repair restore
   summary: Replace source VM's OS disk with data disk from repair VM.
+- uid: ext_vm-repair_az_vm_repair_run
+  name: az vm repair run
+  summary: Run verified scripts from GitHub on a VM. 'az vm repair list-scripts' to view available scripts.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

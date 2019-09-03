@@ -26,20 +26,31 @@ items:
     syntax:
       content: >-
         az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID} \
-                                    --condition "avg Percentage CPU > 90" --window-size 5m --evaluation-frequency 1m \
-                                    --action {actionGroupId} apiKey={APIKey} type=HighCPU --description "High CPU"
+            --condition "avg Percentage CPU > 90" --window-size 5m --evaluation-frequency 1m \
+            --action {actionGroupId} apiKey={APIKey} type=HighCPU --description "High CPU"
   - summary: Create an alert when a storage account shows a high number of slow transactions, using multi-dimensional filters.
     syntax:
       content: >-
         az monitor metrics alert create -g {ResourceGroup} -n alert1 --scopes {StorageAccountId} \
-                                    --description "Storage Slow Transactions" \
-                                    --condition "total transactions > 5 where ResponseType includes Success" \
-                                    --condition "avg SuccessE2ELatency > 250 where ApiName includes GetBlob or PutBlob"
+            --description "Storage Slow Transactions" \
+            --condition "total transactions > 5 where ResponseType includes Success" \
+            --condition "avg SuccessE2ELatency > 250 where ApiName includes GetBlob or PutBlob"
   parameters:
   - isRequired: true
     name: --condition
     summary: The condition which triggers the rule.
-    description: "Usage:  --conditon {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD\n                                                       [where DIMENSION {includes,excludes} VALUE [or VALUE ...]\n                                                       [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]\n                                    \n                                    Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.\n                                    \n                                    Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definition` command.\n                                    \n                                    Multiple conditons can be specified by using more than one `--condition` argument."
+    description: >-
+      Usage:  --conditon {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD
+                         [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
+                         [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
+
+      Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
+
+
+      Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definition` command.
+
+
+      Multiple conditons can be specified by using more than one `--condition` argument.
   - isRequired: true
     name: --description
     summary: Free-text description of the rule.
@@ -58,7 +69,11 @@ items:
     description: ''
   - name: --action -a
     summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: "Usage:   --action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]\n                                    \n                                    Multiple action groups can be specified by using more than one `--action` argument."
+    description: >-
+      Usage:   --action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
+
+
+      Multiple action groups can be specified by using more than one `--action` argument.
   - name: --auto-mitigate
     parameterValueGroup: false, true
     summary: Automatically resolve the alert.
@@ -223,13 +238,28 @@ items:
     description: ''
   - name: --add-action
     summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: "Usage:   --add-action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]\n                                    \n                                    Multiple action groups can be specified by using more than one `--action` argument."
+    description: >-
+      Usage:   --add-action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
+
+
+      Multiple action groups can be specified by using more than one `--action` argument.
   - name: --remove-actions
     summary: Space-separated list of action group names to remove.
     description: ''
   - name: --add-condition
     summary: Add a condition which triggers the rule.
-    description: "Usage:  --add-conditon {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD\n                                                           [where DIMENSION {includes,excludes} VALUE [or VALUE ...]\n                                                           [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]\n                                    \n                                    Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.\n                                    \n                                    Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definition` command.\n                                    \n                                    Multiple conditons can be specified by using more than one `--condition` argument."
+    description: >-
+      Usage:  --add-conditon {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,&gt;,&gt;=,&lt;,&lt;=} THRESHOLD
+                             [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
+                             [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
+
+      Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
+
+
+      Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definition` command.
+
+
+      Multiple conditons can be specified by using more than one `--condition` argument.
   - name: --remove-conditions
     summary: Space-separated list of condition names to remove.
     description: ''

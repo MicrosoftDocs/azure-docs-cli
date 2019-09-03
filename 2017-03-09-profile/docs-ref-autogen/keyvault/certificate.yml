@@ -29,7 +29,18 @@ items:
   examples:
   - summary: Create a self-signed certificate with the default policy and add it to a virtual machine.
     syntax:
-      content: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n                          -p \"$(az keyvault certificate get-default-policy)\"\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+      content: >-
+        az keyvault certificate create --vault-name vaultname -n cert1 \
+          -p "$(az keyvault certificate get-default-policy)"
+
+        secrets=$(az keyvault secret list-versions --vault-name vaultname \
+          -n cert1 --query "[?attributes.enabled].id" -o tsv)
+
+        vm_secrets=$(az vm secret format -s "$secrets")
+
+
+        az vm create -g group-name -n vm-name --admin-username deploy  \
+          --image debian --secrets "$vm_secrets"
   parameters:
   - isRequired: true
     name: --policy -p
@@ -98,12 +109,14 @@ items:
     syntax:
       content: >-
         az keyvault certificate download --vault-name vault -n cert-name -f cert.pem && \
-                                openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
+
+        openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
   - summary: Download a certificate as DER and check its fingerprint in openssl.
     syntax:
       content: >-
         az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && \
-                                openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
+
+        openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
   parameters:
   - isRequired: true
     name: --file -f
@@ -138,7 +151,13 @@ items:
 - uid: az_keyvault_certificate_get_default_policy
   name: az keyvault certificate get-default-policy
   summary: Get the default policy for self-signed certificates.
-  description: "This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate.\n                            The default policy can also be used as a starting point to create derivative policies.\n                            \n                            For more details, see: <a href=\"https://docs.microsoft.com/rest/api/keyvault/certificates-and-policies\">https://docs.microsoft.com/rest/api/keyvault/certificates-and-policies</a>."
+  description: >-
+    This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate.
+
+    The default policy can also be used as a starting point to create derivative policies.
+
+
+    For more details, see: <a href="https://docs.microsoft.com/rest/api/keyvault/certificates-and-policies">https://docs.microsoft.com/rest/api/keyvault/certificates-and-policies</a>.
   langs:
   - azurecli
   examples:
@@ -146,7 +165,7 @@ items:
     syntax:
       content: >-
         az keyvault certificate create --vault-name vaultname -n cert1 \
-                                  -p "$(az keyvault certificate get-default-policy)"
+          -p "$(az keyvault certificate get-default-policy)"
   parameters:
   - name: --scaffold
     summary: Create a fully formed policy structure with default values.
@@ -169,7 +188,27 @@ items:
   examples:
   - summary: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
     syntax:
-      content: "service_principal=$(az ad sp create-for-rbac --create-cert)\n                        \n                        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r)\n                        \n                        az keyvault create -g my-group -n vaultname\n                        \n                        az keyvault certificate import --vault-name vaultname -n cert_name -f cert_file\n                        \n                        secrets=$(az keyvault secret list-versions --vault-name vaultname \\\n                          -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n                        \n                        vm_secrets=$(az vm secret format -s \"$secrets\")\n                        \n                        az vm create -g group-name -n vm-name --admin-username deploy  \\\n                          --image debian --secrets \"$vm_secrets\""
+      content: >-
+        service_principal=$(az ad sp create-for-rbac --create-cert)
+
+
+        cert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r)
+
+
+        az keyvault create -g my-group -n vaultname
+
+
+        az keyvault certificate import --vault-name vaultname -n cert_name -f cert_file
+
+
+        secrets=$(az keyvault secret list-versions --vault-name vaultname \
+          -n cert1 --query "[?attributes.enabled].id" -o tsv)
+
+        vm_secrets=$(az vm secret format -s "$secrets")
+
+
+        az vm create -g group-name -n vm-name --admin-username deploy  \
+          --image debian --secrets "$vm_secrets"
   parameters:
   - isRequired: true
     name: --file -f

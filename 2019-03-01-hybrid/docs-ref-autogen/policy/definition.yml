@@ -23,64 +23,65 @@ items:
     syntax:
       content: >-
         az policy definition create --name readOnlyStorage --rules '{
-                                    "if":
-                                    {
-                                        "field": "type",
-                                        "equals": "Microsoft.Storage/storageAccounts/write"
-                                    },
-                                    "then":
-                                    {
-                                        "effect": "deny"
-                                    }
-                                }'
+            "if":
+            {
+                "field": "type",
+                "equals": "Microsoft.Storage/storageAccounts/write"
+            },
+            "then":
+            {
+                "effect": "deny"
+            }
+        }'
   - summary: Create a policy parameter definition.
     syntax:
       content: >-
         az policy definition create --name allowedLocations --rules '{
-                                    "if": {
-                                        "allOf": [
-                                            {
-                                                "field": "location",
-                                                "notIn": "[parameters('listOfAllowedLocations')]"
-                                            },
-                                            {
-                                                "field": "location",
-                                                "notEquals": "global"
-                                            },
-                                            {
-                                                "field": "type",
-                                                "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
-                                            }
-                                        ]
-                                    },
-                                    "then": {
-                                        "effect": "deny"
-                                    }
-                                }' \
-                                --params '{
-                                    "allowedLocations": {
-                                        "type": "array",
-                                        "metadata": {
-                                            "description": "The list of locations that can be specified when deploying resources",
-                                            "strongType": "location",
-                                            "displayName": "Allowed locations"
-                                        }
-                                    }
-                                }'
+            "if": {
+                "allOf": [
+                    {
+                        "field": "location",
+                        "notIn": "[parameters('listOfAllowedLocations')]"
+                    },
+                    {
+                        "field": "location",
+                        "notEquals": "global"
+                    },
+                    {
+                        "field": "type",
+                        "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }' \
+
+        --params '{
+            "allowedLocations": {
+                "type": "array",
+                "metadata": {
+                    "description": "The list of locations that can be specified when deploying resources",
+                    "strongType": "location",
+                    "displayName": "Allowed locations"
+                }
+            }
+        }'
   - summary: Create a read-only policy that can be applied within a management group.
     syntax:
       content: >-
         az policy definition create -n readOnlyStorage --management-group 'MyManagementGroup' --rules '{
-                                    "if":
-                                    {
-                                        "field": "type",
-                                        "equals": "Microsoft.Storage/storageAccounts/write"
-                                    },
-                                    "then":
-                                    {
-                                        "effect": "deny"
-                                    }
-                                }'
+            "if":
+            {
+                "field": "type",
+                "equals": "Microsoft.Storage/storageAccounts/write"
+            },
+            "then":
+            {
+                "effect": "deny"
+            }
+        }'
   parameters:
   - isRequired: true
     name: --name -n
