@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/30/2019
+ms.date: 09/04/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -24,7 +24,7 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.12 | Provides a preview for upcoming AKS features | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.13 | Provides a preview for upcoming AKS features | Yes |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [appconfig](https://github.com/Azure/azure-cli-extensions) | 0.5.0 | Provides a preview for upcoming App Configuration features. | Yes |
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.1 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
