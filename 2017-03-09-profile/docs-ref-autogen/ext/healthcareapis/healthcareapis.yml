@@ -1,49 +1,55 @@
 ### YamlMime:UniversalReference
 items:
-- uid: ext_healthcare_az_healthcare
-  name: az healthcare
+- uid: ext_healthcareapis_az_healthcareapis
+  name: az healthcareapis
   summary: Commands to manage service.
   description: ''
   langs:
   - azurecli
   children:
-  - ext_healthcare_az_healthcare_create
-  - ext_healthcare_az_healthcare_delete
-  - ext_healthcare_az_healthcare_list
-  - ext_healthcare_az_healthcare_show
-  - ext_healthcare_az_healthcare_update
-- uid: ext_healthcare_az_healthcare_create
-  name: az healthcare create
+  - ext_healthcareapis_az_healthcareapis_create
+  - ext_healthcareapis_az_healthcareapis_delete
+  - ext_healthcareapis_az_healthcareapis_list
+  - ext_healthcareapis_az_healthcareapis_show
+  - ext_healthcareapis_az_healthcareapis_update
+- uid: ext_healthcareapis_az_healthcareapis_create
+  name: az healthcareapis create
   summary: Create service.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: ServicePut
+  - summary: Create or Update a service with all parameters
     syntax:
       content: >-
-        az healthcare create --resource-group "rg1" --name "service1" --kind "fhir" \
+        az healthcareapis create --resource-group "rg1" --name "service1" --kind "fhir-R4" \
 
-        --location "westus" --cosmos-db-offer-throughput "1000" --authentication-authority \
+        --location "westus2" --cosmos-db-offer-throughput "1000" --authentication-authority \
 
         "https://login.microsoftonline.com/common" --authentication-audience \
 
-        "https://azurehealthcare.com" --authentication-smart-proxy-enabled true \
+        "https://azurehealthcareapis.com" --authentication-smart-proxy-enabled true \
 
         --cors-max-age "1440" --cors-allow-credentials false \
 
         --access-policies-object-id c487e7d1-3210-41a3-8ccc-e9372b78da47,5b307da8-43d4-492b-8b66-b0294ade872f \
 
         --cors-origins "*" --cors-headers "*" --cors-methods "DELETE,GET,OPTIONS,PATCH,POST,PUT"
+  - summary: Create or Update a service with minimum parameters
+    syntax:
+      content: >-
+        az healthcareapis create --resource-group "rg1" --name "service2" --kind "fhir-R4" \
+
+        --location "westus2" --access-policies-object-id c487e7d1-3210-41a3-8ccc-e9372b78da47
   parameters:
   - isRequired: true
     name: --access-policies-object-id
-    summary: An object ID that is allowed access to the FHIR service.
+    summary: An Azure AD object ID (User or Apps) that is allowed access to the FHIR service.
     description: ''
   - isRequired: true
     name: --kind
     parameterValueGroup: fhir, fhir-R4, fhir-Stu3
-    summary: 'The kind of the service. Valid values are: fhir, fhir-Stu3 and fhir-R4.'
+    summary: The kind of the service.
     description: ''
   - isRequired: true
     name: --location -l
@@ -92,16 +98,16 @@ items:
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
-- uid: ext_healthcare_az_healthcare_delete
-  name: az healthcare delete
+- uid: ext_healthcareapis_az_healthcareapis_delete
+  name: az healthcareapis delete
   summary: Delete service.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: ServiceDelete
+  - summary: Delete Service
     syntax:
-      content: az healthcare delete --resource-group "rg1" --name "service1"
+      content: az healthcareapis delete --resource-group "rg1" --name "service1"
   parameters:
   - isRequired: true
     name: --name
@@ -111,8 +117,8 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-- uid: ext_healthcare_az_healthcare_list
-  name: az healthcare list
+- uid: ext_healthcareapis_az_healthcareapis_list
+  name: az healthcareapis list
   summary: List service.
   description: ''
   langs:
@@ -121,8 +127,8 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-- uid: ext_healthcare_az_healthcare_show
-  name: az healthcare show
+- uid: ext_healthcareapis_az_healthcareapis_show
+  name: az healthcareapis show
   summary: Show service.
   description: ''
   langs:
@@ -136,16 +142,19 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-- uid: ext_healthcare_az_healthcare_update
-  name: az healthcare update
+- uid: ext_healthcareapis_az_healthcareapis_update
+  name: az healthcareapis update
   summary: Update service.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: ServicePatch
+  - summary: Patch Service
     syntax:
-      content: az healthcare update --resource-group "rg1" --name "service1"
+      content: >-
+        az healthcareapis update --resource-group "rg1" --name "service2" --kind "fhir-R4" \
+
+        --location "westus2" --access-policies-object-id c487e7d1-3210-41a3-8ccc-e9372b78da47
   parameters:
   - isRequired: true
     name: --name
@@ -156,7 +165,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --access-policies-object-id
-    summary: An object ID that is allowed access to the FHIR service.
+    summary: An Azure AD object ID (User or Apps) that is allowed access to the FHIR service.
     description: ''
   - name: --authentication-audience
     summary: The audience url for the service.
@@ -192,7 +201,7 @@ items:
     description: ''
   - name: --kind
     parameterValueGroup: fhir, fhir-R4, fhir-Stu3
-    summary: 'The kind of the service. Valid values are: fhir, fhir-Stu3 and fhir-R4.'
+    summary: The kind of the service.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
@@ -201,20 +210,20 @@ items:
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
 commands:
-- uid: ext_healthcare_az_healthcare_create
-  name: az healthcare create
+- uid: ext_healthcareapis_az_healthcareapis_create
+  name: az healthcareapis create
   summary: Create service.
-- uid: ext_healthcare_az_healthcare_delete
-  name: az healthcare delete
+- uid: ext_healthcareapis_az_healthcareapis_delete
+  name: az healthcareapis delete
   summary: Delete service.
-- uid: ext_healthcare_az_healthcare_list
-  name: az healthcare list
+- uid: ext_healthcareapis_az_healthcareapis_list
+  name: az healthcareapis list
   summary: List service.
-- uid: ext_healthcare_az_healthcare_show
-  name: az healthcare show
+- uid: ext_healthcareapis_az_healthcareapis_show
+  name: az healthcareapis show
   summary: Show service.
-- uid: ext_healthcare_az_healthcare_update
-  name: az healthcare update
+- uid: ext_healthcareapis_az_healthcareapis_update
+  name: az healthcareapis update
   summary: Update service.
 globalParameters:
 - name: --debug
