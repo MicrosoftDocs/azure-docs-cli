@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/27/2019
+ms.date: 09/05/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,51 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## September 5, 2019
+
+### ACR
+
+* Added commands to configure retention policy: "az acr config retention"
+
+### AKS
+
+* Add support of ACR integration, which includes
+* Add `--attach-acr <acr-name-or-resource-id>` to `az aks create` command, which allows for attach the ACR to AKS cluster.
+* Add `--attach-acr <acr-name-or-resource-id>` and `--detach-acr <acr-name-or-resource-id>` to `az aks update` command, which allows to attach or detach the ACR from AKS cluster.
+
+### ARM
+
+* Update azure-mgmt-resource package to use 3.1.0, which utilizes API version 2019-05-10, allowing copy count to be zero.
+
+### Batch
+
+* Expanded `--json-file` capabilities of `az batch pool create` to allow for specifying MountConfigurations for file system mounts(see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for structure)
+* Expanded `--json-file` capabilities of `az batch pool create` with the optional property publicIPs on NetworkConfiguration. This allows specifying publicIPs to be used when deploying pools (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for structure)
+* Expanded `--image` capabilities to support Shared Image Galleries images. Similar to the commands support for Managed Images, to use a Shared Image Gallery image simply use the ARM ID as the value to the argument.
+* [BREAKING] When not specified, the default value for `--start-task-wait-for-success` on `az batch pool create` is now true (was false).
+* [BREAKING] The default value for Scope on AutoUserSpecification is now always Pool (was Task on Windows nodes, Pool on Linux nodes). This argument is not exposed via the commandline, but can be set in the `--json-file` arguments.
+
+### HDInsight
+
+* `az hdinsight resize`: Make parameter `--workernode-count/-c` required
+* GA release
+
+### Key Vault
+
+* Fix #10286: Unable to delete subnet from network rules.
+* Fix: Duplicated subnets and IP addresses can be added to network rules.
+
+### Network
+
+* az network watcher flow-log: Fix #8132. Support `--interval` to set traffic analysis interval value.
+* az network application-gateway identity: Fix #10073 and #8244 Add support for setting identity in application-gateway.
+* az network application-gateway ssl-cert: Fix #8244. Add support for setting key vault id in application-gateway ssl-cert.
+* az network express-route peering peer-connection: Fix #9404. Onboard `show` and `list` command for Azure express route peering peer connection resource.
+
+### Policy
+
+* Support for Policy new API version 2019-01-01
 
 ## August 27, 2019
 
