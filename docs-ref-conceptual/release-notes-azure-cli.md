@@ -17,46 +17,49 @@ ms.devlang: azurecli
 
 ### ACR
 
-* Added commands to configure retention policy: "az acr config retention"
+* Added command group `acr config retention` to configure retention policy
 
 ### AKS
 
-* Add support of ACR integration, which includes
-* Add `--attach-acr <acr-name-or-resource-id>` to `az aks create` command, which allows for attach the ACR to AKS cluster.
-* Add `--attach-acr <acr-name-or-resource-id>` and `--detach-acr <acr-name-or-resource-id>` to `az aks update` command, which allows to attach or detach the ACR from AKS cluster.
+* Added support for ACR integration with the following commands:
+  * Added `--attach-acr` parameter to `aks [create|update]` to attach an ACR to an AKS cluster
+  * Added `--detach-acr` parameter to `aks update` to detach the ACR from an AKS cluster
 
 ### ARM
 
-* Update azure-mgmt-resource package to use 3.1.0, which utilizes API version 2019-05-10, allowing copy count to be zero.
+* Updated to use API version 2019-05-10
 
 ### Batch
 
-* Expanded `--json-file` capabilities of `az batch pool create` to allow for specifying MountConfigurations for file system mounts(see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for structure)
-* Expanded `--json-file` capabilities of `az batch pool create` with the optional property publicIPs on NetworkConfiguration. This allows specifying publicIPs to be used when deploying pools (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for structure)
-* Expanded `--image` capabilities to support Shared Image Galleries images. Similar to the commands support for Managed Images, to use a Shared Image Gallery image simply use the ARM ID as the value to the argument.
-* [BREAKING] When not specified, the default value for `--start-task-wait-for-success` on `az batch pool create` is now true (was false).
-* [BREAKING] The default value for Scope on AutoUserSpecification is now always Pool (was Task on Windows nodes, Pool on Linux nodes). This argument is not exposed via the commandline, but can be set in the `--json-file` arguments.
+* Added new JSON configuration settings to `--json-file` for `batch pool create`:
+  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+  * Added optional property `publicIPs` on `NetworkConfiguration` for public IPs on pools
+    (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+* Added support for shared image galleries to `--image`
+* [BREAKING CHANGE] Changed default value of `--start-task-wait-for-success` on `batch pool create` to be `true`
+* [BREAKING CHANGE] Changed default value for `Scope` on `AutoUserSpecification` to always be Pool (was `Task` on Windows nodes, `Pool` on Linux nodes)
+  * This argument can only be set from a JSON configuration with `--json-file`
 
 ### HDInsight
 
-* `az hdinsight resize`: Make parameter `--workernode-count/-c` required
 * GA release
+* [BREAKING CHANGE] Changed parameter `--workernode-count/-c` of `az hdinsight resize` to be required.
 
 ### Key Vault
 
-* Fix #10286: Unable to delete subnet from network rules.
-* Fix: Duplicated subnets and IP addresses can be added to network rules.
+* Fixed issue where subnets couldn't be deleted from network rules
+* Fixed issue where duplicated subnets and IP addresses could be added to network rules
 
 ### Network
 
-* az network watcher flow-log: Fix #8132. Support `--interval` to set traffic analysis interval value.
-* az network application-gateway identity: Fix #10073 and #8244 Add support for setting identity in application-gateway.
-* az network application-gateway ssl-cert: Fix #8244. Add support for setting key vault id in application-gateway ssl-cert.
-* az network express-route peering peer-connection: Fix #9404. Onboard `show` and `list` command for Azure express route peering peer connection resource.
+* Added `--interval` parameter to `network watcher flow-log` to set traffic analysis interval value
+* Added `network application-gateway identity` to manage gateway identity
+* Added support for setting Key Vault ID to `network application-gateway ssl-cert`
+* Added `network express-route peering peer-connection [show|list]`
 
 ### Policy
 
-* Support for Policy new API version 2019-01-01
+* Updated to use API version 2019-01-01
 
 ## August 27, 2019
 
