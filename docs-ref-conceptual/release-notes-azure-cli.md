@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 08/27/2019
+ms.date: 09/05/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,54 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## September 5, 2019
+
+### ACR
+
+* Added command group `acr config retention` to configure retention policy
+
+### AKS
+
+* Added support for ACR integration with the following commands:
+  * Added `--attach-acr` parameter to `aks [create|update]` to attach an ACR to an AKS cluster
+  * Added `--detach-acr` parameter to `aks update` to detach the ACR from an AKS cluster
+
+### ARM
+
+* Updated to use API version 2019-05-10
+
+### Batch
+
+* Added new JSON configuration settings to `--json-file` for `batch pool create`:
+  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+  * Added optional property `publicIPs` on `NetworkConfiguration` for public IPs on pools
+    (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+* Added support for shared image galleries to `--image`
+* [BREAKING CHANGE] Changed default value of `--start-task-wait-for-success` on `batch pool create` to be `true`
+* [BREAKING CHANGE] Changed default value for `Scope` on `AutoUserSpecification` to always be Pool (was `Task` on Windows nodes, `Pool` on Linux nodes)
+  * This argument can only be set from a JSON configuration with `--json-file`
+
+### HDInsight
+
+* GA release
+* [BREAKING CHANGE] Changed parameter `--workernode-count/-c` of `az hdinsight resize` to be required.
+
+### Key Vault
+
+* Fixed issue where subnets couldn't be deleted from network rules
+* Fixed issue where duplicated subnets and IP addresses could be added to network rules
+
+### Network
+
+* Added `--interval` parameter to `network watcher flow-log` to set traffic analysis interval value
+* Added `network application-gateway identity` to manage gateway identity
+* Added support for setting Key Vault ID to `network application-gateway ssl-cert`
+* Added `network express-route peering peer-connection [show|list]`
+
+### Policy
+
+* Updated to use API version 2019-01-01
 
 ## August 27, 2019
 
