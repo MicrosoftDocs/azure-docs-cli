@@ -16,6 +16,12 @@ ms.devlang: azurecli
 Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
 with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
 
+> [!NOTE]
+>
+> In scripts and on the Microsoft documentation site, Azure CLI examples are written for the `bash` shell. One-line examples will
+> run on any platform. Longer examples which include line continuations (`\`) or variable assignment need to be modified to work
+> on other shells, including PowerShell.
+
 ## Install or run in Azure Cloud Shell
 
 The easiest way to get started with the Azure CLI is by running it in an Azure Cloud Shell environment through your browser. To learn about Cloud Shell, see  [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
