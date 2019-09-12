@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
-## September 5, 2019
+## September 10, 2019
 
 ### ACR
 
