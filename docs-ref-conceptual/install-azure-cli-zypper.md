@@ -100,7 +100,7 @@ sudo zypper update azure-cli
    sudo zypper removerepo azure-cli
    ```
 
-3. If you removed the repository information, also remove the Microsoft GPG signature key.
+3. If you don't use other Microsoft packages, remove the Microsoft signing key.
 
    ```bash
    MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
