@@ -67,7 +67,7 @@ Version 2.0.72
 
 ### ACR
 
-* [BREAKING CHNAGE] Removed support for the `classic` SKU
+* [BREAKING CHANGE] Removed support for the `classic` SKU
 
 ### API Management
 
