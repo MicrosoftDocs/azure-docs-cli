@@ -11,9 +11,9 @@ ms.topic: include
     az login
     ```
 
-    If the CLI can open your default browser, it will do so and load a sign-in page.
+    If the CLI can open your default browser, it will do so and load an Azure sign-in page.
 
-    Otherwise, you need to open a browser page and follow the instructions on the command line to enter an
-    authorization code after navigating to [https://aka.ms/devicelogin](https://aka.ms/devicelogin) in your browser.
+    Otherwise, open a browser page at [https://aka.ms/devicelogin](https://aka.ms/devicelogin) and enter the
+    authorization code displayed in your terminal.
 
 2. Sign in with your account credentials in the browser.

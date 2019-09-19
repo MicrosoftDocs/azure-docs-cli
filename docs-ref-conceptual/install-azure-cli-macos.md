@@ -18,7 +18,7 @@ installation of the CLI update to date. The CLI package has been tested on macOS
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
-## Install
+## Install with Homebrew
 
 Homebrew is the easiest way to manage your CLI install. It provides convenient ways to install, update, and uninstall.
 If you don't have homebrew available on your system, [install homebrew](https://docs.brew.sh/Installation.html) before continuing.
@@ -31,8 +31,8 @@ brew update && brew install azure-cli
 
 > [!IMPORTANT]
 >
-> The Azure CLI has a dependency on the `python3` package in Homebrew, and will install it on your system, even
-> if Python 2 is available. The Azure CLI is guaranteed to be compatible with the latest version of `python3`
+> The Azure CLI has a dependency on the Homebrew `python3` package, and will install it.
+> The Azure CLI is guaranteed to be compatible with the latest version of `python3`
 > published on Homebrew.
 
 You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
