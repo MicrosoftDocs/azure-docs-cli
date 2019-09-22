@@ -14,33 +14,37 @@ items:
   - ext_healthcareapis_az_healthcareapis_update
 - uid: ext_healthcareapis_az_healthcareapis_create
   name: az healthcareapis create
-  summary: Create service.
+  summary: Create service instance.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Create or Update a service with all parameters
+  - summary: Create a service with all parameters
     syntax:
       content: >-
         az healthcareapis create --resource-group "rg1" --name "service1" --kind "fhir-R4" \
 
-        --location "westus2" --cosmos-db-offer-throughput "1000" --authentication-authority \
+        --location "westus2" --access-policies-object-id \
 
-        "https://login.microsoftonline.com/common" --authentication-audience \
+        "c487e7d1-3210-41a3-8ccc-e9372b78da47,5b307da8-43d4-492b-8b66-b0294ade872f" \
 
-        "https://azurehealthcareapis.com" --authentication-smart-proxy-enabled true \
+        --cosmos-db-offer-throughput "1000" --authentication-authority \
 
-        --cors-max-age "1440" --cors-allow-credentials false \
+        "https://login.microsoftonline.com/abfde7b2-df0f-47e6-aabf-2462b07508dc" \
 
-        --access-policies-object-id c487e7d1-3210-41a3-8ccc-e9372b78da47,5b307da8-43d4-492b-8b66-b0294ade872f \
+        --authentication-audience "https://azurehealthcareapis.com" \
 
-        --cors-origins "*" --cors-headers "*" --cors-methods "DELETE,GET,OPTIONS,PATCH,POST,PUT"
-  - summary: Create or Update a service with minimum parameters
+        --authentication-smart-proxy-enabled true --cors-origins "*" --cors-headers "*" \
+
+        --cors-methods "DELETE,GET,OPTIONS,PATCH,POST,PUT" --cors-max-age "1440" \
+
+        --cors-allow-credentials false
+  - summary: Create a service with minimum parameters
     syntax:
       content: >-
         az healthcareapis create --resource-group "rg1" --name "service2" --kind "fhir-R4" \
 
-        --location "westus2" --access-policies-object-id c487e7d1-3210-41a3-8ccc-e9372b78da47
+        --location "westus2" --access-policies-object-id "c487e7d1-3210-41a3-8ccc-e9372b78da47"
   parameters:
   - isRequired: true
     name: --access-policies-object-id
@@ -105,7 +109,7 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Delete Service
+  - summary: Delete service instance.
     syntax:
       content: az healthcareapis delete --resource-group "rg1" --name "service1"
   parameters:
@@ -119,20 +123,31 @@ items:
     description: ''
 - uid: ext_healthcareapis_az_healthcareapis_list
   name: az healthcareapis list
-  summary: List service.
+  summary: List service instances.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: List all servics in subscription
+    syntax:
+      content: az healthcareapis list
+  - summary: List all servics in resource group
+    syntax:
+      content: az healthcareapis list --resource-group "rg1"
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 - uid: ext_healthcareapis_az_healthcareapis_show
   name: az healthcareapis show
-  summary: Show service.
+  summary: Show service instance.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Show selected service
+    syntax:
+      content: az healthcareapis show --resource-group "rg1" --name "service1"
   parameters:
   - isRequired: true
     name: --name
@@ -144,12 +159,32 @@ items:
     description: ''
 - uid: ext_healthcareapis_az_healthcareapis_update
   name: az healthcareapis update
-  summary: Update service.
+  summary: Update service instance.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Patch Service
+  - summary: Update a service with all parameters
+    syntax:
+      content: >-
+        az healthcareapis update --resource-group "rg1" --name "service1" --kind "fhir-R4" \
+
+        --location "westus2" --access-policies-object-id \
+
+        "c487e7d1-3210-41a3-8ccc-e9372b78da47,5b307da8-43d4-492b-8b66-b0294ade872f" \
+
+        --cosmos-db-offer-throughput "1000" --authentication-authority \
+
+        "https://login.microsoftonline.com/abfde7b2-df0f-47e6-aabf-2462b07508dc" \
+
+        --authentication-audience "https://azurehealthcareapis.com" \
+
+        --authentication-smart-proxy-enabled true --cors-origins "*" --cors-headers "*" \
+
+        --cors-methods "DELETE,GET,OPTIONS,PATCH,POST,PUT" --cors-max-age "1440" \
+
+        --cors-allow-credentials false
+  - summary: Update a service with minimum parameters
     syntax:
       content: >-
         az healthcareapis update --resource-group "rg1" --name "service2" --kind "fhir-R4" \
@@ -212,19 +247,19 @@ items:
 commands:
 - uid: ext_healthcareapis_az_healthcareapis_create
   name: az healthcareapis create
-  summary: Create service.
+  summary: Create service instance.
 - uid: ext_healthcareapis_az_healthcareapis_delete
   name: az healthcareapis delete
   summary: Delete service.
 - uid: ext_healthcareapis_az_healthcareapis_list
   name: az healthcareapis list
-  summary: List service.
+  summary: List service instances.
 - uid: ext_healthcareapis_az_healthcareapis_show
   name: az healthcareapis show
-  summary: Show service.
+  summary: Show service instance.
 - uid: ext_healthcareapis_az_healthcareapis_update
   name: az healthcareapis update
-  summary: Update service.
+  summary: Update service instance.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
