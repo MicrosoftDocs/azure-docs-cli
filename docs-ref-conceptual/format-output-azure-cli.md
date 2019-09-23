@@ -4,7 +4,7 @@ description: Learn how to format the output of Azure CLI commands to tables, lis
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/07/2018
+ms.date: 09/23/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -151,21 +151,40 @@ None    None        /subscriptions/.../resourceGroups/DEMORG1/providers/Microsof
 None    None        /subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm212    None    None    westus    demovm212            None    Succeeded    DEMORG1    None            Microsoft.Compute/virtualMachines    4bdac85d-c2f7-410f-9907-ca7921d930b4
 None    None        /subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm213    None    None    westus    demovm213            None    Succeeded    DEMORG1    None            Microsoft.Compute/virtualMachines    2131c664-221a-4b7f-9653-f6d542fbfa34
 None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo001VM    None    None    westus    KBDemo001VM            None    Succeeded    RGDEMO001    None            Microsoft.Compute/virtualMachines    14e74761-c17e-4530-a7be-9e4ff06ea74b
-None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo02None    None    westus    KBDemo020            None    Succeeded    RGDEMO001    None            Microsoft.Compute/virtualMachines    36baa9-9b80-48a8-b4a9-854c7a858ece
+None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo020   None    None    westus    KBDemo020            None    Succeeded    RGDEMO001    None            Microsoft.Compute/virtualMachines    36baa9-9b80-48a8-b4a9-854c7a858ece
 ```
 
-The next example shows how `tsv` output can be piped to other commands in bash. `grep` selects items that have text "RGD" in them, then the `cut` command selects the eighth field to show the name of the VM in output.
+One restriction of the TSV output format is that there isn't a guarantee on output ordering. The CLI makes a best effort to preserve ordering by sorting keys in the response JSON alphebetically,
+and then printing their values in order for TSV output. This isn't a guarantee that the order is always identical though, since the Azure service response format may change.
+
+In order to enforce consistent ordering, you'll need to use the `--query` parameter and the [multiselect list](query-azure-cli.md#get-multiple-values) format. When a CLI command returns a single
+JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key order.  For CLI commands which return an array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
+
+For example, to order the information displayed above by ID, location, resource group, and VM name:
+
+```azurecli-interactive
+az vm list --out tsv --query '[].[id, location, resourceGroup, name]'
+```
+
+```output
+/subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/DemoVM010    westus    DEMORG1    DemoVM010
+/subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm212    westus    DEMORG1    demovm212
+/subscriptions/.../resourceGroups/DEMORG1/providers/Microsoft.Compute/virtualMachines/demovm213    westus    DEMORG1    demovm213
+/subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo001VM     westus  RGDEMO001       KBDemo001VM
+/subscriptions/.../resourceGroups/RGDEMO001/providers/Microsoft.Compute/virtualMachines/KBDemo020       westus  RGDEMO001       KBDemo020
+```
+
+The next example shows how `tsv` output can be piped to other commands in bash. The query is used to filter output and force ordering, `grep` selects items that have text "RGD" in them, then the `cut`
+command selects the fourth field to show the name of the VM in output.
 
 ```bash
-az vm list --out tsv | grep RGD | cut -f8
+az vm list --out tsv --query '[].[id, location, resourceGroup, name]' | grep RGD | cut -f4
 ```
 
 ```output
 KBDemo001VM
 KBDemo020
 ```
-
-For the purposes of processing tab-separated fields, the values are in the same order that they appear in the printed JSON object. This order is guaranteed to be consistent between runs of the command.
 
 ## Set the default output format
 

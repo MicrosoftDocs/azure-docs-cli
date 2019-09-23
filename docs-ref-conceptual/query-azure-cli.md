@@ -4,7 +4,7 @@ description: Learn how to perform JMESPath queries on the output of Azure CLI  c
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/12/2018
+ms.date: 09/23/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -86,24 +86,6 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ]
 ```
 
-To get more than one property, put expressions in square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
-admin user, and SSH key all at once use the command:
-
-```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
-```
-
-```json
-[
-  "TestVM",
-  "azureuser",
-  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMobZNJTqgjWn/IB5xlilvE4Y+BMYpqkDnGRUcA0g9BYPgrGSQquCES37v2e3JmpfDPHFsaR+CPKlVr2GoVJMMHeRcMJhj50ZWq0hAnkJBhlZVWy8S7dwdGAqPyPmWM2iJDCVMVrLITAJCno47O4Ees7RCH6ku7kU86b1NOanvrNwqTHr14wtnLhgZ0gQ5GV1oLWvMEVg1YFMIgPRkTsSQKWCG5lLqQ45aU/4NMJoUxGyJTL9i8YxMavaB1Z2npfTQDQo9+womZ7SXzHaIWC858gWNl9e5UFyHDnTEDc14hKkf1CqnGJVcCJkmSfmrrHk/CkmF0ZT3whTHO1DhJTtV stramer@contoso"
-]
-```
-
-These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no
-keys associated with the results.
-
 ## Get a single value
 
 A common case is that you need to only get _one_ value out of a CLI command, such as an Azure resource ID, a resource name, a username, or a password. In that case, you also often want to store the value in a local environment variable. To get a single property, first make
@@ -143,6 +125,25 @@ azureuser
 ```
 
 For more information about the `tsv` output format, see [Output formats - TSV output format](format-output-azure-cli.md#tsv-output-format)
+
+## Get multiple values
+
+To get more than one property, put expressions in square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
+admin user, and SSH key all at once use the command:
+
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
+```
+
+```json
+[
+  "TestVM",
+  "azureuser",
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMobZNJTqgjWn/IB5xlilvE4Y+BMYpqkDnGRUcA0g9BYPgrGSQquCES37v2e3JmpfDPHFsaR+CPKlVr2GoVJMMHeRcMJhj50ZWq0hAnkJBhlZVWy8S7dwdGAqPyPmWM2iJDCVMVrLITAJCno47O4Ees7RCH6ku7kU86b1NOanvrNwqTHr14wtnLhgZ0gQ5GV1oLWvMEVg1YFMIgPRkTsSQKWCG5lLqQ45aU/4NMJoUxGyJTL9i8YxMavaB1Z2npfTQDQo9+womZ7SXzHaIWC858gWNl9e5UFyHDnTEDc14hKkf1CqnGJVcCJkmSfmrrHk/CkmF0ZT3whTHO1DhJTtV stramer@contoso"
+]
+```
+
+These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no keys associated with the results.
 
 ## Rename properties in a query
 
