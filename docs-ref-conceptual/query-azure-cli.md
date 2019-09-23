@@ -346,3 +346,14 @@ with queries. Data is piped as input, and then queries are written and run in th
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
+
+## Server-side filtering with OData
+
+Some Azure CLI commands which act on large amounts of data need a way to perform that filtering server-side, since all `--query` filtering is done on the client. In order to
+provide that support, those commands offer an argument to use [OData queries](https://www.odata.org/getting-started/basic-tutorial/#queryData). The OData query argument has no
+standard name, but will often include a term like `filter` or `odata` as a keyphrase to make them easier to find at a glance.
+OData queries can be combined with the usual client-side JMESPath queries for even more powerful data filtering and manipulation.
+
+A full discussion of OData is outside the scope of this article. To learn more about OData querying, see the articles [OData - Query options overview](/odata/concepts/queryoptions-overview)
+and [OData - Query options usage](/odata/concepts/queryoptions-usage). Keep in mind that these articles are written from the perspective of using OData in a REST API,
+but for the Azure CLI, all that you will be using is the syntax associated with the `?$filter=` URL query string.
