@@ -19,55 +19,53 @@ Version 2.0.74
 
 ### ACR
 
-* Added a required `--type` parameter to command `az acr config retention update`
-* Param `-n, --name` changed to `-r, --registry` for `az acr config` command group.
+* Added a required `--type` parameter to `acr config retention update`
+* [BREAKING CHNAGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
 
 ### AKS
 
-* Add `--load-balancer-sku`, `--load-balancer-managed-outbound-ip-count`, `--load-balancer-outbound-ips` and `--load-balancer-outbound-ip-prefixes` to `az aks create` command, which allows for creating AKS cluster with SLB.
-* Add `--load-balancer-managed-outbound-ip-count`, `--load-balancer-outbound-ips` and `--load-balancer-outbound-ip-prefixes` to `az aks update` command, which allows for updating load balancer profile of an AKS cluster with SLB.
-* Add `--vm-set-type` to `az aks create` command, which allows to specify vm types of an AKS Cluster (vmas or vmss).
+* Added `--load-balancer-sku` parameter to `aks create` command, which allows for creating AKS cluster with SLB
+* Added `--load-balancer-managed-outbound-ip-count`, `--load-balancer-outbound-ips` and `--load-balancer-outbound-ip-prefixes` parameters to `aks [create|update]` commands, which allow for updating load balancer profile of an AKS cluster with SLB
+* Added `--vm-set-type` parameter to `aks create` command, which allows to specify vm types of an AKS Cluster (vmas or vmss)
 
 ### ARM
 
-* az group deployment create: Add --handle-extended-json-format to support multiline and comments in json template
-* Update azure-mgmt-resource package to use 4.0.0
+* Added `--handle-extended-json-format` parameter to `group deployment create` command to support multiline and comments in json template
 
 ### Compute
 
-* vmss create: Add --terminate-notification-time parameters to support terminate scheduled event configurability.
-* vmss update: Add --enable-terminate-notification and --terminate-notification-time parameters to support terminate scheduled event configurability.
-* Update azure-mgmt-compute version to 8.0.0.
-* vm/vmss create: Support --priority, --eviction-policy, --max-billing parameters.
-* disk create: Allow specifying the exact size of the upload for customers who upload their disks directly.
-* snapshot create: Support incremental snapshots for managed disks.
+* Added `--terminate-notification-time` parameter to `vmss [create|update]` commands to support terminate scheduled event configurability
+* Added `--enable-terminate-notification` parameter to `vmss update` command to support terminate scheduled event configurability
+* Added `--priority,` `--eviction-policy,` `--max-billing` parameters to `[vm|vmss] create` commands
+* Changed `disk create` to allow specifying the exact size of the disk upload
+* Added support for incremental snapshots for managed disks to `snapshot create`
 
 ### Cosmos DB
 
-* Add `--type <key-type>` to `az cosmosdb keys list` command to show key, read only keys or connection strings
-* Add `regenerate` to `az cosmosdb keys` group
-* Deprecate `az cosmosdb list-connection-strings`, `az cosmosdb regenerate-key` and `az cosmosdb list-read-only-keys`
+* Added `--type <key-type>` parameter to `cosmosdb keys list` command to show key, read only keys or connection strings
+* Added `cosmosdb keys regenerate` command
+* [DEPRECATED] Deprecated `cosmosdb list-connection-strings`, `cosmosdb regenerate-key` and `cosmosdb list-read-only-keys` commands
 
 ### EventGrid
 
-* Fix the endpoint help text to refer to the right parameter (namely, to point to parameter `--endpoint` rather than `--endpoint-type` in event subscription commands).
+* Fixed the endpoint help text to refer to the right parameter
 
 ### Key Vault
 
-* Fix #8840: When using tenant domain name in `az login -t`, `keyvault create` fails. Tenant domain name is now resolved to GUID if it is not.
+* Fixed issue where logging in with a tenant (`login -t`) could cause `keyvault create` to fail
 
 ### Monitor
 
-* monitor metrics alert create: Fix #9901. Support special character `:` in `--condition` argument.
+* Fixed issue where `:` character was not allowed in `--condition` argument to `monitor metrics alert create`
 
 ### Policy
 
-* Support for Policy new API version 2019-06-01.
-* az policy assignment create: Add `--enforcement-mode` parameter for `az policy assignment create` command.
+* Added support for Policy API version 2019-06-01
+* Added `--enforcement-mode` parameter to `policy assignment create` command
 
 ### Storage
 
-* Add --blob-type parameter for `az storage copy` command
+* Added `--blob-type` parameter to `az storage copy` command
 
 ## September 10, 2019
 
