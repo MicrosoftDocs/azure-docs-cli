@@ -13,6 +13,60 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## September 24, 2019
+
+Version 2.0.74
+
+### ACR
+
+* Added a required `--type` parameter to `acr config retention update`
+* [BREAKING CHNAGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
+
+### AKS
+
+* Added `--load-balancer-sku` parameter to `aks create` command, which allows for creating AKS cluster with SLB
+* Added `--load-balancer-managed-outbound-ip-count`, `--load-balancer-outbound-ips` and `--load-balancer-outbound-ip-prefixes` parameters to `aks [create|update]` commands, which allow for updating load balancer profile of an AKS cluster with SLB
+* Added `--vm-set-type` parameter to `aks create` command, which allows to specify vm types of an AKS Cluster (vmas or vmss)
+
+### ARM
+
+* Added `--handle-extended-json-format` parameter to `group deployment create` command to support multiline and comments in json template
+
+### Compute
+
+* Added `--terminate-notification-time` parameter to `vmss [create|update]` commands to support terminate scheduled event configurability
+* Added `--enable-terminate-notification` parameter to `vmss update` command to support terminate scheduled event configurability
+* Added `--priority,` `--eviction-policy,` `--max-billing` parameters to `[vm|vmss] create` commands
+* Changed `disk create` to allow specifying the exact size of the disk upload
+* Added support for incremental snapshots for managed disks to `snapshot create`
+
+### Cosmos DB
+
+* Added `--type <key-type>` parameter to `cosmosdb keys list` command to show key, read only keys or connection strings
+* Added `cosmosdb keys regenerate` command
+* [DEPRECATED] Deprecated `cosmosdb list-connection-strings`, `cosmosdb regenerate-key` and `cosmosdb list-read-only-keys` commands
+
+### EventGrid
+
+* Fixed the endpoint help text to refer to the right parameter
+
+### Key Vault
+
+* Fixed issue where logging in with a tenant (`login -t`) could cause `keyvault create` to fail
+
+### Monitor
+
+* Fixed issue where `:` character was not allowed in `--condition` argument to `monitor metrics alert create`
+
+### Policy
+
+* Added support for Policy API version 2019-06-01
+* Added `--enforcement-mode` parameter to `policy assignment create` command
+
+### Storage
+
+* Added `--blob-type` parameter to `az storage copy` command
+
 ## September 10, 2019
 
 ### ACR
