@@ -62,6 +62,15 @@ items:
   - summary: Create a web app with a NodeJS 6.2 runtime and deployed from a local git repository.
     syntax:
       content: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|6.2" --deployment-local-git
+  - summary: Create a web app with an image from DockerHub.
+    syntax:
+      content: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i nginx
+  - summary: Create a web app with an image from a private DockerHub registry.
+    syntax:
+      content: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i MyImageName -s username -w password
+  - summary: Create a web app with an image from a private Azure Container Registry.
+    syntax:
+      content: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i myregistry.azurecr.io/docker-image:tag
   parameters:
   - isRequired: true
     name: --name -n
@@ -87,6 +96,12 @@ items:
     description: ''
   - name: --deployment-source-url -u
     summary: Git repository URL to link with manual integration.
+    description: ''
+  - name: --docker-registry-server-password -w
+    summary: The container registry server password. Required for private registries.
+    description: ''
+  - name: --docker-registry-server-user -s
+    summary: The container registry server username.
     description: ''
   - name: --multicontainer-config-file
     summary: Linux only. Config file for multicontainer apps. (local or remote).
@@ -378,6 +393,7 @@ items:
     summary: Name of the appserviceplan associated with the webapp.
     description: ''
   - name: --sku
+    defaultValue: F1
     parameterValueGroup: B1, B2, B3, D1, F1, FREE, P1V2, P2V2, P3V2, PC2, PC3, PC4, S1, S2, S3, SHARED
     summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large).
     description: ''
@@ -471,6 +487,21 @@ commands:
 - uid: az_webapp_config
   name: az webapp config
   summary: Configure a web app.
+- uid: az_webapp_config_access_restriction
+  name: az webapp config access-restriction
+  summary: Methods that show, set, add, and remove access restrictions on a webapp.
+- uid: az_webapp_config_access_restriction_add
+  name: az webapp config access-restriction add
+  summary: Adds an Access Restriction to the webapp, or updates if the Action of the Ip-Address or Subnet already exists.
+- uid: az_webapp_config_access_restriction_remove
+  name: az webapp config access-restriction remove
+  summary: Removes an Access Restriction from the webapp.
+- uid: az_webapp_config_access_restriction_set
+  name: az webapp config access-restriction set
+  summary: Sets if SCM site is using the same restrictions as the main site.
+- uid: az_webapp_config_access_restriction_show
+  name: az webapp config access-restriction show
+  summary: Show Access Restriction settings for webapp.
 - uid: az_webapp_config_appsettings
   name: az webapp config appsettings
   summary: Configure web app settings. Updating or removing application settings will cause an app recycle.

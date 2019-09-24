@@ -1,0 +1,232 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_functionapp_config_access_restriction
+  name: az functionapp config access-restriction
+  summary: Methods that show, set, add, and remove access restrictions on a functionapp.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_functionapp_config_access_restriction_add
+  - az_functionapp_config_access_restriction_remove
+  - az_functionapp_config_access_restriction_set
+  - az_functionapp_config_access_restriction_show
+- uid: az_functionapp_config_access_restriction_add
+  name: az functionapp config access-restriction add
+  summary: Adds an Access Restriction to the functionapp, or updates if the Action of the Ip-Address or Subnet already exists.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Add Access Restriction opening (Allow) named developers for IPv4 address 130.220.0.0/27 with priority 200 to main site.
+    syntax:
+      content: az functionapp config access-restriction add -g ResourceGroup -n AppName --rule-name developers --action Allow --ip-address 130.220.0.0/27 --priority 200
+  - summary: Add Access Restriction opening (Allow) named build_server for IPv4 address 192.168.0.0/27 with priority 250 to scm site.
+    syntax:
+      content: az functionapp config access-restriction add -g ResourceGroup -n AppName --rule-name build_server --action Allow --ip-address 192.168.0.0/27 --priority 250 --scm-site true
+  - summary: Add Access Restriction opening (Allow) named app_gateway for Subnet app_gw in vNet core_weu with priority 300 to main site.
+    syntax:
+      content: az functionapp config access-restriction add -g ResourceGroup -n AppName --rule-name app_gateway --action Allow --vnet-name core_weu --subnet app_gateway --priority 300
+  - summary: Add Access Restriction opening (Allow) named internal_agents for Subnet build_agents in vNet corp01 with priority 500 to scm site; and ignore service endpoint registration on the Subnet.
+    syntax:
+      content: az functionapp config access-restriction add -g ResourceGroup -n AppName --rule-name internal_agents --action Allow --vnet-name corp01 --subnet build_agents --priority 500 --scm-site true --ignore-missing-endpoint true
+  parameters:
+  - isRequired: true
+    name: --priority -p
+    summary: Priority of the access restriction rule.
+    description: ''
+  - isRequired: true
+    name: --rule-name -r
+    summary: Name of the access restriction rule to add.
+    description: ''
+  - name: --action
+    defaultValue: Allow
+    parameterValueGroup: Allow, Deny
+    summary: Allow or deny access.
+    description: ''
+  - name: --description
+    summary: Description of the access restriction rule.
+    description: ''
+  - name: --ignore-missing-endpoint -i
+    parameterValueGroup: false, true
+    summary: Create access restriction rule with checking if the subnet has Microsoft.Web service endpoint enabled.
+    description: ''
+  - name: --ip-address
+    summary: IP address or CIDR range.
+    description: ''
+  - name: --scm-site
+    parameterValueGroup: false, true
+    summary: True if access restrictions is added for scm site.
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --subnet
+    summary: Subnet name (requires vNet name) or subnet resource id.
+    description: ''
+  - name: --vnet-name
+    summary: VNet name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_functionapp_config_access_restriction_remove
+  name: az functionapp config access-restriction remove
+  summary: Removes an Access Restriction from the functionapp.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Remove Access Restriction named developers from the main site.
+    syntax:
+      content: az functionapp config access-restriction remove -g ResourceGroup -n AppName --rule-name developers
+  - summary: Remove Access Restriction named internal_agents from the scm site.
+    syntax:
+      content: az functionapp config access-restriction remove -g ResourceGroup -n AppName --rule-name internal_agents --scm-site true
+  parameters:
+  - isRequired: true
+    name: --rule-name -r
+    summary: Name of the access restriction to remove.
+    description: ''
+  - name: --scm-site
+    parameterValueGroup: false, true
+    summary: True if access restriction should be removed from scm site.
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_functionapp_config_access_restriction_set
+  name: az functionapp config access-restriction set
+  summary: Sets if SCM site is using the same restrictions as the main site.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Enable SCM site to use same access restrictions as main site.
+    syntax:
+      content: az functionapp config access-restriction set -g ResourceGroup -n AppName --use-same-restrictions-for-scm-site true
+  parameters:
+  - isRequired: true
+    name: --use-same-restrictions-for-scm-site
+    parameterValueGroup: false, true
+    summary: Use same access restrictions for scm site.
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_functionapp_config_access_restriction_show
+  name: az functionapp config access-restriction show
+  summary: Show Access Restriction settings for functionapp.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get Access Restriction settings for a functionapp.
+    syntax:
+      content: az functionapp config access-restriction show -g ResourceGroup -n AppName
+  parameters:
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using 'az configure --defaults web=<name>'.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_functionapp_config_access_restriction_add
+  name: az functionapp config access-restriction add
+  summary: Adds an Access Restriction to the functionapp, or updates if the Action of the Ip-Address or Subnet already exists.
+- uid: az_functionapp_config_access_restriction_remove
+  name: az functionapp config access-restriction remove
+  summary: Removes an Access Restriction from the functionapp.
+- uid: az_functionapp_config_access_restriction_set
+  name: az functionapp config access-restriction set
+  summary: Sets if SCM site is using the same restrictions as the main site.
+- uid: az_functionapp_config_access_restriction_show
+  name: az functionapp config access-restriction show
+  summary: Show Access Restriction settings for functionapp.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/851efddf176b349dc4a293af3e191c4ecec98f6e/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+updated_at: 9/18/2019 5:29:37 PM
+ms.date: 09/18/2019
+description: Methods that show, set, add, and remove access restrictions on a functionapp.
