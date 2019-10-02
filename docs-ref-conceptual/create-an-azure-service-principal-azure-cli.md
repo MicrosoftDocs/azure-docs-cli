@@ -107,10 +107,10 @@ recommended that you filter the list with one of the following arguments:
 * `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` argument. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
 
 The information returned for service principal objects is verbose. To get only the information necessary for sign-in, use the query string
-`[].{"id":"appId", "tenant":"appOwnerTenantId"}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
+`[].{id:appId, tenant:appOwnerTenantId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
-az ad sp list --show-mine --query '[].{"id":"appId", "tenant":"appOwnerTenantId"}'
+az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 ```
 
 > [!IMPORTANT]
