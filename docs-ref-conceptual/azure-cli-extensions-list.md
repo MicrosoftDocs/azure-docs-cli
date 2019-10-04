@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/01/2019
+ms.date: 10/04/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -31,7 +31,7 @@ az extension list-available --output table
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 5.0.0 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.2 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
 | [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.0.65 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
-| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.12.0 | Tools for managing Azure DevOps. |  |
+| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.13.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.3 | Manage Azure Firewall resources. | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.13 | Additional commands to simplify Azure Database workflows. | Yes |
 | [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.3 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
