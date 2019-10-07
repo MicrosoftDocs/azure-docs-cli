@@ -57,7 +57,7 @@ brew link --overwrite python3
 
 ### CLI version 1.x is installed
 
-If an out-of-date version was installed, it could be because of a stale homebrew cache. Follow the [update](#Update) instructions.
+If an out-of-date version was installed, it could be because of a stale homebrew cache. Follow the [update](#update) instructions.
 
 ### Proxy blocks connection
 
