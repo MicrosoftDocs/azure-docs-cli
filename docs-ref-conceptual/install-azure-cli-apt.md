@@ -16,7 +16,7 @@ ms.devlang: azurecli
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
 for the Azure CLI. This package has been tested with and is supported for:
 
-* Ubuntu trusty, xenial, artful, bionic, and disco
+* Ubuntu trusty, xenial, artful, bionic, buster, and disco
 * Debian wheezy, jessie, and stretch
 
 [!INCLUDE [current-version](includes/current-version.md)]
