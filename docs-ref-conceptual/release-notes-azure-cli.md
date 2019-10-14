@@ -13,6 +13,75 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## October 15, 2019
+
+Version 2.0.75
+
+### AKS
+
+* Set `--load-balancer-sku` default value to standard if supported by the kubernetes version
+* Set `--vm-set-type` default value to virtualmachinescalesets if supported by the kubernetes version
+
+### AMS
+
+* BREAKING CHANGE:
+    content-key-policy create:
+        - Changed parameter --ask from utf-8 string to 32 character hex string.
+    job start:
+        - Changed the command from `job start` to `job create`.
+    
+### AppConfig
+
+* Using & in authorization header
+* Adding api-version to all requests
+* Upgrading SDK Version to 1.0.0
+
+### AppService
+
+* Added "webapp config access-restriction show | set | add | remove"
+* az webapp up updated for better error-handling
+* az appservice plan update support Isolated SKU
+
+### ARM
+
+* az deployment create: Add --handle-extended-json-format parameter to support multiline and comments in json template.
+
+### Compute
+
+* vm create: Add --enable-agent configuration.
+* vm create: Use standard public IP SKU automatically when using zones.
+* vm create: Compose a valid computer name from VM name if computer name is not provided.
+* vmss create: Add --computer-name-prefix parameter to support custom computer name prefix of virtual machines in the VMSS.
+* Update galleries API version to 2019-07-01.
+* vm create: Add --workspace to enable log analytics workspace automatically.
+
+### Core
+
+* Add syntax check for --set parameter in generic update command.
+* Minor change in DeploymentOutputLongRunningOperation
+
+### IoT
+
+* Fix #2116: Unexpected 'az iot hub show' error for resource not found.
+
+### Monitor
+
+* az monitor log-analytics workspace: Support CRUD for Azure log analytics workspace.
+
+### Network
+
+* az network private-dns link vnet create/update: Fixes #9851. Support cross-tenant virtual network linking.
+* [BREAKING CHANGE] network vnet subnet list: Fix #10401. `--resource-group` and `--vnet-name` are required now.
+
+### SQL
+
+* New Cmdlets for sql mi ad-admin that supports setting AAD administrator on Managed instance
+
+### Storage
+
+* az storage copy: Add --preserve-s2s-access-tier parameter to preserve access tier during service to service copy.
+* az storage account create/update: Add --enable-large-file-share parameter to support large file shares for storage account.
+
 ## September 24, 2019
 
 Version 2.0.74
