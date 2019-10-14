@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 05/08/2019
+ms.date: 10/14/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -16,8 +16,8 @@ ms.devlang: azurecli
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
 for the Azure CLI. This package has been tested with and is supported for:
 
-* Ubuntu trusty, xenial, artful, bionic, buster, and disco
-* Debian wheezy, jessie, and stretch
+* Ubuntu trusty, xenial, artful, bionic, and disco
+* Debian wheezy, jessie, stretch, and buster
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
