@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/05/2019
+ms.date: 10/15/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -19,68 +19,58 @@ Version 2.0.75
 
 ### AKS
 
-* Set `--load-balancer-sku` default value to standard if supported by the kubernetes version
-* Set `--vm-set-type` default value to virtualmachinescalesets if supported by the kubernetes version
+* Changed `--load-balancer-sku` default value to `standard` if supported by the kubernetes version
+* Changed `--vm-set-type` default value to `virtualmachinescalesets` if supported by the kubernetes version
 
 ### AMS
 
-* BREAKING CHANGE:
-    content-key-policy create:
-        - Changed parameter --ask from utf-8 string to 32 character hex string.
-    job start:
-        - Changed the command from `job start` to `job create`.
-    
-### AppConfig
-
-* Using & in authorization header
-* Adding api-version to all requests
-* Upgrading SDK Version to 1.0.0
+* [BREAKING CHANGE] Changed the name of `job start` to `job create`
+* [BREAKING CHANGE] Changed the `--ask` parameter of `content-key-policy create` to use a 32-character hex string instead of UTF8
 
 ### AppService
 
-* Added "webapp config access-restriction show | set | add | remove"
-* az webapp up updated for better error-handling
-* az appservice plan update support Isolated SKU
+* Added commands `webapp config access-restriction show|set|add|remove`
+* Added better error handling to `webapp up`
+* Added support for `Isolated` SKU to `appservice plan update`
 
 ### ARM
 
-* az deployment create: Add --handle-extended-json-format parameter to support multiline and comments in json template.
+* Added `--handle-extended-json-format` parameter `deployment create` to support multiline and comments in json template
 
 ### Compute
 
-* vm create: Add --enable-agent configuration.
-* vm create: Use standard public IP SKU automatically when using zones.
-* vm create: Compose a valid computer name from VM name if computer name is not provided.
-* vmss create: Add --computer-name-prefix parameter to support custom computer name prefix of virtual machines in the VMSS.
-* Update galleries API version to 2019-07-01.
-* vm create: Add --workspace to enable log analytics workspace automatically.
+* Added `--enable-agent` parameter to `vm create`
+* Changed `vm create` to use standard public IP SKU automatically when using zones
+* Changed `vm create` to automatically create a valid computer name for a VM if none is provided
+* Added `--computer-name-prefix` parameter to `vmss create` to support custom computer name prefix of virtual machines in the VMSS
+* Add `--workspace` parameter to `vm create` to enable log analytics workspace automatically
+* Updated galleries API version to 2019-07-01
 
 ### Core
 
-* Add syntax check for --set parameter in generic update command.
-* Minor change in DeploymentOutputLongRunningOperation
+* Added syntax check for `--set` parameter in generic update command
 
 ### IoT
 
-* Fix #2116: Unexpected 'az iot hub show' error for resource not found.
+* Fixed an issue where `iot hub show` would incorrectly error with "resource not found"
 
 ### Monitor
 
-* az monitor log-analytics workspace: Support CRUD for Azure log analytics workspace.
+* Added support for CRUD to `monitor log-analytics workspace`
 
 ### Network
 
-* az network private-dns link vnet create/update: Fixes #9851. Support cross-tenant virtual network linking.
-* [BREAKING CHANGE] network vnet subnet list: Fix #10401. `--resource-group` and `--vnet-name` are required now.
+* Added support for cross-tenant virtual linking to `network private-dns link vnet [create|update]`
+* [BREAKING CHANGE] Changed `network vnet subnet list` to require `--resource-group` and `--vnet-name` parameters
 
 ### SQL
 
-* New Cmdlets for sql mi ad-admin that supports setting AAD administrator on Managed instance
+* Added commands to `sql mi ad-admin` that support setting an AAD administrator on managed instances
 
 ### Storage
 
-* az storage copy: Add --preserve-s2s-access-tier parameter to preserve access tier during service to service copy.
-* az storage account create/update: Add --enable-large-file-share parameter to support large file shares for storage account.
+* Added `--preserve-s2s-access-tier` parameter `storage copy` to preserve access tier during service to service copy
+* Added `--enable-large-file-share` parameter to `storage account [create|update]` to support large file shares for storage account
 
 ## September 24, 2019
 
