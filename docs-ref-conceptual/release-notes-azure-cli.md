@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/05/2019
+ms.date: 10/15/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,65 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## October 15, 2019
+
+Version 2.0.75
+
+### AKS
+
+* Changed `--load-balancer-sku` default value to `standard` if supported by the kubernetes version
+* Changed `--vm-set-type` default value to `virtualmachinescalesets` if supported by the kubernetes version
+
+### AMS
+
+* [BREAKING CHANGE] Changed the name of `job start` to `job create`
+* [BREAKING CHANGE] Changed the `--ask` parameter of `content-key-policy create` to use a 32-character hex string instead of UTF8
+
+### AppService
+
+* Added commands `webapp config access-restriction show|set|add|remove`
+* Added better error handling to `webapp up`
+* Added support for `Isolated` SKU to `appservice plan update`
+
+### ARM
+
+* Added `--handle-extended-json-format` parameter `deployment create` to support multiline and comments in json template
+
+### Compute
+
+* Added `--enable-agent` parameter to `vm create`
+* Changed `vm create` to use standard public IP SKU automatically when using zones
+* Changed `vm create` to automatically create a valid computer name for a VM if none is provided
+* Added `--computer-name-prefix` parameter to `vmss create` to support custom computer name prefix of virtual machines in the VMSS
+* Add `--workspace` parameter to `vm create` to enable log analytics workspace automatically
+* Updated galleries API version to 2019-07-01
+
+### Core
+
+* Added syntax check for `--set` parameter in generic update command
+
+### IoT
+
+* Fixed an issue where `iot hub show` would incorrectly error with "resource not found"
+
+### Monitor
+
+* Added support for CRUD to `monitor log-analytics workspace`
+
+### Network
+
+* Added support for cross-tenant virtual linking to `network private-dns link vnet [create|update]`
+* [BREAKING CHANGE] Changed `network vnet subnet list` to require `--resource-group` and `--vnet-name` parameters
+
+### SQL
+
+* Added commands to `sql mi ad-admin` that support setting an AAD administrator on managed instances
+
+### Storage
+
+* Added `--preserve-s2s-access-tier` parameter `storage copy` to preserve access tier during service to service copy
+* Added `--enable-large-file-share` parameter to `storage account [create|update]` to support large file shares for storage account
 
 ## September 24, 2019
 
