@@ -45,7 +45,7 @@ az login -u <username> -p <password>
 > use the `read -s` command under `bash`.
 >
 > ```bash
-> read -sp "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
+> read -sP "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
 > ```
 >
 > Under PowerShell, use the `Get-Credential` cmdlet.
@@ -83,7 +83,7 @@ az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant
 > use the `read -s` command under `bash`.
 >
 > ```bash
-> read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-url> -p $AZ_PASS --tenant <tenant>
+> read -sP "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-url> -p $AZ_PASS --tenant <tenant>
 > ```
 >
 > Under PowerShell, use the `Get-Credential` cmdlet.
