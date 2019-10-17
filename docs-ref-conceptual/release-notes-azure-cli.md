@@ -642,7 +642,7 @@ Version 2.0.65
 * Added postgres and mysql support for geo replication
 
 ### RBAC
-* Added support for mangement group scope to `role assignment`
+* Added support for management group scope to `role assignment`
 
 ### Storage
 * `storage blob sync`: add sync command for storage blob
@@ -727,7 +727,7 @@ Version 2.0.64
 * Added `--protect-from-scale-in` and `--protect-from-scale-set-actions` to `vmss update` to enable updates to the protection policy of VMSS VM instances
 * Added `--instance-id` to `vmss update` to enable generic update of VMSS VM instances
 * Added `--instance-id` to `vmss wait`
-* Added new `ppg` command group for manging Proximity Placement Groups
+* Added new `ppg` command group for managing Proximity Placement Groups
 * Added `--ppg` to `[vm|vmss] create` and `vm availability-set create` for managing PPGs
 * Added `--hyper-v-generation` parameter to `image create`
 
