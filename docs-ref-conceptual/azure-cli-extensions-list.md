@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 10/12/2019
+ms.date: 10/17/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -30,7 +30,7 @@ az extension list-available --output table
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.1 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 5.0.0 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.3 | Provides the data plane command layer for Azure IoT Hub, IoT Edge and IoT Device Provisioning Service |  |
-| [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.0.65 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
+| [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.0.69 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.13.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.1.3 | Manage Azure Firewall resources. | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.13 | Additional commands to simplify Azure Database workflows. | Yes |
@@ -43,7 +43,8 @@ az extension list-available --output table
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [find](https://github.com/Azure/azure-cli-extensions/tree/master/src/find) | 0.3.0 | Intelligent querying for CLI information. | Yes |
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.1 | Manage networking Front Doors. |  |
-| [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools HealthCareApis Extension | Yes |
+| [hack](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Hack Extension | Yes |
+| [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Microsoft Azure Command-Line Tools HealthCareApis Extension |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Support for copying managed vm images between regions |  |
 | [interactive](https://github.com/Azure/azure-cli) | 0.4.3 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
