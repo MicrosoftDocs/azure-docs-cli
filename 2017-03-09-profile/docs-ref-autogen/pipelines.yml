@@ -15,7 +15,7 @@ items:
   - az_pipelines_update
 - uid: az_pipelines_create
   name: az pipelines create
-  summary: (PREVIEW) Create a new Azure Pipeline (YAML based).
+  summary: Create a new Azure Pipeline (YAML based).
   description: ''
   langs:
   - azurecli
@@ -67,6 +67,9 @@ items:
     parameterValueGroup: false, true
     summary: Automatically detect organization.
     description: ''
+  - name: --folder-path
+    summary: Path of the folder where the pipeline needs to be created. Default is root folder. e.g. "user1/test_pipelines".
+    description: ''
   - name: --org --organization
     summary: 'Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: <a href="https://dev.azure.com/MyOrganizationName/">https://dev.azure.com/MyOrganizationName/</a>.'
     description: ''
@@ -98,7 +101,7 @@ items:
     description: ''
 - uid: az_pipelines_delete
   name: az pipelines delete
-  summary: (PREVIEW) Delete a pipeline.
+  summary: Delete a pipeline.
   description: ''
   langs:
   - azurecli
@@ -125,7 +128,7 @@ items:
     description: ''
 - uid: az_pipelines_list
   name: az pipelines list
-  summary: (PREVIEW) List pipelines.
+  summary: List pipelines.
   description: ''
   langs:
   - azurecli
@@ -133,6 +136,9 @@ items:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
+    description: ''
+  - name: --folder-path
+    summary: If specified, filters to definitions under this folder.
     description: ''
   - name: --name
     summary: 'Limit results to pipelines with this name or starting with this name. Examples: "FabCI" or "Fab\*".'
@@ -162,7 +168,7 @@ items:
     description: ''
 - uid: az_pipelines_run
   name: az pipelines run
-  summary: (PREVIEW) Queue (run) a pipeline.
+  summary: Queue (run) a pipeline.
   description: ''
   langs:
   - azurecli
@@ -176,6 +182,9 @@ items:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
+    description: ''
+  - name: --folder-path
+    summary: Folder path of pipeline. Default is root level folder.
     description: ''
   - name: --id
     summary: ID of the pipeline to queue. Required if --name is not supplied.
@@ -200,7 +209,7 @@ items:
     description: ''
 - uid: az_pipelines_show
   name: az pipelines show
-  summary: (PREVIEW) Get the details of a pipeline.
+  summary: Get the details of a pipeline.
   description: ''
   langs:
   - azurecli
@@ -208,6 +217,9 @@ items:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
+    description: ''
+  - name: --folder-path
+    summary: Folder path of pipeline. Default is root level folder.
     description: ''
   - name: --id
     summary: ID of the pipeline.
@@ -229,7 +241,7 @@ items:
     description: ''
 - uid: az_pipelines_update
   name: az pipelines update
-  summary: (PREVIEW) Update a pipeline.
+  summary: Update a pipeline.
   description: ''
   langs:
   - azurecli
@@ -238,7 +250,7 @@ items:
     summary: Branch name for which the pipeline will be configured.
     description: ''
   - name: --description
-    summary: Description to be updated for the pipeline.
+    summary: New description for the pipeline.
     description: ''
   - name: --detect
     parameterValueGroup: false, true
@@ -249,6 +261,9 @@ items:
     description: ''
   - name: --name
     summary: Name of the pipeline to update.
+    description: ''
+  - name: --new-folder-path
+    summary: New full path of the folder to move the pipeline to. e.g. "user1/production_pipelines".
     description: ''
   - name: --new-name
     summary: New updated name of the pipeline.
@@ -271,13 +286,13 @@ items:
 commands:
 - uid: az_pipelines_agent
   name: az pipelines agent
-  summary: (PREVIEW) Manage agents.
+  summary: Manage agents.
 - uid: az_pipelines_agent_list
   name: az pipelines agent list
-  summary: (PREVIEW) Get a list of agents in a pool.
+  summary: Get a list of agents in a pool.
 - uid: az_pipelines_agent_show
   name: az pipelines agent show
-  summary: (PREVIEW) Show agent details.
+  summary: Show agent details.
 - uid: az_pipelines_build
   name: az pipelines build
   summary: Manage builds.
@@ -313,31 +328,46 @@ commands:
   summary: Get tags for a build.
 - uid: az_pipelines_create
   name: az pipelines create
-  summary: (PREVIEW) Create a new Azure Pipeline (YAML based).
+  summary: Create a new Azure Pipeline (YAML based).
 - uid: az_pipelines_delete
   name: az pipelines delete
-  summary: (PREVIEW) Delete a pipeline.
+  summary: Delete a pipeline.
+- uid: az_pipelines_folder
+  name: az pipelines folder
+  summary: Manage folders for organizing pipelines.
+- uid: az_pipelines_folder_create
+  name: az pipelines folder create
+  summary: Create a folder.
+- uid: az_pipelines_folder_delete
+  name: az pipelines folder delete
+  summary: Delete a folder.
+- uid: az_pipelines_folder_list
+  name: az pipelines folder list
+  summary: List all folders.
+- uid: az_pipelines_folder_update
+  name: az pipelines folder update
+  summary: Update a folder name or description.
 - uid: az_pipelines_list
   name: az pipelines list
-  summary: (PREVIEW) List pipelines.
+  summary: List pipelines.
 - uid: az_pipelines_pool
   name: az pipelines pool
-  summary: (PREVIEW) Manage agent pools.
+  summary: Manage agent pools.
 - uid: az_pipelines_pool_list
   name: az pipelines pool list
-  summary: (PREVIEW) List agent pools.
+  summary: List agent pools.
 - uid: az_pipelines_pool_show
   name: az pipelines pool show
-  summary: (PREVIEW) Show agent pool details.
+  summary: Show agent pool details.
 - uid: az_pipelines_queue
   name: az pipelines queue
-  summary: (PREVIEW) Manage agent queues.
+  summary: Manage agent queues.
 - uid: az_pipelines_queue_list
   name: az pipelines queue list
-  summary: (PREVIEW) List agent queues.
+  summary: List agent queues.
 - uid: az_pipelines_queue_show
   name: az pipelines queue show
-  summary: (PREVIEW) Show details of agent queue.
+  summary: Show details of agent queue.
 - uid: az_pipelines_release
   name: az pipelines release
   summary: Manage releases.
@@ -361,94 +391,94 @@ commands:
   summary: Get the details of a release.
 - uid: az_pipelines_run
   name: az pipelines run
-  summary: (PREVIEW) Queue (run) a pipeline.
+  summary: Queue (run) a pipeline.
 - uid: az_pipelines_runs
   name: az pipelines runs
-  summary: (PREVIEW) Manage pipeline runs.
+  summary: Manage pipeline runs.
 - uid: az_pipelines_runs_artifact
   name: az pipelines runs artifact
-  summary: (PREVIEW) Manage pipeline run artifacts.
+  summary: Manage pipeline run artifacts.
 - uid: az_pipelines_runs_artifact_download
   name: az pipelines runs artifact download
-  summary: (PREVIEW) Download a pipeline artifact.
+  summary: Download a pipeline artifact.
 - uid: az_pipelines_runs_artifact_list
   name: az pipelines runs artifact list
-  summary: (PREVIEW) List artifacts associated with a run.
+  summary: List artifacts associated with a run.
 - uid: az_pipelines_runs_artifact_upload
   name: az pipelines runs artifact upload
-  summary: (PREVIEW) Upload a pipeline artifact.
+  summary: Upload a pipeline artifact.
 - uid: az_pipelines_runs_list
   name: az pipelines runs list
-  summary: (PREVIEW) List the pipeline runs in a project.
+  summary: List the pipeline runs in a project.
 - uid: az_pipelines_runs_show
   name: az pipelines runs show
-  summary: (PREVIEW) Show details of a pipeline run.
+  summary: Show details of a pipeline run.
 - uid: az_pipelines_runs_tag
   name: az pipelines runs tag
-  summary: (PREVIEW) Manage pipeline run tags.
+  summary: Manage pipeline run tags.
 - uid: az_pipelines_runs_tag_add
   name: az pipelines runs tag add
-  summary: (PREVIEW) Add tag(s) for a pipeline run.
+  summary: Add tag(s) for a pipeline run.
 - uid: az_pipelines_runs_tag_delete
   name: az pipelines runs tag delete
-  summary: (PREVIEW) Delete a pipeline run tag.
+  summary: Delete a pipeline run tag.
 - uid: az_pipelines_runs_tag_list
   name: az pipelines runs tag list
-  summary: (PREVIEW) Get tags for a pipeline run.
+  summary: Get tags for a pipeline run.
 - uid: az_pipelines_show
   name: az pipelines show
-  summary: (PREVIEW) Get the details of a pipeline.
+  summary: Get the details of a pipeline.
 - uid: az_pipelines_update
   name: az pipelines update
-  summary: (PREVIEW) Update a pipeline.
+  summary: Update a pipeline.
 - uid: az_pipelines_variable
   name: az pipelines variable
-  summary: (PREVIEW) Manage pipeline variables.
+  summary: Manage pipeline variables.
 - uid: az_pipelines_variable_create
   name: az pipelines variable create
-  summary: (Preview) Add a variable to a pipeline.
+  summary: Add a variable to a pipeline.
 - uid: az_pipelines_variable_delete
   name: az pipelines variable delete
-  summary: (Preview) Delete a variable from pipeline.
+  summary: Delete a variable from pipeline.
 - uid: az_pipelines_variable_list
   name: az pipelines variable list
-  summary: (Preview) List the variables in a pipeline.
+  summary: List the variables in a pipeline.
 - uid: az_pipelines_variable_update
   name: az pipelines variable update
-  summary: (Preview) Update a variable in a pipeline.
+  summary: Update a variable in a pipeline.
 - uid: az_pipelines_variable_group
   name: az pipelines variable-group
-  summary: (PREVIEW) Manage variable groups.
+  summary: Manage variable groups.
 - uid: az_pipelines_variable_group_create
   name: az pipelines variable-group create
-  summary: (Preview) Create a variable group.
+  summary: Create a variable group.
 - uid: az_pipelines_variable_group_delete
   name: az pipelines variable-group delete
-  summary: (Preview) Delete a variable group.
+  summary: Delete a variable group.
 - uid: az_pipelines_variable_group_list
   name: az pipelines variable-group list
-  summary: (Preview) List variable groups.
+  summary: List variable groups.
 - uid: az_pipelines_variable_group_show
   name: az pipelines variable-group show
-  summary: (Preview) Show variable group details.
+  summary: Show variable group details.
 - uid: az_pipelines_variable_group_update
   name: az pipelines variable-group update
-  summary: (Preview) Update a variable group.
+  summary: Update a variable group.
 - uid: az_pipelines_variable_group_variable
   name: az pipelines variable-group variable
-  summary: (PREVIEW) Manage variables in a variable group.
+  summary: Manage variables in a variable group.
 - uid: az_pipelines_variable_group_variable_create
   name: az pipelines variable-group variable create
-  summary: (Preview) Add a variable to a variable group.
+  summary: Add a variable to a variable group.
 - uid: az_pipelines_variable_group_variable_delete
   name: az pipelines variable-group variable delete
-  summary: (Preview) Delete a variable from variable group.
+  summary: Delete a variable from variable group.
 - uid: az_pipelines_variable_group_variable_list
   name: az pipelines variable-group variable list
-  summary: (Preview) List the variables in a variable group.
+  summary: List the variables in a variable group.
 - uid: az_pipelines_variable_group_variable_update
   name: az pipelines variable-group variable update
-  summary: (Preview) Update a variable in a variable group.
+  summary: Update a variable in a variable group.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
