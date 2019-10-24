@@ -12,8 +12,8 @@ items:
   - ext_azure-cli-iot-ext_az_iot_device_upload_file
 - uid: ext_azure-cli-iot-ext_az_iot_device_send_d2c_message
   name: az iot device send-d2c-message
-  summary: Send an mqtt device-to-cloud message.
-  description: Supports application and system properties to send with message.
+  summary: Send an mqtt device-to-cloud message. The command supports sending messages with application and system properties.
+  description: ''
   langs:
   - azurecli
   examples:
@@ -49,33 +49,49 @@ items:
     summary: Number of device messages to send to IoT Hub.
     description: ''
   - name: --properties --props -p
-    summary: 'Message property bag in key-value pairs with the following format: a=b;c=d.'
+    summary: 'Message property bag in key-value pairs with the following format: a=b;c=d. For mqtt messaging - you are able to send system properties using $.<name>=value. For instance $.cid=12345 sets the system correlation Id property. Other system property identifier examples include $.ct for content type, $.mid for message Id and $.ce for content encoding.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_device_simulate
   name: az iot device simulate
-  summary: Simulate a device in an Azure IoT Hub.
-  description: While the device simulation is running, the device will automatically receive and acknowledge cloud-to-device (c2d) messages. For mqtt simulation, all c2d messages will be acknowledged with completion. For http simulation c2d acknowledgement is based on user selection which can be complete, reject or abandon.
+  summary: >-
+    Simulate a device in an Azure IoT Hub.
+
+
+    While the device simulation is running, the device will automatically receive
+
+    and acknowledge cloud-to-device (c2d) messages. For mqtt simulation, all c2d messages will
+
+    be acknowledged with completion. For http simulation c2d acknowledgement is based on user
+
+    selection which can be complete, reject or abandon.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Basic usage (mqtt).
+  - summary: Basic usage (mqtt)
     syntax:
       content: az iot device simulate -n {iothub_name} -d {device_id}
-  - summary: Basic usage (http).
+  - summary: Basic usage (mqtt) with sending mixed properties
+    syntax:
+      content: az iot device simulate -n {iothub_name} -d {device_id} --properties "myprop=myvalue;$.ct=application/json"
+  - summary: Basic usage (http)
     syntax:
       content: az iot device simulate -n {iothub_name} -d {device_id} --protocol http
-  - summary: Choose total message count and interval between messages.
+  - summary: Basic usage (http) with sending mixed properties
+    syntax:
+      content: az iot device simulate -n {iothub_name} -d {device_id} --protocol http --properties "iothub-app-myprop=myvalue;content-type=application/json;iothub-correlationid=12345"
+  - summary: Choose total message count and interval between messages
     syntax:
       content: az iot device simulate -n {iothub_name} -d {device_id} --msg-count 1000 --msg-interval 5
   - summary: Reject c2d messages (http only)
     syntax:
-      content: az iot device simulate -n {iothub_name} -d {device_id} --rs {reject}
+      content: az iot device simulate -n {iothub_name} -d {device_id} --rs {reject} --protocol http
   - summary: Abandon c2d messages (http only)
     syntax:
-      content: az iot device simulate -n {iothub_name} -d {device_id} --rs {abandon}
+      content: az iot device simulate -n {iothub_name} -d {device_id} --rs {abandon} --protocol http
   parameters:
   - isRequired: true
     name: --device-id -d
@@ -98,6 +114,9 @@ items:
   - name: --mi --msg-interval
     defaultValue: "3"
     summary: Delay in seconds between device-to-cloud messages.
+    description: ''
+  - name: --properties --props -p
+    summary: 'Message property bag in key-value pairs with the following format: a=b;c=d. For mqtt messaging - you are able to send system properties using $.<name>=value. For instance $.cid=12345 sets the system correlation Id property. Other system property identifier examples include $.ct for content type, $.mid for message Id and $.ce for content encoding. For http messaging - application properties are sent using iothub-app-<name>=value, for instance iothub-app-myprop=myvalue. System properties are generally prefixed with iothub-<name> like iothub-correlationid but there are exceptions such as content-type and content-encoding.'
     description: ''
   - name: --proto --protocol
     defaultValue: mqtt
@@ -161,10 +180,20 @@ commands:
   summary: Send a cloud-to-device message.
 - uid: ext_azure-cli-iot-ext_az_iot_device_send_d2c_message
   name: az iot device send-d2c-message
-  summary: Send an mqtt device-to-cloud message.
+  summary: Send an mqtt device-to-cloud message. The command supports sending messages with application and system properties.
 - uid: ext_azure-cli-iot-ext_az_iot_device_simulate
   name: az iot device simulate
-  summary: Simulate a device in an Azure IoT Hub.
+  summary: >-
+    Simulate a device in an Azure IoT Hub.
+
+
+    While the device simulation is running, the device will automatically receive
+
+    and acknowledge cloud-to-device (c2d) messages. For mqtt simulation, all c2d messages will
+
+    be acknowledged with completion. For http simulation c2d acknowledgement is based on user
+
+    selection which can be complete, reject or abandon.
 - uid: ext_azure-cli-iot-ext_az_iot_device_upload_file
   name: az iot device upload-file
   summary: Upload a local file as a device to a pre-configured blob storage container.
