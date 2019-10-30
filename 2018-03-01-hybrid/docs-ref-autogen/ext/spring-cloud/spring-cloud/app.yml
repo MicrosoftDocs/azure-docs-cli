@@ -1,0 +1,517 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_spring-cloud_az_spring_cloud_app
+  name: az spring-cloud app
+  summary: Commands to manage apps in Azure Spring Cloud.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_spring-cloud_az_spring_cloud_app_create
+  - ext_spring-cloud_az_spring_cloud_app_delete
+  - ext_spring-cloud_az_spring_cloud_app_deploy
+  - ext_spring-cloud_az_spring_cloud_app_list
+  - ext_spring-cloud_az_spring_cloud_app_restart
+  - ext_spring-cloud_az_spring_cloud_app_scale
+  - ext_spring-cloud_az_spring_cloud_app_set_deployment
+  - ext_spring-cloud_az_spring_cloud_app_show
+  - ext_spring-cloud_az_spring_cloud_app_show_deploy_log
+  - ext_spring-cloud_az_spring_cloud_app_start
+  - ext_spring-cloud_az_spring_cloud_app_stop
+  - ext_spring-cloud_az_spring_cloud_app_update
+- uid: ext_spring-cloud_az_spring_cloud_app_create
+  name: az spring-cloud app create
+  summary: Create a new app with a default deployment in the Azure Spring Cloud.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create an app with the default configuration.
+    syntax:
+      content: az spring-cloud app create -n MyApp -s MyCluster -g MyResourceGroup
+  - summary: Create an public accessible app with 3 instances and 2 cpu cores and 3 GB of memory per instance.
+    syntax:
+      content: az spring-cloud app create -n MyApp -s MyCluster -g MyResourceGroup --is-public true --cpu 2 --memory 3 --instance-count 3
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --cpu
+    defaultValue: "1"
+    summary: Number of virtual cpu cores per instance.
+    description: ''
+  - name: --enable-persistent-storage
+    parameterValueGroup: false, true
+    summary: If true, mount a 50G disk with default path.
+    description: ''
+  - name: --env
+    summary: Space-separated environment variables in 'key[=value]' format.
+    description: ''
+  - name: --instance-count
+    defaultValue: "1"
+    summary: Number of instance.
+    description: ''
+  - name: --is-public
+    parameterValueGroup: false, true
+    summary: If true, assign public domain.
+    description: ''
+  - name: --jvm-options
+    summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
+    description: ''
+  - name: --memory
+    defaultValue: "1"
+    summary: Number of GB of memory per instance.
+    description: ''
+  - name: --runtime-version
+    parameterValueGroup: Java_11, Java_8
+    summary: Runtime version of used language.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_delete
+  name: az spring-cloud app delete
+  summary: Delete an app in the Azure Spring Cloud.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_deploy
+  name: az spring-cloud app deploy
+  summary: Deploy source code or pre-built binary to an app and update related configurations.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Deploy source code to an app. This will pack current directory, build binary with Pivotal Build Service and then deploy to the app.
+    syntax:
+      content: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup
+  - summary: Deploy a pre-built jar to an app with jvm options and environment variables.
+    syntax:
+      content: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup --jar-path app.jar --jvm-options="-XX:+UseG1GC -XX:+UseStringDeduplication" --env foo=bar
+  - summary: Deploy source code to a specific deployment of an app.
+    syntax:
+      content: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup -d green-deployment
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --cpu
+    summary: Number of virtual cpu cores per instance.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --env
+    summary: Space-separated environment variables in 'key[=value]' format.
+    description: ''
+  - name: --instance-count
+    summary: Number of instance.
+    description: ''
+  - name: --jar-path
+    summary: If provided, deploy jar, otherwise deploy current folder as tar.
+    description: ''
+  - name: --jvm-options
+    summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
+    description: ''
+  - name: --memory
+    summary: Number of GB of memory per instance.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --runtime-version
+    parameterValueGroup: Java_11, Java_8
+    summary: Runtime version of used language.
+    description: ''
+  - name: --target-module
+    summary: Child module to be deployed, required for multiple jar packages built from source code.
+    description: ''
+  - name: --version
+    summary: Deployment version, keep unchanged if not set.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_list
+  name: az spring-cloud app list
+  summary: List all apps in the Azure Spring Cloud.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Query status of persistent storage of all apps
+    syntax:
+      content: az spring-cloud app list -s MyCluster -g MyResourceGroup -o json --query '[].{Name:name, PersistentStorage:properties.persistentDisk}'
+  parameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_restart
+  name: az spring-cloud app restart
+  summary: Restart instances of the app, default to production deployment.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_scale
+  name: az spring-cloud app scale
+  summary: Manually scale an app or its deployments.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Scale up an app to 4 cpu cores and 8 Gb of memory per instance.
+    syntax:
+      content: az spring-cloud app scale -n MyApp -s MyCluster -g MyResourceGroup --cpu 3 --memory 8
+  - summary: Scale out a deployment of the app to 5 instances.
+    syntax:
+      content: az spring-cloud app scale -n MyApp -s MyCluster -g MyResourceGroup -d green-deployment --instance-count 5
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --cpu
+    summary: Number of virtual cpu cores per instance.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --instance-count
+    summary: Number of instance.
+    description: ''
+  - name: --memory
+    summary: Number of GB of memory per instance.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_set_deployment
+  name: az spring-cloud app set-deployment
+  summary: Set production deployment of an app.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Swap a staging deployment of an app to production.
+    syntax:
+      content: az spring-cloud app set-deployment -d green-deployment -n MyApp -s MyCluster -g MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --deployment -d
+    summary: Name of an existing deployment of the app.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_show
+  name: az spring-cloud app show
+  summary: Show the details of an app in the Azure Spring Cloud.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_show_deploy_log
+  name: az spring-cloud app show-deploy-log
+  summary: Show build log of the last deploy, only apply to source code deploy, default to production deployment.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_start
+  name: az spring-cloud app start
+  summary: Start instances of the app, default to production deployment.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_stop
+  name: az spring-cloud app stop
+  summary: Stop instances of the app, default to production deployment.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_spring-cloud_az_spring_cloud_app_update
+  name: az spring-cloud app update
+  summary: Update configurations of an app.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Add an environment variable for the app.
+    syntax:
+      content: az spring-cloud app update -n MyApp -s MyCluster -g MyResourceGroup --env foo=bar
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --enable-persistent-storage
+    parameterValueGroup: false, true
+    summary: If true, mount a 50G disk with default path.
+    description: ''
+  - name: --env
+    summary: Space-separated environment variables in 'key[=value]' format.
+    description: ''
+  - name: --is-public
+    parameterValueGroup: false, true
+    summary: If true, assign public domain.
+    description: ''
+  - name: --jvm-options
+    summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --runtime-version
+    parameterValueGroup: Java_11, Java_8
+    summary: Runtime version of used language.
+    description: ''
+commands:
+- uid: ext_spring-cloud_az_spring_cloud_app_binding
+  name: az spring-cloud app binding
+  summary: Commands to manage bindings with Azure Data Services, you need to manually restart app to make settings take effect.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_cosmos
+  name: az spring-cloud app binding cosmos
+  summary: Commands to manage Azure Cosmos DB bindings.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_cosmos_add
+  name: az spring-cloud app binding cosmos add
+  summary: Bind an Azure Cosmos DB with the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_cosmos_update
+  name: az spring-cloud app binding cosmos update
+  summary: Update an Azure Cosmos DB service binding of the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_list
+  name: az spring-cloud app binding list
+  summary: List all service bindings in an app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_mysql
+  name: az spring-cloud app binding mysql
+  summary: Commands to manage Azure Database for MySQL bindings.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_mysql_add
+  name: az spring-cloud app binding mysql add
+  summary: Bind an Azure Database for MySQL with the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_mysql_update
+  name: az spring-cloud app binding mysql update
+  summary: Update an Azure Database for MySQL service binding of the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_redis
+  name: az spring-cloud app binding redis
+  summary: Commands to manage Azure Cache for Redis bindings.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_redis_add
+  name: az spring-cloud app binding redis add
+  summary: Bind an Azure Cache for Redis with the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_redis_update
+  name: az spring-cloud app binding redis update
+  summary: Update an Azure Cache for Redis service binding of the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_remove
+  name: az spring-cloud app binding remove
+  summary: Remove a service binding of the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_binding_show
+  name: az spring-cloud app binding show
+  summary: Show the details of a service binding.
+- uid: ext_spring-cloud_az_spring_cloud_app_create
+  name: az spring-cloud app create
+  summary: Create a new app with a default deployment in the Azure Spring Cloud.
+- uid: ext_spring-cloud_az_spring_cloud_app_delete
+  name: az spring-cloud app delete
+  summary: Delete an app in the Azure Spring Cloud.
+- uid: ext_spring-cloud_az_spring_cloud_app_deploy
+  name: az spring-cloud app deploy
+  summary: Deploy source code or pre-built binary to an app and update related configurations.
+- uid: ext_spring-cloud_az_spring_cloud_app_deployment
+  name: az spring-cloud app deployment
+  summary: Commands to manage life cycle of deployments of an app in Azure Spring Cloud. More operations on deployments can be done on app level with parameter --deployment. e.g. az spring-cloud app deploy --deployment <staging deployment>.
+- uid: ext_spring-cloud_az_spring_cloud_app_deployment_create
+  name: az spring-cloud app deployment create
+  summary: Create a staging deployment for the app. To deploy code or update setting to an existing deployment, use az spring-cloud app deploy/update --deployment <staging deployment>.
+- uid: ext_spring-cloud_az_spring_cloud_app_deployment_delete
+  name: az spring-cloud app deployment delete
+  summary: Delete a deployment of the app.
+- uid: ext_spring-cloud_az_spring_cloud_app_deployment_list
+  name: az spring-cloud app deployment list
+  summary: List all deployments in an app.
+- uid: ext_spring-cloud_az_spring_cloud_app_deployment_show
+  name: az spring-cloud app deployment show
+  summary: Show details of a deployment.
+- uid: ext_spring-cloud_az_spring_cloud_app_list
+  name: az spring-cloud app list
+  summary: List all apps in the Azure Spring Cloud.
+- uid: ext_spring-cloud_az_spring_cloud_app_restart
+  name: az spring-cloud app restart
+  summary: Restart instances of the app, default to production deployment.
+- uid: ext_spring-cloud_az_spring_cloud_app_scale
+  name: az spring-cloud app scale
+  summary: Manually scale an app or its deployments.
+- uid: ext_spring-cloud_az_spring_cloud_app_set_deployment
+  name: az spring-cloud app set-deployment
+  summary: Set production deployment of an app.
+- uid: ext_spring-cloud_az_spring_cloud_app_show
+  name: az spring-cloud app show
+  summary: Show the details of an app in the Azure Spring Cloud.
+- uid: ext_spring-cloud_az_spring_cloud_app_show_deploy_log
+  name: az spring-cloud app show-deploy-log
+  summary: Show build log of the last deploy, only apply to source code deploy, default to production deployment.
+- uid: ext_spring-cloud_az_spring_cloud_app_start
+  name: az spring-cloud app start
+  summary: Start instances of the app, default to production deployment.
+- uid: ext_spring-cloud_az_spring_cloud_app_stop
+  name: az spring-cloud app stop
+  summary: Stop instances of the app, default to production deployment.
+- uid: ext_spring-cloud_az_spring_cloud_app_update
+  name: az spring-cloud app update
+  summary: Update configurations of an app.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Commands to manage apps in Azure Spring Cloud.
