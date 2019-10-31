@@ -1,0 +1,227 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection
+  name: az network firewall policy rule-collection-group collection
+  summary: Manage and configure Azure firewall policy rule collections in the rule collection group.
+  description: >-
+    Currently, Azure Firewall policy support two kinds of rule collections which are Filter collection and NAT collection. There are also two kinds of rules which are application rule and network rule.
+
+    NAT collection only support having one network rule. Filter collection support including a list of rules in it. But all of rules should be the same type.
+  langs:
+  - azurecli
+  children:
+  - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_filter_collection
+  - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_nat_collection
+  - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_list
+  - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_remove
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_filter_collection
+  name: az network firewall policy rule-collection-group collection add-filter-collection
+  summary: Add a filter collection into an Azure firewall policy rule collection group.
+  description: Common Rule Arguments are used for both Network rule and Application rule. If you want to add more rules into filter collection, please use "az network policy rule-collection-group collection rule add/remove".
+  langs:
+  - azurecli
+  examples:
+  - summary: Add a filter collection with Network rule into the rule collection group
+    syntax:
+      content: az network firewall policy rule-collection-group collection add-filter-collection -g {rg} --policy-name {policy} --rule-collection-group-name {collectiongroup} --name filter_collection --action Allow --rule-name network_rule --rule-type NetworkRule --description "test" --destination-addresses "202.120.36.15" --source-addresses "202.120.36.13" "202.120.36.14" --destination-ports 12003 12004 --ip-protocols TCP UDP --collection-priority 11002
+  - summary: Add a filter collection with Application rule into the rule collection group
+    syntax:
+      content: az network firewall policy rule-collection-group collection add-filter-collection -g {rg} --policy-name {policy} --rule-collection-group-name {collectiongroup} --name filter_collection --action Allow --rule-name application_rule --rule-type ApplicationRule --description "test" --destination-addresses "202.120.36.15" "202.120.36.16" --source-addresses "202.120.36.13" "202.120.36.14" --protocols Http=12800 Https=12801 --fqdn-tags AzureBackup HDInsight --collection-priority 11100
+  parameters:
+  - isRequired: true
+    name: --collection-priority
+    summary: The priority of the rule in Firewall Policy Rule Collection Group.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the collection in Firewall Policy Rule Collection Group.
+    description: ''
+  - isRequired: true
+    name: --policy-name
+    summary: The name of the Firewall Policy.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
+    description: ''
+  - name: --action
+    parameterValueGroup: Allow, Deny
+    summary: The action type of a rule collection.
+    description: ''
+  - name: --fqdn-tags
+    summary: Space-separated list of FQDN tags for this rule.
+    description: ''
+  - name: --protocols
+    summary: Space-separated list of protocols and port numbers to use, in PROTOCOL=PORT format. Valid protocols are Http, Https.
+    description: ''
+  - name: --target-fqdns
+    summary: Space-separated list of FQDNs for this rule.
+    description: ''
+  - name: --description
+    summary: The description of rule.
+    description: ''
+  - name: --destination-addresses
+    summary: Space-separated list of destination IP addresses.
+    description: ''
+  - name: --rule-name
+    summary: The name of rule.
+    description: ''
+  - name: --rule-type
+    parameterValueGroup: ApplicationRule, NetworkRule
+    summary: The type of rule.
+    description: ''
+  - name: --source-addresses
+    summary: Space-separated list of source IP addresses.
+    description: ''
+  - name: --destination-ports
+    summary: Space-separated list of destination ports.
+    description: ''
+  - name: --ip-protocols
+    parameterValueGroup: Any, ICMP, TCP, UDP
+    summary: Space-separated list of IP protocols.
+    description: ''
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_nat_collection
+  name: az network firewall policy rule-collection-group collection add-nat-collection
+  summary: Add a NAT collection into an Azure firewall policy rule collection group.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Add a NAT collection into the rule collection group
+    syntax:
+      content: az network firewall policy rule-collection-group collection add-nat-collection -n nat_collection --collection-priority 10003 --policy-name {policy} -g {rg} --rule-collection-group-name {collectiongroup} --action DNAT --rule-name network_rule --description "test" --destination-addresses "202.120.36.15" --source-addresses "202.120.36.13" "202.120.36.14" --translated-address 128.1.1.1 --translated-port 1234 --destination-ports 12000 12001 --ip-protocols TCP UDP
+  parameters:
+  - isRequired: true
+    name: --collection-priority
+    summary: The priority of the rule in Firewall Policy Rule Collection Group.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the collection in Firewall Policy Rule Collection Group.
+    description: ''
+  - isRequired: true
+    name: --policy-name
+    summary: The name of the Firewall Policy.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
+    description: ''
+  - name: --action
+    parameterValueGroup: DNAT, SNAT
+    summary: The action type of a rule collection.
+    description: ''
+  - name: --description
+    summary: The description of rule.
+    description: ''
+  - name: --destination-addresses
+    summary: Space-separated list of destination IP addresses.
+    description: ''
+  - name: --rule-name
+    summary: The name of rule.
+    description: ''
+  - name: --source-addresses
+    summary: Space-separated list of source IP addresses.
+    description: ''
+  - name: --translated-address
+    summary: Translated address for this NAT rule collection.
+    description: ''
+  - name: --translated-port
+    summary: Translated port for this NAT rule collection.
+    description: ''
+  - name: --destination-ports
+    summary: Space-separated list of destination ports.
+    description: ''
+  - name: --ip-protocols
+    parameterValueGroup: Any, ICMP, TCP, UDP
+    summary: Space-separated list of IP protocols.
+    description: ''
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_list
+  name: az network firewall policy rule-collection-group collection list
+  summary: List all rule collections of an Azure firewall policy rule collection group.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --policy-name
+    summary: The name of the Firewall Policy.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
+    description: ''
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_remove
+  name: az network firewall policy rule-collection-group collection remove
+  summary: Remove a rule collection from an Azure firewall policy rule collection group.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the collection in Firewall Policy Rule Collection Group.
+    description: ''
+  - isRequired: true
+    name: --policy-name
+    summary: The name of the Firewall Policy.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
+    description: ''
+commands:
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_filter_collection
+  name: az network firewall policy rule-collection-group collection add-filter-collection
+  summary: Add a filter collection into an Azure firewall policy rule collection group.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_nat_collection
+  name: az network firewall policy rule-collection-group collection add-nat-collection
+  summary: Add a NAT collection into an Azure firewall policy rule collection group.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_list
+  name: az network firewall policy rule-collection-group collection list
+  summary: List all rule collections of an Azure firewall policy rule collection group.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_remove
+  name: az network firewall policy rule-collection-group collection remove
+  summary: Remove a rule collection from an Azure firewall policy rule collection group.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule
+  name: az network firewall policy rule-collection-group collection rule
+  summary: Manage and configure the rule of a filter collection in the rule collection group of Azure firewall policy.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule_add
+  name: az network firewall policy rule-collection-group collection rule add
+  summary: Add a rule into an Azure firewall policy rule collection.
+- uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule_remove
+  name: az network firewall policy rule-collection-group collection rule remove
+  summary: Remove a rule from an Azure firewall policy rule collection.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: >-
+  Currently, Azure Firewall policy support two kinds of rule collections which are Filter collection and NAT collection. There are also two kinds of rules which are application rule and network rule.
+
+  NAT collection only support having one network rule. Filter collection support including a list of rules in it. But all of rules should be the same type.
