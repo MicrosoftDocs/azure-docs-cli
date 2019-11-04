@@ -19,109 +19,109 @@ Version 2.0.76
 
 ### ACR
 
-* Add a preview parameter `--pack-image-tag` to command `az acr pack build`.
-* Support enabling auditing on creating a registry
-* Support Repository-scoped RBAC
+* Added a preview parameter `--pack-image-tag` to command `az acr pack build`.
+* Supported enabling auditing on creating a registry
+* Supported Repository-scoped RBAC
 
 ### AKS
 
-* Add `--enable-cluster-autoscaler`, `--min-count` and `--max-count` to the `az aks create` command, which enables cluster autoscaler for the node pool.
-* Add the above flags as well as `--update-cluster-autoscaler` and `--disable-cluster-autoscaler` to the `az aks update` command, allowing updates to cluster autoscaler.
+* Added `--enable-cluster-autoscaler`, `--min-count` and `--max-count` to the `az aks create` command, which enables cluster autoscaler for the node pool.
+* Added the above flags as well as `--update-cluster-autoscaler` and `--disable-cluster-autoscaler` to the `az aks update` command, allowing updates to cluster autoscaler.
 
 ### AppConfig
 
-* Add appconfig feature command group to manage feature flags stored in an App Configuration.
-* Minor bug fix for appconfig kv export to file command. Stop reading dest file contents during export.
+* Added appconfig feature command group to manage feature flags stored in an App Configuration.
+* Fixed minor bug for appconfig kv export to file command. Stop reading dest file contents during export.
 
 ### AppService
 
-* az appservice plan create: Adding support to set 'persitescaling' on appservice plan create.
-* Fixing an issue where webapp config ssl bind operation was removing existing tags from the resource
-* Added "--build remote" flag for "az functionapp deployment source config-zip" to support remote build action during function app deployment.
-* Change default node version on function apps to ~10 for Windows
-* Add --runtime-version property to `az functionapp create`
+* `az appservice plan create`: Added support to set 'persitescaling' on appservice plan create.
+* Fixed an issue where webapp config ssl bind operation was removing existing tags from the resource
+* Added `--build-remote` flag for `az functionapp deployment source config-zip` to support remote build action during function app deployment.
+* Changed default node version on function apps to ~10 for Windows
+* Added `--runtime-version` property to `az functionapp create`
 
 ### ARM
 
-* deployment/group deployment validate: Add --handle-extended-json-format parameter to support multiline and comments in json template when deployment.
-* bump azure-mgmt-resource to 2019-07-01
+* `az deployment/group deployment validate`: Added `--handle-extended-json-format` parameter to support multiline and comments in json template when deployment.
+* Bumped azure-mgmt-resource to 2019-07-01
 
 ### Backup
 
-* Add AzureFiles backup support
+* Added AzureFiles backup support
 
 ### Compute
 
-* vm create: Add warning when specifying accelerated networking and an existing NIC together.
-* vm create: Add --vmss to specify an existing virtual machine scale set that the virtual machine should be assigned to.
-* vm/vmss create: Add a local copy of image alias file so that it can be accessed in a restricted network environment.
-* vmss create: Add --orchestration-mode to specify how virtual machines are managed by the scale set.
-* vm/vmss update: Add --ultra-ssd-enabled to allow updating ultra SSD setting.
-* [BREAKING CHANGE] vm extension set: Fix bug where users could not set an extension on a VM with --ids.
-* New commands `az vm image terms accept/cancel/show` to manage Azure Marketplace image terms.
-* Update VMAccessForLinux to version 1.5
+* `az vm create`: Added warning when specifying accelerated networking and an existing NIC together.
+* `az vm create`: Added `--vmss` to specify an existing virtual machine scale set that the virtual machine should be assigned to.
+* `az vm/vmss create`: Added a local copy of image alias file so that it can be accessed in a restricted network environment.
+* `az vmss create`: Added `--orchestration-mode` to specify how virtual machines are managed by the scale set.
+* `az vm/vmss update`: Added `--ultra-ssd-enabled` to allow updating ultra SSD setting.
+* [BREAKING CHANGE] `az vm extension set`: Fixed bug where users could not set an extension on a VM with `--ids`.
+* Added new commands `az vm image terms accept/cancel/show` to manage Azure Marketplace image terms.
+* Updated VMAccessForLinux to version 1.5
 
 ### CosmosDB
 
-* [BREAKING] sql container create: Change --partition-key-path to required parameter
-* [BREAKING] gremlin graph create: Change --partition-key-path to required parameter
-* sql container create: Add --unique-key-policy and --conflict-resolution-policy
-* sql container create/update: Update the --idx default schema
-* gremlin graph create: Add --conflict-resolution-policy
-* gremlin graph create/update: Update the --idx default schema
-* Fix typo in help message
-* database: Add deprecation infomation
-* collection: Add deprecation infomation
+* [BREAKING CHANGE] `az sql container create`: Changed `--partition-key-path` to required parameter
+* [BREAKING CHANGE] `az gremlin graph create`: Changed `--partition-key-path` to required parameter
+* `az sql container create`: Added `--unique-key-policy` and `--conflict-resolution-policy`
+* `az sql container create/update`: Updated the `--idx` default schema
+* `gremlin graph create`: Added `--conflict-resolution-policy`
+* `gremlin graph create/update`: Updated the `--idx` default schema
+* Fixed typo in help message
+* database: Added deprecation infomation
+* collection: Added deprecation infomation
 
 ### IoT
 
-* Add new routing source type: DigitalTwinChangeEvents
-* Fix #2826: Missing features in "az iot hub create"
+* Added new routing source type: DigitalTwinChangeEvents
+* Fixed missing features in `az iot hub create`
 
 ### Key Vault
 
-* Fix #9352: Unexpected error when certificate file does not exist
-* Fix #7048: `az keyvault recover/purge` not working
+* Fixed an unexpected error when certificate file does not exist
+* Fixed `az keyvault recover/purge` not working
 
 ### NetAppFiles
 
-* Upgrade azure-mgmt-netapp to 0.6.0 to use API version 2019-07-01. This new API version includes:
+* Upgraded azure-mgmt-netapp to 0.6.0 to use API version 2019-07-01. This new API version includes:
 
-    - Volume creation --protocol-types accepts now "NFSv4.1" not "NFSv4"
+    - Volume creation `--protocol-types` accepts now "NFSv4.1" not "NFSv4"
     - Volume export policy property now named 'nfsv41' not 'nfsv4'
-    - Volume creation-token renamed to file-path
+    - Volume `--creation-token` renamed to `--file-path`
     - Snapshot creation date now named just 'created'
 
 ### Network
 
-* az network private-dns link vnet create/update: Fixes #9851. Support cross-tenant virtual network linking.
-* [BREAKING CHANGE] network vnet subnet list: Fix #10401. `--resource-group` and `--vnet-name` are required now.
-* az network public-ip prefix create: Fix #10757. Support to specify IP address version (IPv4, IPv6) when creation
-* Bump azure-mgmt-network to 7.0.0 and api-version to 2019-09-01
-* az network vrouter: Support new service virtual router and virtual router peering
-* az network express-route gateway connection: Support `--internet-security`
+* `az network private-dns link vnet create/update`: Support cross-tenant virtual network linking.
+* [BREAKING CHANGE] `az network vnet subnet list`: Changed `--resource-group` and `--vnet-name` to be required now.
+* `az network public-ip prefix create`: Supported to specify IP address version (IPv4, IPv6) when creation
+* Bumped azure-mgmt-network to 7.0.0 and api-version to 2019-09-01
+* `az network vrouter`: Supported new service virtual router and virtual router peering
+* `az network express-route gateway connection`: Supported `--internet-security`
 
 ### Profile
 
-* Fix: `az account get-access-token --resource-type ms-graph` not working
-* Remove warning from `az login`
+* Fixed `az account get-access-token --resource-type ms-graph` not working
+* Removed warning from `az login`
 
 ### RBAC
 
-* Fix #10807: `az ad app update --id {} --display-name {}` doesn't work
+* Fixed `az ad app update --id {} --display-name {}` doesn't work
 
 ### ServiceFabric
 
-* az sf cluster create: fix #10916 modify service fabric linux and windows template.json compute vmss from standard to managed disks
+* `az sf cluster create`: Fixed an issue by modifying service fabric linux and windows template.json compute vmss from standard to managed disks
 
 ### SQL
 
-* Add "--compute-model", "--auto-pause-delay", and "--min-capacity" parameters to support CRUD operations for new SQL Database offering: Serverless compute model."
+* Added `--compute-model`, `--auto-pause-delay`, and `--min-capacity` parameters to support CRUD operations for new SQL Database offering: Serverless compute model.
 
 ### Storage
 
-* storage account create/update: Add --enable-files-adds parameter and Azure Active Directory Properties Argument group to support Azure Files Active Directory Domain Service Authentication
-* Expand `az storage account keys list/renew` to support listing or regenerating Kerberos keys of storage account.
+* `az storage account create/update`: Added --enable-files-adds parameter and Azure Active Directory Properties Argument group to support Azure Files Active Directory Domain Service Authentication
+* Expanded `az storage account keys list/renew` to support listing or regenerating Kerberos keys of storage account.
 
 ## October 15, 2019
 
