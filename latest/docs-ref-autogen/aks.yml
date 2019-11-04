@@ -101,6 +101,9 @@ items:
   - summary: Create a kubernetes cluster with basic SKU load balancer and AvailabilitySet vm set type.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku basic --vm-set-type AvailabilitySet
+  - summary: Create a kubernetes cluster with authorized apiserver IP ranges.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24,195.168.1.0
   parameters:
   - isRequired: true
     name: --name -n
@@ -125,6 +128,9 @@ items:
   - name: --admin-username -u
     defaultValue: azureuser
     summary: User account to create on node VMs for SSH access.
+    description: ''
+  - name: --api-server-authorized-ip-ranges
+    summary: Comma seperated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -151,6 +157,9 @@ items:
           http_application_routing - configure ingress with automatic public DNS name creation.
           monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
           virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+  - name: --enable-cluster-autoscaler
+    summary: Enable cluster autoscaler, default value is false.
+    description: If specified, please make sure the kubernetes version is larger than 1.10.6.
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
     description: ''
@@ -176,9 +185,15 @@ items:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
+  - name: --max-count
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
     description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+  - name: --min-count
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
   - name: --network-plugin
     summary: The Kubernetes network plugin to use.
     description: Specify "azure" for advanced networking configurations. Defaults to "kubenet".
@@ -238,6 +253,10 @@ items:
     description: ''
   - name: --workspace-resource-id
     summary: The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
+    description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Availability zones where agent nodes will be placed.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -486,30 +505,30 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Install the ACI Connector for Linux to a managed Kubernetes cluster.
+  - summary: Install the virtual Kubelet for Linux to a managed Kubernetes cluster.
     syntax:
       content: az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup
-  - summary: Install the ACI Connector for Windows to a managed Kubernetes cluster.
+  - summary: Install the virtual Kubelet for Windows to a managed Kubernetes cluster.
     syntax:
       content: >-
         az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup \
-           --connector-name aci-connector --os-type Windows
-  - summary: Install the ACI Connector for both Windows and Linux to a managed Kubernetes cluster.
+           --connector-name virtual-kubelet --os-type Windows
+  - summary: Install the virtual Kubelet for both Windows and Linux to a managed Kubernetes cluster.
     syntax:
       content: >-
         az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --os-type Both
-  - summary: Install the ACI Connector using a specific service principal in a specific resource group.
+          --connector-name virtual-kubelet --os-type Both
+  - summary: Install the virtual Kubelet using a specific service principal in a specific resource group.
     syntax:
       content: >-
         az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --service-principal {SPN_ID} --client-secret {SPN_SECRET} \
+          --connector-name virtual-kubelet --service-principal {SPN_ID} --client-secret {SPN_SECRET} \
           --aci-resource-group ACI-resource-group
-  - summary: Install the ACI Connector from a custom Helm chart with custom tag.
+  - summary: Install the virtual Kubelet from a custom Helm chart with custom tag.
     syntax:
       content: >-
         az aks install-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --chart-url {CustomURL} --image-tag {VirtualKubeletImageTag}
+          --connector-name virtual-kubelet --chart-url {CustomURL} --image-tag {VirtualKubeletImageTag}
   parameters:
   - isRequired: true
     name: --name -n
@@ -742,6 +761,15 @@ items:
   - summary: Attach AKS cluster to ACR by name "acrName"
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --attach-acr acrName
+  - summary: Update a kubernetes cluster with authorized apiserver ip ranges.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24
+  - summary: Disable authorized apiserver ip ranges feature for a kubernetes cluster.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges ""
+  - summary: Restrict apiserver traffic in a kubernetes cluster to agentpool nodes.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 0.0.0.0/32
   parameters:
   - isRequired: true
     name: --name -n
@@ -751,11 +779,20 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --api-server-authorized-ip-ranges
+    summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
+    description: ''
+  - name: --disable-cluster-autoscaler -d
+    summary: Disable cluster autoscaler.
+    description: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
     description: ''
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
@@ -766,8 +803,17 @@ items:
   - name: --load-balancer-outbound-ips
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --max-count
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
+  - name: --min-count
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --update-cluster-autoscaler -u
+    summary: Update min-count or max-count for cluster autoscaler.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -889,28 +935,28 @@ items:
     syntax:
       content: >-
         az aks upgrade-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector
+          --connector-name virtual-kubelet
   - summary: Upgrade the ACI Connector for Windows to a managed Kubernetes cluster.
     syntax:
       content: >-
         az aks upgrade-connector --name MyManagedCluster --resource-group MyResourceGroup \
-           --connector-name aci-connector --os-type Windows
+           --connector-name virtual-kubelet --os-type Windows
   - summary: Upgrade the ACI Connector for both Windows and Linux to a managed Kubernetes cluster.
     syntax:
       content: >-
         az aks upgrade-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --os-type Both
+          --connector-name virtual-kubelet --os-type Both
   - summary: Upgrade the ACI Connector to use a specific service principal in a specific resource group.
     syntax:
       content: >-
         az aks upgrade-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --service-principal {SPN_ID} --client-secret {SPN_SECRET} \
+          --connector-name virtual-kubelet --service-principal {SPN_ID} --client-secret {SPN_SECRET} \
           --aci-resource-group ACI-resource-group
   - summary: Upgrade the ACI Connector from a custom Helm chart with custom tag.
     syntax:
       content: >-
         az aks upgrade-connector --name MyManagedCluster --resource-group MyResourceGroup \
-          --connector-name aci-connector --chart-url {CustomURL} --image-tag {VirtualKubeletImageTag}
+          --connector-name virtual-kubelet --chart-url {CustomURL} --image-tag {VirtualKubeletImageTag}
   parameters:
   - isRequired: true
     name: --name -n
@@ -1088,6 +1134,30 @@ commands:
 - uid: az_aks_list
   name: az aks list
   summary: List managed Kubernetes clusters.
+- uid: az_aks_nodepool
+  name: az aks nodepool
+  summary: Commands to manage node pools in Kubernetes kubernetes cluster.
+- uid: az_aks_nodepool_add
+  name: az aks nodepool add
+  summary: Add a node pool to the managed Kubernetes cluster.
+- uid: az_aks_nodepool_delete
+  name: az aks nodepool delete
+  summary: Delete the agent pool in the managed Kubernetes cluster.
+- uid: az_aks_nodepool_list
+  name: az aks nodepool list
+  summary: List node pools in the managed Kubernetes cluster.
+- uid: az_aks_nodepool_scale
+  name: az aks nodepool scale
+  summary: Scale the node pool in a managed Kubernetes cluster.
+- uid: az_aks_nodepool_show
+  name: az aks nodepool show
+  summary: Show the details for a node pool in the managed Kubernetes cluster.
+- uid: az_aks_nodepool_update
+  name: az aks nodepool update
+  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
+- uid: az_aks_nodepool_upgrade
+  name: az aks nodepool upgrade
+  summary: Upgrade the node pool in a managed Kubernetes cluster.
 - uid: az_aks_remove_connector
   name: az aks remove-connector
   summary: Remove the ACI Connector from a managed Kubernetes cluster.
@@ -1134,7 +1204,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/7764aad5a6586ff9f847e0c21c97915fec2411aa/src/azure-cli/azure/cli/command_modules/acs/_help.py
-updated_at: 9/19/2019 1:57:41 AM
-ms.date: 09/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/39227821de0195e52279844a9a8b6b135ca4b347/src/azure-cli/azure/cli/command_modules/acs/_help.py
+updated_at: 10/28/2019 2:31:04 AM
+ms.date: 10/28/2019
 description: Manage Azure Kubernetes Services.

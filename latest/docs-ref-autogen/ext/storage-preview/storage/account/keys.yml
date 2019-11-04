@@ -11,12 +11,12 @@ items:
   - ext_storage-preview_az_storage_account_keys_renew
 - uid: ext_storage-preview_az_storage_account_keys_list
   name: az storage account keys list
-  summary: List the primary and secondary keys for a storage account.
+  summary: List the access keys or Kerberos keys (if active directory enabled) for a storage account.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: List the primary and secondary keys for a storage account.
+  - summary: List the access keys for a storage account.
     syntax:
       content: az storage account keys list -g MyResourceGroup -n MyStorageAccount
   parameters:
@@ -29,10 +29,17 @@ items:
     description: ''
 - uid: ext_storage-preview_az_storage_account_keys_renew
   name: az storage account keys renew
-  summary: Regenerates one of the access keys for the specified storage account.
-  description: ''
+  summary: Regenerate one of the access keys or Kerberos keys (if active directory enabled) for a storage account.
+  description: Kerberos key is generated per storage account for Azure Files identity based authentication either with Azure Active Directory Domain Service (Azure AD DS) or Active Directory Domain Service (AD DS). It is used as the password of the identity registered in the domain service that represents the storage account. Kerberos key does not provide access permission to perform any control or data plane read or write operations against the storage account.
   langs:
   - azurecli
+  examples:
+  - summary: Regenerate one of the access keys for a storage account.
+    syntax:
+      content: az storage account keys renew -g MyResourceGroup -n MyStorageAccount --key primary
+  - summary: Regenerate one of the Kerberos keys for a storage account.
+    syntax:
+      content: az storage account keys renew -g MyResourceGroup -n MyStorageAccount --key secondary --key-type kerb
   parameters:
   - isRequired: true
     name: --account-name -n
@@ -49,10 +56,10 @@ items:
 commands:
 - uid: ext_storage-preview_az_storage_account_keys_list
   name: az storage account keys list
-  summary: List the primary and secondary keys for a storage account.
+  summary: List the access keys or Kerberos keys (if active directory enabled) for a storage account.
 - uid: ext_storage-preview_az_storage_account_keys_renew
   name: az storage account keys renew
-  summary: Regenerates one of the access keys for the specified storage account.
+  summary: Regenerate one of the access keys or Kerberos keys (if active directory enabled) for a storage account.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
