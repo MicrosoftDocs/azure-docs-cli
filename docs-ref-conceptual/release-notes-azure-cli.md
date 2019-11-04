@@ -31,7 +31,7 @@ Version 2.0.76
 ### AppConfig
 
 * Added appconfig feature command group to manage feature flags stored in an App Configuration.
-* Minored bug fix for appconfig kv export to file command. Stop reading dest file contents during export.
+* Fixed minor bug for appconfig kv export to file command. Stop reading dest file contents during export.
 
 ### AppService
 
