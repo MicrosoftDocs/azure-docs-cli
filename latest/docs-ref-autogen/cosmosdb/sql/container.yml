@@ -21,7 +21,7 @@ items:
   examples:
   - summary: Create an Azure Cosmos DB SQL container.
     syntax:
-      content: az cosmosdb sql container create -g MyResourceGroup -a MyAccount -d MyDatabase -n MyContainer --part "/my/path" --idx @policy-file.json --ttl 1000 --throughput "700"
+      content: az cosmosdb sql container create -g MyResourceGroup -a MyAccount -d MyDatabase -n MyContainer --partition-key-path "/my/path" --idx @policy-file.json --ttl 1000 --throughput "700"
   parameters:
   - isRequired: true
     name: --account-name -a
@@ -36,8 +36,15 @@ items:
     summary: Container name.
     description: ''
   - isRequired: true
+    name: --partition-key-path -p
+    summary: Partition Key Path, e.g., '/address/zipcode'.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --conflict-resolution-policy -c
+    summary: 'Conflict Resolution Policy, you can enter it as a string or as a file, e.g., --conflict-resolution-policy @policy-file.json or --conflict-resolution-policy "{"mode": "lastWriterWins", "conflictResolutionPath": "/path"}".'
     description: ''
   - name: --idx
     defaultValue: >-
@@ -46,32 +53,25 @@ items:
         "automatic": true,
         "includedPaths": [
           {
-            "path": "/*",
-            "indexes": [
-              {
-                "kind": "Range",
-                "dataType": "String",
-                "precision": -1
-              },
-              {
-                "kind": "Range",
-                "dataType": "Number",
-                "precision": -1
-              }
-            ]
+            "path": "/*"
+          }
+        ],
+        "excludedPaths": [
+          {
+            "path": "/\"_etag\"/?"
           }
         ]
       }
-    summary: 'Indexing Policy, you can enter it as a string or as a file, e.g., --idx @policy-file.json or --idx "{"indexingMode": "consistent", "includedPaths": [{"path": "/\*", "indexes": [{"dataType": "String", "kind": "Range"}]}], "excludedPaths": [{ "path": "/headquarters/employees/?"}]}".'
-    description: ''
-  - name: --partition-key-path -p
-    summary: Partition Key Path, e.g., '/address/zipcode'.
+    summary: 'Indexing Policy, you can enter it as a string or as a file, e.g., --idx @policy-file.json or --idx "{"indexingMode": "consistent", "automatic": true, "includedPaths": [{"path": "/\*"}], "excludedPaths": [{ "path": "/headquarters/employees/?"}, { "path": "/\"_etag\"/?"}]}".'
     description: ''
   - name: --throughput
     summary: The throughput of SQL container (RU/s). Default value is 400.
     description: ''
   - name: --ttl
     summary: Default TTL. If the value is missing or set to "-1", items don’t expire. If the value is set to "n", items will expire "n" seconds after last modified time.
+    description: ''
+  - name: --unique-key-policy -u
+    summary: 'Unique Key Policy, you can enter it as a string or as a file, e.g., --unique-key-policy @policy-file.json or --unique-key-policy "{"uniqueKeys": [{"paths": ["/path/to/key1"]}, {"paths": ["/path/to/key2"]}]}".'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -198,7 +198,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --idx
-    summary: 'Indexing Policy, you can enter it as a string or as a file, e.g., --idx @policy-file.json or --idx "{"indexingMode": "consistent", "includedPaths": [{"path": "/\*", "indexes": [{"dataType": "String", "kind": "Range"}]}], "excludedPaths": [{ "path": "/headquarters/employees/?"}]}".'
+    summary: 'Indexing Policy, you can enter it as a string or as a file, e.g., --idx @policy-file.json or --idx "{"indexingMode": "consistent", "automatic": true, "includedPaths": [{"path": "/\*"}], "excludedPaths": [{ "path": "/headquarters/employees/?"}, { "path": "/\"_etag\"/?"}]}".'
     description: ''
   - name: --ttl
     summary: Default TTL. If the value is missing or set to "-1", items don’t expire. If the value is set to "n", items will expire "n" seconds after last modified time.
@@ -253,7 +253,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/833eca85552c0db1c2f00787310f971fc23aebf1/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
-updated_at: 9/19/2019 6:10:36 AM
-ms.date: 09/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/6c6b983c6649772bd26534470666a4edbb7017a5/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+updated_at: 10/16/2019 4:37:10 AM
+ms.date: 10/16/2019
 description: Manage Azure Cosmos DB SQL containers.

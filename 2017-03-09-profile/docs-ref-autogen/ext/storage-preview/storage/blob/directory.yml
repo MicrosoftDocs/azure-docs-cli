@@ -1,0 +1,472 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_storage-preview_az_storage_blob_directory
+  name: az storage blob directory
+  summary: Manage blob directories in storage account container.
+  description: To use the directory commands, please make sure your storage account type is StorageV2.
+  langs:
+  - azurecli
+  children:
+  - ext_storage-preview_az_storage_blob_directory_create
+  - ext_storage-preview_az_storage_blob_directory_delete
+  - ext_storage-preview_az_storage_blob_directory_download
+  - ext_storage-preview_az_storage_blob_directory_exists
+  - ext_storage-preview_az_storage_blob_directory_list
+  - ext_storage-preview_az_storage_blob_directory_move
+  - ext_storage-preview_az_storage_blob_directory_show
+  - ext_storage-preview_az_storage_blob_directory_upload
+- uid: ext_storage-preview_az_storage_blob_directory_create
+  name: az storage blob directory create
+  summary: Create a storage blob directory in a storage container.
+  description: Create a storage blob directory which can contain other directories or blobs in a storage container.
+  langs:
+  - azurecli
+  examples:
+  - summary: Create a storage blob directory in a storage container.
+    syntax:
+      content: az storage blob directory create -c MyContainer -d MyDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --directory-path -d
+    summary: The directory path name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --lease-id
+    summary: Required if the directory to be overwritten has an active lease.
+    description: ''
+  - name: --metadata
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --posix-permissions
+    summary: Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.
+    description: ''
+  - name: --posix-umask
+    summary: Optional and only valid if Hierarchical Namespace is enabled for the account. This umask restricts permission settings for file and directory, and will only be applied when default Acl does not exist in parent directory. If the umask bit has set, it means that the corresponding permission will be disabled. Otherwise the corresponding permission will be determined by the permission. A 4-digit octal notation (e.g. 0022) is supported here. If no umask was specified, a default umask - 0027 will be used.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_delete
+  name: az storage blob directory delete
+  summary: Delete a storage blob directory in a storage container.
+  description: This operation's behavior is different depending on whether Hierarchical Namespace is enabled; if yes, then the delete operation can be atomic and instantaneous; if not, the operation is performed in batches and a continuation token could be returned.
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete a storage blob directory in a storage container.
+    syntax:
+      content: az storage blob directory delete -c MyContainer -d MyDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --directory-path -d
+    summary: The directory path name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --fail-not-exist
+    summary: Specify whether to throw an exception when the directory doesn't exist.
+    description: ''
+  - name: --lease-id
+    summary: Required if the directory has an active lease.
+    description: ''
+  - name: --marker
+    summary: Optional. When deleting a directory without the Hierarchical Namespace, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned. When a continuation token is returned, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory.
+    description: ''
+  - name: --recursive
+    summary: If "true", all paths beneath the directory will be deleted. If "false" and the directory is non-empty, an error occurs.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
+    description: ''
+  - name: --if-modified-since
+    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag does not match the value specified.
+    description: ''
+  - name: --if-unmodified-since
+    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_download
+  name: az storage blob directory download
+  summary: Download blobs to a local file path.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Download a single blob in a storage blob directory.
+    syntax:
+      content: az storage blob directory download -c MyContainer --account-name MyStorageAccount -s "path/to/blob" -d "<local-path>"
+  - summary: Download the entire directory in a storage container.
+    syntax:
+      content: az storage blob directory download -c MyContainer --account-name MyStorageAccount -s SourceDirectoryPath -d "<local-path>" --recursive
+  - summary: Download an entire subdirectory of a storage blob directory.
+    syntax:
+      content: az storage blob directory download -c MyContainer --account-name MyStorageAccount -s "path/to/subdirectory" -d "<local-path>" --recursive
+  parameters:
+  - isRequired: true
+    name: --container -c
+    summary: The download source container.
+    description: ''
+  - isRequired: true
+    name: --destination-path -d
+    summary: The destination directory path to download.
+    description: ''
+  - isRequired: true
+    name: --source-directory -s
+    summary: The download source directory path.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --recursive -r
+    summary: Recursively download blobs. If enabled, all the blobs including the blobs in subdirectories will be downloaded.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_exists
+  name: az storage blob directory exists
+  summary: Check for the existence of a blob directory in a storage container.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Check for the existence of a blob directory in a storage container.
+    syntax:
+      content: az storage blob directory exists -c MyContainer -d MyDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --directory-path -d
+    summary: The directory path name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --snapshot
+    summary: The snapshot parameter is an opaque DateTime value that, when present, specifies the snapshot.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_list
+  name: az storage blob directory list
+  summary: List blobs and blob subdirectories in a storage directory.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List blobs and blob subdirectories in a storage directory.
+    syntax:
+      content: az storage blob directory list -c MyContainer -d DestinationDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --directory-path -d
+    summary: The directory path name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --delimiter
+    summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
+    description: ''
+  - name: --include
+    defaultValue: mc
+    summary: Specifies one or more additional datasets to include in the response.
+    description: ''
+  - name: --marker
+    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --num-results
+    summary: Specifies the maximum number of blobs to return, including all BlobPrefix elements. If the request does not specify num_results or specifies a value greater than 5,000, the server will return up to 5,000 items. Setting num_results to a value less than or equal to zero results in error response code 400 (Bad Request).
+    description: ''
+  - name: --prefix
+    summary: Filters the results to return only blobs whose names begin with the specified prefix.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_move
+  name: az storage blob directory move
+  summary: Move a storage directory to another storage blob directory in a storage container.
+  description: Move a storage directory and all its content (which can contain other directories or blobs) to another storage blob directory in a storage container. This operation's behavior is different depending on whether Hierarchical Namespace is enabled; if yes, the move operation is atomic and no marker is returned; if not, the operation is performed in batches and a continuation token could be returned.
+  langs:
+  - azurecli
+  examples:
+  - summary: Move a storage directory to another storage blob directory in a storage container.
+    syntax:
+      content: az storage blob directory move -c MyContainer -d DestinationDirectoryPath -s SourceDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --destination-path -d
+    summary: The destination blob directory path.
+    description: ''
+  - isRequired: true
+    name: --source-path -s
+    summary: The source blob directory path.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_show
+  name: az storage blob directory show
+  summary: Show a storage blob directory properties in a storage container.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Show a storage blob directory properties in a storage container.
+    syntax:
+      content: az storage blob directory show -c MyContainer -d MyDirectoryPath --account-name MyStorageAccount
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --directory-path -d
+    summary: The directory path name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --lease-id
+    summary: Required if the blob has an active lease.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --if-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to perform theoperation only if the resource's ETag matches the value specified.
+    description: ''
+  - name: --if-modified-since
+    summary: Alter only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to performthe operation only if the resource's ETag does not match the value specified. Specify the wildcardcharacter (\*) to perform the operation only if the resource does not exist, and fail the operationif it does exist.
+    description: ''
+  - name: --if-unmodified-since
+    summary: Alter only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_directory_upload
+  name: az storage blob directory upload
+  summary: Upload blobs to a storage blob directory.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Upload a single blob to a storage blob directory.
+    syntax:
+      content: az storage blob directory upload -c MyContainer --account-name MyStorageAccount -s "path/to/file" -d directory
+  - summary: Upload a local directory to a storage blob directory.
+    syntax:
+      content: az storage blob directory upload -c MyContainer --account-name MyStorageAccount -s "path/to/directory" -d directory --recursive
+  - summary: Upload a set of files in a local directory to a storage blob directory.
+    syntax:
+      content: az storage blob directory upload -c MyContainer --account-name MyStorageAccount -s "path/to/file*" -d directory --recursive
+  parameters:
+  - isRequired: true
+    name: --container -c
+    summary: The upload destination container.
+    description: ''
+  - isRequired: true
+    name: --destination-directory -d
+    summary: The upload destination directory path.
+    description: ''
+  - isRequired: true
+    name: --source -s
+    summary: The source file path to upload from.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --recursive -r
+    summary: Recursively upload blobs. If enabled, all the blobs including the blobs in subdirectories will be uploaded.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+commands:
+- uid: ext_storage-preview_az_storage_blob_directory_access
+  name: az storage blob directory access
+  summary: Manage the access control properties of a directory when Hierarchical Namespace is enabled.
+- uid: ext_storage-preview_az_storage_blob_directory_access_set
+  name: az storage blob directory access set
+  summary: Set the access control properties of a directory.
+- uid: ext_storage-preview_az_storage_blob_directory_access_show
+  name: az storage blob directory access show
+  summary: Show the access control properties of a directory.
+- uid: ext_storage-preview_az_storage_blob_directory_access_update
+  name: az storage blob directory access update
+  summary: Update the access control properties of a directory.
+- uid: ext_storage-preview_az_storage_blob_directory_create
+  name: az storage blob directory create
+  summary: Create a storage blob directory in a storage container.
+- uid: ext_storage-preview_az_storage_blob_directory_delete
+  name: az storage blob directory delete
+  summary: Delete a storage blob directory in a storage container.
+- uid: ext_storage-preview_az_storage_blob_directory_download
+  name: az storage blob directory download
+  summary: Download blobs to a local file path.
+- uid: ext_storage-preview_az_storage_blob_directory_exists
+  name: az storage blob directory exists
+  summary: Check for the existence of a blob directory in a storage container.
+- uid: ext_storage-preview_az_storage_blob_directory_list
+  name: az storage blob directory list
+  summary: List blobs and blob subdirectories in a storage directory.
+- uid: ext_storage-preview_az_storage_blob_directory_metadata
+  name: az storage blob directory metadata
+  summary: Manage directory metadata.
+- uid: ext_storage-preview_az_storage_blob_directory_metadata_show
+  name: az storage blob directory metadata show
+  summary: Show all user-defined metadata for the specified blob directory.
+- uid: ext_storage-preview_az_storage_blob_directory_metadata_update
+  name: az storage blob directory metadata update
+  summary: Set user-defined metadata for the specified blob directory as one or more name-value pairs.
+- uid: ext_storage-preview_az_storage_blob_directory_move
+  name: az storage blob directory move
+  summary: Move a storage directory to another storage blob directory in a storage container.
+- uid: ext_storage-preview_az_storage_blob_directory_show
+  name: az storage blob directory show
+  summary: Show a storage blob directory properties in a storage container.
+- uid: ext_storage-preview_az_storage_blob_directory_upload
+  name: az storage blob directory upload
+  summary: Upload blobs to a storage blob directory.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: To use the directory commands, please make sure your storage account type is StorageV2.

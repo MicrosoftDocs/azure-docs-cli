@@ -7,7 +7,136 @@ items:
   langs:
   - azurecli
   children:
+  - az_backup_restore_restore_azurefiles
+  - az_backup_restore_restore_azurefileshare
   - az_backup_restore_restore_disks
+- uid: az_backup_restore_restore_azurefiles
+  name: az backup restore restore-azurefiles
+  summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
+    syntax:
+      content: az backup restore restore-azurefiles --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation --source-file-type File --source-file-path MyPath
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
+  - isRequired: true
+    name: --item-name -i
+    summary: Name of the backed up item.
+    description: ''
+  - isRequired: true
+    name: --resolve-conflict
+    parameterValueGroup: Overwrite, Skip
+    summary: Instruction if there's a conflict with the restored data.
+    description: ''
+  - isRequired: true
+    name: --restore-mode
+    parameterValueGroup: AlternateLocation, OriginalLocation
+    summary: Accepts OriginalLocation or AlternateLocation.
+    description: ''
+  - isRequired: true
+    name: --rp-name -r
+    summary: Name of the recovery point.
+    description: ''
+  - name: --source-file-path
+    summary: The absolute path of the file, to be restored within the file share, as a string. This path is the same path used in the 'az storage file download' or 'az storage file show' CLI commands.
+    description: ''
+  - name: --source-file-type
+    parameterValueGroup: Directory, File
+    summary: Specify the source file type to be selected.
+    description: ''
+  - name: --target-file-share
+    summary: Destination file share to which content will be restored.
+    description: ''
+  - name: --target-folder
+    summary: Destination folder to which content will be restored. To restore content to root , leave the folder name empty.
+    description: ''
+  - name: --target-storage-account
+    summary: Destination storage account to which content will be restored.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name -v
+    summary: Name of the Recovery services vault.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/backup/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/backup/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_backup_restore_restore_azurefileshare
+  name: az backup restore restore-azurefileshare
+  summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
+    syntax:
+      content: az backup restore restore-azurefileshare --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
+  - isRequired: true
+    name: --item-name -i
+    summary: Name of the backed up item.
+    description: ''
+  - isRequired: true
+    name: --resolve-conflict
+    parameterValueGroup: Overwrite, Skip
+    summary: Instruction if there's a conflict with the restored data.
+    description: ''
+  - isRequired: true
+    name: --restore-mode
+    parameterValueGroup: AlternateLocation, OriginalLocation
+    summary: Accepts OriginalLocation or AlternateLocation.
+    description: ''
+  - isRequired: true
+    name: --rp-name -r
+    summary: Name of the recovery point.
+    description: ''
+  - name: --target-file-share
+    summary: Destination file share to which content will be restored.
+    description: ''
+  - name: --target-folder
+    summary: Destination folder to which content will be restored. To restore content to root , leave the folder name empty.
+    description: ''
+  - name: --target-storage-account
+    summary: Destination storage account to which content will be restored.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name -v
+    summary: Name of the Recovery services vault.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/backup/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/backup/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_backup_restore_restore_disks
   name: az backup restore restore-disks
   summary: Restore disks of the backed VM from the specified recovery point.
@@ -21,7 +150,7 @@ items:
   parameters:
   - isRequired: true
     name: --container-name -c
-    summary: Name of the container.
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - isRequired: true
     name: --item-name -i
@@ -70,6 +199,12 @@ commands:
 - uid: az_backup_restore_files_unmount_rp
   name: az backup restore files unmount-rp
   summary: Close access to the recovery point.
+- uid: az_backup_restore_restore_azurefiles
+  name: az backup restore restore-azurefiles
+  summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
+- uid: az_backup_restore_restore_azurefileshare
+  name: az backup restore restore-azurefileshare
+  summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
 - uid: az_backup_restore_restore_disks
   name: az backup restore restore-disks
   summary: Restore disks of the backed VM from the specified recovery point.
@@ -89,7 +224,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/backup/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/fa7b80147f3df5321c7a7dfdaf47ae0faa7d3972/src/azure-cli/azure/cli/command_modules/backup/_help.py
-updated_at: 6/12/2019 8:32:55 PM
-ms.date: 06/12/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/f7c10f7ff04978032039c31e9629a7d48e596781/src/azure-cli/azure/cli/command_modules/backup/_help.py
+updated_at: 10/29/2019 8:01:09 AM
+ms.date: 10/29/2019
 description: Restore backed up items from recovery points in a Recovery Services vault.
