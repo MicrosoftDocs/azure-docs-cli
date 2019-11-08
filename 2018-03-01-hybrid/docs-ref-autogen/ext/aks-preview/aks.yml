@@ -15,6 +15,7 @@ items:
   - ext_aks-preview_az_aks_get_upgrades
   - ext_aks-preview_az_aks_get_versions
   - ext_aks-preview_az_aks_kollect
+  - ext_aks-preview_az_aks_rotate_certs
   - ext_aks-preview_az_aks_scale
   - ext_aks-preview_az_aks_show
   - ext_aks-preview_az_aks_update
@@ -72,7 +73,7 @@ items:
   - summary: Create a kubernetes cluster with k8s 1.13.9 but use vmas.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.13.9 --vm-set-type AvailabilitySet
-  - summary: Create a kubernetes cluster with default kubernetes vesrion, default SKU load balancer(basic) and default vm set type(AvailabilitySet).
+  - summary: Create a kubernetes cluster with default kubernetes vesrion, default SKU load balancer(standard) and default vm set type(VirtualMachineScaleSets).
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster
   - summary: Create a kubernetes cluster with standard SKU load balancer and two AKS created IPs for the load balancer outbound connection usage.
@@ -218,9 +219,9 @@ items:
     defaultValue: Standard_DS2_v2
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones
+  - name: --node-zones --zones -z
     parameterValueGroup: 1, 2, 3
-    summary: (PREVIEW) Space-separated list of availability zones where agent nodes will be placed.
+    summary: (--node-zones will be deprecated, use --zones) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --nodepool-name
     defaultValue: nodepool1
@@ -422,6 +423,27 @@ items:
     description: ''
   - name: --storage-account
     summary: Name or ID of the storage account to save the diagnostic information.
+    description: ''
+- uid: ext_aks-preview_az_aks_rotate_certs
+  name: az aks rotate-certs
+  summary: Rotate certificates and keys on a managed Kubernetes cluster.
+  description: Kubernetes will be unavailable during cluster certificate rotation.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_aks-preview_az_aks_scale
   name: az aks scale
@@ -675,6 +697,9 @@ commands:
 - uid: ext_aks-preview_az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: Upgrade the node pool in a managed Kubernetes cluster.
+- uid: ext_aks-preview_az_aks_rotate_certs
+  name: az aks rotate-certs
+  summary: Rotate certificates and keys on a managed Kubernetes cluster.
 - uid: ext_aks-preview_az_aks_scale
   name: az aks scale
   summary: Scale the node pool in a managed Kubernetes cluster.
