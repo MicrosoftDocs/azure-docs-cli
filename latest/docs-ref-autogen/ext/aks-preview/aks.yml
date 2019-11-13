@@ -14,6 +14,7 @@ items:
   - ext_aks-preview_az_aks_get_credentials
   - ext_aks-preview_az_aks_get_upgrades
   - ext_aks-preview_az_aks_get_versions
+  - ext_aks-preview_az_aks_kanalyze
   - ext_aks-preview_az_aks_kollect
   - ext_aks-preview_az_aks_rotate_certs
   - ext_aks-preview_az_aks_scale
@@ -387,6 +388,21 @@ items:
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
+- uid: ext_aks-preview_az_aks_kanalyze
+  name: az aks kanalyze
+  summary: Display diagnostic results for the Kubernetes cluster after kollect is done.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
 - uid: ext_aks-preview_az_aks_kollect
   name: az aks kollect
   summary: Collecting diagnostic information for the Kubernetes cluster.
@@ -409,6 +425,15 @@ items:
   - summary: using the storagea account in diagnostics settings for your managed cluster.
     syntax:
       content: az aks kollect -g MyResourceGroup -n MyManagedCluster
+  - summary: customize the container logs to collect.
+    syntax:
+      content: az aks kollect -g MyResourceGroup -n MyManagedCluster --container-logs "mynamespace1/mypod1 myns2"
+  - summary: customize the kubernetes objects to collect.
+    syntax:
+      content: az aks kollect -g MyResourceGroup -n MyManagedCluster --kube-objects "mynamespace1/service myns2/deployment/deployment1"
+  - summary: customize the node log files to collect.
+    syntax:
+      content: az aks kollect -g MyResourceGroup -n MyManagedCluster --node-logs "/var/log/azure-vnet.log /var/log/azure-vnet-ipam.log"
   parameters:
   - isRequired: true
     name: --name -n
@@ -417,6 +442,25 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --container-logs
+    summary: The list of container logs to collect.
+    description: >-
+      The list of container logs to collect. Its value can be either all containers
+
+      in a namespace, for example, kube-system, or a specific container in a
+
+      namespace, for example, kube-system/tunnelfront.
+  - name: --kube-objects
+    summary: The list of kubernetes objects to describe.
+    description: >-
+      The list of kubernetes objects to describe. Its value can be either all objects of a type
+
+      in a namespace, for example, kube-system/pod, or a specific object of a type in a namespace,
+
+      for example, kube-system/deployment/tunnelfront.
+  - name: --node-logs
+    summary: The list of node logs to collect. For example, /var/log/cloud-init.log.
     description: ''
   - name: --sas-token
     summary: The SAS token with writable permission for the storage account.
@@ -670,6 +714,9 @@ commands:
 - uid: ext_aks-preview_az_aks_get_versions
   name: az aks get-versions
   summary: Get the versions available for creating a managed Kubernetes cluster.
+- uid: ext_aks-preview_az_aks_kanalyze
+  name: az aks kanalyze
+  summary: Display diagnostic results for the Kubernetes cluster after kollect is done.
 - uid: ext_aks-preview_az_aks_kollect
   name: az aks kollect
   summary: Collecting diagnostic information for the Kubernetes cluster.
