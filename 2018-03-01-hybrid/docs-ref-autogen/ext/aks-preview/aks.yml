@@ -89,6 +89,9 @@ items:
   - summary: Create a kubernetes cluster with basic SKU load balancer and AvailabilitySet vm set type.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku basic --vm-set-type AvailabilitySet
+  - summary: Create a kubernetes cluster with authorized apiserver IP ranges.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24,195.168.1.0
   parameters:
   - isRequired: true
     name: --name -n
@@ -113,6 +116,9 @@ items:
   - name: --admin-username -u
     defaultValue: azureuser
     summary: User account to create on node VMs for SSH access.
+    description: ''
+  - name: --api-server-authorized-ip-ranges
+    summary: Comma seperated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -549,9 +555,6 @@ items:
   - summary: Update min-count or max-count for cluster autoscaler.
     syntax:
       content: az aks update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n MyManagedCluster
-  - summary: Enable authorized IP ranges for apiserver.
-    syntax:
-      content: az aks update --api-server-authorized-ip-ranges 172.0.0.10/16,168.10.0.10/18 -g MyResourceGroup -n MyManagedCluster
   - summary: Enable pod security policy.
     syntax:
       content: az aks update --enable-pod-security-policy -g MyResourceGroup -n MyManagedCluster
@@ -567,6 +570,15 @@ items:
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
+  - summary: Update a kubernetes cluster with authorized apiserver ip ranges.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24
+  - summary: Disable authorized apiserver ip ranges feature for a kubernetes cluster.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges ""
+  - summary: Restrict apiserver traffic in a kubernetes cluster to agentpool nodes.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 0.0.0.0/32
   parameters:
   - isRequired: true
     name: --name -n
@@ -577,7 +589,7 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --api-server-authorized-ip-ranges
-    summary: List of authorized IP ranges (separated by comma) for apiserver. Set to "" for disabling it.
+    summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
