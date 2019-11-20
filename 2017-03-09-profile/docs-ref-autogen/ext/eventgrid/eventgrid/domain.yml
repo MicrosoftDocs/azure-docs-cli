@@ -25,9 +25,9 @@ items:
   - summary: Create a new domain with custom input mappings.
     syntax:
       content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=mytopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
-  - summary: Create a new domain that accepts events published in CloudEvents V0.1 schema.
+  - summary: Create a new domain that accepts events published in CloudEvents V1.0 schema and maps a property mytopicfield to the topic name.
     syntax:
-      content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema cloudeventv01schema
+      content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema cloudeventschemav1_0 --input-mapping-fields topic=mytopicfield
   parameters:
   - isRequired: true
     name: --location -l
@@ -49,7 +49,7 @@ items:
     description: ''
   - name: --input-schema
     defaultValue: eventgridschema
-    parameterValueGroup: cloudeventv01schema, customeventschema, eventgridschema
+    parameterValueGroup: cloudeventschemav1_0, customeventschema, eventgridschema
     summary: Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
     description: ''
   - name: --tags
@@ -87,6 +87,12 @@ items:
   - summary: List all domains in a resource group.
     syntax:
       content: az eventgrid domain list -g rg1
+  - summary: List all domains in a resource group whose name contains the pattern "XYZ"
+    syntax:
+      content: az eventgrid domain list -g rg1 --odata-query "Contains(name, 'XYZ')"
+  - summary: List all domains in a resource group except the domain with name "name1"
+    syntax:
+      content: az eventgrid domain list -g rg1 --odata-query "NOT (name eq 'name1')"
   parameters:
   - name: --odata-query
     summary: The query used to filter the results using OData syntax.

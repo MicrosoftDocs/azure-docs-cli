@@ -86,13 +86,13 @@ items:
             --source-resource-id /subscriptions/{SubID} \
             --endpoint-type servicebusqueue \
             --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.ServiceBus/namespaces/ns1/queues/queue1
-  - summary: Create a new event subscription for an Event Grid domain, using default filters, and CloudEventV01 as the delivery schema.
+  - summary: Create a new event subscription for an Event Grid domain, using default filters, and CloudEvent V 1.0 as the delivery schema.
     syntax:
       content: >-
         az eventgrid event-subscription create --name es2 \
             --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1 \
             --endpoint https://contoso.azurewebsites.net/api/f1?code=code \
-            --event-delivery-schema cloudeventv01schema
+            --event-delivery-schema cloudeventschemav1_0
   - summary: Create a new event subscription for a storage account, with a deadletter destination and custom retry policy of maximum 10 delivery attempts and an Event TTL of 2 hours (whichever happens earlier).
     syntax:
       content: >-
@@ -114,6 +114,20 @@ items:
             --source-resource-id "/subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Storage/storageaccounts/sa1" \
             --endpoint https://contoso.azurewebsites.net/api/f1?code=code
             --expiration-date "2018-10-31"
+  - summary: Create a new event subscription for an Event Grid topic, using Azure Active Directory enabled Webhook as a destination .
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es1 \
+            --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1 \
+            --endpoint https://contoso.azurewebsites.net/api/f1?code=code
+            --azure_active_directory_tenant_id azureactivedirectorytenantid
+            --azure_active_directory_application_id_or_uri azureactivedirectoryapplicationidoruri
+  - summary: Create a new event subscription for an Event Grid topic, using Azure Functions as destination.
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --name es1 \
+            --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1 \
+            --endpoint /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Web/sites/{functionappname}/functions/{functionname}
   parameters:
   - isRequired: true
     name: --endpoint
@@ -153,16 +167,22 @@ items:
       BoolEquals:                --advanced-filter data.property3 BoolEquals true
 
       Multiple advanced filters can be specified by using more than one `--advanced-filter` argument.
+  - name: --azure-active-directory-application-id-or-uri
+    summary: The Azure Active Directory Application Id or Uri to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
+    description: ''
+  - name: --azure-active-directory-tenant-id
+    summary: The Azure Active Directory Tenant Id to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
+    description: ''
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
-    summary: The type of the destination endpoint. It is expected that the destination endpoint be created and available for use before executing any Event Grid command.
+    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
+    summary: The type of the destination endpoint.
     description: ''
   - name: --event-delivery-schema
-    parameterValueGroup: cloudeventv01schema, custominputschema, eventgridschema
+    parameterValueGroup: cloudeventschemav1_0, custominputschema, eventgridschema
     summary: The schema in which events should be delivered for this event subscription. By default, events will be delivered in the same schema in which they are published (based on the corresponding topic's input schema).
     description: ''
   - name: --event-ttl
@@ -181,6 +201,12 @@ items:
   - name: --max-delivery-attempts
     defaultValue: "30"
     summary: Maximum number of delivery attempts. Must be a number between 1 and 30.
+    description: ''
+  - name: --max-events-per-batch
+    summary: Maximum number of events in a batch. Must be a number between 1 and 5000.
+    description: ''
+  - name: --preferred-batch-size-in-kilobytes
+    summary: Preferred batch size in kilobytes. Must be a number between 1 and 1024.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -201,7 +227,7 @@ items:
 
       For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
 
-      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
+      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
 
       For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with
@@ -278,7 +304,7 @@ items:
 
       For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
 
-      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
+      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
 
       For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
@@ -338,6 +364,12 @@ items:
         az eventgrid event-subscription list --location westus2 --resource-group {RG}
 
         az eventgrid event-subscription list --location global --resource-group {RG}
+  - summary: List all event subscriptions for an Event Grid domain whose name contains the pattern "XYZ"
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1 --odata-query "Contains(name, 'XYZ')"
+  - summary: List all event subscriptions for an Event Grid domain except the event subscription with name "name1"
+    syntax:
+      content: az eventgrid event-subscription list --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/d1 --odata-query "NOT (name eq 'name1')"
   parameters:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
@@ -364,7 +396,7 @@ items:
 
       For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
 
-      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
+      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
 
       For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
@@ -432,7 +464,7 @@ items:
 
       For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
 
-      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
+      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
 
       For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --topic-name
@@ -489,7 +521,7 @@ items:
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: eventhub, hybridconnection, servicebusqueue, storagequeue, webhook
+    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --included-event-types
@@ -517,7 +549,7 @@ items:
 
       For storage account:        --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageaccounts/sa1
 
-      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1
+      For EventGrid domain:       --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1
 
       For EventGrid domain topic: --source-resource-id /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.EventGrid/domains/d1/topics/t1.
   - name: --subject-begins-with

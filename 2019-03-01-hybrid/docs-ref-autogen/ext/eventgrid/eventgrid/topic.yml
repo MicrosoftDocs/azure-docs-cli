@@ -2,7 +2,7 @@
 items:
 - uid: ext_eventgrid_az_eventgrid_topic
   name: az eventgrid topic
-  summary: Manage topics.
+  summary: Manage Azure Event Grid topics.
   description: ''
   langs:
   - azurecli
@@ -25,9 +25,9 @@ items:
   - summary: Create a new topic with custom input mappings.
     syntax:
       content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=myTopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
-  - summary: Create a new topic that accepts events published in CloudEvents V0.1 schema.
+  - summary: Create a new topic that accepts events published in CloudEvents V1.0 schema.
     syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventv01schema
+      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventschemav1_0
   parameters:
   - isRequired: true
     name: --location -l
@@ -49,7 +49,7 @@ items:
     description: ''
   - name: --input-schema
     defaultValue: eventgridschema
-    parameterValueGroup: cloudeventv01schema, customeventschema, eventgridschema
+    parameterValueGroup: cloudeventschemav1_0, customeventschema, eventgridschema
     summary: Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
     description: ''
   - name: --tags
@@ -87,6 +87,12 @@ items:
   - summary: List all topics in a resource group.
     syntax:
       content: az eventgrid topic list -g rg1
+  - summary: List all topics in a resource group whose name contains the pattern "XYZ"
+    syntax:
+      content: az eventgrid topic list -g rg1 --odata-query "Contains(name, 'XYZ')"
+  - summary: List all topics in a resource group except the domain with name "name1"
+    syntax:
+      content: az eventgrid topic list -g rg1 --odata-query "NOT (name eq 'name1')"
   parameters:
   - name: --odata-query
     summary: The query used to filter the results using OData syntax.
@@ -188,4 +194,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage topics.
+description: Manage Azure Event Grid topics.
