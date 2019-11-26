@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/04/2019
+ms.date: 11/26/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,6 +13,117 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## November 26, 2019
+
+Version 2.0.77
+
+### ACR
+
+* Deprecated paramater `--branch` from acr task create/update
+
+### Azure Red Hat OpenShift
+
+* Added `--workspace-resource-id` flag to allow creation of Azure Red Hat Openshift cluster with monitoring
+* Added `monitor_profile` to create Azure Red Hat OpenShift cluster with monitoring
+
+### AKS
+
+* Added support cluster certificate rotation operation using "az aks rotate-certs".
+
+### AppConfig
+
+* Added support for using ":" for `as az appconfig kv import` separator
+* Fixed issue for listing key values with multiple labels including null label. 
+* Updated management plane sdk, azure-mgmt-appconfiguration, to version 0.3.0. 
+
+### AppService
+
+* Fixed issue #11100: AttributeError for az webapp up when create service plan
+* az webapp up: Forcing the creation or deployment to a site for supported languages, no defaults used.
+* Added support for App Service Environment: az appservice ase show | list | list-addresses | list-plans | create | update | delete
+
+### Backup
+
+* Fixed issue in az backup policy list-associated-items. Added optional BackupManagementType parameter.
+
+### Compute
+
+* Upgraded API version of compute, disks, snapshots to 2019-07-01
+* vmss create: Improvement for --orchestration-mode
+* sig image-definition create: Added --os-state to allow specifying whether the virtual machines created under this image are 'Generalized' or 'Specialized'
+* sig image-definition create: Added --hyper-v-generation to allow specifying the hypervisor generation
+* sig image-version create: Added support --os-snapshot and --data-snapshots
+* image create: Added --data-disk-caching to allow specifying caching setting of data disks
+* Upgraded Python Compute SDK to 10.0.0
+* vm/vmss create: Added 'Spot' to 'Priority' enum property
+* [Breaking change] Renamed '--max-billing' parameter to '--max-price', for both VM and VMSS, to be consistent with Swagger and Powershell cmdlets
+* vm monitor log show: Added support for querying log over linked log analytics workspace.
+
+### IOT
+
+* Fix #2531: Added convenience arguments for hub update.
+* Fix #8323: Added missing parameters to create storage custom endpoint.
+* Fix regression bug: Reverted the changes which overrides the default storage endpoint.
+
+### Key Vault
+
+* Fixed #11121: When using `az keyvault certificate list`, passing `--include-pending` now doesn't require a value of `true` or `false`
+
+### NetAppFiles
+
+* Upgraded azure-mgmt-netapp to 0.7.0 which includes some additional volume properties associated with upcoming replication operations
+
+### Network
+
+* application-gateway waf-config: deprecated
+* application-gateway waf-policy: Added subgroup managed-rules to manage managed rule sets and exclusion rules
+* application-gateway waf-policy: Added subgroup policy-setting to manage global configuration of a waf-policy
+* [BREAKING CHANGE] application-gateway waf-policy: Renamed subgroup rule to custom-rule
+* application-gateway http-listener: Added --firewall-policy when create
+* application-gateway url-path-map rule: Added --firewall-policy when create
+
+### Packaging
+
+* Rewrote the az wrapper in Python
+* Added support for Python 3.8
+* Changed to Python 3 for RPM package
+
+### Profile
+
+* Polished error when running `az login -u {} -p {}` with Microsoft account
+* Polished `SSLError` when running `az login` behind a proxy with self-signed root certificate
+* Fixed #10578: `az login` hangs when more than one instances are launched at the same time on Windows or WSL
+* Fixed #11059: `az login --allow-no-subscriptions` fails if there are subscriptions in the tenant
+* Fixed #11238: After renaming a subscription, logging in with MSI will result in the same subscription appearing twice
+
+### RBAC
+
+* Fixed #10996: Polish error for `--force-change-password-next-login` in `az ad user update` when `--password` is not specified
+
+### Redis
+
+* Fixed #2902: Avoid setting memory configs while updating Basic SKU cache
+
+### Reservations
+
+* Upgraded SDK Version to 0.6.0
+* Added billingplan details info after calling Get-Gatalogs
+* Added new command `az reservations reservation-order calculate` to calculate the price for a reservation
+* Added new command `az reservations reservation-order purchase` to purchase a new reservation
+
+### Rest
+* Changed `az rest` to GA
+
+### SQL
+
+* Updated azure-mgmt-sql to version 0.15.0.
+
+### Storage
+
+* storage account create: Added --enable-hierarchical-namespace to support filesystem semantics in blob service.
+* Removed unrelated exception from error message
+* Fixed issues with incorrect error message "You do not have the required permissions needed to perform this operation." when blocked by network rules or AuthenticationFailed.
+
 ## November 4, 2019
 
 Version 2.0.76
@@ -20,8 +131,8 @@ Version 2.0.76
 ### ACR
 
 * Added a preview parameter `--pack-image-tag` to command `az acr pack build`.
-* Supported enabling auditing on creating a registry
-* Supported Repository-scoped RBAC
+* Added support for enabling auditing on creating a registry
+* Added support for Repository-scoped RBAC
 
 ### AKS
 
@@ -96,10 +207,10 @@ Version 2.0.76
 
 * `az network private-dns link vnet create/update`: Support cross-tenant virtual network linking.
 * [BREAKING CHANGE] `az network vnet subnet list`: Changed `--resource-group` and `--vnet-name` to be required now.
-* `az network public-ip prefix create`: Supported to specify IP address version (IPv4, IPv6) when creation
+* `az network public-ip prefix create`: Added support to specify IP address version (IPv4, IPv6) when creation
 * Bumped azure-mgmt-network to 7.0.0 and api-version to 2019-09-01
-* `az network vrouter`: Supported new service virtual router and virtual router peering
-* `az network express-route gateway connection`: Supported `--internet-security`
+* `az network vrouter`: Added support for new service virtual router and virtual router peering
+* `az network express-route gateway connection`: Added support for `--internet-security`
 
 ### Profile
 
@@ -255,9 +366,9 @@ Version 2.0.74
 ### Batch
 
 * Added new JSON configuration settings to `--json-file` for `batch pool create`:
-  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
   * Added optional property `publicIPs` on `NetworkConfiguration` for public IPs on pools
-    (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+    (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
 * Added support for shared image galleries to `--image`
 * [BREAKING CHANGE] Changed default value of `--start-task-wait-for-success` on `batch pool create` to be `true`
 * [BREAKING CHANGE] Changed default value for `Scope` on `AutoUserSpecification` to always be Pool (was `Task` on Windows nodes, `Pool` on Linux nodes)

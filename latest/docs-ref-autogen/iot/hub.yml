@@ -85,7 +85,7 @@ items:
     summary: Location of your IoT Hub. Default is the location of target resource group.
     description: ''
   - name: --partition-count
-    defaultValue: "2"
+    defaultValue: "4"
     summary: The number of partitions of the backing Event Hub for device-to-cloud messages.
     description: ''
   - name: --rd --retention-day
@@ -122,7 +122,7 @@ items:
       content: az iot hub delete --name MyIoTHub --resource-group MyResourceGroup
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -177,7 +177,7 @@ items:
       content: az iot hub list-skus --name MyIoTHub
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -213,7 +213,7 @@ items:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -245,7 +245,7 @@ items:
       content: az iot hub show-connection-string --key primary --policy-name MyPolicy
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -298,7 +298,7 @@ items:
     summary: IoT Hub name.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -327,7 +327,7 @@ items:
       content: az iot hub show-quota-metrics --name MyIoTHub
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -356,7 +356,7 @@ items:
       content: az iot hub show-stats --name MyIoTHub
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -380,6 +380,9 @@ items:
   langs:
   - azurecli
   examples:
+  - summary: Add a storage container settings
+    syntax:
+      content: az iot hub update --name MyIotHub --fileupload-storage-connectionstring "connection-string" \ --fileupload-storage-container-name "container_name"
   - summary: Add a firewall filter rule to accept traffic from the IP mask 127.0.0.0/31.
     syntax:
       content: az iot hub update --name MyIotHub --add properties.ipFilterRules filter_name=test-rule action=Accept ip_mask=127.0.0.0/31
@@ -387,8 +390,52 @@ items:
     syntax:
       content: az iot hub update --name MyIotHub --set properties.allocationPolicy="GeoLatency"
   parameters:
+  - name: --c2d-max-delivery-count --cdd
+    summary: The number of times the IoT hub will attempt to deliver a cloud-to-device message to a device, between 1 and 100.
+    description: ''
+  - name: --c2d-ttl --ct
+    summary: The amount of time a message is available for the device to consume before it is expired by IoT Hub, between 1 and 48 hours.
+    description: ''
+  - name: --fc --fileupload-storage-container-name
+    summary: The name of the root container where you upload files. The container need not exist but should be creatable using the connectionString specified.
+    description: ''
+  - name: --fcs --fileupload-storage-connectionstring
+    summary: The connection string for the Azure Storage account to which files are uploaded.
+    description: ''
+  - name: --fd --feedback-max-delivery-count
+    summary: The number of times the IoT hub attempts to deliver a message on the feedback queue, between 1 and 100.
+    description: ''
+  - name: --feedback-lock-duration --fld
+    summary: The lock duration for the feedback queue, between 5 and 300 seconds.
+    description: ''
+  - name: --feedback-ttl --ft
+    summary: The period of time for which the IoT hub will maintain the feedback for expiration or delivery of cloud-to-device messages, between 1 and 48 hours.
+    description: ''
+  - name: --fileupload-notification-max-delivery-count --fnd
+    summary: The number of times the IoT hub will attempt to deliver a file notification message, between 1 and 100.
+    description: ''
+  - name: --fileupload-notification-ttl --fnt
+    summary: The amount of time a file upload notification is available for the service to consume before it is expired by IoT Hub, between 1 and 48 hours.
+    description: ''
+  - name: --fileupload-notifications --fn
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether to log information about uploaded files to the messages/servicebound/filenotifications IoT Hub endpoint.
+    description: ''
+  - name: --fileupload-sas-ttl --fst
+    summary: The amount of time a SAS URI generated by IoT Hub is valid before it expires, between 1 and 24 hours.
+    description: ''
+  - name: --rd --retention-day
+    summary: Specifies how long this IoT hub will maintain device-to-cloud events, between 1 and 7 days.
+    description: ''
+  - name: --sku
+    parameterValueGroup: B1, B2, B3, F1, S1, S2, S3
+    summary: Pricing tier for Azure IoT Hub. Default value is F1, which is free. Note that only one free IoT hub instance is allowed in each subscription. Exception will be thrown if free instances exceed one.
+    description: ''
+  - name: --unit
+    summary: Units in your IoT Hub.
+    description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: IoT Hub name.
@@ -590,7 +637,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/iot/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b375582c5584faf9cf3b75896cf8a03f31008077/src/azure-cli/azure/cli/command_modules/iot/_help.py
-updated_at: 10/19/2019 11:33:17 AM
-ms.date: 10/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/b2737127f01b2117a227be8fcbea6dc10cfb3209/src/azure-cli/azure/cli/command_modules/iot/_help.py
+updated_at: 11/20/2019 2:00:33 PM
+ms.date: 11/20/2019
 description: Manage Azure IoT hubs.

@@ -4,7 +4,7 @@ description: How to install the Azure CLI with yum
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 09/09/2018
+ms.date: 11/26/2019
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,8 +13,8 @@ ms.devlang: azurecli
 
 # Install Azure CLI with yum
 
-For Linux distributions with  `yum` such as RHEL, Fedora, or CentOS, there's a package
-for the Azure CLI. This package has been tested with RHEL 7, Fedora 19 and higher, and CentOS 7.
+For Linux distributions with `yum` such as RHEL, Fedora, or CentOS, there's a package
+for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24 and higher, CentOS 7 and CentOS 8.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
@@ -76,6 +76,12 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+
+### Install on RHEL 7.6 or other systems without Python 3
+
+If you can, please upgrade your system to a verison with official support for `python3` package. Otherwise, you need to first install a `python3` package, either [build from source](https://github.com/linux-on-ibm-z/docs/wiki/Building-Python-3.6.x) or install through some [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Then you can follow the [manual install instructions](install-azure-cli-linux.md).
+
+The least recommended option is to still use Python 2 and follow the [manual install instructions](install-azure-cli-linux.md) since Python 2 is being end-of-lifed on January 1, 2020. A future version of Azure CLI will drop support for Python 2.7.
 
 ## Update
 

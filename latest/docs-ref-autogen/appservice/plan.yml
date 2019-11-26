@@ -27,6 +27,11 @@ items:
       content: >-
         az appservice plan create -g MyResourceGroup -n MyPlan \
             --is-linux --number-of-workers 4 --sku S1
+  - summary: Create an app service plan for app service environment.
+    syntax:
+      content: >-
+        az appservice plan create -g MyResourceGroup -n MyPlan \
+            --app-service-environment MyAppServiceEnvironment --sku I1
   parameters:
   - isRequired: true
     name: --name -n
@@ -36,6 +41,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --app-service-environment -e
+    summary: Name or ID of the app service environment.
+    description: ''
   - name: --hyper-v
     summary: Host web app on Windows container.
     description: ''
@@ -44,6 +52,9 @@ items:
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --number-of-workers
     defaultValue: "1"
@@ -55,7 +66,7 @@ items:
   - name: --sku
     defaultValue: B1
     parameterValueGroup: B1, B2, B3, D1, F1, FREE, I1, I2, I3, P1V2, P2V2, P3V2, PC2, PC3, PC4, S1, S2, S3, SHARED
-    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large).
+    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large), I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large).
     description: ''
   - name: --tags
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
@@ -84,7 +95,7 @@ items:
     summary: Do not prompt for confirmation.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the app service plan.
@@ -111,6 +122,9 @@ items:
   - summary: List all free tier App Service plans.
     syntax:
       content: az appservice plan list --query "[?sku.tier=='Free']"
+  - summary: List all App Service plans for an App Service environment.
+    syntax:
+      content: az appservice plan list --query "[?hostingEnvironmentProfile.name=='<ase-name>']"
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -136,7 +150,7 @@ items:
       content: az appservice plan show --name MyAppServicePlan   --resource-group MyResourceGroup
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the app service plan.
@@ -164,16 +178,19 @@ items:
     syntax:
       content: az appservice plan update --name MyAppServicePlan --resource-group MyResourceGroup --sku F1
   parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --number-of-workers
     defaultValue: "1"
     summary: Number of workers to be allocated.
     description: ''
   - name: --sku
     parameterValueGroup: B1, B2, B3, D1, F1, FREE, I1, I2, I3, P1V2, P2V2, P3V2, PC2, PC3, PC4, S1, S2, S3, SHARED
-    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large).
+    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large), I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large).
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the app service plan.
@@ -234,7 +251,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/573d0640d1b738bd1fb57d674f583da0ad5a608d/src/azure-cli/azure/cli/command_modules/appservice/_help.py
-updated_at: 10/19/2019 3:06:36 PM
-ms.date: 10/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/0f86d98e5e3f143382d50ea1465a467f1d0f638f/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+updated_at: 11/21/2019 6:46:58 AM
+ms.date: 11/21/2019
 description: Manage app service plans.

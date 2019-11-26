@@ -1,0 +1,342 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_appservice_ase
+  name: az appservice ase
+  summary: Manage App Service Environments v2.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_appservice_ase_create
+  - az_appservice_ase_delete
+  - az_appservice_ase_list
+  - az_appservice_ase_list_addresses
+  - az_appservice_ase_list_plans
+  - az_appservice_ase_show
+  - az_appservice_ase_update
+- uid: az_appservice_ase_create
+  name: az appservice ase create
+  summary: Create app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create Resource Group, vNet and app service environment with default values.
+    syntax:
+      content: >-
+        az group create -g MyResourceGroup --location westeurope
+
+
+        az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
+          --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
+
+        az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
+          --subnet MyAseSubnet
+  - summary: Create External app service environments with large front-ends and scale factor of 10 in existing resource group and vNet.
+    syntax:
+      content: >-
+        az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
+          --subnet MyAseSubnet --front-end-sku I3 --front-end-scale-factor 10 \
+          --virtual-ip-type External
+  - summary: Create vNet and app service environment, but do not create network security group and route table in existing resource group.
+    syntax:
+      content: >-
+        az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
+          --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
+
+        az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
+          --subnet MyAseSubnet --ignore-network-security-group --ignore-route-table
+  - summary: Create vNet and app service environment in a smaller than recommended subnet in existing resource group.
+    syntax:
+      content: >-
+        az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
+          --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/26
+
+        az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
+          --subnet MyAseSubnet --ignore-subnet-size-validation
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --subnet
+    summary: Name or ID of existing subnet. To create vnet and/or subnet                    use `az network vnet [subnet] create`.
+    description: ''
+  - name: --force-network-security-group
+    parameterValueGroup: false, true
+    summary: Override network security group for subnet.
+    description: ''
+  - name: --force-route-table
+    parameterValueGroup: false, true
+    summary: Override route table for subnet.
+    description: ''
+  - name: --front-end-scale-factor
+    defaultValue: "15"
+    summary: Scale of front ends to app service plan instance ratio.
+    description: ''
+  - name: --front-end-sku
+    defaultValue: I1
+    parameterValueGroup: I1, I2, I3
+    summary: Size of front end servers.
+    description: ''
+  - name: --ignore-network-security-group
+    parameterValueGroup: false, true
+    summary: Configure network security group manually.
+    description: ''
+  - name: --ignore-route-table
+    parameterValueGroup: false, true
+    summary: Configure route table manually.
+    description: ''
+  - name: --ignore-subnet-size-validation
+    parameterValueGroup: false, true
+    summary: Do not check if subnet is sized according to recommendations.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --virtual-ip-type
+    defaultValue: Internal
+    parameterValueGroup: External, Internal
+    summary: Specify if app service environment should be accessible from internet.
+    description: ''
+  - name: --vnet-name
+    summary: Name of the vNet. Mandatory if only subnet name is specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_delete
+  name: az appservice ase delete
+  summary: Delete app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete app service environment.
+    syntax:
+      content: az appservice ase delete -n MyAseName
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_list
+  name: az appservice ase list
+  summary: List app service environments.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List all app service environments in subscription.
+    syntax:
+      content: az appservice ase list
+  - summary: List all app service environments in resource group.
+    syntax:
+      content: az appservice ase list --resource-group MyResourceGroup
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_list_addresses
+  name: az appservice ase list-addresses
+  summary: List VIPs associated with an app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List VIPs for an app service environments.
+    syntax:
+      content: az appservice ase list-addresses --name MyAseName
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_list_plans
+  name: az appservice ase list-plans
+  summary: List app service plans associated with an app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List app service plans for an app service environments.
+    syntax:
+      content: az appservice ase list-plans --name MyAseName
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_show
+  name: az appservice ase show
+  summary: Show details of an app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Show app service environment.
+    syntax:
+      content: az appservice ase show --name MyAseName
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appservice_ase_update
+  name: az appservice ase update
+  summary: Update app service environment.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update app service environment with medium front-ends and scale factor of 10.
+    syntax:
+      content: >-
+        az appservice ase update -n MyAseName -g MyResourceGroup --front-end-sku I2 \
+          --front-end-scale-factor 10
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - name: --front-end-scale-factor
+    summary: Scale of front ends to app service plan instance ratio between 5 and 15.
+    description: ''
+  - name: --front-end-sku
+    parameterValueGroup: I1, I2, I3
+    summary: Size of front end servers.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_appservice_ase_create
+  name: az appservice ase create
+  summary: Create app service environment.
+- uid: az_appservice_ase_delete
+  name: az appservice ase delete
+  summary: Delete app service environment.
+- uid: az_appservice_ase_list
+  name: az appservice ase list
+  summary: List app service environments.
+- uid: az_appservice_ase_list_addresses
+  name: az appservice ase list-addresses
+  summary: List VIPs associated with an app service environment.
+- uid: az_appservice_ase_list_plans
+  name: az appservice ase list-plans
+  summary: List app service plans associated with an app service environment.
+- uid: az_appservice_ase_show
+  name: az appservice ase show
+  summary: Show details of an app service environment.
+- uid: az_appservice_ase_update
+  name: az appservice ase update
+  summary: Update app service environment.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/appservice/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/0f86d98e5e3f143382d50ea1465a467f1d0f638f/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+updated_at: 11/21/2019 6:46:58 AM
+ms.date: 11/21/2019
+description: Manage App Service Environments v2.

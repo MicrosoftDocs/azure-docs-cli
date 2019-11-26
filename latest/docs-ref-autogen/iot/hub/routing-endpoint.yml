@@ -30,7 +30,9 @@ items:
 
         --endpoint-subscription-id {SubscriptionId} --connection-string {ConnectionString} \
 
-        --container-name {ContainerName}
+        --container-name {ContainerName} --batch-frequency 100 --chunk-size 100 \
+
+        --ff {iothub}-{partition}-{YYYY}-{MM}-{DD}-{HH}-{mm}
   parameters:
   - isRequired: true
     name: --connection-string -c
@@ -57,12 +59,24 @@ items:
     name: --hub-name
     summary: IoT Hub name.
     description: ''
+  - name: --batch-frequency -b
+    defaultValue: "300"
+    summary: Request batch frequency in seconds. The maximum amount of time that can elapse before data is written to a blob, between 60 and 720 seconds.
+    description: ''
+  - name: --chunk-size -w
+    defaultValue: "300"
+    summary: Request chunk size in megabytes(MB). The maximum size of blobs, between 10 and 500 MB.
+    description: ''
   - name: --container --container-name
     summary: Name of the storage container.
     description: ''
   - name: --encoding
     parameterValueGroup: avro, json
     summary: Encoding format for the container. The default is AVRO. Note that this field is applicable only for blob container endpoints.
+    description: ''
+  - name: --ff --file-name-format
+    defaultValue: '{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}'
+    summary: File name format for the blob. The file name format must contain {iothub}, {partition}, {YYYY}, {MM}, {DD}, {HH} and {mm} fields. All parameters are mandatory but can be reordered with or without delimiters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -104,7 +118,7 @@ items:
     summary: IoT Hub name.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -140,7 +154,7 @@ items:
     summary: IoT Hub name.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -176,7 +190,7 @@ items:
     summary: IoT Hub name.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -219,7 +233,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/iot/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b375582c5584faf9cf3b75896cf8a03f31008077/src/azure-cli/azure/cli/command_modules/iot/_help.py
-updated_at: 10/19/2019 11:33:17 AM
-ms.date: 10/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/b2737127f01b2117a227be8fcbea6dc10cfb3209/src/azure-cli/azure/cli/command_modules/iot/_help.py
+updated_at: 11/20/2019 2:00:33 PM
+ms.date: 11/20/2019
 description: Manage custom endpoints of an IoT hub.
