@@ -43,13 +43,41 @@ items:
     description: >-
       Usage:   --action TYPE NAME [ARG ...]
 
-      Email:   --action email bob bob@contoso.com
+      Email:
+          Format:     --action email NAME EMAIL_ADDRESS [usecommonalertschema]
+          Example:    --action email bob bob@contoso.com
+      SMS:
+          Format:     --action sms NAME COUNTRY_CODE PHONE_NUMBER
+          Example:    --action sms charli 1 5551234567
+      Webhook:
+          Format:     --action webhook NAME URI [useaadauth OBJECT_ID IDENTIFIER URI] [usecommonalertschema]
+          Example:    --action webhook alert_hook <a href="https://www.contoso.com/alert">https://www.contoso.com/alert</a> useaadauth testobj <a href="http://identifier">http://identifier</a> usecommonalertschema
+      Arm Role:
+          Format:     --action armrole NAME ROLE_ID [usecommonalertschema]
+          Example:    --action armole owner_role 8e3af657-a8ff-443c-a75c-2fe8c4bcb635
+      Azure App Push:
+          Format:     --action azureapppush NAME EMAIL_ADDRESS
+          Example:    --action azureapppush test_apppush bob@contoso.com
+      ITSM:
+          Format:     --action itsm NAME WORKSPACE_ID CONNECTION_ID TICKET_CONFIGURATION REGION
+          Example:    --action itsm test_itsm test_workspace test_conn ticket_blob useast
+      Automation runbook:
+          Format:     --action automationrunbook NAME AUTOMATION_ACCOUNT_ID RUNBOOK_NAME WEBHOOK_RESOURCE_ID SERVICE_URI [isglobalrunbook] [usecommonalertschema]
+          Example:    --action automationrunbook test_runbook test_acc test_book test_webhook test_rsrc <a href="http://example.com">http://example.com</a> isglobalrunbook usecommonalertschema
+      Voice:
+          Format:     --action voice NAME COUNTRY_CODE PHONE_NUMBER
+          Example:    --action voice charli 1 4441234567
+      Logic App:
+          Format:     --action logicapp NAME RESOURCE_ID CALLBACK_URL [usecommonalertschema]
+          Example:    --action logicapp test_logicapp test_rsrc <a href="http://callback">http://callback</a>
+      Azure Function:
+          Format:     --action azurefunction NAME FUNCTION_APP_RESOURCE_ID FUNCTION_NAME HTTP_TRIGGER_URL [usecommonalertschema]
+          Example:    --action azurefunction test_function test_rsrc test_func <a href="http://trigger">http://trigger</a> usecommonalertschema
+      Multiple actions can be specified by using more than one `--add-action` argument.
 
-      SMS:     --action sms charli 1 5551234567
+      'useaadauth', 'isglobalrunbook' and 'usecommonalertschema' are optional arguements that only need to be passed to set the respective parameter to True.
 
-      Webhook: --action webhook alert_hook <a href="https://www.contoso.com/alert">https://www.contoso.com/alert</a>
-
-      Multiple actions can be specified by using more than one `--action` argument.
+      If the 'useaadauth' argument is passed, then the OBJECT_ID and IDENTIFIER_URI values are required as well.
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -67,7 +95,7 @@ items:
   - azurecli
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the action group.
@@ -99,7 +127,7 @@ items:
     summary: The name of the action group.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -144,7 +172,7 @@ items:
       content: az monitor action-group show --name MyActionGroup --resource-group MyResourceGroup
   parameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the action group.
@@ -179,7 +207,7 @@ items:
     summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
   - name: --ids
-    summary: One or more resource IDs (space-delimited). If provided, no other 'Resource Id' arguments should be specified.
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
     description: ''
   - name: --name -n
     summary: The name of the action group.
@@ -195,13 +223,41 @@ items:
     description: >-
       Usage:   --add-action TYPE NAME [ARG ...]
 
-      Email:   --add-action email bob bob@contoso.com
-
-      SMS:     --add-action sms charli 1 5551234567
-
-      Webhook: --add-action <a href="https://www.contoso.com/alert">https://www.contoso.com/alert</a>
-
+      Email:
+          Format:     --add-action email NAME EMAIL_ADDRESS [usecommonalertschema]
+          Example:    --add-action email bob bob@contoso.com
+      SMS:
+          Format:     --add-action sms NAME COUNTRY_CODE PHONE_NUMBER
+          Example:    --add-action sms charli 1 5551234567
+      Webhook:
+          Format:     --add-action webhook NAME URI [useaadauth OBJECT_ID IDENTIFIER URI] [usecommonalertschema]
+          Example:    --add-action <a href="https://www.contoso.com/alert">https://www.contoso.com/alert</a> useaadauth testobj <a href="http://identifier">http://identifier</a> usecommonalertschema
+      Arm Role:
+          Format:     --add-action armrole NAME ROLE_ID [usecommonalertschema]
+          Example:    --add-action armole owner_role 8e3af657-a8ff-443c-a75c-2fe8c4bcb635
+      Azure App Push:
+          Format:     --add-action azureapppush NAME EMAIL_ADDRESS
+          Example:    --add-action azureapppush test_apppush bob@contoso.com
+      ITSM:
+          Format:     --add-action itsm NAME WORKSPACE_ID CONNECTION_ID TICKET_CONFIGURATION REGION
+          Example:    --add-action itsm test_itsm test_workspace test_conn ticket_blob useast
+      Automation runbook:
+          Format:     --add-action automationrunbook NAME AUTOMATION_ACCOUNT_ID RUNBOOK_NAME WEBHOOK_RESOURCE_ID SERVICE_URI [isglobalrunbook] [usecommonalertschema]
+          Example:    --add-action automationrunbook test_runbook test_acc test_book test_webhook test_rsrc <a href="http://example.com">http://example.com</a> isglobalrunbook usecommonalertschema
+      Voice:
+          Format:     --add-action voice NAME COUNTRY_CODE PHONE_NUMBER
+          Example:    --add-action voice charli 1 4441234567
+      Logic App:
+          Format:     --add-action logicapp NAME RESOURCE_ID CALLBACK_URL [usecommonalertschema]
+          Example:    --add-action logicapp test_logicapp test_rsrc <a href="http://callback">http://callback</a>
+      Azure Function:
+          Format:     --add-action azurefunction NAME FUNCTION_APP_RESOURCE_ID FUNCTION_NAME HTTP_TRIGGER_URL [usecommonalertschema]
+          Example:    --add-action azurefunction test_function test_rsrc test_func <a href="http://trigger">http://trigger</a> usecommonalertschema
       Multiple actions can be specified by using more than one `--add-action` argument.
+
+      'useaadauth', 'isglobalrunbook' and 'usecommonalertschema' are optional arguements that only need to be passed to set the respective parameter to True.
+
+      If the 'useaadauth' argument is passed, then the OBJECT_ID and IDENTIFIER_URI values are required as well.
   - name: --remove-action -r
     summary: Remove receivers from the action group. Accept space-separated list of receiver names.
     description: ''
@@ -258,7 +314,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b028e7a80eaaba8419e54e38f03a98a38710c271/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-updated_at: 10/19/2019 1:30:06 PM
-ms.date: 10/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/85ad0a4219c67289080d95ab26af67bd5ecd6460/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+updated_at: 11/8/2019 3:36:55 AM
+ms.date: 11/08/2019
 description: Manage action groups.

@@ -9,6 +9,7 @@ items:
   children:
   - az_appconfig_kv_delete
   - az_appconfig_kv_export
+  - az_appconfig_kv_import
   - az_appconfig_kv_list
   - az_appconfig_kv_lock
   - az_appconfig_kv_restore
@@ -114,7 +115,81 @@ items:
     summary: Local configuration file path. Required for file arguments.
     description: ''
   - name: --separator
-    summary: "Delimiter for flatterning the json or yaml file to key-value pairs. Required for importing hierarchical structure. Not applicable for property files. Supported values: '.', ',', ';', '-', '_', '__', '/', ':', ''."
+    summary: "Delimiter for flatterning the json or yaml file to key-value pairs. Required for importing hierarchical structure. Not applicable for property files. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_appconfig_kv_import
+  name: az appconfig kv import
+  summary: Import configurations into your App Configuration from another place.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Import all keys with label test from a file.
+    syntax:
+      content: az appconfig kv import -n MyAppConfiguration --label test -s file --path D:/abc.json --format json
+  - summary: Import all keys with null label from an App Configuration.
+    syntax:
+      content: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration
+  - summary: Import all keys with null label from an App Service appliaction.
+    syntax:
+      content: az appconfig kv import -n MyAppConfiguration -s appservice --appservice-account MyAppService
+  parameters:
+  - isRequired: true
+    name: --source -s
+    parameterValueGroup: appconfig, appservice, file
+    summary: The source of importing.
+    description: ''
+  - name: --connection-string
+    summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --label
+    summary: Imported KVs will be assigned with this label. If no label specified, will assign null label.
+    description: ''
+  - name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
+    description: ''
+  - name: --prefix
+    summary: This prefix will be appended to the front of imported keys.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for preview.
+    description: ''
+  - name: --src-connection-string
+    summary: Connections of access key and endpoint of the source store.
+    description: ''
+  - name: --src-key
+    summary: If no key specified, import all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported.
+    description: ''
+  - name: --src-label
+    summary: Only keys with this label in source AppConfig will be imported. If no label specified, import keys with null label by default.
+    description: ''
+  - name: --src-name
+    summary: The name of the source App Configuration.
+    description: ''
+  - name: --appservice-account
+    summary: ARM ID for AppService OR the name of the AppService, assuming the it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
+    description: ''
+  - name: --depth
+    summary: Depth for flatterning the json or yaml file to key-value paris. Flattern to the deepest level by default.
+    description: ''
+  - name: --format
+    parameterValueGroup: json, properties, yaml
+    summary: Imported file format. Required for file arguments.
+    description: ''
+  - name: --path
+    summary: Local configuration file path. Required for file arguments.
+    description: ''
+  - name: --separator
+    summary: "Delimiter for flatterning the json or yaml file to key-value pairs. Required for importing hierarchical structure. Not applicable for property files. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -132,9 +207,9 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: List all key-values.
+  - summary: List all key-values with null label.
     syntax:
-      content: az appconfig kv list -n MyAppConfiguration
+      content: az appconfig kv list -n MyAppConfiguration --label \0
   - summary: List a specfic key for any label start with v1. using connection string.
     syntax:
       content: az appconfig kv list --key color --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --label v1.*
@@ -144,6 +219,9 @@ items:
   - summary: List 150 key-values with any labels.
     syntax:
       content: az appconfig kv list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx  --top 150
+  - summary: List key-values with multiple labels.
+    syntax:
+      content: az appconfig kv list --label test,prod,\0 -n MyAppConfiguration
   parameters:
   - name: --all
     summary: List all items.
@@ -162,7 +240,7 @@ items:
     summary: If no key specified, return all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported.
     description: ''
   - name: --label
-    summary: If no label specified, list all labels. Support star sign as filters, for instance abc\* means labels with abc as prefix. Similarly, \*abc and \*abc\* are also supported.
+    summary: If no label specified, list all labels. Support star sign as filters, for instance abc\* means labels with abc as prefix. Similarly, \*abc and \*abc\* are also supported. Use '0' for null label.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
@@ -201,7 +279,7 @@ items:
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --label
-    summary: If no label specified, lock entry with null label. Does NOT support filters like other commands.
+    summary: If no label specified, lock entry with null label. Filtering is not supported.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
@@ -333,7 +411,7 @@ items:
     summary: 'Format: "YYYY-MM-DDThh:mm:ssZ". If no time zone specified, use UTC by default.'
     description: ''
   - name: --label
-    summary: If no label specified, show entry with null label. Does NOT support filters like other commands.
+    summary: If no label specified, show entry with null label. Filtering is not supported.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
@@ -369,7 +447,7 @@ items:
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --label
-    summary: If no label specified, unlock entry with null label. Does NOT support filters like other commands.
+    summary: If no label specified, unlock entry with null label. Filtering is not supported.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
@@ -393,6 +471,9 @@ commands:
 - uid: az_appconfig_kv_export
   name: az appconfig kv export
   summary: Export configurations to another place from your App Configuration.
+- uid: az_appconfig_kv_import
+  name: az appconfig kv import
+  summary: Import configurations into your App Configuration from another place.
 - uid: az_appconfig_kv_list
   name: az appconfig kv list
   summary: List key-values.
@@ -427,7 +508,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/139781d5d58f74bf4f8c8e47c1e8713cdc2f23e9/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-updated_at: 10/24/2019 6:52:10 AM
-ms.date: 10/24/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/c6518d9bf8d600791d040fb606f52d3b1fa471be/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+updated_at: 11/22/2019 1:36:40 AM
+ms.date: 11/22/2019
 description: Manage key-values stored in an App Configuration.
