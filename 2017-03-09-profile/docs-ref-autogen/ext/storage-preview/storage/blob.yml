@@ -7,7 +7,59 @@ items:
   langs:
   - azurecli
   children:
+  - ext_storage-preview_az_storage_blob_list
   - ext_storage-preview_az_storage_blob_move
+- uid: ext_storage-preview_az_storage_blob_list
+  name: az storage blob list
+  summary: List blobs in a given container.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List all storage blobs in a container whose names start with 'foo'; will match names such as 'foo', 'foobar', and 'foo/bar'
+    syntax:
+      content: az storage blob list -c MyContainer --prefix foo
+  parameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --delimiter
+    summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
+    description: ''
+  - name: --include
+    defaultValue: mc
+    summary: 'Specifies additional datasets to include: (c)opy-info, (m)etadata, (s)napshots, (d)eleted-soft. Can be combined.'
+    description: ''
+  - name: --marker
+    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --num-results
+    defaultValue: "5000"
+    summary: Specifies the maximum number of results to return. Provide "\*" to return all.
+    description: ''
+  - name: --prefix
+    summary: Filters the results to return only blobs whose names begin with the specified prefix.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
 - uid: ext_storage-preview_az_storage_blob_move
   name: az storage blob move
   summary: Move a blob in a storage container.
@@ -25,7 +77,7 @@ items:
     description: ''
   - isRequired: true
     name: --destination-blob -d
-    summary: The source blob name. It should be an absolute path under the container. e.g.'topdir1/dirbar'.
+    summary: The destination blob name. It should be an absolute path under the container. e.g.'topdir1/dirbar'.
     description: ''
   - isRequired: true
     name: --source-blob -s
@@ -37,9 +89,6 @@ items:
     description: ''
   - name: --lease-id
     summary: Optional. A lease ID for the new_path. The new_path must have an active lease and the lease ID must match.
-    description: ''
-  - name: --mode
-    summary: 'Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be "legacy" or "posix", and the default value will be "posix". Legacy: if the destination of the move is an existing directory and that directory is empty, the source will overwrite the destination. If the directory is not empty, the move will fail. Posix: if the destination of the move is an existing empty directory, destination will be overwritten. Otherwise, the source will be moved into the destination directory. If the destination is an existing file, the file will be overwritten.'
     description: ''
   - name: --source-if-match
     summary: Optional. An ETag value. Specify this header to perform the rename operation only if the source's ETag matches the value specified.
@@ -131,7 +180,10 @@ commands:
   summary: Show a storage blob directory properties in a storage container.
 - uid: ext_storage-preview_az_storage_blob_directory_upload
   name: az storage blob directory upload
-  summary: Upload blobs to a storage blob directory.
+  summary: Upload blobs or subdirectories to a storage blob directory.
+- uid: ext_storage-preview_az_storage_blob_list
+  name: az storage blob list
+  summary: List blobs in a given container.
 - uid: ext_storage-preview_az_storage_blob_move
   name: az storage blob move
   summary: Move a blob in a storage container.
