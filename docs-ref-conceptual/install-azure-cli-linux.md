@@ -32,8 +32,9 @@ The CLI requires the following software:
 
 > [!IMPORTANT]
 >
-> The CLI is also compatible with Python 2.7.x, which is being end-of-lifed on January 1, 2020. For this
-> reason we recommend that you install Python 3 to run the CLI.
+> The CLI is also compatible with Python 2.7.x, which is being end-of-lifed on January 1, 2020. A future 
+> version of Azure CLI will drop support for Python 2.7. For this reason we recommend that you install 
+> Python 3 to run the CLI. 
 
 ## Install or update
 
