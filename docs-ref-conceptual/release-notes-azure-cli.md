@@ -53,10 +53,10 @@ Version 2.0.77
 * sig image-definition create: Added --os-state to allow specifying whether the virtual machines created under this image are 'Generalized' or 'Specialized'
 * sig image-definition create: Added --hyper-v-generation to allow specifying the hypervisor generation
 * sig image-version create: Added support --os-snapshot and --data-snapshots
-* image create: Add --data-disk-caching to allow specifying caching setting of data disks
-* Upgrade Python Compute SDK to 10.0.0
-* vm/vmss create: Add 'Spot' to 'Priority' enum property
-* [Breaking change] Rename '--max-billing' parameter to '--max-price', for both VM and VMSS, to be consistent with Swagger and Powershell cmdlets
+* image create: Added --data-disk-caching to allow specifying caching setting of data disks
+* Upgraded Python Compute SDK to 10.0.0
+* vm/vmss create: Added 'Spot' to 'Priority' enum property
+* [Breaking change] Renamed '--max-billing' parameter to '--max-price', for both VM and VMSS, to be consistent with Swagger and Powershell cmdlets
 * vm monitor log show: Added support for querying log over linked log analytics workspace.
 
 ### IOT
@@ -131,8 +131,8 @@ Version 2.0.76
 ### ACR
 
 * Added a preview parameter `--pack-image-tag` to command `az acr pack build`.
-* Supported enabling auditing on creating a registry
-* Supported Repository-scoped RBAC
+* Added support for enabling auditing on creating a registry
+* Added support for Repository-scoped RBAC
 
 ### AKS
 
@@ -207,10 +207,10 @@ Version 2.0.76
 
 * `az network private-dns link vnet create/update`: Support cross-tenant virtual network linking.
 * [BREAKING CHANGE] `az network vnet subnet list`: Changed `--resource-group` and `--vnet-name` to be required now.
-* `az network public-ip prefix create`: Supported to specify IP address version (IPv4, IPv6) when creation
+* `az network public-ip prefix create`: Added support to specify IP address version (IPv4, IPv6) when creation
 * Bumped azure-mgmt-network to 7.0.0 and api-version to 2019-09-01
-* `az network vrouter`: Supported new service virtual router and virtual router peering
-* `az network express-route gateway connection`: Supported `--internet-security`
+* `az network vrouter`: Added support for new service virtual router and virtual router peering
+* `az network express-route gateway connection`: Added support for `--internet-security`
 
 ### Profile
 
@@ -366,9 +366,9 @@ Version 2.0.74
 ### Batch
 
 * Added new JSON configuration settings to `--json-file` for `batch pool create`:
-  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
   * Added optional property `publicIPs` on `NetworkConfiguration` for public IPs on pools
-    (see https://docs.microsoft.com/en-us/rest/api/batchservice/pool/add#request-body for details)
+    (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
 * Added support for shared image galleries to `--image`
 * [BREAKING CHANGE] Changed default value of `--start-task-wait-for-success` on `batch pool create` to be `true`
 * [BREAKING CHANGE] Changed default value for `Scope` on `AutoUserSpecification` to always be Pool (was `Task` on Windows nodes, `Pool` on Linux nodes)
