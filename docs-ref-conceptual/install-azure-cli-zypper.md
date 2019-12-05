@@ -14,7 +14,7 @@ ms.devlang: azurecli
 # Install Azure CLI with zypper
 
 For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
-for the Azure CLI. This package has been tested with openSUSE 42.2 and later, and SLES 15 and later.
+for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLES 15.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
@@ -56,7 +56,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
-### Install on SLES 12
+### Install on SLES 12 or other other systems without Python 3.6
 
 On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
 ```bash
