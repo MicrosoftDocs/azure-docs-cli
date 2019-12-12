@@ -128,7 +128,7 @@ items:
       content: az iot device c2d-message send -d {device_id} -n {iothub_name} --data 'Hello World' --props 'key0=value0;key1=value1'
   - summary: Send a C2D message and wait for device acknowledgement
     syntax:
-      content: az iot device c2d-message send -d {device_id} -n {iothub_name} --wait
+      content: az iot device c2d-message send -d {device_id} -n {iothub_name} --ack full --wait
   parameters:
   - isRequired: true
     name: --device-id -d
@@ -138,12 +138,22 @@ items:
     parameterValueGroup: full, negative, positive
     summary: 'Request the delivery of per-message feedback regarding the final state of that message. The description of ack values is as follows. Positive: If the c2d message reaches the Completed state, IoT Hub generates a feedback message. Negative: If the c2d message reaches the Dead lettered state, IoT Hub generates a feedback message. Full: IoT Hub generates a feedback message in either case. By default, no ack is requested.'
     description: ''
+  - name: --ce --content-encoding
+    defaultValue: utf-8
+    summary: The content encoding associated with the C2D message.
+    description: ''
   - name: --cid --correlation-id
-    summary: Correlation Id associated with message.
+    summary: The correlation Id associated with the C2D message.
+    description: ''
+  - name: --content-type --ct
+    summary: The content type associated with the C2D message.
     description: ''
   - name: --da --data
     defaultValue: Ping from Az CLI IoT Extension
     summary: Message body.
+    description: ''
+  - name: --expiry --expiry-time-utc
+    summary: Units are milliseconds since unix epoch. If no time is indicated the default IoT Hub C2D message TTL is used.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -151,8 +161,11 @@ items:
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
     description: ''
+  - name: --message-id --mid
+    summary: The C2D message Id. If no message Id is provided a UUID will be generated.
+    description: ''
   - name: --properties --props -p
-    summary: 'Message property bag in key-value pairs with the following format: a=b;c=d. For mqtt messaging - you are able to send system properties using $.<name>=value. For instance $.cid=12345 sets the system correlation Id property. Other system property identifier examples include $.ct for content type, $.mid for message Id and $.ce for content encoding.'
+    summary: 'Message property bag in key-value pairs with the following format: a=b;c=d.'
     description: ''
   - name: --repair -r
     parameterValueGroup: false, true
@@ -160,6 +173,9 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --uid --user-id
+    summary: The C2D message, user Id property.
     description: ''
   - name: --wait -w
     parameterValueGroup: false, true
