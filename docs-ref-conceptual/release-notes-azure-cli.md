@@ -32,7 +32,7 @@ ms.devlang: azurecli
 ### AppConfig
 
 * Fixed bug when appending api-version to request url. The existing solution doesn't work with pagination.
-* Added support showing languages besides English as our backend service support unicode for globalization.
+* Added support for showing languages besides English as our backend service support unicode for globalization.
 
 ### AppService
 
