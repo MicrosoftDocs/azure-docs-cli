@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 11/26/2019
+ms.date: 12/17/2019
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,13 +13,135 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## December 17, 2019
+
+2.0.78
+
+### ACR
+
+* Added support Local context in acr task run
+
+### ACS
+
+* [BREAKING CHANGE]az openshift create: rename `--workspace-resource-id` to `--workspace-id`.
+
+### AMS
+
+* Updated show commands to return 3 when resource not found
+
+### AppConfig
+
+* Fixed bug when appending api-version to request url. The existing solution doesn't work with pagination.
+* Added support for showing languages besides English as our backend service support unicode for globalization.
+
+### AppService
+
+* Fixed issue #11217: webapp: az webapp config ssl upload should support slot parameter
+* Fixed issue #10965: Error: Name cannot be empty. Allow remove by ip_address and subnet
+* Added support for importing certificates from Key Vault `az webapp config ssl import`
+
+### ARM
+
+* Updated azure-mgmt-resource package to use 6.0.0
+* Cross Tenant Support for `az group deployment create` command by adding new parameter `--aux-subs`
+* Added new parameter `--metadata` to support adding metadata information for policy set definitions.
+
+### Backup
+
+* Added Backup support for SQL and SAP Hana workload.
+
+### BotService
+
+* [Breaking change] Remove '--version' flag from preview command 'az bot create'. Only v4 SDK bots are supported.
+* Added name availability check for 'az bot create'.
+* Added support for updating the icon URL for a bot via 'az bot update'.
+* Added support for updating a Direct Line channel via 'az bot directline update'.
+* Added '--enable-enhanced-auth' flag support to 'az bot directline create'.
+* The following command groups are GA and not in preview: 'az bot authsetting'.
+* The following commands in 'az bot' are GA and not in preview: 'create', 'prepare-deploy', 'show', 'delete', 'update'.
+* Fixed 'az bot prepare-deploy' changing '--proj-file-path' value to lower case (e.g. "Test.csproj" to "test.csproj").
+
+### Compute
+
+* vmss create/update: Added --scale-in-policy, which decides which virtual machines are chosen for removal when a VMSS is scaled-in.
+* vm/vmss update: Added --priority.
+* vm/vmss update: Added --max-price.
+* Added disk-encryption-set command group (create, show, update, delete, list).
+* disk create: Added --encryption-type and --disk-encryption-set.
+* vm/vmss create: Added --os-disk-encryption-set and --data-disk-encryption-sets.
+
+### Core
+
+* Removed support for Python 3.4
+* Plug in HaTS survey in multiple commands
+
+### DLS
+
+* Updated ADLS sdk version (0.0.48).
+
+### Install
+
+* Install script support python 3.8
+
+### IOT
+
+* [BREAKING CHANGE] Removed --failover-region parameter from manual-failover. Now it will failover to assigned geo-paired secondary region.
+
+### Key Vault
+
+* Fixed #8095: `az keyvault storage remove`: improve the help message
+* Fixed #8921: `az keyvault key/secret/certificate list/list-deleted/list-versions`: fix the validation bug on parameter `--maxresults`
+* Fixed #10512: `az keyvault set-policy`: improve the error message when none of `--object-id`, `--spn` or `--upn` is specified
+* Fixed #10846: `az keyvault secret show-deleted`: when `--id` is specified, `--name/-n` is not required
+* Fixed #11084: `az keyvault secret download`: improve the help message of parameter `--encoding`
+
+### Network
+
+* az network application-gateway probe: Added support --port option to specify a port for probing backend servers when create and update
+* az network application-gateway url-path-map create/update: bug fix for `--waf-policy`
+* az network application-gateway: Added support `--rewrite-rule-set`
+* az network list-service-aliases: Added support list service aliases which can be used for Service Endpoint Policies
+* az network dns zone import: Added support .@ in record name
+
+### Packaging
+
+* Added back edge builds for pip install
+* Added Ubuntu eoan package
+
+### Policy
+
+* Added support for Policy API version 2019-09-01.
+* az policy set-definition: Added support grouping within policy set definitions with `--definition-groups` parameter
+
+### Redis
+
+* Added preview param `--replicas-per-master` to `az redis create` command
+* Updated azure-mgmt-redis from 6.0.0 to 7.0.0rc1
+
+### ServiceFabric
+
+* Fixed in node-type add logic including #10963: Adding new node type with durability level Gold will always throw CLI error
+* Updated ServiceFabricNodeVmExt version to 1.1 in creation template
+
+### SQL
+
+* Added "--read-scale" and "--read-replicas" parameters to sql db create and update commands, to support read scale management.
+
+### Storage
+
+* GA Release Large File Shares property for storage account create and update command
+* GA Release User Delegation SAS token Support
+* Added new commands `az storage account blob-service-properties show` and `az storage account blob-service-properties update --enable-change-feed` to manage blob service properties for storage account.
+* [COMING BREAKING CHANGE] `az storage copy`: `*` character is no longer supported as a wildcard in URL, but new parameters --include-pattern and --exclude-pattern will be added with `*` wildcard support.
+* Fixed issue #11043: Added support to remove whole container/share in `az storage remove` command
+
 ## November 26, 2019
 
 Version 2.0.77
 
 ### ACR
 
-* Deprecated paramater `--branch` from acr task create/update
+* Deprecated parameter `--branch` from acr task create/update
 
 ### Azure Red Hat OpenShift
 

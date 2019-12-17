@@ -2,7 +2,7 @@
 items:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration
   name: az iot hub configuration
-  summary: Manage IoT device configurations at scale.
+  summary: Manage IoT automatic device management configuration at scale.
   description: ''
   langs:
   - azurecli
@@ -15,31 +15,35 @@ items:
   - ext_azure-cli-iot-ext_az_iot_hub_configuration_update
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_create
   name: az iot hub configuration create
-  summary: Create an IoT device configuration in the target IoT Hub.
+  summary: Create an IoT automatic device management configuration in a target IoT Hub.
   description: >-
-    The configuration content is json and must include a root object containing the "deviceContent" property.
+    Configuration content is json and slighty varies based on device or module intent.
 
 
-    Alternatively "deviceContent" can be nested in a "content" property.
-
-    E.g. {"deviceContent":{...}} or {"content":{"deviceContent":{...}}}
+    Device configurations are in the form of {"deviceContent":{...}} or {"content":{"deviceContent":{...}}}
 
 
-    Device configurations can be created with user provided metrics for on demand evaluation.
+    Module configurations are in the form of {"moduleContent":{...}} or {"content":{"moduleContent":{...}}}
 
-    User metrics are json and in the form of {"metrics":{"queries":{...}}}.
+
+    Configurations can be defined with user provided metrics for on demand evaluation.
+
+    User metrics are json and in the form of {"queries":{...}} or {"metrics":{"queries":{...}}}.
   langs:
   - azurecli
   examples:
-  - summary: Create a device configuration that applies on condition where a device is in 'building 9' and the environment is 'test'.
+  - summary: Create a device configuration with a priority of 3 that applies on condition when a device is tagged in building 9 and the environment is 'test'.
     syntax:
-      content: az iot hub configuration create -c {config_name} -n {iothub_name} --content ../device_content.json --target-condition "tags.building=9 and tags.environment='test'"
+      content: az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition "tags.building=9 and tags.environment='test'" --priority 3
   - summary: Create a device configuration with labels and provide user metrics inline (bash syntax example)
     syntax:
-      content: "az iot hub configuration create -c {config_name} -n {iothub_name} --content ../device_content.json --target-condition \"tags.building=9\" --labels '{\"key0\":\"value0\", \"key1\":\"value1\"}' --metrics '{\"metrics\": {\"queries\": {\"mymetrik\": \"select deviceId from devices where tags.location='US'\"}}}'"
-  - summary: Create a device configuration with labels and provide user metrics inline (cmd syntax example)
+      content: "az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition \"tags.building=9\" --labels '{\"key0\":\"value0\", \"key1\":\"value1\"}' --priority 10 --metrics '{\"metrics\": {\"queries\": {\"mymetric\": \"select deviceId from devices where tags.location='US'\"}}}'"
+  - summary: Create a module configuration with labels and provide user metrics inline (cmd syntax example)
     syntax:
-      content: "az iot hub configuration create -c {config_name} -n {iothub_name} --content ../device_content.json --target-condition \"tags.building=9\" --labels \"{\\\"key0\\\":\\\"value0\\\", \\\"key1\\\":\\\"value1\\\"}\" --metrics \"{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetrik\\\": \\\"select deviceId from devices where tags.location='US'\\\"}}}\""
+      content: "az iot hub configuration create -c {config_name} -n {iothub_name} --content module_content.json --target-condition \"tags.building=9\" --labels \"{\\\"key0\\\":\\\"value0\\\", \\\"key1\\\":\\\"value1\\\"}\" --metrics \"{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\": \\\"select deviceId from devices where tags.location='US'\\\"}}}\""
+  - summary: Create a module configuration with content and user metrics inline (powershell syntax example)
+    syntax:
+      content: "az iot hub configuration create -c {config_name} -n {iothub_name} --content '{\\\"moduleContent\\\": {\\\"properties.desired.chillerWaterSettings\\\": {\\\"temperature\\\": 38, \\\"pressure\\\": 78}}}' --target-condition \"tags.building=9\" --priority 1 --metrics '{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\":\\\"select deviceId from devices where tags.location=''US''\\\"}}}'"
   parameters:
   - isRequired: true
     name: --config-id -c
@@ -92,7 +96,7 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_list
   name: az iot hub configuration list
-  summary: List IoT device configurations in an IoT Hub.
+  summary: List IoT automatic device management configurations in an IoT Hub.
   description: ''
   langs:
   - azurecli
@@ -112,7 +116,7 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show
   name: az iot hub configuration show
-  summary: Get the details of an IoT device configuration.
+  summary: Get the details of an IoT automatic device management configuration.
   description: ''
   langs:
   - azurecli
@@ -168,8 +172,17 @@ items:
     description: ''
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_update
   name: az iot hub configuration update
-  summary: Update an IoT device configuration with the specified properties.
-  description: Use --set followed by property assignments for updating a configuration. Leverage properties returned from 'az iot hub configuration show'.
+  summary: >-
+    Update specified properties of an IoT automatic device management configuration.
+
+
+    Use --set followed by property assignments for updating a configuration.
+
+
+    Note: Configuration content is immutable. Configuration properties that can be
+
+    updated are 'labels', 'metrics', 'priority' and 'targetCondition'.
+  description: ''
   langs:
   - azurecli
   examples:
@@ -205,22 +218,31 @@ items:
 commands:
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_create
   name: az iot hub configuration create
-  summary: Create an IoT device configuration in the target IoT Hub.
+  summary: Create an IoT automatic device management configuration in a target IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_delete
   name: az iot hub configuration delete
   summary: Delete an IoT device configuration.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_list
   name: az iot hub configuration list
-  summary: List IoT device configurations in an IoT Hub.
+  summary: List IoT automatic device management configurations in an IoT Hub.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show
   name: az iot hub configuration show
-  summary: Get the details of an IoT device configuration.
+  summary: Get the details of an IoT automatic device management configuration.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_show_metric
   name: az iot hub configuration show-metric
   summary: Evaluate a target user or system metric defined in an IoT device configuration.
 - uid: ext_azure-cli-iot-ext_az_iot_hub_configuration_update
   name: az iot hub configuration update
-  summary: Update an IoT device configuration with the specified properties.
+  summary: >-
+    Update specified properties of an IoT automatic device management configuration.
+
+
+    Use --set followed by property assignments for updating a configuration.
+
+
+    Note: Configuration content is immutable. Configuration properties that can be
+
+    updated are 'labels', 'metrics', 'priority' and 'targetCondition'.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -234,4 +256,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage IoT device configurations at scale.
+description: Manage IoT automatic device management configuration at scale.
