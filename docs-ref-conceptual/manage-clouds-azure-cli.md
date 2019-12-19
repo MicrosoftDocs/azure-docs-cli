@@ -69,6 +69,8 @@ az cloud show --name AzureChinaCloud --output json
 
 ## Switch the active cloud
 
+For switching active cloud with configuration file, reference [CLI configuration values and environment variables](/cli/azure/azure-cli-configuration?view=azure-cli-latest#cli-configuration-values-and-environment-variables)
+
 To switch the currently active cloud, run the [az cloud set](/cli/azure/cloud#az-cloud-set) command. This command takes one required argument, the name of the cloud.
 
 ```azurecli-interactive
