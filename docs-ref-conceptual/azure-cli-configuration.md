@@ -102,7 +102,7 @@ When you provide a default value, that argument is no longer required by any com
 | | access\_key | string | The default access key to use for `az batch` commands. Only used with `aad` authorization. |
 | | endpoint | string | The default endpoint to connect to for `az batch` commands. |
 | | auth\_mode | string | The authorization mode to use for `az batch` commands. Can be `shared_key` or `aad`. |
-| __cloud__ | name | string | The cloud to use for all az commands. Can be one of `AzureCloud`, `AzureChinaCloud`, `AzureUSGovernment`, `AzureGermanCloud`. You may also switch cloud using `az cloud set --name AzureChinaCloud`. |
+| __cloud__ | name | string | The cloud to use for all az commands. Can be one of `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`, `AzureGermanCloud`. You may also switch cloud using `az cloud set --name AzureChinaCloud`. |
 
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
