@@ -17,11 +17,12 @@ to format CLI output. The argument values and types of output are:
 
 --output | Description
 ---------|-------------------------------
-`json`   | JSON string. This setting is the default.
-`jsonc`  | Colorized JSON.
-`yaml`   | YAML, a machine-readable alternative to JSON.
-`table`  | ASCII table with keys as column headings.
+`json`   | JSON string. This setting is the default
+`jsonc`  | Colorized JSON
+`yaml`   | YAML, a machine-readable alternative to JSON
+`table`  | ASCII table with keys as column headings
 `tsv`    | Tab-separated values, with no keys
+`none`   | No output other than errors and warnings
 
 ## JSON output format
 
