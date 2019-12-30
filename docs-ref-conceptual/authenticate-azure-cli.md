@@ -1,9 +1,9 @@
 ---
 title: Sign in with the Azure CLI
 description: Sign in with the Azure CLI interactively or with local credentials 
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 02/22/2019
 ms.topic: conceptual
 ms.technology: azure-cli

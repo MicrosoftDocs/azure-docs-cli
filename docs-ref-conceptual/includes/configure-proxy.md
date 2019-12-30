@@ -1,7 +1,7 @@
 ---
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 05/28/2019
 ms.topic: include
 ms.prod: azure

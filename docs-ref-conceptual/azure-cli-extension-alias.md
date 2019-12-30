@@ -1,9 +1,9 @@
 ---
 title: Azure CLI alias extension
 description: How to use the Azure CLI alias extension
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure

@@ -1,7 +1,7 @@
 ---
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 02/19/2019
 ms.topic: include
 ---
