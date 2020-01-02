@@ -62,41 +62,48 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Export all keys with label test to a json file.
+  - summary: Export all keys and feature flags with label test to a json file.
     syntax:
       content: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json
-  - summary: Export all keys with null label to another App Configuration.
+  - summary: Export all keys and feature flags with null label to another App Configuration.
     syntax:
       content: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration
-  - summary: Export all keys with null label to an App Service appliaction.
+  - summary: Export all keys with null label to an App Service application.
     syntax:
       content: az appconfig kv export -n MyAppConfiguration -d appservice  --appservice-account MyAppService
+  - summary: Export all keys with label test excluding feature flags to a json file.
+    syntax:
+      content: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json --skip-features
   parameters:
   - isRequired: true
     name: --destination -d
     parameterValueGroup: appconfig, appservice, file
-    summary: The destination of exporting.
+    summary: The destination of exporting. Note that exporting feature flags to appservice is not supported.
     description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --key
-    summary: If no key specified, return all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported.
+    summary: If no key specified, return all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported. Key filtering not applicable for feature flags. By default, all feature flags with specified label will be exported.
     description: ''
   - name: --label
-    summary: Only keys with this label will be exported. If no label specified, export keys with null label by default.
+    summary: Only keys and feature flags with this label will be exported. If no label specified, export keys and feature flags with null label by default.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
     description: ''
   - name: --prefix
-    summary: Prefix to be trimed from keys.
+    summary: Prefix to be trimmed from keys. Prefix will be ignored for feature flags.
+    description: ''
+  - name: --skip-features
+    parameterValueGroup: false, true
+    summary: Export only key values and exclude all feature flags. By default, all features with the specified label will be exported to file or appconfig. Not applicable for appservice.
     description: ''
   - name: --yes -y
     summary: Do not prompt for preview.
     description: ''
   - name: --dest-connection-string
-    summary: Connections of access key and endpoint of the destination store.
+    summary: Combination of access key and endpoint of the destination store.
     description: ''
   - name: --dest-label
     summary: Exported KVs will be labeled with this destination label.
@@ -105,17 +112,17 @@ items:
     summary: The name of the destination App Configuration.
     description: ''
   - name: --appservice-account
-    summary: ARM ID for AppService OR the name of the AppService, assuming the it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
+    summary: ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
-    summary: File format exporting to. Required for file arguments.
+    summary: File format exporting to. Required for file arguments. Currently, feature flags are only supported in json format.
     description: ''
   - name: --path
     summary: Local configuration file path. Required for file arguments.
     description: ''
   - name: --separator
-    summary: "Delimiter for flatterning the json or yaml file to key-value pairs. Required for importing hierarchical structure. Not applicable for property files. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
+    summary: "Delimiter for flattening the json or yaml file to key-value pairs. Required for importing hierarchical structure. Separator will be ignored for property files and feature flags. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -133,41 +140,48 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Import all keys with label test from a file.
+  - summary: Import all keys and feature flags from a file and apply test label.
     syntax:
       content: az appconfig kv import -n MyAppConfiguration --label test -s file --path D:/abc.json --format json
-  - summary: Import all keys with null label from an App Configuration.
+  - summary: Import all keys and feature flags and apply null label from an App Configuration.
     syntax:
       content: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration
-  - summary: Import all keys with null label from an App Service appliaction.
+  - summary: Import all keys and apply null label from an App Service appliaction.
     syntax:
       content: az appconfig kv import -n MyAppConfiguration -s appservice --appservice-account MyAppService
+  - summary: Import all keys with label test and apply test2 label excluding feature flags from an App Configuration.
+    syntax:
+      content: az appconfig kv import -n MyAppConfiguration -s appconfig --src-label test --label test2 --src-name AnotherAppConfiguration --skip-features
   parameters:
   - isRequired: true
     name: --source -s
     parameterValueGroup: appconfig, appservice, file
-    summary: The source of importing.
+    summary: The source of importing. Note that importing feature flags from appservice is not supported.
     description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --label
-    summary: Imported KVs will be assigned with this label. If no label specified, will assign null label.
+    summary: Imported KVs and feature flags will be assigned with this label. If no label specified, will assign null label.
     description: ''
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
     description: ''
   - name: --prefix
-    summary: This prefix will be appended to the front of imported keys.
+    summary: This prefix will be appended to the front of imported keys. Prefix will be ignored for feature flags.
+    description: ''
+  - name: --skip-features
+    parameterValueGroup: false, true
+    summary: Import only key values and exclude all feature flags. By default, all feature flags will be imported from file or appconfig. Not applicable for appservice.
     description: ''
   - name: --yes -y
     summary: Do not prompt for preview.
     description: ''
   - name: --src-connection-string
-    summary: Connections of access key and endpoint of the source store.
+    summary: Combination of access key and endpoint of the source store.
     description: ''
   - name: --src-key
-    summary: If no key specified, import all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported.
+    summary: If no key specified, import all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Similarly, \*abc and \*abc\* are also supported. Key filtering not applicable for feature flags. By default, all feature flags with specified label will be imported.
     description: ''
   - name: --src-label
     summary: Only keys with this label in source AppConfig will be imported. If no label specified, import keys with null label by default.
@@ -176,20 +190,20 @@ items:
     summary: The name of the source App Configuration.
     description: ''
   - name: --appservice-account
-    summary: ARM ID for AppService OR the name of the AppService, assuming the it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
+    summary: ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
     description: ''
   - name: --depth
-    summary: Depth for flatterning the json or yaml file to key-value paris. Flattern to the deepest level by default.
+    summary: Depth for flattening the json or yaml file to key-value pairs. Flatten to the deepest level by default. Not applicable for property files or feature flags.
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
-    summary: Imported file format. Required for file arguments.
+    summary: Imported file format. Required for file arguments. Currently, feature flags are only supported in json format.
     description: ''
   - name: --path
     summary: Local configuration file path. Required for file arguments.
     description: ''
   - name: --separator
-    summary: "Delimiter for flatterning the json or yaml file to key-value pairs. Required for importing hierarchical structure. Not applicable for property files. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
+    summary: "Delimiter for flattening the json or yaml file to key-value pairs. Required for importing hierarchical structure. Separator will be ignored for property files and feature flags. Supported values: '.', ',', ';', '-', '_', '__', '/', ':'."
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -508,7 +522,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/c6518d9bf8d600791d040fb606f52d3b1fa471be/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-updated_at: 11/22/2019 1:36:40 AM
-ms.date: 11/22/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/bdbd1537b75773b63fab9fc9d7f241d2fdb0bf0e/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+updated_at: 12/17/2019 2:01:19 AM
+ms.date: 12/17/2019
 description: Manage key-values stored in an App Configuration.
