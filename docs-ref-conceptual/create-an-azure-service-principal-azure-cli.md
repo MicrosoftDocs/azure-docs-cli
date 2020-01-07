@@ -1,9 +1,9 @@
 ---
 title: Use Azure service principals with Azure CLI
 description: Learn how to create and use service principals with Azure CLI.
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 02/15/2019
 ms.topic: conceptual
 ms.technology: azure-cli
