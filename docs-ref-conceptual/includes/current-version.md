@@ -1,6 +1,6 @@
 ---
 author: dbradish-microsoft
-ms.author: delora.bradish
+ms.author: dbradish
 manager: barbkess
 ms.date: 01/07/2020
 ms.topic: include
