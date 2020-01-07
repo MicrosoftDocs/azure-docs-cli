@@ -14,6 +14,7 @@ items:
   - az_appconfig_kv_lock
   - az_appconfig_kv_restore
   - az_appconfig_kv_set
+  - az_appconfig_kv_set_keyvault
   - az_appconfig_kv_show
   - az_appconfig_kv_unlock
 - uid: az_appconfig_kv_delete
@@ -116,7 +117,12 @@ items:
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
-    summary: File format exporting to. Required for file arguments. Currently, feature flags are only supported in json format.
+    summary: File format exporting to. Required for file arguments. Currently, feature flags are not supported in properties format.
+    description: ''
+  - name: --naming-convention
+    defaultValue: pascal
+    parameterValueGroup: camel, hyphen, pascal, underscore
+    summary: 'Naming convention to be used for "Feature Management" section of file. Example: pascal = FeatureManagement, camel = featureManagement, underscore = feature_management, hyphen = feature-management.'
     description: ''
   - name: --path
     summary: Local configuration file path. Required for file arguments.
@@ -197,7 +203,7 @@ items:
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
-    summary: Imported file format. Required for file arguments. Currently, feature flags are only supported in json format.
+    summary: Imported file format. Required for file arguments. Currently, feature flags are not supported in properties format.
     description: ''
   - name: --path
     summary: Local configuration file path. Required for file arguments.
@@ -400,6 +406,52 @@ items:
       branch: dev
       path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_appconfig_kv_set_keyvault
+  name: az appconfig kv set-keyvault
+  summary: Set a keyvault reference.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Set a keyvault reference with label MyLabel.
+    syntax:
+      content: az appconfig kv set-keyvault -n MyAppConfiguration --key HostSecret --label MyLabel --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret/Dummyversion
+  - summary: Set a keyvault reference with null label and multiple tags using connection string.
+    syntax:
+      content: az appconfig kv set-keyvault --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key HostSecret --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret --tags tag1=value1 tag2=value2
+  parameters:
+  - isRequired: true
+    name: --key
+    summary: Key to be set.
+    description: ''
+  - isRequired: true
+    name: --secret-identifier
+    summary: ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
+    description: ''
+  - name: --connection-string
+    summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=&lt;connection_string&gt;` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --label
+    summary: If no label specified, set the key with null label by default.
+    description: ''
+  - name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=&lt;name&gt;`.
+    description: ''
+  - name: --tags
+    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_appconfig_kv_show
   name: az appconfig kv show
   summary: Show all attributes of a key-value.
@@ -500,6 +552,9 @@ commands:
 - uid: az_appconfig_kv_set
   name: az appconfig kv set
   summary: Set a key-value.
+- uid: az_appconfig_kv_set_keyvault
+  name: az appconfig kv set-keyvault
+  summary: Set a keyvault reference.
 - uid: az_appconfig_kv_show
   name: az appconfig kv show
   summary: Show all attributes of a key-value.
@@ -522,7 +577,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/bdbd1537b75773b63fab9fc9d7f241d2fdb0bf0e/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-updated_at: 12/17/2019 2:01:19 AM
-ms.date: 12/17/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/594f6a09b33ece5d70f1452304a14c6477e0a2a2/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+updated_at: 1/2/2020 12:19:29 PM
+ms.date: 01/02/2020
 description: Manage key-values stored in an App Configuration.

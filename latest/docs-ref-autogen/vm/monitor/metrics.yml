@@ -1,0 +1,142 @@
+### YamlMime:UniversalReference
+items:
+- uid: az_vm_monitor_metrics
+  name: az vm monitor metrics
+  summary: Manage metrics for a vm.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - az_vm_monitor_metrics_list_definitions
+  - az_vm_monitor_metrics_tail
+- uid: az_vm_monitor_metrics_list_definitions
+  name: az vm monitor metrics list-definitions
+  summary: List the metric definitions for a VM.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name or ID of a virtual machine.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --namespace
+    summary: Namespace to query metric definitions for.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vm_monitor_metrics_tail
+  name: az vm monitor metrics tail
+  summary: List the metric values for a VM.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List CPU usage of VM for past one hour
+    syntax:
+      content: az vm monitor metrics tail --name myVM -g myRG --metric "Percentage CPU"
+  - summary: List one hour CPU usage of VM started at 2019-12-18T00:00:00Z
+    syntax:
+      content: az vm monitor metrics tail --name myVM -g myRG --metric "Percentage CPU" --start-time 2019-12-18T00:00:00Z
+  - summary: List CPU usage of VM for past one hour with filter
+    syntax:
+      content: az vm monitor metrics tail --name myVM -g myRG --metrics "Per Disk Read Bytes/sec" --filter "SlotId eq '*'"
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name or ID of a virtual machine.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --aggregation
+    parameterValueGroup: Average, Count, Maximum, Minimum, Total
+    summary: The list of aggregation types (space-separated) to retrieve.
+    description: ''
+    valueFrom: az vm monitor metrics list-definitions -n MyVM -g MyRG --query "@[*].supportedAggregationTypes"
+  - name: --dimension
+    summary: The list of dimensions (space-separated) the metrics are queried into.
+    description: ''
+    valueFrom: az vm monitor metrics list-definitions -n MyVM -g MyRG --query "@[*].dimensions"
+  - name: --filter
+    summary: A string used to reduce the set of metric data returned. eg. "LUN eq '\*'".
+    description: For a full list of filters, see the filter string reference at <a href="https://docs.microsoft.com/rest/api/monitor/metrics/list">https://docs.microsoft.com/rest/api/monitor/metrics/list</a>.
+  - name: --metadata
+    summary: Return the metadata values instead of metric data.
+    description: ''
+  - name: --metrics
+    summary: Space-separated list of metric names to retrieve.
+    description: ''
+    valueFrom: az vm monitor metrics list-definitions -n MyVM -g MyRG --query "@[*].name.value"
+  - name: --namespace
+    summary: Namespace to query metric definitions for.
+    description: ''
+  - name: --orderby
+    summary: 'Aggregation to use for sorting results and the direction of the sort. Only one order can be specificed. Examples: sum asc.'
+    description: ''
+  - name: --top
+    defaultValue: "10"
+    summary: Max number of records to retrieve. Valid only if --filter used.
+    description: ''
+  - name: --end-time
+    summary: 'End time of the query. Defaults to the current time. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - name: --interval
+    defaultValue: 1m
+    summary: 'The interval over which to aggregate metrics, in ##h##m format.'
+    description: ''
+  - name: --offset
+    defaultValue: 1h
+    summary: 'Time offset of the query range, in ##d##h format.'
+    description: Can be used with either --start-time or --end-time. If used with --start-time, then the end time will be calculated by adding the offset. If used with --end-time (default), then the start time will be calculated by subtracting the offset. If --start-time and --end-time are provided, then --offset will be ignored.
+  - name: --start-time
+    summary: 'Start time of the query. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+commands:
+- uid: az_vm_monitor_metrics_list_definitions
+  name: az vm monitor metrics list-definitions
+  summary: List the metric definitions for a VM.
+- uid: az_vm_monitor_metrics_tail
+  name: az vm monitor metrics tail
+  summary: List the metric values for a VM.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+doc_source_url_path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+gitcommit: https://github.com/Azure/azure-cli/blob/c8b028dbb12c1f4e6d715d828e7e60707211fcb0/src/azure-cli/azure/cli/command_modules/vm/_help.py
+updated_at: 1/3/2020 5:13:29 AM
+ms.date: 01/03/2020
+description: Manage metrics for a vm.
