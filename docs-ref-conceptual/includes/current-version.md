@@ -1,8 +1,8 @@
 ---
-author: sptramer
-ms.author: sttramer
-manager: carmonm
-ms.date: 12/17/2019
+author: dbradish-microsoft
+ms.author: delora.bradish
+manager: barbkess
+ms.date: 01/07/2020
 ms.topic: include
 ---
 The current version of the Azure CLI is __2.0.79__. For information about the latest release, see the [release notes](../release-notes-azure-cli.md). To find your installed version and see if you need to update, run `az --version`.
