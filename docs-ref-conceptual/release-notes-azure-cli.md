@@ -49,6 +49,11 @@ Version 2.0.79
 * vm monitor metrics tail/list-definitions: support query metric and list definitions for a vm.
 * Add new reapply command action for az vm
 
+### HDInsight
+
+* Support for creating a Kafka cluster with Kafka Rest Proxy
+* Upgrade azure-mgmt-hdinsight to 1.3.0
+
 ### Misc.
 
 * Add preview command `az version show` to show the versions of Azure CLI modules and extensions in JSON format by default or format configured by --output
