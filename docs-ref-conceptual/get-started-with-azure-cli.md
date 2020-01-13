@@ -2,9 +2,9 @@
 title: Get started with Azure CLI
 description: Get started using the Azure CLI by learning command basics.
 keywords: Azure CLI, CLI help, Azure help, query, automation,
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 09/07/2018
 ms.topic: conceptual
 ms.prod: azure

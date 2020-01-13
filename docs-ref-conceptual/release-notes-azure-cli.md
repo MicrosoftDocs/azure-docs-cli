@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/07/2020
+ms.date: 01/13/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -12,6 +12,20 @@ ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## January 13, 2020
+
+Version 2.0.80
+
+### Compute
+
+* disk update: Add --disk-encryption-set and --encryption-type
+* snapshot create/update: Add --disk-encryption-set and --encryption-type
+
+### Storage
+
+* Upgrade azure-mgmt-storage version to 7.1.0
+* `az storage account create`: Add `--encryption-key-type-for-table` and `--encryption-key-type-for-queue` to support Table and Queue Encryption Service
 
 ## January 07, 2020
 
@@ -48,6 +62,11 @@ Version 2.0.79
 * Fix `vm create` failure in Azure Stack profile.
 * vm monitor metrics tail/list-definitions: support query metric and list definitions for a vm.
 * Add new reapply command action for az vm
+
+### HDInsight
+
+* Support for creating a Kafka cluster with Kafka Rest Proxy
+* Upgrade azure-mgmt-hdinsight to 1.3.0
 
 ### Misc.
 

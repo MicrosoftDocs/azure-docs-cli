@@ -1,9 +1,9 @@
 ---
 title: Output formats for Azure CLI
 description: Learn how to format the output of Azure CLI commands to tables, lists or json.
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 09/23/2019
 ms.topic: conceptual
 ms.prod: azure
