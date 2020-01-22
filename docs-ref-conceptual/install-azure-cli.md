@@ -1,14 +1,12 @@
 ---
 title: Install the Azure CLI
 description: Reference for the installation of Azure CLI
-keywords: Azure CLI,Install Azure CLI
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 02/12/2019
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 

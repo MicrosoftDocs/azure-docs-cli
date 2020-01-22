@@ -1,13 +1,12 @@
 ---
 title: Query command results with Azure CLI 
 description: Learn how to perform JMESPath queries on the output of Azure CLI  commands.
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 09/23/2019
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Query Azure CLI command output

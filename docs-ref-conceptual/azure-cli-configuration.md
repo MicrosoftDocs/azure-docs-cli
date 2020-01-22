@@ -1,14 +1,12 @@
 ---
 title: Azure CLI configuration options
 description: How to configure the Azure CLI
-keywords: Azure CLI, configuration, settings, Azure
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.date: 06/11/2018 
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Azure CLI configuration

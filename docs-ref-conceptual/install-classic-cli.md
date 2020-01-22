@@ -1,13 +1,12 @@
 ---
 title: Install the Azure classic CLI
 description: Install the Azure classic CLI for Mac, Linux, and Windows to start using Azure services
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 06/11/2018
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Install the Azure classic CLI

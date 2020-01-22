@@ -6,9 +6,8 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 11/26/2019
 ms.topic: article
-ms.prod: azure
-ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.service: azure-cli
+ms.devlang: azurecli
 ---
 
 # Available extensions for the Azure CLI

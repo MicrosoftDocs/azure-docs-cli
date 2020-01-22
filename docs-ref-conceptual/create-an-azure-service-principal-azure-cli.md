@@ -6,7 +6,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 02/15/2019
 ms.topic: conceptual
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Create an Azure service principal with Azure CLI
