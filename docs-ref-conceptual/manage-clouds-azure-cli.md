@@ -1,13 +1,13 @@
 ---
 title: Select clouds with the Azure CLI
 description: Create, sign in, and manage multiple clouds with the Azure CLI.
-author: sptramer
-manager: carmonm
-ms.author: sttramer
+author: dbradish-microsoft
+manager: barbkess
+ms.author: dbradish
 ms.date: 09/09/2018
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure
+ms.subservice: azure-cli
 ms.devlang: azurecli
 ---
 

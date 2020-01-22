@@ -6,9 +6,9 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 02/22/2019
 ms.topic: conceptual
-ms.technology: azure-cli
+ms.service: azure
+ms.subservice: azure-cli
 ms.devlang: azurecli
-ms.component: authentication
 ---
 
 # Sign in with Azure CLI 

@@ -6,8 +6,8 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 09/23/2019
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure
+ms.subservice: azure-cli
 ms.devlang: azurecli
 ---
 # Output formats for Azure CLI commands
