@@ -11,8 +11,7 @@ ms.devlang: azurecli
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
-with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
+Welcome to the Azure CLI!  This article introduces the CLI and provides links to help you get started.
 
 > [!NOTE]
 >
@@ -27,6 +26,9 @@ The easiest way to get started with the Azure CLI is by running it in an Azure C
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
 After installing the CLI for the first time, check that it's installed and you've got the correct version by running `az --version`.
+
+> [!NOTE]
+> If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
 ## Sign in
 
