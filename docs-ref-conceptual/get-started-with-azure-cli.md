@@ -13,8 +13,7 @@ ms.devlang: azurecli
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
-with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
+Welcome to the Azure CLI!  This article introduces the CLI and provides links to help you get started.
 
 > [!NOTE]
 >
