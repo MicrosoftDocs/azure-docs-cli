@@ -66,7 +66,7 @@ $ PYTHON_VERSION="3.6.9"
 $ PYTHON_SRC_DIR=$(mktemp -d)
 $ wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
 # Build Python
-$ $PYTHON_SRC_DIR/*/configure --with-ssl
+$ $PYTHON_SRC_DIR/*/configure
 $ make
 $ sudo make install
 #Download azure-cli package 
