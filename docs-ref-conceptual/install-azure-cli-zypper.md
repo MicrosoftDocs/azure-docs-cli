@@ -56,7 +56,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
-### Install on SLES 12 or other other systems without Python 3.6
+### Install on SLES 12 or other systems without Python 3.6
 
 On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
 ```bash
