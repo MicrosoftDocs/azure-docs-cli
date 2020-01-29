@@ -17,11 +17,12 @@ to format CLI output. The argument values and types of output are:
 
 --output | Description
 ---------|-------------------------------
-`json`   | JSON string. This setting is the default.
-`jsonc`  | Colorized JSON.
-`yaml`   | YAML, a machine-readable alternative to JSON.
-`table`  | ASCII table with keys as column headings.
+`json`   | JSON string. This setting is the default
+`jsonc`  | Colorized JSON
+`yaml`   | YAML, a machine-readable alternative to JSON
+`table`  | ASCII table with keys as column headings
 `tsv`    | Tab-separated values, with no keys
+`none`   | No output other than errors and warnings
 
 ## JSON output format
 
@@ -177,7 +178,7 @@ az vm list --out tsv --query '[].[id, location, resourceGroup, name]'
 The next example shows how `tsv` output can be piped to other commands in bash. The query is used to filter output and force ordering, `grep` selects items that have text "RGD" in them, then the `cut`
 command selects the fourth field to show the name of the VM in output.
 
-```bash
+```azurecli-interactive
 az vm list --out tsv --query '[].[id, location, resourceGroup, name]' | grep RGD | cut -f4
 ```
 
