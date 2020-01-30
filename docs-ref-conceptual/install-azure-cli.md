@@ -28,7 +28,7 @@ The Azure CLI is available to install in Windows, maxOS and Linux environments. 
   * [Install with zypper on openSUSE or SLE](install-azure-cli-zypper.md)
   * [Install from script](install-azure-cli-linux.md)
 * [Run in Docker container](run-azure-cli-docker.md)
-* [Run in Azure Cloud Shell](/azure/cloud-shell/overview)
+* [Run in Azure Cloud Shell](/azure/cloud-shell/quickstart)
 
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
