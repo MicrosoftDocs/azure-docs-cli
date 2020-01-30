@@ -2,10 +2,10 @@
 title: Install the Azure CLI
 description: Reference for the installation of Azure CLI
 keywords: Azure CLI,Install Azure CLI
-author: sptramer
-ms.author: sttramer
-manager: carmonm
-ms.date: 02/12/2019
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
+ms.date: 01/30/2020
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -34,4 +34,5 @@ The Azure CLI is available to install in Windows, maxOS and Linux environments. 
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
 ## Next Steps
+
 See [What is Azure CLI?](what-is-azure-cli.md) for key characteristics.
