@@ -19,7 +19,7 @@ Version 2.0.81
 
 ### ACS
 
-* Added support to set outbound allocated ports and idle timeouts on standard load balancer
+* Add support to set outbound allocated ports and idle timeouts on standard load balancer
 * Update to API Version 2019-11-01
 
 ### ACR
@@ -57,6 +57,11 @@ Version 2.0.81
 
 * Add `monitor` subgroup to manage Log Analytics monitoring in Azure Red Hat OpensShift cluster
 
+### BotService
+
+* Fix issue #11697: `az bot create` is not idempotent
+* Change name-correcting tests to run in Live-mode only
+
 ### CDN
 
 * Add support for rulesEngine feature
@@ -69,14 +74,9 @@ Version 2.0.81
 * Enhance step resource for new step type.
 * Update azure-mgmt-deploymentmanager package to use version 0.2.0.
 
-### BotService
-
-* Fix issue #11697: `az bot create` is not idempotent
-* Change name-correcting tests to run in Live-mode only
-
 ### IoT
 
-* Deprecated 'IoT hub Job' commands.
+* Deprecate 'IoT hub Job' commands.
 
 ### IoT Central
 
@@ -109,11 +109,11 @@ Version 2.0.81
 
 ### Security
 
-* Added new commands `az atp show` and `az atp update` to view and manage advanced threat protection settings for storage accounts.
+* Add new commands `az atp show` and `az atp update` to view and manage advanced threat protection settings for storage accounts.
 
 ### SQL
 
-* `sql dw create`: deprecated `--zone-redundant` and `--read-replica-count` parameters. These parameters do not apply to DataWarehouse.
+* `sql dw create`: deprecate `--zone-redundant` and `--read-replica-count` parameters. These parameters do not apply to DataWarehouse.
 * [BREAKING CHANGE] `az sql db create`: Remove "WideWorldImportersStd" and "WideWorldImportersFull" as documented allowed values for "az sql db create --sample-name". These sample databases would always cause creation to fail.
 * Add New commands `sql db classification show/list/update/delete` and `sql db classification recommendation list/enable/disable` to manage sensitivity classifications for SQL databases.
 * `az sql db audit-policy`: Fix for empty audit actions and groups
@@ -129,28 +129,7 @@ Version 2.0.81
 
 ### ServiceFabric
 
-* Adding new commands to manage appliaction and services.
-    - sf application-type
-        - list
-        - delete
-        - show
-        - create
-    - sf application-type version
-        - list
-        - delete
-        - show
-        - create
-    - sf application
-        - list
-        - delete
-        - show
-        - create
-        - update
-    - sf service
-        - list
-        - delete
-        - show
-        - create
+* Add new commands to manage appliaction and services.
 
 ## January 13, 2020
 
