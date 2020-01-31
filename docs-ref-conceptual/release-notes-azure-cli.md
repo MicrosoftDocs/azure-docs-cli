@@ -380,8 +380,8 @@ Version 2.0.76
 * `gremlin graph create`: Added `--conflict-resolution-policy`
 * `gremlin graph create/update`: Updated the `--idx` default schema
 * Fixed typo in help message
-* database: Added deprecation infomation
-* collection: Added deprecation infomation
+* database: Added deprecation information
+* collection: Added deprecation information
 
 ### IoT
 
@@ -4315,7 +4315,7 @@ vm (2.0.11)
 ### RDBMS
 
 * Support listing servers across a subscription (#3417)
-* Fixed `%s` not processed becasue of missing `% server_type` (#3393)
+* Fixed `%s` not processed because of missing `% server_type` (#3393)
 * Fixed doc source map and added CI task to verify (#3361)
 * Fixed MySQL and PostgreSQL help (#3369)
 
