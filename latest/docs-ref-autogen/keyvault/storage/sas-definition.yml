@@ -25,25 +25,26 @@ items:
   - summary: Add a sas-definition for an account sas-token
     syntax:
       content: >-
-        $sastoken = az storage account generate-sas --expiry 2020-01-01 --permissions rw \
-
-        --resource-types sco --services bfqt --https-only --account-name storageacct     \
-
-        --account-key 00000000
+        $sastoken = az storage account generate-sas --expiry 2020-01-01 --permissions rw --resource-types sco --services bfqt --https-only --account-name storageacct --account-key 00000000
 
 
-        az keyvault storage sas-definition create --vault-name vault --account-name storageacct   \
-
-        -n rwallserviceaccess --validity-period P2D --sas-type account --template-uri $sastoken
+        az keyvault storage sas-definition create --vault-name vault --account-name storageacct -n rwallserviceaccess --validity-period P2D --sas-type account --template-uri $sastoken
   - summary: Add a sas-definition for a blob sas-token
     syntax:
       content: >-
-        $sastoken = az storage blob generate-sas --account-name storageacct --account-key 00000000 \ -c container1 -n blob1 --https-only --permissions rw
+        $sastoken = az storage blob generate-sas --account-name storageacct --account-key 00000000 -c container1 -n blob1 --https-only --permissions rw
 
         $url = az storage blob url --account-name storageacct -c container1 -n blob1
 
+        az keyvault storage sas-definition create --vault-name vault --account-name storageacct -n rwblobaccess --validity-period P2D --sas-type service --template-uri $url?$sastoken
+  - summary: Add a sas-definition for a container sas-token
+    syntax:
+      content: >-
+        $sastoken = az storage container generate-sas --account-name storageacct --account-key 00000000 -n container1 --https-only --permissions rw
 
-        az keyvault storage sas-definition create --vault-name vault --account-name storageacct   \ -n rwblobaccess --validity-period P2D --sas-type service --template-uri $url?$sastoken
+        $url = "https://{storage-account-name}.blob.core.windows.net/{container-name}"  # The prefix of your blob url
+
+        az keyvault storage sas-definition create --vault-name vault --account-name storageacct -n rwcontaineraccess --validity-period P2D --sas-type service --template-uri $url?$sastoken
   parameters:
   - isRequired: true
     name: --sas-type
@@ -63,7 +64,7 @@ items:
     summary: Add the storage account in a disabled state.
     description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - isRequired: true
     name: --account-name
@@ -268,7 +269,7 @@ items:
     summary: The type of SAS token the SAS definition will create.
     description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --template-uri
     summary: The SAS definition token template signed with the key 00000000.  In the case of an account token this is only the sas token itself, for service tokens, the full service endpoint url along with the sas token.  Tokens created according to the SAS definition will have the same properties as the template.
@@ -338,7 +339,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/58cd6d2927f49a221e2e53daf84ff7db760b91a7/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-updated_at: 12/12/2019 6:18:37 AM
-ms.date: 12/12/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/f57bc9e50197057e939afebd8de4f19a3495ddc0/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+updated_at: 1/15/2020 2:23:47 AM
+ms.date: 01/15/2020
 description: Manage storage account SAS definitions.
