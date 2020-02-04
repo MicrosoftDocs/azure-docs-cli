@@ -93,6 +93,9 @@ items:
   - summary: Create a kubernetes cluster with standard SKU load balancer and two AKS created IPs for the load balancer outbound connection usage.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
+  - summary: Create a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Create a kubernetes cluster with standard SKU load balancer and use the provided public IPs for the load balancer outbound connection usage.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
@@ -171,6 +174,9 @@ items:
     summary: Version of Kubernetes to use for creating the cluster, such as "1.11.8" or "1.12.6".
     description: ''
     valueFrom: '`az aks get-versions`'
+  - name: --load-balancer-idle-timeout
+    summary: Load balancer idle timeout in minutes.
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -180,6 +186,9 @@ items:
   - name: --load-balancer-outbound-ips
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ports
+    summary: Load balancer outbound allocated ports.
+    description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs.
   - name: --load-balancer-sku
     summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
@@ -244,7 +253,7 @@ items:
     summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
     description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
@@ -786,6 +795,9 @@ items:
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IPs for the load balancer outbound connection usage.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
+  - summary: Create a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
@@ -825,6 +837,9 @@ items:
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
+  - name: --load-balancer-idle-timeout
+    summary: Load balancer idle timeout in minutes.
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -834,6 +849,9 @@ items:
   - name: --load-balancer-outbound-ips
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ports
+    summary: Load balancer outbound allocated ports.
+    description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs.
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
@@ -1238,7 +1256,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/16d6ebfacec89d1700a51ed82f7acf379ba5c850/src/azure-cli/azure/cli/command_modules/acs/_help.py
-updated_at: 1/13/2020 1:45:57 AM
-ms.date: 01/13/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/b81192b5d7f7fd42ba29297db882193fc66e72ff/src/azure-cli/azure/cli/command_modules/acs/_help.py
+updated_at: 1/31/2020 8:57:27 AM
+ms.date: 01/31/2020
 description: Manage Azure Kubernetes Services.

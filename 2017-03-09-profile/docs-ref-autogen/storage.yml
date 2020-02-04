@@ -12,10 +12,7 @@ items:
 - uid: az_storage_copy
   name: az storage copy
   summary: Copy files or directories to or from Azure storage.
-  description: >-
-    Copy command depends on Azcopy, which will be upgraded to v10.3 soon to support 32-bit Operating System and utilize new features.
-
-    [COMING BREAKING CHANGE] With Azcopy v10.3, `*` character is no longer supported as a wildcard in URL, but new parameters --include-pattern and --exclude-pattern will be added with `*` wildcard support.
+  description: ''
   langs:
   - azurecli
   examples:
@@ -52,9 +49,12 @@ items:
   - summary: Download an entire directory from Azure Blob, and you can also specify your storage account and container information as above.
     syntax:
       content: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/directory] -d /path/to/dir --recursive
-  - summary: Download a set of files from Azure Blob using wildcards, and you can also specify your storage account and container information as above.
+  - summary: Download a subset of containers within a storage account by using a wildcard symbol (*) in the container name, and you can also specify your storage account and container information as above.
     syntax:
-      content: az storage copy -s https://[account].blob.core.windows.net/[container]/foo* -d /path/to/dir --recursive
+      content: az storage copy -s https://[account].blob.core.windows.net/[container*name] -d /path/to/dir --recursive
+  - summary: Download a subset of files from Azure Blob. (Only jpg files and file names don't start with test will be included.)
+    syntax:
+      content: az storage copy -s https://[account].blob.core.windows.net/[container] --include-pattern "*.jpg" --exclude-pattern test* -d /path/to/dir --recursive
   - summary: Copy a single blob to another blob, and you can also specify the storage account and container information of source and destination as above.
     syntax:
       content: az storage copy -s https://[srcaccount].blob.core.windows.net/[container]/[path/to/blob] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/blob]
@@ -102,10 +102,13 @@ items:
       content: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a set of files from Azure File Share using wildcards, and you can also specify your storage account and share information as above.
     syntax:
-      content: az storage copy -s https://[account].file.core.windows.net/[share]/foo* -d /path/to/dir --recursive
+      content: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
   parameters:
   - name: --destination -d
     summary: The path/url of copy destination. It can be a local path, an url to azure storage server. If you provide destination parameter here, you do not need to provide arguments in copy destination arguments group and copy destination arguments will be deprecated in future.
+    description: ''
+  - name: --recursive -r
+    summary: Look into sub-directories recursively.
     description: ''
   - name: --source -s
     summary: The path/url of copy source. It can be a local path, an url to azure storage server or AWS S3 buckets. If you provide source parameter here, you do not need to provide arguments in copy source arguments group and copy source arguments will be deprecated in future.
@@ -114,15 +117,24 @@ items:
     parameterValueGroup: AppendBlob, BlockBlob, PageBlob
     summary: The type of blob at the destination.
     description: ''
+  - name: --exclude-path
+    summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
+    description: ''
+  - name: --exclude-pattern
+    summary: 'Exclude these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
+    description: ''
+  - name: --include-path
+    summary: Include only these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example:myFolder;myFolder/subDirName/file.pdf.
+    description: ''
+  - name: --include-pattern
+    summary: 'Include only these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
+    description: ''
   - name: --preserve-s2s-access-tier
     parameterValueGroup: false, true
     summary: Preserve access tier during service to service copy. Please refer to <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers">https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers</a> to ensure destination storage account support setting access tier. In the cases that setting access tier is not supported, please use `--preserve-s2s-access-tier false` to bypass copying access tier. (Default true).
     description: ''
   - name: --put-md5
     summary: Create an MD5 hash of each file, and save the hash as the Content-MD5 property of the destination blob/file.Only available when uploading.
-    description: ''
-  - name: --recursive
-    summary: Look into sub-directories                     recursively when uploading from local file system.
     description: ''
   - name: --destination-account-name
     summary: Storage account name of copy destination.
@@ -172,7 +184,7 @@ items:
 - uid: az_storage_remove
   name: az storage remove
   summary: Delete blobs or files from Azure Storage.
-  description: To delete blobs, both the source must either be public or be authenticated by using a shared access signature. Remove command depends on Azcopy, which will be upgraded to v10.3 soon to support 32-bit Operating System and utilize new features.
+  description: ''
   langs:
   - azurecli
   examples:
@@ -188,12 +200,12 @@ items:
   - summary: Remove all the blobs in a Storage Container.
     syntax:
       content: az storage remove -c MyContainer -n path/to/directory
-  - summary: Remove a subset of blobs in a virtual directory (For example, only jpg and pdf files, or if the blob name is "exactName").
+  - summary: Remove a subset of blobs in a virtual directory (For example, only jpg and pdf files, or if the blob name is "exactName" and file names don't start with "test").
     syntax:
-      content: az storage remove -c MyContainer -n path/to/directory --recursive --include "*.jpg;*.pdf;exactName"
+      content: az storage remove -c MyContainer --include-path path/to/directory --include-pattern "*.jpg;*.pdf;exactName" --exclude-pattern "test*" --recursive
   - summary: Remove an entire virtual directory but exclude certain blobs from the scope (For example, every blob that starts with foo or ends with bar).
     syntax:
-      content: az storage remove -c MyContainer -n path/to/directory --recursive --include "foo*;*bar"
+      content: az storage remove -c MyContainer --include-path path/to/directory --exclude-pattern "foo*;*bar" --recursive
   - summary: Remove a single file.
     syntax:
       content: az storage remove -s MyShare -p MyFile
@@ -207,12 +219,6 @@ items:
   - name: --container-name -c
     summary: The container name.
     description: ''
-  - name: --exclude
-    summary: Exclude files whose name matches the pattern list.
-    description: ''
-  - name: --include
-    summary: Only include files whose name matches the pattern list.
-    description: ''
   - name: --name -n
     summary: The blob name.
     description: ''
@@ -220,10 +226,22 @@ items:
     summary: The path to the file within the file share.
     description: ''
   - name: --recursive -r
-    summary: Look into sub-directories recursively when deleting between directories.
+    summary: Look into sub-directories recursively.
     description: ''
   - name: --share-name -s
     summary: The file share name.
+    description: ''
+  - name: --exclude-path
+    summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
+    description: ''
+  - name: --exclude-pattern
+    summary: 'Exclude these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
+    description: ''
+  - name: --include-path
+    summary: Include only these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example:myFolder;myFolder/subDirName/file.pdf.
+    description: ''
+  - name: --include-pattern
+    summary: 'Include only these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -615,7 +633,7 @@ commands:
   summary: Update metrics settings for a storage account.
 - uid: az_storage_queue
   name: az storage queue
-  summary: Manage storage queues.
+  summary: Manage shared access policies of a storage table.
 - uid: az_storage_queue_create
   name: az storage queue create
   summary: Creates a queue under the given account.
@@ -770,7 +788,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ab8b7df3d4e441832c82ecb01aad41a2b96bf5d2/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 1/10/2020 6:13:54 AM
-ms.date: 01/10/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/26c8ead7536cb3fe56490fd86db6b0a83b3c7066/src/azure-cli/azure/cli/command_modules/storage/_help.py
+updated_at: 1/21/2020 11:03:59 AM
+ms.date: 01/21/2020
 description: Manage Azure Cloud Storage resources.

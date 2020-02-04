@@ -19,11 +19,11 @@ items:
   examples:
   - summary: Create a cluster with a given size and self-signed certificate that is downloaded locally.
     syntax:
-      content: az sf cluster create -g group-name -n cluster1 -l westus --cluster-size 4 --vm-password Password#1234 --certificate-output-folder MyCertificates --certificate-subject-name cluster1
+      content: az sf cluster create -g group-name -c cluster1 -l westus --cluster-size 4 --vm-password Password#1234 --certificate-output-folder MyCertificates --certificate-subject-name cluster1
   - summary: Use a keyvault certificate and custom template to deploy a cluster.
     syntax:
       content: >-
-        az sf cluster create -g group-name -n cluster1 -l westus --template-file template.json \
+        az sf cluster create -g group-name -c cluster1 -l westus --template-file template.json \
             --parameter-file parameter.json --secret-identifier https://{KeyVault}.vault.azure.net:443/secrets/{MyCertificate}
   parameters:
   - isRequired: true
@@ -32,7 +32,7 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --certificate-file
     summary: The existing certificate file path for the primary cluster certificate.
@@ -46,7 +46,7 @@ items:
   - name: --certificate-subject-name
     summary: The subject name of the certificate to be created.
     description: ''
-  - name: --cluster-name --name -n
+  - name: --cluster-name -c
     summary: Specify the name of the cluster, if not given it will be same as resource group name.
     description: ''
   - name: --cluster-size -s
@@ -99,18 +99,18 @@ items:
     description: ''
 - uid: az_sf_cluster_show
   name: az sf cluster show
-  summary: Get cluster resource.
-  description: Get cluster resource .
+  summary: Gets a Service Fabric cluster resource.
+  description: Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
   langs:
   - azurecli
   parameters:
   - isRequired: true
-    name: --cluster-name --name -n
+    name: --cluster-name -c
     summary: Specify the name of the cluster, if not given it will be same as resource group name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -178,7 +178,7 @@ commands:
   summary: Update the settings of a cluster.
 - uid: az_sf_cluster_show
   name: az sf cluster show
-  summary: Get cluster resource.
+  summary: Gets a Service Fabric cluster resource.
 - uid: az_sf_cluster_upgrade_type
   name: az sf cluster upgrade-type
   summary: Manage the upgrade type of a cluster.

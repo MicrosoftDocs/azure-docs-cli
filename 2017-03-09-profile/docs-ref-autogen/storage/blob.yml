@@ -3,7 +3,7 @@ items:
 - uid: az_storage_blob
   name: az storage blob
   summary: Manage object storage for unstructured data (blobs).
-  description: ''
+  description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
   langs:
   - azurecli
   children:
@@ -31,7 +31,10 @@ items:
   examples:
   - summary: Delete a blob.
     syntax:
-      content: az storage blob delete -c MyContainer -n MyBlob
+      content: az storage blob delete -c mycontainer -n MyBlob
+  - summary: Delete a blob using login credentials.
+    syntax:
+      content: az storage blob delete -c mycontainer -n MyBlob --account-name mystorageaccount --auth-mode login
   parameters:
   - isRequired: true
     name: --container-name -c
@@ -99,7 +102,16 @@ items:
       content: >-
         date=`date -d "10 days ago" '+%Y-%m-%dT%H:%MZ'`
 
-        az storage blob delete-batch -s MyContainer --account-name MyStorageAccount --pattern *.py --if-unmodified-since $date
+        az storage blob delete-batch -s mycontainer --account-name mystorageaccount --pattern *.py --if-unmodified-since $date --auth-mode login
+  - summary: Delete all the blobs in a directory named "dir" in a container named "mycontainer".
+    syntax:
+      content: az storage blob delete-batch -s mycontainer --pattern dir/*
+  - summary: Delete the blobs with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in a container.
+    syntax:
+      content: az storage blob delete-batch -s mycontainer --pattern cli-201[89]-??-??.txt
+  - summary: Delete all blobs with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in a container.
+    syntax:
+      content: az storage blob delete-batch -s mycontainer --pattern cli-201[!89]-??-??.txt
   parameters:
   - isRequired: true
     name: --source -s
@@ -116,8 +128,8 @@ items:
     summary: The active lease id for the blob.
     description: ''
   - name: --pattern
-    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'.
-    description: ''
+    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'. For more information, please refer to <a href="https://docs.python.org/3.7/library/fnmatch.html">https://docs.python.org/3.7/library/fnmatch.html</a>.
+    description: When you use '*' in --pattern, it will match any character including the the directory separator '/'. You can also try "az stroage remove" command with --include and --exclude with azure cli >= 2.0.70 to match multiple patterns.
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
@@ -255,7 +267,16 @@ items:
   examples:
   - summary: Download all blobs that end with .py
     syntax:
-      content: az storage blob download-batch -d . --pattern *.py -s MyContainer --account-name MyStorageAccount
+      content: az storage blob download-batch -d . --pattern *.py -s mycontainer --account-name mystorageaccount --account-key 00000000
+  - summary: Download all blobs in a directory named "dir" from container named "mycontainer".
+    syntax:
+      content: az storage blob download-batch -d . -s mycontainer --pattern dir/*
+  - summary: Download all blobs with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in container to current path.
+    syntax:
+      content: az storage blob download-batch -d . -s mycontainer --pattern cli-201[89]-??-??.txt
+  - summary: Download all blobs with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in container to current path.
+    syntax:
+      content: az storage blob download-batch -d . -s mycontainer --pattern cli-201[!89]-??-??.txt
   parameters:
   - isRequired: true
     name: --destination -d
@@ -276,8 +297,8 @@ items:
     summary: Include this flag to disable progress reporting for the command.
     description: ''
   - name: --pattern
-    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'.
-    description: ''
+    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'. For more information, please refer to <a href="https://docs.python.org/3.7/library/fnmatch.html">https://docs.python.org/3.7/library/fnmatch.html</a>.
+    description: When you use '*' in --pattern, it will match any character including the the directory separator '/'.
   - name: --socket-timeout
     summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
@@ -360,7 +381,7 @@ items:
       content: >-
         end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
 
-        az storage blob generate-sas --account-name MyStorageAccount -c MyContainer -n MyBlob --permissions r --expiry $end --https-only
+        az storage blob generate-sas -c myycontainer -n MyBlob --permissions r --expiry $end --https-only
   - summary: Generates a shared access signature for the blob. (autogenerated)
     syntax:
       content: az storage blob generate-sas --account-key 00000000 --account-name MyStorageAccount --container-name MyContainer --expiry 2018-01-01T00:00:00Z --name MyBlob --permissions r
@@ -549,7 +570,7 @@ items:
       content: az storage blob show -c MyContainer -n MyBlob
   - summary: Get the details of a blob (autogenerated)
     syntax:
-      content: az storage blob show --account-name MyAccount --container-name MyContainer --name MyBlob
+      content: az storage blob show --account-name mystorageccount --account-key 00000000 --container-name MyContainer --name MyBlob
   parameters:
   - isRequired: true
     name: --container-name -c
@@ -661,16 +682,16 @@ items:
 - uid: az_storage_blob_sync
   name: az storage blob sync
   summary: Sync blobs recursively to a storage blob container.
-  description: Sync command depends on Azcopy, which will be upgraded to v10.3 soon to support 32-bit Operating System and utilize new features.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Sync a single blob to a container.
     syntax:
-      content: az storage blob sync -c MyContainer --account-name MyStorageAccount -s "path/to/file" -d NewBlob
+      content: az storage blob sync -c mycontainer -s "path/to/file" -d NewBlob
   - summary: Sync a directory to a container.
     syntax:
-      content: az storage blob sync -c MyContainer --account-name MyStorageAccount -s "path/to/directory"
+      content: az storage blob sync -c mycontainer --account-name mystorageccount --account-key 00000000 -s "path/to/directory"
   parameters:
   - isRequired: true
     name: --container -c
@@ -682,6 +703,15 @@ items:
     description: ''
   - name: --destination -d
     summary: The destination path that will be appended to the blob name.
+    description: ''
+  - name: --exclude-path
+    summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
+    description: ''
+  - name: --exclude-pattern
+    summary: 'Exclude these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
+    description: ''
+  - name: --include-pattern
+    summary: 'Include only these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
     description: ''
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -889,7 +919,16 @@ items:
   examples:
   - summary: Upload all files that end with .py unless blob exists and has been modified since given date.
     syntax:
-      content: az storage blob upload-batch -d MyContainer --account-name MyStorageAccount -s directory_path --pattern *.py --if-unmodified-since 2018-08-27T20:51Z
+      content: az storage blob upload-batch -d mycontainer --account-name mystorageaccount --account-key 00000000 -s <path-to-directory> --pattern *.py --if-unmodified-since 2018-08-27T20:51Z
+  - summary: Upload all files from local path directory to a container named "mycontainer".
+    syntax:
+      content: az storage blob upload-batch -d mycontainer -s <path-to-directory>
+  - summary: Upload all files with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in local path directory.
+    syntax:
+      content: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern cli-201[89]-??-??.txt
+  - summary: Upload all files with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in a container.
+    syntax:
+      content: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern cli-201[!89]-??-??.txt
   parameters:
   - isRequired: true
     name: --destination -d
@@ -919,8 +958,8 @@ items:
     summary: Include this flag to disable progress reporting for the command.
     description: ''
   - name: --pattern
-    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'.
-    description: ''
+    summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'. For more information, please refer to <a href="https://docs.python.org/3.7/library/fnmatch.html">https://docs.python.org/3.7/library/fnmatch.html</a>.
+    description: When you use '*' in --pattern, it will match any character including the the directory separator '/'.
   - name: --socket-timeout
     summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
@@ -997,7 +1036,7 @@ items:
       content: az storage blob url --connection-string $connectionString --container-name container1 --name blob1
   - summary: Create the url to access a blob (autogenerated)
     syntax:
-      content: az storage blob url --account-name storageacct --container-name container1 --name blob1
+      content: az storage blob url --account-name storageacct --account-key 00000000 --container-name container1 --name blob1
   parameters:
   - isRequired: true
     name: --container-name -c
@@ -1146,7 +1185,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/ab8b7df3d4e441832c82ecb01aad41a2b96bf5d2/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 1/10/2020 6:13:54 AM
-ms.date: 01/10/2020
-description: Manage object storage for unstructured data (blobs).
+gitcommit: https://github.com/Azure/azure-cli/blob/26c8ead7536cb3fe56490fd86db6b0a83b3c7066/src/azure-cli/azure/cli/command_modules/storage/_help.py
+updated_at: 1/21/2020 11:03:59 AM
+ms.date: 01/21/2020
+description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

@@ -5,7 +5,7 @@ keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 01/30/2020
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
@@ -13,8 +13,7 @@ ms.devlang: azurecli
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure CLI! The CLI is a tool designed to get you working quickly and efficiently with Azure services,
-with an emphasis on automation. This article introduces features of the CLI and links out to resources that help you be productive.
+Welcome to the Azure CLI!  This article introduces the CLI and provides links to help you get started.
 
 > [!NOTE]
 >

@@ -9,6 +9,7 @@ items:
   children:
   - az_deploymentmanager_step_create
   - az_deploymentmanager_step_delete
+  - az_deploymentmanager_step_list
   - az_deploymentmanager_step_show
   - az_deploymentmanager_step_update
 - uid: az_deploymentmanager_step_create
@@ -18,28 +19,31 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Creates a step.
+  - summary: Creates a wait step.
     syntax:
       content: az deploymentmanager step create -g rg1 -l location -n contosoServiceWaitStep --duration PT30M
+  - summary: Creates a health check step from a JSON file. The step information is read from the file.
+    syntax:
+      content: az deploymentmanager step create -g rg1 --step healthcheck_step.json
   parameters:
-  - isRequired: true
-    name: --duration
-    summary: The duration of the wait step in ISO 8601 format.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
-    description: ''
-  - isRequired: true
-    name: --name --step-name -n
-    summary: The name of the step.
-    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --duration
+    summary: The duration of the wait step in ISO 8601 format.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --name --step-name -n
+    summary: The name of the step.
+    description: ''
+  - name: --step
+    summary: The step object, specify either the path to a json file or provide a json string that forms the step resource. The json is expected to be of the same format as the output of the relevant `az deploymentmanager step show` command.
+    description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -61,6 +65,30 @@ items:
     name: --name --step-name -n
     summary: The name of the step.
     description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_deploymentmanager_step_list
+  name: az deploymentmanager step list
+  summary: List all steps in a resource group.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List available steps in the given resource group.
+    syntax:
+      content: az deploymentmanager step list -g rg1
+  parameters:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -114,10 +142,6 @@ items:
       content: az deploymentmanager step update -g rg1 -n contosoServiceWaitStep --duration PT20M
   parameters:
   - isRequired: true
-    name: --duration
-    summary: The duration of the wait step in ISO 8601 format.
-    description: ''
-  - isRequired: true
     name: --name --step-name -n
     summary: The name of the step.
     description: ''
@@ -125,8 +149,14 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --duration
+    summary: The duration of the wait step in ISO 8601 format.
+    description: ''
+  - name: --step
+    summary: The step object, specify either the path to a json file or provide a json string that forms the step resource. The json is expected to be of the same format as the output of the relevant `az deploymentmanager step show` command.
+    description: ''
   - name: --tags
-    summary: Space-separated tags in 'key[=value]' format. Use "" to clear existing tags.
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -156,6 +186,9 @@ commands:
 - uid: az_deploymentmanager_step_delete
   name: az deploymentmanager step delete
   summary: Deletes the step.
+- uid: az_deploymentmanager_step_list
+  name: az deploymentmanager step list
+  summary: List all steps in a resource group.
 - uid: az_deploymentmanager_step_show
   name: az deploymentmanager step show
   summary: Get the details of the step.
@@ -178,7 +211,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/374564e5093e69d202efb86c5644d3dd8ede9f6e/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-updated_at: 10/19/2019 10:07:39 AM
-ms.date: 10/19/2019
+gitcommit: https://github.com/Azure/azure-cli/blob/f8fcf6fe53ac8443c852afa1f4a334d732a2cea4/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
+updated_at: 1/30/2020 1:38:16 PM
+ms.date: 01/30/2020
 description: Allows you to manage the steps that can be used in rollouts.
