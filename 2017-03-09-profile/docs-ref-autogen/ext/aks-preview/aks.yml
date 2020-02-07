@@ -86,6 +86,9 @@ items:
   - summary: Create a kubernetes cluster with standard SKU load balancer and use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
+  - summary: Create a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Create a kubernetes cluster with basic SKU load balancer and AvailabilitySet vm set type.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku basic --vm-set-type AvailabilitySet
@@ -95,6 +98,9 @@ items:
   - summary: Create a kubernetes cluster with server side encryption using your owned key.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-diskencryptionset-id <disk-encryption-set-resource-id>
+  - summary: Create a kubernetes cluster with userDefinedRouting, standard load balancer SKU and the azure network plugin
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --outbound-type userDefinedRouting --network-plugin azure --load-balancer-sku standard
   parameters:
   - isRequired: true
     name: --name -n
@@ -177,6 +183,9 @@ items:
     summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
     description: ''
     valueFrom: '`az aks get-versions`'
+  - name: --load-balancer-idle-timeout
+    summary: Load balancer idle timeout in minutes.
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -186,6 +195,9 @@ items:
   - name: --load-balancer-outbound-ips
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ports
+    summary: Load balancer outbound allocated ports.
+    description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
   - name: --load-balancer-sku
     summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
@@ -243,6 +255,10 @@ items:
     defaultValue: nodepool1
     summary: Node pool name, upto 12 alphanumeric characters.
     description: ''
+  - name: --outbound-type
+    parameterValueGroup: loadBalancer, userDefinedRouting
+    summary: How outbound traffic will be configured for a cluster.
+    description: Select between loadBalancer and userDefinedRouting. If not set, defaults to type loadBalancer. Requires --network-plugin to be azure and a standard load balancer SKU.
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
@@ -583,6 +599,9 @@ items:
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
+  - summary: Update a kubernetes cluster with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Update a kubernetes cluster with authorized apiserver ip ranges.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24
@@ -622,6 +641,9 @@ items:
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
     description: ''
+  - name: --load-balancer-idle-timeout
+    summary: Load balancer idle timeout in minutes.
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -631,6 +653,9 @@ items:
   - name: --load-balancer-outbound-ips
     summary: Load balancer outbound IP resource IDs.
     description: Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-outbound-ports
+    summary: Load balancer outbound allocated ports.
+    description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specifying the value in the range of [1, 100].
     description: ''
