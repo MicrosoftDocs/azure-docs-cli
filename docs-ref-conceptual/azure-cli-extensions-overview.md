@@ -96,3 +96,6 @@ No. Since the CLI doesn't guarantee a load order, dependencies might not be sati
 ### Are extensions updated along with the CLI?
 
 No. Extensions must be updated separately, as described in [Update extensions](#update-extensions).
+
+### How to develop our own extension?
+Please refer to the official repository for more help. [Azure/azure-cli-extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)
