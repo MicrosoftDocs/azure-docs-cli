@@ -32,7 +32,7 @@ The CLI requires the following software:
 
 > [!IMPORTANT]
 >
-> The CLI has dropped support for Python 2.7 since version 2.1.0. New versions no longer
+> The CLI has dropped support for Python 2.7 since version `2.1.0`. New versions no longer
 > guarantee to run with Python 2.7 correctly.
 
 ## Install or update
