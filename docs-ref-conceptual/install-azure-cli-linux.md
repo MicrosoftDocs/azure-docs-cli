@@ -26,15 +26,14 @@ If there's no package for the Azure CLI for you your distribution, install the C
 
 The CLI requires the following software:
 
-* [Python 3.6.x or 3.7.x](https://www.python.org/downloads/). 
+* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/). 
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
 > [!IMPORTANT]
 >
-> The CLI is also compatible with Python 2.7.x, which is being end-of-lifed on January 1, 2020. A future 
-> version of Azure CLI will drop support for Python 2.7. For this reason we recommend that you install 
-> Python 3 to run the CLI. 
+> The CLI has dropped support for Python 2.7 since version `2.1.0`. New versions no longer
+> guarantee to run with Python 2.7 correctly.
 
 ## Install or update
 
