@@ -64,8 +64,6 @@ $ sudo yumdownloader azure-cli
 $ sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
-The least recommended option is to still use Python 2 and follow the [manual install instructions](install-azure-cli-linux.md) since Python 2 is being end-of-lifed on January 1, 2020. A future version of Azure CLI will drop support for Python 2.7.
-
 ### Proxy blocks connection
 
 [!INCLUDE[configure-proxy](includes/configure-proxy.md)]
