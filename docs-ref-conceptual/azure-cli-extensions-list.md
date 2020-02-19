@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: sptramer
 ms.author: sttramer
 manager: carmonm
-ms.date: 02/17/2020
+ms.date: 02/19/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -62,7 +62,7 @@ az extension list-available --output table
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.0.0 | Support for querying Azure resources with Resource Graph. |  |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.5.5 | Additional commands for working with SAP HanaOnAzure instances. |  |
-| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
+| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.10 | Provides a preview for upcoming storage features. | Yes |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Support for subscription management preview. |  |
 | [support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 0.1.0 | Microsoft Azure Command-Line Tools Support Extension | Yes |
