@@ -132,11 +132,32 @@ items:
   - name: --api-server-authorized-ip-ranges
     summary: Comma seperated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
+  - name: --appgw-id
+    summary: Resource Id of an existing Application Gateway to use with AGIC.
+    description: ''
+  - name: --appgw-name
+    summary: Name of the application gateway to create/use in the node resource group.
+    description: ''
+  - name: --appgw-shared
+    summary: Use shared flag if application gateway will be shared.
+    description: ''
+  - name: --appgw-subnet-id
+    summary: Resource Id of an existing Subnet used to deploy the Application Gateway.
+    description: ''
+  - name: --appgw-subnet-prefix
+    summary: Subnet Prefix to use for a new subnet created to deploy the Application Gateway.
+    description: ''
+  - name: --appgw-watch-namespace
+    summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
+    description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+    description: ''
+  - name: --cluster-autoscaler-profile
+    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
@@ -154,10 +175,11 @@ items:
     summary: Enable the Kubernetes addons in a comma-separated list.
     description: >-
       These addons are available:
-          http_application_routing - configure ingress with automatic public DNS name creation.
-          monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
-          virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-          azure-policy - enable Azure policy (PREVIEW).
+          http_application_routing  - configure ingress with automatic public DNS name creation.
+          monitoring                - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+          virtual-node              - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+          azure-policy              - enable Azure policy (PREVIEW).
+          ingress-appgw             - enable Applicaiton Gateway Ingress Controller addon (PREVIEW).
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
@@ -327,10 +349,11 @@ items:
   summary: Enable Kubernetes addons.
   description: >-
     These addons are available:
-        http_application_routing - configure ingress with automatic public DNS name creation.
-        monitoring - turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-        virtual-node - enable AKS Virtual Node (PREVIEW). Requires "--subnet-name".
-        azure-policy - enable Azure policy (PREVIEW).
+        http_application_routing  - configure ingress with automatic public DNS name creation.
+        monitoring                - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+        virtual-node              - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+        azure-policy              - enable Azure policy (PREVIEW).
+        ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
   langs:
   - azurecli
   examples:
@@ -349,6 +372,24 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --appgw-id
+    summary: Resource Id of an existing Application Gateway to use with AGIC.
+    description: ''
+  - name: --appgw-name
+    summary: Name of the application gateway to create/use in the node resource group.
+    description: ''
+  - name: --appgw-shared
+    summary: Use shared flag if application gateway will be shared.
+    description: ''
+  - name: --appgw-subnet-id
+    summary: Resource Id of an existing Subnet used to deploy the Application Gateway.
+    description: ''
+  - name: --appgw-subnet-prefix
+    summary: Subnet Prefix to use for a new subnet created to deploy the Application Gateway.
+    description: ''
+  - name: --appgw-watch-namespace
+    summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -628,6 +669,9 @@ items:
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
+    description: ''
+  - name: --cluster-autoscaler-profile
+    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
