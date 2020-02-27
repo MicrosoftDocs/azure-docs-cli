@@ -17,7 +17,7 @@ The Azure command-line interface (Azure CLI) is an environment to create and man
 
 Azure CLI capabilities make it easy to work with different programing languages and software environments.  For example, Azure CLI:
 
-- Is available to install in Windows, maxOS and Linux environments.
+- Is available to install in Windows, macOS and Linux environments.
 
 - Can also be run in Docker and Azure Cloud Shell.
 - Offers command-line flexibility when managing an Azure solution.
