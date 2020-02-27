@@ -706,7 +706,7 @@ Version 2.0.74
 ### ACR
 
 * Added a required `--type` parameter to `acr config retention update`
-* [BREAKING CHNAGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
+* [BREAKING CHANGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
 
 ### AKS
 
