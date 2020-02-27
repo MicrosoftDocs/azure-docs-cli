@@ -6,9 +6,8 @@ ms.author: jianzen
 manager: yonzhan,yungezz
 ms.date: 02/27/2020
 ms.topic: article
-ms.prod: azure
-ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.service: azure-cli
+ms.devlang: azurecli
 ---
 
 # Available extensions for the Azure CLI

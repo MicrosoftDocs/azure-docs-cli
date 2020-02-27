@@ -1,14 +1,12 @@
 ---
 title: Azure CLI configuration options
 description: How to configure the Azure CLI
-keywords: Azure CLI, configuration, settings, Azure
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.date: 06/11/2018 
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Azure CLI configuration
@@ -89,7 +87,7 @@ When you provide a default value, that argument is no longer required by any com
 |---------|-----------|------|------------|
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
-| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](http://aka.ms/AzureCliLegal). |
+| | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](https://aka.ms/AzureCliLegal). |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |

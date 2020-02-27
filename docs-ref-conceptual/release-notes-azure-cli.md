@@ -6,8 +6,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 02/18/2020
 ms.topic: article
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 

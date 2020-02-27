@@ -6,7 +6,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 07/12/2018
 ms.topic: conceptual
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
