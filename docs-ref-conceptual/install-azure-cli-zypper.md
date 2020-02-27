@@ -60,7 +60,7 @@ Here are some common problems seen when installing with `zypper`. If you experie
 
 On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
 ```bash
-$ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib
+$ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib openssl-devel
 # Download Python source code
 $ PYTHON_VERSION="3.6.9"
 $ PYTHON_SRC_DIR=$(mktemp -d)
