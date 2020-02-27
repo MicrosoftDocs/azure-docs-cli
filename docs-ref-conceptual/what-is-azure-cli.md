@@ -25,7 +25,7 @@ Azure CLI capabilities make it easy to work with different programing languages 
 - Has the ability to use one subscription for all commands, or vary subscriptions per command.
 - Allows for querying of command-line results with query output returned in your format of choice.
 - Has the flexibility to work with multiple clouds.
-- Provides configurable settings.
+- Provides configurable settings for logging, data collection, and default argument values.
 - Is deployed with Resource Manager deployment templates.
 
 ## Current Version
