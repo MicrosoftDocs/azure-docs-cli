@@ -4,7 +4,7 @@ description: Get started using the Azure CLI by learning command basics.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 01/30/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

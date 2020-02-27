@@ -6,7 +6,229 @@ items:
   description: ''
   langs:
   - azurecli
-  children: []
+  children:
+  - az_sf_application_create
+  - az_sf_application_delete
+  - az_sf_application_list
+  - az_sf_application_show
+  - az_sf_application_update
+- uid: az_sf_application_create
+  name: az sf application create
+  summary: Create a new application on an Azure Service Fabric cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create application "testApp" with parameters. The application type "TestAppType" version "v1" should already exist in the cluster, and the application parameters should be defined in the application manifest.
+    syntax:
+      content: >-
+        az sf application create -g testRG -c testCluster --application-name testApp --application-type-name TestAppType \
+          --application-type-version v1 --application-parameters key0=value0
+  - summary: Create application "testApp" and app type version using the package url provided.
+    syntax:
+      content: >-
+        az sf application create -g testRG -c testCluster --application-name testApp --application-type-name TestAppType \
+          --application-type-version v1 --package-url "https://sftestapp.blob.core.windows.net/sftestapp/testApp_1.0.sfpkg" \
+            --application-parameters key0=value0
+  parameters:
+  - isRequired: true
+    name: --application-name --name
+    summary: Specify the application name.
+    description: ''
+  - isRequired: true
+    name: --application-type-name --type-name
+    summary: Specify the application type name.
+    description: ''
+  - isRequired: true
+    name: --application-type-version --version
+    summary: Specify the application type version.
+    description: ''
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Specify the name of the cluster, if not given it will be same as resource group name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --application-parameters --parameters
+    summary: 'Specify the application parameters as key/value pairs. These parameters must exist in the application manifest. for example: --application-parameters param1=value1 param2=value2.'
+    description: ''
+  - name: --max-nodes --maximum-nodes
+    summary: Specify the maximum number of nodes on which to place an application. The value of this parameter must be a non-negative integer. The default value is 0, which indicates the application can be placed on any number of nodes in the cluster.
+    description: ''
+  - name: --min-nodes --minimum-nodes
+    summary: Specify the minimum number of nodes where Service Fabric will reserve capacity for this application, this does not mean that the application is guaranteed to have replicas on all those nodes. The value of this parameter must be a non-negative integer. Default value for this is zero, which means no capacity is reserved for the application.
+    description: ''
+  - name: --package-url
+    summary: Specify the url of the application package sfpkg file.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sf_application_delete
+  name: az sf application delete
+  summary: Delete an application.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Delete application.
+    syntax:
+      content: az sf application delete -g testRG -c testCluster --application-name testApp
+  parameters:
+  - isRequired: true
+    name: --application-name --name
+    summary: Specify the application name.
+    description: ''
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Specify the name of the cluster, if not given it will be same as resource group name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sf_application_list
+  name: az sf application list
+  summary: List applications of a given cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: List applications for a given cluster.
+    syntax:
+      content: az sf application list -g testRG -c testCluster
+  parameters:
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Specify the name of the cluster, if not given it will be same as resource group name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sf_application_show
+  name: az sf application show
+  summary: Show the properties of an application on an Azure Service Fabric cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get application.
+    syntax:
+      content: az sf application show -g testRG -c testCluster --application-name testApp
+  parameters:
+  - isRequired: true
+    name: --application-name --name
+    summary: Specify the application name.
+    description: ''
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Specify the name of the cluster, if not given it will be same as resource group name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sf_application_update
+  name: az sf application update
+  summary: Update a Azure Service Fabric application. This allows updating the application parameters and/or upgrade the application type version which will trigger an application upgrade.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update application parameters and upgreade policy values and app type version to v2.
+    syntax:
+      content: >-
+        az sf application update -g testRG -c testCluster --application-name testApp --application-type-version v2 \
+          --application-parameters key0=value0 --health-check-stable-duration 0 --health-check-wait-duration 0 --health-check-retry-timeout 0 \
+            --upgrade-domain-timeout 5000 --upgrade-timeout 7000 --failure-action Rollback --upgrade-replica-set-check-timeout 300 --force-restart
+  - summary: Update application minimum and maximum nodes.
+    syntax:
+      content: az sf application update -g testRG -c testCluster --application-name testApp --minimum-nodes 1 --maximum-nodes 3
+  parameters:
+  - isRequired: true
+    name: --application-name --name
+    summary: Specify the application name.
+    description: ''
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Specify the name of the cluster, if not given it will be same as resource group name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --application-parameters --parameters
+    summary: 'Specify the application parameters as key/value pairs. These parameters must exist in the application manifest. for example: --application-parameters param1=value1 param2=value2.'
+    description: ''
+  - name: --application-type-version --version
+    summary: Specify the application type version.
+    description: ''
+  - name: --force-restart
+    parameterValueGroup: false, true
+    summary: Indicates that the service host restarts even if the upgrade is a configuration-only change.
+    description: ''
+  - name: --max-nodes --maximum-nodes
+    summary: Specify the maximum number of nodes on which to place an application. The value of this parameter must be a non-negative integer. The default value is 0, which indicates the application can be placed on any number of nodes in the cluster.
+    description: ''
+  - name: --min-nodes --minimum-nodes
+    summary: Specify the minimum number of nodes where Service Fabric will reserve capacity for this application, this does not mean that the application is guaranteed to have replicas on all those nodes. The value of this parameter must be a non-negative integer. Default value for this is zero, which means no capacity is reserved for the application.
+    description: ''
+  - name: --service-type-health-policy-map
+    summary: 'Specify the map of the health policy to use for different service types as a hash table in the following format: {"ServiceTypeName" : "MaxPercentUnhealthyPartitionsPerService,MaxPercentUnhealthyReplicasPerPartition,MaxPercentUnhealthyServices"}. For example: @{ "ServiceTypeName01" = "5,10,5"; "ServiceTypeName02" = "5,5,5" }.'
+    description: ''
+  - name: --consider-warning-as-error --warning-as-error
+    parameterValueGroup: false, true
+    summary: Indicates whether to treat a warning health event as an error event during health evaluation.
+    description: ''
+  - name: --failure-action
+    parameterValueGroup: Manual, Rollback
+    summary: Specify the action to take if the monitored upgrade fails. The acceptable values for this parameter are Rollback or Manual.
+    description: ''
+  - name: --hc-retry-timeout --health-check-retry-timeout
+    summary: Specify the duration, in seconds, after which Service Fabric retries the health check if the previous health check fails.
+    description: ''
+  - name: --hc-stable-duration --health-check-stable-duration
+    summary: Specify the duration, in seconds, that Service Fabric waits in order to verify that the application is stable before moving to the next upgrade domain or completing the upgrade. This wait duration prevents undetected changes of health right after the health check is performed.
+    description: ''
+  - name: --hc-wait-duration --health-check-wait-duration
+    summary: Specify the duration, in seconds, that Service Fabric waits before it performs the initial health check after it finishes the upgrade on the upgrade domain.
+    description: ''
+  - name: --max-porcent-unhealthy-apps
+    summary: Specify the mximum percentage of the application instances deployed on the nodes in the cluster that have a health state of error before the application health state for the cluster is error. Allowed values are form 0 to 100.
+    description: ''
+  - name: --max-porcent-unhealthy-partitions
+    summary: Specify the maximum percent of unhelthy partitions per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are form 0 to 100.
+    description: ''
+  - name: --max-porcent-unhealthy-replicas
+    summary: Specify the maximum percent of unhelthy replicas per service allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are form 0 to 100.
+    description: ''
+  - name: --max-porcent-unhealthy-services
+    summary: Specify the maximum percent of unhelthy services allowed by the health policy for the default service type to use for the monitored upgrade. Allowed values are form 0 to 100.
+    description: ''
+  - name: --ud_timeout --upgrade-domain-timeout
+    summary: Specify the maximum time, in seconds, that Service Fabric takes to upgrade a single upgrade domain. After this period, the upgrade fails.
+    description: ''
+  - name: --upgrade-replica-set-check-timeout
+    summary: Specify the maximum time, in seconds, that Service Fabric waits for a service to reconfigure into a safe state, if not already in a safe state, before Service Fabric proceeds with the upgrade.
+    description: ''
+  - name: --upgrade-timeout
+    summary: Specify the maximum time, in seconds, that Service Fabric takes for the entire upgrade. After this period, the upgrade fails.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 commands:
 - uid: az_sf_application_certificate
   name: az sf application certificate
@@ -14,6 +236,21 @@ commands:
 - uid: az_sf_application_certificate_add
   name: az sf application certificate add
   summary: Add a new certificate to the Virtual Machine Scale Sets that make up the cluster to be used by hosted applications.
+- uid: az_sf_application_create
+  name: az sf application create
+  summary: Create a new application on an Azure Service Fabric cluster.
+- uid: az_sf_application_delete
+  name: az sf application delete
+  summary: Delete an application.
+- uid: az_sf_application_list
+  name: az sf application list
+  summary: List applications of a given cluster.
+- uid: az_sf_application_show
+  name: az sf application show
+  summary: Show the properties of an application on an Azure Service Fabric cluster.
+- uid: az_sf_application_update
+  name: az sf application update
+  summary: Update a Azure Service Fabric application. This allows updating the application parameters and/or upgrade the application type version which will trigger an application upgrade.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
