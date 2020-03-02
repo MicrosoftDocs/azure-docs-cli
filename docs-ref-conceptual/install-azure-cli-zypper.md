@@ -1,13 +1,12 @@
 ---
 title: Install the Azure CLI on Linux with zypper
 description: How to install the Azure CLI with zypper
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 09/09/2018
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
@@ -56,17 +55,17 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
-### Install on SLES 12 or other other systems without Python 3.6
+### Install on SLES 12 or other systems without Python 3.6
 
 On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
 ```bash
-$ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib
+$ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib openssl-devel
 # Download Python source code
 $ PYTHON_VERSION="3.6.9"
 $ PYTHON_SRC_DIR=$(mktemp -d)
 $ wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
 # Build Python
-$ $PYTHON_SRC_DIR/*/configure --with-ssl
+$ $PYTHON_SRC_DIR/*/configure
 $ make
 $ sudo make install
 #Download azure-cli package 

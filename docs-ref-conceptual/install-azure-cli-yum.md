@@ -1,13 +1,12 @@
 ---
 title: Install the Azure CLI on Linux with yum
 description: How to install the Azure CLI with yum
-author: sptramer
-ms.author: sttramer
-manager: carmonm
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 11/26/2019
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
@@ -57,11 +56,16 @@ Here are some common problems seen when installing with `yum`. If you experience
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you can, please upgrade your system to a verison with official support for `python3` package. Otherwise, you need to first install a `python3` package, either [build from source](https://github.com/linux-on-ibm-z/docs/wiki/Building-Python-3.6.x) or install through some [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Then you can download the package and install it without dependency.
+If you can, please upgrade your system to a version with official support for `python3` package. Otherwise, you need to first install a `python3` package, either [build from source](https://github.com/linux-on-ibm-z/docs/wiki/Building-Python-3.6.x) or install through some [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Then you can download the package and install it without dependency.
 ```bash
 $ sudo yum install yum-utils
 $ sudo yumdownloader azure-cli
 $ sudo rpm -ivh --nodeps azure-cli-*.rpm
+```
+
+If you have setup python3 but are still getting an error `python3: command not found` when trying to run the cli, you need to add it to your path.
+```bash
+$ scl enable rh-python36 bash
 ```
 
 ### Proxy blocks connection

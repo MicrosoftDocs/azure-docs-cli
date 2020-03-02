@@ -1,14 +1,12 @@
 ---
 title: Get started with Azure CLI
 description: Get started using the Azure CLI by learning command basics.
-keywords: Azure CLI, CLI help, Azure help, query, automation,
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.date: 01/30/2020
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 # Get started with Azure CLI
@@ -28,6 +26,9 @@ The easiest way to get started with the Azure CLI is by running it in an Azure C
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
 After installing the CLI for the first time, check that it's installed and you've got the correct version by running `az --version`.
+
+> [!NOTE]
+> If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
 ## Sign in
 

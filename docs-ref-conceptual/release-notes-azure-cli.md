@@ -6,8 +6,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 02/18/2020
 ms.topic: article
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
@@ -587,8 +586,8 @@ Version 2.0.76
 * `gremlin graph create`: Added `--conflict-resolution-policy`
 * `gremlin graph create/update`: Updated the `--idx` default schema
 * Fixed typo in help message
-* database: Added deprecation infomation
-* collection: Added deprecation infomation
+* database: Added deprecation information
+* collection: Added deprecation information
 
 ### IoT
 
@@ -706,7 +705,7 @@ Version 2.0.74
 ### ACR
 
 * Added a required `--type` parameter to `acr config retention update`
-* [BREAKING CHNAGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
+* [BREAKING CHANGE] Renamed parameter `--name -n` changed to `--registry -r ` for `acr config` command group
 
 ### AKS
 
@@ -4522,7 +4521,7 @@ vm (2.0.11)
 ### RDBMS
 
 * Support listing servers across a subscription (#3417)
-* Fixed `%s` not processed becasue of missing `% server_type` (#3393)
+* Fixed `%s` not processed because of missing `% server_type` (#3393)
 * Fixed doc source map and added CI task to verify (#3361)
 * Fixed MySQL and PostgreSQL help (#3369)
 
