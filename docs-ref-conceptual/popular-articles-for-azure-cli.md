@@ -12,9 +12,9 @@ ms.technology: azure-cli
 ms.devlang: azurecli
 ---
 
-# Popular Azure CLI articles
+# Popular articles for the Azure CLI
 
-The Azure CLI [reference syntax](/cli/azure/reference-index?view=azure-cli-latest) is found across many Azure products resulting in articles being spread across document repositories.  Use these links to select articles to popular tasks.
+The Azure CLI can be used in many Azure products resulting in articles being spread across document repositories.  This page provides links to select popular articles.  
 
 ## Compute
 
@@ -40,7 +40,7 @@ The Azure CLI [reference syntax](/cli/azure/reference-index?view=azure-cli-lates
 
 | | | | |
 |-|-|-|-|
-|Virtual Network|Quickstart | [Create a virtual network using the Azure CLI]((Network)/virtual-network/quick-create-cli) | Create a virtual network, deploy two virtual machines into the  virtual network, and connected to the virtual machines from the internet.
+|Virtual Network|Quickstart | [Create a virtual network using the Azure CLI](/virtual-network/quick-create-cli) | Create a virtual network, deploy two virtual machines into the  virtual network, and connected to the virtual machines from the internet.
 |Virtual Network|How-to guide | [Enable Accelerated Networking on a Linux virtual machine using the Azure CLI](/virtual-network/create-vm-accelerated-networking-cli) | Create a Linux virtual machine, handle dynamic binding and revocation of virtual function, and enable Accelerated Networking.
 
 ## Internet of Things
@@ -88,9 +88,9 @@ Policy assignment |Quickstart |[Create a policy assignment to identify non-compl
 
 | | | | |
 |-|-|-|-|
-Azure Stack Hub|Linux VM Quickstart |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](-stack/user/azure-stack-quick-create-vm-linux-cli?view=azs-1910) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
-Azure Stack Hub|Windows VM Quickstart |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](-stack/user/azure-stack-quick-create-vm-windows-cli?view=azs-1910) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
-Azure Stack Hub|ASDK resources How-to guide |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](-stack/user/azure-stack-version-profiles-azurecli2?view=azs-1910) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
+Azure Stack Hub|Linux VM Quickstart |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-linux-cli) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
+Azure Stack Hub|Windows VM Quickstart |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-windows-cli) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
+Azure Stack Hub|ASDK resources How-to guide |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-version-profiles-azurecli2) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
 
 ## Storage
 
@@ -124,3 +124,9 @@ Azure Monitor |How-to guide |[Create a Log Analytics workspace using the Azure C
 |-|-|-|-|
 Azure Germany |Get Started |[Connect to Azure Germany by using the Azure CLI](/germany/germany-get-started-connect-with-cli) | Using Azure Germany, manage a large subscription through scripts and access features that are not currently available in the global Azure portal.
 Azure Government|Get Started |[Connect to Azure Government with Azure CLI](/azure-government/documentation-government-get-started-connect-with-cli)|Access and start managing resources in Azure Government.
+
+## See also
+
+- [Getting started with the Azure CLI](get-started-with-azure-cli.md)
+- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Azure products supported by the Azure CLI](azure-products-supported-by-azure-cli.md)

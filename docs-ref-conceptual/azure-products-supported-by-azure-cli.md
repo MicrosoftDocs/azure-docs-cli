@@ -14,9 +14,9 @@ ms.devlang: azurecli
 
 # Azure products supported by the Azure CLI
 
-The [Azure CLI](/cli/azure/?view=azure-cli-latest) is available in many [Azure products](/services/), and is a flexible yet powerful tool to create and manage Azure resources.  
+The Azure CLI is available in many [Azure products](/services/), and is a flexible yet powerful tool to create and manage Azure resources.  This article provides the list of Azure products where the Azure CLI is available.  
 
-Azure CLI articles are available for the following products.  See [Popular Azure CLI articles](popular-azure-cli-articles.md) for documents with frequent page views.
+Azure CLI references are available for the following products:  
 
 | Category | Product
 |-|-|
@@ -89,3 +89,9 @@ Azure CLI articles are available for the following products.  See [Popular Azure
 ||[Azure Cognitive Search](/search/index)
 ||[Azure Spring Cloud](/spring-cloud/index)
 ||[Notification Hubs](/notification-hubs/index)
+
+## See also
+
+- [Getting started with the Azure CLI](get-started-with-azure-cli.md)
+- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Popular articles for the Azure CLI](popular-articles-for-azure-cli.md)
