@@ -88,9 +88,9 @@ Policy assignment |Quickstart |[Create a policy assignment to identify non-compl
 
 | | | | |
 |-|-|-|-|
-Azure Stack Hub|Linux VM Quickstart |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](/azure/azure-stack/user/azure-stack-quick-create-vm-linux-cli) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
-Azure Stack Hub|Windows VM Quickstart |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](/azure/azure-stack/user/azure-stack-quick-create-vm-windows-cli) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
-Azure Stack Hub|ASDK resources How-to guide |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](/azure/azure-stack/user/azure-stack-version-profiles-azurecli2) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
+Azure Stack Hub|Linux VM Quickstart |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-linux-cli) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
+Azure Stack Hub|Windows VM Quickstart |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-windows-cli) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
+Azure Stack Hub|ASDK resources How-to guide |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-version-profiles-azurecli2) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
 
 ## Storage
 
