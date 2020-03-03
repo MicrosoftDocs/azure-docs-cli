@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/28/2020
+ms.date: 03/03/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -54,7 +54,7 @@ az extension list-available --output table
 | [ip-group](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools IpGroup Extension |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.4 | Support for Azure Log Analytics query capabilities. | Yes |
-| [maintenance](https://github.com/Azure/azure-cli-extensions) | 1.0.0 | Support for Azure maintenance management preview. | Yes |
+| [maintenance](https://github.com/Azure/azure-cli-extensions) | 1.0.1 | Support for Azure maintenance management. |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.6 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
