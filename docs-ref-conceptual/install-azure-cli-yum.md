@@ -63,6 +63,11 @@ $ sudo yumdownloader azure-cli
 $ sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
+If you have setup python3 but are still getting an error `python3: command not found` when trying to run the cli, you need to add it to your path.
+```bash
+$ scl enable rh-python36 bash
+```
+
 ### Proxy blocks connection
 
 [!INCLUDE[configure-proxy](includes/configure-proxy.md)]

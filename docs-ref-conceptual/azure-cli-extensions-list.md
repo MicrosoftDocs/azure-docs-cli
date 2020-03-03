@@ -4,10 +4,11 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/27/2020
+ms.date: 03/03/2020
 ms.topic: article
-ms.service: azure-cli
-ms.devlang: azurecli
+ms.prod: azure
+ms.technology: azure-cli
+ms.devlang: azure-cli
 ---
 
 # Available extensions for the Azure CLI
@@ -33,6 +34,7 @@ az extension list-available --output table
 | [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.0.85 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.17.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.3.0 | Manage Azure Firewall resources. | Yes |
+| [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.9.1 | The Azure IoT extension for Azure CLI. |  |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Connectedmachine Extension | Yes |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.13 | Additional commands to simplify Azure Database workflows. | Yes |
@@ -52,7 +54,7 @@ az extension list-available --output table
 | [ip-group](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools IpGroup Extension |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.4 | Support for Azure Log Analytics query capabilities. | Yes |
-| [maintenance](https://github.com/Azure/azure-cli-extensions) | 1.0.0 | Support for Azure maintenance management preview. | Yes |
+| [maintenance](https://github.com/Azure/azure-cli-extensions) | 1.0.1 | Support for Azure maintenance management. |  |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.2 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.6 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
 | [mixed-reality](https://github.com/Azure/azure-cli-extensions) | 0.0.1 | Mixed Reality Azure CLI Extension. |  |
