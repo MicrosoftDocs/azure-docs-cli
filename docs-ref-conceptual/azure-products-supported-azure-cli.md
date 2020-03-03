@@ -14,15 +14,15 @@ ms.devlang: azurecli
 
 # Azure products supported by the Azure CLI
 
-The Azure CLI is available in many Azure products, and is a flexible yet powerful tool to create and manage Azure resources.  This article provides the list of products where the Azure CLI is available.  
+The Azure CLI is available in many Azure products, and is a flexible yet powerful tool to create and manage Azure resources.  This article provides the list of products that are supported by the Azure CLI.  
 
 Azure CLI references are available for the following Azure products:  
 
-| Category | Product
-|-|-|
-|AI + Machine Learning|[Azure Machine Learning](https://azure.microsoft.com/services/machine-learning/)
-||[Cognitive Services](https://azure.microsoft.com/services/cognitive-services)
-||[Machine Learning Studio](https://azure.microsoft.com/services/machine-learning/)
+| Category | Product | Documentation
+|-|-|-|
+|AI + Machine Learning|[Azure Machine Learning](https://azure.microsoft.com/services/machine-learning/) | [Azure Machine Learning](/azure/machine-learning/)
+||[Cognitive Services](https://azure.microsoft.com/services/cognitive-services) | [Cognitive Services](/azure/cognitive-services/)
+||[Machine Learning Studio](https://azure.microsoft.com/services/machine-learning/) | [Machine Learning Studio](/azure/machine-learning/studio/what-is-ml-studio)
 |Analytics|[Azure Data Lake Storage](https://azure.microsoft.com/services/storage/data-lake-storage/)
 ||[Data Lake Analytics](https://azure.microsoft.com/services/data-lake-analytics/)
 ||[Event Hubs](https://azure.microsoft.com/services/event-hubs)
