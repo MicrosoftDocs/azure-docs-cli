@@ -42,8 +42,9 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 4. Update the `zypper` package index and install:
 
    ```bash
-   sudo zypper install --from azure-cli -y azure-cli
+   sudo zypper install --from azure-cli azure-cli
    ```
+   Input 2 to continue install by ignoring some of its dependencies.
 
 You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
