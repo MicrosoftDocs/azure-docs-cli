@@ -128,4 +128,4 @@ Azure Government|Get Started |[Connect to Azure Government with Azure CLI](/azur
 
 - [Getting started with the Azure CLI](get-started-with-azure-cli.md)
 - [Full command reference list for the Azure CLI](/cli/azure/reference-index)
-- [Azure products supported by the Azure CLI](azure-products-supported-azure-cli.md)
+- [Azure services supported by the Azure CLI](azure-services-supported-azure-cli.md)
