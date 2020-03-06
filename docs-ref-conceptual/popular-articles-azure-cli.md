@@ -13,7 +13,7 @@ ms.devlang: azurecli
 
 # Popular articles for the Azure CLI
 
-The Azure CLI can be used in many Azure products resulting in articles being spread across document repositories.  This page provides links to select popular articles.  
+The Azure CLI can be used in many Azure services resulting in articles being spread across document repositories.  This page provides links to select popular articles.  
 
 ## Compute
 

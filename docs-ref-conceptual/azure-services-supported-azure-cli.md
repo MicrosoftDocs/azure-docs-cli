@@ -11,13 +11,13 @@ ms.technology: azure-cli
 ms.devlang: azurecli
 ---
 
-# Azure products supported by the Azure CLI
+# Azure services supported by the Azure CLI
 
 The Azure CLI is available across many Azure services, and is a flexible yet powerful tool to create and manage Azure resources.  This article provides the list of services that are supported by the Azure CLI.
 
 Azure CLI references are available for the following:  
 
-| Category | Documentation
+| Category | Service Documentation
 |-|-|
 |AI + Machine Learning| [Azure Machine Learning](/azure/machine-learning/)
 ||[Cognitive Services](/azure/cognitive-services/)
