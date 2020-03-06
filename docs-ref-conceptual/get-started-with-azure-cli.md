@@ -130,6 +130,6 @@ az feedback
 
 ## See also
 
-* [Azure products supported by the Azure CLI](azure-products-supported-azure-cli.md)
+* [Azure services supported by the Azure CLI](azure-services-supported-azure-cli.md)
 * [Full command reference list for the Azure CLI](/cli/azure/reference-index)
 * [Popular articles for the Azure CLI](popular-articles-azure-cli.md)

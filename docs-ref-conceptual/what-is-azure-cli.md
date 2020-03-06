@@ -11,7 +11,7 @@ ms.devlang: azurecli
 ---
 # What is Azure CLI
 
-The Azure command-line interface (Azure CLI) is an environment to create and manage Azure resources.  Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
+The Azure command-line interface (Azure CLI) is a set of commands used to create and manage Azure resources.  The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
 
 ## Key Characteristics
 
@@ -36,4 +36,4 @@ Azure CLI capabilities make it easy to work with different programing languages 
 
 - [Getting started with the Azure CLI](get-started-with-azure-cli.md)
 - [Full command reference list for the Azure CLI](/cli/azure/reference-index)
-- [Azure products supported by the Azure CLI](azure-products-supported-azure-cli.md)
+- [Azure services supported by the Azure CLI](azure-services-supported-azure-cli.md)

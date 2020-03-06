@@ -1,7 +1,6 @@
 ---
 title: Cross-service links for working with the Azure CLI
-description: Links to popular tutorials, quickstarts, samples, concepts, and how-to guides 
-keywords: Azure CLI, virtual machines, Azure Kubernetes Service (AKS), Batch, Azure CLI (Core), Azure Resource Manager, Key Vault, Azure Stack Hub, Functions, Database, Event Hubs, App Configuration, App Config, Germany, Security, Governance, Insights, IoT, Internet of Things, DevOps, Virtual Network, Compute, Networking, Developer Tools, Databases, Analytics, Management and Governance, Hybrid, Storage, Security, AI, AI + Machine Learning, Linux, Windows, Ubuntu, automation, application, web app, script
+description: Links to popular tutorials, quickstarts, samples, concepts, and how-to guides, Azure CLI, virtual machines, Azure Kubernetes Service (AKS), Batch, Azure CLI (Core), Azure Resource Manager, Key Vault, Azure Stack Hub, Functions, Database, Event Hubs, App Configuration, App Config, Germany, Security, Governance, Insights, IoT, Internet of Things, DevOps, Virtual Network, Compute, Networking, Developer Tools, Databases, Analytics, Management and Governance, Hybrid, Storage, Security, AI, AI + Machine Learning, Linux, Windows, Ubuntu, automation, application, web app, script
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
