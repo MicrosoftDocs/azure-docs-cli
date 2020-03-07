@@ -62,7 +62,7 @@ The Azure CLI can be used in many Azure services resulting in articles being spr
 | | | | |
 |-|-|-|-|
 |SQL Database| Sample |[Configure Azure SLQ Database using the Azure CLI](/azure/sql-database/sql-database-cli-samples?tabs=single-database) | Azure CLI samples for Azure SQL Database.
-|MySQL|Quickstart |[Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-ceate-mysql-server-database-using-azure-cli) | Create an Azure Database for MySQL server.  Configure a firewall rule and SSL settings.  Get and use connection information.
+|MySQL|Quickstart |[Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli) | Create an Azure Database for MySQL server.  Configure a firewall rule and SSL settings.  Get and use connection information.
 |Cosmos DB |How-to guide |[Manage Azure Cosmos resources using the Azure CLI](/azure/cosmos-db/manage-with-cli) | Use common commands to automate management of your Azure Cosmos DB accounts, databases, and containers.
 |Cosmos DB |Sample |[Azure CLI samples for Azure Cosmos DB SQL (Core) API](/azure/cosmos-db/cli-samples) | Get links to sample Azure CLI scripts for Azure Cosmos DB SQL (Core) API.
 
