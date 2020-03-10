@@ -108,6 +108,9 @@ items:
   - summary: Create a kubernetes cluster with authorized apiserver IP ranges.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24,195.168.1.0
+  - summary: Create a kubernetes cluster which enables managed identity.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --enable-managed-identity
   parameters:
   - isRequired: true
     name: --name -n
@@ -159,11 +162,19 @@ items:
     description: >-
       These addons are available:
           http_application_routing - configure ingress with automatic public DNS name creation.
-          monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+          monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one.
+                       Specify "--workspace-resource-id" to use an existing workspace.
+                       If monitoring addon is enabled --no-wait argument will have no effect
           virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
+  - name: --enable-managed-identity
+    summary: Using a system assigned managed identity to manage cluster resource group.
+    description: ''
+  - name: --enable-private-cluster
+    summary: Enable private cluster.
+    description: ''
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
     description: ''
@@ -205,6 +216,7 @@ items:
     summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
   - name: --network-plugin
+    parameterValueGroup: azure, kubenet
     summary: The Kubernetes network plugin to use.
     description: Specify "azure" for advanced networking configurations. Defaults to "kubenet".
   - name: --network-policy
@@ -232,9 +244,15 @@ items:
     defaultValue: Standard_DS2_v2
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
+  - name: --nodepool-labels
+    summary: 'Space-separated labels: key[=value] [key[=value] ...]. You can not change the node labels through CLI after creation. See <a href="https://aka.ms/node-labels">https://aka.ms/node-labels</a> for syntax of labels.'
+    description: ''
   - name: --nodepool-name
     defaultValue: nodepool1
     summary: Node pool name, upto 12 alphanumeric characters.
+    description: ''
+  - name: --nodepool-tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
@@ -353,6 +371,7 @@ items:
     These addons are available:
         http_application_routing - configure ingress with automatic public DNS name creation.
         monitoring - turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+                     If monitoring addon is enabled --no-wait argument will have no effect
         virtual-node - enable AKS Virtual Node (PREVIEW). Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
   langs:
   - azurecli
@@ -1062,12 +1081,15 @@ items:
   - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, interactively selecting a dev space.
     syntax:
       content: az aks use-dev-spaces -g my-aks-group -n my-aks
-  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, updating to the latest Azure Dev Spaces  client components and selecting a new or existing dev space 'my-space'.
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, updating to the latest Azure Dev Spaces             client components and selecting a new or existing dev space 'my-space'.
     syntax:
       content: az aks use-dev-spaces -g my-aks-group -n my-aks --update --space my-space
-  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, selecting a new or existing dev space  'develop/my-space' without prompting for confirmation.
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster, selecting a new or existing dev space             'develop/my-space' without prompting for confirmation.
     syntax:
       content: az aks use-dev-spaces -g my-aks-group -n my-aks -s develop/my-space -y
+  - summary: Use Azure Dev Spaces with a managed Kubernetes cluster with a private endpoint.
+    syntax:
+      content: az aks use-dev-spaces -g my-aks-group -n my-aks -e private
   parameters:
   - isRequired: true
     name: --name -n
@@ -1076,6 +1098,11 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --endpoint -e
+    defaultValue: Public
+    parameterValueGroup: None, Private, Public
+    summary: The endpoint type to be used for a Azure Dev Spaces controller. See <a href="https://aka.ms/azds-networking">https://aka.ms/azds-networking</a> for more information.
     description: ''
   - name: --space -s
     summary: Name of the new or existing dev space to select. Defaults to an interactive selection experience.
@@ -1256,7 +1283,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/b81192b5d7f7fd42ba29297db882193fc66e72ff/src/azure-cli/azure/cli/command_modules/acs/_help.py
-updated_at: 1/31/2020 8:57:27 AM
-ms.date: 01/31/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/fef1731e83dcccba400742131dd1e6375eea0267/src/azure-cli/azure/cli/command_modules/acs/_help.py
+updated_at: 3/5/2020 9:39:07 AM
+ms.date: 03/05/2020
 description: Manage Azure Kubernetes Services.

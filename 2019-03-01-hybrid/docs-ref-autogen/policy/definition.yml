@@ -22,80 +22,36 @@ items:
   - summary: Create a read-only policy.
     syntax:
       content: >-
-        az policy definition create --name readOnlyStorage --rules '{
-            "if":
-            {
-                "field": "type",
-                "equals": "Microsoft.Storage/storageAccounts/write"
-            },
-            "then":
-            {
-                "effect": "deny"
-            }
-        }'
+        az policy definition create --name readOnlyStorage --rules "{ \"if\": \
+            { \"field\": \"type\", \"equals\": \"Microsoft.Storage/storageAccounts/write\" }, \
+                \"then\": { \"effect\": \"deny\" } }"
   - summary: Create a policy parameter definition.
     syntax:
       content: >-
-        az policy definition create --name allowedLocations --rules '{
-            "if": {
-                "allOf": [
-                    {
-                        "field": "location",
-                        "notIn": "[parameters('listOfAllowedLocations')]"
-                    },
-                    {
-                        "field": "location",
-                        "notEquals": "global"
-                    },
-                    {
-                        "field": "type",
-                        "notEquals": "Microsoft.AzureActiveDirectory/b2cDirectories"
-                    }
-                ]
-            },
-            "then": {
-                "effect": "deny"
-            }
-        }' \
-
-        --params '{
-            "allowedLocations": {
-                "type": "array",
-                "metadata": {
-                    "description": "The list of locations that can be specified when deploying resources",
-                    "strongType": "location",
-                    "displayName": "Allowed locations"
-                }
-            }
-        }'
+        az policy definition create --name allowedLocations \
+            --rules "{ \"if\": { \"allOf\": [ \
+                { \"field\": \"location\",\"notIn\": \"[parameters('listOfAllowedLocations')]\" }, \
+                    { \"field\": \"location\", \"notEquals\": \"global\" }, \
+                        { \"field\": \"type\", \"notEquals\": \
+                            \"Microsoft.AzureActiveDirectory/b2cDirectories\"} \
+                                ] }, \"then\": { \"effect\": \"deny\" } }" \
+            --params "{ \"allowedLocations\": { \
+                \"type\": \"array\", \"metadata\": { \"description\": \
+                    \"The list of locations that can be specified when deploying resources\", \
+                        \"strongType\": \"location\", \"displayName\": \"Allowed locations\" } } }"
   - summary: Create a read-only policy that can be applied within a management group.
     syntax:
       content: >-
-        az policy definition create -n readOnlyStorage --management-group 'MyManagementGroup' --rules '{
-            "if":
-            {
-                "field": "type",
-                "equals": "Microsoft.Storage/storageAccounts/write"
-            },
-            "then":
-            {
-                "effect": "deny"
-            }
-        }'
+        az policy definition create -n readOnlyStorage --management-group "MyManagementGroup" \
+            --rules "{ \"if\": { \"field\": \"type\", \
+                \"equals\": \"Microsoft.Storage/storageAccounts/write\" }, \
+                    \"then\": { \"effect\": \"deny\" } }"
   - summary: Create a policy definition with mode. The mode 'Indexed' indicates the policy should be evaluated only for resource types that support tags and location.
     syntax:
       content: >-
-        az policy definition create --name TagsPolicyDefinition --subscription 'MySubscription' --mode Indexed --rules '{
-            "if":
-            {
-                "field": "tags",
-                "exists": "false"
-            },
-            "then":
-            {
-                "effect": "deny"
-            }
-        }'
+        az policy definition create --name TagsPolicyDefinition --subscription "MySubscription" \
+            --mode Indexed --rules "{ \"if\": { \"field\": \"tags\", \"exists\": \"false\" }, \
+                \"then\": { \"effect\": \"deny\" } }"
   parameters:
   - isRequired: true
     name: --name -n
@@ -275,7 +231,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/resource/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/800e711239d60c81de6679d73779563b2cedcc62/src/azure-cli/azure/cli/command_modules/resource/_help.py
-updated_at: 2/13/2020 4:56:47 AM
-ms.date: 02/13/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/991cb7cc7c9e577d8bec3b78e0316dfb5d39fe10/src/azure-cli/azure/cli/command_modules/resource/_help.py
+updated_at: 2/27/2020 6:58:05 AM
+ms.date: 02/27/2020
 description: Manage resource policy definitions.
