@@ -14,6 +14,7 @@ items:
   - az_storage_blob_exists
   - az_storage_blob_generate_sas
   - az_storage_blob_list
+  - az_storage_blob_restore
   - az_storage_blob_set_tier
   - az_storage_blob_show
   - az_storage_blob_snapshot
@@ -520,6 +521,58 @@ items:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_blob_restore
+  name: az storage blob restore
+  summary: Restore blobs in the specified blob ranges.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Restore blobs in two specified blob ranges. For examples, (container1/blob1, container2/blob2) and (container2/blob3..container2/blob4).
+    syntax:
+      content: az storage blob restore --account-name mystorageaccount -g MyResourceGroup -t 2020-02-27T03:59:59Z -r container1/blob1 container2/blob2 -r container2/blob3 container2/blob4
+  - summary: Restore blobs in the specified blob ranges from account start to account end.
+    syntax:
+      content: az storage blob restore --account-name mystorageaccount -g MyResourceGroup -t 2020-02-27T03:59:59Z -r "" ""
+  - summary: Restore blobs in the specified blob range.
+    syntax:
+      content: >-
+        time=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+        az storage blob restore --account-name mystorageaccount -g MyResourceGroup -t $time -r container0/blob1 container0/blob2
+  - summary: Restore blobs in the specified blob range without wait and query blob restore status with 'az storage account show'.
+    syntax:
+      content: >-
+        time=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+        az storage blob restore --account-name mystorageaccount -g MyResourceGroup -t $time -r container0/blob1 container0/blob2 --no-wait
+  parameters:
+  - isRequired: true
+    name: --account-name -n
+    summary: The storage account name.
+    description: ''
+  - isRequired: true
+    name: --time-to-restore -t
+    summary: Restore blob to the specified time, which should be UTC datetime in (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --blob-range -r
+    summary: 'Blob ranges to restore. You need to two values to specify start_range and end_range for each blob range, e.g. -r blob1 blob2. Note: Empty means account start as start range value, and means account end for end range.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1254,6 +1307,9 @@ commands:
 - uid: az_storage_blob_metadata_update
   name: az storage blob metadata update
   summary: Sets user-defined metadata for the specified blob as one or more name-value pairs.
+- uid: az_storage_blob_restore
+  name: az storage blob restore
+  summary: Restore blobs in the specified blob ranges.
 - uid: az_storage_blob_service_properties
   name: az storage blob service-properties
   summary: Manage storage blob service properties.
@@ -1315,7 +1371,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/800e711239d60c81de6679d73779563b2cedcc62/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 2/13/2020 4:56:47 AM
-ms.date: 02/13/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/d08a69c33e438978baf6232ce2ee315c9d45aae2/src/azure-cli/azure/cli/command_modules/storage/_help.py
+updated_at: 3/6/2020 2:47:20 AM
+ms.date: 03/06/2020
 description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
