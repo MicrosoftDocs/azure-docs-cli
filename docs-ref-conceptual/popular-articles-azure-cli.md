@@ -126,6 +126,6 @@ Azure Government|Get Started |[Connect to Azure Government with Azure CLI](/azur
 
 ## See also
 
-- [Getting started with the Azure CLI](get-started-with-azure-cli.md)
-- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Getting started with the Azure CLI](get-started-with-azure-cli.md)
+* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
 * [Azure services that can be managed by the Azure CLI](azure-services-manageable-azure-cli.md)
