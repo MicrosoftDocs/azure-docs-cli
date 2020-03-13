@@ -34,6 +34,6 @@ Azure CLI capabilities make it easy to work with different programing languages 
 
 ## See Also
 
-- [Getting started with the Azure CLI](get-started-with-azure-cli.md)
+- [Get started with the Azure CLI](get-started-with-azure-cli.md)
 - [Full command reference list for the Azure CLI](/cli/azure/reference-index)
-- [Azure services that can be managed by the Azure CLI](azure-services-manageable-azure-cli.md)
+- [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
