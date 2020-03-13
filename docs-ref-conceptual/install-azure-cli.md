@@ -12,7 +12,7 @@ ms.devlang: azurecli
 
 # Install the Azure CLI
 
-The Azure CLI is available to install in Windows, maxOS and Linux environments.  It can also be run in a Docker container and Azure Cloud Shell.
+The Azure CLI is available to install in Windows, macOS and Linux environments.  It can also be run in a Docker container and Azure Cloud Shell.
 
 ## Install
 

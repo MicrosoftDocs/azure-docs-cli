@@ -92,5 +92,5 @@ Azure CLI references are available for the following:
 ## See also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Full command reference list for the Azure CLI](/azure/cli/azure/reference-index)
-- [Popular articles on using the Azure CLI](popular-articles-on-using-the-azure-cli.md)
+- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Popular articles on using the Azure CLI](popular-articles-using-the-azure-cli.md)
