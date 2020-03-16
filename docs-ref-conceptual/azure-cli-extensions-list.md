@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/15/2020
+ms.date: 03/16/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -61,6 +61,7 @@ az extension list-available --output table
 | [netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 0.3.2 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Yes |
 | [notification-hub](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Notification Hub Extension | Yes |
 | [peering](https://github.com/Azure/azure-cli-extensions) | 0.1.0rc2 | Microsoft Azure Command-Line Tools Peering Extension | Yes |
+| [powerbidedicated](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Yes |
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.0.0 | Support for querying Azure resources with Resource Graph. |  |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.5.9 | Additional commands for working with SAP HanaOnAzure instances. |  |
