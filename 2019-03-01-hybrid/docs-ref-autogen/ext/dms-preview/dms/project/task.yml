@@ -23,7 +23,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    summary: The name of the Task. A DMS Project Task is the activity that performs migration related work. There could be multiple Tasks associated with a Project.
     description: ''
   - isRequired: true
     name: --project-name
@@ -83,7 +83,25 @@ items:
         [
             {
                 "name": "source database",
-                "target_database_name": "target database"
+                "target_database_name": "target database",
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "migrationSetting": {
+                    "setting1": "value1",
+                    ...n
+                },
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "sourceSetting": {
+                    "setting1": "value1",
+                    ...n
+                },
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "targetSetting": {
+                    "setting1": "value1",
+                    ...n
+                }
             },
             ...n
         ]
@@ -131,7 +149,7 @@ items:
                                     ...n
                                 ],
                                 // whether shard key is unique
-                                // see <a href="https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data">https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data</a>
+                                // see <a href="https://docs.microsoft.com/azure/cosmos-db/partition-data">https://docs.microsoft.com/azure/cosmos-db/partition-data</a>
                                 "isUnique": false
                             },
                             "targetRUs": 10000
@@ -141,10 +159,49 @@ items:
                 },
                 ...n
             }
-        }.
+        }
+
+      For Oracle to PostgreSQL, the format of the database options JSON object.
+        [
+            {
+                // "Preserve" or "ToLower". Not valid when providing "tableMap".
+                "caseManipulation": "",
+                // When provided, copies all tables within this schema, preserving the casing of the source object names,
+                // or using the value of "caseManipulation" if provided.
+                // Not valid if providing "tableMap".
+                "schemaName": "",
+                // Defines custom mapping of schemas and tables. As seen, offers freedom for mapping tables to different schemas, changing schema and table names, and modifying object name casing.
+                // Not valid if providing "schemaName".
+                "tableMap": {
+                    "SCHEMA1.TABLE1": "SCHEMA1.TABLE1",
+                    "SCHEMA2.TABLE2": "SCHEMA1.TABLE2",
+                    "SCHEMA2.TABLE3": "schema2.OtherTableName
+                    ...n
+                },
+                "targetDatabaseName": "database_name",
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "migrationSetting": {
+                    "setting1": "value1",
+                    ...n
+                },
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "sourceSetting": {
+                    "setting1": "value1",
+                    ...n
+                },
+                // Used for manipulating the underlying migration engine.
+                // Only provide if instructed to do so or if you really know what you are doing.
+                "targetSetting": {
+                    "setting1": "value1",
+                    ...n
+                }
+            }
+        ].
   - isRequired: true
     name: --name -n
-    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    summary: The name of the Task. A DMS Project Task is the activity that performs migration related work. There could be multiple Tasks associated with a Project.
     description: ''
   - isRequired: true
     name: --project-name
@@ -169,7 +226,7 @@ items:
             "dataSource": "server name[,port]",
             "authentication": "SqlAuthentication|WindowsAuthentication",
             "encryptConnection": true,      // highly recommended to leave as true
-            "trustServerCertificate": true  // highly recommended to leave as true
+            "trustServerCertificate": false  // highly recommended to leave as false
         }
 
       The format of the connection JSON object for MySql connections.
@@ -186,7 +243,9 @@ items:
             "password": null,           // if this is missing or null (highly recommended) you will be prompted
             "serverName": "server name",
             "databaseName": "database name", // if this is missing, it will default to the 'postgres' database
-            "port": 5432                // if this is missing, it will default to 5432
+            "port": 5432,                // if this is missing, it will default to 5432
+            "encryptConnection": true,      // highly recommended to leave as true (For PostgreSQL to Azure PostgreSQL migration only)
+            "trustServerCertificate": false  // highly recommended to leave as false (For PostgreSQL to Azure PostgreSQL migration only)
         }
 
       The format of the connection JSON object for MongoDB connections.
@@ -194,11 +253,18 @@ items:
             "userName": null,   // if this is missing or null, you will be prompted
             "password": null,   // if this is missing or null (highly recommended) you will be prompted
             "connectionString": "mongodb://hostOrIp:port"
+        }
+
+      The format of the connection JSON object for Oracle connections.
+        {
+            "userName": null,   // if this is missing or null, you will be prompted
+            "password": null,   // if this is missing or null (highly recommended) you will be prompted
+            "dataSource": "//hostOrIp:port/serviceName"   // accepts EZConnect or Tnsnames formats
         }.
   - isRequired: true
     name: --target-connection-json
-    summary: The connection information to the target server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See examples below for the format.
-    description: See 'source-connection-json' for examples of connection formats.
+    summary: The connection information to the target server. This can be either a JSON-formatted string or the location to a file containing the JSON object. See 'source-connection-json' for examples of connection formats.
+    description: ''
   - isRequired: true
     name: --task-type
     summary: 'The type of data movement the task will support. The supported types are: OnlineMigration, OfflineMigration.'
@@ -229,7 +295,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    summary: The name of the Task. A DMS Project Task is the activity that performs migration related work. There could be multiple Tasks associated with a Project.
     description: ''
   - isRequired: true
     name: --project-name
@@ -260,7 +326,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    summary: The name of the Task. A DMS Project Task is the activity that performs migration related work. There could be multiple Tasks associated with a Project.
     description: ''
   - isRequired: true
     name: --project-name
@@ -288,7 +354,7 @@ items:
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Task. DMS Task is the activity that performs a migration related task. There could be multiple Tasks associated to a Project.
+    summary: The name of the Task. A DMS Project Task is the activity that performs migration related work. There could be multiple Tasks associated with a Project.
     description: ''
   - isRequired: true
     name: --project-name
