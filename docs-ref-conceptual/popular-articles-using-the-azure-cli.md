@@ -17,8 +17,6 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 
 ## Compute
 
-### Virtual Machines
-
 | | | | |
 |-|-|-|-|
 |Virtual Machines | Tutorial: Linux | [Create a Linux virtual machine with the Azure CLI](azure-cli-vm-tutorial.yml) | Create a virtual machine.  Learn about output queries and setting environment variables.
