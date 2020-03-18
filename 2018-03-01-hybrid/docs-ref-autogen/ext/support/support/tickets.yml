@@ -85,6 +85,22 @@ items:
           --ticket-name "BillingTestTicketName" \
           --title "BillingTicketTitle" \
           --partner-tenant-id "CSPPartnerTenantIdGuid"
+  - summary: Create a ticket for Generic Quota increase for any Azure Service.
+    syntax:
+      content: >-
+        az support tickets create \
+          --contact-country "USA" \
+          --contact-email "abc@contoso.com" \
+          --contact-first-name "Foo" \
+          --contact-language "en-US" \
+          --contact-last-name "Bar" \
+          --contact-method "email" \
+          --contact-timezone "Pacific Standard Time" \
+          --description "QuotaTicketDescription" \
+          --problem-classification "/providers/Microsoft.Support/services/QuotaServiceNameGuid/problemClassifications/GenericProblemClassificationNameGuid" \
+          --severity "minimal" \
+          --ticket-name "QuotaTestTicketName" \
+          --title "QuotaTicketTitle"
   - summary: Create a ticket to request Quota increase for Compute VM Cores.
     syntax:
       content: >-
@@ -335,7 +351,7 @@ items:
     description: ''
   - isRequired: true
     name: --severity
-    parameterValueGroup: critical, minimal, moderate
+    parameterValueGroup: critical, highestcriticalimpact, minimal, moderate
     summary: A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure.
     description: ''
   - isRequired: true
@@ -443,7 +459,7 @@ items:
     description: ''
 - uid: ext_support_az_support_tickets_update
   name: az support tickets update
-  summary: Updates severity level and customer contact information for a support ticket.
+  summary: Updates severity level, status and customer contact information for a support ticket.
   description: ''
   langs:
   - azurecli
@@ -451,6 +467,9 @@ items:
   - summary: Update support ticket severity.
     syntax:
       content: az support tickets update --ticket-name "TestTicketName" --severity "moderate"
+  - summary: Update support ticket status.
+    syntax:
+      content: az support tickets update --ticket-name "TestTicketName" --status "closed"
   - summary: Update support ticket customer contact details properties.
     syntax:
       content: >-
@@ -464,10 +483,11 @@ items:
           --contact-method "phone" \
           --contact-phone-number "123-456-7890" \
           --contact-timezone "Pacific Standard Time"
-  - summary: Update support ticket severity and customer contact details properties.
+  - summary: Update support ticket severity, status and customer contact details properties.
     syntax:
       content: >-
         az support tickets update --ticket-name "TestTicketName" \
+          --status "open" \
           --contact-additional-emails "xyz@contoso.com" "devs@contoso.com" \
           --contact-country "USA" \
           --contact-email "abc@contoso.com" \
@@ -484,8 +504,12 @@ items:
     summary: Support ticket name.
     description: ''
   - name: --severity
-    parameterValueGroup: critical, minimal, moderate
+    parameterValueGroup: critical, highestcriticalimpact, minimal, moderate
     summary: A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure.
+    description: ''
+  - name: --status
+    parameterValueGroup: closed, open
+    summary: Status to be updated on the ticket.
     description: ''
   - name: --contact-additional-emails
     summary: Space seperated list of additional email addresses. Additional email addresses will be copied on any correspondence about the support ticket.
@@ -539,7 +563,7 @@ commands:
   summary: Gets support ticket details for an Azure subscription.
 - uid: ext_support_az_support_tickets_update
   name: az support tickets update
-  summary: Updates severity level and customer contact information for a support ticket.
+  summary: Updates severity level, status and customer contact information for a support ticket.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
