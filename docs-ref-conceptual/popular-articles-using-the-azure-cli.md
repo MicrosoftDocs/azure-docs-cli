@@ -17,23 +17,21 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 
 ## Compute
 
-### Virtual Machines
-
 | | | | |
 |-|-|-|-|
-|Virtual Machines | Linux Tutorial | [Create a Linux virtual machine with the Azure CLI](azure-cli-vm-tutorial.yml) | Create a virtual machine.  Learn about output queries and setting environment variables.
-|Virtual Machines | Linux Quickstart | [Create a Linux virtual machine using the Azure CLI](/azure/virtual-machines/linux/quick-create-cli) | Create and deploy a Linux virtual machine.  Open a port for web traffic, and install a web server.
-|Virtual Machines | Linux How-to guide |[Create a Linus image of a virtual machine or VHD](/azure/virtual-machines/linux/capture-image) | Deprovision an existing virtual machine, create an image, and create a new virtual machine from the captured image.
-|Virtual Machines | Linux How-to guide | [Upload a VHD to Azure using the Azure CLI](/azure/virtual-machines/linux/disks-upload-vhd-to-managed-disk-cli) | Create an empty managed disk, upload your local VHD file, and copy a managed disk.
-|Virtual Machines | Linux How-to guide | [Create a shared image gallery using the Azure CLI](/azure/virtual-machines/linux/shared-images) | Create a Shared Image Gallery of custom VM images with others in your organization, within or across regions, or within an AAzure Active Directory tenant.
-|Virtual Machines | Linux How-to guide | [Deploy Spot VMs using the Azure CLI (preview)](/azure/virtual-machines/linux/spot-cli) | Deploy a Linux Spot virtual machine that will not be evicted based on price.
-|Virtual Machines | Windows Quickstart | [Create a Windows virtual machine using the Azure CLI](/azure/virtual-machines/windows/quick-create-cli) | Deploy a virtual machine in Azure that runs Windows Server 2016.
+|Virtual Machines | Tutorial: Linux | [Create a Linux virtual machine with the Azure CLI](azure-cli-vm-tutorial.yml) | Create a virtual machine.  Learn about output queries and setting environment variables.
+|Virtual Machines | Quickstart: Linux | [Create a Linux virtual machine using the Azure CLI](/azure/virtual-machines/linux/quick-create-cli) | Create and deploy a Linux virtual machine.  Open a port for web traffic, and install a web server.
+|Virtual Machines | How-to guide: Linux |[Create a Linus image of a virtual machine or VHD](/azure/virtual-machines/linux/capture-image) | Deprovision an existing virtual machine, create an image, and create a new virtual machine from the captured image.
+|Virtual Machines | How-to guide: Linux | [Upload a VHD to Azure using the Azure CLI](/azure/virtual-machines/linux/disks-upload-vhd-to-managed-disk-cli) | Create an empty managed disk, upload your local VHD file, and copy a managed disk.
+|Virtual Machines | How-to guide: Linux | [Create a shared image gallery using the Azure CLI](/azure/virtual-machines/linux/shared-images) | Create a Shared Image Gallery of custom VM images with others in your organization, within or across regions, or within an AAzure Active Directory tenant.
+|Virtual Machines | How-to guide: Linux | [Deploy Spot VMs using the Azure CLI (preview)](/azure/virtual-machines/linux/spot-cli) | Deploy a Linux Spot virtual machine that will not be evicted based on price.
+|Virtual Machines | Quickstart: Windows | [Create a Windows virtual machine using the Azure CLI](/azure/virtual-machines/windows/quick-create-cli) | Deploy a virtual machine in Azure that runs Windows Server 2016.
 |Virtual Machines | Learn Module | [Manage virtual machines using the Azure CLI](https://docs.microsoft.com/learn/modules/manage-virtual-machines-with-azure-cli/) | Create, start, stop, and perform additional management tasks related to virtual machines.
-|Azure Kubernetes Service (AKS)|Quickstart | [Deploy an Azure Kubernetes Service (AKS) cluster using the Azure CLI](/azure/aks/kubernetes-walkthrough) | Deploy and manage AKS clusters.  See how to monitor the health of the cluster and pods that run your application.
+|Azure Kubernetes Service (AKS)| Quickstart | [Deploy an Azure Kubernetes Service (AKS) cluster using the Azure CLI](/azure/aks/kubernetes-walkthrough) | Deploy and manage AKS clusters.  See how to monitor the health of the cluster and pods that run your application.
 |Azure Batch|Sample | [Run a job and tasks with Azure Batch using the Azure CLI](/azure/batch/scripts/batch-cli-sample-run-job) | Create a Batch job and add a series of tasks to the job. Monitor a job and its tasks.
 |Azure Batch|Sample | [Create and manage a Windows pool in Azure Batch using the Azure CLI](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) | Create and manage a pool of Windows compute nodes with a Cloud Services configuration.
 |Azure Container Instance|Quickstart | [Deploy a container instance using the Azure CLI](/azure/container-instances/container-instances-quickstart) | Deploy an isolated Docker container and make its application available with a fully qualified domain name (FQDN). Execute a single deployment command, then browse to the application running in the container.
-|Azure Function|Quickstart |  [Create your first function from the command line using the Azure CLI](/azure/azure-functions/functions-create-first-azure-function-azure-cli) | Create a function app project, enable extension bundles, and create and run a function.  Deploy the function app project to Azure.
+|Azure Function|Quickstart |  [Create a function in Azure that responds to HTTP requests using the Azure CLI](/azure/azure-functions/functions-create-first-azure-function-azure-cli) | Use command-line tools to create a function that responds to HTTP requests. After testing the code locally, deploy the function to the serverless environment of Azure Functions.
 
 ## Networking
 
@@ -53,15 +51,15 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 | | | | |
 |-|-|-|-|
 |Azure App Configuration|Samples |[Azure CLI samples for Azure App Configuration](/azure/azure-app-configuration/cli-samples) | Get links to bash scripts that use the Azure CLI for Azure App Configuration.
-|Azure DevOps| DevOps Pipeline Get Started |[Create your first Azure Pipeline using the Azure CLI](/azure/devops/pipelines/create-first-pipeline-cli) | Create a new pipeline in a cloned GitHub directory, manage and run your pipelines.
-|Azure DevOps|DevOps Pipeline How-to guide |[Azure Pipeline deployment tasks using the Azure CLI](/azure/devops/pipelines/tasks/deploy/azure-cli?view=azure-devops) | In a build or release pipeline, run a shell or batch script containing the Azure CLI.  Commands can be run on cross-platform agents running on Linux, macOS, or Windows operating systems.
-|Azure DevOps|Jenkins Pipeline Tutorial|[Deploy to Azure App Service with Jenkins using the Azure CLI](/azure/jenkins/execute-cli-jenkins-pipeline) | Create and configure a Jenkins virtual machine, create a web app in Azure, and prepare a GitHub repository.  Create and run the Jenkins pipeline.
+|Azure DevOps| Get Started: DevOps Pipeline |[Create your first Azure Pipeline using the Azure CLI](/azure/devops/pipelines/create-first-pipeline-cli) | Create a new pipeline in a cloned GitHub directory, manage and run your pipelines.
+|Azure DevOps| How-to guide: DevOps Pipeline |[Azure Pipeline deployment tasks using the Azure CLI](/azure/devops/pipelines/tasks/deploy/azure-cli?view=azure-devops) | In a build or release pipeline, run a shell or batch script containing the Azure CLI.  Commands run on cross-platform agents running on Linux, macOS, or Windows operating systems.
+|Azure DevOps| Tutorial: Jenkins Pipeline |[Deploy to Azure App Service with Jenkins using the Azure CLI](/azure/jenkins/execute-cli-jenkins-pipeline) | Create and configure a Jenkins virtual machine, create a web app in Azure, and prepare a GitHub repository.  Create and run the Jenkins pipeline.
 
 ## Databases
 
 | | | | |
 |-|-|-|-|
-|SQL Database| Sample |[Configure Azure SLQ Database using the Azure CLI](/azure/sql-database/sql-database-cli-samples?tabs=single-database) | Azure CLI samples for Azure SQL Database.
+|SQL Database| Sample |[Configure Azure SQL Database using the Azure CLI](/azure/sql-database/sql-database-cli-samples?tabs=single-database) | Azure CLI samples for Azure SQL Database.
 |MySQL|Quickstart |[Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli) | Create an Azure Database for MySQL server.  Configure a firewall rule and SSL settings.  Get and use connection information.
 |Cosmos DB |How-to guide |[Manage Azure Cosmos resources using the Azure CLI](/azure/cosmos-db/manage-with-cli) | Use common commands to automate management of your Azure Cosmos DB accounts, databases, and containers.
 |Cosmos DB |Sample |[Azure CLI samples for Azure Cosmos DB SQL (Core) API](/azure/cosmos-db/cli-samples) | Get links to sample Azure CLI scripts for Azure Cosmos DB SQL (Core) API.
@@ -87,16 +85,16 @@ Policy assignment |Quickstart |[Create a policy assignment to identify non-compl
 
 | | | | |
 |-|-|-|-|
-Azure Stack Hub|Linux VM Quickstart |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-linux-cli) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
-Azure Stack Hub|Windows VM Quickstart |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-windows-cli) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
-Azure Stack Hub|ASDK resources How-to guide |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-version-profiles-azurecli2) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
+Azure Stack Hub| Quickstart: Linux VM |[Create a Linux server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-linux-cli) | Create an Ubuntu Server 16.04 LTS virtual machine, connect to the virtual machine with a remote client, and install an NGINX web server.
+Azure Stack Hub| Quickstart: Windows VM |[Create a Windows Server virtual machine in Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-quick-create-vm-windows-cli) |Create a Windows Server 2016 virtual machine, connect the virtual machine with a remote client, and install the IIS web server.
+Azure Stack Hub| How-to guide: ASDK resources |[Manage and deploy resources to Azure Stack Hub using the Azure CLI](/azure-stack/user/azure-stack-version-profiles-azurecli2) | Set up the Azure CLI to manage Azure Stack Development Kit (ASDK) resources from Linux, Mac, and Windows client platforms.
 
 ## Storage
 
 | | | | |
 |-|-|-|-|
-Blob storage |How-to guide |[Use the Azure CLI with Azure Storage](/azure/storage/common/storage-azure-cli) | Work with resources in your Azure Storage account.
 Blob storage |Quickstart |  [Create, download, and list blobs using the Azure CLI](/azure/storage/blobs/storage-quickstart-blobs-cli) | Upload and download data to and from Azure Blob storage.
+Blob storage |How-to guide |[Authorize access to blob or queue data using the Azure CLI](/azure/storage/common/authorize-data-operations-cli) | Specify how data operations are authorized, and set environment variables for parameters.
 Blob storage |How-to guide |[Use the Azure CLI to manage directories, files, and ACLs in Azure Data Lake Storage Gen2 (preview)](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) | Create and manage directories, files, and permissions in storage accounts that have a hierarchical namespace.
 File storage |Quickstart |[Create and manage Azure file shares using the Azure CLI](/azure/storage/files/storage-how-to-use-files-cli) | Create and use Azure file shares.  Create and manage share snapshots.
 
@@ -104,7 +102,7 @@ File storage |Quickstart |[Create and manage Azure file shares using the Azure C
 
 | | | | |
 |-|-|-|-|
-Service principal |How-to guide |[Create an Azure service principal with the Azure CLI](/azure/create-an-azure-service-principal-azure-cli) | Create, get information about, and reset a service principal with the Azure CLI.
+Service principal |How-to guide |[Create an Azure service principal with the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli) | Create, get information about, and reset a service principal with the Azure CLI.
 RBAC |How-to guide |[Add or remove role assignments using Azure RBAC and the Azure CLI](/azure/role-based-access-control/role-assignments-cli) | Assign roles to Azure role-based access control.
 Key Vault |How-to guide |[Manage Key Vault using the Azure CLI](/azure/key-vault/key-vault-manage-with-cli2) | Create and manage Azure Key Vault.  Register and authorize an application, set advanced access policies, and learn cross-platform command-line interface commands.
 Key Vault |Tutorial |[Manage storage account keys with Key Vault and the Azure CLI](/azure/key-vault/key-vault-ovw-storage-keys) | Manage storage account keys, and generate shared access signature tokens.
@@ -114,7 +112,7 @@ Key Vault |Tutorial |[Manage storage account keys with Key Vault and the Azure C
 | | | | |
 |-|-|-|-|
 Machine Learning |Reference |[Use the Azure CLI extension for Azure Machine Learning](/azure/machine-learning/reference-azure-machine-learning-cli) | Run experiments to create machine learning models and register machine learning models for customer usage.  Package, deploy and track the lifecycle of your machine learning models.
-Cognitive Services |How-to-guide |[Create a Cognitive Services resource using the Azure CLI](/azure/cognitive-services/How-to-guide/cognitive-services-apis-create-account-cli) | Sign up for Azure Cognitive Services and create an account that has a single-service or multi-service subscription.  Use the keys and endpoint generated for you to authenticate your applications.
+Cognitive Services |How-to-guide |[Create a Cognitive Services resource using the Azure CLI](/azure/cognitive-services/cognitive-services-apis-create-account-cli) | Sign up for Azure Cognitive Services and create an account that has a single-service or multi-service subscription.  Use the keys and endpoint generated for you to authenticate your applications.
 Azure Monitor |How-to guide |[Create a Log Analytics workspace using the Azure CLI](/azure/azure-monitor/learn/quick-create-workspace-cli) | Create and deploy a Log Analytics workspace.
 
 ## Geographies
