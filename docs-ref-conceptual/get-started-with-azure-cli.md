@@ -11,7 +11,7 @@ ms.devlang: azurecli
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure CLI!  This article introduces the CLI and provides links to help you get started.
+Welcome to the Azure CLI!  This article introduces the CLI and helps you complete common tasks.
 
 > [!NOTE]
 >
@@ -127,3 +127,9 @@ features of the CLI to leave general feedback with the [az feedback](/cli/azure/
 ```azurecli-interactive
 az feedback
 ```
+
+## See also
+
+* [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
+* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Popular articles on using the Azure CLI](popular-articles-using-the-azure-cli.md)
