@@ -17,7 +17,7 @@ The Azure CLI is available across many Azure services, and is a flexible yet pow
 
 Azure CLI references are available for the following:  
 
-| Category with link to popular articles | Service Full Documentation
+| Category with link to popular articles | Service full documentation
 |-|-|
 |[AI + Machine Learning](/cli/azure/popular-articles-using-the-azure-cli?#ai--machine-learning)| [Azure Machine Learning](/azure/machine-learning/)
 ||[Cognitive Services](/azure/cognitive-services/)
