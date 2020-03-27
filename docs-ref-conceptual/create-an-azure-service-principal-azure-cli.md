@@ -188,7 +188,7 @@ To sign in with a service principal using a password:
 az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
 ```
 
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format.  When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
+To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
 ```azurecli-interactive
 az login --service-principal --username APP_ID --tenant TENANT_ID --password /path/to/cert
