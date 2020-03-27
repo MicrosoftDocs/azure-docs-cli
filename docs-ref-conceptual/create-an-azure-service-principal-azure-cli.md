@@ -81,8 +81,9 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 az ad sp create-for-rbac --name ServicePrincipalName --create-cert
 ```
 
-```output
-#console output
+Console output:
+
+```
 Creating a role assignment under the scope of "/subscriptions/myId"
 Please copy C:\myPath\myNewFile.pem to a safe place.
 When you run 'az login', provide the file path in the --password argument
@@ -94,15 +95,16 @@ When you run 'az login', provide the file path in the --password argument
   "password": null,
   "tenant": "myTenantId"
 }
+```
 
-#contents of the new PEM file
+Contents of the new PEM file:
+```
 -----BEGIN PRIVATE KEY-----
 myPrivateKeyValue
 -----END PRIVATE KEY-----
 -----BEGIN CERTIFICATE-----
 myCertificateValue
 -----END CERTIFICATE-----
-
 ```
 
 > [!NOTE]
