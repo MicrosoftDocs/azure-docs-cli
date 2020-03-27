@@ -64,7 +64,7 @@ about service principals, see [Create an Azure service principal with the Azure 
 To sign in with a service principal, you need:
 
 * The URL or name associated with the service principal
-* The service principal password, or the X509 certificate used to create the service principal in PEM format  
+* The service principal password, or the X509 certificate used to create the service principal in PEM format
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
