@@ -59,13 +59,17 @@ az login -u <username> -p <password>
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 pre-defined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
 allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
-about service principals, see [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md).
+about service principals, see [Create an Azure service principal with the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli.md).
 
 To sign in with a service principal, you need:
 
 * The URL or name associated with the service principal
 * The service principal password, or the X509 certificate used to create the service principal in PEM format
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
+
+> [!NOTE]
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file.  For an example of a PEM file format, see [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli#sign-in-using-a-service-principal). 
+>
 
 > [!IMPORTANT]
 >
