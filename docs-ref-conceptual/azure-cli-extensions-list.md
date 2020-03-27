@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/26/2020
+ms.date: 03/27/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -71,7 +71,7 @@ az extension list-available --output table
 | [support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 1.0.0 | Microsoft Azure Command-Line Tools Support Extension |  |
 | [synapse](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Synapse Extension | Yes |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
-| [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.2 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
+| [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.3 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
 | [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.2.6 | Auto repair commands to fix VMs. |  |
 | [vmware](https://github.com/virtustream/azure-vmware-virtustream-cli-extension) | 0.5.5 | Preview Azure VMware Solution by Virtustream commands. | Yes |
 | [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.2.24 | Additional commands for Azure AppService. | Yes |
