@@ -106,7 +106,7 @@ myCertificateValue
 ```
 
 > [!NOTE]
-> The `az ad sp create-for-rbac –create-cert` command creates the service principal and a PEM file.  The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
+> The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
 
 The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
 
