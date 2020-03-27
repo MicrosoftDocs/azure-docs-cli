@@ -81,8 +81,9 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 az ad sp create-for-rbac --name ServicePrincipalName --create-cert
 ```
 
-```output
-#console output
+Console output:
+
+```
 Creating a role assignment under the scope of "/subscriptions/myId"
 Please copy C:\myPath\myNewFile.pem to a safe place.
 When you run 'az login', provide the file path in the --password argument
@@ -94,19 +95,20 @@ When you run 'az login', provide the file path in the --password argument
   "password": null,
   "tenant": "myTenantId"
 }
+```
 
-#contents of the new PEM file
+Contents of the new PEM file:
+```
 -----BEGIN PRIVATE KEY-----
 myPrivateKeyValue
 -----END PRIVATE KEY-----
 -----BEGIN CERTIFICATE-----
 myCertificateValue
 -----END CERTIFICATE-----
-
 ```
 
 > [!NOTE]
-> The `az ad sp create-for-rbac –create-cert` command creates the service principal and a PEM file.  The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
+> The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
 
 The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
 
@@ -188,7 +190,7 @@ To sign in with a service principal using a password:
 az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
 ```
 
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format.  When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
+To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
 ```azurecli-interactive
 az login --service-principal --username APP_ID --tenant TENANT_ID --password /path/to/cert
