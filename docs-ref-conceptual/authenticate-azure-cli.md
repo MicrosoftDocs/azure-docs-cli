@@ -68,7 +68,7 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file.  For an example of a PEM file format, see [Create an Azure service principal with the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli#sign-in-using-a-service-principal). 
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file.  For an example of a PEM file format, see [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli#sign-in-using-a-service-principal). 
 >
 
 > [!IMPORTANT]
