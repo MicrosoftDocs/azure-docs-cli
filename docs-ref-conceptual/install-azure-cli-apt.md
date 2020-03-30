@@ -94,6 +94,14 @@ Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return t
 determine the package to install. If you know the code name of the Ubuntu or Debian version your distribution is derived from, you can set the `AZ_REPO` value manually when
 [adding the repository](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution code name and set `AZ_REPO` to the correct value.
 
+### No package for your distribution
+
+Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
+versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
+
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
+use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+
 ### Elementary OS (EOS) fails to install the Azure CLI
 
 EOS fails to install the Azure cli because `lsb_release` returns `HERA`, which is the EOS release name.  The solution is to fix the file `/etc/apt/sources.list.d/azure-cli.list` and change `hera main` to `bionic main`.
@@ -109,14 +117,6 @@ Modified file contents
 ```
 deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main
 ```
-
-### No package for your distribution
-
-Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
-versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
-
-To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
-use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
 
 ### Proxy blocks connection
 
