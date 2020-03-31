@@ -49,6 +49,9 @@ items:
     name: --registry -r
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
+  - name: --agent-pool
+    summary: The name of the agent pool.
+    description: ''
   - name: --auth-mode
     parameterValueGroup: Default, None
     summary: Auth mode of the source registry.
@@ -92,6 +95,9 @@ items:
   - name: <SOURCE_LOCATION>
     summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -124,6 +130,9 @@ items:
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -148,6 +157,9 @@ items:
     name: --name -n
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -159,7 +171,7 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_acr_create
   name: az acr create
-  summary: Creates an Azure Container Registry.
+  summary: Create an Azure Container Registry.
   description: ''
   langs:
   - azurecli
@@ -204,6 +216,9 @@ items:
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches. Only applicable to Premium SKU.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -234,6 +249,9 @@ items:
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -250,17 +268,20 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Import an image to the target registry and inherits sourcerepository:sourcetag from the source registry.
+  - summary: Import an image from 'sourceregistry' to 'MyRegistry'. The image inherits its source repository and tag names.
     syntax:
       content: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag
-  - summary: Import an image from a registry in a different subscription.
+  - summary: Import an image from a public repository on Docker Hub. The image uses the specified repository and tag names.
+    syntax:
+      content: az acr import -n MyRegistry --source docker.io/library/hello-world:latest -t targetrepository:targettag
+  - summary: Import an image from a private repository using its username and password. This also applies to registries outside Azure.
+    syntax:
+      content: az acr import -n MyRegistry --source myprivateregistry.azurecr.io/hello-world:latest -u username -p password
+  - summary: Import an image from an Azure container registry in a different subscription.
     syntax:
       content: >-
         az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag \
             -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
-  - summary: Import an image from a public repository in Docker Hub
-    syntax:
-      content: az acr import -n MyRegistry --source docker.io/library/hello-world:latest -t targetrepository:targettag
   parameters:
   - isRequired: true
     name: --name -n
@@ -268,7 +289,7 @@ items:
     description: ''
   - isRequired: true
     name: --source
-    summary: The source identifier will be either a source image name or a fully qualified source.
+    summary: Source image name or fully qualified source containing the registry login server. If `--registry` is used, `--source` will always be interpreted as a source image, even if it contains the login server.
     description: ''
   - name: --force
     summary: Overwrite the existing tag of the image to be imported.
@@ -280,7 +301,7 @@ items:
     summary: The password of source container registry.
     description: ''
   - name: --registry -r
-    summary: The source container registry can be name, login server or resource ID of the source registry.
+    summary: The source Azure container registry. This can be name, login server or resource ID of the source registry.
     description: ''
   - name: --repository
     summary: The repository name for a manifest-only copy of images. Multiple copies supported by passing --repository multiple times.
@@ -290,6 +311,9 @@ items:
     description: ''
   - name: --username -u
     summary: The username of source container registry.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -316,6 +340,9 @@ items:
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -359,6 +386,9 @@ items:
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -397,6 +427,9 @@ items:
   - isRequired: true
     name: --registry -r
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    description: ''
+  - name: --agent-pool
+    summary: The name of the agent pool.
     description: ''
   - name: --auth-mode
     parameterValueGroup: Default, None
@@ -438,6 +471,9 @@ items:
   - name: <SOURCE_LOCATION>
     summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>'). If '/dev/null' is specified, the value will be set to None and ignored.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -468,6 +504,9 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -494,6 +533,9 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -552,6 +594,9 @@ items:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -562,6 +607,24 @@ items:
       path: src/azure-cli/azure/cli/command_modules/acr/_help.py
       repo: https://github.com/Azure/azure-cli.git
 commands:
+- uid: az_acr_agentpool
+  name: az acr agentpool
+  summary: Manage private Tasks agent pools with Azure Container Registries.
+- uid: az_acr_agentpool_create
+  name: az acr agentpool create
+  summary: Create an agent pool for an Azure Container Registry.
+- uid: az_acr_agentpool_delete
+  name: az acr agentpool delete
+  summary: Delete an agent pool.
+- uid: az_acr_agentpool_list
+  name: az acr agentpool list
+  summary: List the agent pools for an Azure Container Registry.
+- uid: az_acr_agentpool_show
+  name: az acr agentpool show
+  summary: Get the properties of a specified agent pool for an Azure Container Registry.
+- uid: az_acr_agentpool_update
+  name: az acr agentpool update
+  summary: Update an agent pool for an Azure Container Registry.
 - uid: az_acr_build
   name: az acr build
   summary: Queues a quick build, providing streaming logs for an Azure Container Registry.
@@ -594,7 +657,7 @@ commands:
   summary: Update retention policy for an Azure Container Registry.
 - uid: az_acr_create
   name: az acr create
-  summary: Creates an Azure Container Registry.
+  summary: Create an Azure Container Registry.
 - uid: az_acr_credential
   name: az acr credential
   summary: Manage login credentials for Azure Container Registries.
@@ -780,7 +843,7 @@ commands:
   summary: Cancel a specified run of an Azure Container Registry.
 - uid: az_acr_task_create
   name: az acr task create
-  summary: Creates a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
+  summary: Create a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
 - uid: az_acr_task_credential
   name: az acr task credential
   summary: Manage credentials for a task. Please see <a href="https://aka.ms/acr/tasks/cross-registry-authentication">https://aka.ms/acr/tasks/cross-registry-authentication</a> for more information.
@@ -938,7 +1001,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/acr/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/253058ec13b82ff30dd215d5d8ef0bead7e9ee7a/src/azure-cli/azure/cli/command_modules/acr/_help.py
-updated_at: 3/5/2020 8:29:08 AM
-ms.date: 03/05/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/460d4ab2d7177ee7a868791f10cae7b186201fef/src/azure-cli/azure/cli/command_modules/acr/_help.py
+updated_at: 3/30/2020 6:07:50 AM
+ms.date: 03/30/2020
 description: Manage private registries with Azure Container Registries.

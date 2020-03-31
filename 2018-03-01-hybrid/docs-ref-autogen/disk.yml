@@ -44,7 +44,19 @@ items:
       content: az disk create -g MyResourceGroup -n MyDisk2 --source MyDisk
   - summary: Create a disk in an availability zone in the region of "East US 2"
     syntax:
-      content: az disk create -n MyDisk -g MyResourceGroup --size-gb 10 --location eastus2 --zone 1
+      content: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --location eastus2 --zone 1
+  - summary: Create a disk from image.
+    syntax:
+      content: az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:UbuntuServer:18.04-LTS:18.04.202002180
+  - summary: Create a disk from gallery image.
+    syntax:
+      content: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference $id
+  - summary: Create a disk with total number of IOPS and total throughput (MBps) limitation.
+    syntax:
+      content: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --sku UltraSSD_LRS --disk-iops-read-only 200 --disk-mbps-read-only 30
+  - summary: Create a disk and specify maximum number of VMs that can attach to the disk at the same time.
+    syntax:
+      content: az disk create -g MyResourceGroup -n MyDisk --size-gb 256 --max-shares 2 -l centraluseuap
   parameters:
   - isRequired: true
     name: --name -n
@@ -54,8 +66,29 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --disk-iops-read-only
+    summary: The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-mbps-read-only
+    summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
+    description: ''
+  - name: --gallery-image-reference
+    summary: ID of the shared galley image version from which to create a disk.
+    description: ''
+  - name: --gallery-image-reference-lun
+    summary: If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
+    description: ''
+  - name: --image-reference
+    summary: ID or URN (publisher:offer:sku:version) of the image from which to create a disk.
+    description: ''
+  - name: --image-reference-lun
+    summary: If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --max-shares
+    summary: The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -84,6 +117,9 @@ items:
   - name: --zone
     parameterValueGroup: 1, 2, 3
     summary: Availability zone into which to provision the resource.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -117,6 +153,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: az_disk_grant_access
   name: az disk grant-access
   summary: Grant a resource access to a managed disk.
@@ -144,6 +183,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: az_disk_list
   name: az disk list
   summary: List managed disks.
@@ -153,6 +195,9 @@ items:
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -183,6 +228,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: az_disk_show
   name: az disk show
   summary: Gets information about a disk.
@@ -201,6 +249,9 @@ items:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: az_disk_update
   name: az disk update
@@ -247,6 +298,9 @@ items:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: az_disk_wait
   name: az disk wait
   summary: Place the CLI in a waiting state until a condition of a managed disk is met.
@@ -292,6 +346,9 @@ items:
     description: ''
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 commands:
 - uid: az_disk_create

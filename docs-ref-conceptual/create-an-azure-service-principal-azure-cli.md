@@ -9,7 +9,7 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
-# Create an Azure service principal with Azure CLI
+# Create an Azure service principal with the Azure CLI
 
 Automated tools that use Azure services should always have restricted permissions. Instead of having
 applications sign in as a fully privileged user, Azure offers service principals.
@@ -26,7 +26,7 @@ This article shows you the steps for creating, getting information about, and re
 
 ## Create a service principal
 
-Create a service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses. 
+Create a service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses.
 
 > [!NOTE]
 >
@@ -45,7 +45,7 @@ Without any authentication parameters, password-based authentication is used wit
 
 > [!IMPORTANT]
 > As of Azure CLI 2.0.68, the `--password` parameter to create a service principal with a user-defined password
->  is __no longer supported__ to prevent the accidental use of weak passwords.
+> is __no longer supported__ to prevent the accidental use of weak passwords.
 
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
 
@@ -55,6 +55,9 @@ Record their values, but they can be retrieved at any point with [az ad sp list]
 ### Certificate-based authentication
 
 For certificate-based authentication, use the `--cert` argument. This argument requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
+
+> [!NOTE]
+> When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name ServicePrincipalName --cert "-----BEGIN CERTIFICATE-----
@@ -77,6 +80,35 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 ```azurecli-interactive
 az ad sp create-for-rbac --name ServicePrincipalName --create-cert
 ```
+
+Console output:
+
+```
+Creating a role assignment under the scope of "/subscriptions/myId"
+Please copy C:\myPath\myNewFile.pem to a safe place.
+When you run 'az login', provide the file path in the --password argument
+{
+  "appId": "myAppId",
+  "displayName": "myDisplayName",
+  "fileWithCertAndPrivateKey": "C:\\myPath\\myNewFile.pem",
+  "name": "http://myName",
+  "password": null,
+  "tenant": "myTenantId"
+}
+```
+
+Contents of the new PEM file:
+```
+-----BEGIN PRIVATE KEY-----
+myPrivateKeyValue
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+myCertificateValue
+-----END CERTIFICATE-----
+```
+
+> [!NOTE]
+> The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
 
 The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
 
@@ -158,7 +190,7 @@ To sign in with a service principal using a password:
 az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
 ```
 
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format:
+To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
 ```azurecli-interactive
 az login --service-principal --username APP_ID --tenant TENANT_ID --password /path/to/cert

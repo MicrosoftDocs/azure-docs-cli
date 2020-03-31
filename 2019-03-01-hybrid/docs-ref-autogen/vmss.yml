@@ -21,6 +21,7 @@ items:
   - az_vmss_reimage
   - az_vmss_restart
   - az_vmss_scale
+  - az_vmss_set_orchestration_service_state
   - az_vmss_show
   - az_vmss_start
   - az_vmss_stop
@@ -97,7 +98,7 @@ items:
     description: ''
   - name: --eviction-policy
     parameterValueGroup: Deallocate, Delete
-    summary: The eviction policy for virtual machines in a low priority scale set.
+    summary: The eviction policy for virtual machines in a Spot priority scale set. Default eviction policy is Deallocate for a Spot priority scale set.
     description: ''
   - name: --health-probe
     summary: Probe name from the existing load balancer, mainly used for rolling upgrade or automatic repairs.
@@ -130,7 +131,7 @@ items:
     description: ''
   - name: --priority
     parameterValueGroup: Low, Regular
-    summary: Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS.
+    summary: Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
     description: ''
   - name: --scale-in-policy
     summary: Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
@@ -298,6 +299,9 @@ items:
   - name: --use-unmanaged-disk
     summary: Do not use managed disk to persist VM.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -332,6 +336,9 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -362,6 +369,9 @@ items:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -394,6 +404,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -430,6 +443,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -445,6 +461,9 @@ items:
   parameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -478,6 +497,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -506,6 +528,9 @@ items:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -541,6 +566,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -565,6 +593,9 @@ items:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -593,6 +624,9 @@ items:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -629,6 +663,9 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -659,6 +696,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -699,6 +739,52 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_vmss_set_orchestration_service_state
+  name: az vmss set-orchestration-service-state
+  summary: Change ServiceState property for a given service within a VMSS.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Change ServiceState property for AutomaticRepairs
+    syntax:
+      content: az vmss set-orchestration-service-state --service-name AutomaticRepairs --action Resume --name MyScaleSet --resource-group MyResourceGroup
+  parameters:
+  - isRequired: true
+    name: --action
+    summary: The action to be performed.
+    description: ''
+  - isRequired: true
+    name: --service-name
+    summary: The name of the orchestration service.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: Scale set name. You can configure the default using `az configure --defaults vmss=&lt;name&gt;`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -726,6 +812,9 @@ items:
     description: ''
   - name: --instance-id
     summary: VM instance ID. If missing, show the VMSS.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -760,6 +849,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -797,6 +889,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -870,6 +965,9 @@ items:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
     remote:
@@ -901,6 +999,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -965,6 +1066,9 @@ items:
     description: ''
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
   source:
     path: src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -1111,6 +1215,9 @@ commands:
 - uid: az_vmss_scale
   name: az vmss scale
   summary: Change the number of VMs within a VMSS.
+- uid: az_vmss_set_orchestration_service_state
+  name: az vmss set-orchestration-service-state
+  summary: Change ServiceState property for a given service within a VMSS.
 - uid: az_vmss_show
   name: az vmss show
   summary: Get details on VMs within a VMSS.
@@ -1145,7 +1252,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/f6e542a5ab5b4115fc76e39c5b3509da0b7e3a44/src/azure-cli/azure/cli/command_modules/vm/_help.py
-updated_at: 3/6/2020 5:12:58 AM
-ms.date: 03/06/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/89ad796dab6188a565a2a1d280aa9ec6dc959b59/src/azure-cli/azure/cli/command_modules/vm/_help.py
+updated_at: 3/30/2020 6:57:31 AM
+ms.date: 03/30/2020
 description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

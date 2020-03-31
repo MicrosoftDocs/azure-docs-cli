@@ -52,6 +52,9 @@ items:
     defaultValue: "8001"
     summary: The listening port for the dashboard.
     description: Add this argument when the default listening port is used by another process or unavailable.
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_create
   name: az aks create
   summary: Create a new managed Kubernetes cluster.
@@ -98,9 +101,9 @@ items:
   - summary: Create a kubernetes cluster with server side encryption using your owned key.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-diskencryptionset-id <disk-encryption-set-resource-id>
-  - summary: Create a kubernetes cluster with userDefinedRouting, standard load balancer SKU and the azure network plugin
+  - summary: Create a kubernetes cluster with userDefinedRouting, standard load balancer SKU and a custom subnet preconfigured with a route table
     syntax:
-      content: az aks create -g MyResourceGroup -n MyManagedCluster --outbound-type userDefinedRouting --network-plugin azure --load-balancer-sku standard
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --outbound-type userDefinedRouting --load-balancer-sku standard --vnet-subnet-id customUserSubnetVnetID
   parameters:
   - isRequired: true
     name: --name -n
@@ -294,7 +297,7 @@ items:
   - name: --outbound-type
     parameterValueGroup: loadBalancer, userDefinedRouting
     summary: How outbound traffic will be configured for a cluster.
-    description: Select between loadBalancer and userDefinedRouting. If not set, defaults to type loadBalancer. Requires --network-plugin to be azure and a standard load balancer SKU.
+    description: Select between loadBalancer and userDefinedRouting. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
@@ -332,6 +335,9 @@ items:
   - name: --workspace-resource-id
     summary: The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_disable_addons
   name: az aks disable-addons
   summary: Disable Kubernetes addons.
@@ -357,6 +363,9 @@ items:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: ext_aks-preview_az_aks_enable_addons
   name: az aks enable-addons
@@ -415,6 +424,9 @@ items:
   - name: --workspace-resource-id
     summary: The resource ID of an existing Log Analytics Workspace to use for storing monitoring data.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_get_credentials
   name: az aks get-credentials
   summary: Get access credentials for a managed Kubernetes cluster.
@@ -451,6 +463,9 @@ items:
     defaultValue: clusterUser
     summary: 'Get credentials for the user. Only valid when --admin is False.  Default: cluster user credentials.'
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_get_upgrades
   name: az aks get-upgrades
   summary: Get the upgrade versions available for a managed Kubernetes cluster.
@@ -470,6 +485,9 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_get_versions
   name: az aks get-versions
   summary: Get the versions available for creating a managed Kubernetes cluster.
@@ -485,6 +503,9 @@ items:
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_kanalyze
   name: az aks kanalyze
   summary: Display diagnostic results for the Kubernetes cluster after kollect is done.
@@ -499,6 +520,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: ext_aks-preview_az_aks_kollect
   name: az aks kollect
@@ -565,6 +589,9 @@ items:
   - name: --storage-account
     summary: Name or ID of the storage account to save the diagnostic information.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_rotate_certs
   name: az aks rotate-certs
   summary: Rotate certificates and keys on a managed Kubernetes cluster.
@@ -585,6 +612,9 @@ items:
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: ext_aks-preview_az_aks_scale
   name: az aks scale
@@ -611,6 +641,9 @@ items:
   - name: --nodepool-name
     summary: Node pool name, upto 12 alphanumeric characters.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_show
   name: az aks show
   summary: Show the details for a managed Kubernetes cluster.
@@ -629,6 +662,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: ext_aks-preview_az_aks_update
   name: az aks update
@@ -739,6 +775,9 @@ items:
   - name: --update-cluster-autoscaler -u
     summary: Update min-count or max-count for cluster autoscaler.
     description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
 - uid: ext_aks-preview_az_aks_upgrade
   name: az aks upgrade
   summary: Upgrade a managed Kubernetes cluster to a newer version.
@@ -767,6 +806,9 @@ items:
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 - uid: ext_aks-preview_az_aks_wait
   name: az aks wait
@@ -812,6 +854,9 @@ items:
     description: ''
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
     description: ''
 commands:
 - uid: ext_aks-preview_az_aks_browse

@@ -58,8 +58,8 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
 2. Download and install the Microsoft signing key:
 
     ```bash
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc | 
-        gpg --dearmor | 
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc |
+        gpg --dearmor |
         sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
     ```
 
@@ -67,7 +67,7 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | 
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
@@ -91,7 +91,7 @@ Here are some common problems seen when installing with `apt`. If you experience
 ### lsb_release does not return the correct base distribution version
 
 Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
-determine the package to install. If you know the code name of the Ubuntu or Debian version your distribution is derived from, you can set the `AZ_REPO` value manually when 
+determine the package to install. If you know the code name of the Ubuntu or Debian version your distribution is derived from, you can set the `AZ_REPO` value manually when
 [adding the repository](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution code name and set `AZ_REPO` to the correct value.
 
 ### No package for your distribution
@@ -101,6 +101,22 @@ versions of dependencies and rely on as few of them as possible. If there's no p
 
 To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
 use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+
+### Elementary OS (EOS) fails to install the Azure CLI
+
+EOS fails to install the Azure cli because `lsb_release` returns `HERA`, which is the EOS release name.  The solution is to fix the file `/etc/apt/sources.list.d/azure-cli.list` and change `hera main` to `bionic main`.
+
+Original file contents:
+
+```
+deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ hera main
+```
+
+Modified file contents
+
+```
+deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main
+```
 
 ### Proxy blocks connection
 
@@ -141,7 +157,7 @@ Use `apt-get upgrade` to update the CLI package.
 > [!NOTE]
 > This command upgrades all of the installed packages on your system that have not had a dependency change.
 > To upgrade the CLI only, use `apt-get install`.
-> 
+>
 > ```bash
 > sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
 > ```
