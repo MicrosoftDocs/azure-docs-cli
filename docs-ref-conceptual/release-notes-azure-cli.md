@@ -12,7 +12,7 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
-## April 07, 2020
+## April 01, 2020
 
 Version 2.3.1
 
