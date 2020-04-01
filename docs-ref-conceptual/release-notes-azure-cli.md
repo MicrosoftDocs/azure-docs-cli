@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/07/2020
+ms.date: 04/01/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -5188,4 +5188,3 @@ You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
-
