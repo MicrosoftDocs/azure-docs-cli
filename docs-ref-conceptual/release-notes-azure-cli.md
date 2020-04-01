@@ -4,13 +4,25 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/31/2020
+ms.date: 04/07/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## April 07, 2020
+
+Version 2.3.1
+
+### ACR
+
+* Fix wrong version of azure-mgmt-containerregistry for Linux
+
+### Profile
+
+* az login: Fix login failure with cloud profiles other than `latest`
 
 ## March 31, 2020
 
