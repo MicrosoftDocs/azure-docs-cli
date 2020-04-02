@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/30/2020
+ms.date: 04/02/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -25,15 +25,16 @@ az extension list-available --output table
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.0 | Add AI powered examples to help content. | Yes |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.38 | Provides a preview for upcoming AKS features | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.41 | Provides a preview for upcoming AKS features | Yes |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.6 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 5.0.1 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.9 | The Azure IoT extension for Azure CLI. |  |
 | [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.2.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
-| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.17.0 | Tools for managing Azure DevOps. |  |
+| [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.18.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.3.0 | Manage Azure Firewall resources. | Yes |
 | [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.9.1 | The Azure IoT extension for Azure CLI. |  |
+| [blueprint](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Blueprint Extension |  |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools Connectedmachine Extension | Yes |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
 | [csvmware](https://github.com/Azure/az-vmware-cli) | 0.3.0 | Manage Azure VMware Solution by CloudSimple. | Yes |
@@ -45,11 +46,11 @@ az extension list-available --output table
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.7 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
-| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.5 | Manage networking Front Doors. |  |
+| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.6 | Manage networking Front Doors. |  |
 | [hack](https://github.com/Azure/azure-cli-extensions) | 0.4.2 | Microsoft Azure Command-Line Tools Hack Extension | Yes |
 | [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Microsoft Azure Command-Line Tools HealthCareApis Extension |  |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.3 | Support for copying managed vm images between regions |  |
-| [interactive](https://github.com/Azure/azure-cli) | 0.4.3 | Microsoft Azure Command-Line Interactive Shell | Yes |
+| [interactive](https://github.com/Azure/azure-cli) | 0.4.4 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [internet-analyzer](https://github.com/Azure/azure-cli-extensions) | 0.1.0rc5 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Yes |
 | [ip-group](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools IpGroup Extension |  |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
