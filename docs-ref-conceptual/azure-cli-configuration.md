@@ -78,8 +78,7 @@ see the [Python documentation on INI](https://docs.python.org/3/library/configpa
 ## CLI configuration values and environment variables
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
-environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, the `storage_account` default for `batchai` is set 
-in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
+environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, `output` default for `core` is set in the `AZURE_CORE_OUTPUT` variable, and the `storage_account` default for `batchai` is set in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
 
 When you provide a default value, that argument is no longer required by any command. Instead, the default value is used.
 
@@ -88,6 +87,8 @@ When you provide a default value, that argument is no longer required by any com
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI Terms of Use](https://aka.ms/AzureCliLegal). |
+| | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors will be written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It is also available for individual commands with the `--only-show-errors` parameter. |
+| | no\_color | boolean | Disable color. Originally colored messages will be prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This bypasses the issue of a third-party library where the terminal's color cannot revert back after a `stdout` redirection. |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
