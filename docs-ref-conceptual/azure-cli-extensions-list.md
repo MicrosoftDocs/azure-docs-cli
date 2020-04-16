@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/14/2020
+ms.date: 04/16/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -25,7 +25,7 @@ az extension list-available --output table
 |------|---------|---------|---------|
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.0 | Add AI powered examples to help content. | Yes |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.42 | Provides a preview for upcoming AKS features | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.43 | Provides a preview for upcoming AKS features | Yes |
 | [alertsmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Alerts Extension |  |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.6 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
@@ -33,7 +33,7 @@ az extension list-available --output table
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.9 | The Azure IoT extension for Azure CLI. |  |
 | [azure-cli-ml](https://docs.microsoft.com/azure/machine-learning/service/) | 1.3.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.18.0 | Tools for managing Azure DevOps. |  |
-| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.3.0 | Manage Azure Firewall resources. | Yes |
+| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.3.1 | Manage Azure Firewall resources. | Yes |
 | [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.9.1 | The Azure IoT extension for Azure CLI. |  |
 | [blueprint](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Blueprint Extension |  |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools Connectedmachine Extension | Yes |
