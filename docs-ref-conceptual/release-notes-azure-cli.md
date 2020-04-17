@@ -4,13 +4,17 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/01/2020
+ms.date: 04/21/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## April 21, 2020
+
+Version 2.4.0
 
 ## April 01, 2020
 
