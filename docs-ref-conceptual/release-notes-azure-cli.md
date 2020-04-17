@@ -26,7 +26,7 @@ Version 2.4.0
 * `az aks list -o table` should show privateFqdn as fqdn for private clusters
 * Add --uptime-sla
 * Update containerservice package
-* Add node public IP support.
+* Add node public IP support
 * Fix typo in the help command
 
 ### AppConfig
@@ -36,9 +36,9 @@ Version 2.4.0
 
 ### AppService
 
-* `az functionapp create`: Changed the way linuxFxVersion was being set for dotnet linux function apps. This should fix a bug that was preventing dotnet linux consumption apps from being created.
-* [BREAKING CHANGE] `az webapp create`: fix to keep existing AppSettings with az webapp create.
-* [BREAKING CHANGE] `az webapp up`: fix to create RG for az webapp up command when using -g flag.
+* `az functionapp create`: Changed the way linuxFxVersion was being set for dotnet linux function apps. This should fix a bug that was preventing dotnet linux consumption apps from being created
+* [BREAKING CHANGE] `az webapp create`: fix to keep existing AppSettings with az webapp create
+* [BREAKING CHANGE] `az webapp up`: fix to create RG for az webapp up command when using -g flag
 * [BREAKING CHANGE] `az webapp config`: fix to show values for non-JSON output with az webapp config connection-string list
 
 ### ARM
@@ -64,8 +64,8 @@ Version 2.4.0
 * `az sig image-version create`: Add storage account type Premium_LRS
 * `az vmss update`: Fix terminate notification update issue
 * `az vm/vmss create`: Add support for specialized image version
-* SIG API Version 2019-12-01.
-* `az sig image-version create`: Add --target-region-encryption.
+* SIG API Version 2019-12-01
+* `az sig image-version create`: Add --target-region-encryption
 * Fix tests fail when running in serial due to keyvault name is duplicated in global in-momery cache
 
 ### CosmosDB
@@ -85,7 +85,7 @@ Version 2.4.0
 ### Network
 
 * Deprecate sku for public ip update command
-* `az network private-endpoint`: Support private dns zone group.
+* `az network private-endpoint`: Support private dns zone group
 * Enable local context feature for vnet/subnet parameter
 * Fix wrong usage example in test_nw_flow_log_delete
 
@@ -116,8 +116,8 @@ Version 2.4.0
 * Upgrade azure-mgmt-storage to 9.0.0
 * `az storage logging off`: Support turning off logging for a storage account
 * `az storage account update`: Enable key auto-rotated for CMK
-* `az storage account encryption-scope create/update/list/show`: Add support to customize encryption scope.
-* `az storage container create`: Add --default-encryption-scope and --deny-encryption-scope-override to set encryption scope for container level.
+* `az storage account encryption-scope create/update/list/show`: Add support to customize encryption scope
+* `az storage container create`: Add --default-encryption-scope and --deny-encryption-scope-override to set encryption scope for container level
 
 ### Survey
 
