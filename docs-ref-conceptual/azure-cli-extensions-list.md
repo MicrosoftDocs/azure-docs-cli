@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/16/2020
+ms.date: 04/21/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -23,6 +23,7 @@ az extension list-available --output table
 
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
+| [account](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension |  |
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.0 | Add AI powered examples to help content. | Yes |
 | [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.43 | Provides a preview for upcoming AKS features | Yes |
@@ -46,7 +47,7 @@ az extension list-available --output table
 | [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.5 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.11.0 | Support for new Database Migration Service scenarios. | Yes |
-| [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.7 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
+| [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.8 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.6 | Manage networking Front Doors. |  |
