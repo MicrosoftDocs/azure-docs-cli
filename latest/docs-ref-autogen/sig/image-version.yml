@@ -49,6 +49,9 @@ items:
         --gallery-name MyGallery --gallery-image-definition MyImage \
 
         --managed-image imageInTheSameResourceGroup
+  - summary: Add a new image version with target regions and customer managed keys for encryption.
+    syntax:
+      content: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard --target-region-encryption DiskEncryptionSet1,0,DiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --managed-image imageInTheSameResourceGroup
   parameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -95,11 +98,14 @@ items:
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
   - name: --storage-account-type
-    parameterValueGroup: Standard_LRS, Standard_ZRS
+    parameterValueGroup: Premium_LRS, Standard_LRS, Standard_ZRS
     summary: The default storage account type to be used per region. To set regional storage account types, use --target-regions.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --target-region-encryption
+    summary: 'Space-separated list of customer managed keys for encrypting the OS and data disks in the gallery artifact for each region. Format for one region: "<os_des>,<lun1>,<lun1_des>,<lun2>,<lun2_des>". Use "null" as a placeholder.'
     description: ''
   - name: --target-regions
     summary: Space-separated list of regions and their replica counts. Use "<region>[=<replica count>][=<storage account type>]" to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.

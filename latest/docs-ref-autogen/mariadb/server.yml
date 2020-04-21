@@ -25,10 +25,16 @@ items:
   examples:
   - summary: Create a MariaDB server in North Europe with sku GP_Gen5_2 (General Purpose, Gen 5 hardware, 2 vCores).
     syntax:
-      content: az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \ --sku-name GP_Gen5_2
+      content: >-
+        az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
+            --sku-name GP_Gen5_2
   - summary: Create a MariaDB server with all paramaters set.
     syntax:
-      content: az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \ --sku-name B_Gen5_1 --ssl-enforcement Disabled \ --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 --tags "key=value" --version {server-version}
+      content: >-
+        az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
+            --sku-name B_Gen5_1 --ssl-enforcement Disabled --public-network-access Disabled \
+            --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
+            --tags "key=value" --version 10.2
   parameters:
   - isRequired: true
     name: --name -n
@@ -62,7 +68,7 @@ items:
     description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
-    summary: Set whether public network access to server is allowed or not. When false, only connections made through Private Links can reach this server.
+    summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
     description: ''
   - name: --ssl-enforcement
     parameterValueGroup: Disabled, Enabled
@@ -328,7 +334,7 @@ items:
     description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
-    summary: Set whether public network access to server is allowed or not. When false, only connections made through Private Links can reach this server.
+    summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
     description: ''
   - name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'

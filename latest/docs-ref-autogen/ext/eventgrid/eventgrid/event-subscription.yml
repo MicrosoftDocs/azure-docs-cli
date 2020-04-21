@@ -128,11 +128,13 @@ items:
         az eventgrid event-subscription create --name es1 \
             --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1 \
             --endpoint /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Web/sites/{functionappname}/functions/{functionname} --endpoint-type azurefunction
+  - summary: Create a new event subscription for an Event Grid topic, using Eventhub with systemassigned MSI identity as destination and with deadletter with MSI identity
+    syntax:
+      content: >-
+        az eventgrid event-subscription create --source-resource-id /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1 \
+            --delivery-identity-endpoint-type eventhub --delivery-identity systemassigned --delivery-identity-endpoint /subscriptions/{SubId2|}/resourceGroups/{RG2}/providers/Microsoft.eventhub/namespaces/{EventHubNamespace}/eventhubs/{EventhubName} \
+            --deadletter-identity-endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/s2/blobServices/default/containers/blobcontainer1 --deadletter-identity systemassigned -n {EventSubscriptionName}
   parameters:
-  - isRequired: true
-    name: --endpoint
-    summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
-    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the event subscription.
@@ -176,6 +178,27 @@ items:
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
+  - name: --deadletter-identity
+    parameterValueGroup: systemassigned
+    summary: The identity type of the deadletter destination resource.
+    description: ''
+  - name: --deadletter-identity-endpoint
+    summary: The Azure resource ID of an Azure Storage blob container destination with identity where EventGrid should deadletter undeliverable events for this event subscription.
+    description: ''
+  - name: --delivery-identity
+    parameterValueGroup: systemassigned
+    summary: The identity type of the delivery destination resource (e.g., storage queue, or eventhub).
+    description: ''
+  - name: --delivery-identity-endpoint
+    summary: Endpoint with identity where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
+    description: ''
+  - name: --delivery-identity-endpoint-type
+    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
+    summary: The type of the destination endpoint with resource identity.
+    description: ''
+  - name: --endpoint
+    summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
+    description: ''
   - name: --endpoint-type
     defaultValue: webhook
     parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
@@ -532,6 +555,24 @@ items:
       Multiple advanced filters can be specified by using more than one `--advanced-filter` argument.
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
+    description: ''
+  - name: --deadletter-identity
+    parameterValueGroup: systemassigned
+    summary: The identity type of the deadletter destination resource.
+    description: ''
+  - name: --deadletter-identity-endpoint
+    summary: The Azure resource ID of an Azure Storage blob container destination with identity where EventGrid should deadletter undeliverable events for this event subscription.
+    description: ''
+  - name: --delivery-identity
+    parameterValueGroup: systemassigned
+    summary: The identity type of the delivery destination resource (e.g., storage queue, or eventhub).
+    description: ''
+  - name: --delivery-identity-endpoint
+    summary: Endpoint with identity where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.
+    description: ''
+  - name: --delivery-identity-endpoint-type
+    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
+    summary: The type of the destination endpoint with resource identity.
     description: ''
   - name: --endpoint
     summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint.

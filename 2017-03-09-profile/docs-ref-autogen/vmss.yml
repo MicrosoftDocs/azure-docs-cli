@@ -53,6 +53,9 @@ items:
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init'
     syntax:
       content: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
+  - summary: Create a Linux VM scale set from a specialized image version.
+    syntax:
+      content: az vmss create -n MyVmss -g MyResourceGroup --image $id --specialized
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax:
       content: >-
@@ -159,7 +162,7 @@ items:
     summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
     description: ''
   - name: --ssh-dest-key-path
-    summary: Destination file path on the VM for the SSH key. If the file already exists, the specified key(s) are appended to the file.
+    summary: Destination file path on the VM for the SSH key. If the file already exists, the specified key(s) are appended to the file. Destination path for SSH public keys is currently limited to its default value "/home/username/.ssh/authorized_keys" due to a known issue in Linux provisioning agent.
     description: ''
   - name: --ssh-key-values
     summary: Space-separated list of SSH public keys or public key file paths.
@@ -254,6 +257,10 @@ items:
   - name: --os-type
     parameterValueGroup: linux, windows
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    description: ''
+  - name: --specialized
+    parameterValueGroup: false, true
+    summary: Indicate whether the source image is specialized.
     description: ''
   - name: --storage-container-name
     defaultValue: vhds
@@ -1107,7 +1114,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/vm/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/89ad796dab6188a565a2a1d280aa9ec6dc959b59/src/azure-cli/azure/cli/command_modules/vm/_help.py
-updated_at: 3/30/2020 6:57:31 AM
-ms.date: 03/30/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/b686fed3266fa52dae3acee9d5c72571bf049174/src/azure-cli/azure/cli/command_modules/vm/_help.py
+updated_at: 4/16/2020 9:21:55 AM
+ms.date: 04/16/2020
 description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
