@@ -194,7 +194,10 @@ items:
 - uid: az_rest
   name: az rest
   summary: Invoke a custom request.
-  description: ''
+  description: >-
+    This command automatically authenticates using the credential logged in: If Authorization header is not set, it attaches header `Authorization: Bearer &lt;token&gt;`, where `&lt;token&gt;` is retrieved from AAD. The target resource of the token is derived from --url if --url starts with an endpoint from `az cloud show --query endpoints`. You may also use --resource for a custom resource.
+
+    If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
   langs:
   - azurecli
   examples:
@@ -212,11 +215,11 @@ items:
       content: az rest --method put --uri https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}?api-version=2019-09-01 --body @body.json
   parameters:
   - isRequired: true
-    name: --uri -u
-    summary: Request uri. For uri without host, CLI will assume "<a href="https://management.azure.com/">https://management.azure.com/</a>". Common token '{subscriptionId}' will be replaced with the current subscription ID specified by 'az account set'.
+    name: --uri --url -u
+    summary: Request URL. If it doesn't start with a host, CLI assumes it as an Azure resource ID and prefixes it with the ARM endpoint of the current cloud shown by `az cloud show --query endpoints.resourceManager`. Common token {subscriptionId} will be replaced with the current subscription ID specified by `az account set`.
     description: ''
   - name: --body -b
-    summary: Request body. Use @{file} to load from a file.
+    summary: Request body. Use @{file} to load from a file. For quoting issues in different terminals, see <a href="https://github.com/Azure/azure-cli/blob/dev/doc/use_cli_effectively.md#quoting-issues">https://github.com/Azure/azure-cli/blob/dev/doc/use_cli_effectively.md#quoting-issues</a>.
     description: ''
   - name: --headers
     summary: Space-separated headers in KEY=VALUE format or JSON string. Use @{file} to load from a file.
@@ -230,10 +233,10 @@ items:
     summary: Save response payload to a file.
     description: ''
   - name: --resource
-    summary: Resource url for which CLI should acquire a token in order to access the service. The token will be placed in the "Authorization" header. By default, CLI can figure this out based on "--url" argument, unless you use ones not in the list of "az cloud show --query endpoints".
+    summary: Resource url for which CLI should acquire a token from AAD in order to access the service. The token will be placed in the Authorization header. By default, CLI can figure this out based on --url argument, unless you use ones not in the list of "az cloud show --query endpoints".
     description: ''
   - name: --skip-authorization-header
-    summary: Do not auto append "Authorization" header.
+    summary: Do not auto-append Authorization header.
     description: ''
   - name: --uri-parameters
     summary: Space-separated queries in KEY=VALUE format or JSON string. Use @{file} to load from a file.

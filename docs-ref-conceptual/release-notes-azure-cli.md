@@ -4,13 +4,67 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/21/2020
+ms.date: 04/28/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## April 28, 2020
+
+Version 2.5.0
+
+### ACS
+
+* [BREAKING CHANGE] az openshift create: remove --vnet-peer parameter.
+* `az openshift create`: add flags to support private cluster.
+* `az openshift`: upgrade to `2019-10-27-preview` API version.
+* `az openshift`: add `update` command.
+
+### AKS
+
+* `az aks create`: Add support for Windows
+
+### AppService
+
+* `az webapp deployment source config-zip`: remove sleep after request.get()
+
+### ARM
+
+* Add template deployment What-If commands
+
+### ARO
+
+* `az aro`: Fix table output
+
+### CI
+
+* Onboard pytest and deprecate nose for Automation Test
+
+### Compute
+
+* `az vmss disk detach`: fix data disk NoneType issue
+* `az vm availability-set list`: Support showing VM list
+* `az vm list-skus`: Fix display problem of table format
+
+### KeyVault
+
+* Add new parameter `--enable-rbac-authorization` during creating or updating
+
+### Monitor
+
+* Support LA cluster CMK features
+* `az monitor log-analytics workspace linked-storage`: supports BYOS features
+
+### Network
+
+* `az network security-partner`: support security partner provider
+
+### Privatedns
+
+* Add feature in private DNS zone to import export zone file
 
 ## April 21, 2020
 
