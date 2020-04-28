@@ -12,6 +12,7 @@ items:
   - az_openshift_list
   - az_openshift_scale
   - az_openshift_show
+  - az_openshift_update
   - az_openshift_wait
 - uid: az_openshift_create
   name: az openshift create
@@ -29,12 +30,12 @@ items:
   - summary: Create an OpenShift cluster with 5 compute nodes and a custom AAD Client.
     syntax:
       content: az openshift create -g MyResourceGroup -n MyManagedCluster --aad-client-app-id {APP_ID} --aad-client-app-secret {APP_SECRET} --aad-tenant-id {TENANT_ID} --compute-count 5
-  - summary: Create an Openshift cluster using a custom vnet
-    syntax:
-      content: az openshift create -g MyResourceGroup -n MyManagedCluster --vnet-peer "/subscriptions/0000000-0000-0000-0000-000000000000/resourceGroups/openshift-vnet/providers/Microsoft.Network/virtualNetworks/test"
   - summary: Create an Openshift cluster with Log Analytics monitoring enabled
     syntax:
       content: az openshift create -g MyResourceGroup -n MyManagedCluster --workspace-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.OperationalInsights/workspaces/{workspace-id}"
+  - summary: Create a private OpenShift cluster
+    syntax:
+      content: az openshift create -g MyResourceGroup -n MyManagedCluster --private-cluster --management-subnet-cidr 10.0.1.0/24
   parameters:
   - isRequired: true
     name: --name -n
@@ -62,13 +63,20 @@ items:
     summary: Size of Virtual Machines to create as OpenShift nodes.
     description: ''
   - name: --customer-admin-group-id
-    summary: The Object ID of an Azure Active Directory Group that memberships will get synced into the OpenShift group "osa-customer-admins". If not specified, no cluster admin access will be granted.
+    summary: The Object ID of an Azure Active Directory Group that memberships will get synced into the OpenShift group "osa-customer-admins".If not specified, no cluster admin access will be granted.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
+  - name: --management-subnet-cidr
+    summary: CIDR of subnet used to create PLS needed for management of the cluster. If provided, also set --private-cluster flag.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --private-cluster
+    parameterValueGroup: false, true
+    summary: Create private Openshift cluster. If this flag is set, also supply --management-subnet-cidr.
     description: ''
   - name: --subnet-prefix
     defaultValue: 10.0.0.0/24
@@ -78,7 +86,7 @@ items:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --vnet-peer
-    summary: The ID or the name of a subnet in an existing VNet into which to peer the cluster.
+    summary: Vnet peering is no longer supported during cluster creation, instead it is possible to edit vnet properties after cluster creation.
     description: ''
   - name: --vnet-prefix
     defaultValue: 10.0.0.0/8
@@ -198,6 +206,38 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_openshift_update
+  name: az openshift update
+  summary: Commands to manage existing Openshift cluster.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Trigger nodes rotation.
+    syntax:
+      content: az openshift update -g MyResourceGroup -n MyManagedCluster --refresh-cluster
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the managed OpenShift cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --refresh-cluster
+    parameterValueGroup: false, true
+    summary: Allow nodes to be rotated. Use this flag to trigger nodes rotation after DNS settings change.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_openshift_wait
   name: az openshift wait
   summary: Wait for a managed OpenShift cluster to reach a desired state.
@@ -271,6 +311,9 @@ commands:
 - uid: az_openshift_show
   name: az openshift show
   summary: Show the details for a managed OpenShift cluster.
+- uid: az_openshift_update
+  name: az openshift update
+  summary: Commands to manage existing Openshift cluster.
 - uid: az_openshift_wait
   name: az openshift wait
   summary: Wait for a managed OpenShift cluster to reach a desired state.
