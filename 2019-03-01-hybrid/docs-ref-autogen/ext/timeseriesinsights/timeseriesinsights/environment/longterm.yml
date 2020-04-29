@@ -1,0 +1,134 @@
+### YamlMime:UniversalReference
+items:
+- uid: ext_timeseriesinsights_az_timeseriesinsights_environment_longterm
+  name: az timeseriesinsights environment longterm
+  summary: Create or update a longterm environment in the specified subscription and resource group.
+  description: ''
+  langs:
+  - azurecli
+  children:
+  - ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_create
+  - ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_update
+- uid: ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_create
+  name: az timeseriesinsights environment longterm create
+  summary: Create or update a longterm environment in the specified subscription and resource group.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Create storage account and use it to create a longterm environment
+    syntax:
+      content: >-
+        storage=mystorageaccount
+
+        rg={rg}
+
+        az storage account create -g $rg -n $storage --https-only
+
+        key=$(az storage account keys list -g $rg -n $storage --query [0].value --output tsv)
+
+        az timeseriesinsights environment longterm create -g $rg -n {env} --location westus --sku-name L1 --sku-capacity 1 --data-retention 7 --time-series-id-properties DeviceId1 --storage-account-name $storage --storage-management-key $key
+  parameters:
+  - isRequired: true
+    name: --data-retention
+    summary: The number of days the environment's events will be available for query from the warm store.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Time Series Insights environment associated with the specified resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - isRequired: true
+    name: --time-series-id-properties
+    summary: Required. The list of event properties which will be used to define the environment's time series id.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - isRequired: true
+    name: --sku-capacity
+    summary: The capacity of the sku. For standard environments, this value can be changed to support scale out of environments after they have been created.
+    description: ''
+  - isRequired: true
+    name: --sku-name
+    parameterValueGroup: L1, P1, S1, S2
+    summary: The sku determines the type of environment, either standard (S1 or S2) or long-term (L1). For standard environments the sku determines the capacity of the environment, the ingress rate, and the billing rate.
+    description: ''
+  - isRequired: true
+    name: --storage-account-name
+    summary: The name of the storage account that will hold the environment's long term data.
+    description: ''
+  - isRequired: true
+    name: --storage-management-key
+    summary: The value of the management key that grants the Time Series Insights service write access to the storage account. This property is not shown in environment responses.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
+- uid: ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_update
+  name: az timeseriesinsights environment longterm update
+  summary: Update a longterm environment in the specified subscription and resource group.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update dataRetention
+    syntax:
+      content: az timeseriesinsights environment longterm update -g {rg} -n {env} --data-retention 8
+  - summary: Update storageManagementKey
+    syntax:
+      content: az timeseriesinsights environment longterm update -g {rg} -n {env} --storage-management-key xxx
+  parameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Time Series Insights environment associated with the specified resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --data-retention
+    summary: The number of days the environment's events will be available for query from the warm store.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --storage-management-key
+    summary: The value of the management key that grants the Time Series Insights service write access to the storage account. This property is not shown in environment responses.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
+commands:
+- uid: ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_create
+  name: az timeseriesinsights environment longterm create
+  summary: Create or update a longterm environment in the specified subscription and resource group.
+- uid: ext_timeseriesinsights_az_timeseriesinsights_environment_longterm_update
+  name: az timeseriesinsights environment longterm update
+  summary: Update a longterm environment in the specified subscription and resource group.
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+description: Create or update a longterm environment in the specified subscription and resource group.
