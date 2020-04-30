@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 05/05/2020
+ms.date: 04/30/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -12,7 +12,7 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
-## May 05, 2020
+## April 30, 2020
 
 Version 2.5.1
 
