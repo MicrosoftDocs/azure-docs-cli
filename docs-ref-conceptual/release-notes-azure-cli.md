@@ -4,13 +4,50 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/28/2020
+ms.date: 04/30/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## April 30, 2020
+
+Version 2.5.1
+
+### ACR
+
+* `az acr check-health`: Fix "DOCKER_PULL_ERROR" on Windows
+
+### Compute
+
+* `az vm list-ip-addresses`: Error handling
+* Fix a bug of vm create if endpoint_vm_image_alias_doc is not set in cloud profile
+* `az vmss create`: Add --os-disk-size-gb
+
+### Cosmos DB
+
+* `az cosmosdb create/update`: add --enable-public-network support
+
+### Extension
+
+* Fix loading wrong metadata for wheel type extension
+
+### Packaging
+
+* Add az script for Git Bash/Cygwin on Windows
+
+### SQL
+
+* `az sql instance-pool`: Add instance pools command group
+
+### Storage
+
+* Upgrade package azure-multiapi-storage to 0.3.0
+* Support GZRS for storage account creation and update
+* `az storage account failover`: Add support for grs/gzrs storage account failover
+* `az storage blob upload`: Add --encryption-scope parameter to support specifying encryption scope information
 
 ## April 28, 2020
 

@@ -10,6 +10,7 @@ items:
   - az_storage_account_check_name
   - az_storage_account_create
   - az_storage_account_delete
+  - az_storage_account_failover
   - az_storage_account_generate_sas
   - az_storage_account_list
   - az_storage_account_revoke_delegation_keys
@@ -183,6 +184,55 @@ items:
     syntax:
       content: az storage account delete -n MyStorageAccount -g MyResourceGroup
   parameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. If provided, no other 'Resource Id' arguments should be specified.
+    description: ''
+  - name: --name -n
+    summary: The storage account name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --only-show-errors
+    summary: Only show errors, suppressing warnings.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_storage_account_failover
+  name: az storage account failover
+  summary: Failover request can be triggered for a storage account in case of availability issues.
+  description: >-
+    The failover occurs from the storage account's primary cluster to secondary cluster for (RA-)GRS/GZRS accounts. The secondary
+
+    cluster will become primary after failover. For more information, please refer to
+
+    <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance">https://docs.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance</a>.
+  langs:
+  - azurecli
+  examples:
+  - summary: Failover a storage account.
+    syntax:
+      content: az storage account failover -n mystorageaccount -g MyResourceGroup
+  - summary: Failover a storage account without waiting for complete.
+    syntax:
+      content: >-
+        az storage account failover -n mystorageaccount -g MyResourceGroup --no-wait
+
+        az storage account show -n mystorageaccount --expand geoReplicationStats
+  parameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -637,6 +687,9 @@ commands:
 - uid: az_storage_account_encryption_scope_update
   name: az storage account encryption-scope update
   summary: Update properties for specified encryption scope within storage account.
+- uid: az_storage_account_failover
+  name: az storage account failover
+  summary: Failover request can be triggered for a storage account in case of availability issues.
 - uid: az_storage_account_generate_sas
   name: az storage account generate-sas
   summary: Generates a shared access signature for the account.
@@ -731,7 +784,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/8937383b291d1868dc9de81770c054bbcf4385d4/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 4/20/2020 6:24:19 AM
-ms.date: 04/20/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/bd8a96363bea68fa6b69413155db3e5ca27071c2/src/azure-cli/azure/cli/command_modules/storage/_help.py
+updated_at: 4/30/2020 12:42:40 AM
+ms.date: 04/30/2020
 description: Manage storage accounts.
