@@ -21,7 +21,8 @@ Azure CLI references are available for the following:
 |-|-|
 |[AI + Machine Learning](/cli/azure/popular-articles-using-the-azure-cli?#ai--machine-learning)| [Azure Machine Learning](/azure/machine-learning/)
 ||[Cognitive Services](/azure/cognitive-services/)
-|[Analytics](/cli/azure/popular-articles-using-the-azure-cli?#analytics)|[Azure Data Lake Storage](/azure/storage/blobs/data-lake-storage-introduction/)
+|[Analytics](/cli/azure/popular-articles-using-the-azure-cli?#analytics)|[Azure Data Explorer](/azure/data-explorer/)
+||[Azure Data Lake Storage](/azure/storage/blobs/data-lake-storage-introduction/)
 ||[Data Lake Analytics](/azure/data-lake-analytics/)
 ||[Event Hubs](/azure/event-hubs/)
 ||[HDInsight](/azure/hdinsight/)
