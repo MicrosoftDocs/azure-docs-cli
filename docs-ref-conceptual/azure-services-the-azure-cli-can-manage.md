@@ -1,6 +1,6 @@
 ---
 title: Azure services the Azure CLI can manage
-description: Links to services offering the Azure CLI references, App Configuration, App Service, Active Directory (AD), Backup, Cognitive Search, Cosmos DB, Data Lake Storage, Database, MariaDB, MySQL, PostgreSQL, PostgreSQL, DevOps, DevTest Labs, DNS, Functions, IoT, IoT Central, IoT Edge, IoT Hub, Kubernetes Service (AKS), Lab Services, Machine Learning, Managed Applications, Private Link, Resource Manager, Spring Cloud, SQL Database, Batch, Cognitive Services, Container Instances, Container Registry, Data Lake Analytics, Event Grid, Event Hubs, HDInsight, Key Vault, Load Balancer, Managed Disks, Media Services, Notification Hubs, Service Bus, Service Fabric, Storage Accounts, Traffic Manager, Virtual Machine Scale Sets, Virtual Network, Compute, Networking, Internet of Things, Developer Tools, Databases, Analytics, Management and Governance, Hybrid, Storage, Security, AI, AI + Machine Learning
+description: Links to services offering the Azure CLI references, App Configuration, App Service, Active Directory (AD), Backup, Cognitive Search, Cosmos DB, Data Lake Storage, Database, MariaDB, MySQL, PostgreSQL, PostgreSQL, DevOps, DevTest Labs, DNS, Functions, IoT, IoT Central, IoT Edge, IoT Hub, Kubernetes Service (AKS), Lab Services, Machine Learning, Managed Applications, Private Link, Resource Manager, Spring Cloud, SQL Database, Batch, Cognitive Services, Container Instances, Container Registry, Data Lake Analytics, Event Grid, Event Hubs, HDInsight, Key Vault, Load Balancer, Managed Disks, Media Services, Notification Hubs, Service Bus, Service Fabric, Storage Accounts, Traffic Manager, Virtual Machine Scale Sets, Virtual Network, Compute, Networking, Internet of Things, Developer Tools, Databases, Analytics, Management and Governance, Hybrid, Storage, Security, AI, AI + Machine Learning, Azure Data Explorer
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -21,7 +21,8 @@ Azure CLI references are available for the following:
 |-|-|
 |[AI + Machine Learning](/cli/azure/popular-articles-using-the-azure-cli?#ai--machine-learning)| [Azure Machine Learning](/azure/machine-learning/)
 ||[Cognitive Services](/azure/cognitive-services/)
-|[Analytics](/cli/azure/popular-articles-using-the-azure-cli?#analytics)|[Azure Data Lake Storage](/azure/storage/blobs/data-lake-storage-introduction/)
+|[Analytics](/cli/azure/popular-articles-using-the-azure-cli?#analytics)|[Azure Data Explorer](/azure/data-explorer/)
+||[Azure Data Lake Storage](/azure/storage/blobs/data-lake-storage-introduction/)
 ||[Data Lake Analytics](/azure/data-lake-analytics/)
 ||[Event Hubs](/azure/event-hubs/)
 ||[HDInsight](/azure/hdinsight/)
