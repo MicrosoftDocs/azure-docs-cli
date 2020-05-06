@@ -66,17 +66,20 @@ items:
     description: ''
 - uid: ext_azure-iot_az_iot_hub_device_twin_update
   name: az iot hub device-twin update
-  summary: Update device twin definition.
-  description: Use --set followed by property assignments for updating a device twin. Leverage properties returned from 'iot hub device-twin show'.
+  summary: Update device twin desired properties and tags.
+  description: Provide --desired or --tags arguments for PATCH behavior. Usage of generic update args (i.e. --set) will reflect PUT behavior and are deprecated.
   langs:
   - azurecli
   examples:
-  - summary: Add nested tags to device twin.
+  - summary: Patch device twin desired properties.
     syntax:
-      content: az iot hub device-twin update --device-id {device_id} --hub-name {iothub_name} --set tags='{"location":{"region":"US"}}'
-  - summary: Remove the 'region' property from parent 'location' property
+      content: az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"conditions":{"temperature":{"warning":70, "critical":100}}}'
+  - summary: Patch device twin tags.
     syntax:
-      content: az iot hub device-twin update --device-id {device_id} --hub-name {iothub_name} --set tags.location.region='null'
+      content: "az iot hub device-twin update -n {iothub_name} -d {device_id} --tags '{\"country\": \"USA\"}}'"
+  - summary: Patch removal of 'critical' desired property from parent 'temperature'
+    syntax:
+      content: "az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{\"condition\":{\"temperature\":{\"critical\": null}}}'"
   parameters:
   - isRequired: true
     name: --device-id -d
@@ -90,6 +93,12 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --desired
+    summary: Twin desired properties.
+    description: ''
+  - name: --tags
+    summary: Twin tags.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -115,7 +124,7 @@ commands:
   summary: Get a device twin definition.
 - uid: ext_azure-iot_az_iot_hub_device_twin_update
   name: az iot hub device-twin update
-  summary: Update device twin definition.
+  summary: Update device twin desired properties and tags.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

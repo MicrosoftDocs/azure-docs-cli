@@ -74,17 +74,20 @@ items:
     description: ''
 - uid: ext_azure-iot_az_iot_hub_module_twin_update
   name: az iot hub module-twin update
-  summary: Update module twin definition.
-  description: Use --set followed by property assignments for updating a module. Leverage properties returned from 'iot hub module-twin show'.
+  summary: Update module twin desired properties and tags.
+  description: Provide --desired or --tags arguments for PATCH behavior. Usage of generic update args (i.e. --set) will reflect PUT behavior and are deprecated.
   langs:
   - azurecli
   examples:
-  - summary: Add desired properties to module twin.
+  - summary: Patch module twin desired properties.
     syntax:
-      content: az iot hub module-twin update -d {device_id} -n {iothub_name} -m {module_name} --set properties.desired='{"conditions":{"temperature":{"warning":70, "critical":100}}}'
-  - summary: Remove 'critical' property from parent 'temperature'
+      content: az iot hub module-twin update -n {iothub_name} -d {device_id} -m {module_id} --desired '{"conditions":{"temperature":{"warning":70, "critical":100}}}'
+  - summary: Patch module twin tags.
     syntax:
-      content: az iot hub module-twin update -d mydevice -n myhub -m mymod --set properties.desired.condition.temperature.critical='null'
+      content: "az iot hub module-twin update -n {iothub_name} -d {device_id} -m {module_id} --tags '{\"country\": \"USA\"}}'"
+  - summary: Patch removal of 'critical' desired property from parent 'temperature'
+    syntax:
+      content: "az iot hub module-twin update -n {iothub_name} -d {device_id} -m {module_id} --desired '{\"condition\":{\"temperature\":{\"critical\": null}}}'"
   parameters:
   - isRequired: true
     name: --device-id -d
@@ -102,6 +105,12 @@ items:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --desired
+    summary: Twin desired properties.
+    description: ''
+  - name: --tags
+    summary: Twin tags.
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -127,7 +136,7 @@ commands:
   summary: Show a module twin definition.
 - uid: ext_azure-iot_az_iot_hub_module_twin_update
   name: az iot hub module-twin update
-  summary: Update module twin definition.
+  summary: Update module twin desired properties and tags.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
