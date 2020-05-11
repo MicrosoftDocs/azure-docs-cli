@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/07/2020
+ms.date: 05/09/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -37,6 +37,7 @@ az extension list-available --output table
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.3.1 | Manage Azure Firewall resources. | Yes |
 | [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.9.2 | The Azure IoT extension for Azure CLI. |  |
 | [blueprint](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Blueprint Extension |  |
+| [connectedk8s](https://github.com/Azure/azure-cli-extensions) | 0.1.5 | Microsoft Azure Command-Line Tools Connectedk8s Extension | Yes |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools Connectedmachine Extension | Yes |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
 | [csvmware](https://github.com/Azure/az-vmware-cli) | 0.3.0 | Manage Azure VMware Solution by CloudSimple. | Yes |
@@ -60,6 +61,7 @@ az extension list-available --output table
 | [interactive](https://github.com/Azure/azure-cli) | 0.4.4 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [internet-analyzer](https://github.com/Azure/azure-cli-extensions) | 0.1.0rc5 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Yes |
 | [ip-group](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools IpGroup Extension |  |
+| [k8sconfiguration](https://github.com/Azure/azure-cli-extensions) | 0.1.7 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Yes |
 | [keyvault-preview](https://github.com/Azure/azure-keyvault-cli-extension) | 0.1.3 | Preview Azure Key Vault commands. | Yes |
 | [kusto](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension |  |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.1.4 | Support for Azure Log Analytics query capabilities. | Yes |
@@ -77,7 +79,8 @@ az extension list-available --output table
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.1.0 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.6.1 | Additional commands for working with SAP HanaOnAzure instances. |  |
-| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.2 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
+| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.3 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
+| [storage-or-preview](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
 | [storage-ors-preview](https://github.com/Azure/azure-cli-extensions) | 0.3.1 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.10 | Provides a preview for upcoming storage features. | Yes |
 | [storagesync](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension |  |
