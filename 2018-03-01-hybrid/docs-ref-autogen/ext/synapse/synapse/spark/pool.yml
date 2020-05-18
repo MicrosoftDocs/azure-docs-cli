@@ -2,7 +2,7 @@
 items:
 - uid: ext_synapse_az_synapse_spark_pool
   name: az synapse spark pool
-  summary: Manage Spark pool including Create, Get, List, Delete Spark pool.
+  summary: Manage Spark pools.
   description: ''
   langs:
   - azurecli
@@ -16,35 +16,28 @@ items:
 - uid: ext_synapse_az_synapse_spark_pool_create
   name: az synapse spark pool create
   summary: Create a Spark pool.
-  description: Create a Spark pool with default configuration.
+  description: ''
   langs:
   - azurecli
   examples:
   - summary: Create a Spark pool.
     syntax:
       content: >-
-        az synapse spark pool create --name testpool --resource-group rg --workspace-name \
+        az synapse spark pool create --name testpool --workspace-name testsynapseworkspace --resource-group rg \
 
-        testsynapseworkspace --location "East US" --spark-version 2.4
+        --spark-version 2.4 --node-count 3 --node-size Medium
   parameters:
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
-    description: ''
-  - isRequired: true
     name: --name -n
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
-    description: ''
-  - name: --force
-    summary: The flag of force operation.
+    summary: The workspace name.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -52,52 +45,45 @@ items:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
-  - name: --auto-pause-enabled
-    defaultValue: "1"
+  - name: --delay
+    summary: The delay time whose unit is minute.
+    description: ''
+  - name: --enable-auto-pause
     parameterValueGroup: false, true
     summary: The flag of enabling auto pause.
     description: ''
-  - name: --delay-in-minutes
-    defaultValue: "15"
-    summary: The delay time.
-    description: ''
-  - name: --auto-scale-enabled
-    defaultValue: "1"
+  - name: --enable-auto-scale
     parameterValueGroup: false, true
     summary: The flag of enabling auto scale.
     description: ''
   - name: --max-node-count
-    defaultValue: "40"
     summary: The max node count.
     description: ''
   - name: --min-node-count
-    defaultValue: "3"
     summary: The min node count.
     description: ''
   - isRequired: true
     name: --spark-version
-    summary: The supported spark version is 2.4 now.
+    summary: The supported Spark version is 2.4 now.
     description: ''
   - name: --default-spark-log-folder
     defaultValue: /logs
-    summary: The default spark log folder.
+    summary: The default Spark log folder.
     description: ''
   - name: --spark-events-folder
     defaultValue: /events
-    summary: The spark events folder.
+    summary: The Spark events folder.
     description: ''
-  - name: --library-requirements-content
-    summary: The library requirements content.
+  - name: --library-requirements-file
+    summary: The library requirements file.
     description: ''
-  - name: --library-requirements-filename
-    summary: The library requirements file name.
-    description: ''
-  - name: --node-count
-    defaultValue: "3"
+  - isRequired: true
+    name: --node-count
     summary: The number of node.
     description: ''
-  - name: --node-size
-    defaultValue: Medium
+  - isRequired: true
+    name: --node-size
+    parameterValueGroup: Large, Medium, Small
     summary: The node size.
     description: ''
   - name: --node-size-family
@@ -106,29 +92,26 @@ items:
     description: ''
 - uid: ext_synapse_az_synapse_spark_pool_delete
   name: az synapse spark pool delete
-  summary: Delete a specific Spark pool with Spark pool name.
+  summary: Delete a Spark pool.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Delete a specific big Spark pool with Spark pool name.
+  - summary: Delete a Spark pool.
     syntax:
-      content: >-
-        az synapse spark pool delete --name testpool --workspace-name testsynapseworkspace \
-
-        --resource-group rg
+      content: az synapse spark pool delete --name testpool --workspace-name testsynapseworkspace --resource-group rg
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
+    summary: The workspace name.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -139,51 +122,48 @@ items:
 - uid: ext_synapse_az_synapse_spark_pool_list
   name: az synapse spark pool list
   summary: List all Spark pools.
-  description: List all Spark pools under a workspace.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: List all Spark pools under a workspace.
+  - summary: List all Spark pools.
     syntax:
       content: az synapse spark pool list --workspace-name testsynapseworkspace --resource-group rg
   parameters:
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
+    summary: The workspace name.
     description: ''
 - uid: ext_synapse_az_synapse_spark_pool_show
   name: az synapse spark pool show
-  summary: Get a specific Spark pool with Spark pool name.
+  summary: Get a Spark pool.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: Get a specific Spark pools with Spark pool name.
+  - summary: Get a Spark pool.
     syntax:
-      content: >-
-        az synapse spark pool show --name testpool  --workspace-name testsynapseworkspace \
-
-        --resource-group rg
+      content: az synapse spark pool show --name testpool --workspace-name testsynapseworkspace --resource-group rg
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
+    summary: The workspace name.
     description: ''
 - uid: ext_synapse_az_synapse_spark_pool_update
   name: az synapse spark pool update
-  summary: Update the Spark pool's tags.
+  summary: Update the Spark pool.
   description: ''
   langs:
   - azurecli
@@ -191,24 +171,64 @@ items:
   - summary: Update the Spark pool's tags.
     syntax:
       content: >-
-        az synapse spark pool update --name testpool  --workspace-name testsynapseworkspace --resource-group rg \
+        az synapse spark pool update --name testpool --workspace-name testsynapseworkspace --resource-group rg \
 
         --tags key1=value1
+  - summary: Update the Spark pool's auto scale configuration.
+    syntax:
+      content: >-
+        az synapse spark pool update --name testpool --workspace-name testsynapseworkspace --resource-group rg \
+
+        --enable-auto-scale --min-node-count 3 --max-node-count 100
   parameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
+    summary: The workspace name.
+    description: ''
+  - name: --force
+    parameterValueGroup: false, true
+    summary: The flag of force operation.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --delay
+    summary: The delay time whose unit is minute.
+    description: ''
+  - name: --enable-auto-pause
+    parameterValueGroup: false, true
+    summary: The flag of enabling auto pause.
+    description: ''
+  - name: --enable-auto-scale
+    parameterValueGroup: false, true
+    summary: The flag of enabling auto scale.
+    description: ''
+  - name: --max-node-count
+    summary: The max node count.
+    description: ''
+  - name: --min-node-count
+    summary: The min node count.
+    description: ''
+  - name: --library-requirements-file
+    summary: The library requirements file.
+    description: ''
+  - name: --node-count
+    summary: The number of node.
+    description: ''
+  - name: --node-size
+    parameterValueGroup: Large, Medium, Small
+    summary: The node size.
     description: ''
 - uid: ext_synapse_az_synapse_spark_pool_wait
   name: az synapse spark pool wait
@@ -223,11 +243,11 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: The resource group name.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: The name of the workspace.
+    summary: The workspace name.
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -258,16 +278,16 @@ commands:
   summary: Create a Spark pool.
 - uid: ext_synapse_az_synapse_spark_pool_delete
   name: az synapse spark pool delete
-  summary: Delete a specific Spark pool with Spark pool name.
+  summary: Delete a Spark pool.
 - uid: ext_synapse_az_synapse_spark_pool_list
   name: az synapse spark pool list
   summary: List all Spark pools.
 - uid: ext_synapse_az_synapse_spark_pool_show
   name: az synapse spark pool show
-  summary: Get a specific Spark pool with Spark pool name.
+  summary: Get a Spark pool.
 - uid: ext_synapse_az_synapse_spark_pool_update
   name: az synapse spark pool update
-  summary: Update the Spark pool's tags.
+  summary: Update the Spark pool.
 - uid: ext_synapse_az_synapse_spark_pool_wait
   name: az synapse spark pool wait
   summary: Place the CLI in a waiting state until a condition of a Spark pool is met.
@@ -286,4 +306,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Spark pool including Create, Get, List, Delete Spark pool.
+description: Manage Spark pools.
