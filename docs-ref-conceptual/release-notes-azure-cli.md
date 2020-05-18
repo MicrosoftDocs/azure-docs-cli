@@ -4,13 +4,130 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/30/2020
+ms.date: 05/19/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## May 19, 2020
+
+Version 2.6.0
+
+### ACR
+
+* Add default timeout of 5 minutes for any requests to ACR
+* Support disable public network access
+* `az acr token create`: expose --days argument
+* `az acr import`: accept --source argument values which contain login in server name through client end correction
+
+### ACS
+
+* Bug fix: remove fields cleanup for fields that no longer exist
+
+### AKS
+
+* Update uptime-sla command help context
+* Remove range check for updating min count for autoscaler
+* Fix that cli doe not fail when user only specifies Windows password
+
+### AMS
+
+* `az ams transform create`: Add ability to create a transform with a FaceDetector preset
+* `az ams content-key-policy create` : Add ability to create a FairPlay content key policy with an offline rental configuration
+
+### AppConfig
+
+* Bug fix for list key values with fields
+
+### AppService
+
+* `az functionapp create`: AzureWebJobsDashboard will only be set if AppInsights is disabled
+* Fix #10664- VNet Integration - Location Check Issue & fix #13257- az webapp up failing when RG needs to be created
+* `az webapp|functionapp config ssl import`: Lookup key vault across resources groups in subscription and improve help and examples.
+* Onboard local context for app service
+
+### ARM
+
+* `az deployment`: Fix the problem that the templateLink will not be returned when deploying or validating template-uri
+* `az deployment`: Fix the problem that deployment/validate does not support specially encoded character
+* `az deployment sub/group what-if`: Fix array alignment and error handling
+* `az deployment operation`: Modify the deprecate information
+
+### ARO
+
+* Add examples to az aro create, list, list-credentials, show, delete
+* Add generate_random_id function
+
+### Backup
+
+* Allow FriendlyName in enable protection for AzureFileShare command
+* Fix in IaasVM restore-disks Command
+* Add "MAB" BackupManagementType to item list command
+* Add support for retrying policy update for failed items.
+* Add Resume Protection functionality for Azure Virtual Machine
+* Add support to specify ResourceGroup for storing instantRP during Create or Modify Policy
+
+### CI
+
+* Support flake8 3.8.0
+
+### Compute
+
+* New command az vm auto-shutdown
+* `az vm list-skus`: Update --zone behavior, return all type skus now
+
+### Core
+
+* Update local context on/off status to global user level
+
+### Extension
+
+* `az extension add`: Add --system to enable installing extensions in a system path
+* Support .egg-info to store wheel type extension metadata
+
+### IoT
+
+* `az iot`: Update the IoT command module first run extension awareness message to the accurate, non-deprecated modern Id `azure-iot`.
+
+### IoT Hub
+
+* Support for 2020-03-01 API and Network Isolation commands
+
+### NetAppFiles
+
+* `az volume create`: Adds snapshot-id as a parameter to create volume this will allow users to create a volume from existing snapshot.
+
+### Network
+
+* Fix ttl value changed unintended for dns add-record
+* `az network public-ip create`: Inform customers of a coming breaking change
+* Support generic commands for private link scenario
+* `az network private-endpoint-connection`: Support mysql, postgre and mariadb types
+* `az network private-endpoint-connection`: Support cosmosdb types
+* `az network private-endpoint`: deprecate --group-ids and redirect to --group-id
+
+### Output
+
+* Show update instruction in find, feedback and --help
+
+### Packaging
+
+* Build MSI/Homebrew packages with dependecies resolved from requirements.txt
+
+### RBAC
+
+* `az ad sp credential reset`: fix weak credential generation
+
+### Storage
+
+* `az storage account file-service-properties update/show`: Add File Properties Support for Storage Account
+* `az storage container create`: Fix #13373 by adding validator for public access
+* Add ADLS Gen2 track2 support
+* `az storage blob sync`: Support `--connection-string`
+* `az storage blob sync`: Fix the incorrect error message when azcopy cannot find the installation location
 
 ## April 30, 2020
 
