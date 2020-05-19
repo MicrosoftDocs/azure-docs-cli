@@ -2,7 +2,7 @@
 items:
 - uid: ext_synapse_az_synapse_spark_session
   name: az synapse spark session
-  summary: Manage Synapse Spark Session jobs and reset the Spark Session timeout.
+  summary: Manage Synapse Spark sessions.
   description: ''
   langs:
   - azurecli
@@ -14,18 +14,18 @@ items:
   - ext_synapse_az_synapse_spark_session_show
 - uid: ext_synapse_az_synapse_spark_session_cancel
   name: az synapse spark session cancel
-  summary: Cancel a specific spark session job under the specific spark pool.
-  description: Cancel the spark session job under the specific spark pool with session id.
+  summary: Cancel a Spark session.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Cancel a spark session job under the specific spark pool with session id.
+  - summary: Cancel a Spark session.
     syntax:
-      content: az synapse spark session cancel  --id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+      content: az synapse spark session cancel  --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
   parameters:
   - isRequired: true
     name: --spark-pool-name
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --workspace-name
@@ -35,106 +35,71 @@ items:
     summary: Do not prompt for confirmation.
     description: ''
   - isRequired: true
-    name: --id
-    summary: The id of the spark session job.
+    name: --livy-id
+    summary: The id of the Spark session job.
     description: ''
 - uid: ext_synapse_az_synapse_spark_session_create
   name: az synapse spark session create
-  summary: Submit a spark session job.
-  description: Submit a spark session job to a specific spark pool.
+  summary: Create a Spark session.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Submit a spark session job under the specific spark pool.
+  - summary: Create a Spark session.
     syntax:
       content: >-
-        az synapse spark session create --name testsession  --workspace-name testsynapseworkspace --spark-pool-name testsparkpool \
+        az synapse spark session create --name testsession  --workspace-name testsynapseworkspace \
 
-        --driver-memory 4g --driver-cores 4 \
-
-        --executor-memory 4g --executor-cores 4 --num-executors 2
+        --spark-pool-name testsparkpool --executor-size Small --executors 4
   parameters:
   - isRequired: true
-    name: --driver-cores
-    summary: The number of cores in driver.
+    name: --executor-size
+    parameterValueGroup: Large, Medium, Small
+    summary: The executor size.
     description: ''
   - isRequired: true
-    name: --driver-memory
-    summary: The memory of driver.
-    description: ''
-  - isRequired: true
-    name: --executor-cores
-    summary: The number of cores in each executor.
-    description: ''
-  - isRequired: true
-    name: --executor-memory
-    summary: The memory of executor.
-    description: ''
-  - isRequired: true
-    name: --num-executors
+    name: --executors
     summary: The number of executors.
     description: ''
   - isRequired: true
+    name: --name -n
+    summary: The Spark session name.
+    description: ''
+  - isRequired: true
     name: --spark-pool-name
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
-  - name: --archives
-    summary: The array of archives.
+  - name: --configuration
+    summary: The configuration of Spark session.
     description: ''
-  - name: --args
-    summary: The arguments of the job.
-    description: ''
-  - name: --class-name
-    summary: The class name.
-    description: ''
-  - name: --conf
-    summary: The configuration of spark batch job.
-    description: ''
-  - name: --detailed
-    defaultValue: "1"
-    summary: Optional query parameter specifying whether detailed response is returned beyond plain livy.
-    description: ''
-  - name: --file
-    summary: The URI of file.
-    description: ''
-  - name: --files
-    summary: The array of files URI.
-    description: ''
-  - name: --jars
-    summary: The array of jar files.
-    description: ''
-  - name: --name -n
-    summary: The spark batch or session job name.
+  - name: --reference-files
+    summary: Additional files used for reference in the main definition file.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 - uid: ext_synapse_az_synapse_spark_session_list
   name: az synapse spark session list
-  summary: List all spark session jobs under the specific spark pool.
+  summary: List all Spark sessions.
   description: ''
   langs:
   - azurecli
   examples:
-  - summary: List all spark session jobs under the specific spark pool.
+  - summary: List all Spark sessions.
     syntax:
       content: az synapse spark session list --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
   parameters:
   - isRequired: true
     name: --spark-pool-name
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --workspace-name
     summary: The name of the workspace.
-    description: ''
-  - name: --detailed
-    defaultValue: "1"
-    summary: Optional query parameter specifying whether detailed response is returned beyond plain livy.
     description: ''
   - name: --from-index
     summary: Optional parameter specifying which index the list should begin from.
@@ -144,70 +109,66 @@ items:
     description: ''
 - uid: ext_synapse_az_synapse_spark_session_reset_timeout
   name: az synapse spark session reset-timeout
-  summary: Reset the spark session timeout time.
-  description: Reset the spark session timeout time under the specific spark pool with session id.
+  summary: Reset a Spark session timeout time.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Reset the spark session timeout time.
+  - summary: Reset a Spark session's timeout time.
     syntax:
-      content: az synapse spark session reset-timeout --id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+      content: az synapse spark session reset-timeout --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
   parameters:
   - isRequired: true
     name: --spark-pool-name
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
   - isRequired: true
-    name: --id
-    summary: The id of the spark session job.
+    name: --livy-id
+    summary: The id of the Spark session job.
     description: ''
 - uid: ext_synapse_az_synapse_spark_session_show
   name: az synapse spark session show
-  summary: Get a specific spark session job under the specific spark pool.
-  description: Get the spark session job under the specific spark pool with session id.
+  summary: Get a Spark session.
+  description: ''
   langs:
   - azurecli
   examples:
-  - summary: Get a spark session job under the specific spark pool with session id.
+  - summary: Get a Spark session.
     syntax:
-      content: az synapse spark session show --id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+      content: az synapse spark session show --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
   parameters:
   - isRequired: true
     name: --spark-pool-name
-    summary: The name of the spark pool.
+    summary: The name of the Spark pool.
     description: ''
   - isRequired: true
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
-  - name: --detailed
-    defaultValue: "1"
-    summary: Optional query parameter specifying whether detailed response is returned beyond plain livy.
-    description: ''
   - isRequired: true
-    name: --id
-    summary: The id of the spark session job.
+    name: --livy-id
+    summary: The id of the Spark session job.
     description: ''
 commands:
 - uid: ext_synapse_az_synapse_spark_session_cancel
   name: az synapse spark session cancel
-  summary: Cancel a specific spark session job under the specific spark pool.
+  summary: Cancel a Spark session.
 - uid: ext_synapse_az_synapse_spark_session_create
   name: az synapse spark session create
-  summary: Submit a spark session job.
+  summary: Create a Spark session.
 - uid: ext_synapse_az_synapse_spark_session_list
   name: az synapse spark session list
-  summary: List all spark session jobs under the specific spark pool.
+  summary: List all Spark sessions.
 - uid: ext_synapse_az_synapse_spark_session_reset_timeout
   name: az synapse spark session reset-timeout
-  summary: Reset the spark session timeout time.
+  summary: Reset a Spark session timeout time.
 - uid: ext_synapse_az_synapse_spark_session_show
   name: az synapse spark session show
-  summary: Get a specific spark session job under the specific spark pool.
+  summary: Get a Spark session.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -223,4 +184,4 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Synapse Spark Session jobs and reset the Spark Session timeout.
+description: Manage Synapse Spark sessions.

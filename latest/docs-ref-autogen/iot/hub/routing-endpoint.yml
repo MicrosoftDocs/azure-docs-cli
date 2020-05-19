@@ -33,11 +33,10 @@ items:
         --container-name {ContainerName} --batch-frequency 100 --chunk-size 100 \
 
         --ff {iothub}-{partition}-{YYYY}-{MM}-{DD}-{HH}-{mm}
+  - summary: Add a new identity-based EventHub endpoint named "EventHubIdentity"
+    syntax:
+      content: az iot hub routing-endpoint create --resource-group MyResourceGroup --hub-name MyIotHub --endpoint-name EventHubIdentity --endpoint-type eventhub --endpoint-resource-group {ResourceGroup} --endpoint-subscription-id {SubscriptionId} --auth-type identityBased --endpoint-uri {EventHubEndpointUri} --entity-path {EntityPath}
   parameters:
-  - isRequired: true
-    name: --connection-string -c
-    summary: Connection string of the Routing Endpoint.
-    description: ''
   - isRequired: true
     name: --endpoint-name --name -n
     summary: Name of the Routing Endpoint.
@@ -59,6 +58,10 @@ items:
     name: --hub-name
     summary: IoT Hub name.
     description: ''
+  - name: --auth-type
+    parameterValueGroup: identitybased, keybased
+    summary: Authentication type for the endpoint. The default is keyBased.
+    description: ''
   - name: --batch-frequency -b
     defaultValue: "300"
     summary: Request batch frequency in seconds. The maximum amount of time that can elapse before data is written to a blob, between 60 and 720 seconds.
@@ -67,12 +70,21 @@ items:
     defaultValue: "300"
     summary: Request chunk size in megabytes(MB). The maximum size of blobs, between 10 and 500 MB.
     description: ''
+  - name: --connection-string -c
+    summary: Connection string of the Routing Endpoint.
+    description: ''
   - name: --container --container-name
     summary: Name of the storage container.
     description: ''
   - name: --encoding
     parameterValueGroup: avro, json
     summary: Encoding format for the container. The default is AVRO. Note that this field is applicable only for blob container endpoints.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --entity-path
+    summary: The entity path of the endpoint resource.
     description: ''
   - name: --ff --file-name-format
     defaultValue: '{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}'
@@ -235,7 +247,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/iot/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/0b3b6bb2ca49ec106024b9e3c564fc7c8faab66c/src/azure-cli/azure/cli/command_modules/iot/_help.py
-updated_at: 4/17/2020 4:31:47 AM
-ms.date: 04/17/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/58198af0d650df1433f329f2ab42572836bae62e/src/azure-cli/azure/cli/command_modules/iot/_help.py
+updated_at: 5/15/2020 3:24:48 AM
+ms.date: 05/15/2020
 description: Manage custom endpoints of an IoT hub.
