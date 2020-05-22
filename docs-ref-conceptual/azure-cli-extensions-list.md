@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/20/2020
+ms.date: 05/22/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -83,14 +83,13 @@ az extension list-available --output table
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.6.1 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.3 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
 | [storage-or-preview](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
-| [storage-ors-preview](https://github.com/Azure/azure-cli-extensions) | 0.3.1 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.10 | Provides a preview for upcoming storage features. | Yes |
 | [storagesync](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension |  |
 | [stream-analytics](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools stream-analytics Extension |  |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Support for subscription management preview. |  |
 | [support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 1.0.2 | Microsoft Azure Command-Line Tools Support Extension |  |
 | [synapse](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools Synapse Extension | Yes |
-| [timeseriesinsights](https://github.com/Azure/azure-cli-extensions/src/timeseriesinsights) | 0.1.1 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension |  |
+| [timeseriesinsights](https://github.com/Azure/azure-cli-extensions/src/timeseriesinsights) | 0.1.2 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.1.3 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
 | [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.2.7 | Auto repair commands to fix VMs. |  |
