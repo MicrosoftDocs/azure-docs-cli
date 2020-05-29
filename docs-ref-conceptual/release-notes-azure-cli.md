@@ -4,13 +4,80 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 05/19/2020
+ms.date: 06/02/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## June 02, 2020
+
+Version 2.7.0
+
+### ACR
+
+* Fix a typo in an error message of token creation
+
+### AKS
+
+* Change default vm sku to Standard_D2s_v3
+* Fix creating role assignment for MSI clsuter plus custom subnet
+
+### AppService
+
+* Fix #12739 az appservice list-locations returns some invalid locations
+
+### ARM
+
+* `az deployment`: Fix issue #13159 of incorrect message of JSON after removing comments and compressing
+* `az resource tag`: Fix issue #13255 of tagging resources with resource type `Microsoft.ContainerRegistry/registries/webhooks`
+* Improve the examples for the resource module
+
+### ARO
+
+* Change CLIError to correct flag for --worker-vm-disk-size-gb
+
+### EventHub
+
+* Fix for issue #12406 Argument --capture-interval does not update the "intervalInSeconds"
+
+### HDInsight
+
+* Change get_json_object to shell_safe_json_parse
+
+### Monitor
+
+* `az monitor metrics alert`: refine several help messages
+* `az monitor diagnostic-settings create`: support --export-to-resource-specific argument
+* Support LA workspace recover
+
+### Network
+
+* `az network dns zone`: support - character
+* `az network vpn-connection ipsec-policy`: change the --sa-lifetime and --sa-max-size to larger values in example
+* Bump network to 2020-04-01
+* `az network private-endpoint-connection`: support event grid
+* `az network express-route list-route-tables`: fix bug that cannot list routes as table
+
+### Packaging
+
+* Add Ubuntu Focal Package
+
+### RBAC
+
+* `az ad sp credential reset`: modify credential generation to avoid troublesome special characters
+
+### Redis
+
+* Fix #13529: Change documentation of parameter enable_non_ssl_port
+
+### Storage
+
+* `az storage copy`: Add parameter `--follow-symlinks` to support symlinks
+* Enable local context for storage account
+* `az storage logging`: Fix issue #11969 to refine error message
 
 ## May 19, 2020
 
