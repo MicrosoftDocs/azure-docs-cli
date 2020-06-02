@@ -12,8 +12,10 @@ items:
   - az_monitor_log_analytics_workspace_get_schema
   - az_monitor_log_analytics_workspace_get_shared_keys
   - az_monitor_log_analytics_workspace_list
+  - az_monitor_log_analytics_workspace_list_deleted_workspaces
   - az_monitor_log_analytics_workspace_list_management_groups
   - az_monitor_log_analytics_workspace_list_usages
+  - az_monitor_log_analytics_workspace_recover
   - az_monitor_log_analytics_workspace_show
   - az_monitor_log_analytics_workspace_update
 - uid: az_monitor_log_analytics_workspace_create
@@ -35,6 +37,9 @@ items:
     name: --workspace-name -n
     summary: Name of the Log Analytics Workspace.
     description: ''
+  - name: --capacity-reservation-level --level
+    summary: The capacity reservation level for this workspace, when CapacityReservation sku is selected. The maximum value is 1000 and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com.
+    description: ''
   - name: --ingestion-access
     parameterValueGroup: Disabled, Enabled
     summary: The public network access type to access workspace ingestion.
@@ -42,13 +47,23 @@ items:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --query-access
     parameterValueGroup: Disabled, Enabled
     summary: The public network access type to access workspace query.
     description: ''
+  - name: --quota
+    summary: The workspace daily quota for ingestion in gigabytes. The minimum value is 0.023 and default is -1 which means unlimited.
+    description: ''
   - name: --retention-time
     defaultValue: "30"
     summary: The workspace data retention in days.
+    description: ''
+  - name: --sku
+    defaultValue: PerGB2018
+    summary: 'The supported value: PerGB2018, CapacityReservation.'
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -80,6 +95,13 @@ items:
   - isRequired: true
     name: --workspace-name -n
     summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --force -f
+    parameterValueGroup: false, true
+    summary: Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -165,6 +187,29 @@ items:
       branch: dev
       path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_monitor_log_analytics_workspace_list_deleted_workspaces
+  name: az monitor log-analytics workspace list-deleted-workspaces
+  summary: Get a list of deleted workspaces that can be recovered in a subscription or a resource group.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get a list of deleted workspaces that can be recovered in a resource group
+    syntax:
+      content: az monitor log-analytics workspace list-deleted-workspaces --resource-group MyResourceGroup
+  parameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_monitor_log_analytics_workspace_list_management_groups
   name: az monitor log-analytics workspace list-management-groups
   summary: Get a list of management groups connected to a workspace.
@@ -221,6 +266,36 @@ items:
       branch: dev
       path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_monitor_log_analytics_workspace_recover
+  name: az monitor log-analytics workspace recover
+  summary: Recover a workspace in a soft-delete state within 14 days.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Recover a workspace in a soft-delete state within 14 days
+    syntax:
+      content: az monitor log-analytics workspace recover --resource-group MyResourceGroup -n MyWorkspace
+  parameters:
+  - isRequired: true
+    name: --workspace-name -n
+    summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_monitor_log_analytics_workspace_show
   name: az monitor log-analytics workspace show
   summary: Show a workspace instance.
@@ -264,6 +339,9 @@ items:
     name: --workspace-name -n
     summary: Name of the Log Analytics Workspace.
     description: ''
+  - name: --capacity-reservation-level --level
+    summary: The capacity reservation level for this workspace, when CapacityReservation sku is selected. The maximum value is 1000 and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com.
+    description: ''
   - name: --ingestion-access
     parameterValueGroup: Disabled, Enabled
     summary: The public network access type to access workspace ingestion.
@@ -271,6 +349,9 @@ items:
   - name: --query-access
     parameterValueGroup: Disabled, Enabled
     summary: The public network access type to access workspace query.
+    description: ''
+  - name: --quota
+    summary: The workspace daily quota for ingestion in gigabytes. The minimum value is 0.023 and default is -1 which means unlimited.
     description: ''
   - name: --retention-time
     defaultValue: "30"
@@ -358,6 +439,9 @@ commands:
 - uid: az_monitor_log_analytics_workspace_list
   name: az monitor log-analytics workspace list
   summary: Get a list of workspaces under a resource group or a subscription.
+- uid: az_monitor_log_analytics_workspace_list_deleted_workspaces
+  name: az monitor log-analytics workspace list-deleted-workspaces
+  summary: Get a list of deleted workspaces that can be recovered in a subscription or a resource group.
 - uid: az_monitor_log_analytics_workspace_list_management_groups
   name: az monitor log-analytics workspace list-management-groups
   summary: Get a list of management groups connected to a workspace.
@@ -376,9 +460,24 @@ commands:
 - uid: az_monitor_log_analytics_workspace_pack_list
   name: az monitor log-analytics workspace pack list
   summary: List all the intelligence packs possible and whether they are enabled or disabled for a given workspace.
+- uid: az_monitor_log_analytics_workspace_recover
+  name: az monitor log-analytics workspace recover
+  summary: Recover a workspace in a soft-delete state within 14 days.
 - uid: az_monitor_log_analytics_workspace_show
   name: az monitor log-analytics workspace show
   summary: Show a workspace instance.
+- uid: az_monitor_log_analytics_workspace_table
+  name: az monitor log-analytics workspace table
+  summary: Manage tables for log analytics workspace.
+- uid: az_monitor_log_analytics_workspace_table_list
+  name: az monitor log-analytics workspace table list
+  summary: List all the tables for the given Log Analytics workspace.
+- uid: az_monitor_log_analytics_workspace_table_show
+  name: az monitor log-analytics workspace table show
+  summary: Get a Log Analytics workspace table.
+- uid: az_monitor_log_analytics_workspace_table_update
+  name: az monitor log-analytics workspace table update
+  summary: Update the properties of a Log Analytics workspace table, currently only support updating retention time.
 - uid: az_monitor_log_analytics_workspace_update
   name: az monitor log-analytics workspace update
   summary: Update a workspace instance.
@@ -400,7 +499,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/79964fb5ec46abb010362d8a812c75ad7a7e87ca/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-updated_at: 4/27/2020 5:00:33 AM
-ms.date: 04/27/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/6c5055116409df79922d0a54cb8e32da739c4904/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+updated_at: 5/29/2020 2:29:54 AM
+ms.date: 05/29/2020
 description: Manage Azure log analytics workspace.
