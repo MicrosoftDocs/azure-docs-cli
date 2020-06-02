@@ -2,7 +2,15 @@
 items:
 - uid: ext_azure-iot_az_iot_central_app
   name: az iot central app
-  summary: Manage Azure IoT Central applications.
+  summary: >-
+    Manage Azure IoT Central applications.
+
+
+    To use this command group, the user must be logged through the `az login` command,
+
+    have the correct tenant set (the users home tenant) and
+
+    have access to the application through <a href="http://apps.azureiotcentral.com">http://apps.azureiotcentral.com</a>".
   description: ''
   langs:
   - azurecli
@@ -50,9 +58,9 @@ items:
     name: --app-id
     summary: Target App.
     description: ''
-  - name: --central-api-uri
-    defaultValue: api.azureiotcentral.com
-    summary: IoT Central API override.  For use with environments other than production.
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
     description: ''
   - name: --cg --consumer-group -c
     defaultValue: $Default
@@ -72,9 +80,9 @@ items:
     parameterValueGroup: false, true
     summary: 'Reinstall uamqp dependency compatible with extension version. Default: false.'
     description: ''
-  - name: --timeout --to
+  - name: --timeout --to -t
     defaultValue: "300"
-    summary: Maximum number of seconds to wait for device method result.
+    summary: Maximum seconds to maintain connection without receiving message. Use 0 for infinity.
     description: ''
   - name: --yes -y
     parameterValueGroup: false, true
@@ -95,6 +103,9 @@ items:
   - summary: Basic usage
     syntax:
       content: az iot central app validate-messages --app-id {app_id}
+  - summary: Output errors as they are detected
+    syntax:
+      content: az iot central app validate-messages --app-id {app_id} --style scroll
   - summary: Basic usage when filtering on target device
     syntax:
       content: az iot central app validate-messages --app-id {app_id} -d {device_id}
@@ -104,17 +115,14 @@ items:
   - summary: Filter device and specify an Event Hub consumer group to bind to.
     syntax:
       content: az iot central app validate-messages --app-id {app_id} -d {device_id} --cg {consumer_group_name}
-  - summary: Will randomly convert a recieved message into an error so you can see what sample errors might look like.
-    syntax:
-      content: az iot central app validate-messages --app-id {app_id} --simulate-errors
   parameters:
   - isRequired: true
     name: --app-id
     summary: Target App.
     description: ''
-  - name: --central-api-uri
-    defaultValue: api.azureiotcentral.com
-    summary: IoT Central API override.  For use with environments other than production.
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
     description: ''
   - name: --cg --consumer-group -c
     defaultValue: $Default
@@ -123,8 +131,21 @@ items:
   - name: --device-id -d
     summary: Target Device.
     description: ''
+  - name: --dr --duration
+    defaultValue: "300"
+    summary: Maximum duration to receive messages from target device before terminating connection.Use 0 for infinity.
+    description: ''
   - name: --enqueued-time --et -e
     summary: Indicates the time that should be used as a starting point to read messages from the partitions. Units are milliseconds since unix epoch. If no time is indicated "now" is used.
+    description: ''
+  - name: --max-messages --mm
+    defaultValue: "10"
+    summary: Maximum number of messages to recieve from target device before terminating connection.Use 0 for infinity.
+    description: ''
+  - name: --minimum-severity
+    defaultValue: warning
+    parameterValueGroup: error, info, warning
+    summary: Minimum severity of issue required for reporting.
     description: ''
   - name: --properties --props -p
     parameterValueGroup: all, anno, app, sys
@@ -134,19 +155,65 @@ items:
     parameterValueGroup: false, true
     summary: 'Reinstall uamqp dependency compatible with extension version. Default: false.'
     description: ''
-  - name: --simulate-errors
-    parameterValueGroup: false, true
-    summary: 'Randomly converts messages received into errors. Used primarily for testing purposes. Default: false.'
+  - name: --style
+    defaultValue: scroll
+    parameterValueGroup: csv, json, scroll
+    summary: Indicate output stylescroll = deliver errors as they arrive, json = summarize results as json, csv = summarize results as json.
     description: ''
-  - name: --timeout --to
+  - name: --timeout --to -t
     defaultValue: "300"
-    summary: Maximum number of seconds to wait for device method result.
+    summary: Maximum seconds to maintain connection without receiving message. Use 0 for infinity.
     description: ''
   - name: --yes -y
     parameterValueGroup: false, true
     summary: 'Skip user prompts. Indicates acceptance of dependency installation (if required). Used primarily for automation scenarios. Default: false.'
     description: ''
 commands:
+- uid: ext_azure-iot_az_iot_central_app_device
+  name: az iot central app device
+  summary: Manage and configure IoT Central devices.
+- uid: ext_azure-iot_az_iot_central_app_device_create
+  name: az iot central app device create
+  summary: Create a device in IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_delete
+  name: az iot central app device delete
+  summary: Delete a device from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_list
+  name: az iot central app device list
+  summary: List all devices in IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_registration_info
+  name: az iot central app device registration-info
+  summary: Get registration info on device(s) from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_registration_summary
+  name: az iot central app device registration-summary
+  summary: Provides a registration summary of all the devices in an app.
+- uid: ext_azure-iot_az_iot_central_app_device_show
+  name: az iot central app device show
+  summary: Get a device from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_template
+  name: az iot central app device-template
+  summary: Manage and configure IoT Central device templates.
+- uid: ext_azure-iot_az_iot_central_app_device_template_create
+  name: az iot central app device-template create
+  summary: Create a device template in IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_template_delete
+  name: az iot central app device-template delete
+  summary: Delete a device template from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_template_list
+  name: az iot central app device-template list
+  summary: List all device templates in IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_template_map
+  name: az iot central app device-template map
+  summary: Returns a mapping of device template name to device template id.
+- uid: ext_azure-iot_az_iot_central_app_device_template_show
+  name: az iot central app device-template show
+  summary: Get a device template from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_twin
+  name: az iot central app device-twin
+  summary: Manage IoT Central device twins.
+- uid: ext_azure-iot_az_iot_central_app_device_twin_show
+  name: az iot central app device-twin show
+  summary: Get the device twin from IoT Hub.
 - uid: ext_azure-iot_az_iot_central_app_monitor_events
   name: az iot central app monitor-events
   summary: Monitor device telemetry & messages sent to the IoT Hub for an IoT Central app.
@@ -168,4 +235,12 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Azure IoT Central applications.
+description: >-
+  Manage Azure IoT Central applications.
+
+
+  To use this command group, the user must be logged through the `az login` command,
+
+  have the correct tenant set (the users home tenant) and
+
+  have access to the application through <a href="http://apps.azureiotcentral.com">http://apps.azureiotcentral.com</a>".
