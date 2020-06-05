@@ -30,9 +30,9 @@ This beta version of Azure CLI migrate existing Azure CLI authentication from AA
 Authentication migration is transparent to CLI end user, we recommend you to try the beta version in advance. If you meet any issue in the beta release, please help file issue to help us improve the product.
 
 > [!div class="nextstepaction"]
-> [Download the beta MSI installer](https://aka.ms/installazurecliwindows)
+> [Download the beta MSI installer](https://aka.ms/installazurecliwindows-beta)
 
-# [MSI installer](#tab/azure-cli)
+# [MSI installer](#tab/azure-cli/windows)
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/installazurecliwindows)

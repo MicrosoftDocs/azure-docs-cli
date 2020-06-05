@@ -12,6 +12,8 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+# [Core release notes](#tab/azure-cli)
+
 ## June 02, 2020
 
 Version 2.7.0
@@ -5574,3 +5576,9 @@ You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
+
+# [Beta release notes](#tab/azure-cli/windows)
+
+Put beta MSI installer release notes here.
+
+We can remove the tabs when beta becomes GA.
