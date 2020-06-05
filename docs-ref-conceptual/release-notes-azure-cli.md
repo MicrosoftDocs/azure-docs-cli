@@ -12,6 +12,22 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+## June xx, 2020
+
+Version 2.x.x
+
+### beta MSI installer
+
+beta notes here
+
+### reference 1
+
+something here
+
+### reference 2
+
+something here
+
 ## June 02, 2020
 
 Version 2.7.0
