@@ -29,7 +29,7 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
-### MSI beta installer
+### Beta MSI installer
 
 Azure CLI Beta installer is a beta version of Azure CLI which supports all the CLI commands in the released MSI. This beta version of Azure CLI is a necessary migration as the existing Azure CLI authentication using AAD platform (v1.0) is being deprecated.  Microsoft Identity platform (v2.0) is the new authentication method.
 
@@ -51,6 +51,8 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
    ```
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, it will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+
+## Run the Azure CLI
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
 not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.

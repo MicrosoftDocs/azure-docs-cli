@@ -18,7 +18,11 @@ Version 2.x.x
 
 ### beta MSI installer
 
-beta notes here
+if there is only going to be one release noete for this, then this might work.
+
+If there is going to be release-over-release notes of the beta MSI installer, then I would recommend that we use tabs.
+
+We can always remove the tabs when there is no more beta MSI.
 
 ### reference 1
 
