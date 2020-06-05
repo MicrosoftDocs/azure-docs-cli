@@ -20,19 +20,36 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall any current versions
-before using the MSI installer.
+### MSI installer
+
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer.
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/installazurecliwindows)
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
+### MSI beta installer
+
+Azure CLI Beta installer is a beta version of Azure CLI which supports all the CLI commands in the released MSI. This beta version of Azure CLI is a necessary migration as the existing Azure CLI authentication using AAD platform (v1.0) is being deprecated.  Microsoft Identity platform (v2.0) is the new authentication method.
+
+We recommend that you try the beta version in advance.  Any issues or suggestions to improve the beta install can be communicated on the Azure CLI [GitHub site](https://github.com/MicrosoftDocs/azure-docs-cli/issues/new)
+
+> [!IMPORTANT]
+>
+> The beta MSI installer does not guarantee product level quality so it should not be used in your production environment.
+>
+> [!div class="nextstepaction"]
+> [Download the beta MSI installer](https://aka.ms/installazurecliwindows-beta)
+
+### PowerShell
+
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
    ```PowerShell
    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
    ```
+
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, it will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
