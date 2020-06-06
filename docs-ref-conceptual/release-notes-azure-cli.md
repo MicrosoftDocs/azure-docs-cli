@@ -5577,7 +5577,7 @@ You can report issues with nightly preview builds in the following ways:
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
 
-# [Windows beta installer release notes](#tab/azure-cli-beta)
+# [Beta MSI for Windows](#tab/azure-cli-beta)
 
 Put beta MSI installer release notes here.
 

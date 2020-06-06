@@ -22,11 +22,11 @@ for the list of supported package managers or how to install manually under WSL.
 
 The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer.
 
-# [Beta MSI installer](#tab/azure-cli-beta)
+# [Microsoft Installer (MSI)](#tab/azure-cli)
 
-Azure CLI Beta installer is a beta version of Azure CLI which supports all the CLI commands in the released MSI. This beta version of Azure CLI is a necessary migration as the existing Azure CLI authentication using AAD platform (v1.0) is being deprecated.  Microsoft Identity platform (v2.0) is the new authentication method.
+### Azure CLI beta version
 
-We recommend that you try the beta version in advance.  Any issues or suggestions to improve the beta install can be communicated on the Azure CLI [GitHub site](https://github.com/MicrosoftDocs/azure-docs-cli/issues/new)
+The beta version of the Azure CLI supports all CLI commands that you will find in the current version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  Microsoft Identity platform (v2.0) is the new authentication method and is used by the beta MSI.  We recommend that you try the beta version in advance.  
 
 > [!IMPORTANT]
 >
@@ -35,14 +35,18 @@ We recommend that you try the beta version in advance.  Any issues or suggestion
 > [!div class="nextstepaction"]
 > [Download the beta MSI installer](https://aka.ms/installazurecliwindows-beta)
 
-# [MSI installer](#tab/azure-cli)
+When the installer asks if it can make changes to your computer, click the "Yes" box.
+
+### Azure CLI current version
+
+Download and install the latest released version of the azure CLI for Windows.  If you already have a version installed, the installer will update the existing version.
 
 > [!div class="nextstepaction"]
 > [Download the MSI installer](https://aka.ms/installazurecliwindows)
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
-# [PowerShell](#tab/azure-powershell)
+# [PowerShell Installer](#tab/azure-powershell)
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
@@ -50,7 +54,7 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
    ```
 
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, it will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
 
 ---
 
