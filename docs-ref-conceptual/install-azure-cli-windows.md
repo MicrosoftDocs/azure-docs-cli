@@ -28,12 +28,14 @@ If you already have Azure CLI installed, the MSI will update any existing versio
 
 ### Azure CLI beta version
 
-The beta version of the Azure CLI supports all CLI commands that you will find in the current version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  Microsoft Identity platform (v2.0) is the new authentication method and is used by the beta MSI.  We recommend that you try the beta version in advance.  
+The beta version of the Azure CLI supports all CLI commands that you will find in the current released version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview) is the new authentication method and is used by Azure CLI beta.  We recommend that you try the beta version in advance.  
+
+For more information about Azure CLI beta, please see [release notes](https://review.docs.microsoft.com/en-us/cli/azure/release-notes-azure-cli?view=azure-cli-latest&branch=pr-en-us-2013&tabs=azure-cli-beta).
 
 > [!IMPORTANT]
 >
 > The beta version does not guarantee product level quality so it should not be used in your production environment.
->
+
 Download and install the beta version of the Azure CLI.
 
 > [!div class="nextstepaction"]
@@ -44,7 +46,7 @@ Download and install the beta version of the Azure CLI.
 Download and install the latest release of the Azure CLI.  
 
 > [!div class="nextstepaction"]
-> [Download the MSI for the current version](https://aka.ms/installazurecliwindows)
+> [Download the MSI for Azure CLI current release](https://aka.ms/installazurecliwindows)
 
 # [PowerShell Installer](#tab/azure-powershell)
 
