@@ -26,6 +26,13 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 If you already have Azure CLI installed, the MSI will update any existing version.  When the installer asks if it can make changes to your computer, click the "Yes" box.
 
+### Azure CLI current version
+
+Download and install the current release of the Azure CLI.  
+
+> [!div class="nextstepaction"]
+> [Current release of the Azure CLI](https://aka.ms/installazurecliwindows)
+
 ### Azure CLI beta version
 
 The beta version of the Azure CLI supports all CLI commands that you will find in the current released version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview) is the new authentication method and is used by Azure CLI beta.  We recommend that you try the beta version in advance.  
@@ -39,14 +46,7 @@ For more information about Azure CLI beta, please see [release notes](https://re
 Download and install the beta version of the Azure CLI.
 
 > [!div class="nextstepaction"]
-> [Download the MSI for Azure CLI beta](https://aka.ms/installazurecliwindows-beta)
-
-### Azure CLI current version
-
-Download and install the latest release of the Azure CLI.  
-
-> [!div class="nextstepaction"]
-> [Download the MSI for Azure CLI current release](https://aka.ms/installazurecliwindows)
+> [Beta release of the Azure CLI](https://aka.ms/installazurecliwindows-beta)
 
 # [PowerShell Installer](#tab/azure-powershell)
 
