@@ -1,18 +1,17 @@
-# Azure CLI for Azure Networking
-
 > [!NOTE]
 > >
-> This prototype for `az network` is a subgke reference landing page that replaces the following group / summary reference pages: 
+> This prototype for `az network` is a service reference landing page that replaces the following group / summary reference pages: 
 >
-> 1. [Core reference list]() for Azure Networks
-> 2. [Extension reference list]() for Azure Networks
-> 3. Separate [Extension firewall](/cli/azure/ext/azure-firewall/?view=azure-cli-latest)
-> 4. Separate [Extension express-route](/cli/azure/ext/express-route/?view=azure-cli-latest)
-> 5. Separate [Extension express-route-cross-connection](/cli/azure/ext/express-route-cross-connection/?view=azure-cli-latest)
-> 6. Separate [Extension virtual-network-tap](/cli/azure/ext/virtual-network-tap/network?view=azure-cli-latest)
-> 7. Separate [Extension virtual-wan](/cli/azure/ext/virtual-wan/network?view=azure-cli-latest)
+> 1. [Core reference list](/cli/azure/network?view=azure-cli-latest) for Azure Networks
+> 1. Separate [Extension firewall](/cli/azure/ext/azure-firewall/?view=azure-cli-latest)
+> 1. Separate [Extension express-route](/cli/azure/ext/express-route/?view=azure-cli-latest)
+> 1. Separate [Extension express-route-cross-connection](/cli/azure/ext/express-route-cross-connection/?view=azure-cli-latest)
+> 1. Separate [Extension virtual-network-tap](/cli/azure/ext/virtual-network-tap/network?view=azure-cli-latest)
+> 1. Separate [Extension virtual-wan](/cli/azure/ext/virtual-wan/network?view=azure-cli-latest)
 > ... and whatever other network command groups we have
 >
+
+# Azure CLI for Azure Networking
 
 Use Azure CLI to manage Azure networks with the `network` reference set.
 
@@ -61,9 +60,9 @@ There are three types of Azure CLI references:
 
 1. Core references have been published as a permanent part of the Azure CLI.  
 2. Extension references haven't shipped as part of the CLI but run as CLI commands. With extensions, you gain access to experimental and pre-release commands.
-3. Preview references ... `need more information here`
+3. Extension preview references ... `need more information here`
 
-Prerequisites for extension and preview commands are provided on each code sample page.  
+Prerequisites for extension and extension preview commands are provided on each code sample page.  
 
 ## az network application-gateway
 
@@ -99,21 +98,21 @@ Prerequisites for extension and preview commands are provided on each code sampl
 
 ## az network express-route
 
-| Core Command | Extension | Use |
+| Core Command | Use |
 |-|-|-|
-| [az network express-route](/en-us/cli/azure/network/express-route?view=azure-cli-latest) | [Extension](/cli/azure/network/express-route?view=azure-cli-latest) | All commands to manage Azure ExpressRoute
-| [az network express-route gateway](/cli/azure/network/express-route/gateway?view=azure-cli-latest) | [Extension](/cli/azure/ext/express-route/network/express-route/gateway?view=azure-cli-latest) | Manage ExpressRoute gateways with new extension commands.
-| [az network express-route auth](/cli/azure/network/express-route/auth?view=azure-cli-latest) | | Manage authentication of an ExpressRoute circuit.
-| [az network express-route auth create]() | | Create a new link authorization for an ExpressRoute circuit.
-| [az network express-route auth delete]() | | Delete a link authorization of an ExpressRoute circuit.
-| [az network express-route auth list]() | | List link authorizations of an ExpressRoute circuit.
-| [az network express-route auth show]() | | Get the details of a link authorization of an ExpressRoute circuit.
-| [az network express-route create]() | [Extension]() | Create an ExpressRoute circuit.
-| [az network express-route delete]() | | Delete an ExpressRoute circuit.
-| [az network express-route gateway connection]() | [Extension]()| Manage ExpressRoute gateway connections.
-| [az network express-route gateway connection create]() | [Extension]() | Create an ExpressRoute gateway connection.
-| [az network express-route gateway connection delete]() | [Extension]() | Delete an ExpressRoute gateway connection.
-| [az network express-route gateway connection list]() | [Extension]() | List ExpressRoute gateway connections.
+| [az network express-route](prototype-azure-cli-reference-network-express-route) | All commands to manage Azure ExpressRoute
+| [az network express-route auth]() | Manage authentication of an ExpressRoute circuit.
+| [az network express-route auth create]() | Create a new link authorization for an ExpressRoute circuit.
+| [az network express-route auth delete]() | Delete a link authorization of an ExpressRoute circuit.
+| [az network express-route auth list]() | List link authorizations of an ExpressRoute circuit.
+| [az network express-route auth show]() | Get the details of a link authorization of an ExpressRoute circuit.
+| [az network express-route create](prototype-azure-cli-reference-network-express-route#az-network-express-route-create) | Create an ExpressRoute circuit.
+| [az network express-route delete]() | Delete an ExpressRoute circuit.
+| [az network express-route gateway]() | Manage ExpressRoute gateways with new extension commands.
+| [az network express-route gateway connection]() | Manage ExpressRoute gateway connections.
+| [az network express-route gateway connection create]() | Create an ExpressRoute gateway connection.
+| [az network express-route gateway connection delete]() | Delete an ExpressRoute gateway connection.
+| [az network express-route gateway connection list]() | List ExpressRoute gateway connections.
 
 ## az network firewall
 
