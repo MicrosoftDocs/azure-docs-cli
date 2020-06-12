@@ -21,11 +21,11 @@ To learn more about ExpressRoute circuits see [Create and modify an ExpressRoute
 | [az network express-route gateway connection delete]() | [Extension]() | Delete an ExpressRoute gateway connection.
 | [az network express-route gateway connection list]() | [Extension]() | List ExpressRoute gateway connections.
 
-***The rest of the `az network express-route` commands would be listed here**
+**The rest of the `az network express-route` commands would be listed here**
 
 ## az network express-route create
 
-Create an ExpressRoute circuit.
+Create an ExpressRoute circuit using core references.
 
 ```azurecli
 az network express-route create --bandwidth
@@ -75,9 +75,9 @@ az network express-route create --bandwidth 200 -n MyCircuit --peering-location 
 
 ## az network express-route create (extension)
 
-The use of `az network express-route` extension commands requires Azure CLI version x.x.x or higher.  The [network extension](prototype-azure-cli-reference-network#install-the-extension-reference) must also be installed prior to running extension commands.
+The use of `az network express-route` extension commands requires Azure CLI version x.x.x or higher.  The [reference extension](prototype-azure-cli-reference-network#install-the-extension-reference) must also be installed prior to running extension commands.
 
-Create an ExpressRoute circuit with extension references
+Create an ExpressRoute circuit using extension references.
 
 ```azurecli
 az network express-route create --bandwidth

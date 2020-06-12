@@ -116,16 +116,16 @@ Prerequisites for extension and extension preview commands are provided on each 
 
 ## az network firewall
 
-| Core Command | Extension | Use |
+| Command | Use |
 |-|-|-|
-| az network firewall]() | [Extension preview](/cli/azure/ext/azure-firewall/network/firewall?view=azure-cli-latest) | All commands to manage and configure Azure Firewall.
-| az network firewall application-rule | [Extension preview](/cli/azure/ext/azure-firewall/network/firewall/application-rule?view=azure-cli-latest) | Manage and configure Azure Firewall application rules.
-| az network firewall application-rule collection | [Extension preview](/cli/azure/ext/azure-firewall/network/firewall/application-rule/collection?view=azure-cli-latest) | Manage and configure Azure Firewall application rule collections.
-| az network firewall application-rule collection delete | [Extension preview](/cli/azure/ext/azure-firewall/network/firewall/application-rule/collection?view=azure-cli-latest#ext-azure-firewall-az-network-firewall-application-rule-collection-delete) | Delete an Azure Firewall application rule collection.
-| az network firewall application-rule collection list | [Extension preview]() | List Azure Firewall application rule collections.
-| az network firewall application-rule collection show | [Extension preview]() | Get the details of an Azure Firewall application rule collection.
-| az network firewall application-rule create | [Extension preview]() | Create an Azure Firewall application rule.
-| az network firewall application-rule delete | [Extension preview]() | Delete an Azure Firewall application rule.
+| [az network firewall](prototype-azure-cli-reference-network-firewall) | All commands to manage and configure Azure Firewall.
+| [az network firewall application-rule]() | Manage and configure Azure Firewall application rules.
+| [az network firewall application-rule collection]() | Manage and configure Azure Firewall application rule collections.
+| [az network firewall application-rule collection delete]() | Delete an Azure Firewall application rule collection.
+| [az network firewall application-rule collection list]() | List Azure Firewall application rule collections.
+| [az network firewall application-rule collection show]() | Get the details of an Azure Firewall application rule collection.
+| [az network firewall application-rule create]() | Create an Azure Firewall application rule.
+| [az network firewall application-rule delete]() | Delete an Azure Firewall application rule.
 
 ***The rest of the `az network firewall` commands would be listed here**
 
@@ -133,16 +133,16 @@ Prerequisites for extension and extension preview commands are provided on each 
 
 | Command | Extension | Description |
 |-|-|-|
-| az network front-door | [Extension](/cli/azure/ext/front-door/network/front-door) | All commands to manage Azure Front Door.
-| az network front-door backend-pool | [Extension](/cli/azure/ext/front-door/network/front-door/backend-pool) | Manage Front Door backend pools.
-| az network front-door backend-pool backend | [Extension](/cli/azure/ext/front-door/network/front-door/backend-pool/backend) | Manage backends of Front Door backend pools.
-| az network front-door backend-pool backend add | [Extension](/cli/azure/ext/front-door/network/front-door/backend-pool/backend?view=azure-cli-latest#ext-front-door-az-network-front-door-backend-pool-backend-add) | Add a backend to a Front Door backend pool.
-| az network front-door backend-pool backend list | [Extension]() | List backends of a Front Door backend pool.
-| az network front-door backend-pool backend remove | [Extension]() | Remove a backend from a Front Door backend pool.
-| az network front-door backend-pool create | [Extension]() | Create a Front Door backend pool.
-| az network front-door backend-pool delete | [Extension]() | Delete a Front Door backend pool.
-| az network front-door backend-pool list | [Extension]() | List Front Door backend pools.
-| az network front-door backend-pool show | [Extension]() | Get the details of a Front Door backend pool.
+| [az network front-door](prototype-azure-cli-reference-network-front-door) | All commands to manage Azure Front Door.
+| [az network front-door backend-pool]() | Manage Front Door backend pools.
+| [az network front-door backend-pool backend]() | Manage backends of Front Door backend pools.
+| [az network front-door backend-pool backend add]() | Add a backend to a Front Door backend pool.
+| [az network front-door backend-pool backend list]() | List backends of a Front Door backend pool.
+| [az network front-door backend-pool backend remove]() | Remove a backend from a Front Door backend pool.
+| [az network front-door backend-pool create]() | Create a Front Door backend pool.
+| [az network front-door backend-pool deleten]() | Delete a Front Door backend pool.
+| [az network front-door backend-pool list]() | List Front Door backend pools.
+| [az network front-door backend-pool show]() | Get the details of a Front Door backend pool.
 
 ***The rest of the `az network front-door` commands would be listed here**
 
