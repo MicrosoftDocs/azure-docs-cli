@@ -1,5 +1,12 @@
 # prototype for Azure CLI Reference changes using IoT
 
+> [!NOTE]
+> >
+> This section is for talking points.  This section is not an example reference doc 
+>
+> The purpose of this redesign is to ***improve clarity*** and ***increase visibility*** for each `service reference set`.
+>
+
 ## terms
 
 - "root reference" = top most reference level like `az monitor` and `az IoT`
@@ -11,14 +18,43 @@
 - "reference set" = all of the commands that fall under a single root reference
 - "released" = core references
 - "extension" = extension references
+- "preview" = extension references in preview
 
-## assumptions
+## goals
 
-1. the name showing on the TOC is always the full official **service name** like `Azure IoT`, not `IoT`, `az iot`, or `azure-iot`.  We want our service names to match the terminology of the Azure portal.
+1. Rework the Reference TOC so that names are consistent and it is easy to locate and navigate ***all references*** for a ***single service***.
+1. Develop new docs focusing on `service reference set` organization  
+   - combine core and extension references
+   - develop a reference set landing page
+1. Add more reference information to pages
+   - add the group reference name in each level1 document
+   - add prerequisite reminder in each extension reference page
+   - enhance table design to provide more information
+     a. command type (released, extension, extension preview)
+     b. version requirement
+   - remove links to GitHub unless we specifically say [GitHub something-or-other](/Azure/azure-cli-extensions/tree/master/src/express-route)
+1. Fix the breadcrumbs
+   - [az network express-route auth](/cli/azure/network/express-route/auth?view=azure-cli-latest)
+
+## assumptions with a focus on the user experience
+
+1. the name showing on the TOC should always be the full official **service name** like `Azure IoT`, not `IoT`, `az iot`, or `azure-iot`.  We want our service names to match the terminology of the Azure portal.
 1. reference and extension references are now combined under the single root reference URL
-1. the top level [Overview](/cli/azure/reference-index) does not change.  It is still an alpha list of root Azure CLI references
-1. Azure CLI commands that are cross-service will have their own reference set.  Example commands are `az configure`, `az feedback`, `az login`. 
-2. the new reference TOC will have a different organization which will support these document changes (i.e. only one ***Reference*** TOC header containing both core and extension references)
+1. the top level [Overview](/cli/azure/reference-index) is still an alpha list of root Azure CLI references; however, why are we will now be sending users to new [service reference landing pages](#Azure-CLI-for-Azure-IoT)
+1. Azure CLI commands that are cross-service will have their own reference set, `Azure CLI`.  Example commands are `az configure`, `az feedback`, `az login`.
+1. Azure CLI commands that span multiple services, but have been placed in a mixed service reference name, like `db-up`, can remain there but the references themselves will be grouped into the correct `service reference landing page`.  An example would be `az mysql down`.  It can still be part of `db up` technical reference, but it will show up in the `az mysql` references pages.
+1. preview references need a landing page in the TOC, not just a GitHub link.  We can combine them with the reference set to which they belong, and like extensions, provide preview information on pages.  Q: What do we expect a user to know or do when they get to a [preview GitHub page](/Azure/azure-cli-extensions/tree/master/src/express-route)?
+1. the new reference TOC will have a different organization which will support these document changes (i.e. only one ***Reference*** TOC header containing both core and extension references)
+1. We will still have separate summary pages for [core](/cli/azure/reference-index?view=azure-cli-latest) and [extension](/cli/azure/azure-cli-extensions-list?view=azure-cli-latest)
+1. We will not be removing articles that explain how to work with extensions
+1. With these changes, our prototype [reference landing page](/azure/data-share/azure-cli-references-for-data-share) can be removed -- there is too much overlap to keep both in sync.
+
+## Next steps after design review
+
+1. Prototype full reference landing page that has core, extension and preview commands
+1. Prototype individual root reference Overviews
+1. Prototype three sample pages (one for each command type)
+1. Prototype TOC with just these example docs
 
 ## variables
 1. the name of the Azure service
@@ -35,6 +71,8 @@
 > This new page design will replace [az iot](/cli/azure/iot) and combine all reference types.  
 >
 > Please note the clear identification of the reference name as this is not always the root reference.
+>
+> If a reference is in preview, this will be indicated in the H1
 >
 
 # Azure CLI for Azure IoT
