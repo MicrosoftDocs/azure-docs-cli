@@ -12,7 +12,7 @@ ms.devlang: azurecli
 
 # Install Azure CLI on Windows
 
-For Windows the Azure CLI is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
+For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
@@ -46,7 +46,7 @@ For more information about Azure CLI beta, please see [release notes](https://re
 Download and install the beta version of the Azure CLI.
 
 > [!div class="nextstepaction"]
-> [Beta release of the Azure CLI](https://aka.ms/installazurecliwindows-beta)
+> [Beta release of the Azure CLI](https://aka.ms/installazurecliwindowsbeta)
 
 # [PowerShell Installer](#tab/azure-powershell)
 
