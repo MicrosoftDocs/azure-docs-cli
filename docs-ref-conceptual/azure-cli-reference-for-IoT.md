@@ -17,50 +17,32 @@ The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is 
 
 ## References for IoT
 
-Paymaun to wordsmith this paragraph: There are two type of Azure CLI references for IoT: released and extension.  Released references have been published as a permanent part of the Azure CLI.  Extension references haven't shipped as part of the CLI but run as CLI commands. With extensions, you gain access to experimental and pre-release commands.
+The Azure IoT CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure IoT CLI **extension**.
 
-### References that will NOT be on this published page - please confirm
+IoT functionality in Azure CLI **core** is in general, focused on infrastructure management and configuration. For example, IoT Hub CRUD operations, or configuring IoT Hub message routes are core commands.
 
-| Reference | Extension | Description
-|-|-|-|
-| az dt | [extension only](/cli/azure/ext/azure-iot/dt)  | Manage Azure Digital Twins (ADT) solutions & infrastructure.
-| [az iotcentral](/cli/azure/iotcentral) | [extension](/cli/azure/ext/azure-iot/iotcentral)  | Manage Azure Digital Twins (ADT) solutions & infrastructure.
+The IoT **extension** introduces rich features and functionality.  Extensions manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example, managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. Often an IoT extension unlocks the usage of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
 
-### table format #1
-
-| Reference | Extension | Description
-|-|-|-|
-| [az iot](/cli/azure/iot) | [extension](/cli/azure/ext/azure-iot/iot)  | All available Azure IoT commands.
-| [az iot central](/cli/azure/iot/central) | [extension](/cli/azure/ext/azure-iot/iot/central) | Manage IoT Central assets.
-| az iot device | [extension](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| [az iot dps](/en-us/cli/azure/iot/dps) | [extension](/cli/azure/ext/azure-iot/iot/dps) | Manage Azure IoT Hub Device Provisioning Service.
-| az iot edge | [extension](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
-| [az iot hub](/cli/azure/iot/hub) | [extension](/cli/azure/ext/azure-iot/iot/hub) | Manage Azure IoT hubs.
-| [az iot pnp](/cli/azure/iot/pnp) | [extension](/cli/azure/ext/azure-iot/iot/pnp) | Manage IoT Plug and Play repositories and repository access keys.
-
-### table format #2
-
-Do IoT users really refer to Azure CLI commands as "core" or "Extension"?  What is their vocabulary?
-
-| Reference | Type ? Status? Use indicator? | Description
-|-|-|-|
-| az iot | [core reference](/cli/azure/iot) | All available core Azure IoT commands.
-| | [extension reference](/cli/azure/ext/azure-iot/iot) |User friendly explanation here.
-|az iot central | [core reference](/cli/azure/iot/central) | Manage IoT Central assets.
-| | [extension reference](/cli/azure/ext/azure-iot/iot/central) | User friendly explanation here
-| az iot device | [extension reference](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| az iot dps | [core reference](/en-us/cli/azure/iot/dps) | Manage Azure IoT Hub Device Provisioning Service.
-| | [extension reference](/cli/azure/ext/azure-iot/iot/dps) | User friendly explanation here
-| az iot edge | [extension reference](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
-| az iot hub | [core reference](/cli/azure/iot/hub) | | Manage Azure IoT hubs.
-| | [extension reference](/cli/azure/ext/azure-iot/iot/hub) | User friendly explanation here
-| az iot pnp | [core reference](/cli/azure/iot/pnp) | Manage IoT Plug and Play repositories and repository access keys.
-| | [extension reference](/cli/azure/ext/azure-iot/iot/pnp) | User friendly explanation here
+| Reference | Core | Extension | Description
+|-|-|-|-|
+| az iot | [core](/cli/azure/iot) | [extension](/cli/azure/ext/azure-iot/iot)  | All available Azure IoT commands.
+| az iot central | [core](/cli/azure/iot/central) | [extension](/cli/azure/ext/azure-iot/iot/central) | Manage IoT Central assets.
+| az iot device | | [extension only](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| az dt | | [extension only](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins (ADT) solutions & infrastructure.
+| az iot dps | [core](/en-us/cli/azure/iot/dps) | [extension](/cli/azure/ext/azure-iot/iot/dps) | Manage Azure IoT Hub Device Provisioning Service.
+| az iot edge | | [extension only](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
+| az iot hub | [core](/cli/azure/iot/hub) | [extension](/cli/azure/ext/azure-iot/iot/hub) | Manage Azure IoT hubs.
+| az iot pnp | [core](/cli/azure/iot/pnp) | [extension](/cli/azure/ext/azure-iot/iot/pnp) | Manage IoT Plug and Play repositories and repository access keys.
 
 ## Popular Azure CLI articles for IoT
 
 - [Create an IoT hub](/azure/iot-hub/iot-hub-create-using-cli)
 - [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli)
+- [CLI driven device tutorials using Azure RTOS](/azure/rtos/getting-started?branch=master)
+- [Use the IoT extension for Azure IoT Hub device management](/azure/iot-hub/iot-hub-device-management-iot-extension-azure-cli-2-0)
+- [Deploy and monitor IoT Edge modules at scale with the Azure CLI extension for IoT](/azure/iot-edge/how-to-deploy-cli-at-scale)
+- [Send Telemetry to a device and monitor it with the Azure CLI extension for IoT](/azure/iot-hub/quickstart-send-telemetry-cli)
+- [Use the Azure CLI to configure IoT Hub message routing](/azure/iot-hub/tutorial-routing-config-message-routing-cli)
 - [Manage interfaces in a Plug and Play model repository](/azure/iot-pnp/howto-install-pnp-cli#manage-interfaces-in-a-model-repository)
 
 ## Azure CLI reference examples
