@@ -4,7 +4,7 @@ description: How to install the Azure CLI on Windows
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 05/01/2019
+ms.date: 06/05/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -12,7 +12,7 @@ ms.devlang: azurecli
 
 # Install Azure CLI on Windows
 
-For Windows the Azure CLI is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
+For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
@@ -20,20 +20,45 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall any current versions
-before using the MSI installer.
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
 
-> [!div class="nextstepaction"]
-> [Download the MSI installer](https://aka.ms/installazurecliwindows)
+# [Microsoft Installer (MSI)](#tab/azure-cli)
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
+
+### Azure CLI current version
+
+Download and install the current release of the Azure CLI.  
+
+> [!div class="nextstepaction"]
+> [Current release of the Azure CLI](https://aka.ms/installazurecliwindows)
+
+### Azure CLI beta version
+
+The beta version of the Azure CLI supports all CLI commands that you will find in the current released version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview) is the new authentication method and is used by Azure CLI beta.  We recommend that you try the beta version in advance.  
+
+> [!IMPORTANT]
+>
+> The beta version does not guarantee product level quality so it should not be used in your production environment.
+
+Download and install the beta version of the Azure CLI.
+
+> [!div class="nextstepaction"]
+> [Beta release of the Azure CLI](https://aka.ms/installazurecliwindowsbeta)
+
+# [Microsoft Installer (MSI) with PowerShell](#tab/azure-powershell)
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
    ```PowerShell
    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
    ```
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, it will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+
+This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+
+---
+
+## Run the Azure CLI
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
 not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
@@ -76,7 +101,7 @@ You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninst
 | Platform | Instructions |
 |---|---|
 | Windows 10 | Start > Settings > Apps |
-| Windows 8<br/>Windows 7 | Start > Control Panel > Programs > Uninstall a program |
+| Windows 8 and Windows 7 | Start > Control Panel > Programs > Uninstall a program |
 
 Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.
 
