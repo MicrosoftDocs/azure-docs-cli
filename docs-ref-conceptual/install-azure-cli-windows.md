@@ -20,11 +20,9 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer.
-
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
-If you already have Azure CLI installed, the MSI will update any existing version.  When the installer asks if it can make changes to your computer, click the "Yes" box.
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.  When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 ### Azure CLI current version
 
