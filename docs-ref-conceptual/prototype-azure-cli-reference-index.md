@@ -19,3 +19,7 @@
 | [az kusto]() | Manage Azure Kusto resources. | kusto | [GitHub]()
 | [az network](prototype-azure-cli-reference-network) | Manage Azure Network resources. | network | [GitHub]()
 | [notification-hub]() | Manage Azure Notification Hubs. | notification-hub | [GitHub]()
+| [az vmss]() | Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS). | vmss | [GitHub]()
+| [az webapp]() | Manage web apps. | webapp | [GitHub]()
+
+**all `az` sample code has been moved to the `Azure CLI` TOC entry / CLI-only reference landing page.**
