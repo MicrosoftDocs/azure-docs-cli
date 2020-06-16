@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/13/2020
+ms.date: 06/16/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -51,6 +51,7 @@ az extension list-available --output table
 | [datashare](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension |  |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.14 | Additional commands to simplify Azure Database workflows. | Yes |
 | [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 0.2.0 | Deploy to Azure using Github Actions. | Yes |
+| [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization) | 0.1.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension |  |
 | [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.5 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.11.0 | Support for new Database Migration Service scenarios. | Yes |
