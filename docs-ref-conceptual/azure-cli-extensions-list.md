@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/10/2020
+ms.date: 06/13/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -60,7 +60,7 @@ az extension list-available --output table
 | [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.7 | Manage networking Front Doors. |  |
 | [hack](https://github.com/Azure/azure-cli-extensions) | 0.4.2 | Microsoft Azure Command-Line Tools Hack Extension | Yes |
 | [hardware-security-modules](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension |  |
-| [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Microsoft Azure Command-Line Tools HealthCareApis Extension |  |
+| [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension |  |
 | [hpc-cache](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools StorageCache Extension | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.4 | Support for copying managed vm images between regions |  |
 | [import-export](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension |  |
