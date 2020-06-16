@@ -19,9 +19,11 @@ The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is 
 
 The Azure IoT CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure IoT CLI **extension**.
 
-IoT functionality in Azure CLI **core** is in general, focused on infrastructure management and configuration. For example, IoT Hub CRUD operations, or configuring IoT Hub message routes are core commands.
+IoT functionality in Azure CLI **core** is focused on infrastructure management and configuration. IoT Hub CRUD operations, or configuring IoT Hub message routes are typical use cases for core commands.
 
-The IoT **extension** introduces rich features and functionality.  Extensions manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example, managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. Often an IoT extension unlocks the usage of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
+The IoT **extension** introduces rich features and functionality.  Extensions manage, manipulate and interact with the data, entities and objects on the infrastructure itself. Managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. Azure CLI extensions for IoT unlock the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
+
+### Links to core and extension commands
 
 | Reference | Core | Extension | Description
 |-|-|-|-|
@@ -34,7 +36,7 @@ The IoT **extension** introduces rich features and functionality.  Extensions ma
 | az iot hub | [core](/cli/azure/iot/hub) | [extension](/cli/azure/ext/azure-iot/iot/hub) | Manage Azure IoT hubs.
 | az iot pnp | [core](/cli/azure/iot/pnp) | [extension](/cli/azure/ext/azure-iot/iot/pnp) | Manage IoT Plug and Play repositories and repository access keys.
 
-## Popular Azure CLI articles for IoT
+## Popular IoT articles using the Azure CLI
 
 - [Create an IoT hub](/azure/iot-hub/iot-hub-create-using-cli)
 - [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli)
