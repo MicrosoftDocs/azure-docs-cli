@@ -20,9 +20,11 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
+
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.  When the installer asks if it can make changes to your computer, click the "Yes" box.
+When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 ### Azure CLI current version
 
@@ -44,7 +46,7 @@ Download and install the beta version of the Azure CLI.
 > [!div class="nextstepaction"]
 > [Beta release of the Azure CLI](https://aka.ms/installazurecliwindowsbeta)
 
-# [PowerShell Installer](#tab/azure-powershell)
+# [Microsoft Installer (MSI) with PowerShell](#tab/azure-powershell)
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
