@@ -8,8 +8,6 @@
 | [az account]() | Manage Azure subscription information. | account | [GitHub]()
 | [az acr]() | Manage private registries with Azure Container Registries. | acr | [GitHub]()
 | [az acs]() | Manage Azure Container Services. | acs | [GitHub]()
-| [az ad]() | Manage Azure Active Directory Graph entities needed for Role Based Access Control. | ad | [GitHub]()
-| [az advisor]() | Manage Azure Advisor. | advisor | [GitHub]()
 | [az blueprint]() | Manage Azure Blueprint. | blueprint | [GitHub]()
 | [az databox]() | Manage Azure Databoc. | databox | [GitHub]()
 | [az datashare]() | Manage Azure Datashare. | datashare | [GitHub]()
