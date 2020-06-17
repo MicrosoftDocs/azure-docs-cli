@@ -4,10 +4,11 @@ description: How to install the Azure CLI on Windows
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/05/2020
+ms.prod: azure
+ms.date: 06/16/2020
 ms.topic: conceptual
-ms.service: azure-cli
 ms.devlang: azurecli
+ms.technology: azure-cli
 ---
 
 # Install Azure CLI on Windows
@@ -36,6 +37,8 @@ Download and install the current release of the Azure CLI.
 ### Azure CLI beta version
 
 The beta version of the Azure CLI supports all CLI commands that you will find in the current released version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview) is the new authentication method and is used by Azure CLI beta.  We recommend that you try the beta version in advance.  
+
+For more information about Azure CLI beta, please see [release notes](cli/azure/release-notes-azure-cli?tabs=azure-cli-beta).
 
 > [!IMPORTANT]
 >
