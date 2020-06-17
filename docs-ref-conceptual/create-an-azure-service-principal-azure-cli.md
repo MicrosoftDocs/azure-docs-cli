@@ -182,7 +182,7 @@ az role assignment list --assignee APP_ID
 
 ## Sign in using a service principal
 
-Test the new service principal's credentials and permissions by signing in. To sign in with a service prinicpal, you need the `appId`, `tenant`, and credentials.
+Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
 
 To sign in with a service principal using a password:
 
