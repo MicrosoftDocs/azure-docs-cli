@@ -4,10 +4,11 @@ description: How to install the Azure CLI on Windows
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/05/2020
+ms.prod: azure
+ms.date: 06/16/2020
 ms.topic: conceptual
-ms.service: azure-cli
 ms.devlang: azurecli
+ms.technology: azure-cli
 ---
 
 # Install Azure CLI on Windows

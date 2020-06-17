@@ -5581,7 +5581,7 @@ You can report issues with nightly preview builds in the following ways:
 
 The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
 
-## June 17th, 2020
+## June 16, 2020
 
 ### Things to know about the new Azure CLI beta release
 
