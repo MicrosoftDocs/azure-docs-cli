@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/13/2020
+ms.date: 06/17/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -51,6 +51,7 @@ az extension list-available --output table
 | [datashare](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension |  |
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.1.14 | Additional commands to simplify Azure Database workflows. | Yes |
 | [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 0.2.0 | Deploy to Azure using Github Actions. | Yes |
+| [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization) | 0.1.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension |  |
 | [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.5 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.11.0 | Support for new Database Migration Service scenarios. | Yes |
@@ -62,7 +63,7 @@ az extension list-available --output table
 | [hardware-security-modules](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension |  |
 | [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension |  |
 | [hpc-cache](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools StorageCache Extension | Yes |
-| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.4 | Support for copying managed vm images between regions |  |
+| [image-copy-extension](https://github.com/Azure/azure-cli-extensions) | 0.2.5 | Support for copying managed vm images between regions |  |
 | [import-export](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension |  |
 | [interactive](https://github.com/Azure/azure-cli) | 0.4.4 | Microsoft Azure Command-Line Interactive Shell | Yes |
 | [internet-analyzer](https://github.com/Azure/azure-cli-extensions) | 0.1.0rc5 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Yes |
@@ -85,7 +86,7 @@ az extension list-available --output table
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Commands to manage Private DNS Zones | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.1.0 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.6.3 | Additional commands for working with SAP HanaOnAzure instances. |  |
-| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.5 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
+| [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.2.6 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
 | [storage-or-preview](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
 | [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.10 | Provides a preview for upcoming storage features. | Yes |
 | [storagesync](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension |  |
