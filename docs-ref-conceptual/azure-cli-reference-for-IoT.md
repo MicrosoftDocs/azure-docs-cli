@@ -24,18 +24,28 @@ IoT functionality in Azure CLI **core** is focused on infrastructure management 
 
 The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
 
-### Links to core and extension commands
+### Links to core reference commands
 
-| Reference | Core | Extension | Description
-|-|-|-|-|
-| az iot | [core](/cli/azure/iot) | [extension](/cli/azure/ext/azure-iot/iot)  | All available Azure IoT commands.
-| az iot central | [core](/cli/azure/iot/central) | [extension](/cli/azure/ext/azure-iot/iot/central) | Manage IoT Central assets.
-| az iot device | | [extension only](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| az dt | | [extension only](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins solutions & infrastructure.
-| az iot dps | [core](/en-us/cli/azure/iot/dps) | [extension](/cli/azure/ext/azure-iot/iot/dps) | Manage Azure IoT Hub Device Provisioning Service.
-| az iot edge | | [extension only](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
-| az iot hub | [core](/cli/azure/iot/hub) | [extension](/cli/azure/ext/azure-iot/iot/hub) | Manage Azure IoT hubs.
-| az iot pnp | [core](/cli/azure/iot/pnp) | [extension](/cli/azure/ext/azure-iot/iot/pnp) | Manage IoT Plug and Play repositories and repository access keys.
+| Reference | Has extension | Description
+|-|-|-|
+| [az iot](/cli/azure/iot) | yes  | All available Azure CLI core commands for Azure IoT.
+| [az iot central](/cli/azure/iot/central) | yes | Manage IoT Central assets.
+| [az iot dps](/en-us/cli/azure/iot/dps) | yes | Manage Azure IoT Hub Device Provisioning Service.
+| [az iot hub](/cli/azure/iot/hub) | yes | Manage Azure IoT hubs.
+| [az iot pnp](/cli/azure/iot/pnp) | yes | Manage IoT Plug and Play repositories and repository access keys.
+
+### Links to extension reference commands
+
+| Reference | Description
+|-|-|
+| [az iot](/cli/azure/ext/azure-iot/iot)  | All available Azure CLI extension commands for Azure IoT.
+| [az iot central](/cli/azure/ext/azure-iot/iot/central) | Manage Azure Central (IoT Central) solutions & infrastructure.
+| [az iot device](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| [az dt](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins (ADT) solutions & infrastructure.
+| [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | Manage entities in an Azure IoT Hub Device Provisioning Service augmented with the IoT extension.
+| [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
+| [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | Manage entities in an Azure IoT Hub.
+| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | Manage entities of an IoT Plug and Play model repository.
 
 ## Popular IoT articles using the Azure CLI
 
