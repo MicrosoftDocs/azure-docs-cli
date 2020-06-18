@@ -36,16 +36,16 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 
 ### Links to extension reference commands
 
-| Reference | Description
-|-|-|
-| [az iot](/cli/azure/ext/azure-iot/iot)  | All available Azure CLI extension commands for Azure IoT.
-| [az iot central](/cli/azure/ext/azure-iot/iot/central) | Manage Azure Central (IoT Central) solutions & infrastructure.
-| [az iot device](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| [az dt](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins (ADT) solutions & infrastructure.
-| [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | Manage entities in an Azure IoT Hub Device Provisioning Service augmented with the IoT extension.
-| [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
-| [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | Manage entities in an Azure IoT Hub.
-| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | Manage entities of an IoT Plug and Play model repository.
+| Reference | Has core | Description
+|-|-|-|
+| [az iot](/cli/azure/ext/azure-iot/iot) | yes | All available Azure CLI extension commands for Azure IoT.
+| [az iot central](/cli/azure/ext/azure-iot/iot/central) | yes | Manage Azure Central (IoT Central) solutions & infrastructure.
+| [az iot device](/cli/azure/ext/azure-iot/iot/device) | | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| [az dt](/cli/azure/ext/azure-iot/dt) | | Manage Azure Digital Twins (ADT) solutions & infrastructure.
+| [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | yes | Manage entities in an Azure IoT Hub Device Provisioning Service augmented with the IoT extension.
+| [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
+| [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
+| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | yes | Manage entities of an IoT Plug and Play model repository.
 
 ## Popular IoT articles using the Azure CLI
 
