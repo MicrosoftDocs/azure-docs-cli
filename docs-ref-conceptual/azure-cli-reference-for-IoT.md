@@ -9,6 +9,7 @@ ms.date: 06/05/2020
 ms.author: dbradish
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.reviewer: paymaun.heidari
 ---
 
 # Azure CLI for Azure IoT
@@ -21,7 +22,7 @@ The Azure IoT CLI experience is composed of two parts: Azure CLI (commonly refer
 
 IoT functionality in Azure CLI **core** is focused on infrastructure management and configuration. IoT Hub CRUD operations, or configuring IoT Hub message routes are typical use cases for core commands.
 
-The IoT **extension** introduces rich features and functionality.  Extensions manage, manipulate and interact with the data, entities and objects on the infrastructure itself. Managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. Azure CLI extensions for IoT unlock the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
+The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
 
 ### Links to core and extension commands
 
@@ -30,7 +31,7 @@ The IoT **extension** introduces rich features and functionality.  Extensions ma
 | az iot | [core](/cli/azure/iot) | [extension](/cli/azure/ext/azure-iot/iot)  | All available Azure IoT commands.
 | az iot central | [core](/cli/azure/iot/central) | [extension](/cli/azure/ext/azure-iot/iot/central) | Manage IoT Central assets.
 | az iot device | | [extension only](/cli/azure/ext/azure-iot/iot/device) | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| az dt | | [extension only](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins (ADT) solutions & infrastructure.
+| az dt | | [extension only](/cli/azure/ext/azure-iot/dt) | Manage Azure Digital Twins solutions & infrastructure.
 | az iot dps | [core](/en-us/cli/azure/iot/dps) | [extension](/cli/azure/ext/azure-iot/iot/dps) | Manage Azure IoT Hub Device Provisioning Service.
 | az iot edge | | [extension only](/cli/azure/ext/azure-iot/iot/edge) | Manage IoT solutions on the Edge.
 | az iot hub | [core](/cli/azure/iot/hub) | [extension](/cli/azure/ext/azure-iot/iot/hub) | Manage Azure IoT hubs.
