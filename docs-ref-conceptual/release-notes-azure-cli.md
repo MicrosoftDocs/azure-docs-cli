@@ -12,6 +12,8 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+# [Current release notes](#tab/azure-cli)
+
 ## June 02, 2020
 
 Version 2.7.0
@@ -5574,3 +5576,21 @@ You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
+
+# [Beta release notes](#tab/azure-cli-beta)
+
+The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
+
+## June 16, 2020
+
+### Things to know about the new Azure CLI beta release
+
+-	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
+- The beta release only supports the Windows platform.
+-	The Azure Stack is not supported.
+-	`--use-cert-sn-issuer` parameter is not supported when using service principle key to authenticate.
+-	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
+
+If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
+
+---
