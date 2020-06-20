@@ -26,7 +26,16 @@ items:
       content: az codespace plan create -g my-rg -n my-plan -l westus2
   - summary: Create a plan with tags
     syntax:
-      content: az codespace plan create -g my-rg -n my-plan -l westus2 --tags tagname=tagvalue
+      content: az codespace plan create -g my-rg -n my-plan --tags tagname=tagvalue
+  - summary: Create a plan with a default instance type
+    syntax:
+      content: az codespace plan create -g my-rg -n my-plan --default-instance-type premiumLinux
+  - summary: Create a plan with a default suspend after
+    syntax:
+      content: az codespace plan create -g my-rg -n my-plan --default-suspend-after 120
+  - summary: Create a plan associated with a subnet
+    syntax:
+      content: az codespace plan create -g my-rg -n my-plan --subnet /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Network/virtualNetworks/my-vnet/subnets/default
   parameters:
   - isRequired: true
     name: --name -n
@@ -41,6 +50,16 @@ items:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --subnet
+    summary: Resource ID of an existing subnet. If specified, all Codespaces in this plan will be created in this subnet. The subnet must be in the same region as the plan.
+    description: ''
+  - name: --default-instance-type
+    summary: Default Instance Type for Codespaces in this plan.
+    description: ''
+  - name: --default-suspend-after
+    parameterValueGroup: 120, 30, 5
+    summary: Default minutes Codespaces in this plan should suspend after.
     description: ''
 - uid: ext_codespaces_az_codespace_plan_delete
   name: az codespace plan delete
@@ -60,6 +79,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_codespaces_az_codespace_plan_list
   name: az codespace plan list
