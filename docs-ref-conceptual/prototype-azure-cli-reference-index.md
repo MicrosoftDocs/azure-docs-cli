@@ -1,4 +1,4 @@
-# Azure CLI reference sets
+# Azure CLI references
 
 Intro paragraph here
 
