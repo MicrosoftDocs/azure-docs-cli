@@ -12,6 +12,8 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+# [Current release notes](#tab/azure-cli)
+
 ## June 23, 2020
 
 Version 2.8.0
@@ -153,8 +155,6 @@ Version 2.8.0
 * `az storage account create`: Add support for double encryption
 * [BREAKING CHANGE] `az storage blob/container/file/share/table/queue generate-sas`: make --expiry and --permissions required
 * `az storage blob set-tier`: Migrate to Track 2 to support setting rehydrate priority
-
-# [Current release notes](#tab/azure-cli)
 
 ## June 02, 2020
 
@@ -5723,12 +5723,13 @@ You can report issues with nightly preview builds in the following ways:
 
 The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
 
-## June 16, 2020
+## June 23, 2020
 
 ### Things to know about the new Azure CLI beta release
 
 -	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
-- The beta release only supports the Windows platform.
+-	Relogin is required after install the beta version.
+-	The beta release only supports the Windows platform.
 -	The Azure Stack is not supported.
 -	`--use-cert-sn-issuer` parameter is not supported when using service principle key to authenticate.
 -	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
