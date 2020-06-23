@@ -4,13 +4,155 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/02/2020
+ms.date: 06/23/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
 ---
 
 # Azure CLI release notes
+
+## June 23, 2020
+
+Version 2.8.0
+
+### ACR
+
+* Add support for region endpoint disable / routing disable
+* [BREAKING CHANGE] `az acr login --expose-token` does not accept username and password
+
+### ACS
+
+* Remove private cluster and 2019-10-27-preview API
+
+### AKS
+
+* Support --yes for az aks upgrade
+* Revert "change default vm sku to Standard_D2s_v3 (#13541)"
+* Add "az aks update --uptime-sla"
+* Fix typo in az aks update command
+* Change to support 0 node agent pool and block manual scale for CAS enabled pool
+* Fix typo on VirtualMachineScaleSets and update references to Kubernetes versions
+
+### AMS
+
+* CHANGE help text for "--expiry" parameter.
+
+### AppService
+
+* `az webapp log deployment show`: Show the latest deployment log, or the deployment logs of a specific deployment if deployment-id is specified
+* `az webapp log deployment list`: List of deployment logs available
+* Fix: Surface error when invalid webapp name provided
+* Fix #13261 az webapp list-runtimes use static list until new Available Stacks API is available
+* `az appservice ase create`: Fix create issue #13361
+* `az appservice ase list-addresses`: Fix change of SDK #13140.
+* Fix webapp/slot creation for Windows Containers
+* `az webapp auth update`: Add optional parameter to update runtime-version
+* Support list, delete, approve and reject private endpoint connection for webapp in CLI
+* Fix #13888 : Add support for Static WebApps: get, list, create commands
+* Improved error messages for SSH Tunnel Connection
+
+### ARM
+
+* `az tag`: Add examples for -h
+* `az deployment group/sub what-if`: Add --exclude-change-types/-x parameter.
+* `az deployment group/sub/mg/tenant create`: Add --what-if-exclude-change-types/-x parameter.
+* `az deployment group/sub/mg/tenant validate`: Show error messages in a better format.
+* `az group export`: Add new parameters `--skip-resource-name-params` and `--skip-all-params` to support skip parameterization
+* Add az feature unregister api
+
+### ARO
+
+* Add Public, Private to params for help with ingress/apiserver visibility
+
+### Batch
+
+* `az batch account create`: Add new parameter `--public-network-access`
+* `az batch account create`: Add new parameter `--identity-type`
+* `az batch account set`: Add new parameter `--identity-type`
+* [BREAKING CHANGE] az batch pool create: When creating a pool using a custom image, the --image property of can now only refer to a Shared Image Gallery image.
+* [BREAKING CHANGE] az batch pool create: When creating a pool with --json-file option and specifying a networkConfiguration, the publicIPs property has moved in to a new property publicIPAddressConfiguration. This new property also supports a new ipAddressProvisioningType property which specifies how the pool should allocate IP's and a publicIPs property which allows for configuration of a list of PublicIP resources to use in the case ipAddressProvisioningType is set to UserManaged
+* `az network private-link-resource`: Add support for the Microsoft.Batch batchAccount resource
+* `az network private-endpoint-connection`: Add support for the Microsoft.Batch batchAccount resource
+
+### CDN
+
+* `az cdn custom-domain enable-https`: Add BYOC support.
+* `az cdn custom-domain enable-https`: Fix enabling custom HTTPS with CDN managed certificates for Standard_Verizon and Standard_Microsoft SKUs.
+
+### Cognitive Services
+
+* [BREAKING CHANGE] `az cognitiveservices account` now have a unified structure for all commands.
+* `az cognitiveservices account identity`: Add identity management for Cognitive Services.
+
+### Compute
+
+* `az image builder`: Upgrade API version to 2020-02-14
+* `az image builder create`: Add `--identity` to support identity configuration
+* `az image builder customizer add`: Support Windows update customizer
+* New command `az image builder cancel`
+* Show a warning when a user deploys a VMSS pinned to a specific image version rather than latest
+
+### Cosmos DB
+
+* `az cosmosdb`: Add exists command to database and container groups
+* Allow creating fixed collections
+
+### EventHub
+
+* `az eventhubs namespace create` : Add managed identity parameters
+
+### Extension
+
+* Add --version to support to install from a specific version
+* Enable CLI extensions to include packages in the 'azure' namespace
+
+### Iot Hub
+
+* [BREAKING CHANGE] az iot hub job: Remove deprecated job commands
+
+### KeyVault
+
+* `az keyvault key import`: Supports importing from strings via two new parameters.
+* Support string/bytes encryption and decryption with stored keys
+
+### Monitor
+
+* Support no wait for cluster creation
+* `az monitor log-analytics workspace saved-search`: Support new commands for saved search
+
+### Network
+
+* `az network application-gateway address-pool update`: Refine help message and add examples.
+* `az network vnet create`: Support --nsg argument
+* `az network lb address-pool`: Support create lb backend pool with backend address.
+* `az network application-gateway address-pool`: Fix for --add argument
+
+### RBAC
+
+* `az ad sp create-for-rabc`: Support name with space, slash and back slash
+* `az ad sp create-for-rbac`: Refine error message when user specify an invalid scope
+
+### Security
+
+* Add security assessment commands
+
+### SQL
+
+* `az sql db ltr-policy/ltr-backup`: update/show long term retention policy, show/delete long term retention backups, restore long term retention backup
+
+### Storage
+
+* Fix authentication issue to support get token for --subscription
+* `az storage remove`: Fix issue #13459 to raise exception for operation failure
+* Fix issues #13012, #13632 and #13657 to remove unused arguments for generate-sas related commands
+* `az storage logging update`: Add check for logging version
+* `az storage blob show`: Add more properties for blob with track 2 SDK
+* Fix #13708: Refine warning message for credential
+* `az storage share-rm create/update`: Add NFS protocol and root squash support
+* `az storage account create`: Add support for double encryption
+* [BREAKING CHANGE] `az storage blob/container/file/share/table/queue generate-sas`: make --expiry and --permissions required
+* `az storage blob set-tier`: Migrate to Track 2 to support setting rehydrate priority
 
 # [Current release notes](#tab/azure-cli)
 

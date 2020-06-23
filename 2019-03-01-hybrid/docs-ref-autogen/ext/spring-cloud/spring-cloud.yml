@@ -22,6 +22,12 @@ items:
   - summary: Create a new Azure Spring Cloud in westus.
     syntax:
       content: az spring-cloud create -n MyService -g MyResourceGroup -l westus
+  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights by using the instrumentation key.
+    syntax:
+      content: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights-key MyInstrumentationKey
+  - summary: Create a new Azure Spring Cloud with distributed tracing disabled.
+    syntax:
+      content: az spring-cloud create -n MyService -g MyResourceGroup --disable-distributed-tracing
   parameters:
   - isRequired: true
     name: --name -n
@@ -31,6 +37,16 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --app-insights
+    summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
+    description: ''
+  - name: --app-insights-key
+    summary: Instrumentation key of the existing Application Insights to be added for the distributed tracing.
+    description: ''
+  - name: --disable-distributed-tracing
+    parameterValueGroup: false, true
+    summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
     description: ''
@@ -39,6 +55,9 @@ items:
     description: ''
   - name: --sku
     summary: Name of SKU, the value is "Basic" or "Standard".
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 - uid: ext_spring-cloud_az_spring_cloud_delete
   name: az spring-cloud delete
@@ -85,7 +104,7 @@ items:
     description: ''
 - uid: ext_spring-cloud_az_spring_cloud_update
   name: az spring-cloud update
-  summary: Update pricing tier of an Azure Spring Cloud.
+  summary: Update an Azure Spring Cloud.
   description: ''
   langs:
   - azurecli
@@ -93,6 +112,12 @@ items:
   - summary: Update pricing tier.
     syntax:
       content: az spring-cloud update -n MyService --sku Standard -g MyResourceGroup
+  - summary: Enable the distributed tracing of the existing Azure Spring Cloud.
+    syntax:
+      content: az spring-cloud update -n MyService -g MyResourceGroup --disable-distributed-tracing false
+  - summary: Update the tags of the existing Azure Spring Cloud.
+    syntax:
+      content: az spring-cloud update -n MyService -g MyResourceGroup --tags key1=value1 key2=value2
   parameters:
   - isRequired: true
     name: --name -n
@@ -102,11 +127,24 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+  - name: --app-insights
+    summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
+    description: ''
+  - name: --app-insights-key
+    summary: Instrumentation key of the existing Application Insights to be added for the distributed tracing.
+    description: ''
+  - name: --disable-distributed-tracing
+    parameterValueGroup: false, true
+    summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku
     summary: Name of SKU, the value is "Basic" or "Standard".
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
 - uid: ext_spring-cloud_az_spring_cloud_app
@@ -318,7 +356,7 @@ commands:
   summary: Regenerate a test-endpoint key for the Azure Spring Cloud.
 - uid: ext_spring-cloud_az_spring_cloud_update
   name: az spring-cloud update
-  summary: Update pricing tier of an Azure Spring Cloud.
+  summary: Update an Azure Spring Cloud.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

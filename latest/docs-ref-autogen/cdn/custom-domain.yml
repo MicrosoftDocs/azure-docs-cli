@@ -22,14 +22,10 @@ items:
   examples:
   - summary: Create a custom domain within an endpoint and profile.
     syntax:
-      content: >-
-        az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile \
-            -n domain-name --hostname www.example.com
+      content: az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile -n domain-name --hostname www.example.com
   - summary: Enable custom https with a minimum
     syntax:
-      content: >-
-        az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile \
-            -n domain-name --hostname www.example.com
+      content: az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile -n domain-name --hostname www.example.com
   parameters:
   - isRequired: true
     name: --endpoint-name
@@ -75,9 +71,7 @@ items:
   examples:
   - summary: Delete a custom domain.
     syntax:
-      content: >-
-        az cdn custom-domain delete -g group --endpoint-name endpoint --profile-name profile \
-            -n domain-name
+      content: az cdn custom-domain delete -g group --endpoint-name endpoint --profile-name profile -n domain-name
   parameters:
   - isRequired: true
     name: --endpoint-name
@@ -138,14 +132,21 @@ items:
       repo: https://github.com/Azure/azure-cli.git
 - uid: az_cdn_custom_domain_enable_https
   name: az cdn custom-domain enable-https
-  summary: Enable https delivery of the custom domain.
+  summary: Enable HTTPS delivery of the custom domain.
   description: ''
   langs:
   - azurecli
+  examples:
+  - summary: Enable HTTPS using a CDN-managed certificate
+    syntax:
+      content: az cdn custom-domain enable-https -g group --profile-name profile --endpoint-name endpoint -n domain-name
+  - summary: Enable HTTPS using a CDN-managed certificate and a minimum TLS version of 1.2
+    syntax:
+      content: az cdn custom-domain enable-https -g group --profile-name profile --endpoint-name endpoint -n domain-name --min-tls-version 1.2
   parameters:
   - isRequired: true
     name: --endpoint-name
-    summary: Name of the endpoint under the profile which is unique globally.
+    summary: Name of the parent endpoint.
     description: ''
   - isRequired: true
     name: --name -n
@@ -153,14 +154,34 @@ items:
     description: ''
   - isRequired: true
     name: --profile-name
-    summary: Name of the CDN profile which is unique within the resource group.
+    summary: Name of the parent profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - name: --custom-domain-https-parameters
-    summary: The configuration specifying how to enable HTTPS for the custom domain - using CDN managed certificate or user's own certificate. If not specified, enabling ssl uses CDN managed certificate by default.
+  - name: --min-tls-version
+    parameterValueGroup: 1.0, 1.2, none
+    summary: The minimum TLS version required for the custom domain.
+    description: ''
+  - name: --user-cert-group-name
+    summary: The resource group of the KeyVault certificate.
+    description: ''
+  - name: --user-cert-protocol-type
+    parameterValueGroup: ip, sni
+    summary: The protocol type of the certificate.
+    description: ''
+  - name: --user-cert-secret-name
+    summary: The secret name of the KeyVault certificate.
+    description: ''
+  - name: --user-cert-secret-version
+    summary: The secret version of the KeyVault certificate.
+    description: ''
+  - name: --user-cert-subscription-id
+    summary: The subscription id of the KeyVault certificate.
+    description: ''
+  - name: --user-cert-vault-name
+    summary: The vault name of the KeyVault certificate.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -208,9 +229,7 @@ items:
   examples:
   - summary: Get the details of a custom domain.
     syntax:
-      content: >-
-        az cdn custom-domain show -g group --endpoint-name endpoint --profile-name profile \
-            -n domain-name
+      content: az cdn custom-domain show -g group --endpoint-name endpoint --profile-name profile -n domain-name
   parameters:
   - isRequired: true
     name: --endpoint-name
@@ -249,7 +268,7 @@ commands:
   summary: Disable https delivery of the custom domain.
 - uid: az_cdn_custom_domain_enable_https
   name: az cdn custom-domain enable-https
-  summary: Enable https delivery of the custom domain.
+  summary: Enable HTTPS delivery of the custom domain.
 - uid: az_cdn_custom_domain_list
   name: az cdn custom-domain list
   summary: Lists all of the existing custom domains within an endpoint.
@@ -274,7 +293,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/836da4965ce6db2ffcf37f4d3790d61709267654/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-updated_at: 3/5/2020 9:54:39 AM
-ms.date: 03/05/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/0bb45ecd541c1a6109ad67be4f45afe3ce47f2b5/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+updated_at: 6/3/2020 1:56:07 AM
+ms.date: 06/03/2020
 description: Manage Azure CDN Custom Domains to provide custom host names for endpoints.

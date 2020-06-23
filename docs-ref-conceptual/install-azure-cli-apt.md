@@ -60,7 +60,7 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
     ```bash
     curl -sL https://packages.microsoft.com/keys/microsoft.asc |
         gpg --dearmor |
-        sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+        sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
 
 3. <div id="set-release"/>Add the Azure CLI software repository:
@@ -181,7 +181,7 @@ Use `apt-get upgrade` to update the CLI package.
 3. If you use no other packages from Microsoft, remove the signing key:
 
     ```bash
-    sudo rm /etc/apt/trusted.gpg.d/microsoft.asc.gpg
+    sudo rm /etc/apt/trusted.gpg.d/microsoft.gpg
     ```
 
 4. Remove any unneeded packages:

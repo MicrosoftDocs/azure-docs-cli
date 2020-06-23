@@ -12,8 +12,11 @@ items:
   - ext_codespaces_az_codespace_list
   - ext_codespaces_az_codespace_open
   - ext_codespaces_az_codespace_resume
+  - ext_codespaces_az_codespace_set_config
   - ext_codespaces_az_codespace_show
+  - ext_codespaces_az_codespace_show_config
   - ext_codespaces_az_codespace_suspend
+  - ext_codespaces_az_codespace_update
 - uid: ext_codespaces_az_codespace_create
   name: az codespace create
   summary: Create a Codespace.
@@ -21,7 +24,7 @@ items:
   langs:
   - azurecli
   examples:
-  - summary: Create a Codespace with default settings
+  - summary: Create a Codespace with default plan settings
     syntax:
       content: az codespace create -g my-rg --plan my-plan --name my-codespace
   - summary: Create a Codespace with a different instance type with custom suspend time
@@ -43,7 +46,6 @@ items:
     summary: Name or ID of the Codespace plan.
     description: ''
   - name: --instance-type
-    defaultValue: standardLinux
     summary: Instance Type.
     description: ''
     valueFrom: az codespace location show
@@ -51,7 +53,6 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --suspend-after
-    defaultValue: "30"
     parameterValueGroup: 120, 30, 5
     summary: Automatically suspend the inactive Codespace after this many minutes.
     description: ''
@@ -116,13 +117,16 @@ items:
   - summary: List Codespaces
     syntax:
       content: az codespace list -g my-rg --plan my-plan
-  - summary: List Codespaces given plan id and Codespace name
+  - summary: List Codespaces given plan id
     syntax:
       content: az codespace list --plan /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.VSOnline/plans/my-plan
   parameters:
   - isRequired: true
     name: --plan -p
     summary: Name or ID of the Codespace plan.
+    description: ''
+  - name: --all
+    summary: Include the Codespaces of other users. You may not have access to connect or modify these other Codespaces.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
@@ -190,6 +194,22 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+- uid: ext_codespaces_az_codespace_set_config
+  name: az codespace set-config
+  summary: Set configuration for codespace commands.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - name: --clear
+    summary: Clear current configuration to return to defaults.
+    description: ''
+  - name: --domain
+    summary: Service domain to use.
+    description: ''
+  - name: --rp
+    summary: Resource Provider API version to use.
+    description: ''
 - uid: ext_codespaces_az_codespace_show
   name: az codespace show
   summary: Show details of a Codespace.
@@ -220,6 +240,13 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+- uid: ext_codespaces_az_codespace_show_config
+  name: az codespace show-config
+  summary: Show current configuration for codespace commands.
+  description: ''
+  langs:
+  - azurecli
+  parameters: []
 - uid: ext_codespaces_az_codespace_suspend
   name: az codespace suspend
   summary: Suspend a Codespace.
@@ -250,6 +277,40 @@ items:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
+- uid: ext_codespaces_az_codespace_update
+  name: az codespace update
+  summary: Update a Codespace.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Update a Codespace with a different instance type
+    syntax:
+      content: az codespace update -g my-rg --plan my-plan --name my-codespace --instance-type premiumLinux
+  - summary: Update a Codespace with a different suspend after
+    syntax:
+      content: az codespace update -g my-rg --plan my-plan --name my-codespace --suspend-after 30
+  parameters:
+  - isRequired: true
+    name: --plan -p
+    summary: Name or ID of the Codespace plan.
+    description: ''
+  - name: --id
+    summary: Id of the Codespace.
+    description: ''
+  - name: --instance-type
+    summary: Instance Type.
+    description: ''
+  - name: --name -n
+    summary: Name of the Codespace.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --suspend-after
+    parameterValueGroup: 120, 30, 5
+    summary: Automatically suspend the inactive Codespace after this many minutes.
+    description: ''
 commands:
 - uid: ext_codespaces_az_codespace_create
   name: az codespace create
@@ -268,7 +329,7 @@ commands:
   summary: List available regions.
 - uid: ext_codespaces_az_codespace_location_show
   name: az codespace location show
-  summary: Show details on a region.
+  summary: Show details of a region.
 - uid: ext_codespaces_az_codespace_open
   name: az codespace open
   summary: Open a Codespace in the web browser.
@@ -290,12 +351,36 @@ commands:
 - uid: ext_codespaces_az_codespace_resume
   name: az codespace resume
   summary: Resume a Codespace.
+- uid: ext_codespaces_az_codespace_secret
+  name: az codespace secret
+  summary: Manage plan secrets.
+- uid: ext_codespaces_az_codespace_secret_create
+  name: az codespace secret create
+  summary: Create a plan secret.
+- uid: ext_codespaces_az_codespace_secret_delete
+  name: az codespace secret delete
+  summary: Delete a plan secret.
+- uid: ext_codespaces_az_codespace_secret_list
+  name: az codespace secret list
+  summary: List plan secrets.
+- uid: ext_codespaces_az_codespace_secret_update
+  name: az codespace secret update
+  summary: Update a plan secret.
+- uid: ext_codespaces_az_codespace_set_config
+  name: az codespace set-config
+  summary: Set configuration for codespace commands.
 - uid: ext_codespaces_az_codespace_show
   name: az codespace show
   summary: Show details of a Codespace.
+- uid: ext_codespaces_az_codespace_show_config
+  name: az codespace show-config
+  summary: Show current configuration for codespace commands.
 - uid: ext_codespaces_az_codespace_suspend
   name: az codespace suspend
   summary: Suspend a Codespace.
+- uid: ext_codespaces_az_codespace_update
+  name: az codespace update
+  summary: Update a Codespace.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
