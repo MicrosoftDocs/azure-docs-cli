@@ -5728,7 +5728,7 @@ The Azure CLI beta release is a migration from the authentican method of AAD pla
 ### Things to know about the new Azure CLI beta release
 
 -	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
--	Relogin is needed after install beta version.
+-	Relogin is needed after install the beta version.
 -	The beta release only supports the Windows platform.
 -	The Azure Stack is not supported.
 -	`--use-cert-sn-issuer` parameter is not supported when using service principle key to authenticate.
