@@ -9,6 +9,7 @@ items:
   children:
   - az_cosmosdb_cassandra_table_create
   - az_cosmosdb_cassandra_table_delete
+  - az_cosmosdb_cassandra_table_exists
   - az_cosmosdb_cassandra_table_list
   - az_cosmosdb_cassandra_table_show
   - az_cosmosdb_cassandra_table_update
@@ -44,7 +45,7 @@ items:
     summary: 'Schema, you can enter it as a string or as a file, e.g., --schema @schema-file.json or --schema "{"columns": [{"name": "columnA","type": "uuid"}, {"name": "columnB","type": "Ascii"}],"partitionKeys": [{"name": "columnA"}]}".'
     description: ''
   - name: --throughput
-    summary: The throughput of Cassandra table (RU/s). Default value is 400.
+    summary: The throughput of Cassandra table (RU/s). Default value is 400. Omit this parameter if the keyspace has shared throughput unless the table should have dedicated throughput.
     description: ''
   - name: --ttl
     summary: Default TTL. If the value is missing or set to "-1", items don’t expire. If the value is set to "n", items will expire "n" seconds after last modified time.
@@ -83,6 +84,38 @@ items:
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_cosmosdb_cassandra_table_exists
+  name: az cosmosdb cassandra table exists
+  summary: Checks if an Azure Cosmos DB Cassandra table exists.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --keyspace-name -k
+    summary: Keyspace name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Table name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -206,6 +239,9 @@ commands:
 - uid: az_cosmosdb_cassandra_table_delete
   name: az cosmosdb cassandra table delete
   summary: Delete the Cassandra table under an Azure Cosmos DB Cassandra keyspace.
+- uid: az_cosmosdb_cassandra_table_exists
+  name: az cosmosdb cassandra table exists
+  summary: Checks if an Azure Cosmos DB Cassandra table exists.
 - uid: az_cosmosdb_cassandra_table_list
   name: az cosmosdb cassandra table list
   summary: List the Cassandra tables under an Azure Cosmos DB Cassandra keyspace.

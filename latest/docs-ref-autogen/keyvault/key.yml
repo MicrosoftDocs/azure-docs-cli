@@ -9,8 +9,10 @@ items:
   children:
   - az_keyvault_key_backup
   - az_keyvault_key_create
+  - az_keyvault_key_decrypt
   - az_keyvault_key_delete
   - az_keyvault_key_download
+  - az_keyvault_key_encrypt
   - az_keyvault_key_import
   - az_keyvault_key_list
   - az_keyvault_key_list_deleted
@@ -33,7 +35,7 @@ items:
     summary: Local file path in which to store key backup.
     description: ''
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -106,6 +108,43 @@ items:
       branch: dev
       path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
       repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_key_decrypt
+  name: az keyvault key decrypt
+  summary: Decrypts a single block of encrypted data.
+  description: The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT operation applies to asymmetric and symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/decrypt permission.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --algorithm -a
+    parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
+    summary: Algorithm identifier.
+    description: ''
+  - isRequired: true
+    name: --value
+    summary: The value to be decrypted.
+    description: ''
+  - name: --id
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The key version. If omitted, uses the latest version.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
 - uid: az_keyvault_key_delete
   name: az keyvault key delete
   summary: Deletes a key of any type from storage in Azure Key Vault.
@@ -114,7 +153,7 @@ items:
   - azurecli
   parameters:
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -155,7 +194,44 @@ items:
     summary: 'Encoding of the key, default: PEM.'
     description: ''
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The key version. If omitted, uses the latest version.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_keyvault_key_encrypt
+  name: az keyvault key encrypt
+  summary: Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.
+  description: The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure Key Vault. Note that the ENCRYPT operation only supports a single block of data, the size of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly necessary for symmetric keys stored in Azure Key Vault since protection with an asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/encypt permission.
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --algorithm -a
+    parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
+    summary: Algorithm identifier.
+    description: ''
+  - isRequired: true
+    name: --value
+    summary: The value to be encrypted.
+    description: ''
+  - name: --id
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -178,7 +254,7 @@ items:
 - uid: az_keyvault_key_import
   name: az keyvault key import
   summary: Import a private key.
-  description: Supports importing base64 encoded private keys from PEM files. Supports importing BYOK keys into HSM for premium key vaults.
+  description: Supports importing base64 encoded private keys from PEM files or strings. Supports importing BYOK keys into HSM for premium key vaults.
   langs:
   - azurecli
   parameters:
@@ -214,11 +290,17 @@ items:
   - name: --byok-file
     summary: BYOK file containing the key to be imported. Must not be password protected.
     description: ''
+  - name: --byok-string
+    summary: BYOK string containing the key to be imported. Must not be password protected.
+    description: ''
   - name: --pem-file
     summary: PEM file containing the key to be imported.
     description: ''
   - name: --pem-password
     summary: Password of PEM file.
+    description: ''
+  - name: --pem-string
+    summary: PEM string containing the key to be imported.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -286,7 +368,7 @@ items:
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
     description: ''
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -402,7 +484,7 @@ items:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -430,7 +512,7 @@ items:
   - azurecli
   parameters:
   - name: --id
-    summary: Id of the key.  If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -482,12 +564,18 @@ commands:
 - uid: az_keyvault_key_create
   name: az keyvault key create
   summary: Creates a new key, stores it, then returns key parameters and attributes to the client.
+- uid: az_keyvault_key_decrypt
+  name: az keyvault key decrypt
+  summary: Decrypts a single block of encrypted data.
 - uid: az_keyvault_key_delete
   name: az keyvault key delete
   summary: Deletes a key of any type from storage in Azure Key Vault.
 - uid: az_keyvault_key_download
   name: az keyvault key download
   summary: Downloads the public part of a stored key.
+- uid: az_keyvault_key_encrypt
+  name: az keyvault key encrypt
+  summary: Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.
 - uid: az_keyvault_key_import
   name: az keyvault key import
   summary: Import a private key.
@@ -536,7 +624,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/1823d460a40a82c01883f137f8736c431b9cc554/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-updated_at: 5/28/2020 9:30:48 AM
-ms.date: 05/28/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/e3dc0e12dbb72be6ccc77d4d94e3a102ebed7c3c/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+updated_at: 6/4/2020 1:53:34 PM
+ms.date: 06/04/2020
 description: Manage keys.

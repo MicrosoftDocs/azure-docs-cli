@@ -9,6 +9,7 @@ items:
   children:
   - az_cosmosdb_mongodb_collection_create
   - az_cosmosdb_mongodb_collection_delete
+  - az_cosmosdb_mongodb_collection_exists
   - az_cosmosdb_mongodb_collection_list
   - az_cosmosdb_mongodb_collection_show
   - az_cosmosdb_mongodb_collection_update
@@ -39,15 +40,14 @@ items:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
-  - isRequired: true
-    name: --shard
-    summary: Sharding key path.
-    description: ''
   - name: --idx
     summary: 'Indexes, you can enter it as a string or as a file, e.g., --idx @indexes-file.json or --idx "[{"key": {"keys": ["_ts"]},"options": {"expireAfterSeconds": 1000}}, {"key": {"keys": ["user_id", "user_address"]}, "options": {"unique": "true"}}]".'
     description: ''
+  - name: --shard
+    summary: Sharding key path.
+    description: ''
   - name: --throughput
-    summary: The throughput of MongoDB collection (RU/s). Default value is 400.
+    summary: The throughput of MongoDB collection (RU/s). Default value is 400. Omit this parameter if the database has shared throughput unless the collection should have dedicated throughput.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -83,6 +83,38 @@ items:
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  source:
+    path: src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+    remote:
+      branch: dev
+      path: src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+      repo: https://github.com/Azure/azure-cli.git
+- uid: az_cosmosdb_mongodb_collection_exists
+  name: az cosmosdb mongodb collection exists
+  summary: Checks if an Azure Cosmos DB MongoDB collection exists.
+  description: ''
+  langs:
+  - azurecli
+  parameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --database-name -d
+    summary: Database name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Collection name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -195,6 +227,9 @@ commands:
 - uid: az_cosmosdb_mongodb_collection_delete
   name: az cosmosdb mongodb collection delete
   summary: Delete the MongoDB collection under an Azure Cosmos DB MongoDB database.
+- uid: az_cosmosdb_mongodb_collection_exists
+  name: az cosmosdb mongodb collection exists
+  summary: Checks if an Azure Cosmos DB MongoDB collection exists.
 - uid: az_cosmosdb_mongodb_collection_list
   name: az cosmosdb mongodb collection list
   summary: List the MongoDB collections under an Azure Cosmos DB MongoDB database.
