@@ -17,7 +17,7 @@
 
 # Azure CLI for Azure Networking
 
-Use Azure CLI to manage Azure networks with the `network` command group.
+Use Azure CLI to manage Azure Networks from a command line.
 
 ## az network reference set
 
