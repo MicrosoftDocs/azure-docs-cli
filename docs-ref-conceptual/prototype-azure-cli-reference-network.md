@@ -1,6 +1,10 @@
 > [!NOTE]
 > >
-> This prototype for `az network` is a service reference landing page that replaces the following group / summary reference pages: 
+> This prototype for `az network` is a **service reference landing page** that will be the URL in any `Azure Network\Subservice\Reference\Azure CLI` TOC
+>
+> This single page combines all references for `az network` providing a single view to answer the question **What Azure CLI options do I have for Azure Networking?**
+>
+> az network is currently spread across multiple summary pages, such as these: 
 >
 > 1. [Core reference list](/cli/azure/network?view=azure-cli-latest) for Azure Networks
 > 1. Separate [Extension firewall](/cli/azure/ext/azure-firewall/?view=azure-cli-latest)
@@ -13,56 +17,52 @@
 
 # Azure CLI for Azure Networking
 
-Use Azure CLI to manage Azure networks with the `network` reference set.
+Use Azure CLI to manage Azure networks with the `network` command group.
 
-## Reference set
+## az network reference set
 
-| Reference | Use |
-|-|-|
-| [az network application-gateway](#az-network-application-gateway) | Manage application-level routing and load balancing services..
-| [az network asg](#az-network-asg) | Manage application security groups (ASGs).
-| [az network bastion](#az-network-bastion) | Manage Azure bastion host.
-| [az network cross-connection](#az-network-cross-connection) | Manage Azure Network resources.
-| [az network dns](#az-network-dns) | Manage DNS domains in Azure.
-| [az network express-route](#az-network-express-route) | Manage Azure IoT hubs.
-| [az network firewall](#az-network-firewall) | Manage and configure Azure Firewalls.
-| [az network front-door](#az-network-front-door) | Manage networking Front Door resources
-| [az network ib](reference-network-ib) | Manage and configure load balancers.
-| [az network list-service-aliases]() |List available service aliases in the region which can be used for Service Endpoint Policies..
-| [az network list-service-tags]() | List all service tags which are below to different resources.
-| [az network list-usages]() | List the number of network resources in a region that are used against a subscription quota.
-| [az network local-gateway]() | Manage local gateways..
-| [az network nat]() | Manage NAT resources.
-| [az network nic]() | Manage network interfaces.
-| [az network nsg]() | Manage Azure Network Security Groups (NSGs)..
-| [az network private-dns]() | Manage Private DNS links.
-| [az network private-endpoint]() | Manage private endpoints.
-| [az network private-link-resource]() | Manage private link resources.
-| [az network private-link-service]() | Manage private link services.
-| [az network profile]() | Manage network profiles.
-| [az network public-ip]() | Manage public IP addresses.
-| [az network route-filter]() | Manage route filters.
-| [az network security-partner-provider]() | Manage Azure security partner provider.
-| [az network route-table]() | Manage route tables.
-| [az network service-endpoint]() | Manage policies related to service endpoints.
-| [az network traffic-manager]() | Manage the routing of incoming traffic.
-| [az network vnet]() | Manage Azure Virtual Networks.
-| [az network vnet-gateway]() | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity..
-| [az network vpn-connection]() | Manage VPN connections.
-| [az network vrouter]() | Manage the virtual router.
-| [az network watcher]() | Manage the Azure Network Watcher.
+| Reference | Use | Command group | Has core reference | Has extension reference | Has extension preview reference
+|-|-|-|-|-|-|
+| [az network application-gateway](#az-network-application-gateway) | Manage application-level routing and load balancing services. | application-gateway | yes | | |
+| [az network asg](#az-network-asg) | Manage application security groups (ASGs). | asg | yes | | yes |
+| [az network bastion](#az-network-bastion) | Manage Azure bastion host. | bastion | yes | yes | |
+| [az network cross-connection](#az-network-cross-connection) | Manage Azure Network resources. | network | yes |  | |
+| [az network dns](#az-network-dns) | Manage DNS domains in Azure. | network | yes | | |
+| [az network express-route](#az-network-express-route) | Manage Azure IoT hubs. | express-route | yes | yes | |
+| [az network firewall](#az-network-firewall) | Manage and configure Azure Firewalls. | azure-firewall | yes | yes | yes |
+| [az network front-door](#az-network-front-door) | Manage networking Front Door resources. | front-door | | yes | |
+| [az network ib](reference-network-ib) | Manage and configure load balancers. | ib | yes | yes | |
+| [az network list-service-aliases]() | List available service aliases in the region which can be used for Service Endpoint Policies. | network | yes | yes | |
+| [az network list-service-tags]() | List all service tags which are below to different resources. | network | yes | yes | |
+| [az network list-usages]() | List the number of network resources in a region that are used against a subscription quota. | network | yes |  | |
+| [az network local-gateway]() | Manage local gateways. | network | yes | yes | |
+| [az network nat]() | Manage NAT resources. | nat | yes | yes | |
+| [az network nic]() | Manage network interfaces. | nic | yes |  | |
+| [az network nsg]()| Manage Azure Network Security Groups (NSGs). | nsg  | | yes | |
+| [az network private-dns]() | Manage Private DNS links. | network | yes | yes | |
+| [az network private-endpoint]() | Manage private endpoints. | network | yes | | |
+| [az network private-link-resource]() | Manage private link resources. | network | yes | yes | |
+| [az network private-link-service]() | Manage private link services. | network | yes | yes | |
+| [az network profile]() | Manage network profiles. | network | yes | | |
+| [az network public-ip]() | Manage public IP addresses. | network | yes | | |
+| [az network route-filter]() | Manage route filters. | route-filter | yes | | |
+| [az network security-partner-provider]() | Manage Azure security partner provider. | network | yes | | |
+| [az network route-table]() | Manage route tables. | route-table | yes | | |
+| [az network service-endpoint]() | Manage policies related to service endpoints. | network | yes | | |
+| [az network traffic-manager]() | Manage the routing of incoming traffic. | network | yes | yes | |
+| [az network vnet]() | Manage Azure Virtual Networks. | network | yes | yes | |
+| [az network vnet-gateway]() | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. | network | yes | yes | |
+| [az network vpn-connection]() | Manage VPN connections. | network | | yes | |
+| [az network vrouter]() | Manage the virtual router. | network | | yes | |
+| [az network watcher]() | Manage the Azure Network Watcher. | network | yes | yes | |
 
 ***more az network root commands will be listed in alphabetical order above***
 
+See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
+
 ## Full reference list
 
-There are three types of Azure CLI references:
-
-1. Core references have been published as a permanent part of the Azure CLI.  
-2. Extension references haven't shipped as part of the CLI but run as CLI commands. With extensions, you gain access to experimental and pre-release commands.
-3. Extension preview references ... `need more information here`
-
-Prerequisites for extension and extension preview commands are provided on each code sample page.  
+Prerequisites for extension and extension preview references are provided on each code sample page.  
 
 ## az network application-gateway
 
@@ -196,12 +196,20 @@ Prerequisites for extension and extension preview commands are provided on each 
 
 ## Install the extension reference
 
-For extension references, you need to install the extension before running the command. Use the name of the reference set in your `--name` parameter.  
+For extension references, you need to install the extension before running the command. Use the name of the **command group** in your `--name` parameter.  
 
 ```azurecli
 az extension add --name network
 ```
 
-To learn more about extensions, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+```azurecli
+az extension add --name express-route
+```
 
-Review the extension [wiki tips](https://github.com/Azure/azure-network-cli-extension/wiki/Tips) to maximize usage.
+### need a list header here
+
+- To learn more about extensions, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+
+- See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
+
+- Review the extension [wiki tips](https://github.com/Azure/azure-network-cli-extension/wiki/Tips) to maximize usage.

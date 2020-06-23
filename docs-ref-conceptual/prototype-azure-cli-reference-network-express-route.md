@@ -6,22 +6,24 @@ To learn more about ExpressRoute circuits see [Create and modify an ExpressRoute
 
 # Commands
 
-| Core Command | Extension | Use |
-|-|-|-|
-| [az network express-route auth]() | | Manage authentication of an ExpressRoute circuit.
-| [az network express-route auth create]() | | Create a new link authorization for an ExpressRoute circuit.
-| [az network express-route auth delete]() | | Delete a link authorization of an ExpressRoute circuit.
-| [az network express-route auth list]() | | List link authorizations of an ExpressRoute circuit.
-| [az network express-route auth show]() | | Get the details of a link authorization of an ExpressRoute circuit.
-| [az network express-route create](#az-network-express-route-create) | [Extension](#az-network-express-route-create-(extension)) | Create an ExpressRoute circuit.
-| [az network express-route delete]() | | Delete an ExpressRoute circuit.
-| [az network express-route gateway]() | [Extension]() | Manage ExpressRoute gateways with new extension commands.
-| [az network express-route gateway connection]() | [Extension]()| Manage ExpressRoute gateway connections.
-| [az network express-route gateway connection create]() | [Extension]() | Create an ExpressRoute gateway connection.
-| [az network express-route gateway connection delete]() | [Extension]() | Delete an ExpressRoute gateway connection.
-| [az network express-route gateway connection list]() | [Extension]() | List ExpressRoute gateway connections.
+| Service | Core | Extension | Preview | Use |
+|-|-|-|-|-|
+| az network express-route auth | [core]() | | | Manage authentication of an ExpressRoute circuit.
+| az network express-route auth create | [core]() | [extension]() | | Create a new link authorization for an ExpressRoute circuit.
+| az network express-route auth delete | [core]() | | | Delete a link authorization of an ExpressRoute circuit.
+| az network express-route auth list | [core]() | | | List link authorizations of an ExpressRoute circuit.
+| az network express-route auth show | [core]() | | | Get the details of a link authorization of an ExpressRoute circuit.
+| az network express-route create | [core](#az-network-express-route-create) | [extension](#az-network-express-route-create-(extension)) | | Create an ExpressRoute circuit.
+| az network express-route delete | [core]() | | | Delete an ExpressRoute circuit.
+| az network express-route gateway | [core]() | [extension]() | | Manage ExpressRoute gateways with new extension commands.
+| az network express-route gateway connection | [core]() | [extension]()| | Manage ExpressRoute gateway connections.
+| az network express-route gateway connection create | [core]() | [extension]() | [preview]() | Create an ExpressRoute gateway connection.
+| az network express-route gateway connection delete | [core]() | [extension]() | [preview]() | Delete an ExpressRoute gateway connection.
+| az network express-route gateway connection list | [core]() | [extension]() | [preview]() | List ExpressRoute gateway connections.
 
 **The rest of the `az network express-route` commands would be listed here**
+
+See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
 
 ## az network express-route create
 
@@ -75,7 +77,7 @@ az network express-route create --bandwidth 200 -n MyCircuit --peering-location 
 
 ## az network express-route create (extension)
 
-The use of `az network express-route` extension commands requires Azure CLI version x.x.x or higher.  The [reference extension](prototype-azure-cli-reference-network#install-the-extension-reference) must also be installed prior to running extension commands.
+The use of `az network express-route` extension commands require Azure CLI version x.x.x or higher.  The [reference extension](prototype-azure-cli-reference-network#install-the-extension-reference) must also be installed prior to running the command.
 
 Create an ExpressRoute circuit using extension references.
 
@@ -133,3 +135,13 @@ az network express-route create --bandwidth 200 -n MyCircuit --peering-location 
 
 
 ***the rest of the Extension `az network express-route create' parameters here***
+
+# Alternative table layout
+
+| Core Command | Extension | Use |
+|-|-|-|
+| [az network express-route auth]() | | Manage authentication of an ExpressRoute circuit.
+| [az network express-route auth create]() | | Create a new link authorization for an ExpressRoute circuit.
+| [az network express-route auth delete]() | | Delete a link authorization of an ExpressRoute circuit.
+| [az network express-route auth list]() | | List link authorizations of an ExpressRoute circuit.
+| [az network express-route auth show]() | | Get the details of a link authorization of an ExpressRoute circuit.
