@@ -24,7 +24,7 @@ IoT functionality in Azure CLI **core** is focused on infrastructure management 
 
 The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
 
-### Links to core reference commands
+### Core reference commands
 
 | Reference | Has extension | Description
 |-|-|-|
@@ -34,7 +34,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot hub](/cli/azure/iot/hub) | yes | Manage Azure IoT Hub infrastructure.
 | [az iot pnp](/cli/azure/iot/pnp) | yes | Manage IoT Plug and Play repositories and repository access keys.
 
-### Links to extension reference commands
+### Extension reference commands
 
 | Reference | Has core | Description
 |-|-|-|
@@ -46,6 +46,13 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
 | [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
 | [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | yes | Manage entities of an IoT Plug and Play model repository.
+
+### Additional CLI commands for Azure services used by IoT
+
+| Reference | Type | Description
+|-|-|-|
+| [az maps](/cli/azure/maps) | core | Manage Azure Maps.
+| [az timeseriesinsights](/cli/azure/ext/timeseriesinsights/timeseriesinsights) | extension | Manage Azure Time Series Insights.
 
 ## Popular IoT articles using the Azure CLI
 
