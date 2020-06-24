@@ -8,22 +8,22 @@ To learn more about ExpressRoute circuits see [Create and modify an ExpressRoute
 
 | Service | Core | Extension | Experimental | Use | Minimum CL version
 |-|-|-|-|-|-|
-| az network express-route auth | [core]() | | | Manage authentication of an ExpressRoute circuit. | 2.3.1
+| az network express-route auth | [core](/cli/azure/network/express-route/auth) | | | Manage authentication of an ExpressRoute circuit. | 2.3.1
 | az network express-route auth create | [core]() | [extension]() | | Create a new link authorization for an ExpressRoute circuit. | 2.8.0
 | az network express-route auth delete | [core]() | | | Delete a link authorization of an ExpressRoute circuit. | 2.3.1
 | az network express-route auth list | [core]() | | | List link authorizations of an ExpressRoute circuit. | 2.3.1
 | az network express-route auth show | [core]() | | | Get the details of a link authorization of an ExpressRoute circuit. | 2.3.1
 | az network express-route create | [core](#az-network-express-route-create) | [extension](#az-network-express-route-create-(extension)) | | Create an ExpressRoute circuit. | 2.8.0
 | az network express-route delete | [core]() | | | Delete an ExpressRoute circuit. | 2.3.1
-| az network express-route gateway | [core]() | [extension]() | | Manage ExpressRoute gateways with new extension commands. | 2.7.2
+| az network express-route gateway | [core](/cli/azure/network/express-route/gateway) | [extension]() | | Manage ExpressRoute gateways with new extension commands. | 2.7.2
 | az network express-route gateway connection | [core]() | [extension]()| [experimental]() | Manage ExpressRoute gateway connections. | 2.8.0
 | az network express-route gateway connection create | [core]() | [extension]() | [experimental]() | Create an ExpressRoute gateway connection. | 2.8.0
 | az network express-route gateway connection delete | [core]() | [extension]() | [experimental]() | Delete an ExpressRoute gateway connection. | 2.8.0
 | az network express-route gateway connection list | [core]() | [extension]() | [experimental]() | List ExpressRoute gateway connections. | 2.8.0
 
-**The rest of the `az network express-route` commands would be listed here**
+**All `az network express-route` commands will be listed above**
 
-See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and experimental references.
+See [Overview: Azure CLI references](prototype-azure-cli-reference-types) for information on working with extension and experimental references.
 
 ## az network express-route create
 

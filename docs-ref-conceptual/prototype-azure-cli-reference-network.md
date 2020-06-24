@@ -26,7 +26,7 @@ Use Azure CLI to manage Azure Networks from a command line.
 | Azure Service | Reference | Use | CLI command group
 |-|-|-|-|
 | Application Gateway | [az network application-gateway](#az-network-application-gateway) | Manage application-level routing and load balancing services. | application-gateway
-| Virtual Network | [az network asg](#az-network-asg) | Manage application security groups (ASGs). | asg
+| [Virtual Network (example)](/azure/virtual-network/) | [az network asg](#az-network-asg) | Manage application security groups ([ASG](/azure/virtual-network/application-security-groups)]). | asg
 | Bastion | [az network bastion](#az-network-bastion) | Manage Azure bastion host. | bastion
 | ExpressRoute | [az network cross-connection](#az-network-cross-connection) | Manage Azure Network resources. | express-route-cross-connection
 | Networking | [az network dns](#az-network-dns) | Manage Domain Name System (DNS) in Azure. | private-dns
@@ -60,11 +60,7 @@ Use Azure CLI to manage Azure Networks from a command line.
 
 ***more az network root commands will be listed in alphabetical order above***
 
-See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
-
-## Full reference list
-
-Prerequisites for extension and extension preview references are provided on each code sample page.  
+## Full reference list 
 
 ## az network application-gateway
 
@@ -196,22 +192,18 @@ Prerequisites for extension and extension preview references are provided on eac
 
 ## az network watcher
 
-## Install the extension reference
+## Install an extension reference
 
-For extension references, you need to install the extension before running the command. Use the name of the **command group** in your `--name` parameter.  
+For extension references, you need to install the extension before running the command. Use the name of the **command group** in your `--name` parameter.  Comand group names are provided on each Azure CLI reference set summary page.
+
+Install the `network` extension.
 
 ```azurecli
 az extension add --name network
 ```
 
+Install the `express-route` connection.
+
 ```azurecli
 az extension add --name express-route
 ```
-
-### need a list header here
-
-- To learn more about extensions, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
-
-- See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
-
-- Review the extension [wiki tips](https://github.com/Azure/azure-network-cli-extension/wiki/Tips) to maximize usage.
