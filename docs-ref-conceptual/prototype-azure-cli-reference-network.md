@@ -58,7 +58,10 @@ Use Azure CLI to manage Azure Networks from a command line.
 | . | [az network vrouter]() | Manage the virtual router. | network
 | . | [az network watcher]() | Manage the Azure Network Watcher. | network
 
-***more az network root commands will be listed in alphabetical order above***
+> [!NOTE]
+> >
+> more `az network` root commands will be listed in alphabetical order above
+>
 
 ## Full reference list 
 
@@ -86,7 +89,10 @@ Use Azure CLI to manage Azure Networks from a command line.
 | [az network application-gateway frontend-ip delete]() | Delete a frontend IP address.
 | [az network application-gateway frontend-ip list]() | List frontend IP addresses.
 
-***The rest of the `az network application-gateway` commands would be listed here**
+> [!NOTE]
+> >
+> The rest of the `az network application-gateway` commands would be listed here
+>
 
 ## az network asg
 
@@ -125,7 +131,10 @@ Use Azure CLI to manage Azure Networks from a command line.
 | [az network firewall application-rule create]() | Create an Azure Firewall application rule.
 | [az network firewall application-rule delete]() | Delete an Azure Firewall application rule.
 
-***The rest of the `az network firewall` commands would be listed here**
+> [!NOTE]
+> >
+> The rest of the `az network firewall` commands would be listed here
+>
 
 ## az network front-door
 
@@ -142,7 +151,10 @@ Use Azure CLI to manage Azure Networks from a command line.
 | [az network front-door backend-pool list]() | List Front Door backend pools.
 | [az network front-door backend-pool show]() | Get the details of a Front Door backend pool.
 
-***The rest of the `az network front-door` commands would be listed here**
+> [!NOTE]
+> >
+> The rest of the `az network front-door` commands would be listed here
+>
 
 ## az network ib
 

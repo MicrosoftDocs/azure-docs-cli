@@ -21,7 +21,10 @@ To learn more about ExpressRoute circuits see [Create and modify an ExpressRoute
 | az network express-route gateway connection delete | [core]() | [extension]() | [experimental]() | Delete an ExpressRoute gateway connection. | 2.8.0
 | az network express-route gateway connection list | [core]() | [extension]() | [experimental]() | List ExpressRoute gateway connections. | 2.8.0
 
-**All `az network express-route` commands will be listed above**
+> [!NOTE]
+> >
+> All `az network express-route` commands will be listed above
+>
 
 See [Overview: Azure CLI references](prototype-azure-cli-reference-types) for information on working with extension and experimental references.
 
@@ -73,7 +76,10 @@ az network express-route create --bandwidth 200 -n MyCircuit --peering-location 
     Name of the ExpressRoute Service Provider.
     value from: az network express-route list-service-providers
 
-***the rest of the Core `az network express-route create` parameters (required and optional) here***
+> [!NOTE]
+> >
+> the rest of the Core `az network express-route create` parameters (required and optional) here
+>
 
 ## az network express-route create (extension)
 
@@ -133,8 +139,10 @@ az network express-route create --bandwidth 200 -n MyCircuit --peering-location 
 
     Location. Values from: az account list-locations. You can configure the default location using az configure --defaults location=<location>.
 
-
-***the rest of the Extension `az network express-route create' parameters here***
+> [!NOTE]
+> >
+> the rest of the Extension `az network express-route create' parameters here
+>
 
 # Alternative table layout
 

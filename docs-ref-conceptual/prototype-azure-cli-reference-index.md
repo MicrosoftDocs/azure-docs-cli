@@ -4,7 +4,7 @@ Intro paragraph here
 
 ## Reference sets
 
-| Reference set |  Use
+| Reference |  Use
 |-|-|
 | [az account]() | Manage Azure subscription information.
 | [az acr]() | Manage private registries with Azure Container Registries.
@@ -24,9 +24,12 @@ Intro paragraph here
 | [az vmss]() | Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
 | [az webapp]() | Manage web apps.
 
-**all `az` sample code has been moved to the `Azure CLI` reference landing and drill-through pages.**
-
 See [Azure CLI reference types](prototype-azure-cli-reference-types) for information on working with extension and preview references.
+
+> [!NOTE]
+> >
+> all `az` sample code has been moved to the `Azure CLI` reference landing and drill-through pages.
+>
 
 ## Alternative table design (eliminated)
 
