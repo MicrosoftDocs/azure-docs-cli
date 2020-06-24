@@ -4,9 +4,8 @@ Intro paragraph here
 
 ## Reference sets
 
-| | |
+| Reference set |  Use
 |-|-|
-| Reference Set |  Use
 | [az account]() | Manage Azure subscription information.
 | [az acr]() | Manage private registries with Azure Container Registries.
 | [az acs]() | Manage Azure Container Services.

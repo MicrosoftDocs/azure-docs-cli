@@ -24,6 +24,8 @@ Explain how a single command can be both core and extension
 
 Give an example of a single command that has both core and extension parameters
 
+Review the extension [wiki tips](https://github.com/Azure/azure-network-cli-extension/wiki/Tips) to maximize usage.
+
 ### Extension preview
 
 Explain what it is and what to do with it.
