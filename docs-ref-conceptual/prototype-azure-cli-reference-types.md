@@ -1,8 +1,8 @@
-# Azure CLI reference types
+# Overview: Azure CLI references
 
 Intro paragraph
 
-## First H2
+## Reference types
 
 There are three types of Azure CLI references:
 
@@ -30,4 +30,4 @@ Explain what it is and what to do with it.
 
 Explain how to install providing expected warning message
 
-## Possible 2nd H2
+## Reference versions

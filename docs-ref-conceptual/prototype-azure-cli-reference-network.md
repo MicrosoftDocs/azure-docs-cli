@@ -6,13 +6,15 @@
 >
 > az network is currently spread across multiple summary pages, such as these: 
 >
-> 1. [Core reference list](/cli/azure/network?view=azure-cli-latest) for Azure Networks
-> 1. Separate [Extension firewall](/cli/azure/ext/azure-firewall/?view=azure-cli-latest)
-> 1. Separate [Extension express-route](/cli/azure/ext/express-route/?view=azure-cli-latest)
-> 1. Separate [Extension express-route-cross-connection](/cli/azure/ext/express-route-cross-connection/?view=azure-cli-latest)
-> 1. Separate [Extension virtual-network-tap](/cli/azure/ext/virtual-network-tap/network?view=azure-cli-latest)
-> 1. Separate [Extension virtual-wan](/cli/azure/ext/virtual-wan/network?view=azure-cli-latest)
-> ... and whatever other network command groups we have
+> - [Core reference list](/cli/azure/network?view=azure-cli-latest) for Azure Networks
+>
+> Current reference pages will still exist, but "under" the `az network` parent reference
+> - Separate [Extension firewall](/cli/azure/ext/azure-firewall/?view=azure-cli-latest)
+> - Separate [Extension express-route](/cli/azure/ext/express-route/?view=azure-cli-latest)
+> - Separate [Extension express-route-cross-connection](/cli/azure/ext/express-route-cross-connection/?view=azure-cli-latest)
+> - Separate [Extension virtual-network-tap](/cli/azure/ext/virtual-network-tap/network?view=azure-cli-latest)
+> - Separate [Extension virtual-wan](/cli/azure/ext/virtual-wan/network?view=azure-cli-latest)
+> - ... and whatever other `az network` subservices we have.
 >
 
 # Azure CLI for Azure Networking
@@ -21,40 +23,40 @@ Use Azure CLI to manage Azure Networks from a command line.
 
 ## az network reference set
 
-| Reference | Use | Command group | Has core reference | Has extension reference | Has extension preview reference
-|-|-|-|-|-|-|
-| [az network application-gateway](#az-network-application-gateway) | Manage application-level routing and load balancing services. | application-gateway | yes | | |
-| [az network asg](#az-network-asg) | Manage application security groups (ASGs). | asg | yes | | yes |
-| [az network bastion](#az-network-bastion) | Manage Azure bastion host. | bastion | yes | yes | |
-| [az network cross-connection](#az-network-cross-connection) | Manage Azure Network resources. | network | yes |  | |
-| [az network dns](#az-network-dns) | Manage DNS domains in Azure. | network | yes | | |
-| [az network express-route](#az-network-express-route) | Manage Azure IoT hubs. | express-route | yes | yes | |
-| [az network firewall](#az-network-firewall) | Manage and configure Azure Firewalls. | azure-firewall | yes | yes | yes |
-| [az network front-door](#az-network-front-door) | Manage networking Front Door resources. | front-door | | yes | |
-| [az network ib](reference-network-ib) | Manage and configure load balancers. | ib | yes | yes | |
-| [az network list-service-aliases]() | List available service aliases in the region which can be used for Service Endpoint Policies. | network | yes | yes | |
-| [az network list-service-tags]() | List all service tags which are below to different resources. | network | yes | yes | |
-| [az network list-usages]() | List the number of network resources in a region that are used against a subscription quota. | network | yes |  | |
-| [az network local-gateway]() | Manage local gateways. | network | yes | yes | |
-| [az network nat]() | Manage NAT resources. | nat | yes | yes | |
-| [az network nic]() | Manage network interfaces. | nic | yes |  | |
-| [az network nsg]()| Manage Azure Network Security Groups (NSGs). | nsg  | | yes | |
-| [az network private-dns]() | Manage Private DNS links. | network | yes | yes | |
-| [az network private-endpoint]() | Manage private endpoints. | network | yes | | |
-| [az network private-link-resource]() | Manage private link resources. | network | yes | yes | |
-| [az network private-link-service]() | Manage private link services. | network | yes | yes | |
-| [az network profile]() | Manage network profiles. | network | yes | | |
-| [az network public-ip]() | Manage public IP addresses. | network | yes | | |
-| [az network route-filter]() | Manage route filters. | route-filter | yes | | |
-| [az network security-partner-provider]() | Manage Azure security partner provider. | network | yes | | |
-| [az network route-table]() | Manage route tables. | route-table | yes | | |
-| [az network service-endpoint]() | Manage policies related to service endpoints. | network | yes | | |
-| [az network traffic-manager]() | Manage the routing of incoming traffic. | network | yes | yes | |
-| [az network vnet]() | Manage Azure Virtual Networks. | network | yes | yes | |
-| [az network vnet-gateway]() | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. | network | yes | yes | |
-| [az network vpn-connection]() | Manage VPN connections. | network | | yes | |
-| [az network vrouter]() | Manage the virtual router. | network | | yes | |
-| [az network watcher]() | Manage the Azure Network Watcher. | network | yes | yes | |
+| Azure Service | Reference | Use | CLI command group
+|-|-|-|-|
+| Application Gateway | [az network application-gateway](#az-network-application-gateway) | Manage application-level routing and load balancing services. | application-gateway
+| Virtual Network | [az network asg](#az-network-asg) | Manage application security groups (ASGs). | asg
+| Bastion | [az network bastion](#az-network-bastion) | Manage Azure bastion host. | bastion
+| ExpressRoute | [az network cross-connection](#az-network-cross-connection) | Manage Azure Network resources. | express-route-cross-connection
+| Networking | [az network dns](#az-network-dns) | Manage Domain Name System (DNS) in Azure. | private-dns
+| ExpressRoute | [az network express-route](#az-network-express-route) | Manage Azure IoT hubs. | express-route
+| Firewall | [az network firewall](#az-network-firewall) | Manage and configure Azure Firewalls. | azure-firewall
+| Front Door | [az network front-door](#az-network-front-door) | Manage networking Front Door resources. | front-door
+| Networking | [az network ib](reference-network-ib) | Manage and configure load balancers. | ib
+| Virtual Network | [az network list-service-aliases]() | List available service aliases in the region which can be used for Service Endpoint Policies. | network
+| Virtual Network | [az network list-service-tags]() | List all service tags which are below to different resources. | network
+| Virtual Network | [az network list-usages]() | List the number of network resources in a region that are used against a subscription quota. | network
+| On-premises data gateways | [az network local-gateway]() | Manage local gateways. | local-network-gateway
+| Hyper-V | [az network nat]() | Manage network address transalation (NAT) resources. | nat
+| Networking | [az network nic]() | Manage network interfaces. | nic
+| Networking | [az network nsg]()| Manage Azure Network Security Groups (NSG). | nsg
+| DNS | [az network private-dns]() | Manage Private DNS links. | private-dns
+| Private Link | [az network private-endpoint]() | Manage private endpoints. | network
+| Private Link | [az network private-link-resource]() | Manage private link resources. | network
+| Private Link | [az network private-link-service]() | Manage private link services. | network
+| . | [az network profile]() | Manage network profiles. | network
+| . | [az network public-ip]() | Manage public IP addresses. | network
+| . | [az network route-filter]() | Manage route filters. | route-filter
+| . | [az network security-partner-provider]() | Manage Azure security partner provider. | network
+| . | [az network route-table]() | Manage route tables. | route-table
+| . | [az network service-endpoint]() | Manage policies related to service endpoints. | network
+| . | [az network traffic-manager]() | Manage the routing of incoming traffic. | network
+| . | [az network vnet]() | Manage Azure Virtual Networks. | network 
+| . | [az network vnet-gateway]() | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. | network
+| . | [az network vpn-connection]() | Manage VPN connections. | network
+| . | [az network vrouter]() | Manage the virtual router. | network
+| . | [az network watcher]() | Manage the Azure Network Watcher. | network
 
 ***more az network root commands will be listed in alphabetical order above***
 
