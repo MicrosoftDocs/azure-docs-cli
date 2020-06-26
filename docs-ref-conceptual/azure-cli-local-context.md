@@ -96,7 +96,7 @@ Command group 'local-context' is experimental and not covered by customer suppor
 
 ## Add parameters and values to local context
 
-To add stored objects to local context, local context must be turned on, and you need to execute a command. 
+To add stored objects to local context, local context must be turned on, and you need to execute a command.
 
 Create a resource group and view new local context entries.
 
@@ -207,7 +207,7 @@ az local-context show
 }
 ```
 
-> [!NOTE] 
+> [!NOTE]
 > Just because you have local context turned on doesn't mean you have to use it.  You can still execute commands with all parameter values specified.  However, be aware that with local context turned on, _you will be creating new local context enteries, or overwriting existing ones._
 >
 > ```azurecli
