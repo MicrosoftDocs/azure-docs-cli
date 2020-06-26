@@ -207,7 +207,8 @@ az local-context show
 }
 ```
 
-> [!NOTE] Just because you have local context turned on doesn't mean you have to use it.  You can still execute commands with all parameter values specified.  However, be aware that with local context turned on, _you will be creating new local context enteries, or overwriting existing ones._
+> [!NOTE] 
+> Just because you have local context turned on doesn't mean you have to use it.  You can still execute commands with all parameter values specified.  However, be aware that with local context turned on, _you will be creating new local context enteries, or overwriting existing ones._
 >
 > ```azurecli
 > # with local context turned on, create a storage account _without using_ local-context
@@ -216,6 +217,7 @@ az local-context show
 > # create a storage account using local-context understanding that the `--location` has just been changed to `westeurope`
 > az storage account create --name saazclicontext2 --sku Standard_LRS
 > ```
+>
 
 ## Work with multiple directories
 
@@ -250,7 +252,8 @@ az local-context delete --all --yes
 az local-context delete --name resource_group_name
 ```
 
-> [!IMPORTANT] Local context does not get updated when an Azure resource is deleted.
+> [!IMPORTANT]
+> Local context does not get updated when an Azure resource is deleted.
 >
 > ```azurecli
 > # delete a resource group
@@ -262,6 +265,7 @@ az local-context delete --name resource_group_name
 > # See that the resource group name persists in local context
 > az local-context show
 > ```
+>
 
 ## Turn local context off
 
