@@ -52,12 +52,8 @@ dir
 # make directory
 mkdir azCLI
 
-# make a second directory for later use
-mkdir azCLI2
-
 # change directory
 cd azCLI
-
 ```
 
 ## Turn local context on
@@ -65,30 +61,27 @@ cd azCLI
 Local context must be turned on before any parameter values can be stored.
 
 ```azurecli
-
 # see what commands are available for `az local-context`
 az local-context --help
 
 # turn local context on
 az local-context on
-
 ```
 
 When turning local context on, you will receive an expirimental warning until `az local-context` moves to Azure CLI core.
 
 ```output
-
 Command group 'local-context' is experimental and not covered by customer support. Please use with discretion.
 ```
 
 ## Add parameters and values to local context
 
-To add stored objects to local context, local context must be turned on, and you have to execute a command. Here are two examples:
+To add stored objects to local context, local context must be turned on, and you need to execute a command. 
 
 Create a resource group and view new local context entries.
 
 ```azurecli
-# create a resource group
+# with local context turned on, create a resource group
 az group create --name RG1inAzCLI --location eastus2
 
 # see new local context values
@@ -157,11 +150,28 @@ Updating a local context parameter value is as simple as executing a new command
 # clear all local context values for demonstration
 az local-context delete --all
 
-# create a storage account
+# create a storage account placing `--location`, `resource_group_name`, and `storage_account_name` into local context
 az storage account create --name SA1inAzCLI --resource-group RG1inAzCLI --location eastus2
 
-# create a third storage account while changing both the `storage_account_name' and `location` local context
-az storage account create --name SA3inAzCLI --location westus
+# see local context enteries
+az loca-context show
+```
+
+```output
+{
+  "all": {
+    "location": "eastus2",
+    "resource_group_name": "RG1inAzCLI",
+    "storage_account_name": "SA1inAzCLI"
+  }
+}
+```
+
+Replace current local context eneries.
+
+```azurecli
+# create a second storage account while changing both the `storage_account_name' and `location` local context values
+az storage account create --name SA2inAzCLI --location westus
 
 # see new local context values
 az local-context show
@@ -172,7 +182,7 @@ az local-context show
   "all": {
     "location": "westus",
     "resource_group_name": "RG1inAzCLI",
-    "storage_account_name": "SA3inAzCLI"
+    "storage_account_name": "SA2inAzCLI"
   }
 }
 ```
@@ -181,10 +191,10 @@ az local-context show
 >
 > ```azurecli
 > # with local context turned on, create a storage account _without using_ local-context
-> az storage account create --name saazclicontext --location westeurope --resource-group RG1inAzCLI  --sku Standard_LRS
+> az storage account create --name saazclicontext1 --location westeurope --resource-group RG1inAzCLI  --sku Standard_LRS
 >
 > # create a storage account using local-context understanding that the `--location` has just been changed to `westeurope`
-> az storage account create --name saazclicontext --sku Standard_LRS
+> az storage account create --name saazclicontext2 --sku Standard_LRS
 > ```
 
 ## Work with multiple directories
@@ -209,6 +219,8 @@ az local-context show
 
 ## Delete local context values
 
+Use the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command to remove enteries.
+
 ```azurecli
 # remove all local context enteries and do not prompt for confirmation
 az local-context delete --all --yes
@@ -218,7 +230,7 @@ az local-context delete --all --yes
 az local-context delete --name resource_group_name
 ```
 
-> [!NOTE] Local context does not get updated when an Azure resource is deleted.
+> [!IMPORTANT] Local context does not get updated when an Azure resource is deleted.
 >
 > ```azurecli
 > # delete a resource group
@@ -233,7 +245,7 @@ az local-context delete --name resource_group_name
 
 ## Turn local context off
 
-You can turn local context off, but your saved local context data will not be deleted.
+You can turn local context off by using the [az local-context off](/cli/azure/local-context#az-local-context-off) command, but your saved local context data will not be deleted.
 
 ```azurecli
 
@@ -243,6 +255,20 @@ az local-context off
 # see that your local context values still exist
 az local-context show
 
-# try to create a new resource relying on local context and receive error
+# try to create a new resource relying on local context and receive error ""
 az storage account create --name SA4inAzCLI
+```
+
+## Clean up resources
+
+When no longer needed, use the [az group delete](/cli/azure/group) command to remove the resource group, and all related resources.
+
+```azurecli
+az group delete --name RG1inAzCLI
+```
+
+Remove all local context enteries by using the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command.
+
+```azurecli
+az local-context delete --all
 ```
