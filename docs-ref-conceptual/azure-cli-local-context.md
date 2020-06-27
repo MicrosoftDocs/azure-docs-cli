@@ -68,13 +68,9 @@ cd azCLI
 
 ## Turn local context on
 
-Local context must be turned on before this feature can be used and any parameter values stored.
+[Local context](/cli/azure/local-context) must be turned on before parameter values can be stored.
 
 ```azurecli
-# see what commands are available
-az local-context --help
-
-# turn local context on
 az local-context on
 ```
 
@@ -86,9 +82,7 @@ Command group 'local-context' is experimental and not covered by customer suppor
 
 ## Add parameters and values to local context
 
-To create enteries for local context, local context must be turned on, and you need to execute a command.
-
-Create a resource group and view new local context entries.
+To create enteries for local context, you need to execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the `--location` and `--name` parameters are stored for future use.
 
 ```azurecli
 # with local context turned on, create a resource group
@@ -107,14 +101,14 @@ az local-context show
 }
 ```
 
-You don't always have to create a new resource group to get `location` and `resource_group_name` placed into local context.  You can use any command.
+Here is a second example that uses the [az storage account create](/cli/azure/storage/account#az-storage-account-create) command.
 
 ```azurecli
 # clear all local context values for demonstration
 az local-context delete --all
 
 # create a storage account
-az storage account create --name SA1inAzCLI --resource-group RG1inAzCLI --location eastus2
+az storage account create --name SA1inAzCLI --resource-group RG1inAzCLI --location eastus
 
 # see new local context values
 az local-context show
@@ -123,14 +117,14 @@ az local-context show
 ```output
 {
   "all": {
-    "location": "eastus2",
+    "location": "eastus",
     "resource_group_name": "RG1inAzCLI",
     "storage_account_name": "SA1inAzCLI"
   }
 }
 ```
 
-If you don't want to create a new Azure service, use a `--show` or `--list` command that allows accepts parameters.
+If you don't want to create a new Azure service, use a `--show` or `--list` command that accepts the parameters you want to store in local context.
 
 ```azurecli
 # clear all local context values for demonstration
@@ -153,7 +147,7 @@ az local-context show
 
 ## Replace local context values
 
-Updating a local context parameter value is as simple as executing a new command with a new value.
+Updating a local context parameter value is as simple as executing a command containing a replacement value.
 
 ```azurecli
 # clear all local context values for demonstration
@@ -176,7 +170,7 @@ az loca-context show
 }
 ```
 
-Replace current local context eneries.
+Replace current local context enteries.
 
 ```azurecli
 # create a second storage account while changing both the `storage_account_name' and `location` local context values
