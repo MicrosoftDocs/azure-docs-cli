@@ -23,13 +23,13 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
    Azure hosts Azure Cloud Shell, an interactive shell environment that you can use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You can use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
 
-   Start Cloud Shell by using one of these methods
+   Start Cloud Shell by using one of these methods:
 
-   - Select **Try It** in the upper-right corner of a code block. Selecting **Try It** doesn't automatically copy the code to Cloud Shell.
+   - Select **Try It** in the upper-right corner of a code block. **Try It** will open Azure Cloud Shell, but it doesn't automatically copy the code to Cloud Shell.
 
-   - Go to [https://shell.azure.com](https://shell.azure.com)
+   - Open Cloud Shell by going to [https://shell.azure.com](https://shell.azure.com)
 
-   - Select the **Cloud Shell** button on the menu bar at the upper right in the [Azure portal](https://portal.azure.com)
+   - Select the **Cloud Shell** button on the menu bar at the upper right corner in the [Azure portal](https://portal.azure.com)
 
 1. Sign in.
 
@@ -53,7 +53,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
 ## Determine your local directory
 
-Local context parameter values are stored in your Azure storage account used by Azure Cloud Shell.  To list current directories or to create new ones, use these familiar CLI commands.
+Local context parameter values are stored in the Azure storage account used by Azure Cloud Shell.  To list current directories or to create new ones, use these familiar CLI commands.
 
 ```azurecli-interactive
 # list directories
@@ -68,10 +68,10 @@ cd azCLI
 
 ## Turn local context on
 
-Local context must be turned on before any parameter values can be stored.
+Local context must be turned on before this feature can be used and any parameter values stored.
 
 ```azurecli
-# see what commands are available for `az local-context`
+# see what commands are available
 az local-context --help
 
 # turn local context on
@@ -86,7 +86,7 @@ Command group 'local-context' is experimental and not covered by customer suppor
 
 ## Add parameters and values to local context
 
-To add stored objects to local context, local context must be turned on, and you need to execute a command.
+To create enteries for local context, local context must be turned on, and you need to execute a command.
 
 Create a resource group and view new local context entries.
 
@@ -130,14 +130,14 @@ az local-context show
 }
 ```
 
-If you don't want to create a new Azure service, use a `--show` or `--list` command that allows for several parameters.
+If you don't want to create a new Azure service, use a `--show` or `--list` command that allows accepts parameters.
 
 ```azurecli
 # clear all local context values for demonstration
 az local-context delete --all
 
 # list all storage accounts
-az storage account show --resource-group RG1inAzCLI --mySubscription
+az storage account show --resource-group RG1inAzCLIcontext --name SA1inAzCLI
 
 # see new local context values
 az local-context show
@@ -146,8 +146,7 @@ az local-context show
 ```output
 {
   "all": {
-    "resource_group_name": "RG1inAzCLI",
-    "storage_account_name": "mySubscription"
+    "resource_group_name": "RG1inAzCLIcontext"
   }
 }
 ```
@@ -199,15 +198,6 @@ az local-context show
 
 > [!NOTE]
 > Just because you have local context turned on doesn't mean you have to use it.  You can still execute commands with all parameter values specified.  However, be aware that with local context turned on, _you will be creating new local context enteries, or overwriting existing ones._
->
-> ```azurecli
-> # with local context turned on, create a storage account _without using_ local-context
-> az storage account create --name saazclicontext1 --location westeurope --resource-group RG1inAzCLI  --sku Standard_LRS
->
-> # create a storage account using local-context understanding that the `--location` has just been changed to `westeurope`
-> az storage account create --name saazclicontext2 --sku Standard_LRS
-> ```
->
 
 ## Work with multiple directories
 
@@ -237,8 +227,7 @@ Use the [az local-context delete](/cli/azure/local-context#az-local-context-dele
 # remove all local context enteries and do not prompt for confirmation
 az local-context delete --all --yes
 
-# remove a single local context entry.  
-# specify the **name**, not the value
+# remove a single local context entry by specifiying the name, not the value
 az local-context delete --name resource_group_name
 ```
 
