@@ -13,7 +13,7 @@ ms.technology: azure-cli
 
 # Use local context with the Azure CLI
 
-Azure CLI [az local-context](/cli/azure/local-contex) provides local persisted parameter values for Azure CLI commands.  The purpose of local context is to remove the need to continully retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundency and can significantly shorten CLI command syntaz.
+Azure CLI [az local-context](/cli/azure/local-contex) provides local persisted parameter values for Azure CLI commands.  The purpose of local context is to remove the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
 
 If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
 
@@ -21,7 +21,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
 1. Use Azure Cloud Shell
 
-   Azure hosts Azure Cloud Shell, an interactive shell environment that you can use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You can use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
+   Azure hosts Azure Cloud Shell, an interactive shell environment that you use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
 
    Start Cloud Shell by using one of these methods:
 
@@ -74,7 +74,7 @@ cd azCLI
 az local-context on
 ```
 
-When turning local context on, you will receive an expirimental warning until `az local-context` moves to Azure CLI core.
+When turning local context on, you will receive an experimental warning until `az local-context` moves to Azure CLI core.
 
 ```output
 Command group 'local-context' is experimental and not covered by customer support. Please use with discretion.
@@ -82,7 +82,7 @@ Command group 'local-context' is experimental and not covered by customer suppor
 
 ## Add parameters and values to local context
 
-To create enteries for local context, you need to execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the `--location` and `--name` parameters are stored for future use.
+To create entries for local context, you need to execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the `--location` and `--name` parameters are stored for future use.
 
 ```azurecli
 # with local context turned on, create a resource group
@@ -170,7 +170,7 @@ az loca-context show
 }
 ```
 
-Replace current local context enteries.
+Replace current local context entries.
 
 ```azurecli
 # create a second storage account while changing both the `storage_account_name' and `location` local context values
@@ -191,7 +191,10 @@ az local-context show
 ```
 
 > [!NOTE]
-> Just because you have local context turned on doesn't mean you have to use it.  You can still execute commands with all parameter values specified.  However, be aware that with local context turned on, _you will be creating new local context enteries, or overwriting existing ones._
+>
+> Just because you have local context turned on doesn't mean you have to use it.  You can still 
+> execute commands with all parameter values specified.  However, be aware that with local context 
+> turned on, _you will be creating new local context enteries, or overwriting existing ones._
 
 ## Work with multiple directories
 
@@ -215,7 +218,7 @@ az local-context show
 
 ## Delete local context values
 
-Use the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command to remove enteries.
+Use the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command to remove entries.
 
 ```azurecli
 # remove all local context enteries and do not prompt for confirmation
@@ -226,6 +229,7 @@ az local-context delete --name resource_group_name
 ```
 
 > [!IMPORTANT]
+>
 > Local context does not get updated when an Azure resource is deleted.
 >
 > ```azurecli
@@ -264,7 +268,7 @@ When no longer needed, use the [az group delete](/cli/azure/group) command to re
 az group delete --name RG1inAzCLI
 ```
 
-Remove all local context enteries by using the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command.
+Remove all local context entries by using the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command.
 
 ```azurecli
 az local-context delete --all
