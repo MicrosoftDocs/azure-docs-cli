@@ -21,7 +21,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
 1. Use Azure Cloud Shell
 
-   Azure hosts Azure Cloud Shell, an interactive shell environment that you use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
+   Azure hosts Azure Cloud Shell, an interactive shell environment that you use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You use the Cloud Shell preinstalled commands to run the code in this article.
 
    Start Cloud Shell by using one of these methods:
 
@@ -43,7 +43,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
 2. Install the Azure CLI extension.
 
-   When working with extension references for the Azure CLI, you must first install the extension.  Azure CLI extensions give you access to experimental and pre-release commands that have not yet shipped as part of the core CLI.  To learn more about extensions including updating and uninstalling, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+   When working with extension references for the Azure CLI, you must first install the extension.  To learn more about extensions including updating and uninstalling, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
 
    Install the [extension for local context](/cli/azure/local-context/) by running the following command:
 
@@ -68,13 +68,11 @@ cd azCLI
 
 ## Turn local context on
 
-[Local context](/cli/azure/local-context) must be turned on before parameter values can be stored.
+[Local context](/cli/azure/local-context) must be turned on before parameter values can be stored.  You will receive an experimental warning until `az local-context` moves to Azure CLI core.
 
 ```azurecli
 az local-context on
 ```
-
-When turning local context on, you will receive an experimental warning until `az local-context` moves to Azure CLI core.
 
 ```output
 Command group 'local-context' is experimental and not covered by customer support. Please use with discretion.
@@ -124,7 +122,7 @@ az local-context show
 }
 ```
 
-If you don't want to create a new Azure service, use a `--show` or `--list` command that accepts the parameters you want to store in local context.
+If you don't want to create a new Azure service, use a `show` or `list` command that accepts the parameters you want to store in local context.
 
 ```azurecli
 # clear all local context values for demonstration
@@ -190,7 +188,7 @@ az local-context show
 }
 ```
 
-> [!NOTE]
+> [!NOTE]
 >
 > Just because you have local context turned on doesn't mean you have to use it.  You can still 
 > execute commands with all parameter values specified.  However, be aware that with local context 
@@ -228,7 +226,7 @@ az local-context delete --all --yes
 az local-context delete --name resource_group_name
 ```
 
-> [!IMPORTANT]
+> [!IMPORTANT]
 >
 > Local context does not get updated when an Azure resource is deleted.
 >
@@ -242,11 +240,10 @@ az local-context delete --name resource_group_name
 > # See that the resource group name persists in local context
 > az local-context show
 > ```
->
 
 ## Turn local context off
 
-You can turn local context off by using the [az local-context off](/cli/azure/local-context#az-local-context-off) command, but your saved local context data will not be deleted.
+You can turn local context off by using the [az local-context off](/cli/azure/local-context#az-local-context-off) command, but your saved local context data won't be deleted.
 
 ```azurecli
 
