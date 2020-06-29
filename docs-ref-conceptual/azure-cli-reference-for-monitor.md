@@ -57,7 +57,7 @@ The Azure Monitor CLI experience is composed of two parts: Azure CLI (commonly r
 
 ## Azure CLI reference examples
 
-Examples are provided with every Azure CLI reference. Although you can also complete these tasks through the Azure portal, using the Azure CLI requires a single command line.  Here are a few code blocks to give you an idea of how easy it is to use the Azure CLI.
+Examples are provided with every Azure CLI reference. Although you can also complete these tasks through the Azure portal, using the Azure CLI requires a single command line.  Here are a few code samples to give you an idea of how easy it is to use the Azure CLI.
 
 To work with Azure Monitor, you'll first need a resource group.  Azure resource groups are simple to create and manage with the Azure CLI.  
 
@@ -71,7 +71,7 @@ az group create -location westus -name MyResourceGroup
 az group list --subscription MySubscription --output table
 ```
 
-It is as straightforward to create an Azure Monitor log alert.
+Creating an Azure Monitor log alert is just as straightforward.
 
 ```azurecli
 #create an Azure Monitor activity log alert
