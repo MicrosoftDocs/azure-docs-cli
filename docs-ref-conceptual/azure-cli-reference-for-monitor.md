@@ -45,10 +45,20 @@ The Azure Monitor CLI experience is composed of two parts: Azure CLI (commonly r
 
 ### Extension reference commands
 
-| Reference | Has core | Description
-|-|-|-|
-| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) |  | Manage Azure Central (Monitor Central) solutions & infrastructure.
-| [az monitor log-analytics](/cli/azure/ext/log-analytics/monitor/log-analytics) | yes | Commands for querying data in Log Analytics workspaces.
+| Reference | Has core | Description | Extension name
+|-|-|-|-|
+| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) |  | Manage Azure Central (Monitor Central) solutions & infrastructure. | application-insights
+| [az monitor log-analytics](/cli/azure/ext/log-analytics/monitor/log-analytics) | yes | Commands for querying data in Log Analytics workspaces. | log-analytics
+
+Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
+
+```azurelci
+# install the extension for az monitor app-insights
+az extension add --name application-insights
+
+# install the extension for az monitor log-analytics
+az extension add --name log-analytics
+```
 
 ## Popular Monitor articles using the Azure CLI
 
