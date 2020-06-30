@@ -22,10 +22,10 @@ items:
   examples:
   - summary: Create a workspace
     syntax:
-      content: >-
-        az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location \
-
-        westus  --sku standard
+      content: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location westus --sku standard
+  - summary: Create a workspace with managed identity for storage account
+    syntax:
+      content: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --prepare-encryption
   parameters:
   - isRequired: true
     name: --location -l
@@ -50,17 +50,20 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --prepare-encryption
+    summary: Flag to enable the Managed Identity for managed storage account to prepare for CMK encryption.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --private-subnet
-    summary: The name of a new private subnet.
+    summary: The name of a Private Subnet within the Virtual Network.
     description: ''
   - name: --public-subnet
-    summary: The name of a new public subnet.
+    summary: The name of a Public Subnet within the Virtual Network.
     description: ''
   - name: --vnet
-    summary: Virtual network name or resource ID.
+    summary: Virtual Network name or resource ID.
     description: ''
 - uid: ext_databricks_az_databricks_workspace_delete
   name: az databricks workspace delete
@@ -136,6 +139,15 @@ items:
   - summary: Clean the workspace's tags.
     syntax:
       content: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --tags ""
+  - summary: Prepare for CMK encryption by assigning identity for storage account.
+    syntax:
+      content: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --prepare-encryption
+  - summary: Configure CMK encryption
+    syntax:
+      content: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --key-source Microsoft.KeyVault --key-name MyKey --key-vault https://myKeyVault.vault.azure.net/ --key-version 00000000000000000000000000000000
+  - summary: Revert encryption to Microsoft Managed Keys
+    syntax:
+      content: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --key-source Default
   parameters:
   - isRequired: true
     name: --name -n
@@ -148,8 +160,24 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --prepare-encryption
+    summary: Flag to enable the Managed Identity for managed storage account to prepare for CMK encryption.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --key-name
+    summary: The name of KeyVault key.
+    description: ''
+  - name: --key-source
+    parameterValueGroup: Default, Microsoft.Keyvault
+    summary: The encryption key source (provider).
+    description: ''
+  - name: --key-vault
+    summary: The Uri of KeyVault.
+    description: ''
+  - name: --key-version
+    summary: The version of KeyVault key.
     description: ''
 - uid: ext_databricks_az_databricks_workspace_wait
   name: az databricks workspace wait
