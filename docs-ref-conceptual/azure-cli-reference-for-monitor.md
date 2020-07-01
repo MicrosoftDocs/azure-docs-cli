@@ -45,6 +45,8 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor metrics](/cli/azure/monitor/metrics) | Manage near-realtime metric alert rules. | [Metrics]()
 | [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | Manage monitor private link scope resource. | [Web apps]()
 
+### Installing extension references
+
 Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
 
 ```azurelci
