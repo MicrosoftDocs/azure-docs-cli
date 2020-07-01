@@ -30,7 +30,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 ### References
 
-| Reference | Description | Service group| Extension name
+| Reference | Description | Monitor subject area | CLI extension name
 |-|-|-|-|
 | [az monitor](/cli/azure/monitor) | Manage the Azure Monitor Service. | [Overview](/azure/azure-monitor/overview)
 | [az monitor action-group](/cli/azure/monitor/action-group) | Manage action groups. | [Action groups]()
