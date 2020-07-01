@@ -30,20 +30,20 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 ### References
 
-| Reference | Description | Service overview | Extension name
+| Reference | Description | Service group| Extension name
 |-|-|-|-|
-| [az monitor](/cli/azure/monitor) | Manage the Azure Monitor Service. | [overview]()
-| [az monitor action-group](/cli/azure/monitor/action-group) | Manage action groups. | [overview]()
-| [az monitor activity-log](/cli/azure/monitor/activity-log) | Manage activity logs. | [overview]()
-| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) | Manage Azure Central (Monitor Central) solutions & infrastructure.  | [overview]() | application-insights
-| [az monitor alert](/cli/azure/monitor/alert) | Manage classic metric-based alert rules. | [overview]()
-| [az monitor autoscale](/cli/azure/monitor/autoscale) | Manage autoscale settings. | [overview]()
-| [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | Manage service diagnostic settings. | [overview]()
-| [az monitor log-analytics](/cli/azure/monitor/log-analytics) | Manage Azure log analytics. | [overview]()
-| [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext-log-analytics-az-monitor-log-analytics-query) | Commands for querying data in Log Analytics workspaces.  | [overview]() | log-analytics
-| [az monitor log-profiles](/cli/azure/monitor/log-profiles) | Manage log profiles. | [overview]()
-| [az monitor metrics](/cli/azure/monitor/metrics) | Manage near-realtime metric alert rules. | [overview]()
-| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | Manage monitor private link scope resource. | [overview]()
+| [az monitor](/cli/azure/monitor) | Manage the Azure Monitor Service. | [Overview](/azure/azure-monitor/overview)
+| [az monitor action-group](/cli/azure/monitor/action-group) | Manage action groups. | [Action groups]()
+| [az monitor activity-log](/cli/azure/monitor/activity-log) | Manage activity logs. | [Activity log]()
+| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) | Manage Azure Central (Monitor Central) solutions & infrastructure.  | [Insights]() | application-insights
+| [az monitor alert](/cli/azure/monitor/alert) | Manage classic metric-based alert rules. | [Alerts management]()
+| [az monitor autoscale](/cli/azure/monitor/autoscale) | Manage autoscale settings. | [Operations]()
+| [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | Manage service diagnostic settings. | [Diagnostics]()
+| [az monitor log-analytics](/cli/azure/monitor/log-analytics) | Manage Azure log analytics. | [Activity log]()
+| [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext-log-analytics-az-monitor-log-analytics-query) | Commands for querying data in Log Analytics workspaces.  | [Activity log]() | log-analytics
+| [az monitor log-profiles](/cli/azure/monitor/log-profiles) | Manage log profiles. | [Activity log]()
+| [az monitor metrics](/cli/azure/monitor/metrics) | Manage near-realtime metric alert rules. | [Metrics]()
+| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | Manage monitor private link scope resource. | [Web apps]()
 
 Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
 
