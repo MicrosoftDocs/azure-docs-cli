@@ -18,7 +18,7 @@ The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is 
 
 ## References for Monitor
 
-The Azure Monitor CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.
+The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.
 
 > [!NOTE]
 >
@@ -28,27 +28,22 @@ The Azure Monitor CLI experience is composed of two parts: Azure CLI (commonly r
 >
 > The Monitor **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the > infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled > via the Monitor extension. The Azure Monitor extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its > versatility in a variety of scenarios and use cases.
 
-### Core reference commands
+### References
 
-| Reference | Has extension | Description
-|-|-|-|
-| [az monitor](/cli/azure/monitor) | yes | Manage the Azure Monitor Service.
-| [az monitor action-group](/cli/azure/monitor/action-group) | | Manage action groups.
-| [az monitor activity-log](/cli/azure/monitor/activity-log) | | Manage activity logs.
-| [az monitor alert](/cli/azure/monitor/alert) | | Manage classic metric-based alert rules.
-| [az monitor autoscale](/cli/azure/monitor/autoscale) | | Manage autoscale settings.
-| [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | | Manage service diagnostic settings.
-| [az monitor log-analytics](/cli/azure/monitor/log-analytics) | yes | Manage Azure log analytics.
-| [az monitor log-profiles](/cli/azure/monitor/log-profiles) | | Manage log profiles.
-| [az monitor metrics](/cli/azure/monitor/metrics) | | Manage near-realtime metric alert rules.
-| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resource.
-
-### Extension reference commands
-
-| Reference | Has core | Description | Extension name
+| Reference | Description | Service overview | Extension name
 |-|-|-|-|
-| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) |  | Manage Azure Central (Monitor Central) solutions & infrastructure. | application-insights
-| [az monitor log-analytics](/cli/azure/ext/log-analytics/monitor/log-analytics) | yes | Commands for querying data in Log Analytics workspaces. | log-analytics
+| [az monitor](/cli/azure/monitor) | Manage the Azure Monitor Service. | [overview]()
+| [az monitor action-group](/cli/azure/monitor/action-group) | Manage action groups. | [overview]()
+| [az monitor activity-log](/cli/azure/monitor/activity-log) | Manage activity logs. | [overview]()
+| [az monitor app-insights](/cli/azure/ext/application-insights/monitor) | Manage Azure Central (Monitor Central) solutions & infrastructure.  | [overview]() | application-insights
+| [az monitor alert](/cli/azure/monitor/alert) | Manage classic metric-based alert rules. | [overview]()
+| [az monitor autoscale](/cli/azure/monitor/autoscale) | Manage autoscale settings. | [overview]()
+| [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | Manage service diagnostic settings. | [overview]()
+| [az monitor log-analytics](/cli/azure/monitor/log-analytics) | Manage Azure log analytics. | [overview]()
+| [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext-log-analytics-az-monitor-log-analytics-query) | Commands for querying data in Log Analytics workspaces.  | [overview]() | log-analytics
+| [az monitor log-profiles](/cli/azure/monitor/log-profiles) | Manage log profiles. | [overview]()
+| [az monitor metrics](/cli/azure/monitor/metrics) | Manage near-realtime metric alert rules. | [overview]()
+| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | Manage monitor private link scope resource. | [overview]()
 
 Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
 
