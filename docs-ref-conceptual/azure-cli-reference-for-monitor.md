@@ -49,7 +49,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
 
-```azurelci
+```azurecli
 # install the extension for az monitor app-insights
 az extension add --name application-insights
 
