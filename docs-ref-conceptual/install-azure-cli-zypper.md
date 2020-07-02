@@ -95,6 +95,14 @@ allow HTTPS connections to the following addresses:
 
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
+### SSL certificate problem
+
+When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.  
+
+```bach
+sudo zypper update-ca-certificates
+```
+
 ## Update
 
 You can update the package with the `zypper update` command.
