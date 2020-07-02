@@ -321,4 +321,4 @@ az group delete --name RG1inAzCLI
 
 ## See also
 
-- [Azure CLI local context](azure-cli-local-context)
+- [Azure CLI local context](azure-cli-local-context.md)

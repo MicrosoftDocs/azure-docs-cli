@@ -34,4 +34,4 @@ The following Azure CLI parameters are supported by local context.  The `resourc
 
 ## Next steps
 
-- [Tutorial: Use local context with the Azure CLI](azure-cli-local-context-tutorial)
+- [Tutorial: Use local context with the Azure CLI](azure-cli-local-context-tutorial.md)
