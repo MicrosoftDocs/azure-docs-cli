@@ -54,12 +54,12 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az maps](/cli/azure/maps) | core | Manage Azure Maps.
 | [az timeseriesinsights](/cli/azure/ext/timeseriesinsights/timeseriesinsights) | extension | Manage Azure Time Series Insights.
 
-### Installing extension references
+### Extension reference installation
 
-Azure CLI extension references must be installed prior to use.  Use the [az extension add](/cli/azure/azure-cli-extensions-overview) command to install an extension reference by name.
+Azure CLI extension references must be installed prior to use.  Use the [az extension add](/cli/azure/azure-cli-extensions-overview) command to install an extension reference by name.  Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
 
 ```azurelci
-# install the extension for Azure IoT
+# install the Azure CLI extension reference for Azure IoT
 az extension add --name azure-iot
 ```
 
@@ -102,5 +102,3 @@ az iot hub create --resource-group MyResourceGroup --name MyIotHub --location we
 - [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
 
 - Discover additional [released](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
-
-- Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
