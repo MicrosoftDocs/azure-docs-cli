@@ -23,14 +23,14 @@ The local context file name is `.local_context` and is stored in your working di
 
 The following Azure CLI parameters are supported by local context.  The `resource_group_name` and `location` parameters are stored differently in that you can add them to local context **without** executing a create command.
 
-| Local context parameter | Storage by
+| Local context parameter | Storage action
 |-|-|
-| location | all commands
-| resource_group_name | all commands
-| vnet_name | create commands only
-| storage_account_name | create commands only
-| webapp_name | create commands only
-| function_app_name | create commands only
+| location | Execute any command
+| resource_group_name | Execute any command
+| vnet_name | Execute a create command
+| storage_account_name | Execute a create command
+| webapp_name | Execute a create command
+| function_app_name | Execute a create command
 
 ## Next steps
 

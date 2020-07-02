@@ -190,7 +190,7 @@ az local-context show
 
 These scripts create an Azure Function app using the Consumption plan.
 
-# [Using local context](#tab/azure-cli)
+### [Using local context](#tab/azure-cli)
 
 ```azurecli
 
@@ -217,7 +217,7 @@ az functionapp create \
 
 ```
 
-# [Using traditional method](#tab/azure-portal)
+### [Using traditional method](#tab/azure-portal)
 
 ```azurecli
 
@@ -246,7 +246,7 @@ az functionapp create \
 
 ```
 
-```
+* * *
 
 ## Work with multiple directories
 
