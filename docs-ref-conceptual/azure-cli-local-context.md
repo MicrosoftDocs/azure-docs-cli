@@ -17,7 +17,7 @@ Azure CLI [az local-context](/cli/azure/local-contex) provides local persisted p
 
 ## Local context storage files
 
-The local context file name is `.local_context` and is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com), your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli), your working directory is on your local machine.
+The local context file name is `.local_context` and is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the local context file is a hidden file and should not be manually updated.
 
 ## Local context parameters
 
@@ -31,6 +31,69 @@ The following Azure CLI parameters are supported by local context.  The `resourc
 | storage_account_name | Execute a create command
 | webapp_name | Execute a create command
 | function_app_name | Execute a create command
+
+## Local context example
+
+Without local context, sequential CLI commands must repeatedly specify the same parameter values.  In this example, the `location`, `resource group name` or `storage account name` are repeated in each command
+
+### Sample script without local context
+
+```azurecli
+
+# Reminder: function app and storage account names must be unique.
+
+# Create a resource group.
+az group create --name RGlocalContext --location westeurope
+
+# Create an Azure storage account in the resource group.
+az storage account create \
+  --name SAlocalContext \
+  --location westeurope \
+  --resource-group RGlocalContext \
+  --sku Standard_LRS
+
+# Create a serverless function app in the resource group.
+az functionapp create \
+  --name FAlocalContext \
+  --storage-account SAlocalContext \
+  --consumption-plan-location westeurope \
+  --resource-group RGlocalContext \
+  --functions-version 2
+
+```
+
+With local context enabled, stored parameter values can be omitted from subsequent commands.  Local context reduces the number of potential errors and ultimately leads to improving your in-tool experience.
+
+### Sample script with local context
+
+```azurecli
+
+# Reminder: function app and storage account names must be unique.
+
+# turn local context on
+az local-context on
+
+# Create a resource group.
+az group create --name RGlocalContext --location westeurope
+
+# Create an Azure storage account in the resource group omitting location and resource group name
+az storage account create \
+  --name SAlocalContext \
+  --sku Standard_LRS
+
+# Create a serverless function app in the resource group omitting storage account and resouce group names
+az functionapp create \
+  --name FAlocalContext \
+  --consumption-plan-location westeurope \
+  --functions-version 2
+
+# See the stored local context values
+az local-context show
+```
+
+## Compare with az configure
+
+
 
 ## Next steps
 
