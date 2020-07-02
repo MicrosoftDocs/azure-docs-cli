@@ -15,13 +15,13 @@ ms.technology: azure-cli
 
 Azure CLI [az local-context](/cli/azure/local-contex) provides local persisted parameter values for Azure CLI commands.  The purpose of local context is to remove the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
 
-## Local context storage files
+## Local context data file
 
 The local context file name is `.local_context` and is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the local context file is a hidden file and should not be manually updated.
 
 ## Local context parameters
 
-The following Azure CLI parameters are supported by local context.  The `resource_group_name` and `location` parameters are stored differently in that you can add them to local context **without** executing a create command.
+The following Azure CLI parameters are supported by local context.  The `resource_group_name` and `location` parameters are stored differently in that you can add them to local context _without_ executing a create command.
 
 | Local context parameter | Storage action
 |-|-|
@@ -93,7 +93,7 @@ az local-context show
 
 ## Compare with az configure
 
-
+write something here
 
 ## Next steps
 

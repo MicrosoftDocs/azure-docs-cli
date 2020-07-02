@@ -182,8 +182,8 @@ az local-context show
 
 > [!NOTE]
 >
-> Just because you have local context turned on doesn't mean you have to use it.  You can still 
-> execute commands with all parameter values specified.  However, be aware that with local context 
+> Just because you have local context turned on doesn't mean you have to use it.  You can still
+> execute commands with all parameter values specified.  However, be aware that with local context
 > turned on, _you will be creating new local context enteries, or overwriting existing ones._
 
 ## Execute sequential commands
@@ -307,8 +307,8 @@ az local-context off
 # See that your local context values still exist
 az local-context show
 
-# Try to create a new resource relying on local context and receive error ""
-az storage account create --name SA4inAzCLI
+# Try to create a new resource relying on local context and receive error "...the following arguments are required:..."
+az storage account create --name SA4inAzCLI --sku Standard_LRS
 ```
 
 ## Clean up resources
