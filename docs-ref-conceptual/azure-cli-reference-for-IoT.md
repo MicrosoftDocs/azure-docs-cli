@@ -58,7 +58,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 
 Azure CLI extension references must be installed prior to use.  Use the [az extension add](/cli/azure/azure-cli-extensions-overview) command to install an extension reference by name.  Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
 
-```azurelci
+```azurecli
 # install the Azure CLI extension reference for Azure IoT
 az extension add --name azure-iot
 ```
