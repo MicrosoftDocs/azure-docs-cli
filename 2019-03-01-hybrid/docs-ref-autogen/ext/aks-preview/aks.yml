@@ -101,6 +101,9 @@ items:
   - summary: Create a kubernetes cluster with userDefinedRouting, standard load balancer SKU and a custom subnet preconfigured with a route table
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --outbound-type userDefinedRouting --load-balancer-sku standard --vnet-subnet-id customUserSubnetVnetID
+  - summary: Create a kubernetes cluster with managed AAD enabled.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   parameters:
   - isRequired: true
     name: --name -n
@@ -676,6 +679,12 @@ items:
   - summary: Restrict apiserver traffic in a kubernetes cluster to agentpool nodes.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 0.0.0.0/32
+  - summary: Update a AKS-managed AAD cluster with tenant ID or admin group object IDs.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
+  - summary: Update an existing AKS AAD-Integrated cluster to the new AKS-managed AAD experience.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad
   parameters:
   - isRequired: true
     name: --name -n
@@ -711,6 +720,9 @@ items:
     description: ''
   - name: --disable-pod-security-policy
     summary: (PREVIEW) Disable pod security policy.
+    description: ''
+  - name: --enable-aad
+    summary: Enable managed AAD feature for cluster.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
