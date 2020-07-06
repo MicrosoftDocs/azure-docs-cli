@@ -24,7 +24,7 @@ IoT functionality in Azure CLI **core** is focused on infrastructure management 
 
 The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
 
-### Links to core reference commands
+### Core reference commands
 
 | Reference | Has extension | Description
 |-|-|-|
@@ -34,7 +34,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot hub](/cli/azure/iot/hub) | yes | Manage Azure IoT Hub infrastructure.
 | [az iot pnp](/cli/azure/iot/pnp) | yes | Manage IoT Plug and Play repositories and repository access keys.
 
-### Links to extension reference commands
+### Extension reference commands
 
 | Reference | Has core | Description
 |-|-|-|
@@ -46,6 +46,22 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
 | [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
 | [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | yes | Manage entities of an IoT Plug and Play model repository.
+
+### Additional CLI commands for Azure services used by IoT
+
+| Reference | Type | Description
+|-|-|-|
+| [az maps](/cli/azure/maps) | core | Manage Azure Maps.
+| [az timeseriesinsights](/cli/azure/ext/timeseriesinsights/timeseriesinsights) | extension | Manage Azure Time Series Insights.
+
+### Extension reference installation
+
+Azure CLI extension references must be installed prior to use.  Use the [az extension add](/cli/azure/azure-cli-extensions-overview) command to install an extension reference by name.  Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+
+```azurecli
+# install the Azure CLI extension reference for Azure IoT
+az extension add --name azure-iot
+```
 
 ## Popular IoT articles using the Azure CLI
 
@@ -86,5 +102,3 @@ az iot hub create --resource-group MyResourceGroup --name MyIotHub --location we
 - [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
 
 - Discover additional [released](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
-
-- Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
