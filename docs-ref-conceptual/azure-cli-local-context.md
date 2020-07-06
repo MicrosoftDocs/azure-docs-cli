@@ -91,7 +91,7 @@ az functionapp create \
 az local-context show
 ```
 
-## Compare with az configure
+## Compare local context with az configure
 
 write something here
 
