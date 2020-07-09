@@ -66,7 +66,6 @@ az functionapp create \
   --consumption-plan-location westeurope \
   --resource-group RGlocalContext \
   --functions-version 2
-
 ```
 
 ## Sample script with local context
@@ -123,7 +122,6 @@ az storage account create \
   --name myStorageAccount \
   --location westeurope \
   --sku Standard_LRS
-
 ```
 
 You can see that a new storage account was created in the resource group found in the global variable.
@@ -141,7 +139,6 @@ You can see that a new storage account was created in the resource group found i
     "name": "Standard_LRS",
     "tier": "Standard"
   },
-
 ```
 
 Use `az local-context` to set local context used in the creation of an Azure storage account.  If a global variable is set for the same object, local context will override the global variable.
@@ -158,7 +155,6 @@ az storage account create \
   --name myStorageAccount \
   --location westeurope \
   --sku Standard_LRS
-
 ```
 
 Even with a global variable set for resource group with a value of `myGlobalVariableRG`, with local context turned on, the new storage account was created with `myLocalContextRG`.
@@ -176,7 +172,6 @@ Even with a global variable set for resource group with a value of `myGlobalVari
     "name": "Standard_LRS",
     "tier": "Standard"
   },
-
 ```
 
 ## See also

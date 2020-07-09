@@ -209,7 +209,6 @@ az functionapp create \
 
 # See the stored local context values
 az local-context show
-
 ```
 
 ### [Without local context](#tab/azure-portal)
@@ -237,7 +236,6 @@ az functionapp create \
   --consumption-plan-location westeurope \
   --resource-group RGlocalContext \
   --functions-version 2
-
 ```
 
 * * *
