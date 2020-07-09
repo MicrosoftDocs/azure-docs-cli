@@ -5731,7 +5731,7 @@ The Azure CLI beta release is a migration from the authentican method of AAD pla
 -	Relogin is required after install the beta version.
 -	The beta release only supports the Windows platform.
 -	The Azure Stack is not supported.
--	`--use-cert-sn-issuer` parameter is not supported when using service principle key to authenticate.
+-	`--use-cert-sn-issuer` parameter is not supported when using service principal key to authenticate.
 -	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
 
 If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
