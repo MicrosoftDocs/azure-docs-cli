@@ -18,8 +18,9 @@ configuration file or with environment variables.
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
-2. Environment variables
-3. Values in the configuration file or set with `az configure`
+1. Values in the local working directory set by `az local-context`
+1. Environment variables
+1. Values in the configuration file or set with `az configure`
 
 ## CLI configuration with az configure
 
@@ -106,3 +107,7 @@ When you provide a default value, that argument is no longer required by any com
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
 > including `az configure`. The ones listed in the table above are the only values you should change yourself.
+
+## See alos
+
+- [Azure CLI local context](Azure CLI local context)

@@ -13,11 +13,18 @@ ms.technology: azure-cli
 
 # Azure CLI local context
 
-Azure CLI [az local-context](/cli/azure/local-context) provides local persisted parameter values for Azure CLI commands.  The purpose of local context is to remove the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az local-context](/cli/azure/local-context) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
+
+Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
+
+1. Command-line parameters
+1. Values in the local working directory set by `az local-context`
+1. Environment variables
+1. Values in the configuration file or set with `az configure`
 
 ## Local context data file
 
-The local context file name is `.local_context` and is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the local context file is a hidden file and should not be manually updated.
+Local context data is kept in a file named `.local_context` which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the local context file is a hidden file and should not be manually updated.
 
 ## Local context parameters
 
@@ -32,11 +39,9 @@ The following Azure CLI parameters are supported by local context.  The `resourc
 | webapp_name | Execute a create command
 | function_app_name | Execute a create command
 
-## Local context example
+## Sample script without local context
 
 Without local context, sequential CLI commands must repeatedly specify the same parameter values.  In this example, the `location`, `resource group name` or `storage account name` are repeated in each command.
-
-### Sample script without local context
 
 ```azurecli
 
@@ -65,9 +70,9 @@ az functionapp create \
 
 ```
 
-With local context enabled, stored parameter values can be omitted from subsequent commands.  Local context reduces the number of potential errors and ultimately leads to improving your in-tool experience.
+## Sample script with local context
 
-### Sample script with local context
+With local context enabled, stored parameter values can be omitted from subsequent commands.  Local context also reduces the number of potential errors and ultimately leads to improving your in-tool experience.
 
 ```azurecli
 
@@ -96,18 +101,24 @@ az local-context show
 
 ## Compare local context with az configure
 
-There are two Azure CLI commands that can be used to default values: [az configure](/cli/azure/reference-index#az-configure) and [az local-context](/cli/azure/local-context).  You use the `az configure` command to specify **global variables** such as group, location, or web.  You use `az local context` when you want to specify default values unique to your workload.  The main difference between `az configure` and `az local-context` is that local context will save your specific input values into a working directory, and use them for sequential commands.
+There are two Azure CLI commands that can be used to default values: `az configure` and `az local-context`.  Use the `az configure` command to specify **global variables** such as group, location, or web.  Use `az local context` to specify **local default values** unique to your workload.  In both cases, the stored values are used by the CLI in place of required arguments.
 
-| Reference | Use
+> [!Important]
+> Local context overrides global context values.
+>
+
+| Reference | Scope | Use
 |-|-|
-az configure | Scoped globally across the CLI
-az local-context | Scoped locally to a specific working directory
+[az configure](/cli/azure/reference-index#az-configure) | Scoped globally across the CLI | Use for settings such as logging, data collection, and default argument values
+[az local-context](/cli/azure/local-context) | Scoped locally to a specific working directory | Use for individual workload sequential commands.
 
-Use `az configure` to set global variables used in the creation of an Azure storage account.
+### Command examples
+
+Use `az configure` to set a global variable used in the creation of an Azure storage account.
 
 ```azurecli
 # set the global variable for resource group
-az configure --defaults group=myGlobalVariableResourceGroup
+az configure --defaults group=myGlobalVariableRG
 
 # Create an Azure storage account omitting the resource group relying on the global variable value
 az storage account create \
@@ -124,7 +135,7 @@ You can see that a new storage account was created in the resource group found i
   "primaryLocation": "westeurope",
   "privateEndpointConnections": [],
   "provisioningState": "Succeeded",
-  "resourceGroup": "myGlobalVariableResourceGroup",
+  "resourceGroup": "myGlobalVariableRG",
   "routingPreference": null,
   "secondaryEndpoints": null,
   "secondaryLocation": null,
@@ -135,14 +146,14 @@ You can see that a new storage account was created in the resource group found i
 
 ```
 
-Use `az local-context` to set local context used in the creation of an Azure storage account.  Even if a global variable is set for the same object, local context will over-ride the global variable value.
+Use `az local-context` to set local context used in the creation of an Azure storage account.  If a global variable is set for the same object, local context will override the global variable value.
 
 ```azurecli
 # turn local context on
 az local-context on
 
 # Create a resource group in order to write to local context
-az group create --name myLocalContextResourceGroup --location westeurope
+az group create --name myLocalContextRG --location westeurope
 
 # Create an Azure storage account omitting the resource group relying on the local context value
 az storage account create \
@@ -152,12 +163,14 @@ az storage account create \
 
 ```
 
+Even though there was a global variable of `myGlobalVariableRG` specified for resource group, with local context turned on, the new storage account was created with `myLocalContextRG`.
+
 ```output
   },
   "primaryLocation": "westeurope",
   "privateEndpointConnections": [],
   "provisioningState": "Succeeded",
-  "resourceGroup": "myLocalContextResourceGroup",
+  "resourceGroup": "myLocalContextRG",
   "routingPreference": null,
   "secondaryEndpoints": null,
   "secondaryLocation": null,
@@ -170,5 +183,5 @@ az storage account create \
 
 ## See also
 
-- [Azure CLI Configuration using az configure](/cli/azure/azure-cli-configuration).
+- [Azure CLI Configuration using az configure](azure-cli-configuration.md).
 - [Tutorial: Use local context with the Azure CLI](azure-cli-local-context-tutorial.md)
