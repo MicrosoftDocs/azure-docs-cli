@@ -31,7 +31,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor](/cli/azure/monitor) | | The top level command group for all Azure CLI commands for Azure Monitor. | [Azure Monitor overview](/azure/azure-monitor/overview)
 | [az monitor action-group](/cli/azure/monitor/action-group) | | Manage action groups, which relate to notifications once an alert has fired. | [Azure Monitor alerts](/azure/azure-monitor/platform/alerts-overview)
 | [az monitor activity-log](/cli/azure/monitor/activity-log) | | Manage activity log including activity log alerts. | [Azure activity logs](/azure/azure-monitor/platform/activity-log)
-| [az monitor alert](/cli/azure/monitor/alert) | | DO NOT USE for new development.  This command manages older classic metric-based alert rules, which in all but a few cases have been migrated to the newer metric alert types. Use **az monitor metrics alert** instead. |
+| [az monitor alert](/cli/azure/monitor/alert) | | DO NOT USE for new development.  This command manages older classic metric-based alert rules, which in all but a few cases have been migrated to the newer metric alert types. Use [az monitor metrics alert](/cli/azure/monitor/metrics/alert) instead. |
 | [az monitor app-insights](/cli/azure/ext/application-insights/monitor) | yes | Manage Application Insights for application monitoring. | [Application insights overview](/azure/azure-monitor/app/app-insights-overview)
 | [az monitor autoscale](/cli/azure/monitor/autoscale) | | Manage autoscale settings. | [Autoscale overview](/azure/azure-monitor/platform/autoscale-overview)
 | [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | | Manage service diagnostic settings, which sets up collection and routing of many types of platform metrics and logs. | [Create diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings)
@@ -39,8 +39,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext-log-analytics-az-monitor-log-analytics-query) | yes | Commands for querying data in Log Analytics workspaces.  | [Get started with Log Analytics queries](/azure/azure-monitor/log-query/get-started-portal)
 | [az monitor log-profiles](/cli/azure/monitor/log-profiles) | | DO NOT USE for new development.  This command was previously used to route activity logs to Azure Monitor Logs and Log Analytics.  Use [diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings) instead.  | [Send the Activity log to a Log Analytics workspace](/azure/azure-monitor/platform/activity-log#send-to-log-analytics-workspace)
 | [az monitor metrics](/cli/azure/monitor/metrics) | | Manage platform metrics and near-realtime metric alert rules. | [Overview of metrics in Azure Monitor](/azure/azure-monitor/platform/data-platform-metrics) and [Understand how metric alerts work](/azure/azure-monitor/platform/alerts-metric-overview)
-| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resource. | [Use Azure Private Link to securely connect networks to Azure Monitor](azure/azure-monitor/platform/private-link-security)
-
+| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resource. | [Use Azure Private Link to securely connect networks to Azure Monitor](/azure/azure-monitor/platform/private-link-security)
 
 ### Installing extension references
 
@@ -86,4 +85,4 @@ az monitor activity-log alert create --name MyAlertName --resource-group MyResou
 
 - Discover additional [released](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
 
-- Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+- Learn more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
