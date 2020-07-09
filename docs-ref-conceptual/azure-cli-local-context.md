@@ -13,7 +13,7 @@ ms.technology: azure-cli
 
 # Azure CLI local context
 
-The Azure CLI [az local-context](/cli/azure/local-context) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  By storing parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az local-context](/cli/azure/local-context) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  When you store parameter values with local context, you reduce redundancy and can significantly shorten CLI command syntax.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
@@ -41,13 +41,12 @@ The following Azure CLI parameters are supported by local context.  The `resourc
 
 ## Sample script without local context
 
-Without local context, sequential CLI commands must repeatedly specify the same parameter values.  In this example, the `location`, `resource group name` or `storage account name` are repeated in each command.
+Without local context, sequential CLI commands must repeat the same parameter values.  In this example, the `location`, `resource group name` or `storage account name` are repeated in subsequent commands.
 
 ```azurecli
-
 # Reminder: function app and storage account names must be unique.
 
-# turn local context off
+# turn local context off for demonstration purposes
 az local-context off
 
 # Create a resource group.
@@ -72,24 +71,23 @@ az functionapp create \
 
 ## Sample script with local context
 
-With local context enabled, stored parameter values can be omitted from subsequent commands.  Local context also reduces the number of potential errors and ultimately leads to improving your in-tool experience.
+With local context enabled, stored parameter values can be omitted from sequential commands.
 
 ```azurecli
-
 # Reminder: function app and storage account names must be unique.
 
 # turn local context on
 az local-context on
 
-# Create a resource group.
+# Create a resource group which will store group and location in local context
 az group create --name RGlocalContext --location westeurope
 
-# Create an Azure storage account in the resource group omitting location and resource group name
+# Create an Azure storage account omitting location and resource group
 az storage account create \
   --name SAlocalContext \
   --sku Standard_LRS
 
-# Create a serverless function app in the resource group omitting storage account and resource group names
+# Create a serverless function app in the resource group omitting storage account and resource group
 az functionapp create \
   --name FAlocalContext \
   --consumption-plan-location westeurope \
@@ -101,7 +99,7 @@ az local-context show
 
 ## Compare local context with az configure
 
-There are two Azure CLI commands that can be used to default values: `az configure` and `az local-context`.  Use the `az configure` command to specify **global variables** such as group, location, or web.  Use `az local context` to specify **local default values** unique to your workload.  In both cases, the stored values are used by the CLI in place of required arguments.
+There are two Azure CLI commands that can be used to default parameter values: `az configure` and `az local-context`.  Use the `az configure` command to specify **global variables** such as group, location, or web.  Use `az local context` to specify **local default values** unique to your workload.  In both cases, the stored values are used by the CLI in place of required arguments.
 
 > [!Important]
 > Local context overrides global context values.
@@ -146,7 +144,7 @@ You can see that a new storage account was created in the resource group found i
 
 ```
 
-Use `az local-context` to set local context used in the creation of an Azure storage account.  If a global variable is set for the same object, local context will override the global variable value.
+Use `az local-context` to set local context used in the creation of an Azure storage account.  If a global variable is set for the same object, local context will override the global variable.
 
 ```azurecli
 # turn local context on
@@ -163,7 +161,7 @@ az storage account create \
 
 ```
 
-Even though there was a global variable of `myGlobalVariableRG` specified for resource group, with local context turned on, the new storage account was created with `myLocalContextRG`.
+Even with a global variable set for resource group with a value of `myGlobalVariableRG`, with local context turned on, the new storage account was created with `myLocalContextRG`.
 
 ```output
   },
@@ -183,5 +181,5 @@ Even though there was a global variable of `myGlobalVariableRG` specified for re
 
 ## See also
 
-- [Azure CLI Configuration using az configure](azure-cli-configuration.md).
-- [Tutorial: Use local context with the Azure CLI](azure-cli-local-context-tutorial.md)
+* [Azure CLI Configuration using az configure](azure-cli-configuration.md)
+* [Tutorial: Use local context with the Azure CLI](azure-cli-local-context-tutorial.md)

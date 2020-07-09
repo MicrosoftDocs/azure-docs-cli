@@ -13,17 +13,15 @@ ms.technology: azure-cli
 
 # Tutorial: Use local context with sequential Azure CLI commands
 
-Azure CLI has a local context feature that enables you to store parameter values for continued use.  In this tutorial, you learn how to work with local context parameter values, and use local context to efficiently execute sequential commands.
+Azure CLI offers local context that enables you to store parameter values for continued use.  In this tutorial, you learn how to work with local context parameter values, and use these local values to efficiently execute sequential commands.
 
 If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
 
 ## Prepare your environment
 
-1. Use Azure Cloud Shell
+1. [Install the Azure CLI](install-azure-cli.md)
 
-   Azure hosts Azure Cloud Shell, an interactive shell environment that you use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You use the Cloud Shell preinstalled commands to run the code in this article.
-
-   Start Cloud Shell by using one of these methods:
+   If you prefer, you can also use Azure Cloud Shell to complete the steps in this tutorial.  Azure Cloud Shell is an interactive shell environment that you use through your browser.  Start Cloud Shell by using one of these methods:
 
    - Select **Try It** in the upper-right corner of a code block. **Try It** will open Azure Cloud Shell, but it doesn't automatically copy the code to Cloud Shell.
 
@@ -91,37 +89,34 @@ az local-context show
 }
 ```
 
-Using the new local context values, now create a storage account.  This example also removes all prior local context entries by using the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command.
+Using the new local context values, now create a storage account.
 
 ```azurecli
-# Clear all local context values for demonstration
-az local-context delete --all
-
 # Create a storage account
-az storage account create --name SA1inAzCLI --resource-group RG1inAzCLI --location eastus
+az storage account create --name SA1inAzCLI
 
-# See new local context values
+# See that storage_account_name has been added to local context
 az local-context show
 ```
 
 ```output
 {
   "all": {
-    "location": "eastus",
+    "location": "eastus2",
     "resource_group_name": "RG1inAzCLI",
     "storage_account_name": "SA1inAzCLI"
   }
 }
 ```
 
-Only the `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.  In contrast, if you want to store `storage_account_name` you must use a create command
+If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI local context](azure-cli-local-context#local-context-parameters) for a full list of supported parameters, and the storage action needed to retain values in local context.  This example also removes all prior local context entries by using the [az local-context delete](/cli/azure/local-context#az-local-context-delete) command.
 
 ```azurecli
 # Clear all local context values for demonstration
 az local-context delete --all
 
 # List all storage accounts
-az storage account show --resource-group RG1inAzCLIcontext --name SA1inAzCLI
+az storage account show --resource-group RG1inAzCLI --name SA1inAzCLI
 
 # See the new local context value created only for resource group
 az local-context show
@@ -143,7 +138,7 @@ Updating a local context parameter value is as simple as executing a command con
 # Clear all local context values for demonstration
 az local-context delete --all
 
-# Create a storage account placing `--location`, `resource_group_name`, and `storage_account_name` into local context
+# Create a storage account placing `location`, `resource_group_name`, and `storage_account_name` into local context
 az storage account create --name SA1inAzCLI --resource-group RG1inAzCLI --location eastus2
 
 # See local context entries
@@ -164,7 +159,7 @@ Replace current local context entries.
 
 ```azurecli
 # Create a second storage account while changing both the `storage_account_name' and `location` local context values
-az storage account create --name SA2inAzCLI --location westus
+az storage account create --name SA2inAzCLI --location westeurope
 
 # See new local context values
 az local-context show
@@ -173,7 +168,7 @@ az local-context show
 ```output
 {
   "all": {
-    "location": "westus",
+    "location": "westeurope",
     "resource_group_name": "RG1inAzCLI",
     "storage_account_name": "SA2inAzCLI"
   }
@@ -193,7 +188,6 @@ These scripts create an Azure Function app using the Consumption plan.
 ### [With local context](#tab/azure-cli)
 
 ```azurecli
-
 # Reminder: function app and storage account names must be unique.
 
 # turn local context on
@@ -221,7 +215,6 @@ az local-context show
 ### [Without local context](#tab/azure-portal)
 
 ```azurecli
-
 # Reminder: function app and storage account names must be unique.
 
 # turn local context off
@@ -281,7 +274,6 @@ az local-context delete --name resource_group_name
 You can turn local context off by using the [az local-context off](/cli/azure/local-context#az-local-context-off) command, but your saved local context data won't be deleted.
 
 ```azurecli
-
 # Turn local context off
 az local-context off
 

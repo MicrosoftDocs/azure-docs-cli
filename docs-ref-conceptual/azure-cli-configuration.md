@@ -108,6 +108,6 @@ When you provide a default value, that argument is no longer required by any com
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
 > including `az configure`. The ones listed in the table above are the only values you should change yourself.
 
-## See alos
+## See also
 
-- [Azure CLI local context](Azure CLI local context)
+* [Azure CLI local context](azure-cli-local-context.md)
