@@ -12,6 +12,8 @@ ms.devlang: azurecli
 
 # Azure CLI release notes
 
+# [Current release notes](#tab/azure-cli)
+
 ## July 14, 2020
 
 Version 2.9.0
@@ -126,8 +128,6 @@ Version 2.9.0
 
 * Bugfix: az webapp log deployment show - return deployment logs instead of log metadata
 * Bugfix: az webapp vnet-integration add - fix error handling if bad vnet name, support vnet resource ID
-
-# [Current release notes](#tab/azure-cli)
 
 ## June 23, 2020
 
