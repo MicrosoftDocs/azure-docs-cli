@@ -26,7 +26,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 ### References
 
-| Reference | Is an extension | Description | For more information see
+| Reference | Install extension | Description | For more information see
 |-|-|-|-|
 | [az monitor](/cli/azure/monitor) | | The top level command group for all Azure CLI commands for Azure Monitor. | [Azure Monitor overview](/azure/azure-monitor/overview)
 | [az monitor action-group](/cli/azure/monitor/action-group) | | Manage action groups, which relate to notifications once an alert has fired. | [Azure Monitor alerts](/azure/azure-monitor/platform/alerts-overview)
