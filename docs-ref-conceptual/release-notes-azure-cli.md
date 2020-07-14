@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/23/2020
+ms.date: 07/14/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,121 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## July 14, 2020
+
+Version 2.9.0
+
+### ACR
+
+* Handle log artifact link from Registry to stream logs
+* Deprecate helm2 commands
+
+### AKS
+
+* `az aks create`: add --enable-aad argument
+* `az aks update`: add --enable-aad argument
+
+### APIM
+
+* Added general az apim api commands
+
+### AppConfig
+
+* Add example for using --fields in appconfig revision
+
+### AppService
+
+* `az functionapp create`: Added support for Java 11 and Powershell 7. Added Stacks API Support.
+* Fix #14208 multi-container app creation fails
+* Fix az webapp create - use hardcoded runtime stacks
+
+### ARM
+
+* `az resource tag`: Fix the problem of tagging resources with resource type `Microsoft.ContainerInstance/containerGroups`
+
+### Compute
+
+* Bump version disks 2020-05-01, compute 2020-06-01
+* Double encryption of disk encryption set
+* `az vmss update`: support specify cross tenant image.
+* `az sig image-version create`: support specify cross tenant image.
+* vm/vmss create: Encryption of cache & data-in-transit for OS/Data disks and temp disks for VM & VMSS
+* Add simulate-eviction operation for VM and VMSS
+
+### CosmosDB
+
+* Recent features: Autoscale, IpRules, EnableFreeTier and EnableAnalyticalStorage
+
+### EventGrid
+
+* Add CLI support for 2020-04-01-preview and mark preview features with is_Preview=True
+
+### Find
+
+* Fix #14094 az find Fix Queries failing when not logged in and when telemetry is disabled
+
+### HDInsight
+
+* Add two commands to support hdinsight node reboot feature
+
+### Monitor
+
+* Remove preview flag for commands under Log Analytics workspace
+* `az monitor diagnostic-settings subscription`: Support diagnositc settings for subscription
+* `az monitor metrics`: support ',' and '|' in metric name
+* `az monitor log-analytics workspace data-export`: support log analytics data export
+
+### Network
+
+* `az network application-gateway frontend-ip update`: Deprecating the --public-ip-address parameter
+* Bump azure-mgmt-network to 11.0.0
+* `az network express-route gateway connection`: support routing configuration
+* `az network virtual-appliance`: Support Azure network virtual appliance.
+* Application Gateway support private link feature
+
+### PolicyInsights
+
+* `az policy state`: add trigger-scan command to trigger policy compliance evaluations
+* `az policy state list`: expose versions of policy entities in each compliance record
+
+### Profile
+
+* `az account get-access-token`: Show expiresOn for Managed Identity
+
+### RDBMS
+
+* Support Minimum TLS version
+* Add Infrastructure Encryption for Azure Postgres and MySQL
+
+### Security
+
+* Add allowed_connections commands
+* Add Adaptive network hardeningss commands
+* Add adaptive_application_controls commands
+* Addition of az security iot-solution/ iot-alerts/iot-recommendations/iot-analytics REST to Azure CLI
+* Add regulatory compliance CLI
+
+### SignalR
+
+* Add features including managing private endpoint connections, network rules and upstream
+
+### SQL
+
+* `az sql mi create`, `az sql mi update`: Add `--tags` parameter to support resource tagging
+* `az sql mi failover`: Support failover from primary or secondary point
+
+### Storage
+
+* `az storage account create/update`: Add --allow-blob-public-access to allow or disallow public access for blob and containers
+* `az storage account create/update`: Add `--min-tls-version` to support setting the minimum TLS version to be permitted on requests to storage.
+* Remove check in token credential
+* Fix the storage account name in examples
+
+### Webapp
+
+* Bugfix: az webapp log deployment show - return deployment logs instead of log metadata
+* Bugfix: az webapp vnet-integration add - fix error handling if bad vnet name, support vnet resource ID
 
 ## June 23, 2020
 
