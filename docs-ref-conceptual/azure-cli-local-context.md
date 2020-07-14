@@ -30,14 +30,14 @@ Local context data is kept in a file named `.local_context` which is stored in y
 
 The following Azure CLI parameters are supported by local context.  The `resource_group_name` and `location` parameters are stored differently in that you can add them to local context _without_ executing a create command.
 
-| Local context parameter | Storage action
-|-|-|
-| location | Execute any command
-| resource_group_name | Execute any command
-| vnet_name | Execute a create command
-| storage_account_name | Execute a create command
-| webapp_name | Execute a create command
-| function_app_name | Execute a create command
+| Local context parameter | Storage action | Supported by
+|-|-|-|
+| location | Execute any command | All Azure CLI references
+| resource_group_name | Execute any command | All Azure CLI references
+| vnet_name | Execute a create command | Azure Web Apps only
+| storage_account_name | Execute a create command |  Azure Web Apps only
+| webapp_name | Execute a create command | Azure Web Apps only
+| function_app_name | Execute a create command | Azure Functions only
 
 ## Sample script without local context
 
@@ -104,10 +104,10 @@ There are two Azure CLI commands that can be used to default parameter values: `
 > Local context overrides global context values.
 >
 
-| Reference | Scope | Use
-|-|-|
-[az configure](/cli/azure/reference-index#az-configure) | Scoped globally across the CLI | Use for settings such as logging, data collection, and default argument values
-[az local-context](/cli/azure/local-context) | Scoped locally to a specific working directory | Use for individual workload sequential commands.
+| Reference | Scope | Set | Use
+|-|-|-|-|
+[az configure](/cli/azure/reference-index#az-configure) | Scoped globally across the CLI | Set explicitly using `az configure` | Use for settings such as logging, data collection, and default argument values
+[az local-context](/cli/azure/local-context) | Scoped locally to a specific working directory | Set automatically once local context is turned on | Use for individual workload sequential commands.
 
 ### Command examples
 
