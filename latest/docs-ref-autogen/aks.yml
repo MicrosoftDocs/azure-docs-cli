@@ -117,6 +117,9 @@ items:
   - summary: Create a kubernetes cluster with supporting Windows agent pools.
     syntax:
       content: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --vm-set-type VirtualMachineScaleSet --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$'
+  - summary: Create a kubernetes cluster with managed AAD enabled.
+    syntax:
+      content: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   parameters:
   - isRequired: true
     name: --name -n
@@ -125,6 +128,9 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --aad-admin-group-object-ids
+    summary: Comma seperated list of aad group object IDs that will be set as cluster admin.
     description: ''
   - name: --aad-client-app-id
     summary: The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
@@ -163,6 +169,9 @@ items:
   - name: --docker-bridge-address
     summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
     description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
+  - name: --enable-aad
+    summary: Enable managed AAD feature for cluster.
+    description: ''
   - name: --enable-addons -a
     summary: Enable the Kubernetes addons in a comma-separated list.
     description: >-
@@ -854,6 +863,12 @@ items:
   - summary: Restrict apiserver traffic in a kubernetes cluster to agentpool nodes.
     syntax:
       content: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 0.0.0.0/32
+  - summary: Update a AKS-managed AAD cluster with tenant ID or admin group object IDs.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
+  - summary: Update an existing AKS AAD-Integrated cluster to the new AKS-managed AAD experience.
+    syntax:
+      content: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad
   parameters:
   - isRequired: true
     name: --name -n
@@ -862,6 +877,12 @@ items:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    description: ''
+  - name: --aad-admin-group-object-ids
+    summary: Comma seperated list of aad group object IDs that will be set as cluster admin.
+    description: ''
+  - name: --aad-tenant-id
+    summary: The ID of an Azure Active Directory tenant.
     description: ''
   - name: --api-server-authorized-ip-ranges
     summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
@@ -874,6 +895,9 @@ items:
     description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --enable-aad
+    summary: Enable managed AAD feature for cluster.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
@@ -1310,7 +1334,7 @@ globalParameters:
 doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
 doc_source_url_path: src/azure-cli/azure/cli/command_modules/acs/_help.py
 original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/d7902fd7d7d9bcebafbce7f929e266e977be50d6/src/azure-cli/azure/cli/command_modules/acs/_help.py
-updated_at: 6/19/2020 1:36:23 AM
-ms.date: 06/19/2020
+gitcommit: https://github.com/Azure/azure-cli/blob/a9fe6167381b53dac19a3007f726adf27b64f28b/src/azure-cli/azure/cli/command_modules/acs/_help.py
+updated_at: 7/6/2020 6:18:02 AM
+ms.date: 07/06/2020
 description: Manage Azure Kubernetes Services.
