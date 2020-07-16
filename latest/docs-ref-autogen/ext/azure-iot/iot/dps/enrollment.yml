@@ -40,6 +40,9 @@ items:
   - summary: Create an enrollment 'MyEnrollment' with hashed allocation policy and multiple hubs in the Azure IoT Device Provisioning service '{dps_name}' in the resource group '{resource_group_name}'.
     syntax:
       content: az iot dps enrollment create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --attestation-type tpm --allocation-policy hashed --endorsement-key 14963E8F3BA5B3984110B3C1CA8E8B89 --iot-hubs "{iot_hub_host_name1} {iot_hub_host_name2}"
+  - summary: Create an enrollment 'MyEnrollment' with custom allocation policy,
+    syntax:
+      content: az iot dps enrollment create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --attestation-type symmetrickey --allocation-policy custom --webhook-url {webhook_url} --api-version {api_version}
   parameters:
   - isRequired: true
     name: --at --attestation-type
@@ -59,8 +62,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --allocation-policy --ap
-    parameterValueGroup: geolatency, hashed, static
+    parameterValueGroup: custom, geolatency, hashed, static
     summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --api-version --av
+    summary: 'The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.'
     description: ''
   - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate. When choosing x509 as attestation type, one of the certificate path is required.
@@ -103,6 +109,9 @@ items:
     description: ''
   - name: --secondary-key --sk
     summary: The secondary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --webhook-url --wh
+    summary: The webhook URL used for custom allocation requests.
     description: ''
 - uid: ext_azure-iot_az_iot_dps_enrollment_delete
   name: az iot dps enrollment delete
@@ -196,8 +205,11 @@ items:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
     description: ''
   - name: --allocation-policy --ap
-    parameterValueGroup: geolatency, hashed, static
+    parameterValueGroup: custom, geolatency, hashed, static
     summary: Type of allocation for device assigned to the Hub.
+    description: ''
+  - name: --api-version --av
+    summary: 'The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.'
     description: ''
   - name: --certificate-path --cp
     summary: The path to the file containing the primary certificate.
@@ -251,6 +263,9 @@ items:
     description: ''
   - name: --secondary-key --sk
     summary: The secondary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --webhook-url --wh
+    summary: The webhook URL used for custom allocation requests.
     description: ''
 commands:
 - uid: ext_azure-iot_az_iot_dps_enrollment_create
