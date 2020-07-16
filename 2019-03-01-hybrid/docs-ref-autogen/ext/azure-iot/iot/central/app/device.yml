@@ -12,7 +12,10 @@ items:
   - ext_azure-iot_az_iot_central_app_device_list
   - ext_azure-iot_az_iot_central_app_device_registration_info
   - ext_azure-iot_az_iot_central_app_device_registration_summary
+  - ext_azure-iot_az_iot_central_app_device_run_command
   - ext_azure-iot_az_iot_central_app_device_show
+  - ext_azure-iot_az_iot_central_app_device_show_command_history
+  - ext_azure-iot_az_iot_central_app_device_show_credentials
 - uid: ext_azure-iot_az_iot_central_app_device_create
   name: az iot central app device create
   summary: Create a device in IoT Central.
@@ -28,7 +31,7 @@ items:
       content: az iot central app device create --app-id {appid} --device-id {deviceid} --instance-of {devicetemplateid} --simulated
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - isRequired: true
@@ -64,7 +67,7 @@ items:
       content: az iot central app device delete --app-id {appid} --device-id {deviceid}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - isRequired: true
@@ -90,7 +93,7 @@ items:
       content: az iot central app device list --app-id {appid}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - name: --central-api-uri --central-dns-suffix
@@ -115,7 +118,7 @@ items:
       content: az iot central app device registration-info --app-id {appid} --device-id {deviceid}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - isRequired: true
@@ -144,8 +147,56 @@ items:
       content: az iot central app device registration-summary --app-id {appid}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
+    description: ''
+  - name: --token
+    summary: "Authorization token for request. More info available here: <a href=\"https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/\">https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/</a> MUST INCLUDE type (e.g. 'SharedAccessToken ...', 'Bearer ...'). Example: 'Bearer someBearerTokenHere'."
+    description: ''
+- uid: ext_azure-iot_az_iot_central_app_device_run_command
+  name: az iot central app device run-command
+  summary: Run a command on a device and view associated response. Does NOT monitor property updates that the command may perform.
+  description: >-
+    Note: payload should be nested under "request".
+
+    i.e. if your device expects the payload in a shape {"key": "value"}
+
+    payload should be {"request": {"key": "value"}}.
+
+    --content can be pointed at a filepath too (.../path/to/payload.json).
+  langs:
+  - azurecli
+  examples:
+  - summary: Run command response
+    syntax:
+      content: az iot central app device run-command --app-id {appid} --device-id {deviceid} --interface-id {interfaceid} --command-name {commandname} --content {payload}
+  - summary: Short Run command response
+    syntax:
+      content: az iot central app device run-command -n {appid} -d {deviceid} -i {interfaceid} --cn {commandname} -k {payload}
+  parameters:
+  - isRequired: true
+    name: --app-id -n
+    summary: Target App.
+    description: ''
+  - isRequired: true
+    name: --cn --command-name
+    summary: 'Command name as specified in device template. Example: run_firmware_update.'
+    description: ''
+  - isRequired: true
+    name: --content -k
+    summary: "Configuration for request. Provide path to JSON file or raw stringified JSON. [File Path Example: ./path/to/file.json] [Stringified JSON Example: {'a': 'b'}]."
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - isRequired: true
+    name: --interface-id -i
+    summary: 'Interface name as specified in the device template. Example: c2dTestingTemplate_356.'
     description: ''
   - name: --central-api-uri --central-dns-suffix
     defaultValue: azureiotcentral.com
@@ -166,7 +217,67 @@ items:
       content: az iot central app device show --app-id {appid} --device-id {deviceid}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
+    summary: Target App.
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
+    description: ''
+  - name: --token
+    summary: "Authorization token for request. More info available here: <a href=\"https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/\">https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/</a> MUST INCLUDE type (e.g. 'SharedAccessToken ...', 'Bearer ...'). Example: 'Bearer someBearerTokenHere'."
+    description: ''
+- uid: ext_azure-iot_az_iot_central_app_device_show_command_history
+  name: az iot central app device show-command-history
+  summary: Get most recent command-response request and response payload.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Show command response
+    syntax:
+      content: az iot central app device show-command-history --app-id {appid} --device-id {deviceid} --interface-id {interfaceid} --command-name {commandname}
+  parameters:
+  - isRequired: true
+    name: --app-id -n
+    summary: Target App.
+    description: ''
+  - isRequired: true
+    name: --cn --command-name
+    summary: 'Command name as specified in device template. Example: run_firmware_update.'
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - isRequired: true
+    name: --interface-id -i
+    summary: 'Interface name as specified in the device template. Example: c2dTestingTemplate_356.'
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
+    description: ''
+  - name: --token
+    summary: "Authorization token for request. More info available here: <a href=\"https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/\">https://docs.microsoft.com/en-us/learn/modules/manage-iot-central-apps-with-rest-api/</a> MUST INCLUDE type (e.g. 'SharedAccessToken ...', 'Bearer ...'). Example: 'Bearer someBearerTokenHere'."
+    description: ''
+- uid: ext_azure-iot_az_iot_central_app_device_show_credentials
+  name: az iot central app device show-credentials
+  summary: Get device credentials from IoT Central.
+  description: ''
+  langs:
+  - azurecli
+  examples:
+  - summary: Get device credentials for a device
+    syntax:
+      content: az iot central app device show-credentials --app-id {appid} --device-id {deviceid}
+  parameters:
+  - isRequired: true
+    name: --app-id -n
     summary: Target App.
     description: ''
   - isRequired: true
@@ -196,9 +307,18 @@ commands:
 - uid: ext_azure-iot_az_iot_central_app_device_registration_summary
   name: az iot central app device registration-summary
   summary: Provides a registration summary of all the devices in an app.
+- uid: ext_azure-iot_az_iot_central_app_device_run_command
+  name: az iot central app device run-command
+  summary: Run a command on a device and view associated response. Does NOT monitor property updates that the command may perform.
 - uid: ext_azure-iot_az_iot_central_app_device_show
   name: az iot central app device show
   summary: Get a device from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_show_command_history
+  name: az iot central app device show-command-history
+  summary: Get most recent command-response request and response payload.
+- uid: ext_azure-iot_az_iot_central_app_device_show_credentials
+  name: az iot central app device show-credentials
+  summary: Get device credentials from IoT Central.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

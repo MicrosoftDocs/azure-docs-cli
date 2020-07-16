@@ -16,7 +16,9 @@ items:
   - azurecli
   children:
   - ext_azure-iot_az_iot_central_app_monitor_events
+  - ext_azure-iot_az_iot_central_app_monitor_properties
   - ext_azure-iot_az_iot_central_app_validate_messages
+  - ext_azure-iot_az_iot_central_app_validate_properties
 - uid: ext_azure-iot_az_iot_central_app_monitor_events
   name: az iot central app monitor-events
   summary: Monitor device telemetry & messages sent to the IoT Hub for an IoT Central app.
@@ -61,7 +63,7 @@ items:
       content: az iot central app monitor-events --app-id {app_id} --output json
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - name: --central-api-uri --central-dns-suffix
@@ -96,6 +98,34 @@ items:
   - name: --yes -y
     parameterValueGroup: false, true
     summary: 'Skip user prompts. Indicates acceptance of dependency installation (if required). Used primarily for automation scenarios. Default: false.'
+    description: ''
+- uid: ext_azure-iot_az_iot_central_app_monitor_properties
+  name: az iot central app monitor-properties
+  summary: Monitor desired and reported properties sent to/from the IoT Hub for an IoT Central app.
+  description: >-
+    Polls device-twin from central and compares it to the last device-twin
+
+    Parses out properties from device-twin, and detects if changes were made
+
+    Prints subset of properties that were changed within the polling interval.
+  langs:
+  - azurecli
+  examples:
+  - summary: Basic usage
+    syntax:
+      content: az iot central app monitor-properties --app-id {app_id} -d {device_id}
+  parameters:
+  - isRequired: true
+    name: --app-id -n
+    summary: Target App.
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
     description: ''
 - uid: ext_azure-iot_az_iot_central_app_validate_messages
   name: az iot central app validate-messages
@@ -132,7 +162,7 @@ items:
       content: az iot central app validate-messages --app-id {app_id} -d {device_id} --cg {consumer_group_name}
   parameters:
   - isRequired: true
-    name: --app-id
+    name: --app-id -n
     summary: Target App.
     description: ''
   - name: --central-api-uri --central-dns-suffix
@@ -186,6 +216,40 @@ items:
     parameterValueGroup: false, true
     summary: 'Skip user prompts. Indicates acceptance of dependency installation (if required). Used primarily for automation scenarios. Default: false.'
     description: ''
+- uid: ext_azure-iot_az_iot_central_app_validate_properties
+  name: az iot central app validate-properties
+  summary: Validate reported properties sent to IoT Central app.
+  description: >-
+    Performs validations on reported property updates:
+
+    1) Warning - Properties sent by device that are not modeled in central.
+
+    2) Warning - Properties with same name declared in multiple interfaces
+       should have interface name included as part of the property update.
+  langs:
+  - azurecli
+  examples:
+  - summary: Basic usage
+    syntax:
+      content: az iot central app validate-properties --app-id {app_id} -d {device_id}
+  parameters:
+  - isRequired: true
+    name: --app-id -n
+    summary: Target App.
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: Central dns suffix. This enables running cli commands against non public/prod environments.
+    description: ''
+  - name: --minimum-severity
+    defaultValue: warning
+    parameterValueGroup: error, info, warning
+    summary: Minimum severity of issue required for reporting.
+    description: ''
 commands:
 - uid: ext_azure-iot_az_iot_central_app_device
   name: az iot central app device
@@ -205,9 +269,18 @@ commands:
 - uid: ext_azure-iot_az_iot_central_app_device_registration_summary
   name: az iot central app device registration-summary
   summary: Provides a registration summary of all the devices in an app.
+- uid: ext_azure-iot_az_iot_central_app_device_run_command
+  name: az iot central app device run-command
+  summary: Run a command on a device and view associated response. Does NOT monitor property updates that the command may perform.
 - uid: ext_azure-iot_az_iot_central_app_device_show
   name: az iot central app device show
   summary: Get a device from IoT Central.
+- uid: ext_azure-iot_az_iot_central_app_device_show_command_history
+  name: az iot central app device show-command-history
+  summary: Get most recent command-response request and response payload.
+- uid: ext_azure-iot_az_iot_central_app_device_show_credentials
+  name: az iot central app device show-credentials
+  summary: Get device credentials from IoT Central.
 - uid: ext_azure-iot_az_iot_central_app_device_template
   name: az iot central app device-template
   summary: Manage and configure IoT Central device templates.
@@ -235,9 +308,15 @@ commands:
 - uid: ext_azure-iot_az_iot_central_app_monitor_events
   name: az iot central app monitor-events
   summary: Monitor device telemetry & messages sent to the IoT Hub for an IoT Central app.
+- uid: ext_azure-iot_az_iot_central_app_monitor_properties
+  name: az iot central app monitor-properties
+  summary: Monitor desired and reported properties sent to/from the IoT Hub for an IoT Central app.
 - uid: ext_azure-iot_az_iot_central_app_validate_messages
   name: az iot central app validate-messages
   summary: Validate messages sent to the IoT Hub for an IoT Central app.
+- uid: ext_azure-iot_az_iot_central_app_validate_properties
+  name: az iot central app validate-properties
+  summary: Validate reported properties sent to IoT Central app.
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
