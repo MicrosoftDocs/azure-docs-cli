@@ -78,7 +78,7 @@ see the [Python documentation on INI](https://docs.python.org/3/library/configpa
 ## CLI configuration values and environment variables
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
-environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, `output` default for `core` is set in the `AZURE_CORE_OUTPUT` variable, and the `storage_account` default for `batchai` is set in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable.
+environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, `output` default for `core` is set in the `AZURE_CORE_OUTPUT` variable, the `storage_account` default for `batchai` is set in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable, and the default `location` is set in the `AZURE_DEFAULTS_LOCATION` variable.
 
 When you provide a default value, that argument is no longer required by any command. Instead, the default value is used.
 
@@ -91,6 +91,8 @@ When you provide a default value, that argument is no longer required by any com
 | | no\_color | boolean | Disable color. Originally colored messages will be prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This bypasses the issue of a third-party library where the terminal's color cannot revert back after a `stdout` redirection. |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
+| __defaults__ | group | string | The default resource group to use for all commands. |
+| | location | string | The default location to use for all commands. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
 | | account | string | The default account name to use for `az storage` commands. |
 | | key | string | The default account key to use for `az storage` commands. |
