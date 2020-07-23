@@ -105,9 +105,9 @@ There may be cases where a service you are interested in does not have CLI comma
 
 If neither generic update arguments nor `az resource` meets your needs, you can use `az rest` command to call the REST API. It automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`.
 
-This is extremely useful for calling [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/api/overview?toc=./ref/toc.json&view=graph-rest-1.0) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
+This is extremely useful for calling [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json&view=graph-rest-1.0) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
 
-For example, to update `redirectUris` for an [Application](https://docs.microsoft.com/en-us/graph/api/resources/application?view=graph-rest-1.0), we call the [Update application](https://docs.microsoft.com/en-us/graph/api/application-update?view=graph-rest-1.0&tabs=http) REST API with:
+For example, to update `redirectUris` for an [Application](/graph/api/resources/application?view=graph-rest-1.0), we call the [Update application](/graph/api/application-update?view=graph-rest-1.0&tabs=http) REST API with:
 
 ```sh
 # Line breaks for legibility only
@@ -129,7 +129,7 @@ When using `--url-parameters` for requests in the form of OData, please make sur
 This becomes an issue because when the command shell (Bash, Zsh, Windows Command Prompt, PowerShell, etc) parses the CLI command, it will interpret the quotes and spaces. Always refer to the documents when you are uncertain about the usage of a shell:
 
 - Bash: [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
-- PowerShell: [About Quoting Rules](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
+- PowerShell: [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
     - Due to a known issue [#1995](https://github.com/PowerShell/PowerShell/issues/1995) of PowerShell, some extra escaping rules apply. See [Quoting issues with PowerShell](quoting-issues-with-powershell.md) for more information.
 - Windows Command Prompt: [How-to: Escape Characters, Delimiters and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
 
@@ -152,7 +152,7 @@ To avoid unanticipated results, here are a few suggestions:
     - `--arg foo bar`: OK. Unquoted, space-separated list
     - `--arg "foo" "bar"`: OK: Quoted, space-separated list
     - `--arg "foo bar"`: BAD. This is a string with a space in it, not a space-separated list.
-9. When running Azure CLI commands in PowerShell, parsing errors will occur when the arguments contain special characters of PowerShell, such as at `@`. You can solve this problem by adding `` ` `` before the special character to escape it, or by enclosing the argument with single or double quotes `'`/`"`. For example, `az group deployment create --parameters @parameters.json` doesn't work in PowerShell because `@` is parsed as a [splatting symbol](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting). To fix this, you may change the argument to `` `@parameters.json`` or `'@parameters.json'`.
+9. When running Azure CLI commands in PowerShell, parsing errors will occur when the arguments contain special characters of PowerShell, such as at `@`. You can solve this problem by adding `` ` `` before the special character to escape it, or by enclosing the argument with single or double quotes `'`/`"`. For example, `az group deployment create --parameters @parameters.json` doesn't work in PowerShell because `@` is parsed as a [splatting symbol](/powershell/module/microsoft.powershell.core/about/about_splatting). To fix this, you may change the argument to `` `@parameters.json`` or `'@parameters.json'`.
 10. When using `--query` with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell. For example, in Bash:
     ```sh
     # Wrong, as the dash needs to be quoted in a JMESPath query
