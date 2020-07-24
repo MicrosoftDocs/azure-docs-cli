@@ -1,125 +1,123 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_vm_diagnostics
-  name: az vm diagnostics
-  summary: Configure the Azure Virtual Machine diagnostics extension.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_vm_diagnostics_get_default_config
-  - az_vm_diagnostics_set
+### YamlMime:AzureCLIGroup
+uid: az_vm_diagnostics
+name: az vm diagnostics
+summary: Configure the Azure Virtual Machine diagnostics extension.
+description: ''
+directCommands:
 - uid: az_vm_diagnostics_get_default_config
   name: az vm diagnostics get-default-config
   summary: Get the default configuration settings for a VM.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az vm diagnostics get-default-config [--is-windows-os]
+                                         [--subscription]
   examples:
   - summary: Get the default diagnostics for a Linux VM and override the storage account name and the VM resource ID.
-    syntax:
-      content: >-
-        az vm diagnostics get-default-config \
-            | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#MyStorageAccount#g" \
-            | sed "s#__VM_OR_VMSS_RESOURCE_ID__#MyVmResourceId#g"
+    syntax: >-
+      az vm diagnostics get-default-config \
+          | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#MyStorageAccount#g" \
+          | sed "s#__VM_OR_VMSS_RESOURCE_ID__#MyVmResourceId#g"
   - summary: Get the default diagnostics for a Windows VM.
-    syntax:
-      content: az vm diagnostics get-default-config --is-windows-os
-  parameters:
+    syntax: az vm diagnostics get-default-config --is-windows-os
+  optionalParameters:
   - name: --is-windows-os
     summary: For Windows VMs.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_diagnostics_set
   name: az vm diagnostics set
   summary: Configure the Azure VM diagnostics extension.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az vm diagnostics set --settings
+                          [--ids]
+                          [--no-auto-upgrade {false, true}]
+                          [--protected-settings]
+                          [--resource-group]
+                          [--subscription]
+                          [--version]
+                          [--vm-name]
   examples:
   - summary: Set up default diagnostics on a Linux VM for Azure Portal VM metrics graphs and syslog collection.
-    syntax:
-      content: >-
-        # Set the following 3 parameters first.
+    syntax: >-
+      # Set the following 3 parameters first.
 
-        my_resource_group={Resource group name containing your Linux VM and the storage account}
+      my_resource_group={Resource group name containing your Linux VM and the storage account}
 
-        my_linux_vm={Your Azure Linux VM name}
+      my_linux_vm={Your Azure Linux VM name}
 
-        my_diagnostic_storage_account={Your Azure storage account for storing VM diagnostic data}
-
-
-        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query "id" -o tsv)
+      my_diagnostic_storage_account={Your Azure storage account for storing VM diagnostic data}
 
 
-        default_config=$(az vm diagnostics get-default-config \
-            | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g" \
-            | sed "s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g")
+      my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_linux_vm --query "id" -o tsv)
 
-        storage_sastoken=$(az storage account generate-sas \
-            --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z \
-            --permissions wlacu --resource-types co --services bt -o tsv)
 
-        protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
-            'storageAccountSasToken': '$storage_sastoken'}"
+      default_config=$(az vm diagnostics get-default-config \
+          | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g" \
+          | sed "s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g")
 
-        az vm diagnostics set --settings "$default_config" \
-            --protected-settings "$protected_settings" \
-            --resource-group $my_resource_group --vm-name $my_linux_vm
+      storage_sastoken=$(az storage account generate-sas \
+          --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z \
+          --permissions wlacu --resource-types co --services bt -o tsv)
+
+      protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
+          'storageAccountSasToken': '$storage_sastoken'}"
+
+      az vm diagnostics set --settings "$default_config" \
+          --protected-settings "$protected_settings" \
+          --resource-group $my_resource_group --vm-name $my_linux_vm
   - summary: Set up default diagnostics on a Windows VM.
-    syntax:
-      content: >-
-        # Set the following 3 parameters first.
+    syntax: >-
+      # Set the following 3 parameters first.
 
-        my_resource_group={Resource group name containing your Windows VM and the storage account}
+      my_resource_group={Resource group name containing your Windows VM and the storage account}
 
-        my_windows_vm={Your Azure Windows VM name}
+      my_windows_vm={Your Azure Windows VM name}
 
-        my_diagnostic_storage_account={Your Azure storage account for storing VM diagnostic data}
-
-
-        my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_windows_vm --query "id" -o tsv)
+      my_diagnostic_storage_account={Your Azure storage account for storing VM diagnostic data}
 
 
-        default_config=$(az vm diagnostics get-default-config  --is-windows-os \
-            | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g" \
-            | sed "s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g")
+      my_vm_resource_id=$(az vm show -g $my_resource_group -n $my_windows_vm --query "id" -o tsv)
 
-        # Please use the same options, the WAD diagnostic extension has strict
 
-        # expectations of the sas token's format. Set the expiry as desired.
+      default_config=$(az vm diagnostics get-default-config  --is-windows-os \
+          | sed "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g" \
+          | sed "s#__VM_OR_VMSS_RESOURCE_ID__#$my_vm_resource_id#g")
 
-        storage_sastoken=$(az storage account generate-sas \
-            --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z \
-            --permissions acuw --resource-types co --services bt --https-only --output tsv)
+      # Please use the same options, the WAD diagnostic extension has strict
 
-        protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
-            'storageAccountSasToken': '$storage_sastoken'}"
+      # expectations of the sas token's format. Set the expiry as desired.
 
-        az vm diagnostics set --settings "$default_config" \
-            --protected-settings "$protected_settings" \
-            --resource-group $my_resource_group --vm-name $my_windows_vm
+      storage_sastoken=$(az storage account generate-sas \
+          --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z \
+          --permissions acuw --resource-types co --services bt --https-only --output tsv)
 
-        # # Alternatively, if the WAD extension has issues parsing the sas token,
+      protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
+          'storageAccountSasToken': '$storage_sastoken'}"
 
-        # # one can use a storage account key instead.
+      az vm diagnostics set --settings "$default_config" \
+          --protected-settings "$protected_settings" \
+          --resource-group $my_resource_group --vm-name $my_windows_vm
 
-        storage_account_key=$(az storage account keys list --account-name {my_storage_account} \
-          --query [0].value -o tsv)
-        protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
-          'storageAccountKey': '$storage_account_key'}"
-  parameters:
+      # # Alternatively, if the WAD extension has issues parsing the sas token,
+
+      # # one can use a storage account key instead.
+
+      storage_account_key=$(az storage account keys list --account-name {my_storage_account} \
+        --query [0].value -o tsv)
+      protected_settings="{'storageAccountName': '$my_diagnostic_storage_account', \
+        'storageAccountKey': '$storage_account_key'}"
+  requiredParameters:
   - isRequired: true
     name: --settings
     summary: Json string or a file path, which defines data to be collected.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --no-auto-upgrade
     parameterValueGroup: false, true
@@ -128,34 +126,22 @@ items:
   - name: --protected-settings
     summary: Json string or a file path containing private configurations such as storage account keys, etc.
     description: ''
-  - name: --version
-    summary: Version of the diagnostics extension. Will use the latest if not specfied.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --vm-name
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=&lt;name&gt;`.
+  - name: --version
+    summary: Version of the diagnostics extension. Will use the latest if not specfied.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/vm/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/vm/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vm-name
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 commands:
-- uid: az_vm_diagnostics_get_default_config
-  name: az vm diagnostics get-default-config
-  summary: Get the default configuration settings for a VM.
-- uid: az_vm_diagnostics_set
-  name: az vm diagnostics set
-  summary: Configure the Azure VM diagnostics extension.
+- az_vm_diagnostics_get_default_config
+- az_vm_diagnostics_set
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -171,10 +157,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/vm/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/92c8bb1c276b38434733770262a12d1993b7a44d/src/azure-cli/azure/cli/command_modules/vm/_help.py
-updated_at: 7/10/2020 5:22:00 AM
-ms.date: 07/10/2020
-description: Configure the Azure Virtual Machine diagnostics extension.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/92c8bb1c276b38434733770262a12d1993b7a44d/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  updated_at: 7/10/2020 5:22:00 AM
+  ms.date: 07/10/2020
+  description: Configure the Azure Virtual Machine diagnostics extension.

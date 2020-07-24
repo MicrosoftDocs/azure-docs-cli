@@ -1,53 +1,64 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_mariadb_server
-  name: az mariadb server
-  summary: Manage MariaDB servers.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_mariadb_server_create
-  - az_mariadb_server_delete
-  - az_mariadb_server_georestore
-  - az_mariadb_server_list
-  - az_mariadb_server_restart
-  - az_mariadb_server_restore
-  - az_mariadb_server_show
-  - az_mariadb_server_update
-  - az_mariadb_server_wait
+### YamlMime:AzureCLIGroup
+uid: az_mariadb_server
+name: az mariadb server
+summary: Manage MariaDB servers.
+description: ''
+directCommands:
 - uid: az_mariadb_server_create
   name: az mariadb server create
   summary: Create a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server create --admin-password
+                             --admin-user
+                             --name
+                             --resource-group
+                             --sku-name
+                             [--assign-identity]
+                             [--auto-grow {Disabled, Enabled}]
+                             [--backup-retention]
+                             [--geo-redundant-backup {Disabled, Enabled}]
+                             [--infrastructure-encryption {Disabled, Enabled}]
+                             [--location]
+                             [--public-network-access {Disabled, Enabled}]
+                             [--ssl-enforcement {Disabled, Enabled}]
+                             [--storage-size]
+                             [--subscription]
+                             [--tags]
+                             [--version]
   examples:
   - summary: Create a MariaDB server in North Europe with sku GP_Gen5_2 (General Purpose, Gen 5 hardware, 2 vCores).
-    syntax:
-      content: >-
-        az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
-            --sku-name GP_Gen5_2
+    syntax: >-
+      az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name GP_Gen5_2
   - summary: Create a MariaDB server with all paramaters set.
-    syntax:
-      content: >-
-        az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
-            --sku-name B_Gen5_1 --ssl-enforcement Disabled --public-network-access Disabled \
-            --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
-            --tags "key=value" --version 10.2
-  parameters:
+    syntax: >-
+      az mariadb server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name B_Gen5_1 --ssl-enforcement Disabled --public-network-access Disabled \
+          --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
+          --tags "key=value" --version 10.2
+  requiredParameters:
+  - isRequired: true
+    name: --admin-password -p
+    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
+    description: ''
+  - isRequired: true
+    name: --admin-user -u
+    summary: Administrator username for the server. Once set, it cannot be changed.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
+  optionalParameters:
   - name: --assign-identity
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
     description: ''
@@ -68,7 +79,7 @@ items:
     summary: Add an optional second layer of encryption for data using new encryption algorithm. Default value is Disabled.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
@@ -81,37 +92,29 @@ items:
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --version
     summary: Server major version.
     description: ''
-  - isRequired: true
-    name: --admin-password -p
-    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
-    description: ''
-  - isRequired: true
-    name: --admin-user -u
-    summary: Administrator username for the server. Once set, it cannot be changed.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_delete
   name: az mariadb server delete
   summary: Delete a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server delete [--ids]
+                             [--name]
+                             [--resource-group]
+                             [--subscription]
+                             [--yes]
   examples:
   - summary: Delete a server.
-    syntax:
-      content: az mariadb server delete -g testgroup -n testsvr
-  parameters:
-  - name: --yes -y
-    summary: Do not prompt for confirmation.
-    description: ''
+    syntax: az mariadb server delete -g testgroup -n testsvr
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -119,59 +122,69 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_mariadb_server_georestore
   name: az mariadb server georestore
   summary: Geo-restore a server from backup.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server georestore --location
+                                 --source-server
+                                 [--backup-retention]
+                                 [--geo-redundant-backup]
+                                 [--ids]
+                                 [--name]
+                                 [--no-wait]
+                                 [--resource-group]
+                                 [--sku-name]
+                                 [--subscription]
   examples:
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
-    syntax:
-      content: az mariadb server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
+    syntax: az mariadb server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2 with sku GP_Gen5_2.
-    syntax:
-      content: az mariadb server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
+    syntax: az mariadb server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
   - summary: Geo-restore 'testsvr2' into a new server 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
-    syntax:
-      content: >-
-        az mariadb server georestore -g testgroup -n testsvrnew \
-            -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMariaDB/servers/testsvr2" \
-            -l westus2
-  parameters:
+    syntax: >-
+      az mariadb server georestore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMariaDB/servers/testsvr2" \
+          -l westus2
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --source-server -s
     summary: The name or ID of the source server to restore from.
     description: ''
+  optionalParameters:
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --geo-redundant-backup
     summary: Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --sku-name
-    summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
-    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sku-name
+    summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -180,18 +193,17 @@ items:
   name: az mariadb server list
   summary: List available servers.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server list [--resource-group]
+                           [--subscription]
   examples:
   - summary: List all MariaDB servers in a subscription.
-    syntax:
-      content: az mariadb server list
+    syntax: az mariadb server list
   - summary: List all MariaDB servers in a resource group.
-    syntax:
-      content: az mariadb server list -g testgroup
-  parameters:
+    syntax: az mariadb server list -g testgroup
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -200,13 +212,15 @@ items:
   name: az mariadb server restart
   summary: Restart a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server restart [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: Restart a server.
-    syntax:
-      content: az mariadb server restart -g testgroup -n testsvr
-  parameters:
+    syntax: az mariadb server restart -g testgroup -n testsvr
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -214,7 +228,7 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -223,19 +237,23 @@ items:
   name: az mariadb server restore
   summary: Restore a server from backup.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server restore --restore-point-in-time
+                              --source-server
+                              [--ids]
+                              [--name]
+                              [--no-wait]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
-    syntax:
-      content: az mariadb server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
+    syntax: az mariadb server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
   - summary: Restore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
-    syntax:
-      content: >-
-        az mariadb server restore -g testgroup -n testsvrnew \
-            -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMariaDB/servers/testsvr2" \
-            --restore-point-in-time "2017-06-15T13:10:00Z"
-  parameters:
+    syntax: >-
+      az mariadb server restore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMariaDB/servers/testsvr2" \
+          --restore-point-in-time "2017-06-15T13:10:00Z"
+  requiredParameters:
   - isRequired: true
     name: --restore-point-in-time
     summary: The point in time to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+08:00.
@@ -244,17 +262,18 @@ items:
     name: --source-server -s
     summary: The name or resource ID of the source server to restore from.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -263,13 +282,15 @@ items:
   name: az mariadb server show
   summary: Get the details of a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server show [--ids]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
   examples:
   - summary: Get the details of a server. (autogenerated)
-    syntax:
-      content: az mariadb server show --name MyServer --resource-group MyResourceGroup
-  parameters:
+    syntax: az mariadb server show --name MyServer --resource-group MyResourceGroup
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -277,7 +298,7 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -286,22 +307,37 @@ items:
   name: az mariadb server update
   summary: Update a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mariadb server update [--add]
+                             [--admin-password]
+                             [--assign-identity]
+                             [--auto-grow {Disabled, Enabled}]
+                             [--backup-retention]
+                             [--force-string]
+                             [--ids]
+                             [--name]
+                             [--public-network-access {Disabled, Enabled}]
+                             [--remove]
+                             [--resource-group]
+                             [--set]
+                             [--sku-name]
+                             [--ssl-enforcement {Disabled, Enabled}]
+                             [--storage-size]
+                             [--subscription]
+                             [--tags]
   examples:
   - summary: Update a server's sku.
-    syntax:
-      content: az mariadb server update -g testgroup -n testsvrnew --sku-name GP_Gen5_4
+    syntax: az mariadb server update -g testgroup -n testsvrnew --sku-name GP_Gen5_4
   - summary: Update a server's tags.
-    syntax:
-      content: az mariadb server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
+    syntax: az mariadb server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
   - summary: Update a server. (autogenerated)
-    syntax:
-      content: az mariadb server update --admin-password password --name testsvrnew --resource-group testgroup
+    syntax: az mariadb server update --admin-password password --name testsvrnew --resource-group testgroup
   - summary: Update a server. (autogenerated)
-    syntax:
-      content: az mariadb server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled
-  parameters:
+    syntax: az mariadb server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
   - name: --admin-password -p
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
@@ -315,9 +351,27 @@ items:
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
     summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
@@ -329,175 +383,89 @@ items:
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 - uid: az_mariadb_server_wait
   name: az mariadb server wait
   summary: Wait for server to satisfy certain conditions.
   description: ''
-  langs:
-  - azurecli
-  parameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+  syntax: >-
+    az mariadb server wait [--custom]
+                           [--exists]
+                           [--ids]
+                           [--interval]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
+                           [--timeout]
+  optionalParameters:
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --exists
     summary: Wait until the resource exists.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
 commands:
-- uid: az_mariadb_server_configuration
-  name: az mariadb server configuration
-  summary: Manage configuration values for a server.
-- uid: az_mariadb_server_configuration_list
-  name: az mariadb server configuration list
-  summary: List the configuration values for a server.
-- uid: az_mariadb_server_configuration_set
-  name: az mariadb server configuration set
-  summary: Update the configuration of a server.
-- uid: az_mariadb_server_configuration_show
-  name: az mariadb server configuration show
-  summary: Get the configuration for a server.".
-- uid: az_mariadb_server_create
-  name: az mariadb server create
-  summary: Create a server.
-- uid: az_mariadb_server_delete
-  name: az mariadb server delete
-  summary: Delete a server.
-- uid: az_mariadb_server_firewall_rule
-  name: az mariadb server firewall-rule
-  summary: Manage firewall rules for a server.
-- uid: az_mariadb_server_firewall_rule_create
-  name: az mariadb server firewall-rule create
-  summary: Create a new firewall rule for a server.
-- uid: az_mariadb_server_firewall_rule_delete
-  name: az mariadb server firewall-rule delete
-  summary: Delete a firewall rule.
-- uid: az_mariadb_server_firewall_rule_list
-  name: az mariadb server firewall-rule list
-  summary: List all firewall rules for a server.
-- uid: az_mariadb_server_firewall_rule_show
-  name: az mariadb server firewall-rule show
-  summary: Get the details of a firewall rule.
-- uid: az_mariadb_server_firewall_rule_update
-  name: az mariadb server firewall-rule update
-  summary: Update a firewall rule.
-- uid: az_mariadb_server_georestore
-  name: az mariadb server georestore
-  summary: Geo-restore a server from backup.
-- uid: az_mariadb_server_list
-  name: az mariadb server list
-  summary: List available servers.
-- uid: az_mariadb_server_private_endpoint_connection
-  name: az mariadb server private-endpoint-connection
-  summary: Manage MariaDB server private endpoint connections.
-- uid: az_mariadb_server_private_endpoint_connection_approve
-  name: az mariadb server private-endpoint-connection approve
-  summary: Approve the specified private endpoint connection associated with a MariaDB server.
-- uid: az_mariadb_server_private_endpoint_connection_delete
-  name: az mariadb server private-endpoint-connection delete
-  summary: Delete the specified private endpoint connection associated with a MariaDB server.
-- uid: az_mariadb_server_private_endpoint_connection_reject
-  name: az mariadb server private-endpoint-connection reject
-  summary: Reject the specified private endpoint connection associated with a MariaDB server.
-- uid: az_mariadb_server_private_endpoint_connection_show
-  name: az mariadb server private-endpoint-connection show
-  summary: Show details of a private endpoint connection associated with a MariaDB server.
-- uid: az_mariadb_server_private_link_resource
-  name: az mariadb server private-link-resource
-  summary: Manage MariaDB server private link resources.
-- uid: az_mariadb_server_private_link_resource_list
-  name: az mariadb server private-link-resource list
-  summary: List the private link resources supported for a MariaDB server.
-- uid: az_mariadb_server_replica
-  name: az mariadb server replica
-  summary: Manage read replicas.
-- uid: az_mariadb_server_replica_create
-  name: az mariadb server replica create
-  summary: Create a read replica for a server.
-- uid: az_mariadb_server_replica_list
-  name: az mariadb server replica list
-  summary: List all read replicas for a given server.
-- uid: az_mariadb_server_replica_stop
-  name: az mariadb server replica stop
-  summary: Stop replication to a read replica and make it a read/write server.
-- uid: az_mariadb_server_restart
-  name: az mariadb server restart
-  summary: Restart a server.
-- uid: az_mariadb_server_restore
-  name: az mariadb server restore
-  summary: Restore a server from backup.
-- uid: az_mariadb_server_show
-  name: az mariadb server show
-  summary: Get the details of a server.
-- uid: az_mariadb_server_update
-  name: az mariadb server update
-  summary: Update a server.
-- uid: az_mariadb_server_vnet_rule
-  name: az mariadb server vnet-rule
-  summary: Manage a server's virtual network rules.
-- uid: az_mariadb_server_vnet_rule_create
-  name: az mariadb server vnet-rule create
-  summary: Create a virtual network rule to allows access to a MariaDB server.
-- uid: az_mariadb_server_vnet_rule_delete
-  name: az mariadb server vnet-rule delete
-  summary: Deletes the virtual network rule with the given name.
-- uid: az_mariadb_server_vnet_rule_list
-  name: az mariadb server vnet-rule list
-  summary: Gets a list of virtual network rules in a server.
-- uid: az_mariadb_server_vnet_rule_show
-  name: az mariadb server vnet-rule show
-  summary: Gets a virtual network rule.
-- uid: az_mariadb_server_vnet_rule_update
-  name: az mariadb server vnet-rule update
-  summary: Update a virtual network rule.
-- uid: az_mariadb_server_wait
-  name: az mariadb server wait
-  summary: Wait for server to satisfy certain conditions.
+- az_mariadb_server_configuration
+- az_mariadb_server_configuration_list
+- az_mariadb_server_configuration_set
+- az_mariadb_server_configuration_show
+- az_mariadb_server_create
+- az_mariadb_server_delete
+- az_mariadb_server_firewall_rule
+- az_mariadb_server_firewall_rule_create
+- az_mariadb_server_firewall_rule_delete
+- az_mariadb_server_firewall_rule_list
+- az_mariadb_server_firewall_rule_show
+- az_mariadb_server_firewall_rule_update
+- az_mariadb_server_georestore
+- az_mariadb_server_list
+- az_mariadb_server_private_endpoint_connection
+- az_mariadb_server_private_endpoint_connection_approve
+- az_mariadb_server_private_endpoint_connection_delete
+- az_mariadb_server_private_endpoint_connection_reject
+- az_mariadb_server_private_endpoint_connection_show
+- az_mariadb_server_private_link_resource
+- az_mariadb_server_private_link_resource_list
+- az_mariadb_server_replica
+- az_mariadb_server_replica_create
+- az_mariadb_server_replica_list
+- az_mariadb_server_replica_stop
+- az_mariadb_server_restart
+- az_mariadb_server_restore
+- az_mariadb_server_show
+- az_mariadb_server_update
+- az_mariadb_server_vnet_rule
+- az_mariadb_server_vnet_rule_create
+- az_mariadb_server_vnet_rule_delete
+- az_mariadb_server_vnet_rule_list
+- az_mariadb_server_vnet_rule_show
+- az_mariadb_server_vnet_rule_update
+- az_mariadb_server_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -513,4 +481,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage MariaDB servers.
+metadata:
+  description: Manage MariaDB servers.

@@ -1,47 +1,58 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_alertsmanagement_az_monitor_action_rule
-  name: az monitor action-rule
-  summary: Commands to manage action rule.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_alertsmanagement_az_monitor_action_rule_create
-  - ext_alertsmanagement_az_monitor_action_rule_delete
-  - ext_alertsmanagement_az_monitor_action_rule_list
-  - ext_alertsmanagement_az_monitor_action_rule_show
-  - ext_alertsmanagement_az_monitor_action_rule_update
+### YamlMime:AzureCLIGroup
+uid: ext_alertsmanagement_az_monitor_action_rule
+name: az monitor action-rule
+summary: Commands to manage action rule.
+description: ''
+directCommands:
 - uid: ext_alertsmanagement_az_monitor_action_rule_create
   name: az monitor action-rule create
   summary: Create an action rule.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor action-rule create --name
+                                  --resource-group
+                                  --rule-type {ActionGroup, Diagnostics, Suppression}
+                                  [--alert-context]
+                                  [--alert-description]
+                                  [--alert-rule]
+                                  [--description]
+                                  [--location]
+                                  [--monitor-condition]
+                                  [--monitor-service]
+                                  [--scope]
+                                  [--scope-type {Resource, ResourceGroup}]
+                                  [--severity]
+                                  [--status {Disabled, Enabled}]
+                                  [--suppression-end-date]
+                                  [--suppression-end-time]
+                                  [--suppression-recurrence]
+                                  [--suppression-recurrence-type {Always, Daily, Monthly, Once, Weekly}]
+                                  [--suppression-start-date]
+                                  [--suppression-start-time]
+                                  [--tags]
+                                  [--target-resource-type]
   examples:
   - summary: Create an action rule to suppress notifications for all Sev4 alerts on all VMs within the subscription every weekend
-    syntax:
-      content: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --severity Equals Sev4 --target-resource-type Equals Microsoft.Compute/VirtualMachines --suppression-recurrence-type Weekly --suppression-recurrence 0 6 --suppression-start-date 12/09/2018 --suppression-end-date 12/18/2018 --suppression-start-time 06:00:00 --suppression-end-time 14:00:00
+    syntax: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --severity Equals Sev4 --target-resource-type Equals Microsoft.Compute/VirtualMachines --suppression-recurrence-type Weekly --suppression-recurrence 0 6 --suppression-start-date 12/09/2018 --suppression-end-date 12/18/2018 --suppression-start-time 06:00:00 --suppression-end-time 14:00:00
   - summary: Create an action rule to suppress notifications for all log alerts generated for Computer-01 in subscription indefinitely as it's going through maintenance
-    syntax:
-      content: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --suppression-recurrence-type Always --alert-context Contains Computer-01 --monitor-service Equals "Log Analytics"
+    syntax: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --suppression-recurrence-type Always --alert-context Contains Computer-01 --monitor-service Equals "Log Analytics"
   - summary: Create an action rule to suppress notifications in a resource group
-    syntax:
-      content: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --scope-type ResourceGroup --scope /subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/rg --suppression-recurrence-type Always --alert-context Contains Computer-01 --monitor-service Equals "Log Analytics"
-  parameters:
+    syntax: az monitor action-rule create --resource-group rg --name rule --location Global --status Enabled --rule-type Suppression --scope-type ResourceGroup --scope /subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/rg --suppression-recurrence-type Always --alert-context Contains Computer-01 --monitor-service Equals "Log Analytics"
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of action rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --rule-type
     parameterValueGroup: ActionGroup, Diagnostics, Suppression
     summary: Indicate type of action rule.
     description: ''
+  optionalParameters:
   - name: --alert-context
     summary: Filter alerts by alert context (payload).
     description: ''
@@ -55,7 +66,7 @@ items:
     summary: Description of action rule.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --monitor-condition
     summary: Filter alerts by monitor condition.
@@ -106,35 +117,43 @@ items:
   name: az monitor action-rule delete
   summary: Delete an action rule.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor action-rule delete --name
+                                  --resource-group
   examples:
   - summary: Delete an action rule
-    syntax:
-      content: az monitor action-rule delete --resource-group rg --name rule
-  parameters:
+    syntax: az monitor action-rule delete --resource-group rg --name rule
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of action rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_alertsmanagement_az_monitor_action_rule_list
   name: az monitor action-rule list
   summary: List all action rules of the subscription, created in given resource group and given input filters.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor action-rule list [--action-group]
+                                [--alert-rule-id]
+                                [--description]
+                                [--impacted-scope]
+                                [--monitor-service]
+                                [--name]
+                                [--resource-group]
+                                [--severity]
+                                [--target-resource]
+                                [--target-resource-group]
+                                [--target-resource-type]
   examples:
   - summary: List action rules of the subscription
-    syntax:
-      content: az monitor action-rule list
+    syntax: az monitor action-rule list
   - summary: List action rules of the resource group
-    syntax:
-      content: az monitor action-rule list --resource-group rg
-  parameters:
+    syntax: az monitor action-rule list --resource-group rg
+  optionalParameters:
   - name: --action-group
     summary: Filter by action group configured as part of action rule.
     description: ''
@@ -154,7 +173,7 @@ items:
     summary: Filter by action rule name.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --severity
     summary: Filter by severity. Default value is select all.
@@ -172,42 +191,62 @@ items:
   name: az monitor action-rule show
   summary: Get an action rule.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor action-rule show --name
+                                --resource-group
   examples:
   - summary: Get an action rule
-    syntax:
-      content: az monitor action-rule show --resource-group rg --name rule
-  parameters:
+    syntax: az monitor action-rule show --resource-group rg --name rule
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of action rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_alertsmanagement_az_monitor_action_rule_update
   name: az monitor action-rule update
   summary: Update an action rule.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor action-rule update --name
+                                  --resource-group
+                                  [--add]
+                                  [--force-string]
+                                  [--location]
+                                  [--remove]
+                                  [--set]
+                                  [--status {Disabled, Enabled}]
+                                  [--tags]
   examples:
   - summary: Update an action rule
-    syntax:
-      content: az monitor action-rule update --resource-group rg --name rule --status Disabled
-  parameters:
+    syntax: az monitor action-rule update --resource-group rg --name rule --status Disabled
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of action rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --status
     parameterValueGroup: Disabled, Enabled
@@ -216,34 +255,12 @@ items:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
 commands:
-- uid: ext_alertsmanagement_az_monitor_action_rule_create
-  name: az monitor action-rule create
-  summary: Create an action rule.
-- uid: ext_alertsmanagement_az_monitor_action_rule_delete
-  name: az monitor action-rule delete
-  summary: Delete an action rule.
-- uid: ext_alertsmanagement_az_monitor_action_rule_list
-  name: az monitor action-rule list
-  summary: List all action rules of the subscription, created in given resource group and given input filters.
-- uid: ext_alertsmanagement_az_monitor_action_rule_show
-  name: az monitor action-rule show
-  summary: Get an action rule.
-- uid: ext_alertsmanagement_az_monitor_action_rule_update
-  name: az monitor action-rule update
-  summary: Update an action rule.
+- ext_alertsmanagement_az_monitor_action_rule_create
+- ext_alertsmanagement_az_monitor_action_rule_delete
+- ext_alertsmanagement_az_monitor_action_rule_list
+- ext_alertsmanagement_az_monitor_action_rule_show
+- ext_alertsmanagement_az_monitor_action_rule_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -259,4 +276,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Commands to manage action rule.
+metadata:
+  description: Commands to manage action rule.

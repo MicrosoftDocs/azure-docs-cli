@@ -1,43 +1,55 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_sql_db
-  name: az sql db
-  summary: Manage databases.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_sql_db_copy
-  - az_sql_db_create
-  - az_sql_db_delete
-  - az_sql_db_export
-  - az_sql_db_import
-  - az_sql_db_list
-  - az_sql_db_list_deleted
-  - az_sql_db_list_editions
-  - az_sql_db_list_usages
-  - az_sql_db_rename
-  - az_sql_db_restore
-  - az_sql_db_show
-  - az_sql_db_show_connection_string
-  - az_sql_db_update
+### YamlMime:AzureCLIGroup
+uid: az_sql_db
+name: az sql db
+summary: Manage databases.
+description: ''
+directCommands:
 - uid: az_sql_db_copy
   name: az sql db copy
   summary: Create a copy of a database.
   description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`. The copy destination database must have the same edition as the source database, but you can change the edition after the copy has completed.
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db copy --dest-name
+                   [--auto-pause-delay]
+                   [--capacity]
+                   [--compute-model {Provisioned, Serverless}]
+                   [--dest-resource-group]
+                   [--dest-server]
+                   [--elastic-pool]
+                   [--family]
+                   [--ids]
+                   [--license-type {BasePrice, LicenseIncluded}]
+                   [--min-capacity]
+                   [--name]
+                   [--no-wait]
+                   [--read-replicas]
+                   [--read-scale {Disabled, Enabled}]
+                   [--resource-group]
+                   [--server]
+                   [--service-objective]
+                   [--subscription]
+                   [--tags]
+                   [--zone-redundant {false, true}]
   examples:
   - summary: Create a database with performance level S0 as a copy of an existing Standard database.
-    syntax:
-      content: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb --service-objective S0
+    syntax: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb --service-objective S0
   - summary: Create a database with GeneralPurpose edition, Gen4 hardware, and 1 vcore as a copy of an existing GeneralPurpose database.
-    syntax:
-      content: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb -f Gen4 -c 1
-  parameters:
+    syntax: az sql db copy -g mygroup -s myserver -n originalDb --dest-name newDb -f Gen4 -c 1
+  requiredParameters:
   - isRequired: true
     name: --dest-name
     summary: Name of the database that will be created as the copy destination.
+    description: ''
+  optionalParameters:
+  - name: --auto-pause-delay
+    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --compute-model
+    parameterValueGroup: Provisioned, Serverless
+    summary: The compute model of the database.
     description: ''
   - name: --dest-resource-group
     summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
@@ -45,9 +57,24 @@ items:
   - name: --dest-server
     summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
     description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --license-type
     parameterValueGroup: BasePrice, LicenseIncluded
     summary: The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit.
+    description: ''
+  - name: --min-capacity
+    summary: Minimal capacity that database will always have allocated, if not paused.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -59,6 +86,18 @@ items:
     parameterValueGroup: Disabled, Enabled
     summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -66,110 +105,66 @@ items:
     parameterValueGroup: false, true
     summary: Specifies whether to enable zone redundancy.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the Azure SQL Database.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --capacity -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
-    description: ''
-  - name: --elastic-pool
-    summary: The name or resource id of the elastic pool to create the database in.
-    description: ''
-  - name: --service-objective
-    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
-    description: ''
-  - name: --auto-pause-delay
-    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
-    description: ''
-  - name: --compute-model
-    parameterValueGroup: Provisioned, Serverless
-    summary: The compute model of the database.
-    description: ''
-  - name: --min-capacity
-    summary: Minimal capacity that database will always have allocated, if not paused.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_create
   name: az sql db create
   summary: Create a database.
   description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`.
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db create --name
+                     --resource-group
+                     --server
+                     [--auto-pause-delay]
+                     [--capacity]
+                     [--catalog-collation {DATABASE_DEFAULT, SQL_Latin1_General_CP1_CI_AS}]
+                     [--collation]
+                     [--compute-model {Provisioned, Serverless}]
+                     [--edition]
+                     [--elastic-pool]
+                     [--family]
+                     [--license-type {BasePrice, LicenseIncluded}]
+                     [--max-size]
+                     [--min-capacity]
+                     [--no-wait]
+                     [--read-replicas]
+                     [--read-scale {Disabled, Enabled}]
+                     [--sample-name {AdventureWorksLT}]
+                     [--service-objective]
+                     [--subscription]
+                     [--tags]
+                     [--zone-redundant {false, true}]
   examples:
   - summary: Create a Standard S0 database.
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb --service-objective S0
+    syntax: az sql db create -g mygroup -s myserver -n mydb --service-objective S0
   - summary: Create a database with GeneralPurpose edition, Gen4 hardware and 1 vcore
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
+    syntax: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen4 -c 1
   - summary: Create a database with zone redundancy enabled
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb -z
+    syntax: az sql db create -g mygroup -s myserver -n mydb -z
   - summary: Create a database with zone redundancy explicitly disabled
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb -z false
+    syntax: az sql db create -g mygroup -s myserver -n mydb -z false
   - summary: Create a GeneralPurpose Gen5 2 vcore serverless database with auto pause delay of 120 minutes
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen5 -c 2 --compute-model Serverless --auto-pause-delay 120
+    syntax: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen5 -c 2 --compute-model Serverless --auto-pause-delay 120
   - summary: Create a Hyperscale Gen5 2 vcore database with 2 read replicas
-    syntax:
-      content: az sql db create -g mygroup -s myserver -n mydb -e Hyperscale -f Gen5 -c 2 --read-replicas 2
-  parameters:
+    syntax: az sql db create -g mygroup -s myserver -n mydb -e Hyperscale -f Gen5 -c 2 --read-replicas 2
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the Azure SQL Database.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
-  - name: --license-type
-    parameterValueGroup: BasePrice, LicenseIncluded
-    summary: The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit.
+  optionalParameters:
+  - name: --auto-pause-delay
+    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
     description: ''
-  - name: --max-size
-    summary: The max storage size. If no unit is specified, defaults to bytes (B).
-    description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --read-replicas
-    summary: The number of readonly replicas to provision for the database. Only settable for Hyperscale edition.
-    description: ''
-  - name: --read-scale
-    parameterValueGroup: Disabled, Enabled
-    summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --zone-redundant -z
-    parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy.
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
     description: ''
   - name: --catalog-collation
     parameterValueGroup: DATABASE_DEFAULT, SQL_Latin1_General_CP1_CI_AS
@@ -178,108 +173,128 @@ items:
   - name: --collation
     summary: The collation of the database.
     description: ''
-  - name: --sample-name
-    parameterValueGroup: AdventureWorksLT
-    summary: The name of the sample schema to apply when creating this database.
-    description: ''
-  - name: --capacity -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --edition --tier -e
-    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
-    description: ''
-  - name: --elastic-pool
-    summary: The name or resource id of the elastic pool to create the database in.
-    description: ''
-  - name: --service-objective
-    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
-    description: ''
-  - name: --auto-pause-delay
-    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
-    description: ''
   - name: --compute-model
     parameterValueGroup: Provisioned, Serverless
     summary: The compute model of the database.
     description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --license-type
+    parameterValueGroup: BasePrice, LicenseIncluded
+    summary: The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit.
+    description: ''
+  - name: --max-size
+    summary: The max storage size. If no unit is specified, defaults to bytes (B).
+    description: ''
   - name: --min-capacity
     summary: Minimal capacity that database will always have allocated, if not paused.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --read-replicas
+    summary: The number of readonly replicas to provision for the database. Only settable for Hyperscale edition.
+    description: ''
+  - name: --read-scale
+    parameterValueGroup: Disabled, Enabled
+    summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
+    description: ''
+  - name: --sample-name
+    parameterValueGroup: AdventureWorksLT
+    summary: The name of the sample schema to apply when creating this database.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_delete
   name: az sql db delete
   summary: Delete a database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db delete [--ids]
+                     [--name]
+                     [--no-wait]
+                     [--resource-group]
+                     [--server]
+                     [--subscription]
+                     [--yes]
   examples:
   - summary: Delete a database. (autogenerated)
-    syntax:
-      content: az sql db delete --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver
-  parameters:
+    syntax: az sql db delete --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the Azure SQL Database.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_export
   name: az sql db export
   summary: Export a database to a bacpac.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db export --admin-password
+                     --admin-user
+                     --storage-key
+                     --storage-key-type {SharedAccessKey, StorageAccessKey}
+                     --storage-uri
+                     [--auth-type {ADPassword, SQL}]
+                     [--ids]
+                     [--name]
+                     [--resource-group]
+                     [--server]
+                     [--subscription]
   examples:
   - summary: Get an SAS key for use in export operation.
-    syntax:
-      content: >-
-        az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
-            --permissions w --expiry 2018-01-01T00:00:00Z
+    syntax: >-
+      az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
+          --permissions w --expiry 2018-01-01T00:00:00Z
   - summary: Export bacpac using an SAS key.
-    syntax:
-      content: >-
-        az sql db export -s myserver -n mydatabase -g mygroup -p password -u login \
-            --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" \
-            --storage-key-type SharedAccessKey \
-            --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
+    syntax: >-
+      az sql db export -s myserver -n mydatabase -g mygroup -p password -u login \
+          --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" \
+          --storage-key-type SharedAccessKey \
+          --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
   - summary: Export bacpac using a storage account key.
-    syntax:
-      content: >-
-        az sql db export -s myserver -n mydatabase -g mygroup -p password -u login \
-            --storage-key MYKEY== --storage-key-type StorageAccessKey \
-            --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
-  parameters:
+    syntax: >-
+      az sql db export -s myserver -n mydatabase -g mygroup -p password -u login \
+          --storage-key MYKEY== --storage-key-type StorageAccessKey \
+          --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
+  requiredParameters:
   - isRequired: true
     name: --admin-password -p
     summary: Required. The password of the SQL administrator.
@@ -301,6 +316,7 @@ items:
     name: --storage-uri
     summary: Required. The storage uri to use.
     description: ''
+  optionalParameters:
   - name: --auth-type -a
     parameterValueGroup: ADPassword, SQL
     summary: The authentication type.
@@ -312,46 +328,48 @@ items:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_import
   name: az sql db import
   summary: Imports a bacpac into an existing database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db import --admin-password
+                     --admin-user
+                     --storage-key
+                     --storage-key-type {SharedAccessKey, StorageAccessKey}
+                     --storage-uri
+                     [--auth-type {ADPassword, SQL}]
+                     [--ids]
+                     [--name]
+                     [--resource-group]
+                     [--server]
+                     [--subscription]
   examples:
   - summary: Get an SAS key for use in import operation.
-    syntax:
-      content: >-
-        az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
-            --permissions r --expiry 2018-01-01T00:00:00Z
+    syntax: >-
+      az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
+          --permissions r --expiry 2018-01-01T00:00:00Z
   - summary: Import bacpac into an existing database using an SAS key.
-    syntax:
-      content: >-
-        az sql db import -s myserver -n mydatabase -g mygroup -p password -u login \
-            --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" \
-            --storage-key-type SharedAccessKey \
-            --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
+    syntax: >-
+      az sql db import -s myserver -n mydatabase -g mygroup -p password -u login \
+          --storage-key "?sr=b&sp=rw&se=2018-01-01T00%3A00%3A00Z&sig=mysignature&sv=2015-07-08" \
+          --storage-key-type SharedAccessKey \
+          --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
   - summary: Import bacpac into an existing database using a storage account key.
-    syntax:
-      content: >-
-        az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== \
-            --storage-key-type StorageAccessKey \
-            --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
-  parameters:
+    syntax: >-
+      az sql db import -s myserver -n mydatabase -g mygroup -p password -u login --storage-key MYKEY== \
+          --storage-key-type StorageAccessKey \
+          --storage-uri https://myAccountName.blob.core.windows.net/myContainer/myBacpac.bacpac
+  requiredParameters:
   - isRequired: true
     name: --admin-password -p
     summary: Required. The password of the SQL administrator.
@@ -373,6 +391,7 @@ items:
     name: --storage-uri
     summary: Required. The storage uri to use.
     description: ''
+  optionalParameters:
   - name: --auth-type -a
     parameterValueGroup: ADPassword, SQL
     summary: The authentication type.
@@ -384,31 +403,29 @@ items:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_list
   name: az sql db list
   summary: List databases a server or elastic pool.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db list [--elastic-pool]
+                   [--ids]
+                   [--resource-group]
+                   [--server]
+                   [--subscription]
   examples:
   - summary: List databases a server or elastic pool. (autogenerated)
-    syntax:
-      content: az sql db list --resource-group MyResourceGroup --server myserver
-  parameters:
+    syntax: az sql db list --resource-group MyResourceGroup --server myserver
+  optionalParameters:
   - name: --elastic-pool
     summary: If specified, lists only the databases in this elastic pool.
     description: ''
@@ -416,72 +433,66 @@ items:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_list_deleted
   name: az sql db list-deleted
   summary: Gets a list of deleted databases that can be restored.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sql db list-deleted [--ids]
+                           [--resource-group]
+                           [--server]
+                           [--subscription]
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_list_editions
   name: az sql db list-editions
   summary: Show database editions available for the currently active subscription.
   description: Includes available service objectives and storage limits. In order to reduce verbosity, settings to intentionally reduce storage limits are hidden by default.
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db list-editions --location
+                            [--available]
+                            [--dtu]
+                            [--edition]
+                            [--service-objective]
+                            [--show-details {max-size}]
+                            [--subscription]
+                            [--vcores]
   examples:
   - summary: Show all database editions in a location.
-    syntax:
-      content: az sql db list-editions -l westus -o table
+    syntax: az sql db list-editions -l westus -o table
   - summary: Show all available database service objectives for Standard edition.
-    syntax:
-      content: az sql db list-editions -l westus --edition Standard -o table
+    syntax: az sql db list-editions -l westus --edition Standard -o table
   - summary: Show available max database sizes for P1 service objective
-    syntax:
-      content: az sql db list-editions -l westus --service-objective P1 --show-details max-size
-  parameters:
+    syntax: az sql db list-editions -l westus --service-objective P1 --show-details max-size
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  optionalParameters:
   - name: --available -a
     summary: If specified, show only results that are available in the specified region.
-    description: ''
-  - name: --show-details -d
-    parameterValueGroup: max-size
-    summary: List of additional details to include in output.
     description: ''
   - name: --dtu
     summary: Number of DTUs to search for. If unspecified, all DTU sizes are shown.
@@ -492,25 +503,28 @@ items:
   - name: --service-objective
     summary: Service objective to search for. If unspecified, all service objectives are shown.
     description: ''
-  - name: --vcores
-    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
+  - name: --show-details -d
+    parameterValueGroup: max-size
+    summary: List of additional details to include in output.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vcores
+    summary: Number of vcores to search for. If unspecified, all vcore sizes are shown.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_list_usages
   name: az sql db list-usages
   summary: Returns database usages.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sql db list-usages [--ids]
+                          [--name]
+                          [--resource-group]
+                          [--server]
+                          [--subscription]
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -518,35 +532,35 @@ items:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_rename
   name: az sql db rename
   summary: Rename a database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db rename --new-name
+                     [--ids]
+                     [--name]
+                     [--resource-group]
+                     [--server]
+                     [--subscription]
   examples:
   - summary: Rename a database. (autogenerated)
-    syntax:
-      content: az sql db rename --name MyAzureSQLDatabase --new-name MyNew --resource-group MyResourceGroup --server myserver
-  parameters:
+    syntax: az sql db rename --name MyAzureSQLDatabase --new-name MyNew --resource-group MyResourceGroup --server myserver
+  requiredParameters:
   - isRequired: true
     name: --new-name
     summary: The new name that the database will be renamed to.
     description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -554,38 +568,85 @@ items:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_restore
   name: az sql db restore
   summary: Create a new database by restoring from a backup.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db restore --dest-name
+                      [--auto-pause-delay]
+                      [--capacity]
+                      [--compute-model {Provisioned, Serverless}]
+                      [--deleted-time]
+                      [--edition]
+                      [--elastic-pool]
+                      [--family]
+                      [--ids]
+                      [--license-type {BasePrice, LicenseIncluded}]
+                      [--min-capacity]
+                      [--name]
+                      [--no-wait]
+                      [--read-replicas]
+                      [--read-scale {Disabled, Enabled}]
+                      [--resource-group]
+                      [--server]
+                      [--service-objective]
+                      [--subscription]
+                      [--tags]
+                      [--time]
+                      [--zone-redundant {false, true}]
   examples:
   - summary: Create a new database by restoring from a backup. (autogenerated)
-    syntax:
-      content: az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22"
-  parameters:
+    syntax: az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22"
+  requiredParameters:
   - isRequired: true
     name: --dest-name
     summary: Name of the database that will be created as the restore destination.
     description: ''
+  optionalParameters:
+  - name: --auto-pause-delay
+    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --compute-model
+    parameterValueGroup: Provisioned, Serverless
+    summary: The compute model of the database.
+    description: ''
+  - name: --deleted-time
+    summary: 'If specified, restore from a deleted database instead of from an existing database. Must match the deleted time of a deleted database in the same server. Either --time or --deleted-time (or both) must be specified. Time should be in following format: "YYYY-MM-DDTHH:MM:SS".'
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --license-type
     parameterValueGroup: BasePrice, LicenseIncluded
     summary: The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit.
+    description: ''
+  - name: --min-capacity
+    summary: Minimal capacity that database will always have allocated, if not paused.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -597,76 +658,43 @@ items:
     parameterValueGroup: Disabled, Enabled
     summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --service-objective
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --time -t
+    summary: "The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value. Either --time or --deleted-time (or both) must be specified. Time should be in following format: \"YYYY-MM-DDTHH:MM:SS\"."
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: false, true
     summary: Specifies whether to enable zone redundancy.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the Azure SQL Database.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --capacity -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --edition --tier -e
-    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
-    description: ''
-  - name: --elastic-pool
-    summary: The name or resource id of the elastic pool to create the database in.
-    description: ''
-  - name: --service-objective
-    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
-    description: ''
-  - name: --deleted-time
-    summary: 'If specified, restore from a deleted database instead of from an existing database. Must match the deleted time of a deleted database in the same server. Either --time or --deleted-time (or both) must be specified. Time should be in following format: "YYYY-MM-DDTHH:MM:SS".'
-    description: ''
-  - name: --time -t
-    summary: "The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value. Either --time or --deleted-time (or both) must be specified. Time should be in following format: \"YYYY-MM-DDTHH:MM:SS\"."
-    description: ''
-  - name: --auto-pause-delay
-    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
-    description: ''
-  - name: --compute-model
-    parameterValueGroup: Provisioned, Serverless
-    summary: The compute model of the database.
-    description: ''
-  - name: --min-capacity
-    summary: Minimal capacity that database will always have allocated, if not paused.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_show
   name: az sql db show
   summary: Get the details for a database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db show [--ids]
+                   [--name]
+                   [--resource-group]
+                   [--server]
+                   [--subscription]
   examples:
   - summary: Get the details for a database. (autogenerated)
-    syntax:
-      content: az sql db show --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver
-  parameters:
+    syntax: az sql db show --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -674,35 +702,40 @@ items:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_show_connection_string
   name: az sql db show-connection-string
   summary: Generates a connection string to a database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db show-connection-string --client {ado.net, jdbc, odbc, php, php_pdo, sqlcmd}
+                                     [--auth-type {ADIntegrated, ADPassword, SqlPassword}]
+                                     [--ids]
+                                     [--name]
+                                     [--server]
+                                     [--subscription]
   examples:
   - summary: Generate connection string for ado.net
-    syntax:
-      content: az sql db show-connection-string -s myserver -n mydb -c ado.net
-  parameters:
+    syntax: az sql db show-connection-string -s myserver -n mydb -c ado.net
+  requiredParameters:
   - isRequired: true
     name: --client -c
     parameterValueGroup: ado.net, jdbc, odbc, php, php_pdo, sqlcmd
     summary: Type of client connection provider.
+    description: ''
+  optionalParameters:
+  - name: --auth-type -a
+    defaultValue: SqlPassword
+    parameterValueGroup: ADIntegrated, ADPassword, SqlPassword
+    summary: Type of authentication.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -713,53 +746,91 @@ items:
     description: ''
   - name: --server -s
     defaultValue: <servername>
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --auth-type -a
-    defaultValue: SqlPassword
-    parameterValueGroup: ADIntegrated, ADPassword, SqlPassword
-    summary: Type of authentication.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_update
   name: az sql db update
   summary: Update a database.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sql db update [--add]
+                     [--auto-pause-delay]
+                     [--capacity]
+                     [--compute-model {Provisioned, Serverless}]
+                     [--edition]
+                     [--elastic-pool]
+                     [--family]
+                     [--force-string]
+                     [--ids]
+                     [--max-size]
+                     [--min-capacity]
+                     [--name]
+                     [--no-wait]
+                     [--read-replicas]
+                     [--read-scale {Disabled, Enabled}]
+                     [--remove]
+                     [--resource-group]
+                     [--server]
+                     [--service-objective]
+                     [--set]
+                     [--subscription]
+                     [--zone-redundant {false, true}]
   examples:
   - summary: Update a database to Standard edition, S0 performance level (10 DTU) by specifying DTU capacity. Note that GeneralPurpose allows a wider range of max size than Standard edition.
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb --edition Standard --capacity 10 --max-size 250GB
+    syntax: az sql db update -g mygroup -s myserver -n mydb --edition Standard --capacity 10 --max-size 250GB
   - summary: Update a database to Standard edition, S1 performance level (20 DTU) by specifying performance level name. Note that GeneralPurpose allows a wider range of max size than Standard edition.
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb --edition Standard --service-objective S1 --max-size 250GB
+    syntax: az sql db update -g mygroup -s myserver -n mydb --edition Standard --service-objective S1 --max-size 250GB
   - summary: Update a database to GeneralPurpose edition, 4 vcores with Gen5 hardware
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb --edition GeneralPurpose --capacity 4 --family Gen5
+    syntax: az sql db update -g mygroup -s myserver -n mydb --edition GeneralPurpose --capacity 4 --family Gen5
   - summary: Update database with increased max size
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb --max-size 500GB
+    syntax: az sql db update -g mygroup -s myserver -n mydb --max-size 500GB
   - summary: Update database with zone redundancy enabled
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb -z
+    syntax: az sql db update -g mygroup -s myserver -n mydb -z
   - summary: Update database with zone redundancy explicitly disabled
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb -z false
+    syntax: az sql db update -g mygroup -s myserver -n mydb -z false
   - summary: Update database to serverless compute model
-    syntax:
-      content: az sql db update -g mygroup -s myserver -n mydb --edition GeneralPurpose --capacity 2 --family Gen5 --compute-model Serverless
-  parameters:
+    syntax: az sql db update -g mygroup -s myserver -n mydb --edition GeneralPurpose --capacity 2 --family Gen5 --compute-model Serverless
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --auto-pause-delay
+    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --compute-model
+    parameterValueGroup: Provisioned, Serverless
+    summary: The compute model of the database.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to move the database into.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --max-size
     summary: The new maximum size of the database expressed in bytes.
+    description: ''
+  - name: --min-capacity
+    summary: Minimal capacity that database will always have allocated, if not paused.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -771,219 +842,80 @@ items:
     parameterValueGroup: Disabled, Enabled
     summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
     description: ''
-  - name: --zone-redundant -z
-    parameterValueGroup: false, true
-    summary: Specifies whether to enable zone redundancy.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the Azure SQL Database.
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --server -s
-    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --capacity -c
-    summary: The capacity component of the sku in integer number of DTUs or vcores.
-    description: ''
-  - name: --edition --tier -e
-    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
-    description: ''
-  - name: --family -f
-    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
-    description: ''
-  - name: --elastic-pool
-    summary: The name or resource id of the elastic pool to move the database into.
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --service-objective
     summary: The name of the new service objective. If this is a standalone db service objective and the db is currently in an elastic pool, then the db is removed from the pool.
     description: ''
-  - name: --auto-pause-delay
-    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
-    description: ''
-  - name: --compute-model
-    parameterValueGroup: Provisioned, Serverless
-    summary: The compute model of the database.
-    description: ''
-  - name: --min-capacity
-    summary: Minimal capacity that database will always have allocated, if not paused.
-    description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: false, true
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
-- uid: az_sql_db_audit_policy
-  name: az sql db audit-policy
-  summary: Manage a database's auditing policy.
-- uid: az_sql_db_audit_policy_show
-  name: az sql db audit-policy show
-  summary: Gets a database's blob auditing policy.
-- uid: az_sql_db_audit_policy_update
-  name: az sql db audit-policy update
-  summary: Update a database's auditing policy.
-- uid: az_sql_db_classification
-  name: az sql db classification
-  summary: Manage sensitivity classifications.
-- uid: az_sql_db_classification_delete
-  name: az sql db classification delete
-  summary: Delete the sensitivity classification of a given column.
-- uid: az_sql_db_classification_list
-  name: az sql db classification list
-  summary: Get the sensitivity classifications of a given database.
-- uid: az_sql_db_classification_recommendation
-  name: az sql db classification recommendation
-  summary: Manage sensitivity classification recommendations.
-- uid: az_sql_db_classification_recommendation_disable
-  name: az sql db classification recommendation disable
-  summary: Disable sensitivity recommendations for a given column (recommendations are enabled by default on all columns).
-- uid: az_sql_db_classification_recommendation_enable
-  name: az sql db classification recommendation enable
-  summary: Enable sensitivity recommendations for a given column (recommendations are enabled by default on all columns).
-- uid: az_sql_db_classification_recommendation_list
-  name: az sql db classification recommendation list
-  summary: List the recommended sensitivity classifications of a given database.
-- uid: az_sql_db_classification_show
-  name: az sql db classification show
-  summary: Get the sensitivity classification of a given column.
-- uid: az_sql_db_classification_update
-  name: az sql db classification update
-  summary: Update a columns's sensitivity classification.
-- uid: az_sql_db_copy
-  name: az sql db copy
-  summary: Create a copy of a database.
-- uid: az_sql_db_create
-  name: az sql db create
-  summary: Create a database.
-- uid: az_sql_db_delete
-  name: az sql db delete
-  summary: Delete a database.
-- uid: az_sql_db_export
-  name: az sql db export
-  summary: Export a database to a bacpac.
-- uid: az_sql_db_import
-  name: az sql db import
-  summary: Imports a bacpac into an existing database.
-- uid: az_sql_db_list
-  name: az sql db list
-  summary: List databases a server or elastic pool.
-- uid: az_sql_db_list_deleted
-  name: az sql db list-deleted
-  summary: Gets a list of deleted databases that can be restored.
-- uid: az_sql_db_list_editions
-  name: az sql db list-editions
-  summary: Show database editions available for the currently active subscription.
-- uid: az_sql_db_list_usages
-  name: az sql db list-usages
-  summary: Returns database usages.
-- uid: az_sql_db_ltr_backup
-  name: az sql db ltr-backup
-  summary: Manage SQL database long term retention backups.
-- uid: az_sql_db_ltr_backup_delete
-  name: az sql db ltr-backup delete
-  summary: Delete a long term retention backup.
-- uid: az_sql_db_ltr_backup_list
-  name: az sql db ltr-backup list
-  summary: List the long term retention backups for a location, server or database.
-- uid: az_sql_db_ltr_backup_restore
-  name: az sql db ltr-backup restore
-  summary: Restore a long term retention backup to a new database.
-- uid: az_sql_db_ltr_backup_show
-  name: az sql db ltr-backup show
-  summary: Get a long term retention backup for a database.
-- uid: az_sql_db_ltr_backup_wait
-  name: az sql db ltr-backup wait
-  summary: Place the CLI in a waiting state until a condition of the database is met.
-- uid: az_sql_db_ltr_policy
-  name: az sql db ltr-policy
-  summary: Manage SQL database long term retention policy.
-- uid: az_sql_db_ltr_policy_set
-  name: az sql db ltr-policy set
-  summary: Update long term retention settings for a database.
-- uid: az_sql_db_ltr_policy_show
-  name: az sql db ltr-policy show
-  summary: Show the long term retention policy for a database.
-- uid: az_sql_db_op
-  name: az sql db op
-  summary: Manage operations on a database.
-- uid: az_sql_db_op_cancel
-  name: az sql db op cancel
-  summary: Cancels the asynchronous operation on the database.
-- uid: az_sql_db_op_list
-  name: az sql db op list
-  summary: Gets a list of operations performed on the database.
-- uid: az_sql_db_rename
-  name: az sql db rename
-  summary: Rename a database.
-- uid: az_sql_db_replica
-  name: az sql db replica
-  summary: Manage replication between databases.
-- uid: az_sql_db_replica_create
-  name: az sql db replica create
-  summary: Create a database as a readable secondary replica of an existing database.
-- uid: az_sql_db_replica_delete_link
-  name: az sql db replica delete-link
-  summary: Permanently stop data replication between two database replicas.
-- uid: az_sql_db_replica_list_links
-  name: az sql db replica list-links
-  summary: List the replicas of a database and their replication status.
-- uid: az_sql_db_replica_set_primary
-  name: az sql db replica set-primary
-  summary: Set the primary replica database by failing over from the current primary replica database.
-- uid: az_sql_db_restore
-  name: az sql db restore
-  summary: Create a new database by restoring from a backup.
-- uid: az_sql_db_show
-  name: az sql db show
-  summary: Get the details for a database.
-- uid: az_sql_db_show_connection_string
-  name: az sql db show-connection-string
-  summary: Generates a connection string to a database.
-- uid: az_sql_db_tde
-  name: az sql db tde
-  summary: Manage a database's transparent data encryption.
-- uid: az_sql_db_tde_list_activity
-  name: az sql db tde list-activity
-  summary: Returns a database's transparent data encryption operation result.
-- uid: az_sql_db_tde_set
-  name: az sql db tde set
-  summary: Sets a database's transparent data encryption configuration.
-- uid: az_sql_db_tde_show
-  name: az sql db tde show
-  summary: Gets a database's transparent data encryption configuration.
-- uid: az_sql_db_threat_policy
-  name: az sql db threat-policy
-  summary: Manage a database's threat detection policies.
-- uid: az_sql_db_threat_policy_show
-  name: az sql db threat-policy show
-  summary: Gets a database's threat detection policy.
-- uid: az_sql_db_threat_policy_update
-  name: az sql db threat-policy update
-  summary: Update a database's threat detection policy.
-- uid: az_sql_db_update
-  name: az sql db update
-  summary: Update a database.
+- az_sql_db_audit_policy
+- az_sql_db_audit_policy_show
+- az_sql_db_audit_policy_update
+- az_sql_db_classification
+- az_sql_db_classification_delete
+- az_sql_db_classification_list
+- az_sql_db_classification_recommendation
+- az_sql_db_classification_recommendation_disable
+- az_sql_db_classification_recommendation_enable
+- az_sql_db_classification_recommendation_list
+- az_sql_db_classification_show
+- az_sql_db_classification_update
+- az_sql_db_copy
+- az_sql_db_create
+- az_sql_db_delete
+- az_sql_db_export
+- az_sql_db_import
+- az_sql_db_list
+- az_sql_db_list_deleted
+- az_sql_db_list_editions
+- az_sql_db_list_usages
+- az_sql_db_ltr_backup
+- az_sql_db_ltr_backup_delete
+- az_sql_db_ltr_backup_list
+- az_sql_db_ltr_backup_restore
+- az_sql_db_ltr_backup_show
+- az_sql_db_ltr_backup_wait
+- az_sql_db_ltr_policy
+- az_sql_db_ltr_policy_set
+- az_sql_db_ltr_policy_show
+- az_sql_db_op
+- az_sql_db_op_cancel
+- az_sql_db_op_list
+- az_sql_db_rename
+- az_sql_db_replica
+- az_sql_db_replica_create
+- az_sql_db_replica_delete_link
+- az_sql_db_replica_list_links
+- az_sql_db_replica_set_primary
+- az_sql_db_restore
+- az_sql_db_show
+- az_sql_db_show_connection_string
+- az_sql_db_tde
+- az_sql_db_tde_list_activity
+- az_sql_db_tde_set
+- az_sql_db_tde_show
+- az_sql_db_threat_policy
+- az_sql_db_threat_policy_show
+- az_sql_db_threat_policy_update
+- az_sql_db_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -999,10 +931,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/sql/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/6a87eb946e924c23ab348fd50d649d12d707be20/src/azure-cli/azure/cli/command_modules/sql/_help.py
-updated_at: 7/9/2020 5:44:39 AM
-ms.date: 07/09/2020
-description: Manage databases.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/6a87eb946e924c23ab348fd50d649d12d707be20/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  updated_at: 7/9/2020 5:44:39 AM
+  ms.date: 07/09/2020
+  description: Manage databases.

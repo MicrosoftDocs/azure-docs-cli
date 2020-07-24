@@ -1,35 +1,28 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_dms-preview_az_dms_task
-  name: az dms task
-  summary: Manage service-level tasks for a Database Migration Service instance.
-  description: Service-level tasks are non-migration tasks that are performed at the service level. This is usually for administrative and maintenance work which applies to the service's agent and VM.
-  langs:
-  - azurecli
-  children:
-  - ext_dms-preview_az_dms_task_cancel
-  - ext_dms-preview_az_dms_task_create
-  - ext_dms-preview_az_dms_task_delete
-  - ext_dms-preview_az_dms_task_list
-  - ext_dms-preview_az_dms_task_show
+### YamlMime:AzureCLIGroup
+uid: ext_dms-preview_az_dms_task
+name: az dms task
+summary: Manage service-level tasks for a Database Migration Service instance.
+description: Service-level tasks are non-migration tasks that are performed at the service level. This is usually for administrative and maintenance work which applies to the service's agent and VM.
+directCommands:
 - uid: ext_dms-preview_az_dms_task_cancel
   name: az dms task cancel
   summary: Cancel a service-level Task if it's currently queued or running.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az dms task cancel --name
+                       --resource-group
+                       --service-name
   examples:
   - summary: Cancel a service-level task
-    syntax:
-      content: az dms task cancel -g myresourcegroup --service-name mydms -n mytask
-  parameters:
+    syntax: az dms task cancel -g myresourcegroup --service-name mydms -n mytask
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the Task. A DMS Task is the activity that performs service-level related work. There could be multiple Tasks associated with a service.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -43,20 +36,23 @@ items:
         1) Check OCI driver against Oracle source to check for compatibility
         2) Upload OCI driver install package
         3) Install an already uploaded OCI driver package.
-  langs:
-  - azurecli
+  syntax: >-
+    az dms task create --name
+                       --resource-group
+                       --service-name
+                       --task-options-json
+                       --task-type
   examples:
   - summary: Create a service-level task which checks if the currently installed OCI driver supports
-    syntax:
-      content: 'az dms task create -g myresourcegroup --service-name mydms -n checkocitask1 --task-options-json "{"serverVersion": "12.2.0.1"}" --task-type CheckOciDriver'
-  parameters:
+    syntax: 'az dms task create -g myresourcegroup --service-name mydms -n checkocitask1 --task-options-json "{"serverVersion": "12.2.0.1"}" --task-type CheckOciDriver'
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the Task. A DMS Task is the activity that performs service-level related work. There could be multiple Tasks associated with a service.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -93,21 +89,26 @@ items:
   name: az dms task delete
   summary: Delete a service-level Task.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az dms task delete --name
+                       --resource-group
+                       --service-name
+                       [--delete-running-tasks]
+                       [--yes]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the Task. A DMS Task is the activity that performs service-level related work. There could be multiple Tasks associated with a service.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
     summary: The name of the Service.
     description: ''
+  optionalParameters:
   - name: --delete-running-tasks
     summary: Delete the service-level Task even if the Task is currently running.
     description: ''
@@ -118,24 +119,25 @@ items:
   name: az dms task list
   summary: List the service-level Tasks within a DMS instance. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az dms task list --name
+                     --resource-group
+                     [--task-type]
   examples:
   - summary: List all Tasks within a DMS instance.
-    syntax:
-      content: az dms task list -g myresourcegroup -n mydms
+    syntax: az dms task list -g myresourcegroup -n mydms
   - summary: List only the tasks that check the OCI driver compatibility within a DMS instance.
-    syntax:
-      content: az dms task list -g myresourcegroup -n mydms --task-type Service.Check.OCI
-  parameters:
+    syntax: az dms task list -g myresourcegroup -n mydms --task-type Service.Check.OCI
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the Service.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --task-type
     summary: The type of task to be listed. For the list of possible types see "az dms check-status".
     description: ''
@@ -143,40 +145,34 @@ items:
   name: az dms task show
   summary: Show the details of a service-level Task. Use the "--expand" to get more details.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az dms task show --name
+                     --resource-group
+                     --service-name
+                     [--expand]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the Task. A DMS Task is the activity that performs service-level related work. There could be multiple Tasks associated with a service.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
     summary: The name of the Service.
     description: ''
+  optionalParameters:
   - name: --expand
     summary: Expand the response to provide more details. Use with "command" to see more details of the Task. Use with "output" to see the results of the Task's migration.
     description: ''
 commands:
-- uid: ext_dms-preview_az_dms_task_cancel
-  name: az dms task cancel
-  summary: Cancel a service-level Task if it's currently queued or running.
-- uid: ext_dms-preview_az_dms_task_create
-  name: az dms task create
-  summary: Create and start a service-level task.
-- uid: ext_dms-preview_az_dms_task_delete
-  name: az dms task delete
-  summary: Delete a service-level Task.
-- uid: ext_dms-preview_az_dms_task_list
-  name: az dms task list
-  summary: List the service-level Tasks within a DMS instance. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
-- uid: ext_dms-preview_az_dms_task_show
-  name: az dms task show
-  summary: Show the details of a service-level Task. Use the "--expand" to get more details.
+- ext_dms-preview_az_dms_task_cancel
+- ext_dms-preview_az_dms_task_create
+- ext_dms-preview_az_dms_task_delete
+- ext_dms-preview_az_dms_task_list
+- ext_dms-preview_az_dms_task_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -192,4 +188,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Service-level tasks are non-migration tasks that are performed at the service level. This is usually for administrative and maintenance work which applies to the service's agent and VM.
+metadata:
+  description: Service-level tasks are non-migration tasks that are performed at the service level. This is usually for administrative and maintenance work which applies to the service's agent and VM.

@@ -1,29 +1,28 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_azure-iot_az_iot_pnp_twin
-  name: az iot pnp twin
-  summary: Manipulate and interact with the digital twin of an IoT Hub device.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_azure-iot_az_iot_pnp_twin_invoke_command
-  - ext_azure-iot_az_iot_pnp_twin_show
-  - ext_azure-iot_az_iot_pnp_twin_update
+### YamlMime:AzureCLIGroup
+uid: ext_azure-iot_az_iot_pnp_twin
+name: az iot pnp twin
+summary: Manipulate and interact with the digital twin of an IoT Hub device.
+description: ''
+directCommands:
 - uid: ext_azure-iot_az_iot_pnp_twin_invoke_command
   name: az iot pnp twin invoke-command
   summary: Invoke a root or component level command of a digital twin device.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az iot pnp twin invoke-command --cn
+                                   --device-id
+                                   [--component-path]
+                                   [--hub-name]
+                                   [--login]
+                                   [--payload]
+                                   [--resource-group]
+                                   [--timeout]
   examples:
   - summary: Invoke root level command "reboot" which takes a payload that includes the "delay" property.
-    syntax:
-      content: az iot pnp twin invoke-command --command-name reboot -n {iothub_name} -d {device_id} --payload '{"delay":5}'
+    syntax: az iot pnp twin invoke-command --command-name reboot -n {iothub_name} -d {device_id} --payload '{"delay":5}'
   - summary: Invoke command "getMaxMinReport" on component "thermostat1" that takes no input.
-    syntax:
-      content: az iot pnp twin invoke-command --cn getMaxMinReport -n {iothub_name} -d {device_id} --component-path thermostat1
-  parameters:
+    syntax: az iot pnp twin invoke-command --cn getMaxMinReport -n {iothub_name} -d {device_id} --component-path thermostat1
+  requiredParameters:
   - isRequired: true
     name: --cn --command-name
     summary: Digital twin command name.
@@ -32,6 +31,7 @@ items:
     name: --device-id -d
     summary: Target Device.
     description: ''
+  optionalParameters:
   - name: --component-path
     summary: 'Digital twin component path. For example: thermostat1.'
     description: ''
@@ -46,7 +46,7 @@ items:
     summary: JSON payload input for command. Provide file path or inline JSON.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --timeout --to
     defaultValue: "30"
@@ -56,17 +56,20 @@ items:
   name: az iot pnp twin show
   summary: Show the digital twin of an IoT Hub device.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az iot pnp twin show --device-id
+                         [--hub-name]
+                         [--login]
+                         [--resource-group]
   examples:
   - summary: Show the target device digital twin.
-    syntax:
-      content: az iot pnp twin show -n {iothub_name} -d {device_id}
-  parameters:
+    syntax: az iot pnp twin show -n {iothub_name} -d {device_id}
+  requiredParameters:
   - isRequired: true
     name: --device-id -d
     summary: Target Device.
     description: ''
+  optionalParameters:
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -74,29 +77,30 @@ items:
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-iot_az_iot_pnp_twin_update
   name: az iot pnp twin update
   summary: Update the read-write properties of a digital twin device via JSON patch specification.
   description: Currently operations are limited to add, replace and remove.
-  langs:
-  - azurecli
+  syntax: >-
+    az iot pnp twin update --device-id
+                           --json-patch
+                           [--hub-name]
+                           [--login]
+                           [--resource-group]
   examples:
   - summary: Update a digital twin via JSON patch specification.
-    syntax:
-      content: "az iot pnp twin update --hub-name {iothub_name} --device-id {device_id} --json-patch '{\"op\":\"add\", \"path\":\"/thermostat1/targetTemperature\", \"value\": 54}'"
+    syntax: "az iot pnp twin update --hub-name {iothub_name} --device-id {device_id} --json-patch '{\"op\":\"add\", \"path\":\"/thermostat1/targetTemperature\", \"value\": 54}'"
   - summary: Update a digital twin via JSON patch specification.
-    syntax:
-      content: >-
-        az iot pnp twin update -n {iothub_name} -d {device_id} --json-patch '[
-          {"op":"remove", "path":"/thermostat1/targetTemperature"},
-          {"op":"add", "path":"/thermostat2/targetTemperature", "value": 22}
-        ]'
+    syntax: >-
+      az iot pnp twin update -n {iothub_name} -d {device_id} --json-patch '[
+        {"op":"remove", "path":"/thermostat1/targetTemperature"},
+        {"op":"add", "path":"/thermostat2/targetTemperature", "value": 22}
+      ]'
   - summary: Update a digital twin property via JSON patch specification defined in a file.
-    syntax:
-      content: az iot pnp twin update -n {iothub_name} -d {device_id} --json-patch ./my/patch/document.json
-  parameters:
+    syntax: az iot pnp twin update -n {iothub_name} -d {device_id} --json-patch ./my/patch/document.json
+  requiredParameters:
   - isRequired: true
     name: --device-id -d
     summary: Target Device.
@@ -105,6 +109,7 @@ items:
     name: --json-patch --patch
     summary: An update specification described by JSON-patch. Operations are limited to add, replace and remove. Provide file path or inline JSON.
     description: ''
+  optionalParameters:
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -112,18 +117,12 @@ items:
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 commands:
-- uid: ext_azure-iot_az_iot_pnp_twin_invoke_command
-  name: az iot pnp twin invoke-command
-  summary: Invoke a root or component level command of a digital twin device.
-- uid: ext_azure-iot_az_iot_pnp_twin_show
-  name: az iot pnp twin show
-  summary: Show the digital twin of an IoT Hub device.
-- uid: ext_azure-iot_az_iot_pnp_twin_update
-  name: az iot pnp twin update
-  summary: Update the read-write properties of a digital twin device via JSON patch specification.
+- ext_azure-iot_az_iot_pnp_twin_invoke_command
+- ext_azure-iot_az_iot_pnp_twin_show
+- ext_azure-iot_az_iot_pnp_twin_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -139,4 +138,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manipulate and interact with the digital twin of an IoT Hub device.
+metadata:
+  description: Manipulate and interact with the digital twin of an IoT Hub device.

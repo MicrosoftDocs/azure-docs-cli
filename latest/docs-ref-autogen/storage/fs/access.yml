@@ -1,34 +1,35 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_storage_fs_access
-  name: az storage fs access
-  summary: Manage file system access and permissions for Azure Data Lake Storage Gen2 account.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_storage_fs_access_set
-  - az_storage_fs_access_show
+### YamlMime:AzureCLIGroup
+uid: az_storage_fs_access
+name: az storage fs access
+summary: Manage file system access and permissions for Azure Data Lake Storage Gen2 account.
+description: ''
+directCommands:
 - uid: az_storage_fs_access_set
   name: az storage fs access set
   summary: Set the access control properties of a path(directory or file) in Azure Data Lake Storage Gen2 account.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage fs access set --file-system
+                             --path
+                             [--account-key]
+                             [--account-name]
+                             [--acl]
+                             [--connection-string]
+                             [--group]
+                             [--owner]
+                             [--permissions]
+                             [--sas-token]
+                             [--subscription]
   examples:
   - summary: Set the access control list of a path.
-    syntax:
-      content: az storage fs access set --acl "user::rwx,group::r--,other::---" -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
+    syntax: az storage fs access set --acl "user::rwx,group::r--,other::---" -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
   - summary: Set permissions of a path.
-    syntax:
-      content: az storage fs access set --permissions "rwxrwx---" -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
+    syntax: az storage fs access set --permissions "rwxrwx---" -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
   - summary: Set owner of a path.
-    syntax:
-      content: az storage fs access set --owner example@microsoft.com -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
+    syntax: az storage fs access set --owner example@microsoft.com -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
   - summary: Set owning group of a path.
-    syntax:
-      content: az storage fs access set --group 68390a19-a897-236b-b453-488abf67b4dc -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
-  parameters:
+    syntax: az storage fs access set --group 68390a19-a897-236b-b453-488abf67b4dc -p dir -f myfilesystem --account-name mystorageaccount --account-key 0000-0000
+  requiredParameters:
   - isRequired: true
     name: --file-system -f
     summary: File system name.
@@ -37,9 +38,19 @@ items:
     name: --path -p
     summary: The path to a file or directory in the specified file system.
     description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
   - name: --acl
     summary: Invalid in conjunction with acl. POSIX access control rights on files and directories in the format "[scope:][type]:[id]:[permissions]". e.g. "user::rwx,group::r--,other::---,mask::rwx".
     description: 'The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]". The scope must be "default" to indicate the ACE belongs to the default ACL for a directory; otherwise scope is implicit and the ACE belongs to the access ACL. There are four ACE types: "user" grants rights to the owner or a named user, "group" grants rights to the owning group or a named group, "mask" restricts rights granted to named users and the members of groups, and "other" grants rights to all users not found in any of the other entries. The user or group identifier is omitted for entries of type "mask" and "other". The user or group identifier is also omitted for the owner and owning group. For example, the following ACL grants read, write, and execute rights to the file owner an john.doe@contoso, the read right to the owning group, and nothing to everyone else: "user::rwx,user:john.doe@contoso:rwx,group::r--,other::---,mask::rwx". For more information, please refer to https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-access-control.'
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
   - name: --group
     summary: The owning group of the file or directory. The group Azure Active Directory object ID or user principal name to set as the owning group. For more information, please refer to <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-access-control#changing-the-owning-group">https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-access-control#changing-the-owning-group</a>.
     description: ''
@@ -49,38 +60,29 @@ items:
   - name: --permissions
     summary: Invalid in conjunction with acl. POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read(r), write(w), or execute(x) permission. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.'.
     description: ''
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_fs_access_show
   name: az storage fs access show
   summary: Show the access control properties of a path (directory or file) in Azure Data Lake Storage Gen2 account.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage fs access show --file-system
+                              --path
+                              [--account-key]
+                              [--account-name]
+                              [--connection-string]
+                              [--sas-token]
+                              [--subscription]
   examples:
   - summary: Show the access control properties of a path.
-    syntax:
-      content: az storage fs access show -p dir -f myfilesystem --account-name myadlsaccount --account-key 0000-0000
-  parameters:
+    syntax: az storage fs access show -p dir -f myfilesystem --account-name myadlsaccount --account-key 0000-0000
+  requiredParameters:
   - isRequired: true
     name: --file-system -f
     summary: File system name.
@@ -89,6 +91,7 @@ items:
     name: --path -p
     summary: The path to a file or directory in the specified file system.
     description: ''
+  optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -104,19 +107,10 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
-- uid: az_storage_fs_access_set
-  name: az storage fs access set
-  summary: Set the access control properties of a path(directory or file) in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_access_show
-  name: az storage fs access show
-  summary: Show the access control properties of a path (directory or file) in Azure Data Lake Storage Gen2 account.
+- az_storage_fs_access_set
+- az_storage_fs_access_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -132,10 +126,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 7/16/2020 5:46:58 AM
-ms.date: 07/16/2020
-description: Manage file system access and permissions for Azure Data Lake Storage Gen2 account.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  updated_at: 7/16/2020 5:46:58 AM
+  ms.date: 07/16/2020
+  description: Manage file system access and permissions for Azure Data Lake Storage Gen2 account.

@@ -1,32 +1,47 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_storage-preview_az_storage_blob
-  name: az storage blob
-  summary: Manage object storage for unstructured data (blobs).
-  description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
-  langs:
-  - azurecli
-  children:
-  - ext_storage-preview_az_storage_blob_list
-  - ext_storage-preview_az_storage_blob_move
+### YamlMime:AzureCLIGroup
+uid: ext_storage-preview_az_storage_blob
+name: az storage blob
+summary: Manage object storage for unstructured data (blobs).
+description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
+directCommands:
 - uid: ext_storage-preview_az_storage_blob_list
   name: az storage blob list
   summary: List blobs in a given container.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage blob list --container-name
+                         [--account-key]
+                         [--account-name]
+                         [--auth-mode {key, login}]
+                         [--connection-string]
+                         [--delimiter]
+                         [--include]
+                         [--marker]
+                         [--num-results]
+                         [--prefix]
+                         [--sas-token]
+                         [--timeout]
   examples:
   - summary: List all storage blobs in a container whose names start with 'foo'; will match names such as 'foo', 'foobar', and 'foo/bar'
-    syntax:
-      content: az storage blob list -c MyContainer --prefix foo
-  parameters:
+    syntax: az storage blob list -c MyContainer --prefix foo
+  requiredParameters:
   - isRequired: true
     name: --container-name -c
     summary: The container name.
     description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
   - name: --delimiter
     summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
@@ -45,32 +60,36 @@ items:
   - name: --prefix
     summary: Filters the results to return only blobs whose names begin with the specified prefix.
     description: ''
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
-    description: ''
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
 - uid: ext_storage-preview_az_storage_blob_move
   name: az storage blob move
   summary: Move a blob in a storage container.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage blob move --container-name
+                         --destination-blob
+                         --source-blob
+                         [--account-key]
+                         [--account-name]
+                         [--auth-mode {key, login}]
+                         [--connection-string]
+                         [--lease-id]
+                         [--sas-token]
+                         [--source-if-match]
+                         [--source-if-modified-since]
+                         [--source-if-none-match]
+                         [--source-if-unmodified-since]
+                         [--source-lease-id]
+                         [--timeout]
   examples:
   - summary: Move a blob in a storage container.
-    syntax:
-      content: az storage blob move -c MyContainer -d DestinationBlobPath -s SourceBlobPath --account-name MyStorageAccount
-  parameters:
+    syntax: az storage blob move -c MyContainer -d DestinationBlobPath -s SourceBlobPath --account-name MyStorageAccount
+  requiredParameters:
   - isRequired: true
     name: --container-name -c
     summary: The container name.
@@ -83,12 +102,25 @@ items:
     name: --source-blob -s
     summary: The source blob name. It should be an absolute path under the container. e.g.'topdir1/dirsubfoo'.
     description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
   - name: --auth-mode
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
   - name: --lease-id
     summary: Optional. A lease ID for the new_path. The new_path must have an active lease and the lease ID must match.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --source-if-match
     summary: Optional. An ETag value. Specify this header to perform the rename operation only if the source's ETag matches the value specified.
@@ -108,94 +140,32 @@ items:
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
 commands:
-- uid: ext_storage-preview_az_storage_blob_access
-  name: az storage blob access
-  summary: Manage the access control properties of a blob when Hierarchical Namespace is enabled.
-- uid: ext_storage-preview_az_storage_blob_access_set
-  name: az storage blob access set
-  summary: Set the access control properties of a blob.
-- uid: ext_storage-preview_az_storage_blob_access_show
-  name: az storage blob access show
-  summary: Show the access control properties of a blob.
-- uid: ext_storage-preview_az_storage_blob_access_update
-  name: az storage blob access update
-  summary: Update the access control properties of a blob.
-- uid: ext_storage-preview_az_storage_blob_directory
-  name: az storage blob directory
-  summary: Manage blob directories in storage account container.
-- uid: ext_storage-preview_az_storage_blob_directory_access
-  name: az storage blob directory access
-  summary: Manage the access control properties of a directory when Hierarchical Namespace is enabled.
-- uid: ext_storage-preview_az_storage_blob_directory_access_set
-  name: az storage blob directory access set
-  summary: Set the access control properties of a directory.
-- uid: ext_storage-preview_az_storage_blob_directory_access_show
-  name: az storage blob directory access show
-  summary: Show the access control properties of a directory.
-- uid: ext_storage-preview_az_storage_blob_directory_access_update
-  name: az storage blob directory access update
-  summary: Update the access control properties of a directory.
-- uid: ext_storage-preview_az_storage_blob_directory_create
-  name: az storage blob directory create
-  summary: Create a storage blob directory in a storage container.
-- uid: ext_storage-preview_az_storage_blob_directory_delete
-  name: az storage blob directory delete
-  summary: Delete a storage blob directory in a storage container.
-- uid: ext_storage-preview_az_storage_blob_directory_download
-  name: az storage blob directory download
-  summary: Download blobs to a local file path.
-- uid: ext_storage-preview_az_storage_blob_directory_exists
-  name: az storage blob directory exists
-  summary: Check for the existence of a blob directory in a storage container.
-- uid: ext_storage-preview_az_storage_blob_directory_list
-  name: az storage blob directory list
-  summary: List blobs and blob subdirectories in a storage directory.
-- uid: ext_storage-preview_az_storage_blob_directory_metadata
-  name: az storage blob directory metadata
-  summary: Manage directory metadata.
-- uid: ext_storage-preview_az_storage_blob_directory_metadata_show
-  name: az storage blob directory metadata show
-  summary: Show all user-defined metadata for the specified blob directory.
-- uid: ext_storage-preview_az_storage_blob_directory_metadata_update
-  name: az storage blob directory metadata update
-  summary: Set user-defined metadata for the specified blob directory as one or more name-value pairs.
-- uid: ext_storage-preview_az_storage_blob_directory_move
-  name: az storage blob directory move
-  summary: Move a storage directory to another storage blob directory in a storage container.
-- uid: ext_storage-preview_az_storage_blob_directory_show
-  name: az storage blob directory show
-  summary: Show a storage blob directory properties in a storage container.
-- uid: ext_storage-preview_az_storage_blob_directory_upload
-  name: az storage blob directory upload
-  summary: Upload blobs or subdirectories to a storage blob directory.
-- uid: ext_storage-preview_az_storage_blob_list
-  name: az storage blob list
-  summary: List blobs in a given container.
-- uid: ext_storage-preview_az_storage_blob_move
-  name: az storage blob move
-  summary: Move a blob in a storage container.
-- uid: ext_storage-preview_az_storage_blob_service_properties
-  name: az storage blob service-properties
-  summary: Manage storage blob service properties.
-- uid: ext_storage-preview_az_storage_blob_service_properties_show
-  name: az storage blob service-properties show
-  summary: Gets the properties of a storage account's Blob service, including Azure Storage Analytics.
-- uid: ext_storage-preview_az_storage_blob_service_properties_update
-  name: az storage blob service-properties update
-  summary: Update storage blob service properties.
+- ext_storage-preview_az_storage_blob_access
+- ext_storage-preview_az_storage_blob_access_set
+- ext_storage-preview_az_storage_blob_access_show
+- ext_storage-preview_az_storage_blob_access_update
+- ext_storage-preview_az_storage_blob_directory
+- ext_storage-preview_az_storage_blob_directory_access
+- ext_storage-preview_az_storage_blob_directory_access_set
+- ext_storage-preview_az_storage_blob_directory_access_show
+- ext_storage-preview_az_storage_blob_directory_access_update
+- ext_storage-preview_az_storage_blob_directory_create
+- ext_storage-preview_az_storage_blob_directory_delete
+- ext_storage-preview_az_storage_blob_directory_download
+- ext_storage-preview_az_storage_blob_directory_exists
+- ext_storage-preview_az_storage_blob_directory_list
+- ext_storage-preview_az_storage_blob_directory_metadata
+- ext_storage-preview_az_storage_blob_directory_metadata_show
+- ext_storage-preview_az_storage_blob_directory_metadata_update
+- ext_storage-preview_az_storage_blob_directory_move
+- ext_storage-preview_az_storage_blob_directory_show
+- ext_storage-preview_az_storage_blob_directory_upload
+- ext_storage-preview_az_storage_blob_list
+- ext_storage-preview_az_storage_blob_move
+- ext_storage-preview_az_storage_blob_service_properties
+- ext_storage-preview_az_storage_blob_service_properties_show
+- ext_storage-preview_az_storage_blob_service_properties_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -211,4 +181,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
+metadata:
+  description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

@@ -1,45 +1,48 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_image
-  name: az image
-  summary: Manage custom virtual machine images.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_image_create
-  - az_image_delete
-  - az_image_list
-  - az_image_show
-  - az_image_update
+### YamlMime:AzureCLIGroup
+uid: az_image
+name: az image
+summary: Manage custom virtual machine images.
+description: ''
+directCommands:
 - uid: az_image_create
   name: az image create
   summary: Create a custom Virtual Machine Image from managed disks or snapshots.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az image create --name
+                    --resource-group
+                    --source
+                    [--data-disk-caching {None, ReadOnly, ReadWrite}]
+                    [--data-disk-sources]
+                    [--hyper-v-generation {V1, V2}]
+                    [--location]
+                    [--os-disk-caching {None, ReadOnly, ReadWrite}]
+                    [--os-type {Linux, Windows}]
+                    [--storage-sku {Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS}]
+                    [--subscription]
+                    [--tags]
+                    [--zone-resilient {false, true}]
   examples:
   - summary: Create an image from an existing disk.
-    syntax:
-      content: >-
-        az image create -g MyResourceGroup -n image1 --os-type Linux \
-            --source /subscriptions/db5eb68e-73e2-4fa8-b18a-0123456789999/resourceGroups/rg1/providers/Microsoft.Compute/snapshots/s1
+    syntax: >-
+      az image create -g MyResourceGroup -n image1 --os-type Linux \
+          --source /subscriptions/db5eb68e-73e2-4fa8-b18a-0123456789999/resourceGroups/rg1/providers/Microsoft.Compute/snapshots/s1
   - summary: Create an image by capturing an existing generalized virtual machine in the same resource group.
-    syntax:
-      content: az image create -g MyResourceGroup -n image1 --source MyVm1
-  parameters:
+    syntax: az image create -g MyResourceGroup -n image1 --source MyVm1
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: New image name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --source
     summary: OS disk source from the same region, including a virtual machine ID or name, OS disk blob URI, managed OS disk ID or name, or OS snapshot ID or name.
     description: ''
+  optionalParameters:
   - name: --data-disk-caching
     parameterValueGroup: None, ReadOnly, ReadWrite
     summary: Storage caching type for the image's data disk.
@@ -53,7 +56,7 @@ items:
     summary: The hypervisor generation of the Virtual Machine created from the image.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --os-disk-caching
     parameterValueGroup: None, ReadOnly, ReadWrite
@@ -67,6 +70,9 @@ items:
     parameterValueGroup: Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS
     summary: The SKU of the storage account with which to create the VM image. Unused if source VM is specified.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -74,16 +80,16 @@ items:
     parameterValueGroup: false, true
     summary: Specifies whether an image is zone resilient or not. Default is false. Zone resilient images can be created only in regions that provide Zone Redundant Storage.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_image_delete
   name: az image delete
   summary: Deletes an Image.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az image delete [--ids]
+                    [--name]
+                    [--resource-group]
+                    [--subscription]
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -91,7 +97,7 @@ items:
     summary: The name of the image.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -100,11 +106,12 @@ items:
   name: az image list
   summary: List custom VM images.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az image list [--resource-group]
+                  [--subscription]
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -113,9 +120,13 @@ items:
   name: az image show
   summary: Gets an image.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az image show [--expand]
+                  [--ids]
+                  [--name]
+                  [--resource-group]
+                  [--subscription]
+  optionalParameters:
   - name: --expand
     summary: The expand expression to apply on the operation.
     description: ''
@@ -126,7 +137,7 @@ items:
     summary: The name of the image.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -135,18 +146,27 @@ items:
   name: az image update
   summary: Update custom VM images.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az image update [--add]
+                    [--force-string]
+                    [--ids]
+                    [--name]
+                    [--remove]
+                    [--resource-group]
+                    [--set]
+                    [--subscription]
+                    [--tags]
   examples:
   - summary: Add or update tags.
-    syntax:
-      content: az image update -n ImageName -g ResourceGroup --tags tag1=val1 tag2=val2
+    syntax: az image update -n ImageName -g ResourceGroup --tags tag1=val1 tag2=val2
   - summary: Remove all tags.
-    syntax:
-      content: az image update -n ImageName -g resourceGroup --tags
-  parameters:
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    syntax: az image update -n ImageName -g resourceGroup --tags
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -154,94 +174,45 @@ items:
   - name: --name -n
     summary: The name of the image.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
 commands:
-- uid: az_image_builder
-  name: az image builder
-  summary: Manage and build image builder templates.
-- uid: az_image_builder_cancel
-  name: az image builder cancel
-  summary: Cancel the long running image build based on the image template.
-- uid: az_image_builder_create
-  name: az image builder create
-  summary: Create an image builder template.
-- uid: az_image_builder_customizer
-  name: az image builder customizer
-  summary: Manage image builder template customizers.
-- uid: az_image_builder_customizer_add
-  name: az image builder customizer add
-  summary: Add an image builder customizer to an image builder template.
-- uid: az_image_builder_customizer_clear
-  name: az image builder customizer clear
-  summary: Remove all image builder customizers from an image builder template.
-- uid: az_image_builder_customizer_remove
-  name: az image builder customizer remove
-  summary: Remove an image builder customizer from an image builder template.
-- uid: az_image_builder_delete
-  name: az image builder delete
-  summary: Delete image builder template.
-- uid: az_image_builder_list
-  name: az image builder list
-  summary: List image builder templates.
-- uid: az_image_builder_output
-  name: az image builder output
-  summary: Manage image builder template output distributors.
-- uid: az_image_builder_output_add
-  name: az image builder output add
-  summary: Add an image builder output distributor to an image builder template.
-- uid: az_image_builder_output_clear
-  name: az image builder output clear
-  summary: Remove all image builder output distributors from an image builder template.
-- uid: az_image_builder_output_remove
-  name: az image builder output remove
-  summary: Remove an image builder output distributor from an image builder template.
-- uid: az_image_builder_run
-  name: az image builder run
-  summary: Build an image builder template.
-- uid: az_image_builder_show
-  name: az image builder show
-  summary: Show an image builder template.
-- uid: az_image_builder_show_runs
-  name: az image builder show-runs
-  summary: Show an image builder template's run outputs.
-- uid: az_image_builder_update
-  name: az image builder update
-  summary: Update an image builder template.
-- uid: az_image_builder_wait
-  name: az image builder wait
-  summary: Place the CLI in a waiting state until a condition of the template is met.
-- uid: az_image_create
-  name: az image create
-  summary: Create a custom Virtual Machine Image from managed disks or snapshots.
-- uid: az_image_delete
-  name: az image delete
-  summary: Deletes an Image.
-- uid: az_image_list
-  name: az image list
-  summary: List custom VM images.
-- uid: az_image_show
-  name: az image show
-  summary: Gets an image.
-- uid: az_image_update
-  name: az image update
-  summary: Update custom VM images.
+- az_image_builder
+- az_image_builder_cancel
+- az_image_builder_create
+- az_image_builder_customizer
+- az_image_builder_customizer_add
+- az_image_builder_customizer_clear
+- az_image_builder_customizer_remove
+- az_image_builder_delete
+- az_image_builder_list
+- az_image_builder_output
+- az_image_builder_output_add
+- az_image_builder_output_clear
+- az_image_builder_output_remove
+- az_image_builder_run
+- az_image_builder_show
+- az_image_builder_show_runs
+- az_image_builder_update
+- az_image_builder_wait
+- az_image_create
+- az_image_delete
+- az_image_list
+- az_image_show
+- az_image_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -257,4 +228,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage custom virtual machine images.
+metadata:
+  description: Manage custom virtual machine images.
