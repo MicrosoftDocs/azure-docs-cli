@@ -1,124 +1,126 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_storage
-  name: az storage
-  summary: Manage Azure Cloud Storage resources.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_storage_copy
-  - az_storage_remove
+### YamlMime:AzureCLIGroup
+uid: az_storage
+name: az storage
+summary: Manage Azure Cloud Storage resources.
+description: ''
+directCommands:
 - uid: az_storage_copy
   name: az storage copy
   summary: Copy files or directories to or from Azure storage.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage copy [--blob-type {AppendBlob, BlockBlob, PageBlob}]
+                    [--content-type]
+                    [--destination]
+                    [--destination-account-name]
+                    [--destination-blob]
+                    [--destination-container]
+                    [--destination-file-path]
+                    [--destination-local-path]
+                    [--destination-share]
+                    [--exclude-path]
+                    [--exclude-pattern]
+                    [--follow-symlinks]
+                    [--include-path]
+                    [--include-pattern]
+                    [--preserve-s2s-access-tier {false, true}]
+                    [--put-md5]
+                    [--recursive]
+                    [--source]
+                    [--source-account-name]
+                    [--source-blob]
+                    [--source-container]
+                    [--source-file-path]
+                    [--source-local-path]
+                    [--source-share]
+                    [--subscription]
   examples:
   - summary: Upload a single file to Azure Blob using url.
-    syntax:
-      content: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob]
+    syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob]
   - summary: Upload a single file to Azure Blob using account name and container name.
-    syntax:
-      content: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-container mycontainer
+    syntax: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-container mycontainer
   - summary: Upload a single file to Azure Blob with MD5 hash of the file content and save it as the blob's Content-MD5 property.
-    syntax:
-      content: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob] --put-md5
+    syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob] --put-md5
   - summary: Upload an entire directory to Azure Blob using url.
-    syntax:
-      content: az storage copy -s /path/to/dir -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
+    syntax: az storage copy -s /path/to/dir -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
   - summary: Upload an entire directory to Azure Blob using account name and container name.
-    syntax:
-      content: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-container mycontainer --recursive
+    syntax: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-container mycontainer --recursive
   - summary: Upload a set of files to Azure Blob using wildcards with url.
-    syntax:
-      content: az storage copy -s /path/*foo/*bar/*.pdf -d https://[account].blob.core.windows.net/[container]/[path/to/directory]
+    syntax: az storage copy -s /path/*foo/*bar/*.pdf -d https://[account].blob.core.windows.net/[container]/[path/to/directory]
   - summary: Upload a set of files to Azure Blob using wildcards with account name and container name.
-    syntax:
-      content: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-container mycontainer
+    syntax: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-container mycontainer
   - summary: Upload files and directories to Azure Blob using wildcards with url.
-    syntax:
-      content: az storage copy -s /path/*foo/*bar* -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
+    syntax: az storage copy -s /path/*foo/*bar* -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
   - summary: Upload files and directories to Azure Blob using wildcards with account name and container name.
-    syntax:
-      content: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-container mycontainer --recursive
+    syntax: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-container mycontainer --recursive
   - summary: Download a single file from Azure Blob using url, and you can also specify your storage account and container information as above.
-    syntax:
-      content: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/blob] -d /path/to/file.txt
+    syntax: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/blob] -d /path/to/file.txt
   - summary: Download an entire directory from Azure Blob, and you can also specify your storage account and container information as above.
-    syntax:
-      content: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/directory] -d /path/to/dir --recursive
+    syntax: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a subset of containers within a storage account by using a wildcard symbol (*) in the container name, and you can also specify your storage account and container information as above.
-    syntax:
-      content: az storage copy -s https://[account].blob.core.windows.net/[container*name] -d /path/to/dir --recursive
+    syntax: az storage copy -s https://[account].blob.core.windows.net/[container*name] -d /path/to/dir --recursive
   - summary: Download a subset of files from Azure Blob. (Only jpg files and file names don't start with test will be included.)
-    syntax:
-      content: az storage copy -s https://[account].blob.core.windows.net/[container] --include-pattern "*.jpg" --exclude-pattern test* -d /path/to/dir --recursive
+    syntax: az storage copy -s https://[account].blob.core.windows.net/[container] --include-pattern "*.jpg" --exclude-pattern test* -d /path/to/dir --recursive
   - summary: Copy a single blob to another blob, and you can also specify the storage account and container information of source and destination as above.
-    syntax:
-      content: az storage copy -s https://[srcaccount].blob.core.windows.net/[container]/[path/to/blob] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/blob]
+    syntax: az storage copy -s https://[srcaccount].blob.core.windows.net/[container]/[path/to/blob] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/blob]
   - summary: Copy an entire account data from blob account to another blob account, and you can also specify the storage account and container information of source and destination as above.
-    syntax:
-      content: az storage copy -s https://[srcaccount].blob.core.windows.net -d https://[destaccount].blob.core.windows.net --recursive
+    syntax: az storage copy -s https://[srcaccount].blob.core.windows.net -d https://[destaccount].blob.core.windows.net --recursive
   - summary: Copy a single object from S3 with access key to blob, and you can also specify your storage account and container information as above.
-    syntax:
-      content: az storage copy -s https://s3.amazonaws.com/[bucket]/[object] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/blob]
+    syntax: az storage copy -s https://s3.amazonaws.com/[bucket]/[object] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/blob]
   - summary: Copy an entire directory from S3 with access key to blob virtual directory, and you can also specify your storage account and container information as above.
-    syntax:
-      content: az storage copy -s https://s3.amazonaws.com/[bucket]/[folder] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/directory] --recursive
+    syntax: az storage copy -s https://s3.amazonaws.com/[bucket]/[folder] -d https://[destaccount].blob.core.windows.net/[container]/[path/to/directory] --recursive
   - summary: Copy all buckets in S3 service with access key to blob account, and you can also specify your storage account information as above.
-    syntax:
-      content: az storage copy -s https://s3.amazonaws.com/ -d https://[destaccount].blob.core.windows.net --recursive
+    syntax: az storage copy -s https://s3.amazonaws.com/ -d https://[destaccount].blob.core.windows.net --recursive
   - summary: Copy all buckets in a S3 region with access key to blob account, and you can also specify your storage account information as above.
-    syntax:
-      content: az storage copy -s https://s3-[region].amazonaws.com/ -d https://[destaccount].blob.core.windows.net --recursive
+    syntax: az storage copy -s https://s3-[region].amazonaws.com/ -d https://[destaccount].blob.core.windows.net --recursive
   - summary: Upload a single file to Azure File Share using url.
-    syntax:
-      content: az storage copy -s /path/to/file.txt -d https://[account].file.core.windows.net/[share]/[path/to/file]
+    syntax: az storage copy -s /path/to/file.txt -d https://[account].file.core.windows.net/[share]/[path/to/file]
   - summary: Upload a single file to Azure File Share using account name and share name.
-    syntax:
-      content: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-share myshare
+    syntax: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-share myshare
   - summary: Upload an entire directory to Azure File Share using url.
-    syntax:
-      content: az storage copy -s /path/to/dir -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
+    syntax: az storage copy -s /path/to/dir -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
   - summary: Upload an entire directory to Azure File Share using account name and container name.
-    syntax:
-      content: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-share myshare --recursive
+    syntax: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-share myshare --recursive
   - summary: Upload a set of files to Azure File Share using wildcards with account name and share name.
-    syntax:
-      content: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-share myshare
+    syntax: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-share myshare
   - summary: Upload files and directories to Azure File Share using wildcards with url.
-    syntax:
-      content: az storage copy -s /path/*foo/*bar* -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
+    syntax: az storage copy -s /path/*foo/*bar* -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
   - summary: Upload files and directories to Azure File Share using wildcards with account name and share name.
-    syntax:
-      content: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-share myshare --recursive
+    syntax: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-share myshare --recursive
   - summary: Download a single file from Azure File Share using url, and you can also specify your storage account and share information as above.
-    syntax:
-      content: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/file] -d /path/to/file.txt
+    syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/file] -d /path/to/file.txt
   - summary: Download an entire directory from Azure File Share, and you can also specify your storage account and share information as above.
-    syntax:
-      content: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
+    syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a set of files from Azure File Share using wildcards, and you can also specify your storage account and share information as above.
-    syntax:
-      content: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
-  parameters:
-  - name: --destination -d
-    summary: The path/url of copy destination. It can be a local path, an url to azure storage server. If you provide destination parameter here, you do not need to provide arguments in copy destination arguments group and copy destination arguments will be deprecated in future.
-    description: ''
-  - name: --recursive -r
-    summary: Look into sub-directories recursively.
-    description: ''
-  - name: --source -s
-    summary: The path/url of copy source. It can be a local path, an url to azure storage server or AWS S3 buckets. If you provide source parameter here, you do not need to provide arguments in copy source arguments group and copy source arguments will be deprecated in future.
-    description: ''
+    syntax: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
+  optionalParameters:
   - name: --blob-type
     parameterValueGroup: AppendBlob, BlockBlob, PageBlob
     summary: The type of blob at the destination.
     description: ''
   - name: --content-type
     summary: Specify content type of the file.
+    description: ''
+  - name: --destination -d
+    summary: The path/url of copy destination. It can be a local path, an url to azure storage server. If you provide destination parameter here, you do not need to provide arguments in copy destination arguments group and copy destination arguments will be deprecated in future.
+    description: ''
+  - name: --destination-account-name
+    summary: Storage account name of copy destination.
+    description: ''
+  - name: --destination-blob
+    summary: Blob name in blob container of copy destination storage account.
+    description: ''
+  - name: --destination-container
+    summary: Container name of copy destination storage account.
+    description: ''
+  - name: --destination-file-path
+    summary: File path in file share of copy destination storage account.
+    description: ''
+  - name: --destination-local-path
+    summary: Local file path.
+    description: ''
+  - name: --destination-share
+    summary: File share name of copy destination storage account.
     description: ''
   - name: --exclude-path
     summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
@@ -142,23 +144,11 @@ items:
   - name: --put-md5
     summary: Create an MD5 hash of each file, and save the hash as the Content-MD5 property of the destination blob/file.Only available when uploading.
     description: ''
-  - name: --destination-account-name
-    summary: Storage account name of copy destination.
+  - name: --recursive -r
+    summary: Look into sub-directories recursively.
     description: ''
-  - name: --destination-blob
-    summary: Blob name in blob container of copy destination storage account.
-    description: ''
-  - name: --destination-container
-    summary: Container name of copy destination storage account.
-    description: ''
-  - name: --destination-file-path
-    summary: File path in file share of copy destination storage account.
-    description: ''
-  - name: --destination-local-path
-    summary: Local file path.
-    description: ''
-  - name: --destination-share
-    summary: File share name of copy destination storage account.
+  - name: --source -s
+    summary: The path/url of copy source. It can be a local path, an url to azure storage server or AWS S3 buckets. If you provide source parameter here, you do not need to provide arguments in copy source arguments group and copy source arguments will be deprecated in future.
     description: ''
   - name: --source-account-name
     summary: Storage account name of copy source.
@@ -181,61 +171,57 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_remove
   name: az storage remove
   summary: Delete blobs or files from Azure Storage.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage remove [--account-key]
+                      [--account-name]
+                      [--connection-string]
+                      [--container-name]
+                      [--exclude-path]
+                      [--exclude-pattern]
+                      [--include-path]
+                      [--include-pattern]
+                      [--name]
+                      [--path]
+                      [--recursive]
+                      [--sas-token]
+                      [--share-name]
+                      [--subscription]
   examples:
   - summary: Remove a single blob.
-    syntax:
-      content: az storage remove -c MyContainer -n MyBlob
+    syntax: az storage remove -c MyContainer -n MyBlob
   - summary: Remove an entire virtual directory.
-    syntax:
-      content: az storage remove -c MyContainer -n path/to/directory --recursive
+    syntax: az storage remove -c MyContainer -n path/to/directory --recursive
   - summary: Remove only the top blobs inside a virtual directory but not its sub-directories.
-    syntax:
-      content: az storage remove -c MyContainer --recursive
+    syntax: az storage remove -c MyContainer --recursive
   - summary: Remove all the blobs in a Storage Container.
-    syntax:
-      content: az storage remove -c MyContainer -n path/to/directory
+    syntax: az storage remove -c MyContainer -n path/to/directory
   - summary: Remove a subset of blobs in a virtual directory (For example, only jpg and pdf files, or if the blob name is "exactName" and file names don't start with "test").
-    syntax:
-      content: az storage remove -c MyContainer --include-path path/to/directory --include-pattern "*.jpg;*.pdf;exactName" --exclude-pattern "test*" --recursive
+    syntax: az storage remove -c MyContainer --include-path path/to/directory --include-pattern "*.jpg;*.pdf;exactName" --exclude-pattern "test*" --recursive
   - summary: Remove an entire virtual directory but exclude certain blobs from the scope (For example, every blob that starts with foo or ends with bar).
-    syntax:
-      content: az storage remove -c MyContainer --include-path path/to/directory --exclude-pattern "foo*;*bar" --recursive
+    syntax: az storage remove -c MyContainer --include-path path/to/directory --exclude-pattern "foo*;*bar" --recursive
   - summary: Remove a single file.
-    syntax:
-      content: az storage remove -s MyShare -p MyFile
+    syntax: az storage remove -s MyShare -p MyFile
   - summary: Remove an entire directory.
-    syntax:
-      content: az storage remove -s MyShare -p path/to/directory --recursive
+    syntax: az storage remove -s MyShare -p path/to/directory --recursive
   - summary: Remove all the files in a Storage File Share.
-    syntax:
-      content: az storage remove -s MyShare --recursive
-  parameters:
+    syntax: az storage remove -s MyShare --recursive
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
   - name: --container-name -c
     summary: The container name.
-    description: ''
-  - name: --name -n
-    summary: The blob name.
-    description: ''
-  - name: --path -p
-    summary: The path to the file within the file share.
-    description: ''
-  - name: --recursive -r
-    summary: Look into sub-directories recursively.
-    description: ''
-  - name: --share-name -s
-    summary: The file share name.
     description: ''
   - name: --exclude-path
     summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
@@ -249,820 +235,290 @@ items:
   - name: --include-pattern
     summary: 'Include only these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
     description: ''
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+  - name: --name -n
+    summary: The blob name.
     description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+  - name: --path -p
+    summary: The path to the file within the file share.
     description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+  - name: --recursive -r
+    summary: Look into sub-directories recursively.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --share-name -s
+    summary: The file share name.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
-- uid: az_storage_account
-  name: az storage account
-  summary: Manage storage accounts.
-- uid: az_storage_account_blob_service_properties
-  name: az storage account blob-service-properties
-  summary: Manage the properties of a storage account's blob service.
-- uid: az_storage_account_blob_service_properties_show
-  name: az storage account blob-service-properties show
-  summary: Show the properties of a storage account's blob service.
-- uid: az_storage_account_blob_service_properties_update
-  name: az storage account blob-service-properties update
-  summary: Update the properties of a storage account's blob service.
-- uid: az_storage_account_check_name
-  name: az storage account check-name
-  summary: Checks that the storage account name is valid and is not already in use.
-- uid: az_storage_account_create
-  name: az storage account create
-  summary: Create a storage account.
-- uid: az_storage_account_delete
-  name: az storage account delete
-  summary: Delete a storage account.
-- uid: az_storage_account_encryption_scope
-  name: az storage account encryption-scope
-  summary: Manage encryption scope for a storage account.
-- uid: az_storage_account_encryption_scope_create
-  name: az storage account encryption-scope create
-  summary: Create an encryption scope within storage account.
-- uid: az_storage_account_encryption_scope_list
-  name: az storage account encryption-scope list
-  summary: List encryption scopes within storage account.
-- uid: az_storage_account_encryption_scope_show
-  name: az storage account encryption-scope show
-  summary: Show properties for specified encryption scope within storage account.
-- uid: az_storage_account_encryption_scope_update
-  name: az storage account encryption-scope update
-  summary: Update properties for specified encryption scope within storage account.
-- uid: az_storage_account_failover
-  name: az storage account failover
-  summary: Failover request can be triggered for a storage account in case of availability issues.
-- uid: az_storage_account_file_service_properties
-  name: az storage account file-service-properties
-  summary: Manage the properties of file service in storage account.
-- uid: az_storage_account_file_service_properties_show
-  name: az storage account file-service-properties show
-  summary: Show the properties of file service in storage account.
-- uid: az_storage_account_file_service_properties_update
-  name: az storage account file-service-properties update
-  summary: Update the properties of file service in storage account.
-- uid: az_storage_account_generate_sas
-  name: az storage account generate-sas
-  summary: Generates a shared access signature for the account.
-- uid: az_storage_account_keys
-  name: az storage account keys
-  summary: Manage storage account keys.
-- uid: az_storage_account_keys_list
-  name: az storage account keys list
-  summary: List the access keys or Kerberos keys (if active directory enabled) for a storage account.
-- uid: az_storage_account_keys_renew
-  name: az storage account keys renew
-  summary: Regenerate one of the access keys or Kerberos keys (if active directory enabled) for a storage account.
-- uid: az_storage_account_list
-  name: az storage account list
-  summary: List storage accounts.
-- uid: az_storage_account_management_policy
-  name: az storage account management-policy
-  summary: Manage storage account management policies.
-- uid: az_storage_account_management_policy_create
-  name: az storage account management-policy create
-  summary: Creates the data policy rules associated with the specified storage account.
-- uid: az_storage_account_management_policy_delete
-  name: az storage account management-policy delete
-  summary: Deletes the managementpolicy associated with the specified storage account.
-- uid: az_storage_account_management_policy_show
-  name: az storage account management-policy show
-  summary: Gets the managementpolicy associated with the specified storage account.
-- uid: az_storage_account_management_policy_update
-  name: az storage account management-policy update
-  summary: Updates the data policy rules associated with the specified storage account.
-- uid: az_storage_account_network_rule
-  name: az storage account network-rule
-  summary: Manage network rules.
-- uid: az_storage_account_network_rule_add
-  name: az storage account network-rule add
-  summary: Add a network rule.
-- uid: az_storage_account_network_rule_list
-  name: az storage account network-rule list
-  summary: List network rules.
-- uid: az_storage_account_network_rule_remove
-  name: az storage account network-rule remove
-  summary: Remove a network rule.
-- uid: az_storage_account_private_endpoint_connection
-  name: az storage account private-endpoint-connection
-  summary: Manage storage account private endpoint connection.
-- uid: az_storage_account_private_endpoint_connection_approve
-  name: az storage account private-endpoint-connection approve
-  summary: Approve a private endpoint connection request for storage account.
-- uid: az_storage_account_private_endpoint_connection_delete
-  name: az storage account private-endpoint-connection delete
-  summary: Delete a private endpoint connection request for storage account.
-- uid: az_storage_account_private_endpoint_connection_reject
-  name: az storage account private-endpoint-connection reject
-  summary: Reject a private endpoint connection request for storage account.
-- uid: az_storage_account_private_endpoint_connection_show
-  name: az storage account private-endpoint-connection show
-  summary: Show details of a private endpoint connection request for storage account.
-- uid: az_storage_account_private_link_resource
-  name: az storage account private-link-resource
-  summary: Manage storage account private link resources.
-- uid: az_storage_account_private_link_resource_list
-  name: az storage account private-link-resource list
-  summary: Get the private link resources that need to be created for a storage account.
-- uid: az_storage_account_revoke_delegation_keys
-  name: az storage account revoke-delegation-keys
-  summary: Revoke all user delegation keys for a storage account.
-- uid: az_storage_account_show
-  name: az storage account show
-  summary: Show storage account properties.
-- uid: az_storage_account_show_connection_string
-  name: az storage account show-connection-string
-  summary: Get the connection string for a storage account.
-- uid: az_storage_account_show_usage
-  name: az storage account show-usage
-  summary: Show the current count and limit of the storage accounts under the subscription.
-- uid: az_storage_account_update
-  name: az storage account update
-  summary: Update the properties of a storage account.
-- uid: az_storage_blob
-  name: az storage blob
-  summary: Manage object storage for unstructured data (blobs).
-- uid: az_storage_blob_copy
-  name: az storage blob copy
-  summary: Manage blob copy operations. Use `az storage blob show` to check the status of the blobs.
-- uid: az_storage_blob_copy_cancel
-  name: az storage blob copy cancel
-  summary: Aborts a pending copy_blob operation, and leaves a destination blob with zero length and full metadata.
-- uid: az_storage_blob_copy_start
-  name: az storage blob copy start
-  summary: Copies a blob asynchronously. Use `az storage blob show` to check the status of the blobs.
-- uid: az_storage_blob_copy_start_batch
-  name: az storage blob copy start-batch
-  summary: Copy multiple blobs to a blob container. Use `az storage blob show` to check the status of the blobs.
-- uid: az_storage_blob_delete
-  name: az storage blob delete
-  summary: Mark a blob or snapshot for deletion.
-- uid: az_storage_blob_delete_batch
-  name: az storage blob delete-batch
-  summary: Delete blobs from a blob container recursively.
-- uid: az_storage_blob_download
-  name: az storage blob download
-  summary: Downloads a blob to a file path, with automatic chunking and progress notifications.
-- uid: az_storage_blob_download_batch
-  name: az storage blob download-batch
-  summary: Download blobs from a blob container recursively.
-- uid: az_storage_blob_exists
-  name: az storage blob exists
-  summary: Check for the existence of a blob in a container.
-- uid: az_storage_blob_generate_sas
-  name: az storage blob generate-sas
-  summary: Generate a shared access signature for the blob.
-- uid: az_storage_blob_incremental_copy
-  name: az storage blob incremental-copy
-  summary: Manage blob incremental copy operations.
-- uid: az_storage_blob_incremental_copy_cancel
-  name: az storage blob incremental-copy cancel
-  summary: Aborts a pending copy_blob operation, and leaves a destination blob with zero length and full metadata.
-- uid: az_storage_blob_incremental_copy_start
-  name: az storage blob incremental-copy start
-  summary: Copies an incremental copy of a blob asynchronously.
-- uid: az_storage_blob_lease
-  name: az storage blob lease
-  summary: Manage storage blob leases.
-- uid: az_storage_blob_lease_acquire
-  name: az storage blob lease acquire
-  summary: Requests a new lease.
-- uid: az_storage_blob_lease_break
-  name: az storage blob lease break
-  summary: Breaks the lease, if the blob has an active lease.
-- uid: az_storage_blob_lease_change
-  name: az storage blob lease change
-  summary: Changes the lease ID of an active lease.
-- uid: az_storage_blob_lease_release
-  name: az storage blob lease release
-  summary: Releases the lease.
-- uid: az_storage_blob_lease_renew
-  name: az storage blob lease renew
-  summary: Renews the lease.
-- uid: az_storage_blob_list
-  name: az storage blob list
-  summary: List blobs in a given container.
-- uid: az_storage_blob_metadata
-  name: az storage blob metadata
-  summary: Manage blob metadata.
-- uid: az_storage_blob_metadata_show
-  name: az storage blob metadata show
-  summary: Returns all user-defined metadata for the specified blob or snapshot.
-- uid: az_storage_blob_metadata_update
-  name: az storage blob metadata update
-  summary: Sets user-defined metadata for the specified blob as one or more name-value pairs.
-- uid: az_storage_blob_restore
-  name: az storage blob restore
-  summary: Restore blobs in the specified blob ranges.
-- uid: az_storage_blob_service_properties
-  name: az storage blob service-properties
-  summary: Manage storage blob service properties.
-- uid: az_storage_blob_service_properties_delete_policy
-  name: az storage blob service-properties delete-policy
-  summary: Manage storage blob delete-policy service properties.
-- uid: az_storage_blob_service_properties_delete_policy_show
-  name: az storage blob service-properties delete-policy show
-  summary: Show the storage blob delete-policy.
-- uid: az_storage_blob_service_properties_delete_policy_update
-  name: az storage blob service-properties delete-policy update
-  summary: Update the storage blob delete-policy.
-- uid: az_storage_blob_service_properties_show
-  name: az storage blob service-properties show
-  summary: Gets the properties of a storage account's Blob service, including Azure Storage Analytics.
-- uid: az_storage_blob_service_properties_update
-  name: az storage blob service-properties update
-  summary: Update storage blob service properties.
-- uid: az_storage_blob_set_tier
-  name: az storage blob set-tier
-  summary: Set the block or page tiers on the blob.
-- uid: az_storage_blob_show
-  name: az storage blob show
-  summary: Get the details of a blob.
-- uid: az_storage_blob_snapshot
-  name: az storage blob snapshot
-  summary: Creates a read-only snapshot of a blob.
-- uid: az_storage_blob_sync
-  name: az storage blob sync
-  summary: Sync blobs recursively to a storage blob container.
-- uid: az_storage_blob_undelete
-  name: az storage blob undelete
-  summary: The undelete Blob operation restores the contents and metadata of soft deleted blob or snapshot.
-- uid: az_storage_blob_update
-  name: az storage blob update
-  summary: Sets system properties on the blob.
-- uid: az_storage_blob_upload
-  name: az storage blob upload
-  summary: Upload a file to a storage blob.
-- uid: az_storage_blob_upload_batch
-  name: az storage blob upload-batch
-  summary: Upload files from a local directory to a blob container.
-- uid: az_storage_blob_url
-  name: az storage blob url
-  summary: Create the url to access a blob.
-- uid: az_storage_container
-  name: az storage container
-  summary: Manage blob storage containers.
-- uid: az_storage_container_create
-  name: az storage container create
-  summary: Create a container in a storage account.
-- uid: az_storage_container_delete
-  name: az storage container delete
-  summary: Marks the specified container for deletion.
-- uid: az_storage_container_exists
-  name: az storage container exists
-  summary: Check for the existence of a storage container.
-- uid: az_storage_container_generate_sas
-  name: az storage container generate-sas
-  summary: Generate a SAS token for a storage container.
-- uid: az_storage_container_immutability_policy
-  name: az storage container immutability-policy
-  summary: Manage container immutability policies.
-- uid: az_storage_container_immutability_policy_create
-  name: az storage container immutability-policy create
-  summary: Creates or updates an unlocked immutability policy.
-- uid: az_storage_container_immutability_policy_delete
-  name: az storage container immutability-policy delete
-  summary: Aborts an unlocked immutability policy.
-- uid: az_storage_container_immutability_policy_extend
-  name: az storage container immutability-policy extend
-  summary: Extends the immutabilityPeriodSinceCreationInDays of a locked immutabilityPolicy.
-- uid: az_storage_container_immutability_policy_lock
-  name: az storage container immutability-policy lock
-  summary: Sets the ImmutabilityPolicy to Locked state.
-- uid: az_storage_container_immutability_policy_show
-  name: az storage container immutability-policy show
-  summary: Gets the existing immutability policy along with the corresponding ETag in response headers and body.
-- uid: az_storage_container_lease
-  name: az storage container lease
-  summary: Manage blob storage container leases.
-- uid: az_storage_container_lease_acquire
-  name: az storage container lease acquire
-  summary: Requests a new lease.
-- uid: az_storage_container_lease_break
-  name: az storage container lease break
-  summary: Break the lease, if the container has an active lease.
-- uid: az_storage_container_lease_change
-  name: az storage container lease change
-  summary: Change the lease ID of an active lease.
-- uid: az_storage_container_lease_release
-  name: az storage container lease release
-  summary: Release the lease.
-- uid: az_storage_container_lease_renew
-  name: az storage container lease renew
-  summary: Renews the lease.
-- uid: az_storage_container_legal_hold
-  name: az storage container legal-hold
-  summary: Manage container legal holds.
-- uid: az_storage_container_legal_hold_clear
-  name: az storage container legal-hold clear
-  summary: Clears legal hold tags.
-- uid: az_storage_container_legal_hold_set
-  name: az storage container legal-hold set
-  summary: Sets legal hold tags.
-- uid: az_storage_container_legal_hold_show
-  name: az storage container legal-hold show
-  summary: Get the legal hold properties of a container.
-- uid: az_storage_container_list
-  name: az storage container list
-  summary: List containers in a storage account.
-- uid: az_storage_container_metadata
-  name: az storage container metadata
-  summary: Manage container metadata.
-- uid: az_storage_container_metadata_show
-  name: az storage container metadata show
-  summary: Returns all user-defined metadata for the specified container.
-- uid: az_storage_container_metadata_update
-  name: az storage container metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified container.
-- uid: az_storage_container_policy
-  name: az storage container policy
-  summary: Manage container stored access policies.
-- uid: az_storage_container_policy_create
-  name: az storage container policy create
-  summary: Create a stored access policy on the containing object.
-- uid: az_storage_container_policy_delete
-  name: az storage container policy delete
-  summary: Delete a stored access policy on a containing object.
-- uid: az_storage_container_policy_list
-  name: az storage container policy list
-  summary: List stored access policies on a containing object.
-- uid: az_storage_container_policy_show
-  name: az storage container policy show
-  summary: Show a stored access policy on a containing object.
-- uid: az_storage_container_policy_update
-  name: az storage container policy update
-  summary: Set a stored access policy on a containing object.
-- uid: az_storage_container_set_permission
-  name: az storage container set-permission
-  summary: Sets the permissions for the specified container or stored access  policies that may be used with Shared Access Signatures.
-- uid: az_storage_container_show
-  name: az storage container show
-  summary: Returns all user-defined metadata and system properties for the specified container.
-- uid: az_storage_container_show_permission
-  name: az storage container show-permission
-  summary: Gets the permissions for the specified container.
-- uid: az_storage_copy
-  name: az storage copy
-  summary: Copy files or directories to or from Azure storage.
-- uid: az_storage_cors
-  name: az storage cors
-  summary: Manage storage service Cross-Origin Resource Sharing (CORS).
-- uid: az_storage_cors_add
-  name: az storage cors add
-  summary: Add a CORS rule to a storage account.
-- uid: az_storage_cors_clear
-  name: az storage cors clear
-  summary: Remove all CORS rules from a storage account.
-- uid: az_storage_cors_list
-  name: az storage cors list
-  summary: List all CORS rules for a storage account.
-- uid: az_storage_directory
-  name: az storage directory
-  summary: Manage file storage directories.
-- uid: az_storage_directory_create
-  name: az storage directory create
-  summary: Creates a new directory under the specified share or parent directory.
-- uid: az_storage_directory_delete
-  name: az storage directory delete
-  summary: Deletes the specified empty directory.
-- uid: az_storage_directory_exists
-  name: az storage directory exists
-  summary: Check for the existence of a storage directory.
-- uid: az_storage_directory_list
-  name: az storage directory list
-  summary: List directories in a share.
-- uid: az_storage_directory_metadata
-  name: az storage directory metadata
-  summary: Manage file storage directory metadata.
-- uid: az_storage_directory_metadata_show
-  name: az storage directory metadata show
-  summary: Returns all user-defined metadata for the specified directory.
-- uid: az_storage_directory_metadata_update
-  name: az storage directory metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified directory.
-- uid: az_storage_directory_show
-  name: az storage directory show
-  summary: Returns all user-defined metadata and system properties for the specified directory.
-- uid: az_storage_entity
-  name: az storage entity
-  summary: Manage table storage entities.
-- uid: az_storage_entity_delete
-  name: az storage entity delete
-  summary: Deletes an existing entity in a table.
-- uid: az_storage_entity_insert
-  name: az storage entity insert
-  summary: Insert an entity into a table.
-- uid: az_storage_entity_merge
-  name: az storage entity merge
-  summary: Updates an existing entity by merging the entity's properties.
-- uid: az_storage_entity_query
-  name: az storage entity query
-  summary: List entities which satisfy a query.
-- uid: az_storage_entity_replace
-  name: az storage entity replace
-  summary: Updates an existing entity in a table.
-- uid: az_storage_entity_show
-  name: az storage entity show
-  summary: Get an entity from the specified table.
-- uid: az_storage_file
-  name: az storage file
-  summary: Manage file shares that use the SMB 3.0 protocol.
-- uid: az_storage_file_copy
-  name: az storage file copy
-  summary: Manage file copy operations.
-- uid: az_storage_file_copy_cancel
-  name: az storage file copy cancel
-  summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
-- uid: az_storage_file_copy_start
-  name: az storage file copy start
-  summary: Copy a file asynchronously.
-- uid: az_storage_file_copy_start_batch
-  name: az storage file copy start-batch
-  summary: Copy multiple files or blobs to a file share.
-- uid: az_storage_file_delete
-  name: az storage file delete
-  summary: Marks the specified file for deletion.
-- uid: az_storage_file_delete_batch
-  name: az storage file delete-batch
-  summary: Delete files from an Azure Storage File Share.
-- uid: az_storage_file_download
-  name: az storage file download
-  summary: Downloads a file to a file path, with automatic chunking and progress notifications.
-- uid: az_storage_file_download_batch
-  name: az storage file download-batch
-  summary: Download files from an Azure Storage File Share to a local directory in a batch operation.
-- uid: az_storage_file_exists
-  name: az storage file exists
-  summary: Check for the existence of a file.
-- uid: az_storage_file_generate_sas
-  name: az storage file generate-sas
-  summary: Generates a shared access signature for the file.
-- uid: az_storage_file_list
-  name: az storage file list
-  summary: List files and directories in a share.
-- uid: az_storage_file_metadata
-  name: az storage file metadata
-  summary: Manage file metadata.
-- uid: az_storage_file_metadata_show
-  name: az storage file metadata show
-  summary: Returns all user-defined metadata for the specified file.
-- uid: az_storage_file_metadata_update
-  name: az storage file metadata update
-  summary: Sets user-defined metadata for the specified file as one or more name-value pairs.
-- uid: az_storage_file_resize
-  name: az storage file resize
-  summary: Resizes a file to the specified size.
-- uid: az_storage_file_show
-  name: az storage file show
-  summary: Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
-- uid: az_storage_file_update
-  name: az storage file update
-  summary: Sets system properties on the file.
-- uid: az_storage_file_upload
-  name: az storage file upload
-  summary: Upload a file to a share that uses the SMB 3.0 protocol.
-- uid: az_storage_file_upload_batch
-  name: az storage file upload-batch
-  summary: Upload files from a local directory to an Azure Storage File Share in a batch operation.
-- uid: az_storage_file_url
-  name: az storage file url
-  summary: Create the url to access a file.
-- uid: az_storage_fs
-  name: az storage fs
-  summary: Manage file systems in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_access
-  name: az storage fs access
-  summary: Manage file system access and permissions for Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_access_set
-  name: az storage fs access set
-  summary: Set the access control properties of a path(directory or file) in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_access_show
-  name: az storage fs access show
-  summary: Show the access control properties of a path (directory or file) in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_create
-  name: az storage fs create
-  summary: Create file system for Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_delete
-  name: az storage fs delete
-  summary: Delete a file system in ADLS Gen2 account.
-- uid: az_storage_fs_directory
-  name: az storage fs directory
-  summary: Manage directories in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_directory_create
-  name: az storage fs directory create
-  summary: Create a directory in ADLS Gen2 file system.
-- uid: az_storage_fs_directory_delete
-  name: az storage fs directory delete
-  summary: Delete a directory in ADLS Gen2 file system.
-- uid: az_storage_fs_directory_exists
-  name: az storage fs directory exists
-  summary: Check for the existence of a directory in ADLS Gen2 file system.
-- uid: az_storage_fs_directory_list
-  name: az storage fs directory list
-  summary: List directories in ADLS Gen2 file system.
-- uid: az_storage_fs_directory_metadata
-  name: az storage fs directory metadata
-  summary: Manage the metadata for directory in file system.
-- uid: az_storage_fs_directory_metadata_show
-  name: az storage fs directory metadata show
-  summary: Return all user-defined metadata for the specified directory.
-- uid: az_storage_fs_directory_metadata_update
-  name: az storage fs directory metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified file system.
-- uid: az_storage_fs_directory_move
-  name: az storage fs directory move
-  summary: Move a directory in ADLS Gen2 file system.
-- uid: az_storage_fs_directory_show
-  name: az storage fs directory show
-  summary: Show properties of a directory in ADLS Gen2 file system.
-- uid: az_storage_fs_exists
-  name: az storage fs exists
-  summary: Check for the existence of a file system in ADLS Gen2 account.
-- uid: az_storage_fs_file
-  name: az storage fs file
-  summary: Manage files in Azure Data Lake Storage Gen2 account.
-- uid: az_storage_fs_file_append
-  name: az storage fs file append
-  summary: Append content to a file in ADLS Gen2 file system.
-- uid: az_storage_fs_file_create
-  name: az storage fs file create
-  summary: Create a new file in ADLS Gen2 file system.
-- uid: az_storage_fs_file_delete
-  name: az storage fs file delete
-  summary: Delete a file in ADLS Gen2 file system.
-- uid: az_storage_fs_file_download
-  name: az storage fs file download
-  summary: Download a file from the specified path in ADLS Gen2 file system.
-- uid: az_storage_fs_file_exists
-  name: az storage fs file exists
-  summary: Check for the existence of a file in ADLS Gen2 file system.
-- uid: az_storage_fs_file_list
-  name: az storage fs file list
-  summary: List files and directories in ADLS Gen2 file system.
-- uid: az_storage_fs_file_metadata
-  name: az storage fs file metadata
-  summary: Manage the metadata for file in file system.
-- uid: az_storage_fs_file_metadata_show
-  name: az storage fs file metadata show
-  summary: Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
-- uid: az_storage_fs_file_metadata_update
-  name: az storage fs file metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified file system.
-- uid: az_storage_fs_file_move
-  name: az storage fs file move
-  summary: Move a file in ADLS Gen2 Account.
-- uid: az_storage_fs_file_show
-  name: az storage fs file show
-  summary: Show properties of file in ADLS Gen2 file system.
-- uid: az_storage_fs_file_upload
-  name: az storage fs file upload
-  summary: Upload a file to a file path in ADLS Gen2 file system.
-- uid: az_storage_fs_list
-  name: az storage fs list
-  summary: List file systems in ADLS Gen2 account.
-- uid: az_storage_fs_metadata
-  name: az storage fs metadata
-  summary: Manage the metadata for file system.
-- uid: az_storage_fs_metadata_show
-  name: az storage fs metadata show
-  summary: Return all user-defined metadata for the specified file system.
-- uid: az_storage_fs_metadata_update
-  name: az storage fs metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified file system.
-- uid: az_storage_fs_show
-  name: az storage fs show
-  summary: Show properties of file system in ADLS Gen2 account.
-- uid: az_storage_logging
-  name: az storage logging
-  summary: Manage storage service logging information.
-- uid: az_storage_logging_off
-  name: az storage logging off
-  summary: Turn off logging for a storage account.
-- uid: az_storage_logging_show
-  name: az storage logging show
-  summary: Show logging settings for a storage account.
-- uid: az_storage_logging_update
-  name: az storage logging update
-  summary: Update logging settings for a storage account.
-- uid: az_storage_message
-  name: az storage message
-  summary: Manage queue storage messages.
-- uid: az_storage_message_clear
-  name: az storage message clear
-  summary: Deletes all messages from the specified queue.
-- uid: az_storage_message_delete
-  name: az storage message delete
-  summary: Deletes the specified message.
-- uid: az_storage_message_get
-  name: az storage message get
-  summary: Retrieves one or more messages from the front of the queue.
-- uid: az_storage_message_peek
-  name: az storage message peek
-  summary: Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message.
-- uid: az_storage_message_put
-  name: az storage message put
-  summary: Adds a new message to the back of the message queue.
-- uid: az_storage_message_update
-  name: az storage message update
-  summary: Updates the visibility timeout of a message.
-- uid: az_storage_metrics
-  name: az storage metrics
-  summary: Manage storage service metrics.
-- uid: az_storage_metrics_show
-  name: az storage metrics show
-  summary: Show metrics settings for a storage account.
-- uid: az_storage_metrics_update
-  name: az storage metrics update
-  summary: Update metrics settings for a storage account.
-- uid: az_storage_queue
-  name: az storage queue
-  summary: Manage shared access policies of a storage table.
-- uid: az_storage_queue_create
-  name: az storage queue create
-  summary: Creates a queue under the given account.
-- uid: az_storage_queue_delete
-  name: az storage queue delete
-  summary: Deletes the specified queue and any messages it contains.
-- uid: az_storage_queue_exists
-  name: az storage queue exists
-  summary: Returns a boolean indicating whether the queue exists.
-- uid: az_storage_queue_generate_sas
-  name: az storage queue generate-sas
-  summary: Generates a shared access signature for the queue.
-- uid: az_storage_queue_list
-  name: az storage queue list
-  summary: List queues in a storage account.
-- uid: az_storage_queue_metadata
-  name: az storage queue metadata
-  summary: Manage the metadata for a storage queue.
-- uid: az_storage_queue_metadata_show
-  name: az storage queue metadata show
-  summary: Retrieves user-defined metadata and queue properties on the specified queue.
-- uid: az_storage_queue_metadata_update
-  name: az storage queue metadata update
-  summary: Sets user-defined metadata on the specified queue.
-- uid: az_storage_queue_policy
-  name: az storage queue policy
-  summary: Manage shared access policies for a storage queue.
-- uid: az_storage_queue_policy_create
-  name: az storage queue policy create
-  summary: Create a stored access policy on the containing object.
-- uid: az_storage_queue_policy_delete
-  name: az storage queue policy delete
-  summary: Delete a stored access policy on a containing object.
-- uid: az_storage_queue_policy_list
-  name: az storage queue policy list
-  summary: List stored access policies on a containing object.
-- uid: az_storage_queue_policy_show
-  name: az storage queue policy show
-  summary: Show a stored access policy on a containing object.
-- uid: az_storage_queue_policy_update
-  name: az storage queue policy update
-  summary: Set a stored access policy on a containing object.
-- uid: az_storage_queue_stats
-  name: az storage queue stats
-  summary: Retrieves statistics related to replication for the Queue service.
-- uid: az_storage_remove
-  name: az storage remove
-  summary: Delete blobs or files from Azure Storage.
-- uid: az_storage_share
-  name: az storage share
-  summary: Manage file shares.
-- uid: az_storage_share_create
-  name: az storage share create
-  summary: Creates a new share under the specified account.
-- uid: az_storage_share_delete
-  name: az storage share delete
-  summary: Marks the specified share for deletion.
-- uid: az_storage_share_exists
-  name: az storage share exists
-  summary: Check for the existence of a file share.
-- uid: az_storage_share_generate_sas
-  name: az storage share generate-sas
-  summary: Generates a shared access signature for the share.
-- uid: az_storage_share_list
-  name: az storage share list
-  summary: List the file shares in a storage account.
-- uid: az_storage_share_metadata
-  name: az storage share metadata
-  summary: Manage the metadata of a file share.
-- uid: az_storage_share_metadata_show
-  name: az storage share metadata show
-  summary: Returns all user-defined metadata for the specified share.
-- uid: az_storage_share_metadata_update
-  name: az storage share metadata update
-  summary: Sets one or more user-defined name-value pairs for the specified share.
-- uid: az_storage_share_policy
-  name: az storage share policy
-  summary: Manage shared access policies of a storage file share.
-- uid: az_storage_share_policy_create
-  name: az storage share policy create
-  summary: Create a stored access policy on the containing object.
-- uid: az_storage_share_policy_delete
-  name: az storage share policy delete
-  summary: Delete a stored access policy on a containing object.
-- uid: az_storage_share_policy_list
-  name: az storage share policy list
-  summary: List stored access policies on a containing object.
-- uid: az_storage_share_policy_show
-  name: az storage share policy show
-  summary: Show a stored access policy on a containing object.
-- uid: az_storage_share_policy_update
-  name: az storage share policy update
-  summary: Set a stored access policy on a containing object.
-- uid: az_storage_share_show
-  name: az storage share show
-  summary: Returns all user-defined metadata and system properties for the specified share.
-- uid: az_storage_share_snapshot
-  name: az storage share snapshot
-  summary: Creates a snapshot of an existing share under the specified account.
-- uid: az_storage_share_stats
-  name: az storage share stats
-  summary: Gets the approximate size of the data stored on the share, rounded up to the nearest gigabyte.
-- uid: az_storage_share_update
-  name: az storage share update
-  summary: Sets service-defined properties for the specified share.
-- uid: az_storage_share_url
-  name: az storage share url
-  summary: Create a URI to access a file share.
-- uid: az_storage_share_rm
-  name: az storage share-rm
-  summary: Manage Azure file shares using the Microsoft.Storage resource provider.
-- uid: az_storage_share_rm_create
-  name: az storage share-rm create
-  summary: Create a new Azure file share under the specified storage account.
-- uid: az_storage_share_rm_delete
-  name: az storage share-rm delete
-  summary: Delete the specified Azure file share.
-- uid: az_storage_share_rm_exists
-  name: az storage share-rm exists
-  summary: Check for the existence of an Azure file share.
-- uid: az_storage_share_rm_list
-  name: az storage share-rm list
-  summary: List the Azure file shares under the specified storage account.
-- uid: az_storage_share_rm_show
-  name: az storage share-rm show
-  summary: Show the properties for a specified Azure file share.
-- uid: az_storage_share_rm_update
-  name: az storage share-rm update
-  summary: Update the properties for an Azure file share.
-- uid: az_storage_table
-  name: az storage table
-  summary: Manage NoSQL key-value storage.
-- uid: az_storage_table_create
-  name: az storage table create
-  summary: Creates a new table in the storage account.
-- uid: az_storage_table_delete
-  name: az storage table delete
-  summary: Deletes the specified table and any data it contains.
-- uid: az_storage_table_exists
-  name: az storage table exists
-  summary: Returns a boolean indicating whether the table exists.
-- uid: az_storage_table_generate_sas
-  name: az storage table generate-sas
-  summary: Generates a shared access signature for the table.
-- uid: az_storage_table_list
-  name: az storage table list
-  summary: List tables in a storage account.
-- uid: az_storage_table_policy
-  name: az storage table policy
-  summary: Manage shared access policies of a storage table.
-- uid: az_storage_table_policy_create
-  name: az storage table policy create
-  summary: Create a stored access policy on the containing object.
-- uid: az_storage_table_policy_delete
-  name: az storage table policy delete
-  summary: Delete a stored access policy on a containing object.
-- uid: az_storage_table_policy_list
-  name: az storage table policy list
-  summary: List stored access policies on a containing object.
-- uid: az_storage_table_policy_show
-  name: az storage table policy show
-  summary: Show a stored access policy on a containing object.
-- uid: az_storage_table_policy_update
-  name: az storage table policy update
-  summary: Set a stored access policy on a containing object.
-- uid: az_storage_table_stats
-  name: az storage table stats
-  summary: Retrieves statistics related to replication for the Table service.
+- az_storage_account
+- az_storage_account_blob_service_properties
+- az_storage_account_blob_service_properties_show
+- az_storage_account_blob_service_properties_update
+- az_storage_account_check_name
+- az_storage_account_create
+- az_storage_account_delete
+- az_storage_account_encryption_scope
+- az_storage_account_encryption_scope_create
+- az_storage_account_encryption_scope_list
+- az_storage_account_encryption_scope_show
+- az_storage_account_encryption_scope_update
+- az_storage_account_failover
+- az_storage_account_file_service_properties
+- az_storage_account_file_service_properties_show
+- az_storage_account_file_service_properties_update
+- az_storage_account_generate_sas
+- az_storage_account_keys
+- az_storage_account_keys_list
+- az_storage_account_keys_renew
+- az_storage_account_list
+- az_storage_account_management_policy
+- az_storage_account_management_policy_create
+- az_storage_account_management_policy_delete
+- az_storage_account_management_policy_show
+- az_storage_account_management_policy_update
+- az_storage_account_network_rule
+- az_storage_account_network_rule_add
+- az_storage_account_network_rule_list
+- az_storage_account_network_rule_remove
+- az_storage_account_private_endpoint_connection
+- az_storage_account_private_endpoint_connection_approve
+- az_storage_account_private_endpoint_connection_delete
+- az_storage_account_private_endpoint_connection_reject
+- az_storage_account_private_endpoint_connection_show
+- az_storage_account_private_link_resource
+- az_storage_account_private_link_resource_list
+- az_storage_account_revoke_delegation_keys
+- az_storage_account_show
+- az_storage_account_show_connection_string
+- az_storage_account_show_usage
+- az_storage_account_update
+- az_storage_blob
+- az_storage_blob_copy
+- az_storage_blob_copy_cancel
+- az_storage_blob_copy_start
+- az_storage_blob_copy_start_batch
+- az_storage_blob_delete
+- az_storage_blob_delete_batch
+- az_storage_blob_download
+- az_storage_blob_download_batch
+- az_storage_blob_exists
+- az_storage_blob_generate_sas
+- az_storage_blob_incremental_copy
+- az_storage_blob_incremental_copy_cancel
+- az_storage_blob_incremental_copy_start
+- az_storage_blob_lease
+- az_storage_blob_lease_acquire
+- az_storage_blob_lease_break
+- az_storage_blob_lease_change
+- az_storage_blob_lease_release
+- az_storage_blob_lease_renew
+- az_storage_blob_list
+- az_storage_blob_metadata
+- az_storage_blob_metadata_show
+- az_storage_blob_metadata_update
+- az_storage_blob_restore
+- az_storage_blob_service_properties
+- az_storage_blob_service_properties_delete_policy
+- az_storage_blob_service_properties_delete_policy_show
+- az_storage_blob_service_properties_delete_policy_update
+- az_storage_blob_service_properties_show
+- az_storage_blob_service_properties_update
+- az_storage_blob_set_tier
+- az_storage_blob_show
+- az_storage_blob_snapshot
+- az_storage_blob_sync
+- az_storage_blob_undelete
+- az_storage_blob_update
+- az_storage_blob_upload
+- az_storage_blob_upload_batch
+- az_storage_blob_url
+- az_storage_container
+- az_storage_container_create
+- az_storage_container_delete
+- az_storage_container_exists
+- az_storage_container_generate_sas
+- az_storage_container_immutability_policy
+- az_storage_container_immutability_policy_create
+- az_storage_container_immutability_policy_delete
+- az_storage_container_immutability_policy_extend
+- az_storage_container_immutability_policy_lock
+- az_storage_container_immutability_policy_show
+- az_storage_container_lease
+- az_storage_container_lease_acquire
+- az_storage_container_lease_break
+- az_storage_container_lease_change
+- az_storage_container_lease_release
+- az_storage_container_lease_renew
+- az_storage_container_legal_hold
+- az_storage_container_legal_hold_clear
+- az_storage_container_legal_hold_set
+- az_storage_container_legal_hold_show
+- az_storage_container_list
+- az_storage_container_metadata
+- az_storage_container_metadata_show
+- az_storage_container_metadata_update
+- az_storage_container_policy
+- az_storage_container_policy_create
+- az_storage_container_policy_delete
+- az_storage_container_policy_list
+- az_storage_container_policy_show
+- az_storage_container_policy_update
+- az_storage_container_set_permission
+- az_storage_container_show
+- az_storage_container_show_permission
+- az_storage_copy
+- az_storage_cors
+- az_storage_cors_add
+- az_storage_cors_clear
+- az_storage_cors_list
+- az_storage_directory
+- az_storage_directory_create
+- az_storage_directory_delete
+- az_storage_directory_exists
+- az_storage_directory_list
+- az_storage_directory_metadata
+- az_storage_directory_metadata_show
+- az_storage_directory_metadata_update
+- az_storage_directory_show
+- az_storage_entity
+- az_storage_entity_delete
+- az_storage_entity_insert
+- az_storage_entity_merge
+- az_storage_entity_query
+- az_storage_entity_replace
+- az_storage_entity_show
+- az_storage_file
+- az_storage_file_copy
+- az_storage_file_copy_cancel
+- az_storage_file_copy_start
+- az_storage_file_copy_start_batch
+- az_storage_file_delete
+- az_storage_file_delete_batch
+- az_storage_file_download
+- az_storage_file_download_batch
+- az_storage_file_exists
+- az_storage_file_generate_sas
+- az_storage_file_list
+- az_storage_file_metadata
+- az_storage_file_metadata_show
+- az_storage_file_metadata_update
+- az_storage_file_resize
+- az_storage_file_show
+- az_storage_file_update
+- az_storage_file_upload
+- az_storage_file_upload_batch
+- az_storage_file_url
+- az_storage_fs
+- az_storage_fs_access
+- az_storage_fs_access_set
+- az_storage_fs_access_show
+- az_storage_fs_create
+- az_storage_fs_delete
+- az_storage_fs_directory
+- az_storage_fs_directory_create
+- az_storage_fs_directory_delete
+- az_storage_fs_directory_exists
+- az_storage_fs_directory_list
+- az_storage_fs_directory_metadata
+- az_storage_fs_directory_metadata_show
+- az_storage_fs_directory_metadata_update
+- az_storage_fs_directory_move
+- az_storage_fs_directory_show
+- az_storage_fs_exists
+- az_storage_fs_file
+- az_storage_fs_file_append
+- az_storage_fs_file_create
+- az_storage_fs_file_delete
+- az_storage_fs_file_download
+- az_storage_fs_file_exists
+- az_storage_fs_file_list
+- az_storage_fs_file_metadata
+- az_storage_fs_file_metadata_show
+- az_storage_fs_file_metadata_update
+- az_storage_fs_file_move
+- az_storage_fs_file_show
+- az_storage_fs_file_upload
+- az_storage_fs_list
+- az_storage_fs_metadata
+- az_storage_fs_metadata_show
+- az_storage_fs_metadata_update
+- az_storage_fs_show
+- az_storage_logging
+- az_storage_logging_off
+- az_storage_logging_show
+- az_storage_logging_update
+- az_storage_message
+- az_storage_message_clear
+- az_storage_message_delete
+- az_storage_message_get
+- az_storage_message_peek
+- az_storage_message_put
+- az_storage_message_update
+- az_storage_metrics
+- az_storage_metrics_show
+- az_storage_metrics_update
+- az_storage_queue
+- az_storage_queue_create
+- az_storage_queue_delete
+- az_storage_queue_exists
+- az_storage_queue_generate_sas
+- az_storage_queue_list
+- az_storage_queue_metadata
+- az_storage_queue_metadata_show
+- az_storage_queue_metadata_update
+- az_storage_queue_policy
+- az_storage_queue_policy_create
+- az_storage_queue_policy_delete
+- az_storage_queue_policy_list
+- az_storage_queue_policy_show
+- az_storage_queue_policy_update
+- az_storage_queue_stats
+- az_storage_remove
+- az_storage_share
+- az_storage_share_create
+- az_storage_share_delete
+- az_storage_share_exists
+- az_storage_share_generate_sas
+- az_storage_share_list
+- az_storage_share_metadata
+- az_storage_share_metadata_show
+- az_storage_share_metadata_update
+- az_storage_share_policy
+- az_storage_share_policy_create
+- az_storage_share_policy_delete
+- az_storage_share_policy_list
+- az_storage_share_policy_show
+- az_storage_share_policy_update
+- az_storage_share_show
+- az_storage_share_snapshot
+- az_storage_share_stats
+- az_storage_share_update
+- az_storage_share_url
+- az_storage_share_rm
+- az_storage_share_rm_create
+- az_storage_share_rm_delete
+- az_storage_share_rm_exists
+- az_storage_share_rm_list
+- az_storage_share_rm_show
+- az_storage_share_rm_update
+- az_storage_table
+- az_storage_table_create
+- az_storage_table_delete
+- az_storage_table_exists
+- az_storage_table_generate_sas
+- az_storage_table_list
+- az_storage_table_policy
+- az_storage_table_policy_create
+- az_storage_table_policy_delete
+- az_storage_table_policy_list
+- az_storage_table_policy_show
+- az_storage_table_policy_update
+- az_storage_table_stats
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -1078,10 +534,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 7/16/2020 5:46:58 AM
-ms.date: 07/16/2020
-description: Manage Azure Cloud Storage resources.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  updated_at: 7/16/2020 5:46:58 AM
+  ms.date: 07/16/2020
+  description: Manage Azure Cloud Storage resources.

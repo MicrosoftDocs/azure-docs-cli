@@ -1,66 +1,95 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_network_nic
-  name: az network nic
-  summary: Manage network interfaces.
-  description: To learn more about network interfaces in Azure visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface">https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface</a>.
-  langs:
-  - azurecli
-  children:
-  - az_network_nic_create
-  - az_network_nic_delete
-  - az_network_nic_list
-  - az_network_nic_list_effective_nsg
-  - az_network_nic_show
-  - az_network_nic_show_effective_route_table
-  - az_network_nic_update
-  - az_network_nic_wait
+### YamlMime:AzureCLIGroup
+uid: az_network_nic
+name: az network nic
+summary: Manage network interfaces.
+description: To learn more about network interfaces in Azure visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface">https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface</a>.
+directCommands:
 - uid: az_network_nic_create
   name: az network nic create
   summary: Create a network interface.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic create --name
+                          --resource-group
+                          --subnet
+                          [--accelerated-networking {false, true}]
+                          [--app-gateway-address-pools]
+                          [--application-security-groups]
+                          [--dns-servers]
+                          [--gateway-name]
+                          [--internal-dns-name]
+                          [--ip-forwarding {false, true}]
+                          [--lb-address-pools]
+                          [--lb-inbound-nat-rules]
+                          [--lb-name]
+                          [--location]
+                          [--network-security-group]
+                          [--no-wait]
+                          [--private-ip-address]
+                          [--private-ip-address-version {IPv4, IPv6}]
+                          [--public-ip-address]
+                          [--subscription]
+                          [--tags]
+                          [--vnet-name]
   examples:
   - summary: Create a network interface for a specified subnet on a specified virtual network.
-    syntax:
-      content: az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic
+    syntax: az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic
   - summary: Create a network interface for a specified subnet on a virtual network which allows
-    syntax:
-      content: >-
-        az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
-            --ip-forwarding --network-security-group MyNsg
+    syntax: >-
+      az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
+          --ip-forwarding --network-security-group MyNsg
   - summary: Create a network interface for a specified subnet on a virtual network with network security group and application security groups.
-    syntax:
-      content: >-
-        az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
-            --network-security-group MyNsg --application-security-groups Web App
-  parameters:
+    syntax: >-
+      az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
+          --network-security-group MyNsg --application-security-groups Web App
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The network interface (NIC).
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --subnet
     summary: Name or ID of an existing subnet. If name specified, also specify --vnet-name. If you want to use an existing subnet in other resource group, please provide the ID instead of the name of the subnet.
     description: ''
+  optionalParameters:
   - name: --accelerated-networking
     parameterValueGroup: false, true
     summary: Enable accelerated networking.
     description: ''
+  - name: --app-gateway-address-pools
+    summary: Space-separated list of names or IDs of application gateway backend address pools to associate with the NIC. If names are used, --gateway-name must be specified.
+    description: ''
   - name: --application-security-groups
     summary: Space-separated list of application security groups.
+    description: ''
+  - name: --dns-servers
+    summary: Space-separated list of DNS server IP addresses.
+    description: ''
+  - name: --gateway-name
+    summary: The name of the application gateway to use when adding address pools by name (ignored when IDs are specified).
+    description: ''
+  - name: --internal-dns-name
+    summary: The internal DNS name label.
     description: ''
   - name: --ip-forwarding
     parameterValueGroup: false, true
     summary: Enable IP forwarding.
     description: ''
+  - name: --lb-address-pools
+    summary: Space-separated list of names or IDs of load balancer address pools to associate with the NIC. If names are used, --lb-name must be specified.
+    description: ''
+  - name: --lb-inbound-nat-rules
+    summary: Space-separated list of names or IDs of load balancer inbound NAT rules to associate with the NIC. If names are used, --lb-name must be specified.
+    description: ''
+  - name: --lb-name
+    summary: The name of the load balancer to use when adding NAT rules or address pools by name (ignored when IDs are specified).
+    description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --network-security-group
     summary: Name or ID of an existing network security group, or none by default.
@@ -79,108 +108,77 @@ items:
   - name: --public-ip-address
     summary: Name or ID of an existing public IP address, or none by default.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --vnet-name
     summary: The virtual network (VNet) name.
     description: ''
-  - name: --app-gateway-address-pools
-    summary: Space-separated list of names or IDs of application gateway backend address pools to associate with the NIC. If names are used, --gateway-name must be specified.
-    description: ''
-  - name: --gateway-name
-    summary: The name of the application gateway to use when adding address pools by name (ignored when IDs are specified).
-    description: ''
-  - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses.
-    description: ''
-  - name: --internal-dns-name
-    summary: The internal DNS name label.
-    description: ''
-  - name: --lb-address-pools
-    summary: Space-separated list of names or IDs of load balancer address pools to associate with the NIC. If names are used, --lb-name must be specified.
-    description: ''
-  - name: --lb-inbound-nat-rules
-    summary: Space-separated list of names or IDs of load balancer inbound NAT rules to associate with the NIC. If names are used, --lb-name must be specified.
-    description: ''
-  - name: --lb-name
-    summary: The name of the load balancer to use when adding NAT rules or address pools by name (ignored when IDs are specified).
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_delete
   name: az network nic delete
   summary: Delete a network interface.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic delete [--ids]
+                          [--name]
+                          [--no-wait]
+                          [--resource-group]
+                          [--subscription]
   examples:
   - summary: Delete a network interface.
-    syntax:
-      content: az network nic delete -g MyResourceGroup -n MyNic
-  parameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    syntax: az network nic delete -g MyResourceGroup -n MyNic
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: The network interface (NIC).
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_list
   name: az network nic list
   summary: List network interfaces.
   description: To list network interfaces attached to VMs in VM scale sets use 'az vmss nic list' or 'az vmss nic list-vm-nics'.
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic list [--resource-group]
+                        [--subscription]
   examples:
   - summary: List all NICs by internal DNS suffix.
-    syntax:
-      content: az network nic list --query "[?dnsSettings.internalDomainNameSuffix=`{dnsSuffix}`]"
-  parameters:
+    syntax: az network nic list --query "[?dnsSettings.internalDomainNameSuffix=`{dnsSuffix}`]"
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_list_effective_nsg
   name: az network nic list-effective-nsg
   summary: List all effective network security groups applied to a network interface.
   description: To learn more about troubleshooting using effective security rules visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-nsg-troubleshoot-portal">https://docs.microsoft.com/azure/virtual-network/virtual-network-nsg-troubleshoot-portal</a>.
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic list-effective-nsg [--ids]
+                                      [--name]
+                                      [--resource-group]
+                                      [--subscription]
   examples:
   - summary: List the effective security groups associated with a NIC.
-    syntax:
-      content: az network nic list-effective-nsg -g MyResourceGroup -n MyNic
-  parameters:
+    syntax: az network nic list-effective-nsg -g MyResourceGroup -n MyNic
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -188,28 +186,26 @@ items:
     summary: The network interface (NIC).
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_show
   name: az network nic show
   summary: Get the details of a network interface.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic show [--expand]
+                        [--ids]
+                        [--name]
+                        [--resource-group]
+                        [--subscription]
   examples:
   - summary: Get the internal domain name suffix of a NIC.
-    syntax:
-      content: az network nic show -g MyResourceGroup -n MyNic --query "dnsSettings.internalDomainNameSuffix"
-  parameters:
+    syntax: az network nic show -g MyResourceGroup -n MyNic --query "dnsSettings.internalDomainNameSuffix"
+  optionalParameters:
   - name: --expand
     summary: Expands referenced resources.
     description: ''
@@ -220,28 +216,25 @@ items:
     summary: The network interface (NIC).
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_show_effective_route_table
   name: az network nic show-effective-route-table
   summary: Show the effective route table applied to a network interface.
   description: To learn more about troubleshooting using the effective route tables visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-routes-troubleshoot-portal#using-effective-routes-to-troubleshoot-vm-traffic-flow">https://docs.microsoft.com/azure/virtual-network/virtual-network-routes-troubleshoot-portal#using-effective-routes-to-troubleshoot-vm-traffic-flow</a>.
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic show-effective-route-table [--ids]
+                                              [--name]
+                                              [--resource-group]
+                                              [--subscription]
   examples:
   - summary: Show the effective routes applied to a network interface.
-    syntax:
-      content: az network nic show-effective-route-table -g MyResourceGroup -n MyNic
-  parameters:
+    syntax: az network nic show-effective-route-table -g MyResourceGroup -n MyNic
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -249,38 +242,62 @@ items:
     summary: The network interface (NIC).
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_update
   name: az network nic update
   summary: Update a network interface.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic update [--accelerated-networking {false, true}]
+                          [--add]
+                          [--dns-servers]
+                          [--force-string]
+                          [--ids]
+                          [--internal-dns-name]
+                          [--ip-forwarding {false, true}]
+                          [--name]
+                          [--network-security-group]
+                          [--no-wait]
+                          [--remove]
+                          [--resource-group]
+                          [--set]
+                          [--subscription]
   examples:
   - summary: Update a network interface to use a different network security group.
-    syntax:
-      content: az network nic update -g MyResourceGroup -n MyNic --network-security-group MyNewNsg
+    syntax: az network nic update -g MyResourceGroup -n MyNic --network-security-group MyNewNsg
   - summary: Update a network interface. (autogenerated)
-    syntax:
-      content: az network nic update --accelerated-networking true --name MyNic --resource-group MyResourceGroup
-  parameters:
+    syntax: az network nic update --accelerated-networking true --name MyNic --resource-group MyResourceGroup
+  optionalParameters:
   - name: --accelerated-networking
     parameterValueGroup: false, true
     summary: Enable accelerated networking.
     description: ''
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --dns-servers
+    summary: Space-separated list of DNS server IP addresses. Use "" to revert to default Azure servers.
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --internal-dns-name
+    summary: The internal DNS name label.
+    description: ''
   - name: --ip-forwarding
     parameterValueGroup: false, true
     summary: Enable IP forwarding.
+    description: ''
+  - name: --name -n
+    summary: The network interface (NIC).
     description: ''
   - name: --network-security-group
     summary: Name or ID of the associated network security group.
@@ -288,68 +305,40 @@ items:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: The network interface (NIC).
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses. Use "" to revert to default Azure servers.
-    description: ''
-  - name: --internal-dns-name
-    summary: The internal DNS name label.
-    description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_wait
   name: az network nic wait
   summary: Place the CLI in a waiting state until a condition of the network interface is met.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az network nic wait [--created]
+                        [--custom]
+                        [--deleted]
+                        [--exists]
+                        [--expand]
+                        [--ids]
+                        [--interval]
+                        [--name]
+                        [--resource-group]
+                        [--subscription]
+                        [--timeout]
+                        [--updated]
   examples:
   - summary: Pause CLI until the network interface is created.
-    syntax:
-      content: az network nic wait -g MyResourceGroup -n MyNic --created
-  parameters:
-  - name: --expand
-    summary: Expands referenced resources.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: The network interface (NIC).
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+    syntax: az network nic wait -g MyResourceGroup -n MyNic --created
+  optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
@@ -362,9 +351,24 @@ items:
   - name: --exists
     summary: Wait until the resource exists.
     description: ''
+  - name: --expand
+    summary: Expands referenced resources.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: The network interface (NIC).
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -373,73 +377,28 @@ items:
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/network/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/network/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
-- uid: az_network_nic_create
-  name: az network nic create
-  summary: Create a network interface.
-- uid: az_network_nic_delete
-  name: az network nic delete
-  summary: Delete a network interface.
-- uid: az_network_nic_ip_config
-  name: az network nic ip-config
-  summary: Manage IP configurations of a network interface.
-- uid: az_network_nic_ip_config_address_pool
-  name: az network nic ip-config address-pool
-  summary: Manage address pools in an IP configuration.
-- uid: az_network_nic_ip_config_address_pool_add
-  name: az network nic ip-config address-pool add
-  summary: Add an address pool to an IP configuration.
-- uid: az_network_nic_ip_config_address_pool_remove
-  name: az network nic ip-config address-pool remove
-  summary: Remove an address pool of an IP configuration.
-- uid: az_network_nic_ip_config_create
-  name: az network nic ip-config create
-  summary: Create an IP configuration.
-- uid: az_network_nic_ip_config_delete
-  name: az network nic ip-config delete
-  summary: Delete an IP configuration.
-- uid: az_network_nic_ip_config_inbound_nat_rule
-  name: az network nic ip-config inbound-nat-rule
-  summary: Manage inbound NAT rules of an IP configuration.
-- uid: az_network_nic_ip_config_inbound_nat_rule_add
-  name: az network nic ip-config inbound-nat-rule add
-  summary: Add an inbound NAT rule to an IP configuration.
-- uid: az_network_nic_ip_config_inbound_nat_rule_remove
-  name: az network nic ip-config inbound-nat-rule remove
-  summary: Remove an inbound NAT rule of an IP configuration.
-- uid: az_network_nic_ip_config_list
-  name: az network nic ip-config list
-  summary: List the IP configurations of a NIC.
-- uid: az_network_nic_ip_config_show
-  name: az network nic ip-config show
-  summary: Show the details of an IP configuration.
-- uid: az_network_nic_ip_config_update
-  name: az network nic ip-config update
-  summary: Update an IP configuration.
-- uid: az_network_nic_list
-  name: az network nic list
-  summary: List network interfaces.
-- uid: az_network_nic_list_effective_nsg
-  name: az network nic list-effective-nsg
-  summary: List all effective network security groups applied to a network interface.
-- uid: az_network_nic_show
-  name: az network nic show
-  summary: Get the details of a network interface.
-- uid: az_network_nic_show_effective_route_table
-  name: az network nic show-effective-route-table
-  summary: Show the effective route table applied to a network interface.
-- uid: az_network_nic_update
-  name: az network nic update
-  summary: Update a network interface.
-- uid: az_network_nic_wait
-  name: az network nic wait
-  summary: Place the CLI in a waiting state until a condition of the network interface is met.
+- az_network_nic_create
+- az_network_nic_delete
+- az_network_nic_ip_config
+- az_network_nic_ip_config_address_pool
+- az_network_nic_ip_config_address_pool_add
+- az_network_nic_ip_config_address_pool_remove
+- az_network_nic_ip_config_create
+- az_network_nic_ip_config_delete
+- az_network_nic_ip_config_inbound_nat_rule
+- az_network_nic_ip_config_inbound_nat_rule_add
+- az_network_nic_ip_config_inbound_nat_rule_remove
+- az_network_nic_ip_config_list
+- az_network_nic_ip_config_show
+- az_network_nic_ip_config_update
+- az_network_nic_list
+- az_network_nic_list_effective_nsg
+- az_network_nic_show
+- az_network_nic_show_effective_route_table
+- az_network_nic_update
+- az_network_nic_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -455,10 +414,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/network/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/50f3a3750542be0e06c33a28ac43ce7d49cca040/src/azure-cli/azure/cli/command_modules/network/_help.py
-updated_at: 7/10/2020 1:55:33 AM
-ms.date: 07/10/2020
-description: To learn more about network interfaces in Azure visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface">https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface</a>.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/50f3a3750542be0e06c33a28ac43ce7d49cca040/src/azure-cli/azure/cli/command_modules/network/_help.py
+  updated_at: 7/10/2020 1:55:33 AM
+  ms.date: 07/10/2020
+  description: To learn more about network interfaces in Azure visit <a href="https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface">https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface</a>.

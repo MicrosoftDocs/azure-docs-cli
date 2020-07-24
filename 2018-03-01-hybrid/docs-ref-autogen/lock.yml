@@ -1,38 +1,35 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_lock
-  name: az lock
-  summary: Manage Azure locks.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_lock_create
-  - az_lock_delete
-  - az_lock_list
-  - az_lock_show
-  - az_lock_update
+### YamlMime:AzureCLIGroup
+uid: az_lock
+name: az lock
+summary: Manage Azure locks.
+description: ''
+directCommands:
 - uid: az_lock_create
   name: az lock create
   summary: Create a lock.
   description: 'Locks can exist at three different scopes: subscription, resource group and resource.'
-  langs:
-  - azurecli
+  syntax: >-
+    az lock create --lock-type {CanNotDelete, ReadOnly}
+                   --name
+                   [--namespace]
+                   [--notes]
+                   [--parent]
+                   [--resource]
+                   [--resource-group]
+                   [--resource-type]
+                   [--subscription]
   examples:
   - summary: Create a read-only subscription level lock.
-    syntax:
-      content: az lock create --name lockName --resource-group group --lock-type ReadOnly
+    syntax: az lock create --name lockName --resource-group group --lock-type ReadOnly
   - summary: Create a read-only resource level lock on a vnet resource.
-    syntax:
-      content: >-
-        az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
-            Microsoft.Network/virtualNetworks --resource myVnet
+    syntax: >-
+      az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
+          Microsoft.Network/virtualNetworks --resource myVnet
   - summary: Create a read-only resource level lock on a subnet resource with a specific parent.
-    syntax:
-      content: >-
-        az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
-            Microsoft.Network/subnets --parent virtualNetworks/myVnet --resource mySubnet
-  parameters:
+    syntax: >-
+      az lock create --name lockName --resource-group group --lock-type ReadOnly --resource-type \
+          Microsoft.Network/subnets --parent virtualNetworks/myVnet --resource mySubnet
+  requiredParameters:
   - isRequired: true
     name: --lock-type -t
     parameterValueGroup: CanNotDelete, ReadOnly
@@ -42,6 +39,7 @@ items:
     name: --name -n
     summary: Name of the lock.
     description: ''
+  optionalParameters:
   - name: --namespace
     summary: "Provider namespace (Ex: 'Microsoft.Provider')."
     description: ''
@@ -55,7 +53,7 @@ items:
     summary: Name or ID of the resource being locked. If an ID is given, other resource arguments should not be given.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type
     summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
@@ -63,23 +61,24 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_lock_delete
   name: az lock delete
   summary: Delete a lock.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az lock delete [--ids]
+                   [--name]
+                   [--namespace]
+                   [--parent]
+                   [--resource]
+                   [--resource-group]
+                   [--resource-type]
+                   [--subscription]
   examples:
   - summary: Delete a resource group-level lock
-    syntax:
-      content: az lock delete --name lockName --resource-group group
-  parameters:
+    syntax: az lock delete --name lockName --resource-group group
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
@@ -96,7 +95,7 @@ items:
     summary: Name or ID of the resource being locked. If an ID is given, other resource arguments should not be given.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type
     summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
@@ -104,26 +103,25 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_lock_list
   name: az lock list
   summary: List lock information.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az lock list [--filter-string]
+                 [--namespace]
+                 [--parent]
+                 [--resource]
+                 [--resource-group]
+                 [--resource-type]
+                 [--subscription]
   examples:
   - summary: List out the locks on a vnet resource. Includes locks in the associated group and subscription.
-    syntax:
-      content: az lock list --resource myvnet --resource-type Microsoft.Network/virtualNetworks -g group
+    syntax: az lock list --resource myvnet --resource-type Microsoft.Network/virtualNetworks -g group
   - summary: List out all locks on the subscription level
-    syntax:
-      content: az lock list
-  parameters:
+    syntax: az lock list
+  optionalParameters:
   - name: --filter-string
     summary: A query filter to use to restrict the results.
     description: ''
@@ -137,7 +135,7 @@ items:
     summary: Name or ID of the resource being locked. If an ID is given, other resource arguments should not be given.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type
     summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
@@ -145,26 +143,26 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_lock_show
   name: az lock show
   summary: Show the properties of a lock.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az lock show [--ids]
+                 [--name]
+                 [--namespace]
+                 [--parent]
+                 [--resource]
+                 [--resource-group]
+                 [--resource-type]
+                 [--subscription]
   examples:
   - summary: Show a subscription level lock
-    syntax:
-      content: az lock show -n lockname
+    syntax: az lock show -n lockname
   - summary: Show the properties of a lock (autogenerated)
-    syntax:
-      content: az lock show --name lockname --resource-group MyResourceGroup --resource-name MyResource --resource-type Microsoft.Network/virtualNetworks
-  parameters:
+    syntax: az lock show --name lockname --resource-group MyResourceGroup --resource-name MyResource --resource-type Microsoft.Network/virtualNetworks
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
@@ -181,7 +179,7 @@ items:
     summary: Name or ID of the resource being locked. If an ID is given, other resource arguments should not be given.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type
     summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
@@ -189,23 +187,26 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_lock_update
   name: az lock update
   summary: Update a lock.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az lock update [--ids]
+                   [--lock-type {CanNotDelete, ReadOnly}]
+                   [--name]
+                   [--namespace]
+                   [--notes]
+                   [--parent]
+                   [--resource]
+                   [--resource-group]
+                   [--resource-type]
+                   [--subscription]
   examples:
   - summary: Update a resource group level lock with new notes and type
-    syntax:
-      content: az lock update --name lockName --resource-group group --notes newNotesHere --lock-type CanNotDelete
-  parameters:
+    syntax: az lock update --name lockName --resource-group group --notes newNotesHere --lock-type CanNotDelete
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
@@ -229,7 +230,7 @@ items:
     summary: Name or ID of the resource being locked. If an ID is given, other resource arguments should not be given.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type
     summary: "The resource type (Ex: 'resC'). Can also accept namespace/type format (Ex: 'Microsoft.Provider/resC')."
@@ -237,28 +238,13 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 commands:
-- uid: az_lock_create
-  name: az lock create
-  summary: Create a lock.
-- uid: az_lock_delete
-  name: az lock delete
-  summary: Delete a lock.
-- uid: az_lock_list
-  name: az lock list
-  summary: List lock information.
-- uid: az_lock_show
-  name: az lock show
-  summary: Show the properties of a lock.
-- uid: az_lock_update
-  name: az lock update
-  summary: Update a lock.
+- az_lock_create
+- az_lock_delete
+- az_lock_list
+- az_lock_show
+- az_lock_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -274,10 +260,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/17064a23dc9885db8c851747c2be6c8ff4aa595f/src/azure-cli/azure/cli/command_modules/resource/_help.py
-updated_at: 6/16/2020 5:44:37 AM
-ms.date: 06/16/2020
-description: Manage Azure locks.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/17064a23dc9885db8c851747c2be6c8ff4aa595f/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  updated_at: 6/16/2020 5:44:37 AM
+  ms.date: 06/16/2020
+  description: Manage Azure locks.

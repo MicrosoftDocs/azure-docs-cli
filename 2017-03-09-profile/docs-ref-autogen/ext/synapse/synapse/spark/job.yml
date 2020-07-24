@@ -1,27 +1,26 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_synapse_az_synapse_spark_job
-  name: az synapse spark job
-  summary: Manage Synapse Spark batch jobs.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_synapse_az_synapse_spark_job_cancel
-  - ext_synapse_az_synapse_spark_job_list
-  - ext_synapse_az_synapse_spark_job_show
-  - ext_synapse_az_synapse_spark_job_submit
+### YamlMime:AzureCLIGroup
+uid: ext_synapse_az_synapse_spark_job
+name: az synapse spark job
+summary: Manage Synapse Spark batch jobs.
+description: ''
+directCommands:
 - uid: ext_synapse_az_synapse_spark_job_cancel
   name: az synapse spark job cancel
   summary: Cancel a Spark job.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az synapse spark job cancel --livy-id
+                                --spark-pool-name
+                                --workspace-name
+                                [--yes]
   examples:
   - summary: Cancel a Spark job.
-    syntax:
-      content: az synapse spark job cancel --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
-  parameters:
+    syntax: az synapse spark job cancel --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+  requiredParameters:
+  - isRequired: true
+    name: --livy-id
+    summary: The id of the Spark job.
+    description: ''
   - isRequired: true
     name: --spark-pool-name
     summary: The name of the Spark pool.
@@ -30,24 +29,23 @@ items:
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
+  optionalParameters:
   - name: --yes -y
     summary: Do not prompt for confirmation.
-    description: ''
-  - isRequired: true
-    name: --livy-id
-    summary: The id of the Spark job.
     description: ''
 - uid: ext_synapse_az_synapse_spark_job_list
   name: az synapse spark job list
   summary: List all Spark jobs.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az synapse spark job list --spark-pool-name
+                              --workspace-name
+                              [--from-index]
+                              [--size]
   examples:
   - summary: List all Spark jobs.
-    syntax:
-      content: az synapse spark job list --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
-  parameters:
+    syntax: az synapse spark job list --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+  requiredParameters:
   - isRequired: true
     name: --spark-pool-name
     summary: The name of the Spark pool.
@@ -56,6 +54,7 @@ items:
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
+  optionalParameters:
   - name: --from-index
     summary: Optional parameter specifying which index the list should begin from.
     description: ''
@@ -66,13 +65,18 @@ items:
   name: az synapse spark job show
   summary: Get a Spark job.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az synapse spark job show --livy-id
+                              --spark-pool-name
+                              --workspace-name
   examples:
   - summary: Get a Spark job.
-    syntax:
-      content: az synapse spark job show --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
-  parameters:
+    syntax: az synapse spark job show --livy-id 1 --workspace-name testsynapseworkspace --spark-pool-name testsparkpool
+  requiredParameters:
+  - isRequired: true
+    name: --livy-id
+    summary: The id of the Spark job.
+    description: ''
   - isRequired: true
     name: --spark-pool-name
     summary: The name of the Spark pool.
@@ -81,34 +85,41 @@ items:
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
-  - isRequired: true
-    name: --livy-id
-    summary: The id of the Spark job.
-    description: ''
 - uid: ext_synapse_az_synapse_spark_job_submit
   name: az synapse spark job submit
   summary: Submit a Spark job.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az synapse spark job submit --executor-size {Large, Medium, Small}
+                                --executors
+                                --main-class-name
+                                --main-definition-file
+                                --name
+                                --spark-pool-name
+                                --workspace-name
+                                [--archives]
+                                [--command-line-arguments]
+                                [--configuration]
+                                [--language {CSharp, PySpark, Python, Scala, Spark, SparkDotNet}]
+                                [--reference-files]
+                                [--tags]
   examples:
   - summary: Submit a Java Spark job.
-    syntax:
-      content: >-
-        az synapse spark job submit --name WordCount_Java --workspace-name testsynapseworkspace \
+    syntax: >-
+      az synapse spark job submit --name WordCount_Java --workspace-name testsynapseworkspace \
 
-        --spark-pool-name testsparkpool \
+      --spark-pool-name testsparkpool \
 
-        --main-definition-file abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar \
+      --main-definition-file abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/wordcount.jar \
 
-        --main-class-name WordCount \
+      --main-class-name WordCount \
 
-        --command-line-arguments abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt \
+      --command-line-arguments abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt \
 
-        abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/ \
+      abfss://testfilesystem@testadlsgen2.dfs.core.windows.net/samples/java/wordcount/result/ \
 
-        --executors 2 --executor-size Small
-  parameters:
+      --executors 2 --executor-size Small
+  requiredParameters:
   - isRequired: true
     name: --executor-size
     parameterValueGroup: Large, Medium, Small
@@ -138,6 +149,7 @@ items:
     name: --workspace-name
     summary: The name of the workspace.
     description: ''
+  optionalParameters:
   - name: --archives
     summary: The array of archives.
     description: ''
@@ -159,18 +171,10 @@ items:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
-- uid: ext_synapse_az_synapse_spark_job_cancel
-  name: az synapse spark job cancel
-  summary: Cancel a Spark job.
-- uid: ext_synapse_az_synapse_spark_job_list
-  name: az synapse spark job list
-  summary: List all Spark jobs.
-- uid: ext_synapse_az_synapse_spark_job_show
-  name: az synapse spark job show
-  summary: Get a Spark job.
-- uid: ext_synapse_az_synapse_spark_job_submit
-  name: az synapse spark job submit
-  summary: Submit a Spark job.
+- ext_synapse_az_synapse_spark_job_cancel
+- ext_synapse_az_synapse_spark_job_list
+- ext_synapse_az_synapse_spark_job_show
+- ext_synapse_az_synapse_spark_job_submit
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -186,4 +190,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Synapse Spark batch jobs.
+metadata:
+  description: Manage Synapse Spark batch jobs.

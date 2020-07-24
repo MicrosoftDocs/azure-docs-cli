@@ -1,17 +1,9 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_front-door_az_network_front_door_routing_rule
-  name: az network front-door routing-rule
-  summary: Manage Front Door routing rules.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_front-door_az_network_front_door_routing_rule_create
-  - ext_front-door_az_network_front_door_routing_rule_delete
-  - ext_front-door_az_network_front_door_routing_rule_list
-  - ext_front-door_az_network_front_door_routing_rule_show
-  - ext_front-door_az_network_front_door_routing_rule_update
+### YamlMime:AzureCLIGroup
+uid: ext_front-door_az_network_front_door_routing_rule
+name: az network front-door routing-rule
+summary: Manage Front Door routing rules.
+description: ''
+directCommands:
 - uid: ext_front-door_az_network_front_door_routing_rule_create
   name: az network front-door routing-rule create
   summary: Create a Front Door routing rule.
@@ -23,9 +15,31 @@ items:
 
 
     Example 2: az network front-door routing-rule create -f frontdoor1 -g rg1 --frontend-endpoints DefaultFrontendEndpoint --route-type Redirect --custom-host redirecthost.com -n redirectRouteRule1 --patterns /redirect1 --custom-query-string querystring.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az network front-door routing-rule create --front-door-name
+                                              --frontend-endpoints
+                                              --name
+                                              --resource-group
+                                              --route-type {Forward, Redirect}
+                                              [--accepted-protocols]
+                                              [--backend-pool]
+                                              [--cache-duration]
+                                              [--caching {Disabled, Enabled}]
+                                              [--custom-forwarding-path]
+                                              [--custom-fragment]
+                                              [--custom-host]
+                                              [--custom-path]
+                                              [--custom-query-string]
+                                              [--disabled {false, true}]
+                                              [--dynamic-compression {Disabled, Enabled}]
+                                              [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                                              [--patterns]
+                                              [--query-parameter-strip-directive {StripAll, StripAllExcept, StripNone, StripOnly}]
+                                              [--query-parameters]
+                                              [--redirect-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                                              [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
+                                              [--rules-engine]
+  requiredParameters:
   - isRequired: true
     name: --front-door-name -f
     summary: Name of the Front Door.
@@ -40,20 +54,16 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - isRequired: true
+    name: --route-type
+    parameterValueGroup: Forward, Redirect
+    summary: Route type to define how Front Door should handle requests for this route i.e. forward them to a backend or redirect the users to a different URL.
+    description: ''
+  optionalParameters:
   - name: --accepted-protocols
     summary: 'Space-separated list of protocols to accept. Default: Http.'
-    description: ''
-  - name: --disabled
-    parameterValueGroup: false, true
-    summary: Create in a disabled state.
-    description: ''
-  - name: --patterns
-    summary: "Space-separated list of patterns to match. Default: '/\\*'."
-    description: ''
-  - name: --rules-engine
-    summary: Name or ID of a Rules Engine configuration. To unlink property, "--remove rulesEngine".
     description: ''
   - name: --backend-pool
     summary: Name or ID of a backend pool. It's required to create a Forward routing rule.
@@ -68,21 +78,6 @@ items:
   - name: --custom-forwarding-path
     summary: Custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path.
     description: ''
-  - name: --dynamic-compression
-    parameterValueGroup: Disabled, Enabled
-    summary: Use dynamic compression for cached content.
-    description: ''
-  - name: --forwarding-protocol
-    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
-    summary: Protocol to use for forwarding traffic.
-    description: ''
-  - name: --query-parameter-strip-directive
-    parameterValueGroup: StripAll, StripAllExcept, StripNone, StripOnly
-    summary: Treatment of URL query terms when forming the cache key.
-    description: ''
-  - name: --query-parameters
-    summary: Query parameters to include or exclude (comma separated) when using query-parameter-strip-directive type StripAllExcept or StripOnly respectively.
-    description: ''
   - name: --custom-fragment
     summary: 'Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #.'
     description: ''
@@ -94,6 +89,28 @@ items:
     description: ''
   - name: --custom-query-string
     summary: The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in <key>=<value> format. The first ? and & will be added automatically so do not include them in the front, but do separate multiple query strings with &.
+    description: ''
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Create in a disabled state.
+    description: ''
+  - name: --dynamic-compression
+    parameterValueGroup: Disabled, Enabled
+    summary: Use dynamic compression for cached content.
+    description: ''
+  - name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol to use for forwarding traffic.
+    description: ''
+  - name: --patterns
+    summary: "Space-separated list of patterns to match. Default: '/\\*'."
+    description: ''
+  - name: --query-parameter-strip-directive
+    parameterValueGroup: StripAll, StripAllExcept, StripNone, StripOnly
+    summary: Treatment of URL query terms when forming the cache key.
+    description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude (comma separated) when using query-parameter-strip-directive type StripAllExcept or StripOnly respectively.
     description: ''
   - name: --redirect-protocol
     defaultValue: MatchRequest
@@ -105,18 +122,18 @@ items:
     parameterValueGroup: Found, Moved, PermanentRedirect, TemporaryRedirect
     summary: The redirect type the rule will use when redirecting traffic.
     description: ''
-  - isRequired: true
-    name: --route-type
-    parameterValueGroup: Forward, Redirect
-    summary: Route type to define how Front Door should handle requests for this route i.e. forward them to a backend or redirect the users to a different URL.
+  - name: --rules-engine
+    summary: Name or ID of a Rules Engine configuration. To unlink property, "--remove rulesEngine".
     description: ''
 - uid: ext_front-door_az_network_front_door_routing_rule_delete
   name: az network front-door routing-rule delete
   summary: Delete a Front Door routing rule.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az network front-door routing-rule delete --front-door-name
+                                              --name
+                                              --resource-group
+  requiredParameters:
   - isRequired: true
     name: --front-door-name -f
     summary: Name of the Front Door.
@@ -127,30 +144,33 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_front-door_az_network_front_door_routing_rule_list
   name: az network front-door routing-rule list
   summary: List Front Door routing rules.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az network front-door routing-rule list --front-door-name
+                                            --resource-group
+  requiredParameters:
   - isRequired: true
     name: --front-door-name -f
     summary: Name of the Front Door.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_front-door_az_network_front_door_routing_rule_show
   name: az network front-door routing-rule show
   summary: Get the details of a Front Door routing rule.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az network front-door routing-rule show --front-door-name
+                                            --name
+                                            --resource-group
+  requiredParameters:
   - isRequired: true
     name: --front-door-name -f
     summary: Name of the Front Door.
@@ -161,15 +181,40 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_front-door_az_network_front_door_routing_rule_update
   name: az network front-door routing-rule update
   summary: Update a Front Door routing rule.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az network front-door routing-rule update --front-door-name
+                                              --name
+                                              --resource-group
+                                              [--accepted-protocols]
+                                              [--add]
+                                              [--backend-pool]
+                                              [--cache-duration]
+                                              [--caching {Disabled, Enabled}]
+                                              [--custom-forwarding-path]
+                                              [--custom-fragment]
+                                              [--custom-host]
+                                              [--custom-path]
+                                              [--custom-query-string]
+                                              [--dynamic-compression {Disabled, Enabled}]
+                                              [--enabled {Disabled, Enabled}]
+                                              [--force-string]
+                                              [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                                              [--frontend-endpoints]
+                                              [--patterns]
+                                              [--query-parameter-strip-directive {StripAll, StripAllExcept, StripNone, StripOnly}]
+                                              [--query-parameters]
+                                              [--redirect-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                                              [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
+                                              [--remove]
+                                              [--rules-engine]
+                                              [--set]
+  requiredParameters:
   - isRequired: true
     name: --front-door-name -f
     summary: Name of the Front Door.
@@ -180,19 +225,14 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --accepted-protocols
     summary: 'Space-separated list of protocols to accept. Default: Http.'
     description: ''
-  - name: --frontend-endpoints
-    summary: Space-separated list of frontend endpoint names or IDs.
-    description: ''
-  - name: --patterns
-    summary: "Space-separated list of patterns to match. Default: '/\\*'."
-    description: ''
-  - name: --rules-engine
-    summary: Name or ID of a Rules Engine configuration. To unlink property, "--remove rulesEngine".
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --backend-pool
     summary: Name or ID of a backend pool. It's required to create a Forward routing rule.
@@ -207,25 +247,6 @@ items:
   - name: --custom-forwarding-path
     summary: Custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path.
     description: ''
-  - name: --dynamic-compression
-    parameterValueGroup: Disabled, Enabled
-    summary: Use dynamic compression for cached content.
-    description: ''
-  - name: --forwarding-protocol
-    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
-    summary: Protocol to use for forwarding traffic.
-    description: ''
-  - name: --query-parameter-strip-directive
-    parameterValueGroup: StripAll, StripAllExcept, StripNone, StripOnly
-    summary: Treatment of URL query terms when forming the cache key.
-    description: ''
-  - name: --query-parameters
-    summary: Query parameters to include or exclude (comma separated) when using query-parameter-strip-directive type StripAllExcept or StripOnly respectively.
-    description: ''
-  - name: --enabled
-    parameterValueGroup: Disabled, Enabled
-    summary: Enabled status.
-    description: ''
   - name: --custom-fragment
     summary: 'Fragment to add to the redirect URL. Fragment is the part of the URL that comes after #. Do not include the #.'
     description: ''
@@ -238,6 +259,34 @@ items:
   - name: --custom-query-string
     summary: The set of query strings to be placed in the redirect URL. Setting this value would replace any existing query string; leave empty to preserve the incoming query string. Query string must be in <key>=<value> format. The first ? and & will be added automatically so do not include them in the front, but do separate multiple query strings with &.
     description: ''
+  - name: --dynamic-compression
+    parameterValueGroup: Disabled, Enabled
+    summary: Use dynamic compression for cached content.
+    description: ''
+  - name: --enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Enabled status.
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol to use for forwarding traffic.
+    description: ''
+  - name: --frontend-endpoints
+    summary: Space-separated list of frontend endpoint names or IDs.
+    description: ''
+  - name: --patterns
+    summary: "Space-separated list of patterns to match. Default: '/\\*'."
+    description: ''
+  - name: --query-parameter-strip-directive
+    parameterValueGroup: StripAll, StripAllExcept, StripNone, StripOnly
+    summary: Treatment of URL query terms when forming the cache key.
+    description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude (comma separated) when using query-parameter-strip-directive type StripAllExcept or StripOnly respectively.
+    description: ''
   - name: --redirect-protocol
     parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
     summary: The protocol of the destination to where the traffic is redirected.
@@ -246,34 +295,21 @@ items:
     parameterValueGroup: Found, Moved, PermanentRedirect, TemporaryRedirect
     summary: The redirect type the rule will use when redirecting traffic.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --rules-engine
+    summary: Name or ID of a Rules Engine configuration. To unlink property, "--remove rulesEngine".
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
 commands:
-- uid: ext_front-door_az_network_front_door_routing_rule_create
-  name: az network front-door routing-rule create
-  summary: Create a Front Door routing rule.
-- uid: ext_front-door_az_network_front_door_routing_rule_delete
-  name: az network front-door routing-rule delete
-  summary: Delete a Front Door routing rule.
-- uid: ext_front-door_az_network_front_door_routing_rule_list
-  name: az network front-door routing-rule list
-  summary: List Front Door routing rules.
-- uid: ext_front-door_az_network_front_door_routing_rule_show
-  name: az network front-door routing-rule show
-  summary: Get the details of a Front Door routing rule.
-- uid: ext_front-door_az_network_front_door_routing_rule_update
-  name: az network front-door routing-rule update
-  summary: Update a Front Door routing rule.
+- ext_front-door_az_network_front_door_routing_rule_create
+- ext_front-door_az_network_front_door_routing_rule_delete
+- ext_front-door_az_network_front_door_routing_rule_list
+- ext_front-door_az_network_front_door_routing_rule_show
+- ext_front-door_az_network_front_door_routing_rule_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -289,4 +325,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Front Door routing rules.
+metadata:
+  description: Manage Front Door routing rules.

@@ -1,39 +1,49 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_sf_cluster
-  name: az sf cluster
-  summary: Manage an Azure Service Fabric cluster.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_sf_cluster_create
-  - az_sf_cluster_list
-  - az_sf_cluster_show
+### YamlMime:AzureCLIGroup
+uid: az_sf_cluster
+name: az sf cluster
+summary: Manage an Azure Service Fabric cluster.
+description: ''
+directCommands:
 - uid: az_sf_cluster_create
   name: az sf cluster create
   summary: Create a new Azure Service Fabric cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sf cluster create --location
+                         --resource-group
+                         [--certificate-file]
+                         [--certificate-output-folder]
+                         [--certificate-password]
+                         [--certificate-subject-name]
+                         [--cluster-name]
+                         [--cluster-size]
+                         [--os {UbuntuServer1604, WindowsServer1709, WindowsServer1709withContainers, WindowsServer1803withContainers, WindowsServer1809withContainers, WindowsServer2012R2Datacenter, WindowsServer2016Datacenter, WindowsServer2016DatacenterwithContainers, WindowsServer2019Datacenter, WindowsServer2019DatacenterwithContainers}]
+                         [--parameter-file]
+                         [--secret-identifier]
+                         [--subscription]
+                         [--template-file]
+                         [--vault-name]
+                         [--vault-resource-group]
+                         [--vm-password]
+                         [--vm-sku]
+                         [--vm-user-name]
   examples:
   - summary: Create a cluster with a given size and self-signed certificate that is downloaded locally.
-    syntax:
-      content: az sf cluster create -g group-name -c cluster1 -l westus --cluster-size 4 --vm-password Password#1234 --certificate-output-folder MyCertificates --certificate-subject-name cluster1
+    syntax: az sf cluster create -g group-name -c cluster1 -l westus --cluster-size 4 --vm-password Password#1234 --certificate-output-folder MyCertificates --certificate-subject-name cluster1
   - summary: Use a keyvault certificate and custom template to deploy a cluster.
-    syntax:
-      content: >-
-        az sf cluster create -g group-name -c cluster1 -l westus --template-file template.json \
-            --parameter-file parameter.json --secret-identifier https://{KeyVault}.vault.azure.net:443/secrets/{MyCertificate}
-  parameters:
+    syntax: >-
+      az sf cluster create -g group-name -c cluster1 -l westus --template-file template.json \
+          --parameter-file parameter.json --secret-identifier https://{KeyVault}.vault.azure.net:443/secrets/{MyCertificate}
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --certificate-file
     summary: The existing certificate file path for the primary cluster certificate.
     description: ''
@@ -63,6 +73,9 @@ items:
   - name: --secret-identifier
     summary: The existing Azure key vault secret URL.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --template-file
     summary: The path to the template file.
     description: ''
@@ -81,16 +94,14 @@ items:
   - name: --vm-user-name
     summary: The user name for logging to Vm. Default will be adminuser.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_sf_cluster_list
   name: az sf cluster list
   summary: List cluster resources.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sf cluster list [--resource-group]
+                       [--subscription]
+  optionalParameters:
   - name: --resource-group -g
     summary: The resource group name.
     description: ''
@@ -101,90 +112,47 @@ items:
   name: az sf cluster show
   summary: Gets a Service Fabric cluster resource.
   description: Get a Service Fabric cluster resource created or in the process of being created in the specified resource group.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sf cluster show --cluster-name
+                       --resource-group
+                       [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --cluster-name -c
     summary: Specify the name of the cluster, if not given it will be same as resource group name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
-- uid: az_sf_cluster_certificate
-  name: az sf cluster certificate
-  summary: Manage a cluster certificate.
-- uid: az_sf_cluster_certificate_add
-  name: az sf cluster certificate add
-  summary: Add a secondary cluster certificate to the cluster.
-- uid: az_sf_cluster_certificate_remove
-  name: az sf cluster certificate remove
-  summary: Remove a certificate from a cluster.
-- uid: az_sf_cluster_client_certificate
-  name: az sf cluster client-certificate
-  summary: Manage the client certificate of a cluster.
-- uid: az_sf_cluster_client_certificate_add
-  name: az sf cluster client-certificate add
-  summary: Add a common name or certificate thumbprint to the cluster for client authentication.
-- uid: az_sf_cluster_client_certificate_remove
-  name: az sf cluster client-certificate remove
-  summary: Remove client certificates or subject names used for authentication.
-- uid: az_sf_cluster_create
-  name: az sf cluster create
-  summary: Create a new Azure Service Fabric cluster.
-- uid: az_sf_cluster_durability
-  name: az sf cluster durability
-  summary: Manage the durability of a cluster.
-- uid: az_sf_cluster_durability_update
-  name: az sf cluster durability update
-  summary: Update the durability tier or VM SKU of a node type in the cluster.
-- uid: az_sf_cluster_list
-  name: az sf cluster list
-  summary: List cluster resources.
-- uid: az_sf_cluster_node
-  name: az sf cluster node
-  summary: Manage the node instance of a cluster.
-- uid: az_sf_cluster_node_add
-  name: az sf cluster node add
-  summary: Add nodes to a node type in a cluster.
-- uid: az_sf_cluster_node_remove
-  name: az sf cluster node remove
-  summary: Remove nodes from a node type in a cluster.
-- uid: az_sf_cluster_node_type
-  name: az sf cluster node-type
-  summary: Manage the node-type of a cluster.
-- uid: az_sf_cluster_node_type_add
-  name: az sf cluster node-type add
-  summary: Add a new node type to a cluster.
-- uid: az_sf_cluster_reliability
-  name: az sf cluster reliability
-  summary: Manage the reliability of a cluster.
-- uid: az_sf_cluster_reliability_update
-  name: az sf cluster reliability update
-  summary: Update the reliability tier for the primary node in a cluster.
-- uid: az_sf_cluster_setting
-  name: az sf cluster setting
-  summary: Manage a cluster's settings.
-- uid: az_sf_cluster_setting_remove
-  name: az sf cluster setting remove
-  summary: Remove settings from a cluster.
-- uid: az_sf_cluster_setting_set
-  name: az sf cluster setting set
-  summary: Update the settings of a cluster.
-- uid: az_sf_cluster_show
-  name: az sf cluster show
-  summary: Gets a Service Fabric cluster resource.
-- uid: az_sf_cluster_upgrade_type
-  name: az sf cluster upgrade-type
-  summary: Manage the upgrade type of a cluster.
-- uid: az_sf_cluster_upgrade_type_set
-  name: az sf cluster upgrade-type set
-  summary: Change the  upgrade type for a cluster.
+- az_sf_cluster_certificate
+- az_sf_cluster_certificate_add
+- az_sf_cluster_certificate_remove
+- az_sf_cluster_client_certificate
+- az_sf_cluster_client_certificate_add
+- az_sf_cluster_client_certificate_remove
+- az_sf_cluster_create
+- az_sf_cluster_durability
+- az_sf_cluster_durability_update
+- az_sf_cluster_list
+- az_sf_cluster_node
+- az_sf_cluster_node_add
+- az_sf_cluster_node_remove
+- az_sf_cluster_node_type
+- az_sf_cluster_node_type_add
+- az_sf_cluster_reliability
+- az_sf_cluster_reliability_update
+- az_sf_cluster_setting
+- az_sf_cluster_setting_remove
+- az_sf_cluster_setting_set
+- az_sf_cluster_show
+- az_sf_cluster_upgrade_type
+- az_sf_cluster_upgrade_type_set
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -200,4 +168,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage an Azure Service Fabric cluster.
+metadata:
+  description: Manage an Azure Service Fabric cluster.

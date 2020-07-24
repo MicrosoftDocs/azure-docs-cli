@@ -1,103 +1,112 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_acr_task
-  name: az acr task
-  summary: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_acr_task_cancel_run
-  - az_acr_task_create
-  - az_acr_task_delete
-  - az_acr_task_list
-  - az_acr_task_list_runs
-  - az_acr_task_logs
-  - az_acr_task_run
-  - az_acr_task_show
-  - az_acr_task_show_run
-  - az_acr_task_update
-  - az_acr_task_update_run
+### YamlMime:AzureCLIGroup
+uid: az_acr_task
+name: az acr task
+summary: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
+description: ''
+directCommands:
 - uid: az_acr_task_cancel_run
   name: az acr task cancel-run
   summary: Cancel a specified run of an Azure Container Registry.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task cancel-run --registry
+                           --run-id
+                           [--resource-group]
+                           [--subscription]
   examples:
   - summary: Cancel a run
-    syntax:
-      content: az acr task cancel-run -r MyRegistry --run-id runId
-  parameters:
+    syntax: az acr task cancel-run -r MyRegistry --run-id runId
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id
     summary: The unique run identifier.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_create
   name: az acr task create
   summary: Create a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task create --context
+                       --name
+                       --registry
+                       [--agent-pool]
+                       [--arg]
+                       [--assign-identity]
+                       [--auth-mode {Default, None}]
+                       [--base-image-trigger-enabled {false, true}]
+                       [--base-image-trigger-name]
+                       [--base-image-trigger-type {All, Runtime}]
+                       [--cmd]
+                       [--commit-trigger-enabled {false, true}]
+                       [--cpu]
+                       [--file]
+                       [--git-access-token]
+                       [--image]
+                       [--no-cache {false, true}]
+                       [--no-push {false, true}]
+                       [--platform]
+                       [--pull-request-trigger-enabled {false, true}]
+                       [--resource-group]
+                       [--schedule]
+                       [--secret-arg]
+                       [--set]
+                       [--set-secret]
+                       [--source-trigger-name]
+                       [--status {Disabled, Enabled}]
+                       [--subscription]
+                       [--target]
+                       [--timeout]
+                       [--update-trigger-endpoint]
+                       [--update-trigger-payload-type {Default, Token}]
+                       [--values]
   examples:
   - summary: Create a task without the source location.
-    syntax:
-      content: az acr task create -n hello-world -r MyRegistry --cmd '$Registry/myimage' -c /dev/null
+    syntax: az acr task create -n hello-world -r MyRegistry --cmd '$Registry/myimage' -c /dev/null
   - summary: Create a task with the definition from the standard input and with a timer trigger that runs the task at the top of every hour using the default trigger name. Either 'Ctrl + Z'(Windows) or 'Ctrl + D'(Linux) terminates the input stream.
-    syntax:
-      content: >-
-        cat task.yaml | az acr task create -n hello-world -r MyRegistry -f - -c /dev/null \
-            --schedule "0 */1 * * *"
-        az acr task create -n hello-world -r MyRegistry -f - -c /dev/null --schedule "0 */1 * * *"
+    syntax: >-
+      cat task.yaml | az acr task create -n hello-world -r MyRegistry -f - -c /dev/null \
+          --schedule "0 */1 * * *"
+      az acr task create -n hello-world -r MyRegistry -f - -c /dev/null --schedule "0 */1 * * *"
   - summary: Create a Linux task from a public GitHub repository which builds the hello-world image without triggers and uses a build argument.
-    syntax:
-      content: >-
-        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
-            -c https://github.com/Azure/acr-builder.git -f Dockerfile \
-            --commit-trigger-enabled false --base-image-trigger-enabled false \
-            --arg DOCKER_CLI_BASE_IMAGE=docker:18.03.0-ce-git
+    syntax: >-
+      az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
+          -c https://github.com/Azure/acr-builder.git -f Dockerfile \
+          --commit-trigger-enabled false --base-image-trigger-enabled false \
+          --arg DOCKER_CLI_BASE_IMAGE=docker:18.03.0-ce-git
   - summary: Create a Linux task using a specific branch of a private Azure DevOps repository which builds the hello-world image on Arm architecture (V7 variant) and has triggers enabled.
-    syntax:
-      content: >-
-        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
-            -c https://msazure.visualstudio.com/DefaultCollection/Project/_git/Repo#Branch:Folder \
-            -f Dockerfile --git-access-token <Personal Access Token> --platform linux/arm/v7
+    syntax: >-
+      az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
+          -c https://msazure.visualstudio.com/DefaultCollection/Project/_git/Repo#Branch:Folder \
+          -f Dockerfile --git-access-token <Personal Access Token> --platform linux/arm/v7
   - summary: Create a Linux task from a public GitHub repository which builds the hello-world image with both a git commit and pull request trigger enabled. Note that this task does not use Source Registry (MyRegistry), so we can explicitly set Auth mode as None for it.
-    syntax:
-      content: >-
-        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry  -f Dockerfile \
-            --auth-mode None -c https://github.com/Azure-Samples/acr-build-helloworld-node.git \
-            --pull-request-trigger-enabled true --git-access-token 000000000000000000000000000000000
+    syntax: >-
+      az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry  -f Dockerfile \
+          --auth-mode None -c https://github.com/Azure-Samples/acr-build-helloworld-node.git \
+          --pull-request-trigger-enabled true --git-access-token 000000000000000000000000000000000
   - summary: Create a Windows task from a public GitHub repository which builds the Azure Container Builder image on Amd64 architecture with only base image trigger enabled.
-    syntax:
-      content: >-
-        az acr task create -t acb:{{.Run.ID}} -n acb-win -r MyRegistry \
-            -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile \
-            --commit-trigger-enabled false --platform Windows/amd64
+    syntax: >-
+      az acr task create -t acb:{{.Run.ID}} -n acb-win -r MyRegistry \
+          -c https://github.com/Azure/acr-builder.git -f Windows.Dockerfile \
+          --commit-trigger-enabled false --platform Windows/amd64
   - summary: Create a Linux multi-step task from a public GitHub repository with with both system-assigned and user-assigned managed identities and base image, git commit, pull request, and timer triggers that run the task at noon on Mondays through Fridays with the timer trigger name provided.
-    syntax:
-      content: >-
-        az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
-            --pull-request-trigger-enabled true --schedule "dailyTimer:0 12 * * Mon-Fri" \
-            -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
-            --assign-identity [system] "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
-  parameters:
+    syntax: >-
+      az acr task create -t hello-world:{{.Run.ID}} -n hello-world -r MyRegistry \
+          --pull-request-trigger-enabled true --schedule "dailyTimer:0 12 * * Mon-Fri" \
+          -c https://github.com/Azure-Samples/acr-tasks.git#:multipleRegistries -f testtask.yaml \
+          --assign-identity [system] "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
+  requiredParameters:
   - isRequired: true
     name: --context -c
     summary: The full URL to the source code repository (Requires '.git' suffix for a github repo). If '/dev/null' is specified, the value will be set to None and ignored.
@@ -108,8 +117,9 @@ items:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --agent-pool
     summary: The name of the agent pool.
     description: ''
@@ -122,57 +132,6 @@ items:
   - name: --auth-mode
     parameterValueGroup: Default, None
     summary: Auth mode of the source registry.
-    description: ''
-  - name: --cmd
-    summary: Commands to execute.
-    description: ''
-  - name: --cpu
-    defaultValue: "2"
-    summary: The CPU configuration in terms of number of cores required for the run.
-    description: ''
-  - name: --file -f
-    summary: Relative path of the the task/docker file to the source code root folder. Task files must be suffixed with '.yaml' or piped from the standard input using '-'.
-    description: ''
-  - name: --image -t
-    summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
-    description: ''
-  - name: --no-cache
-    parameterValueGroup: false, true
-    summary: Indicates whether the image cache is enabled.
-    description: ''
-  - name: --no-push
-    parameterValueGroup: false, true
-    summary: Indicates whether the image built should be pushed to the registry.
-    description: ''
-  - name: --platform
-    summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --secret-arg
-    summary: Secret build argument in '--secret-arg name[=value]' format. Multiples supported by passing --secret-arg multiple times.
-    description: ''
-  - name: --set
-    summary: Task value in '--set name[=value]' format. Multiples supported by passing --set multiple times.
-    description: ''
-  - name: --set-secret
-    summary: Secret task value in '--set-secret name[=value]' format. Multiples supported by passing --set-secret multiple times.
-    description: ''
-  - name: --status
-    defaultValue: Enabled
-    parameterValueGroup: Disabled, Enabled
-    summary: The current status of task.
-    description: ''
-  - name: --target
-    summary: The name of the target build stage.
-    description: ''
-  - name: --timeout
-    defaultValue: "3600"
-    summary: The timeout in seconds.
-    description: ''
-  - name: --values
-    summary: The task values/parameters file path relative to the source context.
     description: ''
   - name: --base-image-trigger-enabled
     defaultValue: "1"
@@ -188,24 +147,75 @@ items:
     parameterValueGroup: All, Runtime
     summary: The type of the auto trigger for base image dependency updates.
     description: ''
+  - name: --cmd
+    summary: Commands to execute.
+    description: ''
   - name: --commit-trigger-enabled
     defaultValue: "1"
     parameterValueGroup: false, true
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
+  - name: --cpu
+    defaultValue: "2"
+    summary: The CPU configuration in terms of number of cores required for the run.
+    description: ''
+  - name: --file -f
+    summary: Relative path of the the task/docker file to the source code root folder. Task files must be suffixed with '.yaml' or piped from the standard input using '-'.
+    description: ''
   - name: --git-access-token
     summary: The access token used to access the source control provider.
+    description: ''
+  - name: --image -t
+    summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
+    description: ''
+  - name: --no-cache
+    parameterValueGroup: false, true
+    summary: Indicates whether the image cache is enabled.
+    description: ''
+  - name: --no-push
+    parameterValueGroup: false, true
+    summary: Indicates whether the image built should be pushed to the registry.
+    description: ''
+  - name: --platform
+    summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
     description: ''
   - name: --pull-request-trigger-enabled
     parameterValueGroup: false, true
     summary: Indicates whether the source control pull request trigger is enabled. The trigger is disabled by default.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --schedule
     summary: Schedule for a timer trigger represented as a cron expression. An optional trigger name can be specified using `--schedule name:schedule` format. Multiples supported by passing --schedule multiple times.
+    description: ''
+  - name: --secret-arg
+    summary: Secret build argument in '--secret-arg name[=value]' format. Multiples supported by passing --secret-arg multiple times.
+    description: ''
+  - name: --set
+    summary: Task value in '--set name[=value]' format. Multiples supported by passing --set multiple times.
+    description: ''
+  - name: --set-secret
+    summary: Secret task value in '--set-secret name[=value]' format. Multiples supported by passing --set-secret multiple times.
     description: ''
   - name: --source-trigger-name
     defaultValue: defaultSourceTriggerName
     summary: The name of the source trigger.
+    description: ''
+  - name: --status
+    defaultValue: Enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: The current status of task.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target
+    summary: The name of the target build stage.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: The timeout in seconds.
     description: ''
   - name: --update-trigger-endpoint
     summary: The full URL of the endpoint to receive base image update trigger notifications.
@@ -215,100 +225,94 @@ items:
     parameterValueGroup: Default, Token
     summary: Indicates whether to include metadata about the base image trigger in the payload alongwith the update trigger token, when a notification is sent.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --values
+    summary: The task values/parameters file path relative to the source context.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_delete
   name: az acr task delete
   summary: Delete a task from an Azure Container Registry.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task delete --name
+                       --registry
+                       [--resource-group]
+                       [--subscription]
+                       [--yes]
   examples:
   - summary: Delete a task from an Azure Container Registry.
-    syntax:
-      content: az acr task delete -n MyTask -r MyRegistry
-  parameters:
+    syntax: az acr task delete -n MyTask -r MyRegistry
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the task.
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_list
   name: az acr task list
   summary: List the tasks for an Azure Container Registry.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task list --registry
+                     [--resource-group]
+                     [--subscription]
   examples:
   - summary: List tasks and show the results in a table.
-    syntax:
-      content: az acr task list -r MyRegistry -o table
-  parameters:
+    syntax: az acr task list -r MyRegistry -o table
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_list_runs
   name: az acr task list-runs
   summary: List all of the executed runs for an Azure Container Registry, with the ability to filter by a specific Task.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task list-runs --registry
+                          [--image]
+                          [--name]
+                          [--resource-group]
+                          [--run-status {Canceled, Error, Failed, Queued, Running, Started, Succeeded, Timeout}]
+                          [--subscription]
+                          [--top]
   examples:
   - summary: List all of the runs for a registry and show the results in a table.
-    syntax:
-      content: az acr task list-runs -r MyRegistry -o table
+    syntax: az acr task list-runs -r MyRegistry -o table
   - summary: List runs for a task and show the results in a table.
-    syntax:
-      content: az acr task list-runs -r MyRegistry -n MyTask -o table
+    syntax: az acr task list-runs -r MyRegistry -n MyTask -o table
   - summary: List the last 10 successful runs for a registry and show the results in a table.
-    syntax:
-      content: az acr task list-runs -r MyRegistry --run-status Succeeded --top 10 -o table
+    syntax: az acr task list-runs -r MyRegistry --run-status Succeeded --top 10 -o table
   - summary: List all of the runs that built the image 'hello-world' for a registry and show the results in a table.
-    syntax:
-      content: az acr task list-runs -r MyRegistry --image hello-world -o table
-  parameters:
+    syntax: az acr task list-runs -r MyRegistry --image hello-world -o table
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --image -t
     summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
@@ -316,49 +320,46 @@ items:
     summary: The name of the task.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --run-status
     parameterValueGroup: Canceled, Error, Failed, Queued, Running, Started, Succeeded, Timeout
     summary: The current status of run.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --top
     defaultValue: "15"
     summary: Limit the number of latest runs in the results.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_logs
   name: az acr task logs
   summary: Show logs for a particular run. If no run-id is supplied, show logs for the last created run.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task logs --registry
+                     [--image]
+                     [--name]
+                     [--resource-group]
+                     [--run-id]
+                     [--subscription]
   examples:
   - summary: Show logs for the last created run in the registry.
-    syntax:
-      content: az acr task logs -r MyRegistry
+    syntax: az acr task logs -r MyRegistry
   - summary: Show logs for the last created run in the registry, filtered by task.
-    syntax:
-      content: az acr task logs -r MyRegistry -n MyTask
+    syntax: az acr task logs -r MyRegistry -n MyTask
   - summary: Show logs for a particular run.
-    syntax:
-      content: az acr task logs -r MyRegistry --run-id runId
+    syntax: az acr task logs -r MyRegistry --run-id runId
   - summary: Show logs for the last created run in the registry that built the image 'hello-world'.
-    syntax:
-      content: az acr task logs -r MyRegistry --image hello-world
-  parameters:
+    syntax: az acr task logs -r MyRegistry --image hello-world
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --image -t
     summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
     description: ''
@@ -366,7 +367,7 @@ items:
     summary: The name of the task.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --run-id
     summary: The unique run identifier.
@@ -374,40 +375,46 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_run
   name: az acr task run
   summary: Manually trigger a task that might otherwise be waiting for git commits or base image update triggers.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task run --name
+                    --registry
+                    [--agent-pool]
+                    [--arg]
+                    [--context]
+                    [--file]
+                    [--no-logs]
+                    [--no-wait]
+                    [--resource-group]
+                    [--secret-arg]
+                    [--set]
+                    [--set-secret]
+                    [--subscription]
+                    [--target]
+                    [--update-trigger-token]
   examples:
   - summary: Trigger a task run.
-    syntax:
-      content: az acr task run -n MyTask -r MyRegistry
+    syntax: az acr task run -n MyTask -r MyRegistry
   - summary: Trigger a task run by overriding the context and file passed during Task create with a remote repository.
-    syntax:
-      content: az acr task run -n MyTask -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile
+    syntax: az acr task run -n MyTask -r MyRegistry -c https://github.com/Azure-Samples/acr-build-helloworld-node.git -f Dockerfile
   - summary: Trigger a task run by overriding the context and file passed during Task create with a local context.
-    syntax:
-      content: az acr task run -n MyTask -r MyRegistry -c . -f Dockerfile
+    syntax: az acr task run -n MyTask -r MyRegistry -c . -f Dockerfile
   - summary: Trigger a task run by adding or overriding build arguments set during Task create.
-    syntax:
-      content: az acr task run -n MyTask -r MyRegistry --arg DOCKER_CLI_BASE_IMAGE=docker:18.03.0-ce-git
-  parameters:
+    syntax: az acr task run -n MyTask -r MyRegistry --arg DOCKER_CLI_BASE_IMAGE=docker:18.03.0-ce-git
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the task.
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --agent-pool
     summary: The name of the agent pool.
     description: ''
@@ -427,7 +434,7 @@ items:
     summary: Do not wait for the run to complete and return immediately after queuing the run.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --secret-arg
     summary: Secret build argument in '--secret-arg name[=value]' format. Multiples supported by passing --secret-arg multiple times.
@@ -438,122 +445,137 @@ items:
   - name: --set-secret
     summary: Secret task value in '--set-secret name[=value]' format. Multiples supported by passing --set-secret multiple times.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --target
     summary: The name of the target build stage.
     description: ''
   - name: --update-trigger-token
     summary: The payload that will be passed back alongwith the base image trigger notification.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_show
   name: az acr task show
   summary: Get the properties of a named task for an Azure Container Registry.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task show --name
+                     --registry
+                     [--resource-group]
+                     [--subscription]
+                     [--with-secure-properties]
   examples:
   - summary: Get the properties of a task, displaying the results in a table.
-    syntax:
-      content: az acr task show -n MyTask -r MyRegistry -o table
+    syntax: az acr task show -n MyTask -r MyRegistry -o table
   - summary: Get the properties of a task, including secure properties.
-    syntax:
-      content: az acr task show -n MyTask -r MyRegistry --with-secure-properties
-  parameters:
+    syntax: az acr task show -n MyTask -r MyRegistry --with-secure-properties
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the task.
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --with-secure-properties
-    summary: Indicates whether the secure properties of a task should be returned.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --with-secure-properties
+    summary: Indicates whether the secure properties of a task should be returned.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_show_run
   name: az acr task show-run
   summary: Get the properties of a specified run of an Azure Container Registry Task.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task show-run --registry
+                         --run-id
+                         [--resource-group]
+                         [--subscription]
   examples:
   - summary: Get the details of a run, displaying the results in a table.
-    syntax:
-      content: az acr task show-run -r MyRegistry --run-id runId -o table
-  parameters:
+    syntax: az acr task show-run -r MyRegistry --run-id runId -o table
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id
     summary: The unique run identifier.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_update
   name: az acr task update
   summary: Update a task for an Azure Container Registry.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task update --name
+                       --registry
+                       [--agent-pool]
+                       [--arg]
+                       [--auth-mode {Default, None}]
+                       [--base-image-trigger-enabled {false, true}]
+                       [--base-image-trigger-type {All, Runtime}]
+                       [--commit-trigger-enabled {false, true}]
+                       [--context]
+                       [--cpu]
+                       [--file]
+                       [--git-access-token]
+                       [--image]
+                       [--no-cache {false, true}]
+                       [--no-push {false, true}]
+                       [--platform]
+                       [--pull-request-trigger-enabled {false, true}]
+                       [--resource-group]
+                       [--secret-arg]
+                       [--set]
+                       [--set-secret]
+                       [--status {Disabled, Enabled}]
+                       [--subscription]
+                       [--target]
+                       [--timeout]
+                       [--update-trigger-endpoint]
+                       [--update-trigger-payload-type {Default, Token}]
+                       [--values]
   examples:
   - summary: Update base image updates to trigger on all dependent images of a multi-stage dockerfile, and status of a task in an Azure Container Registry.
-    syntax:
-      content: az acr task update -n MyTask -r MyRegistry --base-image-trigger-type All --status Disabled
+    syntax: az acr task update -n MyTask -r MyRegistry --base-image-trigger-type All --status Disabled
   - summary: Update platform for the Build step of your Task to Windows (prev Linux).
-    syntax:
-      content: az acr task update -n MyTask -r MyRegistry --platform Windows
+    syntax: az acr task update -n MyTask -r MyRegistry --platform Windows
   - summary: Update task's triggers and context for an Azure Container Registry.
-    syntax:
-      content: >-
-        az acr task update -n hello-world -r MyRegistry -f Dockerfile \
-            --commit-trigger-enabled false --pull-request-trigger-enabled true \
-            -c https://msazure.visualstudio.com/DefaultCollection/Project/_git/Repo#Branch:Folder
+    syntax: >-
+      az acr task update -n hello-world -r MyRegistry -f Dockerfile \
+          --commit-trigger-enabled false --pull-request-trigger-enabled true \
+          -c https://msazure.visualstudio.com/DefaultCollection/Project/_git/Repo#Branch:Folder
   - summary: Update a task for an Azure Container Registry. (autogenerated)
-    syntax:
-      content: >-
-        az acr task update --image MyImage --name MyTask --registry MyRegistry \
-            --context https://github.com/Azure-Samples/acr-build-helloworld-node.git
-  parameters:
+    syntax: >-
+      az acr task update --image MyImage --name MyTask --registry MyRegistry \
+          --context https://github.com/Azure-Samples/acr-build-helloworld-node.git
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the task.
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
+  optionalParameters:
   - name: --agent-pool
     summary: The name of the agent pool.
     description: ''
@@ -564,6 +586,18 @@ items:
     parameterValueGroup: Default, None
     summary: Auth mode of the source registry.
     description: ''
+  - name: --base-image-trigger-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether the base image trigger is enabled.
+    description: ''
+  - name: --base-image-trigger-type
+    parameterValueGroup: All, Runtime
+    summary: The type of the auto trigger for base image dependency updates.
+    description: ''
+  - name: --commit-trigger-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether the source control commit trigger is enabled.
+    description: ''
   - name: --context -c
     summary: The full URL to the source code repository (Requires '.git' suffix for a github repo). If '/dev/null' is specified, the value will be set to None and ignored.
     description: ''
@@ -572,6 +606,9 @@ items:
     description: ''
   - name: --file -f
     summary: Relative path of the the task/docker file to the source code root folder. Task files must be suffixed with '.yaml' or piped from the standard input using '-'.
+    description: ''
+  - name: --git-access-token
+    summary: The access token used to access the source control provider.
     description: ''
   - name: --image -t
     summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
@@ -587,8 +624,12 @@ items:
   - name: --platform
     summary: The platform where build/task is run, Eg, 'windows' and 'linux'. When it's used in build commands, it also can be specified in 'os/arch/variant' format for the resulting image. Eg, linux/arm/v7. The 'arch' and 'variant' parts are optional.
     description: ''
+  - name: --pull-request-trigger-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether the source control pull request trigger is enabled. The trigger is disabled by default.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --secret-arg
     summary: Secret build argument in '--secret-arg name[=value]' format. Multiples supported by passing --secret-arg multiple times.
@@ -603,33 +644,14 @@ items:
     parameterValueGroup: Disabled, Enabled
     summary: The current status of task.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --target
     summary: The name of the target build stage.
     description: ''
   - name: --timeout
     summary: The timeout in seconds.
-    description: ''
-  - name: --values
-    summary: The task values/parameters file path relative to the source context.
-    description: ''
-  - name: --base-image-trigger-enabled
-    parameterValueGroup: false, true
-    summary: Indicates whether the base image trigger is enabled.
-    description: ''
-  - name: --base-image-trigger-type
-    parameterValueGroup: All, Runtime
-    summary: The type of the auto trigger for base image dependency updates.
-    description: ''
-  - name: --commit-trigger-enabled
-    parameterValueGroup: false, true
-    summary: Indicates whether the source control commit trigger is enabled.
-    description: ''
-  - name: --git-access-token
-    summary: The access token used to access the source control provider.
-    description: ''
-  - name: --pull-request-trigger-enabled
-    parameterValueGroup: false, true
-    summary: Indicates whether the source control pull request trigger is enabled. The trigger is disabled by default.
     description: ''
   - name: --update-trigger-endpoint
     summary: The full URL of the endpoint to receive base image update trigger notifications.
@@ -638,126 +660,70 @@ items:
     parameterValueGroup: Default, Token
     summary: Indicates whether to include metadata about the base image trigger in the payload alongwith the update trigger token, when a notification is sent.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --values
+    summary: The task values/parameters file path relative to the source context.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_task_update_run
   name: az acr task update-run
   summary: Patch the run properties of an Azure Container Registry Task.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az acr task update-run --registry
+                           --run-id
+                           [--no-archive {false, true}]
+                           [--resource-group]
+                           [--subscription]
   examples:
   - summary: Update an existing run to be archived.
-    syntax:
-      content: az acr task update-run -r MyRegistry --run-id runId --no-archive false
-  parameters:
+    syntax: az acr task update-run -r MyRegistry --run-id runId --no-archive false
+  requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=&lt;registry name&gt;`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id
     summary: The unique run identifier.
     description: ''
+  optionalParameters:
   - name: --no-archive
     parameterValueGroup: false, true
     summary: Indicates whether the run should be archived.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 commands:
-- uid: az_acr_task_cancel_run
-  name: az acr task cancel-run
-  summary: Cancel a specified run of an Azure Container Registry.
-- uid: az_acr_task_create
-  name: az acr task create
-  summary: Create a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
-- uid: az_acr_task_credential
-  name: az acr task credential
-  summary: Manage credentials for a task. Please see <a href="https://aka.ms/acr/tasks/cross-registry-authentication">https://aka.ms/acr/tasks/cross-registry-authentication</a> for more information.
-- uid: az_acr_task_credential_add
-  name: az acr task credential add
-  summary: Add a custom registry login credential to the task.
-- uid: az_acr_task_credential_list
-  name: az acr task credential list
-  summary: List all the custom registry credentials for task.
-- uid: az_acr_task_credential_remove
-  name: az acr task credential remove
-  summary: Remove credential for a task.
-- uid: az_acr_task_credential_update
-  name: az acr task credential update
-  summary: Update the registry login credential for a task.
-- uid: az_acr_task_delete
-  name: az acr task delete
-  summary: Delete a task from an Azure Container Registry.
-- uid: az_acr_task_identity
-  name: az acr task identity
-  summary: Managed Identities for Task. Please see <a href="https://aka.ms/acr/tasks/task-create-managed-identity">https://aka.ms/acr/tasks/task-create-managed-identity</a> for more information.
-- uid: az_acr_task_identity_assign
-  name: az acr task identity assign
-  summary: Update the managed identity for a task.
-- uid: az_acr_task_identity_remove
-  name: az acr task identity remove
-  summary: Remove managed identities for a task.
-- uid: az_acr_task_identity_show
-  name: az acr task identity show
-  summary: Display the managed identities for task.
-- uid: az_acr_task_list
-  name: az acr task list
-  summary: List the tasks for an Azure Container Registry.
-- uid: az_acr_task_list_runs
-  name: az acr task list-runs
-  summary: List all of the executed runs for an Azure Container Registry, with the ability to filter by a specific Task.
-- uid: az_acr_task_logs
-  name: az acr task logs
-  summary: Show logs for a particular run. If no run-id is supplied, show logs for the last created run.
-- uid: az_acr_task_run
-  name: az acr task run
-  summary: Manually trigger a task that might otherwise be waiting for git commits or base image update triggers.
-- uid: az_acr_task_show
-  name: az acr task show
-  summary: Get the properties of a named task for an Azure Container Registry.
-- uid: az_acr_task_show_run
-  name: az acr task show-run
-  summary: Get the properties of a specified run of an Azure Container Registry Task.
-- uid: az_acr_task_timer
-  name: az acr task timer
-  summary: Manage timer triggers for a task.
-- uid: az_acr_task_timer_add
-  name: az acr task timer add
-  summary: Add a timer trigger to a task.
-- uid: az_acr_task_timer_list
-  name: az acr task timer list
-  summary: List all timer triggers for a task.
-- uid: az_acr_task_timer_remove
-  name: az acr task timer remove
-  summary: Remove a timer trigger from a task.
-- uid: az_acr_task_timer_update
-  name: az acr task timer update
-  summary: Update the timer trigger for a task.
-- uid: az_acr_task_update
-  name: az acr task update
-  summary: Update a task for an Azure Container Registry.
-- uid: az_acr_task_update_run
-  name: az acr task update-run
-  summary: Patch the run properties of an Azure Container Registry Task.
+- az_acr_task_cancel_run
+- az_acr_task_create
+- az_acr_task_credential
+- az_acr_task_credential_add
+- az_acr_task_credential_list
+- az_acr_task_credential_remove
+- az_acr_task_credential_update
+- az_acr_task_delete
+- az_acr_task_identity
+- az_acr_task_identity_assign
+- az_acr_task_identity_remove
+- az_acr_task_identity_show
+- az_acr_task_list
+- az_acr_task_list_runs
+- az_acr_task_logs
+- az_acr_task_run
+- az_acr_task_show
+- az_acr_task_show_run
+- az_acr_task_timer
+- az_acr_task_timer_add
+- az_acr_task_timer_list
+- az_acr_task_timer_remove
+- az_acr_task_timer_update
+- az_acr_task_update
+- az_acr_task_update_run
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -773,10 +739,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/acr/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/537e4dd63081fb7aee3d051899dd5d045c1edccd/src/azure-cli/azure/cli/command_modules/acr/_help.py
-updated_at: 4/15/2020 7:14:42 AM
-ms.date: 04/15/2020
-description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/537e4dd63081fb7aee3d051899dd5d045c1edccd/src/azure-cli/azure/cli/command_modules/acr/_help.py
+  updated_at: 4/15/2020 7:14:42 AM
+  ms.date: 04/15/2020
+  description: Manage a collection of steps for building, testing and OS & Framework patching container images using Azure Container Registries.

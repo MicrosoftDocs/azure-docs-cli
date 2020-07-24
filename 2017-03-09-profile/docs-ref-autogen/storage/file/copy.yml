@@ -1,22 +1,24 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_storage_file_copy
-  name: az storage file copy
-  summary: Manage file copy operations.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_storage_file_copy_cancel
-  - az_storage_file_copy_start
-  - az_storage_file_copy_start_batch
+### YamlMime:AzureCLIGroup
+uid: az_storage_file_copy
+name: az storage file copy
+summary: Manage file copy operations.
+description: ''
+directCommands:
 - uid: az_storage_file_copy_cancel
   name: az storage file copy cancel
   summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az storage file copy cancel --copy-id
+                                --destination-path
+                                --destination-share
+                                [--account-key]
+                                [--account-name]
+                                [--connection-string]
+                                [--sas-token]
+                                [--subscription]
+                                [--timeout]
+  requiredParameters:
   - isRequired: true
     name: --copy-id
     summary: Copy identifier provided in the copy.id of the original copy_file operation.
@@ -29,9 +31,7 @@ items:
     name: --destination-share -s
     summary: Name of the destination share. The share must exist.
     description: ''
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
-    description: ''
+  optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -47,29 +47,42 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_copy_start
   name: az storage file copy start
   summary: Copy a file asynchronously.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az storage file copy start --destination-path
+                               --destination-share
+                               [--account-key]
+                               [--account-name]
+                               [--connection-string]
+                               [--file-snapshot]
+                               [--metadata]
+                               [--sas-token]
+                               [--source-account-key]
+                               [--source-account-name]
+                               [--source-blob]
+                               [--source-container]
+                               [--source-path]
+                               [--source-sas]
+                               [--source-share]
+                               [--source-snapshot]
+                               [--source-uri]
+                               [--subscription]
+                               [--timeout]
   examples:
   - summary: Copy a file asynchronously.
-    syntax:
-      content: az storage file copy start --source-account-name srcaccount --source-account-key 00000000 --source-path <srcpath-to-file> --source-share srcshare --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --account-key 00000000
+    syntax: az storage file copy start --source-account-name srcaccount --source-account-key 00000000 --source-path <srcpath-to-file> --source-share srcshare --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --account-key 00000000
   - summary: Copy a file asynchronously from source uri to destination storage account with sas token.
-    syntax:
-      content: az storage file copy start --source-uri "https://srcaccount.file.core.windows.net/myshare/mydir/myfile?<sastoken>" --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
+    syntax: az storage file copy start --source-uri "https://srcaccount.file.core.windows.net/myshare/mydir/myfile?<sastoken>" --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
   - summary: Copy a file asynchronously from file snapshot to destination storage account with sas token.
-    syntax:
-      content: az storage file copy start --source-account-name srcaccount --source-account-key 00000000 --source-path <srcpath-to-file> --source-share srcshare --file-snapshot "2020-03-02T13:51:54.0000000Z" --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
-  parameters:
+    syntax: az storage file copy start --source-account-name srcaccount --source-account-key 00000000 --source-path <srcpath-to-file> --source-share srcshare --file-snapshot "2020-03-02T13:51:54.0000000Z" --destination-path <destpath-to-file> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
+  requiredParameters:
   - isRequired: true
     name: --destination-path -p
     summary: The path to the file within the file share.
@@ -78,14 +91,24 @@ items:
     name: --destination-share -s
     summary: Name of the destination share. The share must exist.
     description: ''
-  - name: --metadata
-    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
   - name: --file-snapshot
     summary: The file snapshot for the source storage account.
+    description: ''
+  - name: --metadata
+    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --source-account-key
     summary: The storage account key of the source blob.
@@ -114,6 +137,41 @@ items:
   - name: --source-uri -u
     summary: 'Specifies the URL of the source blob or file, up to 2 KB in length. A source file in the same account can be private, but a file in another account must be public or accept credentials included in this URL, such as a Shared Access Signature. Examples: <a href="https://myaccount.file.core.windows.net/myshare/mydirectory/myfile">https://myaccount.file.core.windows.net/myshare/mydirectory/myfile</a>.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_file_copy_start_batch
+  name: az storage file copy start-batch
+  summary: Copy multiple files or blobs to a file share.
+  description: ''
+  syntax: >-
+    az storage file copy start-batch [--account-key]
+                                     [--account-name]
+                                     [--connection-string]
+                                     [--destination-path]
+                                     [--destination-share]
+                                     [--dryrun]
+                                     [--metadata]
+                                     [--pattern]
+                                     [--sas-token]
+                                     [--source-account-key]
+                                     [--source-account-name]
+                                     [--source-container]
+                                     [--source-sas]
+                                     [--source-share]
+                                     [--source-uri]
+                                     [--subscription]
+                                     [--timeout]
+  examples:
+  - summary: Copy all files in a file share to another storage account.
+    syntax: az storage file copy start-batch --source-account-name srcaccount --source-account-key 00000000 --source-share srcshare --destination-path <destpath-to-directory> --destination-share destshare --account-name destaccount --account-key 00000000
+  - summary: Copy all files in a file share to another storage account. with sas token.
+    syntax: az storage file copy start-batch --source-uri "https://srcaccount.file.core.windows.net/myshare?<sastoken>" --destination-path <destpath-to-directory> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
+  optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
@@ -123,32 +181,6 @@ items:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
-- uid: az_storage_file_copy_start_batch
-  name: az storage file copy start-batch
-  summary: Copy multiple files or blobs to a file share.
-  description: ''
-  langs:
-  - azurecli
-  examples:
-  - summary: Copy all files in a file share to another storage account.
-    syntax:
-      content: az storage file copy start-batch --source-account-name srcaccount --source-account-key 00000000 --source-share srcshare --destination-path <destpath-to-directory> --destination-share destshare --account-name destaccount --account-key 00000000
-  - summary: Copy all files in a file share to another storage account. with sas token.
-    syntax:
-      content: az storage file copy start-batch --source-uri "https://srcaccount.file.core.windows.net/myshare?<sastoken>" --destination-path <destpath-to-directory> --destination-share destshare --account-name destaccount --sas-token <destinaition-sas>
-  parameters:
   - name: --destination-path
     summary: The directory where the source data is copied to. If omitted, data is copied to the root directory.
     description: ''
@@ -164,8 +196,8 @@ items:
   - name: --pattern
     summary: The pattern used for globbing files and blobs. The supported patterns are '\*', '?', '[seq]', and '[!seq]'. For more information, please refer to <a href="https://docs.python.org/3.7/library/fnmatch.html">https://docs.python.org/3.7/library/fnmatch.html</a>.
     description: When you use '*' in --pattern, it will match any character including the the directory separator '/'.
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --source-account-key
     summary: The account key for the source storage account. If omitted, the active login is used to determine the account key.
@@ -185,37 +217,17 @@ items:
   - name: --source-uri
     summary: A URI that specifies a the source file share or blob container.
     description: If the source is in another account, the source must either be public or authenticated via a shared access signature.
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
-- uid: az_storage_file_copy_cancel
-  name: az storage file copy cancel
-  summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
-- uid: az_storage_file_copy_start
-  name: az storage file copy start
-  summary: Copy a file asynchronously.
-- uid: az_storage_file_copy_start_batch
-  name: az storage file copy start-batch
-  summary: Copy multiple files or blobs to a file share.
+- az_storage_file_copy_cancel
+- az_storage_file_copy_start
+- az_storage_file_copy_start_batch
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -231,10 +243,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/storage/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
-updated_at: 7/16/2020 5:46:58 AM
-ms.date: 07/16/2020
-description: Manage file copy operations.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/9a8302043cdd0c6e6f3f5f51b64b296bda7708d5/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  updated_at: 7/16/2020 5:46:58 AM
+  ms.date: 07/16/2020
+  description: Manage file copy operations.

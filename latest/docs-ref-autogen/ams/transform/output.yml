@@ -1,31 +1,51 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_ams_transform_output
-  name: az ams transform output
-  summary: Manage transform outputs for an Azure Media Services account.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_ams_transform_output_add
-  - az_ams_transform_output_remove
+### YamlMime:AzureCLIGroup
+uid: az_ams_transform_output
+name: az ams transform output
+summary: Manage transform outputs for an Azure Media Services account.
+description: ''
+directCommands:
 - uid: az_ams_transform_output_add
   name: az ams transform output add
   summary: Add an output to an existing transform.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az ams transform output add --preset
+                                [--account-name]
+                                [--audio-language]
+                                [--ids]
+                                [--insights-to-extract {AllInsights, AudioInsightsOnly, VideoInsightsOnly}]
+                                [--name]
+                                [--on-error {ContinueJob, StopProcessingJob}]
+                                [--relative-priority {High, Low, Normal}]
+                                [--resolution]
+                                [--resource-group]
+                                [--subscription]
   examples:
   - summary: Add an output with a custom Standard Encoder preset from a JSON file.
-    syntax:
-      content: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset "C:\MyPresets\CustomPreset.json"
+    syntax: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset "C:\MyPresets\CustomPreset.json"
   - summary: Add an output with a VideoAnalyzer preset with es-ES as audio language and only with audio insights.
-    syntax:
-      content: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset VideoAnalyzer --audio-language es-ES --insights-to-extract AudioInsightsOnly
-  parameters:
+    syntax: az ams transform output add -a myAmsAccount -n transformName -g myResourceGroup --preset VideoAnalyzer --audio-language es-ES --insights-to-extract AudioInsightsOnly
+  requiredParameters:
   - isRequired: true
     name: --preset
     summary: 'Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the transform output. Allowed values: H264SingleBitrateSD, H264SingleBitrate720p, H264SingleBitrate1080p, AdaptiveStreaming, AACGoodQualityAudio, ContentAwareEncodingExperimental, ContentAwareEncoding, H264MultipleBitrate1080p, H264MultipleBitrate720p, H264MultipleBitrateSD, AudioAnalyzer, VideoAnalyzer, FaceDetector. In addition to the allowed values, you can also pass a path to a custom Standard Encoder preset JSON file. See <a href="https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset">https://docs.microsoft.com/rest/api/media/transforms/createorupdate#standardencoderpreset</a> for further details on the settings to use to build a custom preset.'
+    description: ''
+  optionalParameters:
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --audio-language
+    summary: 'The language for the audio payload in the input using the BCP-47 format of "language tag-region" (e.g: en-US). If not specified, automatic language detection would be employed. This feature currently supports English, Chinese, French, German, Italian, Japanese, Spanish, Russian, and Portuguese. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to English. Allowed values: en-US, en-GB, es-ES, es-MX, fr-FR, it-IT, ja-JP, pt-BR, zh-CN, de-DE, ar-EG, ru-RU, hi-IN.'
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --insights-to-extract
+    parameterValueGroup: AllInsights, AudioInsightsOnly, VideoInsightsOnly
+    summary: The type of insights to be extracted. If not set then the type will be selected based on the content type. If the content is audio only then only audio insights will be extracted and if it is video only video insights will be extracted.
+    description: ''
+  - name: --name -n
+    summary: The name of the transform.
     description: ''
   - name: --on-error
     parameterValueGroup: ContinueJob, StopProcessingJob
@@ -35,52 +55,36 @@ items:
     parameterValueGroup: High, Low, Normal
     summary: Sets the relative priority of the transform outputs within a transform. This sets the priority that the service uses for processing TransformOutputs. The default priority is Normal.
     description: ''
-  - name: --account-name -a
-    summary: The name of the Azure Media Services account.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: The name of the transform.
+  - name: --resolution
+    summary: 'Specifies the maximum resolution at which your video is analyzed. The default behavior is "SourceResolution," which will keep the input video at its original resolution when analyzed. Using StandardDefinition will resize input videos to standard definition while preserving the appropriate aspect ratio. It will only resize if the video is of higher resolution. For example, a 1920x1080 input would be scaled to 640x360 before processing. Switching to "StandardDefinition" will reduce the time it takes to process high resolution video. It may also reduce the cost of using this component (see <a href="https://azure.microsoft.com/en-us/pricing/details/media-services/#analytics">https://azure.microsoft.com/en-us/pricing/details/media-services/#analytics</a> for details). However, faces that end up being too small in the resized video may not be detected. Allowed values: StandardDefinition, SourceResolution.'
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --audio-language
-    summary: 'The language for the audio payload in the input using the BCP-47 format of "language tag-region" (e.g: en-US). If not specified, automatic language detection would be employed. This feature currently supports English, Chinese, French, German, Italian, Japanese, Spanish, Russian, and Portuguese. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to English. Allowed values: en-US, en-GB, es-ES, es-MX, fr-FR, it-IT, ja-JP, pt-BR, zh-CN, de-DE, ar-EG, ru-RU, hi-IN.'
-    description: ''
-  - name: --resolution
-    summary: 'Specifies the maximum resolution at which your video is analyzed. The default behavior is "SourceResolution," which will keep the input video at its original resolution when analyzed. Using StandardDefinition will resize input videos to standard definition while preserving the appropriate aspect ratio. It will only resize if the video is of higher resolution. For example, a 1920x1080 input would be scaled to 640x360 before processing. Switching to "StandardDefinition" will reduce the time it takes to process high resolution video. It may also reduce the cost of using this component (see <a href="https://azure.microsoft.com/en-us/pricing/details/media-services/#analytics">https://azure.microsoft.com/en-us/pricing/details/media-services/#analytics</a> for details). However, faces that end up being too small in the resized video may not be detected. Allowed values: StandardDefinition, SourceResolution.'
-    description: ''
-  - name: --insights-to-extract
-    parameterValueGroup: AllInsights, AudioInsightsOnly, VideoInsightsOnly
-    summary: The type of insights to be extracted. If not set then the type will be selected based on the content type. If the content is audio only then only audio insights will be extracted and if it is video only video insights will be extracted.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/ams/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/ams/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
 - uid: az_ams_transform_output_remove
   name: az ams transform output remove
   summary: Remove an output from an existing transform.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az ams transform output remove --output-index
+                                   [--account-name]
+                                   [--ids]
+                                   [--name]
+                                   [--resource-group]
+                                   [--subscription]
   examples:
   - summary: Remove the output element at the index specified with --output-index argument.
-    syntax:
-      content: az ams transform output remove -a myAmsAccount -n transformName -g myResourceGroup --output-index 1
-  parameters:
+    syntax: az ams transform output remove -a myAmsAccount -n transformName -g myResourceGroup --output-index 1
+  requiredParameters:
   - isRequired: true
     name: --output-index
     summary: The element index of the output to remove.
     description: ''
+  optionalParameters:
   - name: --account-name -a
     summary: The name of the Azure Media Services account.
     description: ''
@@ -91,24 +95,15 @@ items:
     summary: The name of the transform.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/ams/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/ams/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
 commands:
-- uid: az_ams_transform_output_add
-  name: az ams transform output add
-  summary: Add an output to an existing transform.
-- uid: az_ams_transform_output_remove
-  name: az ams transform output remove
-  summary: Remove an output from an existing transform.
+- az_ams_transform_output_add
+- az_ams_transform_output_remove
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -124,10 +119,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/ams/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/dd62da8e5059af7c52237643ae48ffd389ef763b/src/azure-cli/azure/cli/command_modules/ams/_help.py
-updated_at: 3/25/2020 2:12:45 AM
-ms.date: 03/25/2020
-description: Manage transform outputs for an Azure Media Services account.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/dd62da8e5059af7c52237643ae48ffd389ef763b/src/azure-cli/azure/cli/command_modules/ams/_help.py
+  updated_at: 3/25/2020 2:12:45 AM
+  ms.date: 03/25/2020
+  description: Manage transform outputs for an Azure Media Services account.

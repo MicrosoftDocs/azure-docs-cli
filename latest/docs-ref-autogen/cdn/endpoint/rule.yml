@@ -1,29 +1,54 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_cdn_endpoint_rule
-  name: az cdn endpoint rule
-  summary: Manage delivery rules for an endpoint.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_cdn_endpoint_rule_add
-  - az_cdn_endpoint_rule_remove
-  - az_cdn_endpoint_rule_show
+### YamlMime:AzureCLIGroup
+uid: az_cdn_endpoint_rule
+name: az cdn endpoint rule
+summary: Manage delivery rules for an endpoint.
+description: ''
+directCommands:
 - uid: az_cdn_endpoint_rule_add
   name: az cdn endpoint rule add
   summary: Add a delivery rule to a CDN endpoint.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az cdn endpoint rule add --action-name
+                             --order
+                             --rule-name
+                             [--cache-behavior {BypassCache, Override, SetIfMissing}]
+                             [--cache-duration]
+                             [--custom-fragment]
+                             [--custom-hostname]
+                             [--custom-path]
+                             [--custom-querystring]
+                             [--destination]
+                             [--header-action {Append, Delete, Overwrite}]
+                             [--header-name]
+                             [--header-value]
+                             [--ids]
+                             [--match-values]
+                             [--match-variable]
+                             [--name]
+                             [--negate-condition {false, true}]
+                             [--operator]
+                             [--preserve-unmatched-path {false, true}]
+                             [--profile-name]
+                             [--query-parameters]
+                             [--query-string-behavior {Exclude, ExcludeAll, Include, IncludeAll}]
+                             [--redirect-protocol {Http, Https, MatchRequest}]
+                             [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
+                             [--resource-group]
+                             [--selector]
+                             [--source-pattern]
+                             [--subscription]
+                             [--transform {Lowercase, Uppercase}]
   examples:
   - summary: Create a global rule to disable caching.
-    syntax:
-      content: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 0 --rule-name global --action-name CacheExpiration --cache-behavior BypassCache
+    syntax: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 0 --rule-name global --action-name CacheExpiration --cache-behavior BypassCache
   - summary: Create a rule for http to https redirect
-    syntax:
-      content: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 1 --rule-name "redirect" --match-variable RequestScheme --operator Equal --match-values HTTPS --action-name "UrlRedirect" --redirect-protocol Https --redirect-type Moved
-  parameters:
+    syntax: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 1 --rule-name "redirect" --match-variable RequestScheme --operator Equal --match-values HTTPS --action-name "UrlRedirect" --redirect-protocol Https --redirect-type Moved
+  requiredParameters:
+  - isRequired: true
+    name: --action-name
+    summary: Name of the action.
+    description: ''
   - isRequired: true
     name: --order
     summary: The order of the rule. The order number must start from 0 and consecutive.                    Rule with higher order will be applied later.
@@ -32,28 +57,7 @@ items:
     name: --rule-name
     summary: Name of the rule.
     description: ''
-  - name: --destination
-    summary: The destination path to be used in the rewrite.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the CDN endpoint.
-    description: ''
-  - name: --profile-name
-    summary: Name of the CDN profile which is unique within the resource group.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - isRequired: true
-    name: --action-name
-    summary: Name of the action.
-    description: ''
+  optionalParameters:
   - name: --cache-behavior
     parameterValueGroup: BypassCache, Override, SetIfMissing
     summary: Caching behavior for the requests.
@@ -73,6 +77,9 @@ items:
   - name: --custom-querystring
     summary: The set of query strings to be placed in the redirect URL.                    leave empty to preserve the incoming query string.
     description: ''
+  - name: --destination
+    summary: The destination path to be used in the rewrite.
+    description: ''
   - name: --header-action
     parameterValueGroup: Append, Delete, Overwrite
     summary: Header action for the requests.
@@ -83,9 +90,31 @@ items:
   - name: --header-value
     summary: Value of the header.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --match-values
+    summary: Match values of the match condition (comma separated).
+    description: ''
+  - name: --match-variable
+    summary: Name of the match condition.
+    description: ''
+  - name: --name -n
+    summary: Name of the CDN endpoint.
+    description: ''
+  - name: --negate-condition
+    parameterValueGroup: false, true
+    summary: If true, negates the condition.
+    description: ''
+  - name: --operator
+    summary: Operator of the match condition.
+    description: ''
   - name: --preserve-unmatched-path
     parameterValueGroup: false, true
     summary: If True, the remaining path after the source                    pattern will be appended to the new destination path.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --query-parameters
     summary: Query parameters to include or exclude (comma separated).
@@ -102,50 +131,43 @@ items:
     parameterValueGroup: Found, Moved, PermanentRedirect, TemporaryRedirect
     summary: The redirect type the rule will use when redirecting traffic.
     description: ''
-  - name: --source-pattern
-    summary: A request URI pattern that identifies the type of requests that may be rewritten.
-    description: ''
-  - name: --match-values
-    summary: Match values of the match condition (comma separated).
-    description: ''
-  - name: --match-variable
-    summary: Name of the match condition.
-    description: ''
-  - name: --negate-condition
-    parameterValueGroup: false, true
-    summary: If true, negates the condition.
-    description: ''
-  - name: --operator
-    summary: Operator of the match condition.
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --selector
     summary: Selector of the match condition.
+    description: ''
+  - name: --source-pattern
+    summary: A request URI pattern that identifies the type of requests that may be rewritten.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --transform
     parameterValueGroup: Lowercase, Uppercase
     summary: Transform to apply before matching.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
 - uid: az_cdn_endpoint_rule_remove
   name: az cdn endpoint rule remove
   summary: Remove a delivery rule from an endpoint.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az cdn endpoint rule remove --rule-name
+                                [--ids]
+                                [--name]
+                                [--profile-name]
+                                [--resource-group]
+                                [--subscription]
   examples:
   - summary: Remove the global rule.
-    syntax:
-      content: az cdn endpoint rule remove -g group -n endpoint --profile-name profile --rule-name Global
-  parameters:
+    syntax: az cdn endpoint rule remove -g group -n endpoint --profile-name profile --rule-name Global
+  requiredParameters:
   - isRequired: true
     name: --rule-name
     summary: Name of the rule.
     description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -156,28 +178,26 @@ items:
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
 - uid: az_cdn_endpoint_rule_show
   name: az cdn endpoint rule show
   summary: Show delivery rules asscociate with the endpoint.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az cdn endpoint rule show [--ids]
+                              [--name]
+                              [--profile-name]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: show delivery rules asscociate with the endpoint.
-    syntax:
-      content: az cdn endpoint rule show -g group -n endpoint --profile-name profile
-  parameters:
+    syntax: az cdn endpoint rule show -g group -n endpoint --profile-name profile
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -188,51 +208,24 @@ items:
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
 commands:
-- uid: az_cdn_endpoint_rule_action
-  name: az cdn endpoint rule action
-  summary: Manage delivery rule actions for an endpoint.
-- uid: az_cdn_endpoint_rule_action_add
-  name: az cdn endpoint rule action add
-  summary: Add an action to a delivery rule.
-- uid: az_cdn_endpoint_rule_action_remove
-  name: az cdn endpoint rule action remove
-  summary: Remove an action from a delivery rule.
-- uid: az_cdn_endpoint_rule_action_show
-  name: az cdn endpoint rule action show
-  summary: Show delivery rules asscociate with the endpoint.
-- uid: az_cdn_endpoint_rule_add
-  name: az cdn endpoint rule add
-  summary: Add a delivery rule to a CDN endpoint.
-- uid: az_cdn_endpoint_rule_condition
-  name: az cdn endpoint rule condition
-  summary: Manage delivery rule conditions for an endpoint.
-- uid: az_cdn_endpoint_rule_condition_add
-  name: az cdn endpoint rule condition add
-  summary: Add a condition to a delivery rule.
-- uid: az_cdn_endpoint_rule_condition_remove
-  name: az cdn endpoint rule condition remove
-  summary: Remove a condition from a delivery rule.
-- uid: az_cdn_endpoint_rule_condition_show
-  name: az cdn endpoint rule condition show
-  summary: Show delivery rules asscociate with the endpoint.
-- uid: az_cdn_endpoint_rule_remove
-  name: az cdn endpoint rule remove
-  summary: Remove a delivery rule from an endpoint.
-- uid: az_cdn_endpoint_rule_show
-  name: az cdn endpoint rule show
-  summary: Show delivery rules asscociate with the endpoint.
+- az_cdn_endpoint_rule_action
+- az_cdn_endpoint_rule_action_add
+- az_cdn_endpoint_rule_action_remove
+- az_cdn_endpoint_rule_action_show
+- az_cdn_endpoint_rule_add
+- az_cdn_endpoint_rule_condition
+- az_cdn_endpoint_rule_condition_add
+- az_cdn_endpoint_rule_condition_remove
+- az_cdn_endpoint_rule_condition_show
+- az_cdn_endpoint_rule_remove
+- az_cdn_endpoint_rule_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -248,10 +241,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/cdn/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/0bb45ecd541c1a6109ad67be4f45afe3ce47f2b5/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-updated_at: 6/3/2020 1:56:07 AM
-ms.date: 06/03/2020
-description: Manage delivery rules for an endpoint.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/0bb45ecd541c1a6109ad67be4f45afe3ce47f2b5/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  updated_at: 6/3/2020 1:56:07 AM
+  ms.date: 06/03/2020
+  description: Manage delivery rules for an endpoint.

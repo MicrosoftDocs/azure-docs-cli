@@ -1,64 +1,65 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_keyvault_key
-  name: az keyvault key
-  summary: Manage keys.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_keyvault_key_backup
-  - az_keyvault_key_create
-  - az_keyvault_key_decrypt
-  - az_keyvault_key_delete
-  - az_keyvault_key_download
-  - az_keyvault_key_encrypt
-  - az_keyvault_key_import
-  - az_keyvault_key_list
-  - az_keyvault_key_list_deleted
-  - az_keyvault_key_list_versions
-  - az_keyvault_key_purge
-  - az_keyvault_key_recover
-  - az_keyvault_key_restore
-  - az_keyvault_key_set_attributes
-  - az_keyvault_key_show
-  - az_keyvault_key_show_deleted
+### YamlMime:AzureCLIGroup
+uid: az_keyvault_key
+name: az keyvault key
+summary: Manage keys.
+description: ''
+directCommands:
 - uid: az_keyvault_key_backup
   name: az keyvault key backup
   summary: Requests that a backup of the specified key be downloaded to the client.
   description: The Key Backup operation exports a key from Azure Key Vault in a protected form. Note that this operation does NOT return key material in a form that can be used outside the Azure Key Vault system, the returned key material is either protected to a Azure Key Vault HSM or to Azure Key Vault itself. The intent of this operation is to allow a client to GENERATE a key in one Azure Key Vault instance, BACKUP the key, and then RESTORE it into another Azure Key Vault instance. The BACKUP operation may be used to export, in protected form, any key type from Azure Key Vault. Individual versions of a key cannot be backed up. BACKUP / RESTORE can be performed within geographical boundaries only; meaning that a BACKUP from one geographical area cannot be restored to another geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This operation requires the key/backup permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key backup --file
+                           [--id]
+                           [--name]
+                           [--subscription]
+                           [--vault-name]
+  requiredParameters:
   - isRequired: true
     name: --file -f
     summary: Local file path in which to store key backup.
     description: ''
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_create
   name: az keyvault key create
   summary: Creates a new key, stores it, then returns key parameters and attributes to the client.
   description: The create key operation can be used to create any key type in Azure Key Vault. If the named key already exists, Azure Key Vault creates a new version of the key. It requires the keys/create permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key create --name
+                           --vault-name
+                           [--curve {P-256, P-384, P-521, SECP256K1}]
+                           [--disabled {false, true}]
+                           [--expires]
+                           [--kty {EC, EC-HSM, RSA, RSA-HSM, oct}]
+                           [--not-before]
+                           [--ops {decrypt, encrypt, import, sign, unwrapKey, verify, wrapKey}]
+                           [--protection {hsm, software}]
+                           [--size]
+                           [--subscription]
+                           [--tags]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the key.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
   - name: --curve
     parameterValueGroup: P-256, P-384, P-521, SECP256K1
     summary: 'Elliptic curve name. For valid values, see: <a href="https://docs.microsoft.com/en-us/rest/api/keyvault/createkey/createkey#jsonwebkeycurvename">https://docs.microsoft.com/en-us/rest/api/keyvault/createkey/createkey#jsonwebkeycurvename</a>.'
@@ -88,33 +89,26 @@ items:
   - name: --size
     summary: 'The key size in bits. For example: 2048, 3072, or 4096 for RSA.'
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Name of the key.
-    description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: Name of the key vault.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_decrypt
   name: az keyvault key decrypt
   summary: Decrypts a single block of encrypted data.
   description: The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT operation applies to asymmetric and symmetric keys stored in Azure Key Vault since it uses the private portion of the key. This operation requires the keys/decrypt permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key decrypt --algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}
+                            --value
+                            [--id]
+                            [--name]
+                            [--subscription]
+                            [--vault-name]
+                            [--version]
+  requiredParameters:
   - isRequired: true
     name: --algorithm -a
     parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
@@ -124,11 +118,15 @@ items:
     name: --value
     summary: The value to be decrypted.
     description: ''
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
     summary: Name of the key vault. Required if --id is not specified.
@@ -136,58 +134,53 @@ items:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_delete
   name: az keyvault key delete
   summary: Deletes a key of any type from storage in Azure Key Vault.
   description: The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic material associated with the key, which means the key is not usable for Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key delete [--id]
+                           [--name]
+                           [--subscription]
+                           [--vault-name]
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_download
   name: az keyvault key download
   summary: Downloads the public part of a stored key.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az keyvault key download --file
+                             [--encoding {DER, PEM}]
+                             [--id]
+                             [--name]
+                             [--subscription]
+                             [--vault-name]
+                             [--version]
   examples:
   - summary: Save the key with PEM encoding
-    syntax:
-      content: az keyvault key download --vault-name MyKeyVault -n MyKey -e PEM -f mykey.pem
+    syntax: az keyvault key download --vault-name MyKeyVault -n MyKey -e PEM -f mykey.pem
   - summary: Save the key with DER encoding
-    syntax:
-      content: az keyvault key download --vault-name MyKeyVault -n MyKey -e DER -f mykey.der
-  parameters:
+    syntax: az keyvault key download --vault-name MyKeyVault -n MyKey -e DER -f mykey.der
+  requiredParameters:
   - isRequired: true
     name: --file -f
     summary: File to receive the key contents.
     description: ''
+  optionalParameters:
   - name: --encoding -e
     defaultValue: PEM
     parameterValueGroup: DER, PEM
@@ -199,28 +192,29 @@ items:
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --vault-name
     summary: Name of the key vault. Required if --id is not specified.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_encrypt
   name: az keyvault key encrypt
   summary: Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.
   description: The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Azure Key Vault. Note that the ENCRYPT operation only supports a single block of data, the size of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly necessary for symmetric keys stored in Azure Key Vault since protection with an asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/encypt permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key encrypt --algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}
+                            --value
+                            [--id]
+                            [--name]
+                            [--subscription]
+                            [--vault-name]
+                            [--version]
+  requiredParameters:
   - isRequired: true
     name: --algorithm -a
     parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
@@ -230,11 +224,15 @@ items:
     name: --value
     summary: The value to be encrypted.
     description: ''
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
     summary: Name of the key vault. Required if --id is not specified.
@@ -242,22 +240,42 @@ items:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_import
   name: az keyvault key import
   summary: Import a private key.
   description: Supports importing base64 encoded private keys from PEM files or strings. Supports importing BYOK keys into HSM for premium key vaults.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key import --name
+                           --vault-name
+                           [--byok-file]
+                           [--byok-string]
+                           [--disabled {false, true}]
+                           [--expires]
+                           [--not-before]
+                           [--ops {decrypt, encrypt, import, sign, unwrapKey, verify, wrapKey}]
+                           [--pem-file]
+                           [--pem-password]
+                           [--pem-string]
+                           [--protection {hsm, software}]
+                           [--subscription]
+                           [--tags]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the key.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --byok-file
+    summary: BYOK file containing the key to be imported. Must not be password protected.
+    description: ''
+  - name: --byok-string
+    summary: BYOK string containing the key to be imported. Must not be password protected.
+    description: ''
   - name: --disabled
     parameterValueGroup: false, true
     summary: Create key in disabled state.
@@ -272,27 +290,6 @@ items:
     parameterValueGroup: decrypt, encrypt, import, sign, unwrapKey, verify, wrapKey
     summary: Space-separated list of permitted JSON web key operations.
     description: ''
-  - name: --protection -p
-    parameterValueGroup: hsm, software
-    summary: Specifies the type of key protection.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Name of the key.
-    description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: Name of the key vault.
-    description: ''
-  - name: --byok-file
-    summary: BYOK file containing the key to be imported. Must not be password protected.
-    description: ''
-  - name: --byok-string
-    summary: BYOK string containing the key to be imported. Must not be password protected.
-    description: ''
   - name: --pem-file
     summary: PEM file containing the key to be imported.
     description: ''
@@ -302,146 +299,141 @@ items:
   - name: --pem-string
     summary: PEM string containing the key to be imported.
     description: ''
+  - name: --protection -p
+    parameterValueGroup: hsm, software
+    summary: Specifies the type of key protection.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_list
   name: az keyvault key list
   summary: List keys in the specified vault.
   description: Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a stored key. The LIST operation is applicable to all key types, however only the base key identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the keys/list permission.
-  langs:
-  - azurecli
-  parameters:
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-    description: ''
+  syntax: >-
+    az keyvault key list --vault-name
+                         [--maxresults]
+                         [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
     description: ''
+  optionalParameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_list_deleted
   name: az keyvault key list-deleted
   summary: Lists the deleted keys in the specified vault.
   description: Retrieves a list of the keys in the Key Vault as JSON Web Key structures that contain the public part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/list permission.
-  langs:
-  - azurecli
-  parameters:
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-    description: ''
+  syntax: >-
+    az keyvault key list-deleted --vault-name
+                                 [--maxresults]
+                                 [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --vault-name
     summary: Name of the key vault.
     description: ''
+  optionalParameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_list_versions
   name: az keyvault key list-versions
   summary: Retrieves a list of individual key versions with the same key name.
   description: The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
-  langs:
-  - azurecli
-  parameters:
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-    description: ''
+  syntax: >-
+    az keyvault key list-versions [--id]
+                                  [--maxresults]
+                                  [--name]
+                                  [--subscription]
+                                  [--vault-name]
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_purge
   name: az keyvault key purge
   summary: Permanently deletes the specified key.
   description: The Purge Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/purge permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key purge [--id]
+                          [--name]
+                          [--subscription]
+                          [--vault-name]
+  optionalParameters:
   - name: --id
     summary: The recovery id of the key.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_recover
   name: az keyvault key recover
   summary: Recovers the deleted key to its latest version.
   description: The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled vaults. It recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted key will return an error. Consider this the inverse of the delete operation on soft-delete enabled vaults. This operation requires the keys/recover permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key recover [--id]
+                            [--name]
+                            [--subscription]
+                            [--vault-name]
+  optionalParameters:
   - name: --id
     summary: The recovery id of the key.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_restore
   name: az keyvault key restore
   summary: Restores a backed up key to a vault.
   description: 'Imports a previously backed up key into Azure Key Vault, restoring the key, its key identifier, attributes and access control policies. The RESTORE operation may be used to import a previously backed up key. Individual versions of a key cannot be restored. The key is restored in its entirety with the same key name as it had when it was backed up. If the key name is not available in the target Key Vault, the RESTORE operation will be rejected. While the key name is retained during restore, the final key identifier will change if the key is restored to a different vault. Restore will restore all versions and preserve version identifiers. The RESTORE operation is subject to security constraints: The target Key Vault must be owned by the same Microsoft Azure Subscription as the source Key Vault The user must have RESTORE permission in the target Key Vault. This operation requires the keys/restore permission.'
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key restore --file
+                            --vault-name
+                            [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --file -f
     summary: Local key backup from which to restore key.
@@ -450,28 +442,39 @@ items:
     name: --vault-name
     summary: Name of the key vault.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_set_attributes
   name: az keyvault key set-attributes
   summary: The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Azure Key Vault.
   description: 'In order to perform this operation, the key must already exist in the Key Vault. Note: The cryptographic material of a key itself cannot be changed. This operation requires the keys/update permission.'
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key set-attributes [--enabled {false, true}]
+                                   [--expires]
+                                   [--id]
+                                   [--name]
+                                   [--not-before]
+                                   [--ops {decrypt, encrypt, import, sign, unwrapKey, verify, wrapKey}]
+                                   [--subscription]
+                                   [--tags]
+                                   [--vault-name]
+                                   [--version]
+  optionalParameters:
   - name: --enabled
     parameterValueGroup: false, true
     summary: Enable the key.
     description: ''
   - name: --expires
     summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --id
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the key. Required if --id is not specified.
     description: ''
   - name: --not-before
     summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
@@ -480,14 +483,11 @@ items:
     parameterValueGroup: decrypt, encrypt, import, sign, unwrapKey, verify, wrapKey
     summary: Space-separated list of permitted JSON web key operations.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --id
-    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
-    description: ''
-  - name: --name -n
-    summary: Name of the key. Required if --id is not specified.
     description: ''
   - name: --vault-name
     summary: Name of the key vault. Required if --id is not specified.
@@ -495,27 +495,26 @@ items:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_show
   name: az keyvault key show
   summary: Gets the public part of a stored key.
   description: The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This operation requires the keys/get permission.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key show [--id]
+                         [--name]
+                         [--subscription]
+                         [--vault-name]
+                         [--version]
+  optionalParameters:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
     summary: Name of the key vault. Required if --id is not specified.
@@ -523,89 +522,47 @@ items:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_show_deleted
   name: az keyvault key show-deleted
   summary: Gets the public part of a deleted key.
   description: The Get Deleted Key operation is applicable for soft-delete enabled vaults. While the operation can be invoked on any vault, it will return an error if invoked on a non soft-delete enabled vault. This operation requires the keys/get permission. .
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az keyvault key show-deleted [--id]
+                                 [--name]
+                                 [--subscription]
+                                 [--vault-name]
+  optionalParameters:
   - name: --id
     summary: The recovery id of the key.  If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
-  - name: --vault-name
-    summary: Name of the key vault. Required if --id is not specified.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 commands:
-- uid: az_keyvault_key_backup
-  name: az keyvault key backup
-  summary: Requests that a backup of the specified key be downloaded to the client.
-- uid: az_keyvault_key_create
-  name: az keyvault key create
-  summary: Creates a new key, stores it, then returns key parameters and attributes to the client.
-- uid: az_keyvault_key_decrypt
-  name: az keyvault key decrypt
-  summary: Decrypts a single block of encrypted data.
-- uid: az_keyvault_key_delete
-  name: az keyvault key delete
-  summary: Deletes a key of any type from storage in Azure Key Vault.
-- uid: az_keyvault_key_download
-  name: az keyvault key download
-  summary: Downloads the public part of a stored key.
-- uid: az_keyvault_key_encrypt
-  name: az keyvault key encrypt
-  summary: Encrypts an arbitrary sequence of bytes using an encryption key that is stored in a key vault.
-- uid: az_keyvault_key_import
-  name: az keyvault key import
-  summary: Import a private key.
-- uid: az_keyvault_key_list
-  name: az keyvault key list
-  summary: List keys in the specified vault.
-- uid: az_keyvault_key_list_deleted
-  name: az keyvault key list-deleted
-  summary: Lists the deleted keys in the specified vault.
-- uid: az_keyvault_key_list_versions
-  name: az keyvault key list-versions
-  summary: Retrieves a list of individual key versions with the same key name.
-- uid: az_keyvault_key_purge
-  name: az keyvault key purge
-  summary: Permanently deletes the specified key.
-- uid: az_keyvault_key_recover
-  name: az keyvault key recover
-  summary: Recovers the deleted key to its latest version.
-- uid: az_keyvault_key_restore
-  name: az keyvault key restore
-  summary: Restores a backed up key to a vault.
-- uid: az_keyvault_key_set_attributes
-  name: az keyvault key set-attributes
-  summary: The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Azure Key Vault.
-- uid: az_keyvault_key_show
-  name: az keyvault key show
-  summary: Gets the public part of a stored key.
-- uid: az_keyvault_key_show_deleted
-  name: az keyvault key show-deleted
-  summary: Gets the public part of a deleted key.
+- az_keyvault_key_backup
+- az_keyvault_key_create
+- az_keyvault_key_decrypt
+- az_keyvault_key_delete
+- az_keyvault_key_download
+- az_keyvault_key_encrypt
+- az_keyvault_key_import
+- az_keyvault_key_list
+- az_keyvault_key_list_deleted
+- az_keyvault_key_list_versions
+- az_keyvault_key_purge
+- az_keyvault_key_recover
+- az_keyvault_key_restore
+- az_keyvault_key_set_attributes
+- az_keyvault_key_show
+- az_keyvault_key_show_deleted
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -621,10 +578,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/e3dc0e12dbb72be6ccc77d4d94e3a102ebed7c3c/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-updated_at: 6/4/2020 1:53:34 PM
-ms.date: 06/04/2020
-description: Manage keys.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/e3dc0e12dbb72be6ccc77d4d94e3a102ebed7c3c/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+  updated_at: 6/4/2020 1:53:34 PM
+  ms.date: 06/04/2020
+  description: Manage keys.

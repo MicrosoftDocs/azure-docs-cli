@@ -1,69 +1,66 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_group_deployment
-  name: az group deployment
-  summary: Manage Azure Resource Manager deployments.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_group_deployment_cancel
-  - az_group_deployment_create
-  - az_group_deployment_delete
-  - az_group_deployment_export
-  - az_group_deployment_list
-  - az_group_deployment_show
-  - az_group_deployment_validate
-  - az_group_deployment_wait
+### YamlMime:AzureCLIGroup
+uid: az_group_deployment
+name: az group deployment
+summary: Manage Azure Resource Manager deployments.
+description: ''
+directCommands:
 - uid: az_group_deployment_cancel
   name: az group deployment cancel
   summary: Cancels a currently running template deployment.
   description: You can cancel a deployment only if the provisioningState is Accepted or Running. After the deployment is canceled, the provisioningState is set to Canceled. Canceling a template deployment stops the currently running template deployment and leaves the resource group partially deployed.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az group deployment cancel --name
+                               --resource-group
+                               [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The deployment name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_create
   name: az group deployment create
   summary: Start a deployment.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az group deployment create --resource-group
+                               [--aux-subs]
+                               [--aux-tenants]
+                               [--handle-extended-json-format]
+                               [--mode {Complete, Incremental}]
+                               [--name]
+                               [--no-prompt {false, true}]
+                               [--no-wait]
+                               [--parameters]
+                               [--rollback-on-error]
+                               [--subscription]
+                               [--template-file]
+                               [--template-uri]
   examples:
   - summary: Create a deployment from a remote template file, using parameters from a local JSON file.
-    syntax:
-      content: az group deployment create -g MyResourceGroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
+    syntax: az group deployment create -g MyResourceGroup --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
   - summary: Create a deployment from a local template file, using parameters from a JSON string.
-    syntax:
-      content: >-
-        az group deployment create -g MyResourceGroup --template-file azuredeploy.json \
-            --parameters "{ \"location\": { \"value\": \"westus\" } }"
+    syntax: >-
+      az group deployment create -g MyResourceGroup --template-file azuredeploy.json \
+          --parameters "{ \"location\": { \"value\": \"westus\" } }"
   - summary: Create a deployment from a local template, using a local parameter file, a remote parameter file, and selectively overriding key/value pairs.
-    syntax:
-      content: >-
-        az group deployment create -g MyResourceGroup --template-file azuredeploy.json \
-            --parameters @params.json --parameters https://mysite/params.json --parameters MyValue=This MyArray=@array.json
-  parameters:
+    syntax: >-
+      az group deployment create -g MyResourceGroup --template-file azuredeploy.json \
+          --parameters @params.json --parameters https://mysite/params.json --parameters MyValue=This MyArray=@array.json
+  requiredParameters:
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --aux-subs
     summary: Auxiliary subscriptions which will be used during deployment across tenants.
     description: ''
@@ -90,9 +87,12 @@ items:
     description: ''
   - name: --parameters -p
     summary: Supply deployment parameter values.
-    description: Parameters may be supplied from a file using the `@{path}` syntax, a JSON string, or as &lt;KEY=VALUE&gt; pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax.
+    description: Parameters may be supplied from a file using the `@{path}` syntax, a JSON string, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax.
   - name: --rollback-on-error
     summary: The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --template-file -f
     summary: A template file path in the file system.
@@ -100,137 +100,130 @@ items:
   - name: --template-uri -u
     summary: A uri to a remote template file.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_delete
   name: az group deployment delete
   summary: Deletes a deployment from the deployment history.
   description: A template deployment that is currently running cannot be deleted. Deleting a template deployment removes the associated deployment operations. Deleting a template deployment does not affect the state of the resource group. This is an asynchronous operation that returns a status of 202 until the template deployment is successfully deleted. The Location response header contains the URI that is used to obtain the status of the process. While the process is running, a call to the URI in the Location header returns a status of 202. When the process finishes, the URI in the Location header returns a status of 204 on success. If the asynchronous request failed, the URI in the Location header returns an error-level status code.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az group deployment delete --name
+                               --resource-group
+                               [--no-wait]
+                               [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The deployment name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_export
   name: az group deployment export
   summary: Export the template used for a deployment.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az group deployment export --name
+                               --resource-group
+                               [--subscription]
   examples:
   - summary: Export the template used for a deployment. (autogenerated)
-    syntax:
-      content: az group deployment export --name MyDeployment --resource-group MyResourceGroup
-  parameters:
+    syntax: az group deployment export --name MyDeployment --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The deployment name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_list
   name: az group deployment list
   summary: Get all the deployments for a resource group.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az group deployment list --resource-group
+                             [--filter]
+                             [--subscription]
+                             [--top]
+  requiredParameters:
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --filter
     summary: The filter to apply on the operation. For example, you can use $filter=provisioningState eq '{state}'.
-    description: ''
-  - name: --top
-    summary: The number of results to get. If null is passed, returns all deployments.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --top
+    summary: The number of results to get. If null is passed, returns all deployments.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_show
   name: az group deployment show
   summary: Gets a deployment.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az group deployment show --name
+                             --resource-group
+                             [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The deployment name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_validate
   name: az group deployment validate
   summary: Validate whether a template is syntactically correct.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az group deployment validate --resource-group
+                                 [--handle-extended-json-format]
+                                 [--mode {Complete, Incremental}]
+                                 [--no-prompt {false, true}]
+                                 [--parameters]
+                                 [--rollback-on-error]
+                                 [--subscription]
+                                 [--template-file]
+                                 [--template-uri]
   examples:
   - summary: Validate whether a template is syntactically correct. (autogenerated)
-    syntax:
-      content: >-
-        az group deployment validate --parameters "{ \"location\": { \"value\": \"westus\" } }" \
-            --resource-group MyResourceGroup --template-file storage.json
-  parameters:
+    syntax: >-
+      az group deployment validate --parameters "{ \"location\": { \"value\": \"westus\" } }" \
+          --resource-group MyResourceGroup --template-file storage.json
+  requiredParameters:
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --handle-extended-json-format -j
     summary: Support to handle extended template content including multiline and comments in deployment.
     description: ''
@@ -245,9 +238,12 @@ items:
     description: ''
   - name: --parameters -p
     summary: Supply deployment parameter values.
-    description: Parameters may be supplied from a file using the `@{path}` syntax, a JSON string, or as &lt;KEY=VALUE&gt; pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax.
+    description: Parameters may be supplied from a file using the `@{path}` syntax, a JSON string, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax.
   - name: --rollback-on-error
     summary: The name of a deployment to roll back to on error, or use as a flag to roll back to the last successful deployment.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --template-file -f
     summary: A template file path in the file system.
@@ -255,37 +251,37 @@ items:
   - name: --template-uri -u
     summary: A uri to a remote template file.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_deployment_wait
   name: az group deployment wait
   summary: Place the CLI in a waiting state until a deployment condition is met.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az group deployment wait --name
+                             --resource-group
+                             [--created]
+                             [--custom]
+                             [--deleted]
+                             [--exists]
+                             [--interval]
+                             [--subscription]
+                             [--timeout]
+                             [--updated]
   examples:
   - summary: Place the CLI in a waiting state until a deployment condition is met. (autogenerated)
-    syntax:
-      content: az group deployment wait --name MyDeployment --resource-group MyResourceGroup --updated
+    syntax: az group deployment wait --name MyDeployment --resource-group MyResourceGroup --updated
   - summary: Place the CLI in a waiting state until a deployment condition is met. (autogenerated)
-    syntax:
-      content: az group deployment wait --created --name MyDeployment --resource-group MyResourceGroup
-  parameters:
+    syntax: az group deployment wait --created --name MyDeployment --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The deployment name.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
@@ -302,6 +298,9 @@ items:
     defaultValue: "30"
     summary: Polling interval in seconds.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
@@ -309,49 +308,19 @@ items:
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 commands:
-- uid: az_group_deployment_cancel
-  name: az group deployment cancel
-  summary: Cancels a currently running template deployment.
-- uid: az_group_deployment_create
-  name: az group deployment create
-  summary: Start a deployment.
-- uid: az_group_deployment_delete
-  name: az group deployment delete
-  summary: Deletes a deployment from the deployment history.
-- uid: az_group_deployment_export
-  name: az group deployment export
-  summary: Export the template used for a deployment.
-- uid: az_group_deployment_list
-  name: az group deployment list
-  summary: Get all the deployments for a resource group.
-- uid: az_group_deployment_operation
-  name: az group deployment operation
-  summary: Manage deployment operations.
-- uid: az_group_deployment_operation_list
-  name: az group deployment operation list
-  summary: Gets all deployments operations for a deployment.
-- uid: az_group_deployment_operation_show
-  name: az group deployment operation show
-  summary: Get a deployment's operation.
-- uid: az_group_deployment_show
-  name: az group deployment show
-  summary: Gets a deployment.
-- uid: az_group_deployment_validate
-  name: az group deployment validate
-  summary: Validate whether a template is syntactically correct.
-- uid: az_group_deployment_wait
-  name: az group deployment wait
-  summary: Place the CLI in a waiting state until a deployment condition is met.
+- az_group_deployment_cancel
+- az_group_deployment_create
+- az_group_deployment_delete
+- az_group_deployment_export
+- az_group_deployment_list
+- az_group_deployment_operation
+- az_group_deployment_operation_list
+- az_group_deployment_operation_show
+- az_group_deployment_show
+- az_group_deployment_validate
+- az_group_deployment_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -367,10 +336,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/resource/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/17064a23dc9885db8c851747c2be6c8ff4aa595f/src/azure-cli/azure/cli/command_modules/resource/_help.py
-updated_at: 6/16/2020 5:44:37 AM
-ms.date: 06/16/2020
-description: Manage Azure Resource Manager deployments.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/17064a23dc9885db8c851747c2be6c8ff4aa595f/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  updated_at: 6/16/2020 5:44:37 AM
+  ms.date: 06/16/2020
+  description: Manage Azure Resource Manager deployments.

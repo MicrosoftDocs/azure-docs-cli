@@ -1,62 +1,61 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_azure-devops_az_pipelines
-  name: az pipelines
-  summary: Manage Azure Pipelines.
-  description: This command group is a part of the azure-devops extension.
-  langs:
-  - azurecli
-  children:
-  - ext_azure-devops_az_pipelines_create
-  - ext_azure-devops_az_pipelines_delete
-  - ext_azure-devops_az_pipelines_list
-  - ext_azure-devops_az_pipelines_run
-  - ext_azure-devops_az_pipelines_show
-  - ext_azure-devops_az_pipelines_update
+### YamlMime:AzureCLIGroup
+uid: ext_azure-devops_az_pipelines
+name: az pipelines
+summary: Manage Azure Pipelines.
+description: This command group is a part of the azure-devops extension.
+directCommands:
 - uid: ext_azure-devops_az_pipelines_create
   name: az pipelines create
   summary: Create a new Azure Pipeline (YAML based).
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az pipelines create --name
+                        [--branch]
+                        [--description]
+                        [--detect {false, true}]
+                        [--folder-path]
+                        [--org]
+                        [--project]
+                        [--queue-id]
+                        [--repository]
+                        [--repository-type {github, tfsgit}]
+                        [--service-connection]
+                        [--skip-first-run {false, true}]
+                        [--yaml-path]
   examples:
   - summary: Create an Azure Pipeline from local checkout repository context
-    syntax:
-      content: >-
-        Repository name/url (--repository), type (--repository-type) and branch name (--branch) will be detected from the local git repository
+    syntax: >-
+      Repository name/url (--repository), type (--repository-type) and branch name (--branch) will be detected from the local git repository
 
-        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+      az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
   - summary: Create an Azure Pipeline for a repository hosted on Github using clone url
-    syntax:
-      content: >-
-        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+    syntax: >-
+      az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
 
-        --repository https://github.com/SampleOrg/SampleRepo --branch master
+      --repository https://github.com/SampleOrg/SampleRepo --branch master
   - summary: Create an Azure Pipeline for a repository hosted on Github organization SampleOrg, repository name SampleRepo
-    syntax:
-      content: >-
-        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+    syntax: >-
+      az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
 
-        --repository SampleOrg/SampleRepoName --branch master --repository-type github
+      --repository SampleOrg/SampleRepoName --branch master --repository-type github
   - summary: Create an Azure Pipeline for a repository hosted in a Azure Repo in the same project
-    syntax:
-      content: >-
-        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+    syntax: >-
+      az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
 
-        --repository SampleRepoName --branch master --repository-type tfsgit
+      --repository SampleRepoName --branch master --repository-type tfsgit
   - summary: Create an Azure Pipeline for a repository with the pipeline yaml already checked in into the repository
-    syntax:
-      content: >-
-        Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
+    syntax: >-
+      Service connection required for non Azure Repos can be optionally provided in the command to run it non interatively
 
-        az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
+      az pipelines create --name 'ContosoBuild' --description 'Pipeline for contoso project'
 
-        --repository https://github.com/SampleOrg/SampleRepo --branch master --yml-path azure-pipelines.yml [--service-connection SERVICE_CONNECTION]
-  parameters:
+      --repository https://github.com/SampleOrg/SampleRepo --branch master --yml-path azure-pipelines.yml [--service-connection SERVICE_CONNECTION]
+  requiredParameters:
   - isRequired: true
     name: --name
     summary: Name of the new pipeline.
     description: ''
+  optionalParameters:
   - name: --branch
     summary: Branch name for which the pipeline will be configured. If omitted, it will be auto-detected from local repository.
     description: ''
@@ -100,13 +99,18 @@ items:
   name: az pipelines delete
   summary: Delete a pipeline.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az pipelines delete --id
+                        [--detect {false, true}]
+                        [--org]
+                        [--project]
+                        [--yes]
+  requiredParameters:
   - isRequired: true
     name: --id
     summary: ID of the pipeline.
     description: ''
+  optionalParameters:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
@@ -124,9 +128,17 @@ items:
   name: az pipelines list
   summary: List pipelines.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az pipelines list [--detect {false, true}]
+                      [--folder-path]
+                      [--name]
+                      [--org]
+                      [--project]
+                      [--query-order {ModifiedAsc, ModifiedDesc, NameAsc, NameDesc, None}]
+                      [--repository]
+                      [--repository-type {bitbucket, git, github, githubenterprise, svn, tfsgit, tfsversioncontrol}]
+                      [--top]
+  optionalParameters:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
@@ -161,9 +173,18 @@ items:
   name: az pipelines run
   summary: Queue (run) a pipeline.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az pipelines run [--branch]
+                     [--commit-id]
+                     [--detect {false, true}]
+                     [--folder-path]
+                     [--id]
+                     [--name]
+                     [--open]
+                     [--org]
+                     [--project]
+                     [--variables]
+  optionalParameters:
   - name: --branch
     summary: 'Name of the branch on which the pipeline run is to be queued. Example: refs/heads/master or master or refs/pull/1/merge.'
     description: ''
@@ -199,9 +220,15 @@ items:
   name: az pipelines show
   summary: Get the details of a pipeline.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az pipelines show [--detect {false, true}]
+                      [--folder-path]
+                      [--id]
+                      [--name]
+                      [--open]
+                      [--org]
+                      [--project]
+  optionalParameters:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
@@ -228,9 +255,19 @@ items:
   name: az pipelines update
   summary: Update a pipeline.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az pipelines update [--branch]
+                        [--description]
+                        [--detect {false, true}]
+                        [--id]
+                        [--name]
+                        [--new-folder-path]
+                        [--new-name]
+                        [--org]
+                        [--project]
+                        [--queue-id]
+                        [--yaml-path]
+  optionalParameters:
   - name: --branch
     summary: Branch name for which the pipeline will be configured.
     description: ''
@@ -266,201 +303,71 @@ items:
     summary: Path of the pipelines yaml file in the repo.
     description: ''
 commands:
-- uid: ext_azure-devops_az_pipelines_agent
-  name: az pipelines agent
-  summary: Manage agents.
-- uid: ext_azure-devops_az_pipelines_agent_list
-  name: az pipelines agent list
-  summary: Get a list of agents in a pool.
-- uid: ext_azure-devops_az_pipelines_agent_show
-  name: az pipelines agent show
-  summary: Show agent details.
-- uid: ext_azure-devops_az_pipelines_build
-  name: az pipelines build
-  summary: Manage builds.
-- uid: ext_azure-devops_az_pipelines_build_definition
-  name: az pipelines build definition
-  summary: Manage build definitions.
-- uid: ext_azure-devops_az_pipelines_build_definition_list
-  name: az pipelines build definition list
-  summary: List build definitions.
-- uid: ext_azure-devops_az_pipelines_build_definition_show
-  name: az pipelines build definition show
-  summary: Get the details of a build definition.
-- uid: ext_azure-devops_az_pipelines_build_list
-  name: az pipelines build list
-  summary: List build results.
-- uid: ext_azure-devops_az_pipelines_build_queue
-  name: az pipelines build queue
-  summary: Request (queue) a build.
-- uid: ext_azure-devops_az_pipelines_build_show
-  name: az pipelines build show
-  summary: Get the details of a build.
-- uid: ext_azure-devops_az_pipelines_build_tag
-  name: az pipelines build tag
-  summary: Manage build tags.
-- uid: ext_azure-devops_az_pipelines_build_tag_add
-  name: az pipelines build tag add
-  summary: Add tag(s) for a build.
-- uid: ext_azure-devops_az_pipelines_build_tag_delete
-  name: az pipelines build tag delete
-  summary: Delete a build tag.
-- uid: ext_azure-devops_az_pipelines_build_tag_list
-  name: az pipelines build tag list
-  summary: Get tags for a build.
-- uid: ext_azure-devops_az_pipelines_create
-  name: az pipelines create
-  summary: Create a new Azure Pipeline (YAML based).
-- uid: ext_azure-devops_az_pipelines_delete
-  name: az pipelines delete
-  summary: Delete a pipeline.
-- uid: ext_azure-devops_az_pipelines_folder
-  name: az pipelines folder
-  summary: Manage folders for organizing pipelines.
-- uid: ext_azure-devops_az_pipelines_folder_create
-  name: az pipelines folder create
-  summary: Create a folder.
-- uid: ext_azure-devops_az_pipelines_folder_delete
-  name: az pipelines folder delete
-  summary: Delete a folder.
-- uid: ext_azure-devops_az_pipelines_folder_list
-  name: az pipelines folder list
-  summary: List all folders.
-- uid: ext_azure-devops_az_pipelines_folder_update
-  name: az pipelines folder update
-  summary: Update a folder name or description.
-- uid: ext_azure-devops_az_pipelines_list
-  name: az pipelines list
-  summary: List pipelines.
-- uid: ext_azure-devops_az_pipelines_pool
-  name: az pipelines pool
-  summary: Manage agent pools.
-- uid: ext_azure-devops_az_pipelines_pool_list
-  name: az pipelines pool list
-  summary: List agent pools.
-- uid: ext_azure-devops_az_pipelines_pool_show
-  name: az pipelines pool show
-  summary: Show agent pool details.
-- uid: ext_azure-devops_az_pipelines_queue
-  name: az pipelines queue
-  summary: Manage agent queues.
-- uid: ext_azure-devops_az_pipelines_queue_list
-  name: az pipelines queue list
-  summary: List agent queues.
-- uid: ext_azure-devops_az_pipelines_queue_show
-  name: az pipelines queue show
-  summary: Show details of agent queue.
-- uid: ext_azure-devops_az_pipelines_release
-  name: az pipelines release
-  summary: Manage releases.
-- uid: ext_azure-devops_az_pipelines_release_create
-  name: az pipelines release create
-  summary: Request (create) a release.
-- uid: ext_azure-devops_az_pipelines_release_definition
-  name: az pipelines release definition
-  summary: Manage release definitions.
-- uid: ext_azure-devops_az_pipelines_release_definition_list
-  name: az pipelines release definition list
-  summary: List release definitions.
-- uid: ext_azure-devops_az_pipelines_release_definition_show
-  name: az pipelines release definition show
-  summary: Get the details of a release definition.
-- uid: ext_azure-devops_az_pipelines_release_list
-  name: az pipelines release list
-  summary: List release results.
-- uid: ext_azure-devops_az_pipelines_release_show
-  name: az pipelines release show
-  summary: Get the details of a release.
-- uid: ext_azure-devops_az_pipelines_run
-  name: az pipelines run
-  summary: Queue (run) a pipeline.
-- uid: ext_azure-devops_az_pipelines_runs
-  name: az pipelines runs
-  summary: Manage pipeline runs.
-- uid: ext_azure-devops_az_pipelines_runs_artifact
-  name: az pipelines runs artifact
-  summary: Manage pipeline run artifacts.
-- uid: ext_azure-devops_az_pipelines_runs_artifact_download
-  name: az pipelines runs artifact download
-  summary: Download a pipeline artifact.
-- uid: ext_azure-devops_az_pipelines_runs_artifact_list
-  name: az pipelines runs artifact list
-  summary: List artifacts associated with a run.
-- uid: ext_azure-devops_az_pipelines_runs_artifact_upload
-  name: az pipelines runs artifact upload
-  summary: Upload a pipeline artifact.
-- uid: ext_azure-devops_az_pipelines_runs_list
-  name: az pipelines runs list
-  summary: List the pipeline runs in a project.
-- uid: ext_azure-devops_az_pipelines_runs_show
-  name: az pipelines runs show
-  summary: Show details of a pipeline run.
-- uid: ext_azure-devops_az_pipelines_runs_tag
-  name: az pipelines runs tag
-  summary: Manage pipeline run tags.
-- uid: ext_azure-devops_az_pipelines_runs_tag_add
-  name: az pipelines runs tag add
-  summary: Add tag(s) for a pipeline run.
-- uid: ext_azure-devops_az_pipelines_runs_tag_delete
-  name: az pipelines runs tag delete
-  summary: Delete a pipeline run tag.
-- uid: ext_azure-devops_az_pipelines_runs_tag_list
-  name: az pipelines runs tag list
-  summary: Get tags for a pipeline run.
-- uid: ext_azure-devops_az_pipelines_show
-  name: az pipelines show
-  summary: Get the details of a pipeline.
-- uid: ext_azure-devops_az_pipelines_update
-  name: az pipelines update
-  summary: Update a pipeline.
-- uid: ext_azure-devops_az_pipelines_variable
-  name: az pipelines variable
-  summary: Manage pipeline variables.
-- uid: ext_azure-devops_az_pipelines_variable_create
-  name: az pipelines variable create
-  summary: Add a variable to a pipeline.
-- uid: ext_azure-devops_az_pipelines_variable_delete
-  name: az pipelines variable delete
-  summary: Delete a variable from pipeline.
-- uid: ext_azure-devops_az_pipelines_variable_list
-  name: az pipelines variable list
-  summary: List the variables in a pipeline.
-- uid: ext_azure-devops_az_pipelines_variable_update
-  name: az pipelines variable update
-  summary: Update a variable in a pipeline.
-- uid: ext_azure-devops_az_pipelines_variable_group
-  name: az pipelines variable-group
-  summary: Manage variable groups.
-- uid: ext_azure-devops_az_pipelines_variable_group_create
-  name: az pipelines variable-group create
-  summary: Create a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_delete
-  name: az pipelines variable-group delete
-  summary: Delete a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_list
-  name: az pipelines variable-group list
-  summary: List variable groups.
-- uid: ext_azure-devops_az_pipelines_variable_group_show
-  name: az pipelines variable-group show
-  summary: Show variable group details.
-- uid: ext_azure-devops_az_pipelines_variable_group_update
-  name: az pipelines variable-group update
-  summary: Update a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_variable
-  name: az pipelines variable-group variable
-  summary: Manage variables in a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_variable_create
-  name: az pipelines variable-group variable create
-  summary: Add a variable to a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_variable_delete
-  name: az pipelines variable-group variable delete
-  summary: Delete a variable from variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_variable_list
-  name: az pipelines variable-group variable list
-  summary: List the variables in a variable group.
-- uid: ext_azure-devops_az_pipelines_variable_group_variable_update
-  name: az pipelines variable-group variable update
-  summary: Update a variable in a variable group.
+- ext_azure-devops_az_pipelines_agent
+- ext_azure-devops_az_pipelines_agent_list
+- ext_azure-devops_az_pipelines_agent_show
+- ext_azure-devops_az_pipelines_build
+- ext_azure-devops_az_pipelines_build_definition
+- ext_azure-devops_az_pipelines_build_definition_list
+- ext_azure-devops_az_pipelines_build_definition_show
+- ext_azure-devops_az_pipelines_build_list
+- ext_azure-devops_az_pipelines_build_queue
+- ext_azure-devops_az_pipelines_build_show
+- ext_azure-devops_az_pipelines_build_tag
+- ext_azure-devops_az_pipelines_build_tag_add
+- ext_azure-devops_az_pipelines_build_tag_delete
+- ext_azure-devops_az_pipelines_build_tag_list
+- ext_azure-devops_az_pipelines_create
+- ext_azure-devops_az_pipelines_delete
+- ext_azure-devops_az_pipelines_folder
+- ext_azure-devops_az_pipelines_folder_create
+- ext_azure-devops_az_pipelines_folder_delete
+- ext_azure-devops_az_pipelines_folder_list
+- ext_azure-devops_az_pipelines_folder_update
+- ext_azure-devops_az_pipelines_list
+- ext_azure-devops_az_pipelines_pool
+- ext_azure-devops_az_pipelines_pool_list
+- ext_azure-devops_az_pipelines_pool_show
+- ext_azure-devops_az_pipelines_queue
+- ext_azure-devops_az_pipelines_queue_list
+- ext_azure-devops_az_pipelines_queue_show
+- ext_azure-devops_az_pipelines_release
+- ext_azure-devops_az_pipelines_release_create
+- ext_azure-devops_az_pipelines_release_definition
+- ext_azure-devops_az_pipelines_release_definition_list
+- ext_azure-devops_az_pipelines_release_definition_show
+- ext_azure-devops_az_pipelines_release_list
+- ext_azure-devops_az_pipelines_release_show
+- ext_azure-devops_az_pipelines_run
+- ext_azure-devops_az_pipelines_runs
+- ext_azure-devops_az_pipelines_runs_artifact
+- ext_azure-devops_az_pipelines_runs_artifact_download
+- ext_azure-devops_az_pipelines_runs_artifact_list
+- ext_azure-devops_az_pipelines_runs_artifact_upload
+- ext_azure-devops_az_pipelines_runs_list
+- ext_azure-devops_az_pipelines_runs_show
+- ext_azure-devops_az_pipelines_runs_tag
+- ext_azure-devops_az_pipelines_runs_tag_add
+- ext_azure-devops_az_pipelines_runs_tag_delete
+- ext_azure-devops_az_pipelines_runs_tag_list
+- ext_azure-devops_az_pipelines_show
+- ext_azure-devops_az_pipelines_update
+- ext_azure-devops_az_pipelines_variable
+- ext_azure-devops_az_pipelines_variable_create
+- ext_azure-devops_az_pipelines_variable_delete
+- ext_azure-devops_az_pipelines_variable_list
+- ext_azure-devops_az_pipelines_variable_update
+- ext_azure-devops_az_pipelines_variable_group
+- ext_azure-devops_az_pipelines_variable_group_create
+- ext_azure-devops_az_pipelines_variable_group_delete
+- ext_azure-devops_az_pipelines_variable_group_list
+- ext_azure-devops_az_pipelines_variable_group_show
+- ext_azure-devops_az_pipelines_variable_group_update
+- ext_azure-devops_az_pipelines_variable_group_variable
+- ext_azure-devops_az_pipelines_variable_group_variable_create
+- ext_azure-devops_az_pipelines_variable_group_variable_delete
+- ext_azure-devops_az_pipelines_variable_group_variable_list
+- ext_azure-devops_az_pipelines_variable_group_variable_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -476,4 +383,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: This command group is a part of the azure-devops extension.
+metadata:
+  description: This command group is a part of the azure-devops extension.

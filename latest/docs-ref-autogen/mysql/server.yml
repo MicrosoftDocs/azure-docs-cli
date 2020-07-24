@@ -1,53 +1,65 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_mysql_server
-  name: az mysql server
-  summary: Manage MySQL servers.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_mysql_server_create
-  - az_mysql_server_delete
-  - az_mysql_server_georestore
-  - az_mysql_server_list
-  - az_mysql_server_restart
-  - az_mysql_server_restore
-  - az_mysql_server_show
-  - az_mysql_server_update
-  - az_mysql_server_wait
+### YamlMime:AzureCLIGroup
+uid: az_mysql_server
+name: az mysql server
+summary: Manage MySQL servers.
+description: ''
+directCommands:
 - uid: az_mysql_server_create
   name: az mysql server create
   summary: Create a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server create --admin-password
+                           --admin-user
+                           --name
+                           --resource-group
+                           --sku-name
+                           [--assign-identity]
+                           [--auto-grow {Disabled, Enabled}]
+                           [--backup-retention]
+                           [--geo-redundant-backup {Disabled, Enabled}]
+                           [--infrastructure-encryption {Disabled, Enabled}]
+                           [--location]
+                           [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
+                           [--public-network-access {Disabled, Enabled}]
+                           [--ssl-enforcement {Disabled, Enabled}]
+                           [--storage-size]
+                           [--subscription]
+                           [--tags]
+                           [--version]
   examples:
   - summary: Create a MySQL server in North Europe with sku GP_Gen5_2 (General Purpose, Gen 5 hardware, 2 vCores).
-    syntax:
-      content: >-
-        az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password \
-            --sku-name GP_Gen5_2
+    syntax: >-
+      az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name GP_Gen5_2
   - summary: Create a MySQL server with all paramaters set.
-    syntax:
-      content: >-
-        az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password \
-            --sku-name B_Gen5_1 --ssl-enforcement Enabled --minimal-tls-version TLS1_0 --public-network-access Disabled \
-            --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
-            --tags "key=value" --version 5.7
-  parameters:
+    syntax: >-
+      az mysql server create -l northeurope -g testgroup -n testsvr -u username -p password \
+          --sku-name B_Gen5_1 --ssl-enforcement Enabled --minimal-tls-version TLS1_0 --public-network-access Disabled \
+          --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
+          --tags "key=value" --version 5.7
+  requiredParameters:
+  - isRequired: true
+    name: --admin-password -p
+    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
+    description: ''
+  - isRequired: true
+    name: --admin-user -u
+    summary: Administrator username for the server. Once set, it cannot be changed.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
+  optionalParameters:
   - name: --assign-identity
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
     description: ''
@@ -68,7 +80,7 @@ items:
     summary: Add an optional second layer of encryption for data using new encryption algorithm. Default value is Disabled.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --minimal-tls-version
     parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
@@ -85,37 +97,29 @@ items:
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --version
     summary: Server major version.
     description: ''
-  - isRequired: true
-    name: --admin-password -p
-    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
-    description: ''
-  - isRequired: true
-    name: --admin-user -u
-    summary: Administrator username for the server. Once set, it cannot be changed.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mysql_server_delete
   name: az mysql server delete
   summary: Delete a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server delete [--ids]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
+                           [--yes]
   examples:
   - summary: Delete a server.
-    syntax:
-      content: az mysql server delete -g testgroup -n testsvr
-  parameters:
-  - name: --yes -y
-    summary: Do not prompt for confirmation.
-    description: ''
+    syntax: az mysql server delete -g testgroup -n testsvr
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -123,59 +127,69 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_mysql_server_georestore
   name: az mysql server georestore
   summary: Geo-restore a server from backup.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server georestore --location
+                               --source-server
+                               [--backup-retention]
+                               [--geo-redundant-backup]
+                               [--ids]
+                               [--name]
+                               [--no-wait]
+                               [--resource-group]
+                               [--sku-name]
+                               [--subscription]
   examples:
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
-    syntax:
-      content: az mysql server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
+    syntax: az mysql server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2 with sku GP_Gen5_2.
-    syntax:
-      content: az mysql server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
+    syntax: az mysql server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2 --sku-name GP_Gen5_2
   - summary: Geo-restore 'testsvr2' into a new server 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
-    syntax:
-      content: >-
-        az mysql server georestore -g testgroup -n testsvrnew \
-            -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMySQL/servers/testsvr2" \
-            -l westus2
-  parameters:
+    syntax: >-
+      az mysql server georestore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMySQL/servers/testsvr2" \
+          -l westus2
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --source-server -s
     summary: The name or ID of the source server to restore from.
     description: ''
+  optionalParameters:
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --geo-redundant-backup
     summary: Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --sku-name
-    summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
-    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sku-name
+    summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -184,18 +198,17 @@ items:
   name: az mysql server list
   summary: List available servers.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server list [--resource-group]
+                         [--subscription]
   examples:
   - summary: List all MySQL servers in a subscription.
-    syntax:
-      content: az mysql server list
+    syntax: az mysql server list
   - summary: List all MySQL servers in a resource group.
-    syntax:
-      content: az mysql server list -g testgroup
-  parameters:
+    syntax: az mysql server list -g testgroup
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -204,16 +217,17 @@ items:
   name: az mysql server restart
   summary: Restart a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server restart [--ids]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
   examples:
   - summary: Restart a server.
-    syntax:
-      content: az mysql server restart -g testgroup -n testsvr
+    syntax: az mysql server restart -g testgroup -n testsvr
   - summary: Restart a server. (autogenerated)
-    syntax:
-      content: az mysql server restart --name testsvr --resource-group testgroup --subscription MySubscription
-  parameters:
+    syntax: az mysql server restart --name testsvr --resource-group testgroup --subscription MySubscription
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -221,7 +235,7 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -230,19 +244,23 @@ items:
   name: az mysql server restore
   summary: Restore a server from backup.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server restore --restore-point-in-time
+                            --source-server
+                            [--ids]
+                            [--name]
+                            [--no-wait]
+                            [--resource-group]
+                            [--subscription]
   examples:
   - summary: Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
-    syntax:
-      content: az mysql server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
+    syntax: az mysql server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
   - summary: Restore 'testsvr2' to 'testsvrnew', where 'testsvrnew' is in a different resource group from 'testsvr2'.
-    syntax:
-      content: >-
-        az mysql server restore -g testgroup -n testsvrnew \
-            -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMySQL/servers/testsvr2" \
-            --restore-point-in-time "2017-06-15T13:10:00Z"
-  parameters:
+    syntax: >-
+      az mysql server restore -g testgroup -n testsvrnew \
+          -s "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforMySQL/servers/testsvr2" \
+          --restore-point-in-time "2017-06-15T13:10:00Z"
+  requiredParameters:
   - isRequired: true
     name: --restore-point-in-time
     summary: The point in time to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+08:00.
@@ -251,17 +269,18 @@ items:
     name: --source-server -s
     summary: The name or resource ID of the source server to restore from.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -270,13 +289,15 @@ items:
   name: az mysql server show
   summary: Get the details of a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server show [--ids]
+                         [--name]
+                         [--resource-group]
+                         [--subscription]
   examples:
   - summary: Get the details of a server
-    syntax:
-      content: az mysql server show --name MyServer --resource-group MyResourceGroup
-  parameters:
+    syntax: az mysql server show --name MyServer --resource-group MyResourceGroup
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -284,7 +305,7 @@ items:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -293,19 +314,36 @@ items:
   name: az mysql server update
   summary: Update a server.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server update [--add]
+                           [--admin-password]
+                           [--assign-identity]
+                           [--auto-grow {Disabled, Enabled}]
+                           [--backup-retention]
+                           [--force-string]
+                           [--ids]
+                           [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
+                           [--name]
+                           [--public-network-access {Disabled, Enabled}]
+                           [--remove]
+                           [--resource-group]
+                           [--set]
+                           [--sku-name]
+                           [--ssl-enforcement {Disabled, Enabled}]
+                           [--storage-size]
+                           [--subscription]
+                           [--tags]
   examples:
   - summary: Update a server's sku.
-    syntax:
-      content: az mysql server update -g testgroup -n testsvrnew --sku-name GP_Gen5_4
+    syntax: az mysql server update -g testgroup -n testsvrnew --sku-name GP_Gen5_4
   - summary: Update a server's tags.
-    syntax:
-      content: az mysql server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
+    syntax: az mysql server update -g testgroup -n testsvrnew --tags "k1=v1" "k2=v2"
   - summary: Update a server. (autogenerated)
-    syntax:
-      content: az mysql server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled --minimal-tls-version TLS1_0
-  parameters:
+    syntax: az mysql server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled --minimal-tls-version TLS1_0
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
   - name: --admin-password -p
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
@@ -319,13 +357,31 @@ items:
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --minimal-tls-version
     parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
     summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
     description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
     summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
@@ -337,212 +393,103 @@ items:
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --force-string
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 - uid: az_mysql_server_wait
   name: az mysql server wait
   summary: Wait for server to satisfy certain conditions.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az mysql server wait [--custom]
+                         [--exists]
+                         [--ids]
+                         [--interval]
+                         [--name]
+                         [--resource-group]
+                         [--subscription]
+                         [--timeout]
   examples:
   - summary: Wait for server to satisfy certain conditions. (autogenerated)
-    syntax:
-      content: az mysql server wait --exists --name MyServer --resource-group MyResourceGroup
-  parameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+    syntax: az mysql server wait --exists --name MyServer --resource-group MyResourceGroup
+  optionalParameters:
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --exists
     summary: Wait until the resource exists.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
 commands:
-- uid: az_mysql_server_ad_admin
-  name: az mysql server ad-admin
-  summary: Manage a MySQL server's Active Directory administrator.
-- uid: az_mysql_server_ad_admin_create
-  name: az mysql server ad-admin create
-  summary: Create an Active Directory administrator for MySQL server.
-- uid: az_mysql_server_ad_admin_delete
-  name: az mysql server ad-admin delete
-  summary: Delete an Active Directory Administrator for MySQL server.
-- uid: az_mysql_server_ad_admin_list
-  name: az mysql server ad-admin list
-  summary: List all Active Directory Administrators for MySQL server.
-- uid: az_mysql_server_ad_admin_show
-  name: az mysql server ad-admin show
-  summary: Get Active Directory Administrator information for a MySQL server.
-- uid: az_mysql_server_ad_admin_wait
-  name: az mysql server ad-admin wait
-  summary: Place the CLI in a waiting state until a condition of the MySQL server Active Directory Administrator is met.
-- uid: az_mysql_server_configuration
-  name: az mysql server configuration
-  summary: Manage configuration values for a server.
-- uid: az_mysql_server_configuration_list
-  name: az mysql server configuration list
-  summary: List the configuration values for a server.
-- uid: az_mysql_server_configuration_set
-  name: az mysql server configuration set
-  summary: Update the configuration of a server.
-- uid: az_mysql_server_configuration_show
-  name: az mysql server configuration show
-  summary: Get the configuration for a server.".
-- uid: az_mysql_server_create
-  name: az mysql server create
-  summary: Create a server.
-- uid: az_mysql_server_delete
-  name: az mysql server delete
-  summary: Delete a server.
-- uid: az_mysql_server_firewall_rule
-  name: az mysql server firewall-rule
-  summary: Manage firewall rules for a server.
-- uid: az_mysql_server_firewall_rule_create
-  name: az mysql server firewall-rule create
-  summary: Create a new firewall rule for a server.
-- uid: az_mysql_server_firewall_rule_delete
-  name: az mysql server firewall-rule delete
-  summary: Delete a firewall rule.
-- uid: az_mysql_server_firewall_rule_list
-  name: az mysql server firewall-rule list
-  summary: List all firewall rules for a server.
-- uid: az_mysql_server_firewall_rule_show
-  name: az mysql server firewall-rule show
-  summary: Get the details of a firewall rule.
-- uid: az_mysql_server_firewall_rule_update
-  name: az mysql server firewall-rule update
-  summary: Update a firewall rule.
-- uid: az_mysql_server_georestore
-  name: az mysql server georestore
-  summary: Geo-restore a server from backup.
-- uid: az_mysql_server_key
-  name: az mysql server key
-  summary: Manage MySQL server keys.
-- uid: az_mysql_server_key_create
-  name: az mysql server key create
-  summary: Create server key.
-- uid: az_mysql_server_key_delete
-  name: az mysql server key delete
-  summary: Delete server key.
-- uid: az_mysql_server_key_list
-  name: az mysql server key list
-  summary: Gets a list of  Server keys.
-- uid: az_mysql_server_key_show
-  name: az mysql server key show
-  summary: Show server key.
-- uid: az_mysql_server_list
-  name: az mysql server list
-  summary: List available servers.
-- uid: az_mysql_server_private_endpoint_connection
-  name: az mysql server private-endpoint-connection
-  summary: Manage MySQL server private endpoint connections.
-- uid: az_mysql_server_private_endpoint_connection_approve
-  name: az mysql server private-endpoint-connection approve
-  summary: Approve the specified private endpoint connection associated with a MySQL server.
-- uid: az_mysql_server_private_endpoint_connection_delete
-  name: az mysql server private-endpoint-connection delete
-  summary: Delete the specified private endpoint connection associated with a MySQL server.
-- uid: az_mysql_server_private_endpoint_connection_reject
-  name: az mysql server private-endpoint-connection reject
-  summary: Reject the specified private endpoint connection associated with a MySQL server.
-- uid: az_mysql_server_private_endpoint_connection_show
-  name: az mysql server private-endpoint-connection show
-  summary: Show details of a private endpoint connection associated with a MySQL server.
-- uid: az_mysql_server_private_link_resource
-  name: az mysql server private-link-resource
-  summary: Manage MySQL server private link resources.
-- uid: az_mysql_server_private_link_resource_list
-  name: az mysql server private-link-resource list
-  summary: List the private link resources supported for a MySQL server.
-- uid: az_mysql_server_replica
-  name: az mysql server replica
-  summary: Manage read replicas.
-- uid: az_mysql_server_replica_create
-  name: az mysql server replica create
-  summary: Create a read replica for a server.
-- uid: az_mysql_server_replica_list
-  name: az mysql server replica list
-  summary: List all read replicas for a given server.
-- uid: az_mysql_server_replica_stop
-  name: az mysql server replica stop
-  summary: Stop replication to a read replica and make it a read/write server.
-- uid: az_mysql_server_restart
-  name: az mysql server restart
-  summary: Restart a server.
-- uid: az_mysql_server_restore
-  name: az mysql server restore
-  summary: Restore a server from backup.
-- uid: az_mysql_server_show
-  name: az mysql server show
-  summary: Get the details of a server.
-- uid: az_mysql_server_update
-  name: az mysql server update
-  summary: Update a server.
-- uid: az_mysql_server_vnet_rule
-  name: az mysql server vnet-rule
-  summary: Manage a server's virtual network rules.
-- uid: az_mysql_server_vnet_rule_create
-  name: az mysql server vnet-rule create
-  summary: Create a virtual network rule to allows access to a MySQL server.
-- uid: az_mysql_server_vnet_rule_delete
-  name: az mysql server vnet-rule delete
-  summary: Deletes the virtual network rule with the given name.
-- uid: az_mysql_server_vnet_rule_list
-  name: az mysql server vnet-rule list
-  summary: Gets a list of virtual network rules in a server.
-- uid: az_mysql_server_vnet_rule_show
-  name: az mysql server vnet-rule show
-  summary: Gets a virtual network rule.
-- uid: az_mysql_server_vnet_rule_update
-  name: az mysql server vnet-rule update
-  summary: Update a virtual network rule.
-- uid: az_mysql_server_wait
-  name: az mysql server wait
-  summary: Wait for server to satisfy certain conditions.
+- az_mysql_server_ad_admin
+- az_mysql_server_ad_admin_create
+- az_mysql_server_ad_admin_delete
+- az_mysql_server_ad_admin_list
+- az_mysql_server_ad_admin_show
+- az_mysql_server_ad_admin_wait
+- az_mysql_server_configuration
+- az_mysql_server_configuration_list
+- az_mysql_server_configuration_set
+- az_mysql_server_configuration_show
+- az_mysql_server_create
+- az_mysql_server_delete
+- az_mysql_server_firewall_rule
+- az_mysql_server_firewall_rule_create
+- az_mysql_server_firewall_rule_delete
+- az_mysql_server_firewall_rule_list
+- az_mysql_server_firewall_rule_show
+- az_mysql_server_firewall_rule_update
+- az_mysql_server_georestore
+- az_mysql_server_key
+- az_mysql_server_key_create
+- az_mysql_server_key_delete
+- az_mysql_server_key_list
+- az_mysql_server_key_show
+- az_mysql_server_list
+- az_mysql_server_private_endpoint_connection
+- az_mysql_server_private_endpoint_connection_approve
+- az_mysql_server_private_endpoint_connection_delete
+- az_mysql_server_private_endpoint_connection_reject
+- az_mysql_server_private_endpoint_connection_show
+- az_mysql_server_private_link_resource
+- az_mysql_server_private_link_resource_list
+- az_mysql_server_replica
+- az_mysql_server_replica_create
+- az_mysql_server_replica_list
+- az_mysql_server_replica_stop
+- az_mysql_server_restart
+- az_mysql_server_restore
+- az_mysql_server_show
+- az_mysql_server_update
+- az_mysql_server_vnet_rule
+- az_mysql_server_vnet_rule_create
+- az_mysql_server_vnet_rule_delete
+- az_mysql_server_vnet_rule_list
+- az_mysql_server_vnet_rule_show
+- az_mysql_server_vnet_rule_update
+- az_mysql_server_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -558,4 +505,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage MySQL servers.
+metadata:
+  description: Manage MySQL servers.

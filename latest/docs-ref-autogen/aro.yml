@@ -1,36 +1,45 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_aro
-  name: az aro
-  summary: Manage Azure Red Hat OpenShift clusters.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_aro_create
-  - az_aro_delete
-  - az_aro_list
-  - az_aro_list_credentials
-  - az_aro_show
-  - az_aro_update
-  - az_aro_wait
+### YamlMime:AzureCLIGroup
+uid: az_aro
+name: az aro
+summary: Manage Azure Red Hat OpenShift clusters.
+description: ''
+directCommands:
 - uid: az_aro_create
   name: az aro create
   summary: Create a cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro create --master-subnet
+                  --name
+                  --resource-group
+                  --worker-subnet
+                  [--apiserver-visibility {Private, Public}]
+                  [--client-id]
+                  [--client-secret]
+                  [--cluster-resource-group]
+                  [--domain]
+                  [--ingress-visibility {Private, Public}]
+                  [--location]
+                  [--master-vm-size]
+                  [--no-wait]
+                  [--pod-cidr]
+                  [--pull-secret]
+                  [--service-cidr]
+                  [--subscription]
+                  [--tags]
+                  [--vnet]
+                  [--vnet-resource-group]
+                  [--worker-count]
+                  [--worker-vm-disk-size-gb]
+                  [--worker-vm-size]
   examples:
   - summary: Create an OpenShift cluster
-    syntax:
-      content: az aro create --resource-group MyResourceGroup --name MyCluster  --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet
+    syntax: az aro create --resource-group MyResourceGroup --name MyCluster  --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet
   - summary: Create an OpenShift cluster with 5 compute nodes and Red Hat Pull Secret
-    syntax:
-      content: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --worker-count 5 --pull-secret @pullsecret.txt
+    syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --worker-count 5 --pull-secret @pullsecret.txt
   - summary: Create a Private OpenShift cluster
-    syntax:
-      content: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --apiserver-visibility Private --ingress-visibility Private
-  parameters:
+    syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --apiserver-visibility Private --ingress-visibility Private
+  requiredParameters:
   - isRequired: true
     name: --master-subnet
     summary: Name or ID of master vnet subnet.  If name is supplied, `--vnet` must be supplied.
@@ -41,12 +50,13 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --worker-subnet
     summary: Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
     description: ''
+  optionalParameters:
   - name: --apiserver-visibility
     parameterValueGroup: Private, Public
     summary: API server visibility.
@@ -68,7 +78,7 @@ items:
     summary: Ingress visibility.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --master-vm-size
     summary: Size of master VMs.
@@ -84,6 +94,9 @@ items:
     description: ''
   - name: --service-cidr
     summary: CIDR of service network.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -103,177 +116,164 @@ items:
   - name: --worker-vm-size
     summary: Size of worker VMs.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_delete
   name: az aro delete
   summary: Delete a cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro delete --name
+                  --resource-group
+                  [--no-wait]
+                  [--subscription]
+                  [--yes]
   examples:
   - summary: Delete a OpenShift cluster
-    syntax:
-      content: az aro delete --name MyCluster --resource-group MyResourceGroup
-  parameters:
+    syntax: az aro delete --name MyCluster --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_list
   name: az aro list
   summary: List clusters.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro list [--resource-group]
+                [--subscription]
   examples:
   - summary: List OpenShift clusters
-    syntax:
-      content: az aro list
+    syntax: az aro list
   - summary: List OpenShift clusters with table view
-    syntax:
-      content: az aro list -o table
-  parameters:
+    syntax: az aro list -o table
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_list_credentials
   name: az aro list-credentials
   summary: List credentials of a cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro list-credentials --name
+                            --resource-group
+                            [--subscription]
   examples:
   - summary: List credentials of a cluster
-    syntax:
-      content: az aro list-credentials --name MyCluster --resource-group MyResourceGroup
-  parameters:
+    syntax: az aro list-credentials --name MyCluster --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_show
   name: az aro show
   summary: Get the details of a cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro show --name
+                --resource-group
+                [--subscription]
   examples:
   - summary: Get the details of a Managed OpenShift cluster
-    syntax:
-      content: az aro show --name MyCluster --resource-group MyResourceGroup
-  parameters:
+    syntax: az aro show --name MyCluster --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_update
   name: az aro update
   summary: Update a cluster.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az aro update --name
+                  --resource-group
+                  [--no-wait]
+                  [--subscription]
   examples:
   - summary: Update an existing cluster
-    syntax:
-      content: az aro update --name MyCluster --resource-group MyResourceGroup
-  parameters:
+    syntax: az aro update --name MyCluster --resource-group MyResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_wait
   name: az aro wait
   summary: Wait for a cluster to reach a desired state.
   description: If an operation on a cluster was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az aro wait --name
+                --resource-group
+                [--created]
+                [--custom]
+                [--deleted]
+                [--exists]
+                [--interval]
+                [--subscription]
+                [--timeout]
+                [--updated]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of cluster.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
@@ -290,6 +290,9 @@ items:
     defaultValue: "30"
     summary: Polling interval in seconds.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
@@ -297,37 +300,15 @@ items:
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 commands:
-- uid: az_aro_create
-  name: az aro create
-  summary: Create a cluster.
-- uid: az_aro_delete
-  name: az aro delete
-  summary: Delete a cluster.
-- uid: az_aro_list
-  name: az aro list
-  summary: List clusters.
-- uid: az_aro_list_credentials
-  name: az aro list-credentials
-  summary: List credentials of a cluster.
-- uid: az_aro_show
-  name: az aro show
-  summary: Get the details of a cluster.
-- uid: az_aro_update
-  name: az aro update
-  summary: Update a cluster.
-- uid: az_aro_wait
-  name: az aro wait
-  summary: Wait for a cluster to reach a desired state.
+- az_aro_create
+- az_aro_delete
+- az_aro_list
+- az_aro_list_credentials
+- az_aro_show
+- az_aro_update
+- az_aro_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -343,10 +324,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/aro/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/03c698beae6a47d8ba77bb2328a21460ff683b8d/src/azure-cli/azure/cli/command_modules/aro/_help.py
-updated_at: 6/3/2020 2:05:39 AM
-ms.date: 06/03/2020
-description: Manage Azure Red Hat OpenShift clusters.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/03c698beae6a47d8ba77bb2328a21460ff683b8d/src/azure-cli/azure/cli/command_modules/aro/_help.py
+  updated_at: 6/3/2020 2:05:39 AM
+  ms.date: 06/03/2020
+  description: Manage Azure Red Hat OpenShift clusters.
