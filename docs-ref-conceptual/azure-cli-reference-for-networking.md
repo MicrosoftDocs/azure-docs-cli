@@ -34,10 +34,10 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | Service | [az network service-endpoint](/cli/azure/network/service-endpoint) | Manage policies related to service endpoints. |
 | Usage | [az network list-usages](/cli/azure/network/list-usages) | List the number of network resources in a region that are used against a subscription quota. |
 | VMware | [az network vmware](/cli/azure/ext/vmware/vmware) | Commands to manage Azure VMware Solutions. | yes
-| VNet | [az network vnet](/cli/azure/network/vnet) | Manage Azure Virtual Networks. |
-| VNet | [az network vnet-tap](/cli/azure/ext/virtual-network-tap/network/vnet/tap) | Manage virtual network taps. | yes
-| VNet | [az network vnet-gateway](/cli/azure/network/vnet-gateway) | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. |
-| VNet | [az network profile](/cli/azure/network/profile) | Manage network profiles. |
+| vNet | [az network vnet](/cli/azure/network/vnet) | Manage Azure Virtual Networks. |
+| vNet | [az network vnet-tap](/cli/azure/ext/virtual-network-tap/network/vnet/tap) | Manage virtual network taps. | yes
+| vNet | [az network vnet-gateway](/cli/azure/network/vnet-gateway) | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. |
+| vNet | [az network profile](/cli/azure/network/profile) | Manage network profiles. |
 
 ### Virtual machine
 
@@ -72,7 +72,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | Front Door | [az network front-door](/cli/azure/ext/frontdoor/network/front-door) | Manage networking Front Door resources. | yes
 | Local Gateway | [az network local-gateway](/cli/azure/network/local-gateway) | Manage local gateways. |
 | Traffic manager | [az network traffic-manager](/cli/azure/network/traffic-manager) | Manage the routing of incoming traffic. |
-| Vnet watcher | [az network watcher](/cli/azure/network/watcher) | Manage the Azure Network Watcher. |
+| vNet watcher | [az network watcher](/cli/azure/network/watcher) | Manage the Azure Network Watcher. |
 
 ### Security
 
@@ -86,7 +86,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | Private link | [az network private-endpoint](/cli/azure/network/private-endpoint) | Manage private endpoints. |
 | Private link | [az network private-link-resource](/cli/azure/network/private-link-resource) | Manage private link resources. |
 | Private link | [az network private-link-service](/cli/azure/network/private-link-service) | Manage private link services. |
-| VHub | [az network vhub](/cli/azure/ext/virtual-wan/network/vhub) | Manage virtual hubs. | yes
+| vHub | [az network vhub](/cli/azure/ext/virtual-wan/network/vhub) | Manage virtual hubs. | yes
 
 ## Installing extension references
 
