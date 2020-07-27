@@ -28,6 +28,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | DNS | [az network private-dns](/cli/azure/network/private-dns) | Manage Private DNS links. |
 | NAT | [az network nat](/cli/azure/network/nat) | Manage network address translation resources. |
 | NIC | [az network nic](/cli/azure/network/nic) | Manage network interfaces. |
+| Peering | [az peering](/cli/azure/ext/peering/peering) | Manage peering
 | Public IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
 | Service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region which can be used for Service Endpoint Policies. |
 | Service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags which are below to different resources. |
@@ -43,11 +44,11 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
-| Image | [az image](/cli/azure/image) | Manage custom virtual machine images. |
-| Snapshot | [az snapshot](/cli/azure/snapshot) | Manage point-in-time copies of managed disks, native blobs, or other snapshots. |
 | VM | [az vm](/cli/azure/vm) | Manage Linux or Windows virtual machines. |
 | VM | [az network vm-repair](/cli/azure/ext/vm-repair/vm) | Manage Linux or Windows virtual machines. | yes
 | VMSS | [az vmss](/cli/azure/vmss) | Manage groupings of virtual machines in an Azure Virtual Machine Scale Set. |
+| Image | [az image](/cli/azure/image) | Manage custom virtual machine images. |
+| Snapshot | [az snapshot](/cli/azure/snapshot) | Manage point-in-time copies of managed disks, native blobs, or other snapshots. |
 
 ### WAN
 
@@ -80,8 +81,8 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 |-|-|-|-|
 | ASG | [az asg](/cli/azure/network/asg) | Manage application security groups (ASGs). |
 | Bastion | [az network bastion](/cli/azure/network/bastion) | Manage Azure bastion host. |
-| Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner provider. |
 | Firewall | [az network firewall](/cli/azure/network/firewall) | Manage and configure Azure Firewalls. |
+| Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner provider. |
 | NSG | [az network nsg](/cli/azure/network/nsg)| Manage Azure Network Security Groups (NSG). |
 | Private link | [az network private-endpoint](/cli/azure/network/private-endpoint) | Manage private endpoints. |
 | Private link | [az network private-link-resource](/cli/azure/network/private-link-resource) | Manage private link resources. |
