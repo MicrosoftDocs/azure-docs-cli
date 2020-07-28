@@ -9,7 +9,7 @@ ms.date: 06/30/2020
 ms.author: dbradish
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.reviewer:
+ms.reviewer: mohnader
 ---
 
 # Azure CLI for Azure Network
