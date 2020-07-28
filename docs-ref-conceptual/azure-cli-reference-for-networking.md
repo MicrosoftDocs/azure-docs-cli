@@ -18,7 +18,7 @@ The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is 
 
 ## References for Azure Network
 
-The [Azure Network](/azure/azure-Network/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Network CLI **extension**.  Azure CLI extension references must be installed prior to use. The [az extension add](/cli/azure/extension?view=azure-cli-latest#az-extension-add) command installs an extension reference by name.
+The [Azure Network](/azure/azure-Network/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Network CLI **extension**.  An extension gives you access to experimental and pre-release commands, and must be installed prior to use.  See [Installing extension references](#installing-extension-references) for script examples.
 
 ### Virtual network
 
@@ -28,10 +28,10 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | DNS | [az network private-dns](/cli/azure/network/private-dns) | Manage Private DNS links. |
 | NAT | [az network nat](/cli/azure/network/nat) | Manage network address translation resources. |
 | NIC | [az network nic](/cli/azure/network/nic) | Manage network interfaces. |
-| Peering | [az peering](/cli/azure/ext/peering/peering) | Manage peering
+| Peering | [az peering](/cli/azure/ext/peering/peering) | Manage peering. | yes
 | Public IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
-| Service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region which can be used for Service Endpoint Policies. |
-| Service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags which are below to different resources. |
+| Service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
+| Service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags that belong to different resources. |
 | Service | [az network service-endpoint](/cli/azure/network/service-endpoint) | Manage policies related to service endpoints. |
 | Usage | [az network list-usages](/cli/azure/network/list-usages) | List the number of network resources in a region that are used against a subscription quota. |
 | VMware | [az network vmware](/cli/azure/ext/vmware/vmware) | Commands to manage Azure VMware Solutions. | yes
@@ -79,11 +79,11 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
-| ASG | [az asg](/cli/azure/network/asg) | Manage application security groups (ASGs). |
+| ASG | [az asg](/cli/azure/network/asg) | Manage application security groups. |
 | Bastion | [az network bastion](/cli/azure/network/bastion) | Manage Azure bastion host. |
 | Firewall | [az network firewall](/cli/azure/network/firewall) | Manage and configure Azure Firewalls. |
 | Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner provider. |
-| NSG | [az network nsg](/cli/azure/network/nsg)| Manage Azure Network Security Groups (NSG). |
+| NSG | [az network nsg](/cli/azure/network/nsg)| Manage Azure Network Security Groups. |
 | Private link | [az network private-endpoint](/cli/azure/network/private-endpoint) | Manage private endpoints. |
 | Private link | [az network private-link-resource](/cli/azure/network/private-link-resource) | Manage private link resources. |
 | Private link | [az network private-link-service](/cli/azure/network/private-link-service) | Manage private link services. |
@@ -107,7 +107,7 @@ az extension add --name vmware
 az extension add --name express-route-cross-connection
 ```
 
-## Popular Network articles using the Azure CLI
+## Popular network articles using the Azure CLI
 
 - [Create virtual machines](/cli/azure/azure-cli-vm-tutorial)
 - [Create a virtual network](/azure/virtual-network/quick-create-cli)
@@ -116,7 +116,7 @@ az extension add --name express-route-cross-connection
 - [Run Azure IoT Edge on Ubuntu Virtual Machines](/azure/iot-edge/how-to-install-iot-edge-ubuntuvm#deploy-from-azure-cli)
 - [Load balance Linux virtual machines in Azure](/azure/virtual-machines/linux/tutorial-load-balancer)
 - [Create and manage Azure virtual networks for Linux VMs](/azure/virtual-machines/linux/tutorial-virtual-network)
-- [Configure a service endpoint for Cosmos DB](/azure/cosmos-db/how-to-configure-vnet-service-endpoint#configure-using-cli) 
+- [Configure a service endpoint for Cosmos DB](/azure/cosmos-db/how-to-configure-vnet-service-endpoint#configure-using-cli)
 
 ## See also
 
