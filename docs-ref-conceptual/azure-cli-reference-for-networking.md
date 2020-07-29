@@ -14,27 +14,19 @@ ms.reviewer: mohnader
 
 # Azure CLI for Azure Network
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Network.  There are over 100 references for Azure Network giving you the ability to work effectively with Network services from a command line.
+The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Network.  There are many references for networking that give you the ability to work effectively with Azure Network services from a command line.
 
 ## References for Azure Network
 
 The [Azure Network](/azure/azure-Network/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Network CLI **extension**.  An extension gives you access to experimental and pre-release commands, and must be installed prior to use.  See [Installing extension references](#installing-extension-references) for script examples.
-
-### Azure CLI
-
-| Subgroup | Reference | Use | Is extension
-|-|-|-|-|
-| List service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
-| List service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags that belong to different resources. |
-| List usage | [az network list-usages](/cli/azure/network/list-usages) | List the number of network resources in a region that are used against a subscription quota. |
 
 ### Virtual network
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Appliance | [az network virtual-appliance](/cli/azure/network/virtual-appliance) | Manage Azure Network Virtual Appliance.
-| DNS | [az network dns](/cli/azure/ext/privatedns/network/private-dns) | Manage Domain Name System in Azure. | yes
-| DNS | [az network private-dns](/cli/azure/network/private-dns) | Manage Private DNS links. |
+| DNS | [az network private-dns](/cli/azure/network/private-dns) core | Manage Private DNS domains in Azure. |
+| DNS | [az network private-dns](/cli/azure/ext/privatedns/network/private-dns) extension | Manage Private DNS domains in Azure with additional parameters. | yes
 | Endpoint | [az network service-endpoint](/cli/azure/network/service-endpoint) | Manage policies related to service endpoints. |
 | NAT | [az network nat](/cli/azure/network/nat) | Manage network address translation resources. |
 | NIC | [az network nic](/cli/azure/network/nic) | Manage network interfaces. |
@@ -102,22 +94,42 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 |-|-|-|-|
 | Watcher | [az network watcher](/cli/azure/network/watcher) | Manage the Azure Network Watcher. |
 
+### Azure CLI
+
+| Subgroup | Reference | Use | Is extension
+|-|-|-|-|
+| Service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
+| Service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags that belong to different resources. |
+| Usage | [az network list-usages](/cli/azure/network/list-usages) | List the number of network resources in a region that are used against a subscription quota. |
+
 ## Installing extension references
 
 Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.  Learn more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
 
 ```azurecli
-# install the extension for az network vm-repair
-az extension add --name virtual-network-tap
+## get a list of available Azure CLI extensions
+az extension list-available --output table
+
+# install the extension for az network express-route-cross-connection
+az extension add --name express-route-cross-connection
+
+# install the extension for az network front-door
+az extension add --name front-door
 
 # install the extension for az network virtual-wan
 az extension add --name virtual-wan
 
+# install the extension for az network vm-repair
+az extension add --name virtual-network-tap
+
 # install the extension for az network vmware
 az extension add --name vmware
 
-# install the extension for az network express-route-cross-connection
-az extension add --name express-route-cross-connection
+# install the extension for az peering
+az extension add --name peering
+
+# install the extension for az private-dns
+az extension add --name privatedns
 ```
 
 ## Popular network articles using the Azure CLI
