@@ -14,7 +14,7 @@ ms.reviewer: mohnader
 
 # Azure CLI for Azure Network
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Network.  There are many references for networking that give you the ability to work effectively with Azure Network services from a command line.
+The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Network.  The many CLI **az network** commands give you the ability to work effectively with Azure Network services from a command line.
 
 ## References for Azure Network
 
@@ -25,8 +25,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Appliance | [az network virtual-appliance](/cli/azure/network/virtual-appliance) | Manage Azure Network Virtual Appliance.
-| DNS | [az network private-dns](/cli/azure/network/private-dns) core | Manage Private DNS domains in Azure. |
-| DNS | [az network private-dns](/cli/azure/ext/privatedns/network/private-dns) extension | Manage Private DNS domains in Azure with additional parameters. | yes
+| DNS | [az network private-dns](/cli/azure/network/private-dns) | Manage Private DNS domains in Azure. |
 | Endpoint | [az network service-endpoint](/cli/azure/network/service-endpoint) | Manage policies related to service endpoints. |
 | NAT | [az network nat](/cli/azure/network/nat) | Manage network address translation resources. |
 | NIC | [az network nic](/cli/azure/network/nic) | Manage network interfaces. |
@@ -38,16 +37,6 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | vNet | [az network vnet](/cli/azure/network/vnet) | Manage Azure Virtual Networks. |
 | vNet | [az network vnet-tap](/cli/azure/ext/virtual-network-tap/network/vnet/tap) | Manage virtual network taps. | yes
 | vNet | [az network vnet-gateway](/cli/azure/network/vnet-gateway) | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. |
-
-### Virtual machine
-
-| Subgroup | Reference | Use | Is extension
-|-|-|-|-|
-| VM | [az vm](/cli/azure/vm) | Manage Linux or Windows virtual machines. |
-| VM | [az network vm-repair](/cli/azure/ext/vm-repair/vm) | Manage Linux or Windows virtual machines. | yes
-| VMSS | [az vmss](/cli/azure/vmss) | Manage groupings of virtual machines in an Azure Virtual Machine Scale Set. |
-| Image | [az image](/cli/azure/image) | Manage custom virtual machine images. |
-| Snapshot | [az snapshot](/cli/azure/snapshot) | Manage point-in-time copies of managed disks, native blobs, or other snapshots. |
 
 ### WAN and On-premise connectivity
 
@@ -68,9 +57,10 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 |-|-|-|-|
 | Application Gateway | [az network application-gateway](/cli/azure/network/application-gateway) | Manage application-level routing and load balancing services. |
 | InfiniBand | [az network ib](/cli/azure/network/reference-network-ib) | Manage and configure load balancers. |
+| IP | [az network ip-group](/cli/azure/ext/ip-group/network/ip-group) | Manage IpGroups. |
+| IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
 | Front Door | [az network front-door](/cli/azure/ext/frontdoor/network/front-door) | Manage networking Front Door resources. | yes
 | Local Gateway | [az network local-gateway](/cli/azure/network/local-gateway) | Manage local gateways. |
-| Public IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
 | Traffic manager | [az network traffic-manager](/cli/azure/network/traffic-manager) | Manage the routing of incoming traffic. |
 
 ### Security
@@ -94,7 +84,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 |-|-|-|-|
 | Watcher | [az network watcher](/cli/azure/network/watcher) | Manage the Azure Network Watcher. |
 
-### Azure CLI
+### List
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
@@ -127,9 +117,6 @@ az extension add --name vmware
 
 # install the extension for az peering
 az extension add --name peering
-
-# install the extension for az private-dns
-az extension add --name privatedns
 ```
 
 ## Popular network articles using the Azure CLI
@@ -147,4 +134,6 @@ az extension add --name privatedns
 
 - [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
 
-- Discover additional [released](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
+- Discover additional [core](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
+
+- Manage Linux or Windows virtual machines with [az vm](/cli/azure/vm).
