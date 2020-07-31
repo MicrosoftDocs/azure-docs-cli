@@ -14,11 +14,13 @@ ms.reviewer: mohnader
 
 # Azure CLI for Azure Network
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Network.  The many CLI **az network** commands give you the ability to work effectively with Azure Network services from a command line.
+The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  The CLI is available across many Azure services including Azure Network giving you the ability to manage networking services from a command line.
 
 ## References for Azure Network
 
-The [Azure Network](/azure/azure-Network/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Network CLI **extension**.  An extension gives you access to experimental and pre-release commands, and must be installed prior to use.  See [Installing extension references](#installing-extension-references) for script examples.
+The Azure Network CLI experience is composed of two parts: **core** and **extension**.  Core Azure CLI commands ship as part of the CLI and are fully supported.  An extension gives you access to experimental and pre-release commands, and must be installed prior to use.  Example install scripts are provided in [Installing extension references](#installing-extension-references).
+
+See [az network](/cli/azure/network) for a complete list of Azure CLI core references for Azure Network.  Follow the links below for extension references.
 
 ### Virtual network
 
