@@ -7,7 +7,8 @@ manager: barbkess
 ms.date: 10/14/2019
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.devlang: azurecli 
+ms.custom: devx-track-azurecli
 ---
 
 # Install Azure CLI with apt
