@@ -8,7 +8,8 @@ ms.prod: azure
 ms.date: 06/16/2020
 ms.topic: conceptual
 ms.devlang: azurecli
-ms.technology: azure-cli
+ms.technology: azure-cli 
+ms.custom: devx-track-azurecli
 ---
 
 # Install Azure CLI on Windows

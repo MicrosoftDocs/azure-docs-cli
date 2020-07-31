@@ -7,7 +7,8 @@ manager: barbkess
 ms.date: 09/07/2018
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.devlang: azurecli 
+ms.custom: devx-track-azurecli
 ---
 
 # Use extensions with Azure CLI 
