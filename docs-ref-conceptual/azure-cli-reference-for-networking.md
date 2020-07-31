@@ -56,10 +56,10 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Application Gateway | [az network application-gateway](/cli/azure/network/application-gateway) | Manage application-level routing and load balancing services. |
-| InfiniBand | [az network ib](/cli/azure/network/reference-network-ib) | Manage and configure load balancers. |
-| IP | [az network ip-group](/cli/azure/ext/ip-group/network/ip-group) | Manage IpGroups. |
+| Load balance | [az network lb](/cli/azure/network/lb) | Manage and configure load balancers. |
+| IP | [az network ip-group](/cli/azure/ext/ip-group/network/ip-group) | Manage IpGroups. | yes
 | IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
-| Front Door | [az network front-door](/cli/azure/ext/frontdoor/network/front-door) | Manage networking Front Door resources. | yes
+| Front Door | [az network front-door](/cli/azure/ext/front-door/network/front-door) | Manage networking Front Door resources. | yes
 | Local Gateway | [az network local-gateway](/cli/azure/network/local-gateway) | Manage local gateways. |
 | Traffic manager | [az network traffic-manager](/cli/azure/network/traffic-manager) | Manage the routing of incoming traffic. |
 
@@ -70,7 +70,7 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 | ASG | [az asg](/cli/azure/network/asg) | Manage application security groups. |
 | Bastion | [az network bastion](/cli/azure/network/bastion) | Manage Azure bastion host. |
 | DDoS | [az network ddos-protection](/cli/azure/network/ddos-protection) | Manage DDoS Protection Plans. |
-| Firewall | [az network firewall](/cli/azure/network/firewall) | Manage and configure Azure Firewalls. |
+| Firewall | [az network firewall](/cli/azure/ext/azure-firewall/network/firewall) | Manage and configure Azure Firewalls. | yes
 | Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner provider. |
 | NSG | [az network nsg](/cli/azure/network/nsg)| Manage Azure Network Security Groups. |
 | Private endpoint | [az network private-endpoint](/cli/azure/network/private-endpoint) | Manage private endpoints. |
@@ -88,9 +88,9 @@ The [Azure Network](/azure/azure-Network/) CLI experience is composed of two par
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
-| Service | [az network list-service-aliases](/cli/azure/network/list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
-| Service | [az network list-service-tags](/cli/azure/nsecurity-partner-provideretwork/list-service-tags) | List all service tags that belong to different resources. |
-| Usage | [az network list-usages](/cli/azure/network/list-usages) | List the number of network resources in a region that are used against a subscription quota. |
+| Service | [az network list-service-aliases](/cli/azure/network#az-network-list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
+| Service | [az network list-service-tags](/cli/azure/network#az-network-list-service-tags) | List all service tags that belong to different resources. |
+| Usage | [az network list-usages](/cli/azure/network#az-network-list-usages) | List the number of network resources in a region that are used against a subscription quota. |
 
 ## Installing extension references
 
