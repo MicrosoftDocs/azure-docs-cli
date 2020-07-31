@@ -32,7 +32,6 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot central](/cli/azure/iot/central) | yes | Manage IoT Central assets.
 | [az iot dps](/en-us/cli/azure/iot/dps) | yes | Manage Azure IoT Hub Device Provisioning Service.
 | [az iot hub](/cli/azure/iot/hub) | yes | Manage Azure IoT Hub infrastructure.
-| [az iot pnp](/cli/azure/iot/pnp) | yes | Manage IoT Plug and Play repositories and repository access keys.
 
 ### Extension reference commands
 

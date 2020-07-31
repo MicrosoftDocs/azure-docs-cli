@@ -1,65 +1,68 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_sig_image_version
-  name: az sig image-version
-  summary: Create a new version from an image defintion.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_sig_image_version_create
-  - az_sig_image_version_delete
-  - az_sig_image_version_list
-  - az_sig_image_version_show
-  - az_sig_image_version_update
-  - az_sig_image_version_wait
+### YamlMime:AzureCLIGroup
+uid: az_sig_image_version
+name: az sig image-version
+summary: Create a new version from an image defintion.
+description: ''
+directCommands:
 - uid: az_sig_image_version_create
   name: az sig image-version create
   summary: Create a new image version.
   description: This operation might take a long time depending on the replicate region number. Use "--no-wait" is advised.
-  langs:
-  - azurecli
+  syntax: >-
+    az sig image-version create --gallery-image-definition
+                                --gallery-image-version
+                                --gallery-name
+                                --resource-group
+                                [--data-snapshot-luns]
+                                [--data-snapshots]
+                                [--end-of-life-date]
+                                [--exclude-from-latest {false, true}]
+                                [--location]
+                                [--managed-image]
+                                [--no-wait]
+                                [--os-snapshot]
+                                [--replica-count]
+                                [--storage-account-type {Premium_LRS, Standard_LRS, Standard_ZRS}]
+                                [--subscription]
+                                [--tags]
+                                [--target-region-encryption]
+                                [--target-regions]
   examples:
   - summary: Add a new image version
-    syntax:
-      content: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/images/MyManagedImage
+    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/images/MyManagedImage
   - summary: Add a new image version replicated across multiple regions with different replication counts each. Eastus2 will have it's replica count set to the default replica count.
-    syntax:
-      content: >-
-        az sig image-version create -g MyResourceGroup --gallery-name MyGallery \
+    syntax: >-
+      az sig image-version create -g MyResourceGroup --gallery-name MyGallery \
 
-        --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
 
-        --managed-image image-name --target-regions eastus2 ukwest=3 southindia=2
+      --managed-image image-name --target-regions eastus2 ukwest=3 southindia=2
   - summary: Add a new image version and don't wait on it. Later you can invoke "az sig image-version wait" command when ready to create a vm from the gallery image version
-    syntax:
-      content: >-
-        az sig image-version create --no-wait -g MyResourceGroup --gallery-name MyGallery \
+    syntax: >-
+      az sig image-version create --no-wait -g MyResourceGroup --gallery-name MyGallery \
 
-        --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
 
-        --managed-image imageInTheSameResourceGroup
+      --managed-image imageInTheSameResourceGroup
   - summary: Add a new image version with target regions that have different storage account types and replica counts
-    syntax:
-      content: >-
-        az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 \
+    syntax: >-
+      az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 \
 
-        --target-regions westus=2=standard_lrs eastus=3=standard_zrs \
+      --target-regions westus=2=standard_lrs eastus=3=standard_zrs \
 
-        --gallery-name MyGallery --gallery-image-definition MyImage \
+      --gallery-name MyGallery --gallery-image-definition MyImage \
 
-        --managed-image imageInTheSameResourceGroup
+      --managed-image imageInTheSameResourceGroup
   - summary: Add a new image version with target regions and customer managed keys for encryption.
-    syntax:
-      content: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard --target-region-encryption DiskEncryptionSet1,0,DiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --managed-image imageInTheSameResourceGroup
-  parameters:
+    syntax: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard --target-region-encryption DiskEncryptionSet1,0,DiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --managed-image imageInTheSameResourceGroup
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
     name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `&lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;`.
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - isRequired: true
     name: --gallery-name -r
@@ -67,8 +70,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --data-snapshot-luns
     summary: Logical unit numbers (space-delimited) of data disk snapshots.
     description: ''
@@ -83,7 +87,7 @@ items:
     summary: The flag means that if it is set to true, people deploying VMs with version omitted will not use this version.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --managed-image
     summary: Image name(if in the same resource group) or resource id.
@@ -101,32 +105,36 @@ items:
     parameterValueGroup: Premium_LRS, Standard_LRS, Standard_ZRS
     summary: The default storage account type to be used per region. To set regional storage account types, use --target-regions.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --target-region-encryption
-    summary: 'Space-separated list of customer managed keys for encrypting the OS and data disks in the gallery artifact for each region. Format for each region: `&lt;os_des&gt;,&lt;lun1&gt;,&lt;lun1_des&gt;,&lt;lun2&gt;,&lt;lun2_des&gt;`. Use "null" as a placeholder.'
+    summary: 'Space-separated list of customer managed keys for encrypting the OS and data disks in the gallery artifact for each region. Format for each region: `<os_des>,<lun1>,<lun1_des>,<lun2>,<lun2_des>`. Use "null" as a placeholder.'
     description: ''
   - name: --target-regions
-    summary: Space-separated list of regions and their replica counts. Use `&lt;region&gt;[=&lt;replica count&gt;][=&lt;storage account type&gt;]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    summary: Space-separated list of regions and their replica counts. Use `<region>[=<replica count>][=<storage account type>]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
     description: ''
 - uid: az_sig_image_version_delete
   name: az sig image-version delete
   summary: Delete a gallery Image Version.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sig image-version delete --gallery-image-definition
+                                --gallery-image-version
+                                --gallery-name
+                                --resource-group
+                                [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
     name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `&lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;`.
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - isRequired: true
     name: --gallery-name -r
@@ -134,8 +142,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -143,9 +152,12 @@ items:
   name: az sig image-version list
   summary: List gallery Image Versions in a gallery Image Definition.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sig image-version list --gallery-image-definition
+                              --gallery-name
+                              --resource-group
+                              [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
@@ -156,8 +168,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -165,16 +178,21 @@ items:
   name: az sig image-version show
   summary: Retrieves information about a gallery Image Version.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az sig image-version show --gallery-image-definition
+                              --gallery-image-version
+                              --gallery-name
+                              --resource-group
+                              [--expand]
+                              [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
     name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `&lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;`.
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - isRequired: true
     name: --gallery-name -r
@@ -182,8 +200,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --expand
     summary: The expand expression to apply on the operation, e.g. 'ReplicationStatus'.
     description: ''
@@ -194,26 +213,34 @@ items:
   name: az sig image-version update
   summary: Update a share image version.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sig image-version update --gallery-image-definition
+                                --gallery-image-version
+                                --gallery-name
+                                --resource-group
+                                [--add]
+                                [--force-string]
+                                [--no-wait]
+                                [--remove]
+                                [--replica-count]
+                                [--set]
+                                [--subscription]
+                                [--target-regions]
   examples:
   - summary: Replicate to a new set of regions
-    syntax:
-      content: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --target-regions westcentralus=2 eastus2
+    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --target-regions westcentralus=2 eastus2
   - summary: Replicate to one more region
-    syntax:
-      content: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --add publishingProfile.targetRegions name=westcentralus
+    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --add publishingProfile.targetRegions name=westcentralus
   - summary: Update --exclude-from-latest. If it is set to true, people deploying VMs with version omitted will not use this version.
-    syntax:
-      content: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --set publishingProfile.excludeFromLatest=true
-  parameters:
+    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --set publishingProfile.excludeFromLatest=true
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
     name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `&lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;`.
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - isRequired: true
     name: --gallery-name -r
@@ -221,25 +248,23 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --replica-count
-    summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
-    description: ''
-  - name: --target-regions
-    summary: Space-separated list of regions and their replica counts. Use `&lt;region&gt;[=&lt;replica count&gt;][=&lt;storage account type&gt;]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
-    description: ''
+  optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --replica-count
+    summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
@@ -247,24 +272,38 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --target-regions
+    summary: Space-separated list of regions and their replica counts. Use `<region>[=<replica count>][=<storage account type>]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
+    description: ''
 - uid: az_sig_image_version_wait
   name: az sig image-version wait
   summary: Wait for image version related operation.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az sig image-version wait --gallery-image-definition
+                              --gallery-image-version
+                              --gallery-name
+                              --resource-group
+                              [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--expand]
+                              [--interval]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
   examples:
   - summary: wait for an image version gets updated
-    syntax:
-      content: az sig image-version wait --updated -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0
-  parameters:
+    syntax: az sig image-version wait --updated -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0
+  requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
     name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `&lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;`.
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - isRequired: true
     name: --gallery-name -r
@@ -272,11 +311,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --expand
-    summary: The expand expression to apply on the operation.
-    description: ''
+  optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
@@ -289,9 +326,15 @@ items:
   - name: --exists
     summary: Wait until the resource exists.
     description: ''
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -300,28 +343,13 @@ items:
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 commands:
-- uid: az_sig_image_version_create
-  name: az sig image-version create
-  summary: Create a new image version.
-- uid: az_sig_image_version_delete
-  name: az sig image-version delete
-  summary: Delete a gallery Image Version.
-- uid: az_sig_image_version_list
-  name: az sig image-version list
-  summary: List gallery Image Versions in a gallery Image Definition.
-- uid: az_sig_image_version_show
-  name: az sig image-version show
-  summary: Retrieves information about a gallery Image Version.
-- uid: az_sig_image_version_update
-  name: az sig image-version update
-  summary: Update a share image version.
-- uid: az_sig_image_version_wait
-  name: az sig image-version wait
-  summary: Wait for image version related operation.
+- az_sig_image_version_create
+- az_sig_image_version_delete
+- az_sig_image_version_list
+- az_sig_image_version_show
+- az_sig_image_version_update
+- az_sig_image_version_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -337,4 +365,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Create a new version from an image defintion.
+metadata:
+  description: Create a new version from an image defintion.

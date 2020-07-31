@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/14/2020
+ms.date: 07/16/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,26 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## July 16, 2020
+
+Version 2.9.1
+
+### AKS
+
+* Remove explicit setting of VMSS in Windows example command since it is now default
+
+### IoT
+
+* [BREAKING CHANGE] `az iot pnp`: Remove IoT PNP preview commands from core CLI
+
+### REST
+
+* Fix #14152: `az rest`: Accept ARM URLs without subscription ID
+
+### Storage
+
+* Fix #14138: Make some permissions optional
 
 ## July 14, 2020
 

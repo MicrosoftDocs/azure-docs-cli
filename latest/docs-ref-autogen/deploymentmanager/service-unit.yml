@@ -1,50 +1,35 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_deploymentmanager_service_unit
-  name: az deploymentmanager service-unit
-  summary: Manage the service units.
-  description: Service units combine to form a service in a service topology.
-  langs:
-  - azurecli
-  children:
-  - az_deploymentmanager_service_unit_create
-  - az_deploymentmanager_service_unit_delete
-  - az_deploymentmanager_service_unit_list
-  - az_deploymentmanager_service_unit_show
-  - az_deploymentmanager_service_unit_update
+### YamlMime:AzureCLIGroup
+uid: az_deploymentmanager_service_unit
+name: az deploymentmanager service-unit
+summary: Manage the service units.
+description: Service units combine to form a service in a service topology.
+directCommands:
 - uid: az_deploymentmanager_service_unit_create
   name: az deploymentmanager service-unit create
   summary: Creates a service unit under the specified service and service topology.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az deploymentmanager service-unit create --deployment-mode {Complete, Incremental}
+                                             --name
+                                             --parameters-path
+                                             --resource-group
+                                             --service-name
+                                             --service-topology-name
+                                             --target-resource-group
+                                             --template-path
+                                             [--location]
+                                             [--subscription]
+                                             [--tags]
   examples:
   - summary: Create a new service unit using relative paths into the artifact source.
-    syntax:
-      content: az deploymentmanager service-unit create -g rg1 -l location --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage --target-resource-group service1ResourceGroup --deployment-mode Incremental --template-path "Templates/Service1.Storage.json" --parameters-path "Parameters/Service1.Storage.Parameters.json"
+    syntax: az deploymentmanager service-unit create -g rg1 -l location --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage --target-resource-group service1ResourceGroup --deployment-mode Incremental --template-path "Templates/Service1.Storage.json" --parameters-path "Parameters/Service1.Storage.Parameters.json"
   - summary: Create a new service unit using SAS Uri for template and parameters.
-    syntax:
-      content: >-
-        az deploymentmanager service-unit create -g rg1 -l location --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage \
-            --target-resource-group service1ResourceGroup --deployment-mode Incremental \
-            --template-path "https://ContosoStorage.blob.core.windows.net/ContosoArtifacts/Templates/Service2.Storage.json?sasParameters" \
-            --parameters-path "https://ContosoStorage.blob.core.windows.net/ContosoArtifacts/Parameters/Service2Storage.Parameters.json?sasParameters"
-  parameters:
-  - isRequired: true
-    name: --parameters-path
-    summary: The path to the ARM parameters file. Either the full SAS Uri or the relative path in the artifact source for this topology.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - isRequired: true
-    name: --template-path
-    summary: The path to the ARM template file. Either the full SAS Uri or the relative path in the artifact source for this topology.
-    description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
-    description: ''
+    syntax: >-
+      az deploymentmanager service-unit create -g rg1 -l location --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage \
+          --target-resource-group service1ResourceGroup --deployment-mode Incremental \
+          --template-path "https://ContosoStorage.blob.core.windows.net/ContosoArtifacts/Templates/Service2.Storage.json?sasParameters" \
+          --parameters-path "https://ContosoStorage.blob.core.windows.net/ContosoArtifacts/Parameters/Service2Storage.Parameters.json?sasParameters"
+  requiredParameters:
   - isRequired: true
     name: --deployment-mode
     defaultValue: DeploymentMode.incremental
@@ -54,6 +39,14 @@ items:
   - isRequired: true
     name: --name --service-unit-name -n
     summary: The name of the service unit.
+    description: ''
+  - isRequired: true
+    name: --parameters-path
+    summary: The path to the ARM parameters file. Either the full SAS Uri or the relative path in the artifact source for this topology.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -67,36 +60,42 @@ items:
     name: --target-resource-group
     summary: The resource group where the resources in the service unit should be deployed to.
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+  - isRequired: true
+    name: --template-path
+    summary: The path to the ARM template file. Either the full SAS Uri or the relative path in the artifact source for this topology.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 - uid: az_deploymentmanager_service_unit_delete
   name: az deploymentmanager service-unit delete
   summary: Deletes the service unit.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az deploymentmanager service-unit delete --name
+                                             --resource-group
+                                             --service-name
+                                             --service-topology-name
+                                             [--subscription]
   examples:
   - summary: Deletes a service unit.
-    syntax:
-      content: az deploymentmanager service-unit delete -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage
-  parameters:
+    syntax: az deploymentmanager service-unit delete -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage
+  requiredParameters:
   - isRequired: true
     name: --name --service-unit-name -n
     summary: The name of the service unit.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -106,29 +105,27 @@ items:
     name: --service-topology-name
     summary: The name of the service topology.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 - uid: az_deploymentmanager_service_unit_list
   name: az deploymentmanager service-unit list
   summary: List all service units in a service.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az deploymentmanager service-unit list --resource-group
+                                           --service-name
+                                           --service-topology-name
+                                           [--subscription]
   examples:
   - summary: List the service units in the given service topology and service.
-    syntax:
-      content: az deploymentmanager service-unit list -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1
-  parameters:
+    syntax: az deploymentmanager service-unit list -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1
+  requiredParameters:
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -138,33 +135,32 @@ items:
     name: --service-topology-name
     summary: The name of the service topology.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 - uid: az_deploymentmanager_service_unit_show
   name: az deploymentmanager service-unit show
   summary: Get the details of a service unit.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az deploymentmanager service-unit show --name
+                                           --resource-group
+                                           --service-name
+                                           --service-topology-name
+                                           [--subscription]
   examples:
   - summary: Get the service unit.
-    syntax:
-      content: az deploymentmanager service-unit show -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage
-  parameters:
+    syntax: az deploymentmanager service-unit show -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage
+  requiredParameters:
   - isRequired: true
     name: --name --service-unit-name -n
     summary: The name of the service unit.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -174,36 +170,43 @@ items:
     name: --service-topology-name
     summary: The name of the service topology.
     description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 - uid: az_deploymentmanager_service_unit_update
   name: az deploymentmanager service-unit update
   summary: Updates the service unit.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az deploymentmanager service-unit update --name
+                                             --resource-group
+                                             --service-name
+                                             --service-topology-name
+                                             [--add]
+                                             [--deployment-mode {Complete, Incremental}]
+                                             [--force-string]
+                                             [--parameters-path]
+                                             [--remove]
+                                             [--set]
+                                             [--subscription]
+                                             [--tags]
+                                             [--target-resource-group]
+                                             [--template-path]
   examples:
   - summary: Updates the service unit.
-    syntax:
-      content: az deploymentmanager service-unit update -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage --target-resource-group service1ResourceGroupUpdated
+    syntax: az deploymentmanager service-unit update -g rg1 --service-topology-name contosoServiceTopology --service-name contosoService1 -n ContosoService1Storage --target-resource-group service1ResourceGroupUpdated
   - summary: Updates the service unit. (autogenerated)
-    syntax:
-      content: az deploymentmanager service-unit update --deployment-mode Incremental --resource-group rg1 --service-name contosoService1 --service-topology-name contosoServiceTopology --service-unit-name ContosoService1Storage
-  parameters:
+    syntax: az deploymentmanager service-unit update --deployment-mode Incremental --resource-group rg1 --service-name contosoService1 --service-topology-name contosoServiceTopology --service-unit-name ContosoService1Storage
+  requiredParameters:
   - isRequired: true
     name: --name --service-unit-name -n
     summary: The name of the service unit.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --service-name
@@ -212,29 +215,21 @@ items:
   - isRequired: true
     name: --service-topology-name
     summary: The name of the service topology.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --deployment-mode
     defaultValue: DeploymentMode.incremental
     parameterValueGroup: Complete, Incremental
     summary: 'The type of depoyment mode to be used when deploying the service unit. Possible values: Incremental, Complete.'
     description: ''
-  - name: --parameters-path
-    summary: The path to the ARM parameters file. Either the full SAS Uri or the relative path in the artifact source for this topology.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --target-resource-group
-    summary: The resource group where the resources in the service unit should be deployed to.
-    description: ''
-  - name: --template-path
-    summary: The path to the ARM template file. Either the full SAS Uri or the relative path in the artifact source for this topology.
-    description: ''
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --parameters-path
+    summary: The path to the ARM parameters file. Either the full SAS Uri or the relative path in the artifact source for this topology.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -245,28 +240,22 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --target-resource-group
+    summary: The resource group where the resources in the service unit should be deployed to.
+    description: ''
+  - name: --template-path
+    summary: The path to the ARM template file. Either the full SAS Uri or the relative path in the artifact source for this topology.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
 commands:
-- uid: az_deploymentmanager_service_unit_create
-  name: az deploymentmanager service-unit create
-  summary: Creates a service unit under the specified service and service topology.
-- uid: az_deploymentmanager_service_unit_delete
-  name: az deploymentmanager service-unit delete
-  summary: Deletes the service unit.
-- uid: az_deploymentmanager_service_unit_list
-  name: az deploymentmanager service-unit list
-  summary: List all service units in a service.
-- uid: az_deploymentmanager_service_unit_show
-  name: az deploymentmanager service-unit show
-  summary: Get the details of a service unit.
-- uid: az_deploymentmanager_service_unit_update
-  name: az deploymentmanager service-unit update
-  summary: Updates the service unit.
+- az_deploymentmanager_service_unit_create
+- az_deploymentmanager_service_unit_delete
+- az_deploymentmanager_service_unit_list
+- az_deploymentmanager_service_unit_show
+- az_deploymentmanager_service_unit_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -282,10 +271,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/f8fcf6fe53ac8443c852afa1f4a334d732a2cea4/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
-updated_at: 1/30/2020 1:38:16 PM
-ms.date: 01/30/2020
-description: Service units combine to form a service in a service topology.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/f8fcf6fe53ac8443c852afa1f4a334d732a2cea4/src/azure-cli/azure/cli/command_modules/deploymentmanager/_help.py
+  updated_at: 1/30/2020 1:38:16 PM
+  ms.date: 01/30/2020
+  description: Service units combine to form a service in a service topology.

@@ -1,37 +1,34 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_resource-graph_az_graph
-  name: az graph
-  summary: Query the resources managed by Azure Resource Manager.
-  description: Run 'az graph query --help' for detailed help.
-  langs:
-  - azurecli
-  children:
-  - ext_resource-graph_az_graph_query
+### YamlMime:AzureCLIGroup
+uid: ext_resource-graph_az_graph
+name: az graph
+summary: Query the resources managed by Azure Resource Manager.
+description: Run 'az graph query --help' for detailed help.
+directCommands:
 - uid: ext_resource-graph_az_graph_query
   name: az graph query
   summary: Query the resources managed by Azure Resource Manager.
   description: See <a href="https://aka.ms/AzureResourceGraph-QueryLanguage">https://aka.ms/AzureResourceGraph-QueryLanguage</a> to learn more about query language and browse examples.
-  langs:
-  - azurecli
+  syntax: >-
+    az graph query --graph-query
+                   [--first]
+                   [--include]
+                   [--skip]
+                   [--subscriptions]
   examples:
   - summary: Query resources requesting a subset of resource fields.
-    syntax:
-      content: az graph query -q "project id, name, type, location, tags"
+    syntax: az graph query -q "project id, name, type, location, tags"
   - summary: Query resources with field selection, filtering and summarizing.
-    syntax:
-      content: az graph query -q "project id, type, location | where type =~ 'Microsoft.Compute/virtualMachines' | summarize count() by location | top 3 by count_"
+    syntax: az graph query -q "project id, type, location | where type =~ 'Microsoft.Compute/virtualMachines' | summarize count() by location | top 3 by count_"
   - summary: Request a subset of results, skipping 20 items and getting the next 10.
-    syntax:
-      content: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --first 10 --skip 20
+    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --first 10 --skip 20
   - summary: Choose subscriptions to query.
-    syntax:
-      content: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --subscriptions 11111111-1111-1111-1111-111111111111, 22222222-2222-2222-2222-222222222222
-  parameters:
+    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --subscriptions 11111111-1111-1111-1111-111111111111, 22222222-2222-2222-2222-222222222222
+  requiredParameters:
   - isRequired: true
     name: --graph-query --q -q
     summary: Resource Graph query to execute.
     description: ''
+  optionalParameters:
   - name: --first
     defaultValue: "100"
     summary: 'The maximum number of objects to return. Accepted range: 1-5000.'
@@ -46,24 +43,12 @@ items:
     summary: List of subscriptions to run query against. By default all accessible subscriptions are queried.
     description: ''
 commands:
-- uid: ext_resource-graph_az_graph_query
-  name: az graph query
-  summary: Query the resources managed by Azure Resource Manager.
-- uid: ext_resource-graph_az_graph_shared_query
-  name: az graph shared-query
-  summary: Manage shared query of Azure resource graph.
-- uid: ext_resource-graph_az_graph_shared_query_create
-  name: az graph shared-query create
-  summary: Create a shared query.
-- uid: ext_resource-graph_az_graph_shared_query_delete
-  name: az graph shared-query delete
-  summary: Delete a shared query.
-- uid: ext_resource-graph_az_graph_shared_query_list
-  name: az graph shared-query list
-  summary: List all shared query in a resource group.
-- uid: ext_resource-graph_az_graph_shared_query_show
-  name: az graph shared-query show
-  summary: Show the properties of a shared query.
+- ext_resource-graph_az_graph_query
+- ext_resource-graph_az_graph_shared_query
+- ext_resource-graph_az_graph_shared_query_create
+- ext_resource-graph_az_graph_shared_query_delete
+- ext_resource-graph_az_graph_shared_query_list
+- ext_resource-graph_az_graph_shared_query_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -79,4 +64,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Run 'az graph query --help' for detailed help.
+metadata:
+  description: Run 'az graph query --help' for detailed help.

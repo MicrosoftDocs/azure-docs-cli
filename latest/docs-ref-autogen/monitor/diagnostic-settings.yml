@@ -1,54 +1,63 @@
-### YamlMime:UniversalReference
-items:
-- uid: az_monitor_diagnostic_settings
-  name: az monitor diagnostic-settings
-  summary: Manage service diagnostic settings.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - az_monitor_diagnostic_settings_create
-  - az_monitor_diagnostic_settings_delete
-  - az_monitor_diagnostic_settings_list
-  - az_monitor_diagnostic_settings_show
-  - az_monitor_diagnostic_settings_update
+### YamlMime:AzureCLIGroup
+uid: az_monitor_diagnostic_settings
+name: az monitor diagnostic-settings
+summary: Manage service diagnostic settings.
+description: ''
+directCommands:
 - uid: az_monitor_diagnostic_settings_create
   name: az monitor diagnostic-settings create
   summary: Create diagnostic settings for the specified resource.
   description: 'For more information, visit: <a href="https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#metricsettings">https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#metricsettings</a>.'
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor diagnostic-settings create --name
+                                          --resource
+                                          [--event-hub]
+                                          [--event-hub-rule]
+                                          [--export-to-resource-specific {false, true}]
+                                          [--logs]
+                                          [--metrics]
+                                          [--resource-group]
+                                          [--resource-namespace]
+                                          [--resource-parent]
+                                          [--resource-type]
+                                          [--storage-account]
+                                          [--subscription]
+                                          [--workspace]
   examples:
   - summary: Create diagnostic settings with EventHub.
-    syntax:
-      content: >-
-        az monitor diagnostic-settings create --resource {ID} -n {name}
-           --event-hub-rule {eventHubRuleID} --storage-account {storageAccount}
-           --logs '[
-             {
-               "category": "WorkflowRuntime",
-               "enabled": true,
-               "retentionPolicy": {
-                 "enabled": false,
-                 "days": 0
-               }
+    syntax: >-
+      az monitor diagnostic-settings create --resource {ID} -n {name}
+         --event-hub-rule {eventHubRuleID} --storage-account {storageAccount}
+         --logs '[
+           {
+             "category": "WorkflowRuntime",
+             "enabled": true,
+             "retentionPolicy": {
+               "enabled": false,
+               "days": 0
              }
-           ]'
-           --metrics '[
-             {
-               "category": "WorkflowRuntime",
-               "enabled": true,
-               "retentionPolicy": {
-                 "enabled": false,
-                 "days": 0
-               }
+           }
+         ]'
+         --metrics '[
+           {
+             "category": "WorkflowRuntime",
+             "enabled": true,
+             "retentionPolicy": {
+               "enabled": false,
+               "days": 0
              }
-           ]'
-  parameters:
+           }
+         ]'
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the diagnostic settings.
     description: ''
+  - isRequired: true
+    name: --resource
+    summary: Name or ID of the target resource.
+    description: ''
+  optionalParameters:
   - name: --event-hub
     summary: Name or ID an event hub. If none is specified, the default event hub will be selected.
     description: ''
@@ -65,16 +74,6 @@ items:
   - name: --metrics
     summary: JSON encoded list of metric settings. Use '@{file}' to load from a file.
     description: ''
-  - name: --storage-account
-    summary: Name or ID of the storage account to send diagnostic logs to.
-    description: ''
-  - name: --workspace
-    summary: Name or ID of the Log Analytics workspace to send diagnostic logs to.
-    description: ''
-  - isRequired: true
-    name: --resource
-    summary: Name or ID of the target resource.
-    description: ''
   - name: --resource-group -g
     summary: Name of the resource group for the Log Analytics and Storage Account when the name of the service instead of a full resource ID is given.
     description: ''
@@ -87,22 +86,29 @@ items:
   - name: --resource-type
     summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines')."
     description: ''
+  - name: --storage-account
+    summary: Name or ID of the storage account to send diagnostic logs to.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  - name: --workspace
+    summary: Name or ID of the Log Analytics workspace to send diagnostic logs to.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_diagnostic_settings_delete
   name: az monitor diagnostic-settings delete
   summary: Deletes existing diagnostic settings for the specified resource.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az monitor diagnostic-settings delete --name
+                                          --resource
+                                          [--resource-group]
+                                          [--resource-namespace]
+                                          [--resource-parent]
+                                          [--resource-type]
+                                          [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the diagnostic setting.
@@ -111,8 +117,9 @@ items:
     name: --resource
     summary: Name or ID of the target resource.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-namespace
     summary: Target resource provider namespace.
@@ -126,25 +133,26 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_diagnostic_settings_list
   name: az monitor diagnostic-settings list
   summary: Gets the active diagnostic settings list for the specified resource.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az monitor diagnostic-settings list --resource
+                                        [--resource-group]
+                                        [--resource-namespace]
+                                        [--resource-parent]
+                                        [--resource-type]
+                                        [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --resource
     summary: Name or ID of the target resource.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-namespace
     summary: Target resource provider namespace.
@@ -158,19 +166,20 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_diagnostic_settings_show
   name: az monitor diagnostic-settings show
   summary: Gets the active diagnostic settings for the specified resource.
   description: ''
-  langs:
-  - azurecli
-  parameters:
+  syntax: >-
+    az monitor diagnostic-settings show --name
+                                        --resource
+                                        [--resource-group]
+                                        [--resource-namespace]
+                                        [--resource-parent]
+                                        [--resource-type]
+                                        [--subscription]
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the diagnostic setting.
@@ -179,8 +188,9 @@ items:
     name: --resource
     summary: Name or ID of the target resource.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-namespace
     summary: Target resource provider namespace.
@@ -194,23 +204,27 @@ items:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_diagnostic_settings_update
   name: az monitor diagnostic-settings update
   summary: Update diagnostic settings.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az monitor diagnostic-settings update --name
+                                          --resource
+                                          [--add]
+                                          [--force-string]
+                                          [--remove]
+                                          [--resource-group]
+                                          [--resource-namespace]
+                                          [--resource-parent]
+                                          [--resource-type]
+                                          [--set]
+                                          [--subscription]
   examples:
   - summary: Update diagnostic settings. (autogenerated)
-    syntax:
-      content: az monitor diagnostic-settings update --name MyDiagnosticSetting --resource myScaleSet --set retentionPolicy.days=365
-  parameters:
+    syntax: az monitor diagnostic-settings update --name MyDiagnosticSetting --resource myScaleSet --set retentionPolicy.days=365
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the diagnostic setting.
@@ -219,18 +233,7 @@ items:
     name: --resource
     summary: Name or ID of the target resource.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
-    description: ''
-  - name: --resource-namespace
-    summary: Target resource provider namespace.
-    description: ''
-  - name: --resource-parent
-    summary: Target resource parent path, if applicable.
-    description: ''
-  - name: --resource-type
-    summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines')."
-    description: ''
+  optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
@@ -240,61 +243,40 @@ items:
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --resource-namespace
+    summary: Target resource provider namespace.
+    description: ''
+  - name: --resource-parent
+    summary: Target resource parent path, if applicable.
+    description: ''
+  - name: --resource-type
+    summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines')."
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  source:
-    path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-    remote:
-      branch: dev
-      path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-      repo: https://github.com/Azure/azure-cli.git
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 commands:
-- uid: az_monitor_diagnostic_settings_categories
-  name: az monitor diagnostic-settings categories
-  summary: Retrieve service diagnostic settings categories.
-- uid: az_monitor_diagnostic_settings_categories_list
-  name: az monitor diagnostic-settings categories list
-  summary: List the diagnostic settings categories for the specified resource.
-- uid: az_monitor_diagnostic_settings_categories_show
-  name: az monitor diagnostic-settings categories show
-  summary: Gets the diagnostic settings category for the specified resource.
-- uid: az_monitor_diagnostic_settings_create
-  name: az monitor diagnostic-settings create
-  summary: Create diagnostic settings for the specified resource.
-- uid: az_monitor_diagnostic_settings_delete
-  name: az monitor diagnostic-settings delete
-  summary: Deletes existing diagnostic settings for the specified resource.
-- uid: az_monitor_diagnostic_settings_list
-  name: az monitor diagnostic-settings list
-  summary: Gets the active diagnostic settings list for the specified resource.
-- uid: az_monitor_diagnostic_settings_show
-  name: az monitor diagnostic-settings show
-  summary: Gets the active diagnostic settings for the specified resource.
-- uid: az_monitor_diagnostic_settings_subscription
-  name: az monitor diagnostic-settings subscription
-  summary: Manage diagnostic settings for subscription.
-- uid: az_monitor_diagnostic_settings_subscription_create
-  name: az monitor diagnostic-settings subscription create
-  summary: Create diagnostic settings for a subscription.
-- uid: az_monitor_diagnostic_settings_subscription_delete
-  name: az monitor diagnostic-settings subscription delete
-  summary: Deletes existing subscription diagnostic settings for the specified resource.
-- uid: az_monitor_diagnostic_settings_subscription_list
-  name: az monitor diagnostic-settings subscription list
-  summary: Gets the active subscription diagnostic settings list for the specified subscriptionId.
-- uid: az_monitor_diagnostic_settings_subscription_show
-  name: az monitor diagnostic-settings subscription show
-  summary: Gets the active subscription diagnostic settings for the specified resource.
-- uid: az_monitor_diagnostic_settings_subscription_update
-  name: az monitor diagnostic-settings subscription update
-  summary: Update diagnostic settings for a subscription.
-- uid: az_monitor_diagnostic_settings_update
-  name: az monitor diagnostic-settings update
-  summary: Update diagnostic settings.
+- az_monitor_diagnostic_settings_categories
+- az_monitor_diagnostic_settings_categories_list
+- az_monitor_diagnostic_settings_categories_show
+- az_monitor_diagnostic_settings_create
+- az_monitor_diagnostic_settings_delete
+- az_monitor_diagnostic_settings_list
+- az_monitor_diagnostic_settings_show
+- az_monitor_diagnostic_settings_subscription
+- az_monitor_diagnostic_settings_subscription_create
+- az_monitor_diagnostic_settings_subscription_delete
+- az_monitor_diagnostic_settings_subscription_list
+- az_monitor_diagnostic_settings_subscription_show
+- az_monitor_diagnostic_settings_subscription_update
+- az_monitor_diagnostic_settings_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -310,10 +292,10 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-doc_source_url_path: src/azure-cli/azure/cli/command_modules/monitor/_help.py
-original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-gitcommit: https://github.com/Azure/azure-cli/blob/4abc978de45d56273df6d91ccd1c39f695c7db2d/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-updated_at: 7/10/2020 12:08:08 AM
-ms.date: 07/10/2020
-description: Manage service diagnostic settings.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/4abc978de45d56273df6d91ccd1c39f695c7db2d/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  updated_at: 7/10/2020 12:08:08 AM
+  ms.date: 07/10/2020
+  description: Manage service diagnostic settings.

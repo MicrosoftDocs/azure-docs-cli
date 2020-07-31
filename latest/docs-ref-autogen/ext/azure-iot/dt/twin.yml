@@ -1,41 +1,34 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_azure-iot_az_dt_twin
-  name: az dt twin
-  summary: Manage and configure the digital twins of a Digital Twins instance.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_azure-iot_az_dt_twin_create
-  - ext_azure-iot_az_dt_twin_delete
-  - ext_azure-iot_az_dt_twin_query
-  - ext_azure-iot_az_dt_twin_show
-  - ext_azure-iot_az_dt_twin_update
+### YamlMime:AzureCLIGroup
+uid: ext_azure-iot_az_dt_twin
+name: az dt twin
+summary: Manage and configure the digital twins of a Digital Twins instance.
+description: ''
+directCommands:
 - uid: ext_azure-iot_az_dt_twin_create
   name: az dt twin create
   summary: Create a digital twin on an instance.
   description: --properties can be inline JSON or file path.
-  langs:
-  - azurecli
+  syntax: >-
+    az dt twin create --dt-name
+                      --dtmi
+                      --twin-id
+                      [--properties]
+                      [--resource-group]
   examples:
   - summary: Create a digital twin from an existing (prior-created) model.
-    syntax:
-      content: az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id}
+    syntax: az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id}
   - summary: Create a digital twin from an existing (prior-created) model. Instantiate with property values.
-    syntax:
-      content: "az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
+    syntax: "az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
   - summary: Create a digital twin with component from existing (prior-created) models. Instantiate with property values.
-    syntax:
-      content: >-
-        az dt twin create -n {instance_name} --dtmi dtmi:example:Room;1 --twin-id {twin_id} --properties '{
-            "Temperature": 10.2,
-            "Thermostat": {
-                "$metadata": {},
-                "setPointTemp": 23.12
-            }
-        }'
-  parameters:
+    syntax: >-
+      az dt twin create -n {instance_name} --dtmi dtmi:example:Room;1 --twin-id {twin_id} --properties '{
+          "Temperature": 10.2,
+          "Thermostat": {
+              "$metadata": {},
+              "setPointTemp": 23.12
+          }
+      }'
+  requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
     summary: Digital Twins instance name.
@@ -48,23 +41,25 @@ items:
     name: --twin-id -t
     summary: The digital twin Id.
     description: ''
+  optionalParameters:
   - name: --properties -p
     summary: Initial property values for instantiating a digital twin or related components. Provide file path or inline JSON.
     description: ''
   - name: --resource-group -g
-    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-iot_az_dt_twin_delete
   name: az dt twin delete
   summary: Remove a digital twin. All relationships referencing this twin must already be deleted.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az dt twin delete --dt-name
+                      --twin-id
+                      [--resource-group]
   examples:
   - summary: Remove a digital twin by Id.
-    syntax:
-      content: az dt twin delete -n {instance_name} --twin-id {twin_id}
-  parameters:
+    syntax: az dt twin delete -n {instance_name} --twin-id {twin_id}
+  requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
     summary: Digital Twins instance name.
@@ -73,23 +68,25 @@ items:
     name: --twin-id -t
     summary: The digital twin Id.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-iot_az_dt_twin_query
   name: az dt twin query
   summary: Query the digital twins of an instance. Allows traversing relationships and filtering by property values.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az dt twin query --dt-name
+                     --query-command
+                     [--cost {false, true}]
+                     [--resource-group]
   examples:
   - summary: Query all digital twins in target instance and project all attributes. Also show cost in query units.
-    syntax:
-      content: az dt twin query -n {instance_name} -q "select * from digitaltwins" --show-cost
+    syntax: az dt twin query -n {instance_name} -q "select * from digitaltwins" --show-cost
   - summary: Query by model and project all attributes.
-    syntax:
-      content: az dt twin query -n {instance_name} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:example:Room;2')"
-  parameters:
+    syntax: az dt twin query -n {instance_name} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:example:Room;2')"
+  requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
     summary: Digital Twins instance name.
@@ -98,24 +95,26 @@ items:
     name: --query-command -q
     summary: User query to be executed.
     description: ''
+  optionalParameters:
   - name: --cost --show-cost
     parameterValueGroup: false, true
     summary: Calculates and shows the query charge.
     description: ''
   - name: --resource-group -g
-    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-iot_az_dt_twin_show
   name: az dt twin show
   summary: Show the details of a digital twin.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az dt twin show --dt-name
+                    --twin-id
+                    [--resource-group]
   examples:
   - summary: Show the details of a digital twin.
-    syntax:
-      content: az dt twin show -n {instance_name} --twin-id {twin_id}
-  parameters:
+    syntax: az dt twin show -n {instance_name} --twin-id {twin_id}
+  requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
     summary: Digital Twins instance name.
@@ -124,30 +123,31 @@ items:
     name: --twin-id -t
     summary: The digital twin Id.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-iot_az_dt_twin_update
   name: az dt twin update
   summary: Update an instance digital twin via JSON patch specification.
   description: Updates to property values and $model elements may happen in the same request. Operations are limited to add, replace and remove.
-  langs:
-  - azurecli
+  syntax: >-
+    az dt twin update --dt-name
+                      --json-patch
+                      --twin-id
+                      [--resource-group]
   examples:
   - summary: Update a digital twin via JSON patch specification.
-    syntax:
-      content: "az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
+    syntax: "az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
   - summary: Update a digital twin via JSON patch specification.
-    syntax:
-      content: >-
-        az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '[
-          {"op":"replace", "path":"/Temperature", "value": 20.5},
-          {"op":"add", "path":"/Areas", "value": ["ControlSystem"]}
-        ]'
+    syntax: >-
+      az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '[
+        {"op":"replace", "path":"/Temperature", "value": 20.5},
+        {"op":"add", "path":"/Areas", "value": ["ControlSystem"]}
+      ]'
   - summary: Update a digital twin via JSON patch specification defined in a file.
-    syntax:
-      content: az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch ./my/patch/document.json
-  parameters:
+    syntax: az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch ./my/patch/document.json
+  requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
     summary: Digital Twins instance name.
@@ -160,58 +160,27 @@ items:
     name: --twin-id -t
     summary: The digital twin Id.
     description: ''
+  optionalParameters:
   - name: --resource-group -g
-    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 commands:
-- uid: ext_azure-iot_az_dt_twin_component
-  name: az dt twin component
-  summary: Show and update the digital twin components of a Digital Twins instance.
-- uid: ext_azure-iot_az_dt_twin_component_show
-  name: az dt twin component show
-  summary: Show details of a digital twin component.
-- uid: ext_azure-iot_az_dt_twin_component_update
-  name: az dt twin component update
-  summary: Update a digital twin component via JSON patch specification.
-- uid: ext_azure-iot_az_dt_twin_create
-  name: az dt twin create
-  summary: Create a digital twin on an instance.
-- uid: ext_azure-iot_az_dt_twin_delete
-  name: az dt twin delete
-  summary: Remove a digital twin. All relationships referencing this twin must already be deleted.
-- uid: ext_azure-iot_az_dt_twin_query
-  name: az dt twin query
-  summary: Query the digital twins of an instance. Allows traversing relationships and filtering by property values.
-- uid: ext_azure-iot_az_dt_twin_relationship
-  name: az dt twin relationship
-  summary: Manage and configure the digital twin relationships of a Digital Twins instance.
-- uid: ext_azure-iot_az_dt_twin_relationship_create
-  name: az dt twin relationship create
-  summary: Create a relationship between source and target digital twins.
-- uid: ext_azure-iot_az_dt_twin_relationship_delete
-  name: az dt twin relationship delete
-  summary: Delete a digital twin relationship on a Digital Twins instance.
-- uid: ext_azure-iot_az_dt_twin_relationship_list
-  name: az dt twin relationship list
-  summary: List the relationships of a digital twin.
-- uid: ext_azure-iot_az_dt_twin_relationship_show
-  name: az dt twin relationship show
-  summary: Show details of a digital twin relationship.
-- uid: ext_azure-iot_az_dt_twin_relationship_update
-  name: az dt twin relationship update
-  summary: Updates the properties of a relationship between two digital twins via JSON patch specification.
-- uid: ext_azure-iot_az_dt_twin_show
-  name: az dt twin show
-  summary: Show the details of a digital twin.
-- uid: ext_azure-iot_az_dt_twin_telemetry
-  name: az dt twin telemetry
-  summary: Test and validate the event routes and endpoints of a Digital Twins instance.
-- uid: ext_azure-iot_az_dt_twin_telemetry_send
-  name: az dt twin telemetry send
-  summary: Sends telemetry on behalf of a digital twin. If component path is provided the emitted telemetry is on behalf of the component.
-- uid: ext_azure-iot_az_dt_twin_update
-  name: az dt twin update
-  summary: Update an instance digital twin via JSON patch specification.
+- ext_azure-iot_az_dt_twin_component
+- ext_azure-iot_az_dt_twin_component_show
+- ext_azure-iot_az_dt_twin_component_update
+- ext_azure-iot_az_dt_twin_create
+- ext_azure-iot_az_dt_twin_delete
+- ext_azure-iot_az_dt_twin_query
+- ext_azure-iot_az_dt_twin_relationship
+- ext_azure-iot_az_dt_twin_relationship_create
+- ext_azure-iot_az_dt_twin_relationship_delete
+- ext_azure-iot_az_dt_twin_relationship_list
+- ext_azure-iot_az_dt_twin_relationship_show
+- ext_azure-iot_az_dt_twin_relationship_update
+- ext_azure-iot_az_dt_twin_show
+- ext_azure-iot_az_dt_twin_telemetry
+- ext_azure-iot_az_dt_twin_telemetry_send
+- ext_azure-iot_az_dt_twin_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -227,4 +196,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage and configure the digital twins of a Digital Twins instance.
+metadata:
+  description: Manage and configure the digital twins of a Digital Twins instance.

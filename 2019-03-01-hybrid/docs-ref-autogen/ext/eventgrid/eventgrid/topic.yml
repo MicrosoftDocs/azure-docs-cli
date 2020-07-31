@@ -1,40 +1,38 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_eventgrid_az_eventgrid_topic
-  name: az eventgrid topic
-  summary: Manage Azure Event Grid topics.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_eventgrid_az_eventgrid_topic_create
-  - ext_eventgrid_az_eventgrid_topic_delete
-  - ext_eventgrid_az_eventgrid_topic_list
-  - ext_eventgrid_az_eventgrid_topic_show
-  - ext_eventgrid_az_eventgrid_topic_update
+### YamlMime:AzureCLIGroup
+uid: ext_eventgrid_az_eventgrid_topic
+name: az eventgrid topic
+summary: Manage Azure Event Grid topics.
+description: ''
+directCommands:
 - uid: ext_eventgrid_az_eventgrid_topic_create
   name: az eventgrid topic create
   summary: Create a topic.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid topic create --location
+                              --name
+                              --resource-group
+                              [--identity {noidentity, systemassigned}]
+                              [--inbound-ip-rules]
+                              [--input-mapping-default-values]
+                              [--input-mapping-fields]
+                              [--input-schema {cloudeventschemav1_0, customeventschema, eventgridschema}]
+                              [--public-network-access {disabled, enabled}]
+                              [--sku {basic, premium}]
+                              [--tags]
   examples:
   - summary: Create a new topic.
-    syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2
+    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2
   - summary: Create a new topic with custom input mappings.
-    syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=myTopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
+    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=myTopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
   - summary: Create a new topic that accepts events published in CloudEvents V1.0 schema.
-    syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventschemav1_0
+    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --input-schema cloudeventschemav1_0
   - summary: Create a new topic which allows specific inbound ip rules with Basic Sku and system assigned identity
-    syntax:
-      content: az eventgrid topic create -g rg1 --name topic1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku Basic --identity systemassigned
-  parameters:
+    syntax: az eventgrid topic create -g rg1 --name topic1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku Basic --identity systemassigned
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --name -n
@@ -42,8 +40,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
     summary: The identity type of the resource (e.g., topic or domain).
@@ -78,88 +77,90 @@ items:
   name: az eventgrid topic delete
   summary: Delete a topic.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid topic delete --name
+                              --resource-group
   examples:
   - summary: Delete a topic.
-    syntax:
-      content: az eventgrid topic delete -g rg1 --name topic1
-  parameters:
+    syntax: az eventgrid topic delete -g rg1 --name topic1
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the topic.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_topic_list
   name: az eventgrid topic list
   summary: List available topics.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid topic list [--odata-query]
+                            [--resource-group]
   examples:
   - summary: List all topics in the current Azure subscription.
-    syntax:
-      content: az eventgrid topic list
+    syntax: az eventgrid topic list
   - summary: List all topics in a resource group.
-    syntax:
-      content: az eventgrid topic list -g rg1
+    syntax: az eventgrid topic list -g rg1
   - summary: List all topics in a resource group whose name contains the pattern "XYZ"
-    syntax:
-      content: az eventgrid topic list -g rg1 --odata-query "Contains(name, 'XYZ')"
+    syntax: az eventgrid topic list -g rg1 --odata-query "Contains(name, 'XYZ')"
   - summary: List all topics in a resource group except the domain with name "name1"
-    syntax:
-      content: az eventgrid topic list -g rg1 --odata-query "NOT (name eq 'name1')"
-  parameters:
+    syntax: az eventgrid topic list -g rg1 --odata-query "NOT (name eq 'name1')"
+  optionalParameters:
   - name: --odata-query
     summary: The query used to filter the results using OData syntax.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_topic_show
   name: az eventgrid topic show
   summary: Get the details of a topic.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid topic show --name
+                            --resource-group
   examples:
   - summary: Show the details of a topic.
-    syntax:
-      content: az eventgrid topic show -g rg1 -n topic1
+    syntax: az eventgrid topic show -g rg1 -n topic1
   - summary: Show the details of a topic based on resource ID.
-    syntax:
-      content: az eventgrid topic show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1
-  parameters:
+    syntax: az eventgrid topic show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/topics/topic1
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the topic.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_topic_update
   name: az eventgrid topic update
   summary: Update a topic.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid topic update --name
+                              --resource-group
+                              [--identity {noidentity, systemassigned}]
+                              [--inbound-ip-rules]
+                              [--public-network-access {disabled, enabled}]
+                              [--sku {basic, premium}]
+                              [--tags]
   examples:
   - summary: Update the properties of an existing topic with new sku, identity and public network access information.
-    syntax:
-      content: az eventgrid topic update -g rg1 --name topic1 --sku Premium --identity systemassigned --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --tags Dept=IT --sku basic
-  parameters:
+    syntax: az eventgrid topic update -g rg1 --name topic1 --sku Premium --identity systemassigned --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --tags Dept=IT --sku basic
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the topic.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
     summary: The identity type of the resource (e.g., topic or domain).
@@ -179,57 +180,23 @@ items:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
-- uid: ext_eventgrid_az_eventgrid_topic_create
-  name: az eventgrid topic create
-  summary: Create a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_delete
-  name: az eventgrid topic delete
-  summary: Delete a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_key
-  name: az eventgrid topic key
-  summary: Manage shared access keys of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_key_list
-  name: az eventgrid topic key list
-  summary: List shared access keys of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_key_regenerate
-  name: az eventgrid topic key regenerate
-  summary: Regenerate a shared access key of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_list
-  name: az eventgrid topic list
-  summary: List available topics.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection
-  name: az eventgrid topic private-endpoint-connection
-  summary: Manage private endpoint connections of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_approve
-  name: az eventgrid topic private-endpoint-connection approve
-  summary: Approve a private endpoint connection request for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_delete
-  name: az eventgrid topic private-endpoint-connection delete
-  summary: Delete a private endpoint connection for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_list
-  name: az eventgrid topic private-endpoint-connection list
-  summary: List the properties of all the private endpoint connections for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_reject
-  name: az eventgrid topic private-endpoint-connection reject
-  summary: Reject a private endpoint connection request for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_show
-  name: az eventgrid topic private-endpoint-connection show
-  summary: Display the properties of a private endpoint connection for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_link_resource
-  name: az eventgrid topic private-link-resource
-  summary: Manage private link resource of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_link_resource_list
-  name: az eventgrid topic private-link-resource list
-  summary: List the properties of all the private link resources for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_private_link_resource_show
-  name: az eventgrid topic private-link-resource show
-  summary: Display the properties of a private link resource for a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_show
-  name: az eventgrid topic show
-  summary: Get the details of a topic.
-- uid: ext_eventgrid_az_eventgrid_topic_update
-  name: az eventgrid topic update
-  summary: Update a topic.
+- ext_eventgrid_az_eventgrid_topic_create
+- ext_eventgrid_az_eventgrid_topic_delete
+- ext_eventgrid_az_eventgrid_topic_key
+- ext_eventgrid_az_eventgrid_topic_key_list
+- ext_eventgrid_az_eventgrid_topic_key_regenerate
+- ext_eventgrid_az_eventgrid_topic_list
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_approve
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_delete
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_list
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_reject
+- ext_eventgrid_az_eventgrid_topic_private_endpoint_connection_show
+- ext_eventgrid_az_eventgrid_topic_private_link_resource
+- ext_eventgrid_az_eventgrid_topic_private_link_resource_list
+- ext_eventgrid_az_eventgrid_topic_private_link_resource_show
+- ext_eventgrid_az_eventgrid_topic_show
+- ext_eventgrid_az_eventgrid_topic_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -245,4 +212,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage Azure Event Grid topics.
+metadata:
+  description: Manage Azure Event Grid topics.

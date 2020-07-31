@@ -1,40 +1,38 @@
-### YamlMime:UniversalReference
-items:
-- uid: ext_eventgrid_az_eventgrid_domain
-  name: az eventgrid domain
-  summary: Manage event domains.
-  description: ''
-  langs:
-  - azurecli
-  children:
-  - ext_eventgrid_az_eventgrid_domain_create
-  - ext_eventgrid_az_eventgrid_domain_delete
-  - ext_eventgrid_az_eventgrid_domain_list
-  - ext_eventgrid_az_eventgrid_domain_show
-  - ext_eventgrid_az_eventgrid_domain_update
+### YamlMime:AzureCLIGroup
+uid: ext_eventgrid_az_eventgrid_domain
+name: az eventgrid domain
+summary: Manage event domains.
+description: ''
+directCommands:
 - uid: ext_eventgrid_az_eventgrid_domain_create
   name: az eventgrid domain create
   summary: Create a domain.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid domain create --location
+                               --name
+                               --resource-group
+                               [--identity {noidentity, systemassigned}]
+                               [--inbound-ip-rules]
+                               [--input-mapping-default-values]
+                               [--input-mapping-fields]
+                               [--input-schema {cloudeventschemav1_0, customeventschema, eventgridschema}]
+                               [--public-network-access {disabled, enabled}]
+                               [--sku {basic, premium}]
+                               [--tags]
   examples:
   - summary: Create a new domain.
-    syntax:
-      content: az eventgrid domain create -g rg1 --name domain1 -l westus2
+    syntax: az eventgrid domain create -g rg1 --name domain1 -l westus2
   - summary: Create a new domain with custom input mappings.
-    syntax:
-      content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=mytopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
+    syntax: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema customeventschema --input-mapping-fields topic=mytopicField eventType=myEventTypeField --input-mapping-default-values subject=DefaultSubject dataVersion=1.0
   - summary: Create a new domain that accepts events published in CloudEvents V1.0 schema and maps a property mytopicfield to the topic name.
-    syntax:
-      content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema cloudeventschemav1_0 --input-mapping-fields topic=mytopicfield
+    syntax: az eventgrid domain create -g rg1 --name domain1 -l westus2 --input-schema cloudeventschemav1_0 --input-mapping-fields topic=mytopicfield
   - summary: Create a new domain which allows specific inbound ip rules.
-    syntax:
-      content: az eventgrid domain create -g rg1 --name domain1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku basic
-  parameters:
+    syntax: az eventgrid domain create -g rg1 --name domain1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku basic
+  requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=&lt;location&gt;`.'
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --name -n
@@ -42,8 +40,9 @@ items:
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
     summary: The identity type of the resource (e.g., topic or domain).
@@ -78,88 +77,90 @@ items:
   name: az eventgrid domain delete
   summary: Delete a domain.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid domain delete --name
+                               --resource-group
   examples:
   - summary: Delete a domain.
-    syntax:
-      content: az eventgrid domain delete -g rg1 --name domain1
-  parameters:
+    syntax: az eventgrid domain delete -g rg1 --name domain1
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_domain_list
   name: az eventgrid domain list
   summary: List available domains.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid domain list [--odata-query]
+                             [--resource-group]
   examples:
   - summary: List all domains in the current Azure subscription.
-    syntax:
-      content: az eventgrid domain list
+    syntax: az eventgrid domain list
   - summary: List all domains in a resource group.
-    syntax:
-      content: az eventgrid domain list -g rg1
+    syntax: az eventgrid domain list -g rg1
   - summary: List all domains in a resource group whose name contains the pattern "XYZ"
-    syntax:
-      content: az eventgrid domain list -g rg1 --odata-query "Contains(name, 'XYZ')"
+    syntax: az eventgrid domain list -g rg1 --odata-query "Contains(name, 'XYZ')"
   - summary: List all domains in a resource group except the domain with name "name1"
-    syntax:
-      content: az eventgrid domain list -g rg1 --odata-query "NOT (name eq 'name1')"
-  parameters:
+    syntax: az eventgrid domain list -g rg1 --odata-query "NOT (name eq 'name1')"
+  optionalParameters:
   - name: --odata-query
     summary: The query used to filter the results using OData syntax.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_domain_show
   name: az eventgrid domain show
   summary: Get the details of a domain.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid domain show --name
+                             --resource-group
   examples:
   - summary: Show the details of a domain.
-    syntax:
-      content: az eventgrid domain show -g rg1 -n domain1
+    syntax: az eventgrid domain show -g rg1 -n domain1
   - summary: Show the details of a domain based on resource ID.
-    syntax:
-      content: az eventgrid domain show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1
-  parameters:
+    syntax: az eventgrid domain show --ids /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.EventGrid/domains/domain1
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_eventgrid_az_eventgrid_domain_update
   name: az eventgrid domain update
   summary: Update a domain.
   description: ''
-  langs:
-  - azurecli
+  syntax: >-
+    az eventgrid domain update --name
+                               --resource-group
+                               [--identity {noidentity, systemassigned}]
+                               [--inbound-ip-rules]
+                               [--public-network-access {disabled, enabled}]
+                               [--sku {basic, premium}]
+                               [--tags]
   examples:
   - summary: Update the properties of an existing domain.
-    syntax:
-      content: az eventgrid domain update -g rg1 --name domain1 --sku Basic --identity noidentity --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --tags Dept=IT --sku basic
-  parameters:
+    syntax: az eventgrid domain update -g rg1 --name domain1 --sku Basic --identity noidentity --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --tags Dept=IT --sku basic
+  requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=&lt;name&gt;`.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
     summary: The identity type of the resource (e.g., topic or domain).
@@ -179,72 +180,28 @@ items:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
-- uid: ext_eventgrid_az_eventgrid_domain_create
-  name: az eventgrid domain create
-  summary: Create a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_delete
-  name: az eventgrid domain delete
-  summary: Delete a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_key
-  name: az eventgrid domain key
-  summary: Manage shared access keys of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_key_list
-  name: az eventgrid domain key list
-  summary: List shared access keys of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_key_regenerate
-  name: az eventgrid domain key regenerate
-  summary: Regenerate a shared access key of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_list
-  name: az eventgrid domain list
-  summary: List available domains.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection
-  name: az eventgrid domain private-endpoint-connection
-  summary: Manage private endpoint connection resources of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_approve
-  name: az eventgrid domain private-endpoint-connection approve
-  summary: Approve a private endpoint connection request for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_delete
-  name: az eventgrid domain private-endpoint-connection delete
-  summary: Delete a private endpoint connection for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_list
-  name: az eventgrid domain private-endpoint-connection list
-  summary: List the properties of all the private endpoint connections for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_reject
-  name: az eventgrid domain private-endpoint-connection reject
-  summary: Reject a private endpoint connection request for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_show
-  name: az eventgrid domain private-endpoint-connection show
-  summary: Display the properties of a private endpoint connection for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_link_resource
-  name: az eventgrid domain private-link-resource
-  summary: Manage private link resource of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_link_resource_list
-  name: az eventgrid domain private-link-resource list
-  summary: List the properties of all the private link resources for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_private_link_resource_show
-  name: az eventgrid domain private-link-resource show
-  summary: Display the properties of a private link resource for a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_show
-  name: az eventgrid domain show
-  summary: Get the details of a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_topic
-  name: az eventgrid domain topic
-  summary: Manage event domain topics.
-- uid: ext_eventgrid_az_eventgrid_domain_topic_create
-  name: az eventgrid domain topic create
-  summary: Create a domain topic under a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_topic_delete
-  name: az eventgrid domain topic delete
-  summary: Delete a domain topic under a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_topic_list
-  name: az eventgrid domain topic list
-  summary: List available topics in a domain.
-- uid: ext_eventgrid_az_eventgrid_domain_topic_show
-  name: az eventgrid domain topic show
-  summary: Get the details of a domain topic.
-- uid: ext_eventgrid_az_eventgrid_domain_update
-  name: az eventgrid domain update
-  summary: Update a domain.
+- ext_eventgrid_az_eventgrid_domain_create
+- ext_eventgrid_az_eventgrid_domain_delete
+- ext_eventgrid_az_eventgrid_domain_key
+- ext_eventgrid_az_eventgrid_domain_key_list
+- ext_eventgrid_az_eventgrid_domain_key_regenerate
+- ext_eventgrid_az_eventgrid_domain_list
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_approve
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_delete
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_list
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_reject
+- ext_eventgrid_az_eventgrid_domain_private_endpoint_connection_show
+- ext_eventgrid_az_eventgrid_domain_private_link_resource
+- ext_eventgrid_az_eventgrid_domain_private_link_resource_list
+- ext_eventgrid_az_eventgrid_domain_private_link_resource_show
+- ext_eventgrid_az_eventgrid_domain_show
+- ext_eventgrid_az_eventgrid_domain_topic
+- ext_eventgrid_az_eventgrid_domain_topic_create
+- ext_eventgrid_az_eventgrid_domain_topic_delete
+- ext_eventgrid_az_eventgrid_domain_topic_list
+- ext_eventgrid_az_eventgrid_domain_topic_show
+- ext_eventgrid_az_eventgrid_domain_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -260,4 +217,5 @@ globalParameters:
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
-description: Manage event domains.
+metadata:
+  description: Manage event domains.
