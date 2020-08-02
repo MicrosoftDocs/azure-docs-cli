@@ -1,6 +1,6 @@
 # Tips for using Azure CLI effectively
 
-For clarity, Bash scripts are used inline. Windows batch or PowerScript examples are listed in the appendix, which you can use to build similar examples.
+For clarity, Bash scripts are used inline. Windows batch or PowerShell examples are listed in the appendix, which you can use to build similar examples.
 
 ## Output formatting (json, table, or tsv)
 
