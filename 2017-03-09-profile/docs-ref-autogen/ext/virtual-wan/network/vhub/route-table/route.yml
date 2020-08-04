@@ -9,23 +9,27 @@ directCommands:
   summary: Add a route into route table of the virtual hub.
   description: ''
   syntax: >-
-    az network vhub route-table route add --destination-type {CIDR, Service}
+    az network vhub route-table route add --destination-type {CIDR, ResourceId, Service}
                                           --destinations
                                           --name
-                                          --next-hop-type {IPAddress}
-                                          --next-hops
+                                          --next-hop-type {IPAddress, ResourceId}
                                           --resource-group
                                           --vhub-name
+                                          [--next-hop]
+                                          [--next-hops]
                                           [--no-wait]
+                                          [--route-name]
   examples:
-  - summary: Add a route with CIDR destination into route table of the virtual hub.
+  - summary: Add a route with CIDR destination into route table of the virtual hub (route table v2).
     syntax: az network vhub route-table route add -n MyRouteTable -g MyResourceGroup --vhub-name MyVhub --destination-type CIDR --destinations "10.4.0.0/16" "10.6.0.0/16" --next-hop-type IPAddress --next-hops "10.0.0.68"
-  - summary: Add a route with Service destination into route table of the virtual hub.
+  - summary: Add a route with Service destination into route table of the virtual hub (route table v2).
     syntax: az network vhub route-table route add -n MyRouteTable -g MyResourceGroup --vhub-name MyVhub --destination-type Service --destinations Skype Sharepoint --next-hop-type IPAddress --next-hops "10.0.0.68"
+  - summary: Add a route with firewall as next hop into route table of the virtual hub (route table v3).
+    syntax: az network vhub route-table route add -n MyRouteTable -g MyResourceGroup --vhub-name MyVhub --destination-type CIDR --destinations "10.4.0.0/16" "10.6.0.0/16" --next-hop-type ResourceId --next-hop /subscriptions/MySub/resourceGroups/MyResourceGroup/providers/Microsoft.Network/azureFirewalls/MyFirewall
   requiredParameters:
   - isRequired: true
     name: --destination-type
-    parameterValueGroup: CIDR, Service
+    parameterValueGroup: CIDR, ResourceId, Service
     summary: The type of destinations.
     description: ''
   - isRequired: true
@@ -38,12 +42,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --next-hop-type
-    parameterValueGroup: IPAddress
-    summary: The type of next hops. Currently it only supports IP Address.
-    description: ''
-  - isRequired: true
-    name: --next-hops
-    summary: Space-separated list of IP address of the next hop.
+    parameterValueGroup: IPAddress, ResourceId
+    summary: The type of next hop. If --next-hops (v2) is provided, it should be IPAddress; if --next-hop (v3) is provided, it should be ResourceId.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -54,8 +54,17 @@ directCommands:
     summary: Name of the virtual hub.
     description: ''
   optionalParameters:
+  - name: --next-hop
+    summary: The resource ID of the next hop.
+    description: ''
+  - name: --next-hops
+    summary: Space-separated list of IP address of the next hop. Currently only one next hop is allowed for every route.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --route-name
+    summary: The name of the route.
     description: ''
 - uid: ext_virtual-wan_az_network_vhub_route_table_route_list
   name: az network vhub route-table route list
