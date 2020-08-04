@@ -543,20 +543,30 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_install_cli
   name: az aks install-cli
-  summary: Download and install kubectl, the Kubernetes command-line tool.
+  summary: Download and install kubectl, the Kubernetes command-line tool. Download and install kubelogin, a client-go credential (exec) plugin implementing azure authentication.
   description: ''
   syntax: >-
     az aks install-cli [--client-version]
                        [--install-location]
+                       [--kubelogin-install-location]
+                       [--kubelogin-version]
                        [--subscription]
   optionalParameters:
   - name: --client-version
     defaultValue: latest
-    summary: Version of the client to install.
+    summary: Version of kubectl to install.
     description: ''
   - name: --install-location
     defaultValue: ~/.azure-kubectl/kubectl.exe
     summary: Path at which to install kubectl.
+    description: ''
+  - name: --kubelogin-install-location
+    defaultValue: ~/.azure-kubelogin/kubelogin.exe
+    summary: Path at which to install kubelogin.
+    description: ''
+  - name: --kubelogin-version
+    defaultValue: latest
+    summary: Version of kubelogin to install.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -872,8 +882,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 0.0.0.0/32
   - summary: Update a AKS-managed AAD cluster with tenant ID or admin group object IDs.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
-  - summary: Update an existing AKS AAD-Integrated cluster to the new AKS-managed AAD experience.
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad
+  - summary: Migrate a AKS AAD-Integrated cluster or a non-AAD cluster to a AKS-managed AAD cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1249,6 +1259,7 @@ commands:
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
+- az_aks_nodepool_get_upgrades
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
@@ -1283,7 +1294,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/b0d94892483eb0afdce9dbff53d15dcbbb294639/src/azure-cli/azure/cli/command_modules/acs/_help.py
-  updated_at: 7/15/2020 7:48:32 AM
-  ms.date: 07/15/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/e94d2c8986ac07d2b92fb21a293444dfaa775047/src/azure-cli/azure/cli/command_modules/acs/_help.py
+  updated_at: 7/29/2020 2:19:25 AM
+  ms.date: 07/29/2020
   description: Manage Azure Kubernetes Services.

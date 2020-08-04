@@ -22,6 +22,7 @@ directCommands:
                         [--domain]
                         [--edgenode-size]
                         [--encryption-algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}]
+                        [--encryption-in-transit {false, true}]
                         [--encryption-key-name]
                         [--encryption-key-version]
                         [--encryption-vault-uri]
@@ -38,6 +39,8 @@ directCommands:
                         [--minimal-tls-version {1.0, 1.1, 1.2}]
                         [--no-validation-timeout]
                         [--no-wait]
+                        [--outbound-public-network-access-type {PublicLoadBalancer, UDR}]
+                        [--public-network-access-type {InboundAndOutbound, OutboundOnly}]
                         [--ssh-password]
                         [--ssh-public-key]
                         [--ssh-user]
@@ -72,6 +75,24 @@ directCommands:
       -p "HttpPassword1234!" \
 
       --storage-account MyStorageAccount --minimal-tls-version 1.2
+  - summary: Create a cluster which enables encryption in transit.
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" \
+
+      --storage-account MyStorageAccount --encryption-in-transit true
+  - summary: Create a cluster with private link settings.
+    syntax: >-
+      az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --subnet "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/subnet1" \
+
+      --public-network-access-type OutboundOnly --outbound-public-network-access-type PublicLoadBalancer
   - summary: Create a cluster with the Enterprise Security Package (ESP).
     syntax: >-
       az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
@@ -193,6 +214,10 @@ directCommands:
     parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
     summary: Algorithm identifier for encryption.
     description: ''
+  - name: --encryption-in-transit
+    parameterValueGroup: false, true
+    summary: Indicates whether enable encryption in transit.
+    description: ''
   - name: --encryption-key-name
     summary: Key name that is used for enabling disk encryption.
     description: ''
@@ -243,6 +268,14 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --outbound-public-network-access-type
+    parameterValueGroup: PublicLoadBalancer, UDR
+    summary: The outbound only public network access type.
+    description: ''
+  - name: --public-network-access-type
+    parameterValueGroup: InboundAndOutbound, OutboundOnly
+    summary: The public network access type.
     description: ''
   - name: --ssh-password -P
     summary: SSH password for the cluster nodes. If none specified, uses the HTTP password.
@@ -593,7 +626,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/efbcd5d69e369c987ca039dca12123b74759f119/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-  updated_at: 7/2/2020 3:09:29 AM
-  ms.date: 07/02/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/d8f306b22019c781488f53629fad55f30314c5d6/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+  updated_at: 7/24/2020 6:04:35 AM
+  ms.date: 07/24/2020
   description: Manage HDInsight resources.

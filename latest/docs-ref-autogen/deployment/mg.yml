@@ -36,6 +36,7 @@ directCommands:
   syntax: >-
     az deployment mg create --location
                             --management-group-id
+                            [--confirm-with-what-if]
                             [--handle-extended-json-format]
                             [--name]
                             [--no-prompt {false, true}]
@@ -44,6 +45,8 @@ directCommands:
                             [--subscription]
                             [--template-file]
                             [--template-uri]
+                            [--what-if-exclude-change-types {Create, Delete, Deploy, Ignore, Modify, NoChange}]
+                            [--what-if-result-format {FullResourcePayloads, ResourceIdOnly}]
   examples:
   - summary: Create a deployment at management group from a remote template file, using parameters from a local JSON file.
     syntax: >-
@@ -69,6 +72,9 @@ directCommands:
     summary: The management group id to create deployment at.
     description: ''
   optionalParameters:
+  - name: --confirm-with-what-if -c
+    summary: Instruct the command to run deployment What-If before executing the deployment. It then prompts you to acknowledge resource changes before it continues.
+    description: ''
   - name: --handle-extended-json-format -j
     summary: Support to handle extended template content including multiline and comments in deployment.
     description: ''
@@ -93,6 +99,15 @@ directCommands:
     description: ''
   - name: --template-uri -u
     summary: The URI to the template file.
+    description: ''
+  - name: --what-if-exclude-change-types -x
+    parameterValueGroup: Create, Delete, Deploy, Ignore, Modify, NoChange
+    summary: Space-separated list of resource change types to be excluded from What-If results. Applicable when --confirm-with-what-if is set.
+    description: ''
+  - name: --what-if-result-format -r
+    defaultValue: FullResourcePayloads
+    parameterValueGroup: FullResourcePayloads, ResourceIdOnly
+    summary: The format of What-If results. Applicable when `--confirm-with-what-if` is set.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_deployment_mg_delete
@@ -300,6 +315,71 @@ directCommands:
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+- uid: az_deployment_mg_what_if
+  name: az deployment mg what-if
+  summary: Execute a deployment What-If operation at management group scope.
+  description: ''
+  syntax: >-
+    az deployment mg what-if --location
+                             --management-group-id
+                             [--exclude-change-types {Create, Delete, Deploy, Ignore, Modify, NoChange}]
+                             [--name]
+                             [--no-pretty-print]
+                             [--no-prompt {false, true}]
+                             [--parameters]
+                             [--result-format {FullResourcePayloads, ResourceIdOnly}]
+                             [--subscription]
+                             [--template-file]
+                             [--template-uri]
+  examples:
+  - summary: Execute a deployment What-If operation at a management group.
+    syntax: az deployment mg what-if --management-group-id testmg --location westus --name rollout01 --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
+  - summary: Execute a deployment What-If operation at a management group with ResourceIdOnly format.
+    syntax: az deployment mg what-if --management-group-id testmg --location westus --name rollout01 --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json --result-format ResourceIdOnly
+  - summary: Execute a deployment What-If operation at a management group without pretty-printing the result.
+    syntax: az deployment mg what-if --management-group-id testmg --location westus --name rollout01 --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json --no-pretty-print
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: The location to store the deployment metadata.
+    description: ''
+  - isRequired: true
+    name: --management-group-id -m
+    summary: The management group id to create deployment at.
+    description: ''
+  optionalParameters:
+  - name: --exclude-change-types -x
+    parameterValueGroup: Create, Delete, Deploy, Ignore, Modify, NoChange
+    summary: Space-separated list of resource change types to be excluded from What-If results.
+    description: ''
+  - name: --name -n
+    summary: The deployment name.
+    description: ''
+  - name: --no-pretty-print
+    summary: Disable pretty-print for What-If results. When set, the output format type will be used.
+    description: ''
+  - name: --no-prompt
+    parameterValueGroup: false, true
+    summary: The option to disable the prompt of missing parameters for ARM template. When the value is true, the prompt requiring users to provide missing parameter will be ignored. The default value is false.
+    description: ''
+  - name: --parameters -p
+    summary: Supply deployment parameter values.
+    description: Parameters may be supplied from a file using the `@{path}` syntax, a JSON string, or as <KEY=VALUE> pairs. Parameters are evaluated in order, so when a value is assigned twice, the latter value will be used. It is recommended that you supply your parameters file first, and then override selectively using KEY=VALUE syntax.
+  - name: --result-format -r
+    defaultValue: FullResourcePayloads
+    parameterValueGroup: FullResourcePayloads, ResourceIdOnly
+    summary: The format of What-If results.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --template-file -f
+    summary: The path to the template file.
+    description: ''
+  - name: --template-uri -u
+    summary: The URI to the template file.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 commands:
 - az_deployment_mg_cancel
 - az_deployment_mg_create
@@ -309,6 +389,7 @@ commands:
 - az_deployment_mg_show
 - az_deployment_mg_validate
 - az_deployment_mg_wait
+- az_deployment_mg_what_if
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -327,7 +408,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/17064a23dc9885db8c851747c2be6c8ff4aa595f/src/azure-cli/azure/cli/command_modules/resource/_help.py
-  updated_at: 6/16/2020 5:44:37 AM
-  ms.date: 06/16/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/3da88657420b557637230aa3a2655d5f31f66356/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  updated_at: 7/31/2020 3:35:55 AM
+  ms.date: 07/31/2020
   description: Manage Azure Resource Manager template deployment at management group.
