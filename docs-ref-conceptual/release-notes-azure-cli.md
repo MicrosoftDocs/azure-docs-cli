@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/16/2020
+ms.date: 08/04/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,105 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 04, 2020
+
+Version 2.10.0
+
+### AKS
+
+* `az aks update`: Change --enable-aad argument to migrate a RBAC-enabled non-AAD cluster to a AKS-managed AAD cluster
+* `az aks install-cli`: Add --kubelogin-version and --kubelogin-install-location arguments to install kubelogin
+* Add az aks nodepool get-upgrades command
+
+### AMS
+
+* Fix #14021: az ams account sp is not idempotent
+
+### APIM
+
+* apim api import: support API import and enchance other api level cli commands
+
+### App Service
+
+* Fix #13035: Add validation for az webapp config access-restriction to avoid adding duplicates
+
+### AppConfig
+
+* Default to standard sku if not specified
+* [BREAKING CHANGE] Support settings with JSON content type
+
+### ARM
+
+* `az resource tag`: Fix the bug of managedApp tagging and some related test issues
+* `az deployment mg/tenant what-if`: Add support to management group and tenant level deployment What-If
+* `az deployment mg/tenant create`: Add --confirm-with-what-if/-c parameter.
+* `az deployment mg/tenant create`: Add --what-if-result-format/-r parameter.
+* `az deployment mg/tenant create`: Add --what-if-exclude-change-types/-x parameter.
+* `az tag`: az tag support for resource id parameter
+
+### Backup
+
+* Trigger AFS container/item discovery only when needed
+
+### CDN
+
+* Add private link fields to origin
+
+### Compute
+
+* `az vm/vmss create`: Select a valid username for user if the default username is invalid
+* `az vm update`: support cross tenant image
+* `az disk-access`: Add new command group to operate disk access resource
+* Support dedicated host group automatic placement
+* Support ppg and spg in VMSS orchestration mode
+
+### Config
+
+* `az config`: Add new `config` command module
+
+### Extension
+
+* Support automatically installing an extension if the extension of a command is not installed
+
+### HDInsight
+
+* Add 3 parameters to the command `az hdinsight create` to support private link and encryption in transit feature:
+
+### Iot Hub
+
+* Fix #7792: IoT Hub Create is not idempotent
+
+### IoT Central
+
+* Add paramater option list for iot central
+
+### KeyVault
+
+* `az keyvault key encrypt/decrypt`: add parameter `--data-type` for explicitly specifing the type of original data
+
+### Monitor
+
+* `az monitor log-analytics workspace data-export`: support event hub namespace as the destination.
+* `az monitor autoscale`: support namespace and dimensions for --condition
+
+### NetAppFiles
+
+* `az volume revert`:  Add Volume Revert to revert a volume to one of its snapshots.
+* [BREAKING CHANGE] Remove `az netappfiles mount-target`.
+* `az volume show`: Add site to Active Directory Properties
+
+### Network
+
+* `az application-gateway private-link add`: support to specify an existing subnet by ID
+* `az network application-gateway waf-policy create`: support version and type
+
+### Storage
+
+* Fix #10302: Support guess content-type when synchronizing files
+* `az storage blob lease`: Apply new api version for blob lease operations
+* `az storage fs access`: Support AAD credential in managing access control for ADLS Gen2 account
+* `az storage share-rm create/update`: add --access-tier to support access tier
 
 ## July 16, 2020
 

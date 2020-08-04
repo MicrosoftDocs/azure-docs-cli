@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/28/2020
+ms.date: 08/01/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -59,7 +59,7 @@ az extension list-available --output table
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.9 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
 | [express-route](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route) | 0.1.3 | Manage ExpressRoutes with preview features. | Yes |
 | [express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 0.1.1 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. |  |
-| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.8 | Manage networking Front Doors. |  |
+| [front-door](https://github.com/Azure/azure-cli-extensions/tree/master/src/front-door) | 1.0.9 | Manage networking Front Doors. |  |
 | [hack](https://github.com/Azure/azure-cli-extensions) | 0.4.2 | Microsoft Azure Command-Line Tools Hack Extension | Yes |
 | [hardware-security-modules](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension |  |
 | [healthcareapis](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension |  |
@@ -89,7 +89,7 @@ az extension list-available --output table
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.6.4 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 0.3.1 | Microsoft Azure Command-Line Tools spring-cloud Extension | Yes |
 | [storage-or-preview](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
-| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.11 | Provides a preview for upcoming storage features. | Yes |
+| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.2.12 | Provides a preview for upcoming storage features. | Yes |
 | [storagesync](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension |  |
 | [stream-analytics](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools stream-analytics Extension |  |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.4 | Support for subscription management preview. | Yes |

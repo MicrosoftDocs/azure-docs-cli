@@ -29,6 +29,8 @@ directCommands:
     syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com
   - summary: Create an endpoint with a custom domain origin with HTTP and HTTPS ports.
     syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 88 4444
+  - summary: Create an endpoint with a custom domain origin with private link enabled.
+    syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com 80 443 /subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Network/privateLinkServices/pls1 eastus "Please approve this request"
   - summary: Create an endpoint with a custom domain with compression and only HTTPS.
     syntax: az cdn endpoint create -g group -n endpoint --profile-name profile --origin www.example.com --no-http --enable-compression
   requiredParameters:
@@ -38,7 +40,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --origin
-    summary: 'Endpoint origin specified by the following space-delimited 3 tuple: `www.example.com http_port https_port`. The HTTP and HTTPsports are optional and will default to 80 and 443 respectively.'
+    summary: 'Endpoint origin specified by the following space-delimited 6 tuple: `www.example.com http_port https_port private_link_resource_id private_link_location private_link_approval_message`. The HTTP and HTTPS ports and the private link resource ID and location are optional. The HTTP and HTTPS ports default to 80 and 443, respectively. Private link fields are only valid for the sku Standard_Microsoft, and private_link_location is required if private_link_resource_id is set.'
     description: ''
   - isRequired: true
     name: --profile-name
@@ -71,7 +73,7 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --origin-host-header
-    summary: The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+    summary: The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
     description: ''
   - name: --origin-path
     summary: A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
@@ -380,7 +382,7 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --origin-host-header
-    summary: The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+    summary: The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
     description: ''
   - name: --origin-path
     summary: A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
@@ -487,7 +489,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/0bb45ecd541c1a6109ad67be4f45afe3ce47f2b5/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-  updated_at: 6/3/2020 1:56:07 AM
-  ms.date: 06/03/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/08856867924671d5aecba081e520f8c9bb0b40a6/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  updated_at: 7/30/2020 7:46:20 AM
+  ms.date: 07/30/2020
   description: Manage CDN endpoints.
