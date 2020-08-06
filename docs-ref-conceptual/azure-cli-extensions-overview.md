@@ -4,7 +4,7 @@ description: Using extensions with the Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 08/06/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -28,6 +28,8 @@ We also host a [list of extensions](azure-cli-extensions-list.md) on the documen
 
 ## Install extensions
 
+### Install extensions manually
+
 Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli-interactive
@@ -42,6 +44,22 @@ az extension add --source <URL-or-path>
 
 Once an extension is installed, it's found under the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on
 Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
+
+### Install extensions automatically
+
+Azure CLI also has the ability to install an extension dynamically based on the command you run if the command is from an extension that is not installed yet. You can enable the feature through configuration:
+```azurecli-interactive
+az config set extension.use_dynamic_install=yes_prompt
+```
+To use for automation without prompt:
+```azurecli-interactive
+az config set extension.use_dynamic_install=yes_without_prompt
+```
+
+By default, the command stops after the needed extension is installed and you need to rerun the command. You can make the command continue to run after the extension is installed:
+```azurecli-interactive
+az config set extension.run_after_dynamic_install=yes
+```
 
 ## Update extensions
 
