@@ -15,7 +15,7 @@ directCommands:
                                             [--value]
   examples:
   - summary: KustoClusterAddLanguageExtensions
-    syntax: az kusto cluster add-language-extension --cluster-name "KustoClusterRPTest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
+    syntax: az kusto cluster add-language-extension --cluster-name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -30,8 +30,15 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --value
-    summary: 'The list of language extensions. Expect value: language-extension-name=xx.'
-    description: ''
+    summary: The list of language extensions.
+    description: >-
+      Usage: --value language-extension-name=XX
+
+
+      language-extension-name: The language extension name.
+
+
+      Multiple actions can be specified by using more than one --value argument.
 - uid: ext_kusto_az_kusto_cluster_create
   name: az kusto cluster create
   summary: Create or update a Kusto cluster.
@@ -42,12 +49,12 @@ directCommands:
                             --resource-group
                             --sku
                             [--enable-disk-encryption {false, true}]
+                            [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
                             [--enable-streaming-ingest {false, true}]
                             [--identity-type {None, SystemAssigned}]
                             [--identity-user-assigned-identities]
                             [--key-vault-properties]
-                            [--language-extensions-value]
                             [--no-wait]
                             [--optimized-autoscale]
                             [--tags]
@@ -56,7 +63,7 @@ directCommands:
                             [--zones]
   examples:
   - summary: KustoClustersCreateOrUpdate
-    syntax: az kusto cluster create --cluster-name "KustoClusterRPTest4" --identity-type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="" key-vault-uri="" key-version="" --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
+    syntax: az kusto cluster create --cluster-name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -72,12 +79,24 @@ directCommands:
     description: ''
   - isRequired: true
     name: --sku
-    summary: 'The SKU of the cluster. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: name, capacity, tier.'
-    description: ''
+    summary: The SKU of the cluster.
+    description: >-
+      Usage: --sku name=XX capacity=XX tier=XX
+
+
+      name: Required. SKU name.
+
+      capacity: The number of instances of the cluster.
+
+      tier: Required. SKU tier.
   optionalParameters:
   - name: --enable-disk-encryption
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the cluster's disks are encrypted.
+    description: ''
+  - name: --enable-double-encryption
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates if double encryption is enabled.
     description: ''
   - name: --enable-purge
     parameterValueGroup: false, true
@@ -95,28 +114,58 @@ directCommands:
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
     description: ''
   - name: --key-vault-properties
-    summary: 'KeyVault properties for the cluster encryption. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: key-name, key-version, key-vault-uri.'
-    description: ''
-  - name: --language-extensions-value
-    summary: 'The list of language extensions. Expect value: language-extension-name=xx.'
-    description: ''
+    summary: KeyVault properties for the cluster encryption.
+    description: >-
+      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX
+
+
+      key-name: Required. The name of the key vault key.
+
+      key-version: Required. The version of the key vault key.
+
+      key-vault-uri: Required. The Uri of the key vault.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --optimized-autoscale
-    summary: 'Optimized auto scale definition. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: version, is-enabled, minimum, maximum.'
-    description: ''
+    summary: Optimized auto scale definition.
+    description: >-
+      Usage: --optimized-autoscale version=XX is-enabled=XX minimum=XX maximum=XX
+
+
+      version: Required. The version of the template defined, for instance 1.
+
+      is-enabled: Required. A boolean value that indicate if the optimized autoscale feature is enabled or not.
+
+      minimum: Required. Minimum allowed instances count.
+
+      maximum: Required. Maximum allowed instances count.
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --trusted-external-tenants
-    summary: "The cluster's external tenants. Expect value: value=xx."
-    description: ''
+    summary: The cluster's external tenants.
+    description: >-
+      Usage: --trusted-external-tenants value=XX
+
+
+      value: GUID representing an external tenant.
+
+
+      Multiple actions can be specified by using more than one --trusted-external-tenants argument.
   - name: --virtual-network-configuration
-    summary: 'Virtual network definition. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: subnet-id, engine-public-ip-id, data-management-public-ip-id.'
-    description: ''
+    summary: Virtual network definition.
+    description: >-
+      Usage: --virtual-network-configuration subnet-id=XX engine-public-ip-id=XX data-management-public-ip-id=XX
+
+
+      subnet-id: Required. The subnet resource id.
+
+      engine-public-ip-id: Required. Engine service's public IP address resource id.
+
+      data-management-public-ip-id: Required. Data management's service public IP address resource id.
   - name: --zones
-    summary: 'The availability zones of the cluster. Expected value: json-string/@json-file.'
+    summary: The availability zones of the cluster.
     description: ''
 - uid: ext_kusto_az_kusto_cluster_delete
   name: az kusto cluster delete
@@ -128,7 +177,7 @@ directCommands:
                             [--no-wait]
   examples:
   - summary: KustoClustersDelete
-    syntax: az kusto cluster delete --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster delete --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -154,7 +203,7 @@ directCommands:
                                               [--no-wait]
   examples:
   - summary: KustoClusterDetachFollowerDatabases
-    syntax: az kusto cluster detach-follower-database --cluster-name "KustoClusterRPTest4" --attached-database-configuration-name "myAttachedDatabaseConfiguration" --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/clusters/leader4" --resource-group "kustorptest"
+    syntax: az kusto cluster detach-follower-database --cluster-name "kustoclusterrptest4" --attached-database-configuration-name "myAttachedDatabaseConfiguration" --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/clusters/leader4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --attached-database-configuration-name
@@ -186,7 +235,7 @@ directCommands:
                                               [--no-wait]
   examples:
   - summary: KustoClusterDiagnoseVirtualNetwork
-    syntax: az kusto cluster diagnose-virtual-network --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster diagnose-virtual-network --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -221,7 +270,7 @@ directCommands:
                                             --resource-group
   examples:
   - summary: KustoClusterListFollowerDatabases
-    syntax: az kusto cluster list-follower-database --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-follower-database --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -240,7 +289,7 @@ directCommands:
                                              --resource-group
   examples:
   - summary: KustoClusterListLanguageExtensions
-    syntax: az kusto cluster list-language-extension --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-language-extension --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -259,7 +308,7 @@ directCommands:
                               [--resource-group]
   examples:
   - summary: KustoClustersListResourceSkus
-    syntax: az kusto cluster list-sku --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-sku --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   optionalParameters:
   - name: --cluster-name
     summary: The name of the Kusto cluster.
@@ -278,7 +327,7 @@ directCommands:
                                                [--value]
   examples:
   - summary: KustoClusterRemoveLanguageExtensions
-    syntax: az kusto cluster remove-language-extension --cluster-name "KustoClusterRPTest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
+    syntax: az kusto cluster remove-language-extension --cluster-name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -293,8 +342,15 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --value
-    summary: 'The list of language extensions. Expect value: language-extension-name=xx.'
-    description: ''
+    summary: The list of language extensions.
+    description: >-
+      Usage: --value language-extension-name=XX
+
+
+      language-extension-name: The language extension name.
+
+
+      Multiple actions can be specified by using more than one --value argument.
 - uid: ext_kusto_az_kusto_cluster_show
   name: az kusto cluster show
   summary: Gets a Kusto cluster.
@@ -304,7 +360,7 @@ directCommands:
                           --resource-group
   examples:
   - summary: KustoClustersGet
-    syntax: az kusto cluster show --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster show --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -324,7 +380,7 @@ directCommands:
                            [--no-wait]
   examples:
   - summary: KustoClustersStart
-    syntax: az kusto cluster start --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster start --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -348,7 +404,7 @@ directCommands:
                           [--no-wait]
   examples:
   - summary: KustoClustersStop
-    syntax: az kusto cluster stop --cluster-name "KustoClusterRPTest4" --resource-group "kustorptest"
+    syntax: az kusto cluster stop --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -370,12 +426,12 @@ directCommands:
     az kusto cluster update --cluster-name
                             --resource-group
                             [--enable-disk-encryption {false, true}]
+                            [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
                             [--enable-streaming-ingest {false, true}]
                             [--identity-type {None, SystemAssigned}]
                             [--identity-user-assigned-identities]
                             [--key-vault-properties]
-                            [--language-extensions-value]
                             [--location]
                             [--no-wait]
                             [--optimized-autoscale]
@@ -385,7 +441,7 @@ directCommands:
                             [--virtual-network-configuration]
   examples:
   - summary: KustoClustersUpdate
-    syntax: az kusto cluster update --cluster-name "KustoClusterRPTest4" --identity-type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
+    syntax: az kusto cluster update --cluster-name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -399,6 +455,10 @@ directCommands:
   - name: --enable-disk-encryption
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the cluster's disks are encrypted.
+    description: ''
+  - name: --enable-double-encryption
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates if double encryption is enabled.
     description: ''
   - name: --enable-purge
     parameterValueGroup: false, true
@@ -416,11 +476,16 @@ directCommands:
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
     description: ''
   - name: --key-vault-properties
-    summary: 'KeyVault properties for the cluster encryption. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: key-name, key-version, key-vault-uri.'
-    description: ''
-  - name: --language-extensions-value
-    summary: 'The list of language extensions. Expect value: language-extension-name=xx.'
-    description: ''
+    summary: KeyVault properties for the cluster encryption.
+    description: >-
+      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX
+
+
+      key-name: Required. The name of the key vault key.
+
+      key-version: Required. The version of the key vault key.
+
+      key-vault-uri: Required. The Uri of the key vault.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
@@ -428,24 +493,57 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --optimized-autoscale
-    summary: 'Optimized auto scale definition. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: version, is-enabled, minimum, maximum.'
-    description: ''
+    summary: Optimized auto scale definition.
+    description: >-
+      Usage: --optimized-autoscale version=XX is-enabled=XX minimum=XX maximum=XX
+
+
+      version: Required. The version of the template defined, for instance 1.
+
+      is-enabled: Required. A boolean value that indicate if the optimized autoscale feature is enabled or not.
+
+      minimum: Required. Minimum allowed instances count.
+
+      maximum: Required. Maximum allowed instances count.
   - name: --sku
-    summary: 'The SKU of the cluster. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: name, capacity, tier.'
-    description: ''
+    summary: The SKU of the cluster.
+    description: >-
+      Usage: --sku name=XX capacity=XX tier=XX
+
+
+      name: Required. SKU name.
+
+      capacity: The number of instances of the cluster.
+
+      tier: Required. SKU tier.
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --trusted-external-tenants
-    summary: "The cluster's external tenants. Expect value: value=xx."
-    description: ''
+    summary: The cluster's external tenants.
+    description: >-
+      Usage: --trusted-external-tenants value=XX
+
+
+      value: GUID representing an external tenant.
+
+
+      Multiple actions can be specified by using more than one --trusted-external-tenants argument.
   - name: --virtual-network-configuration
-    summary: 'Virtual network definition. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: subnet-id, engine-public-ip-id, data-management-public-ip-id.'
-    description: ''
+    summary: Virtual network definition.
+    description: >-
+      Usage: --virtual-network-configuration subnet-id=XX engine-public-ip-id=XX data-management-public-ip-id=XX
+
+
+      subnet-id: Required. The subnet resource id.
+
+      engine-public-ip-id: Required. Engine service's public IP address resource id.
+
+      data-management-public-ip-id: Required. Data management's service public IP address resource id.
 - uid: ext_kusto_az_kusto_cluster_wait
   name: az kusto cluster wait
-  summary: Wait for a managed Kusto cluster to reach a desired state.
-  description: If an operation on a cluster was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
+  summary: Place the CLI in a waiting state until a condition of the kusto cluster is met.
+  description: ''
   syntax: >-
     az kusto cluster wait --cluster-name
                           --resource-group
@@ -456,6 +554,13 @@ directCommands:
                           [--interval]
                           [--timeout]
                           [--updated]
+  examples:
+  - summary: Pause executing next line of CLI script until the kusto cluster is successfully created.
+    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --created
+  - summary: Pause executing next line of CLI script until the kusto cluster is successfully updated.
+    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --updated
+  - summary: Pause executing next line of CLI script until the kusto cluster is successfully deleted.
+    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --deleted
   requiredParameters:
   - isRequired: true
     name: --cluster-name
