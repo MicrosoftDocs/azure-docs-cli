@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/11/2020
+ms.date: 08/06/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -20,7 +20,7 @@ Version 2.10.1
 
 ### App Service
 
-* Fix # 9887 webapp and functionapp, support assigning/removing user managed identity
+* Fix #9887 webapp and functionapp, support assigning/removing user managed identity
 * Fix #1382, #14055: Update error messages for az webapp create and az webapp config container set
 * `az webapp up`: Fix default ASP selection logic when --plan parameter is not provided
 
