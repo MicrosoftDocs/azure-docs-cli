@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/04/2020
+ms.date: 08/06/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,32 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 11, 2020
+
+Version 2.10.1
+
+### App Service
+
+* Fix #9887 webapp and functionapp, support assigning/removing user managed identity
+* Fix #1382, #14055: Update error messages for az webapp create and az webapp config container set
+* `az webapp up`: Fix default ASP selection logic when --plan parameter is not provided
+
+### AppConfig
+
+* Support enabling/disabling PublicNetworkAccess during store creation
+
+### Compute
+
+* Support associating disk and snapshot with a disk-access resource
+
+### Lab
+
+* Fix for issue #7904 date validation bug in lab vm creation
+
+### Storage
+
+* `az storage blob upload-batch`: Fix issue #14660 with unpositional arguments
 
 ## August 04, 2020
 
