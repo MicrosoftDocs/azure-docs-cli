@@ -15,7 +15,7 @@ directCommands:
                                               --resource-group
                                               [--compression {GZip, None}]
                                               [--consumer-group]
-                                              [--data-format {AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT}]
+                                              [--data-format {APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE}]
                                               [--event-hub-resource-id]
                                               [--event-system-properties]
                                               [--location]
@@ -24,7 +24,7 @@ directCommands:
                                               [--table-name]
   examples:
   - summary: KustoDataConnectionsCreateOrUpdate
-    syntax: az kusto data-connection event-hub create --cluster-name "KustoClusterRPTest4" --data-connection-name "DataConnections8" --database-name "KustoDatabase8" --location "westus" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
+    syntax: az kusto data-connection event-hub create --cluster-name "kustoclusterrptest4" --data-connection-name "DataConnections8" --database-name "KustoDatabase8" --location "westus" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -51,14 +51,14 @@ directCommands:
     summary: The event hub consumer group.
     description: ''
   - name: --data-format
-    parameterValueGroup: AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT
+    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
   - name: --event-hub-resource-id
     summary: The resource ID of the event hub to be used to create a data connection.
     description: ''
   - name: --event-system-properties
-    summary: 'System properties of the event hub Expected value: json-string/@json-file.'
+    summary: System properties of the event hub.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -83,15 +83,16 @@ directCommands:
                                                                   [--compression {GZip, None}]
                                                                   [--consumer-group]
                                                                   [--data-connection-name]
-                                                                  [--data-format {AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT}]
+                                                                  [--data-format {APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE}]
                                                                   [--event-hub-resource-id]
                                                                   [--event-system-properties]
                                                                   [--location]
                                                                   [--mapping-rule-name]
+                                                                  [--no-wait]
                                                                   [--table-name]
   examples:
   - summary: KustoDataConnectionValidation
-    syntax: az kusto data-connection event-hub data-connection-validation --cluster-name "KustoClusterRPTest4" --database-name "KustoDatabase8" --data-connection-name "DataConnections8" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
+    syntax: az kusto data-connection event-hub data-connection-validation --cluster-name "kustoclusterrptest4" --database-name "KustoDatabase8" --data-connection-name "DataConnections8" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -117,20 +118,23 @@ directCommands:
     summary: The name of the data connection.
     description: ''
   - name: --data-format
-    parameterValueGroup: AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT
+    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
   - name: --event-hub-resource-id
     summary: The resource ID of the event hub to be used to create a data connection.
     description: ''
   - name: --event-system-properties
-    summary: 'System properties of the event hub Expected value: json-string/@json-file.'
+    summary: System properties of the event hub.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --mapping-rule-name
     summary: The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --table-name
     summary: The table where the data should be ingested. Optionally the table information can be added to each message.
@@ -146,7 +150,7 @@ directCommands:
                                               --resource-group
                                               [--compression {GZip, None}]
                                               [--consumer-group]
-                                              [--data-format {AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT}]
+                                              [--data-format {APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE}]
                                               [--event-hub-resource-id]
                                               [--event-system-properties]
                                               [--location]
@@ -155,7 +159,7 @@ directCommands:
                                               [--table-name]
   examples:
   - summary: KustoDataConnectionsUpdate
-    syntax: az kusto data-connection event-hub update --cluster-name "KustoClusterRPTest4" --data-connection-name "DataConnections8" --database-name "KustoDatabase8" --location "westus" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
+    syntax: az kusto data-connection event-hub update --cluster-name "kustoclusterrptest4" --data-connection-name "DataConnections8" --database-name "KustoDatabase8" --location "westus" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -182,14 +186,14 @@ directCommands:
     summary: The event hub consumer group.
     description: ''
   - name: --data-format
-    parameterValueGroup: AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT
+    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
   - name: --event-hub-resource-id
     summary: The resource ID of the event hub to be used to create a data connection.
     description: ''
   - name: --event-system-properties
-    summary: 'System properties of the event hub Expected value: json-string/@json-file.'
+    summary: System properties of the event hub.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
