@@ -44,7 +44,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | yes | Manage entities in an Azure IoT Hub Device Provisioning Service.
 | [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
 | [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
-| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | yes | Manage entities of an IoT Plug and Play model repository.
+| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | | Manage entities of an IoT Plug and Play model repository.
 
 ### Additional CLI commands for Azure services used by IoT
 
