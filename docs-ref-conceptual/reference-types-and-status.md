@@ -71,13 +71,13 @@ Although most commands and parameters for a single reference have a single statu
 
 | Full reference command | Parameters | Type | GA | Public preview | Experimental
 |-|-|-|-|-|-|
-| az network application-gateway create | All | Core | yes |
-| az network cmd2 create | --param2a | Core | yes |
-| az network cmd2 create | --param2b | Core | | yes
-| az network cmd3 create | All | Core | | | yes
-| az network cmd4 create | All |Extension | yes
-| az network cmd5 create | --param5a |Extension | yes
-| az network cmd5 create | --param5b |Extension | | yes
+| az network dns zone list | All | Core | yes |
+| az network dns zone create | --if-none-match | Core | yes |
+| az network dns zone create | --newParameter | Core | | yes
+| az network ?? create | All | Core | | | yes
+| az network vhub list | All |Extension | yes
+| az network vhub create | --sku |Extension | yes
+| az network vhub create | --newParameter |Extension | | yes
 | az network firewall create | All | Extension | | | yes
 
 > [!NOTE]
