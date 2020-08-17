@@ -47,16 +47,22 @@ Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ### Install extensions automatically
 
-Azure CLI also has the ability to install an extension dynamically based on the command you run if the command is from an extension that is not installed yet. You can enable the feature through configuration:
+When you run an extension command that is not installed, the Azure CLI can recognize the command you run, and automatically install the extension for you. This feature, referred to as **dynamic install**, is enabled through configuration.
 ```azurecli-interactive
 az config set extension.use_dynamic_install=yes_prompt
 ```
-To use for automation without prompt:
+
+Use the following configuration command to enable dynamic install without a prompt.
 ```azurecli-interactive
 az config set extension.use_dynamic_install=yes_without_prompt
 ```
 
-By default, the command stops after the needed extension is installed and you need to rerun the command. You can make the command continue to run after the extension is installed:
+Use the following configuration command to turn off the dynamic install feature to revert to the default behavior. The extension command will return a command-not-found error if the extension is not installed.
+```azurecli-interactive
+az config set extension.use_dynamic_install=no
+```
+
+By default, an extension command that prompts dynamic install will not continue to run. You can change the default behavior and make the command continue by setting the `run_after_dynamic_install` property to `yes`.
 ```azurecli-interactive
 az config set extension.run_after_dynamic_install=yes
 ```
