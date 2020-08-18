@@ -1,0 +1,212 @@
+### YamlMime:AzureCLIGroup
+uid: ext_azure-iot_az_iot_product_test
+name: az iot product test
+summary: Manage device tests for product certification.
+description: ''
+directCommands:
+- uid: ext_azure-iot_az_iot_product_test_create
+  name: az iot product test create
+  summary: Create a new product test for product certification.
+  description: ''
+  syntax: >-
+    az iot product test create [--at {ConnectionString, SymmetricKey, TPM, X509}]
+                               [--badge-type {IotDevice, IotEdgeCompatible, Pnp}]
+                               [--base-url]
+                               [--certificate-path]
+                               [--cf]
+                               [--connection-string]
+                               [--device-type {DevKit, FinishedProduct}]
+                               [--ek]
+                               [--models]
+                               [--product-id]
+                               [--skip-provisioning]
+                               [--validation-type {Certification, Test}]
+  examples:
+  - summary: Basic usage
+    syntax: az iot product test create --configuration-file {configuration_file}
+  - summary: Do not have service create provisioning configuration
+    syntax: az iot product test create --configuration-file {configuration_file} --skip-provisioning
+  - summary: Creating test with symmetric key attestation
+    syntax: az iot product test create --attestation-type SymmetricKey --device-type {device_type}
+  - summary: Creating test with TPM attestation
+    syntax: az iot product test create --attestation-type TPM --device-type {device_type} --endorsement-key {endorsement_key}
+  - summary: Creating test with x509 attestation
+    syntax: az iot product test create --attestation-type x509 --device-type {device_type} --certificate-path {certificate_path}
+  - summary: Creating test for Edge module
+    syntax: az iot product test create --attestation-type ConnectionString --device-type {device_type} --badge-type IotEdgeCompatible --connection-string {connection_string}
+  - summary: Creating test with symmetric key attestation and specified validation type
+    syntax: az iot product test create --attestation-type SymmetricKey --device-type {device_type} --validation-type Certification --product-id {product_id}
+  optionalParameters:
+  - name: --at --attestation-type
+    parameterValueGroup: ConnectionString, SymmetricKey, TPM, X509
+    summary: How the device will authenticate to testing service Device Provisioning Service.
+    description: ''
+  - name: --badge-type --bt
+    defaultValue: IotDevice
+    parameterValueGroup: IotDevice, IotEdgeCompatible, Pnp
+    summary: The type of certification badge.
+    description: ''
+  - name: --base-url
+    summary: Override certification service URL to allow testing in non-production environements.
+    description: ''
+  - name: --certificate-path --cp
+    summary: The path to the file containing the primary certificate. When choosing x509 as attestation type, one of the certificate path is required.
+    description: ''
+  - name: --cf --configuration-file
+    summary: Path to device test JSON file. If not specified, attestation and device definition parameters must be specified.
+    description: ''
+  - name: --connection-string --cs
+    summary: Edge module connection stringWhen choosing IotEdgeCompatible badge type, connection string and attestaion-type of connection string are required.
+    description: ''
+  - name: --device-type --dt
+    parameterValueGroup: DevKit, FinishedProduct
+    summary: Defines the type of device to be tested.
+    description: ''
+  - name: --ek --endorsement-key
+    summary: TPM endorsement key for a TPM device. When choosing TPM as attestation type, endorsement key is required.
+    description: ''
+  - name: --models -m
+    summary: Path containing Azure IoT Plug and Play interfaces implemented by the device being tested. When badge type is Pnp, models is required.
+    description: ''
+  - name: --product-id -p
+    summary: The submitted product id. Required when validation-type is 'Certification'.
+    description: ''
+  - name: --skip-provisioning --sp
+    summary: Determines whether the service skips generating provisioning configuration. Only applies to SymmetricKey and ConnectionString provisioning types.
+    description: ''
+  - name: --validation-type --vt
+    defaultValue: Test
+    parameterValueGroup: Certification, Test
+    summary: The type of validations testing to be performed.
+    description: ''
+- uid: ext_azure-iot_az_iot_product_test_search
+  name: az iot product test search
+  summary: Search product repository for testing data.
+  description: ''
+  syntax: >-
+    az iot product test search [--base-url]
+                               [--certificate-name]
+                               [--product-id]
+                               [--registration-id]
+  examples:
+  - summary: Search by product id
+    syntax: az iot product test search --product-id {product_id}
+  - summary: Search by DPS registration
+    syntax: az iot product test search --registration-id {registration_id}
+  - summary: Search by x509 certifcate common name (CN)
+    syntax: az iot product test search --certificate-name {certificate_name}
+  - summary: Search by multiple values
+    syntax: az iot product test search --product-id {product_id} --certificate-name {certificate_name}
+  optionalParameters:
+  - name: --base-url
+    summary: Override certification service URL to allow testing in non-production environements.
+    description: ''
+  - name: --certificate-name --cn
+    summary: The x509 Certificate Common Name (cn) used for Device Provisioning Service attestation.
+    description: ''
+  - name: --product-id -p
+    summary: The submitted product id.
+    description: ''
+  - name: --registration-id -r
+    summary: The regstration Id for Device Provisioning Service.
+    description: ''
+- uid: ext_azure-iot_az_iot_product_test_show
+  name: az iot product test show
+  summary: View product test data.
+  description: ''
+  syntax: >-
+    az iot product test show --test-id
+                             [--base-url]
+  examples:
+  - summary: Basic usage
+    syntax: az iot product test show --test-id {test_id}
+  requiredParameters:
+  - isRequired: true
+    name: --test-id -t
+    summary: The generated Id for the device certification test.
+    description: ''
+  optionalParameters:
+  - name: --base-url
+    summary: Override certification service URL to allow testing in non-production environements.
+    description: ''
+- uid: ext_azure-iot_az_iot_product_test_update
+  name: az iot product test update
+  summary: Update the product certification test data.
+  description: ''
+  syntax: >-
+    az iot product test update --test-id
+                               [--at {ConnectionString, SymmetricKey, TPM, X509}]
+                               [--badge-type {IotDevice, IotEdgeCompatible, Pnp}]
+                               [--base-url]
+                               [--certificate-path]
+                               [--cf]
+                               [--connection-string]
+                               [--ek]
+                               [--models]
+  examples:
+  - summary: Basic usage
+    syntax: az iot product test update --test-id {test_id} --configuration-file {configuration_file}
+  requiredParameters:
+  - isRequired: true
+    name: --test-id -t
+    summary: The generated Id for the device certification test.
+    description: ''
+  optionalParameters:
+  - name: --at --attestation-type
+    parameterValueGroup: ConnectionString, SymmetricKey, TPM, X509
+    summary: How the device will authenticate to testing service Device Provisioning Service.
+    description: ''
+  - name: --badge-type --bt
+    parameterValueGroup: IotDevice, IotEdgeCompatible, Pnp
+    summary: The type of certification badge.
+    description: ''
+  - name: --base-url
+    summary: Override certification service URL to allow testing in non-production environements.
+    description: ''
+  - name: --certificate-path --cp
+    summary: The path to the file containing the primary certificate. When choosing x509 as attestation type, one of the certificate path is required.
+    description: ''
+  - name: --cf --configuration-file
+    summary: Path to device test JSON file. If not specified, attestation and device definition parameters must be specified.
+    description: ''
+  - name: --connection-string --cs
+    summary: Edge module connection stringWhen choosing IotEdgeCompatible badge type, connection string and attestaion-type of connection string are required.
+    description: ''
+  - name: --ek --endorsement-key
+    summary: TPM endorsement key for a TPM device. When choosing TPM as attestation type, endorsement key is required.
+    description: ''
+  - name: --models -m
+    summary: Path containing Azure IoT Plug and Play interfaces implemented by the device being tested. When badge type is Pnp, models is required.
+    description: ''
+commands:
+- ext_azure-iot_az_iot_product_test_case
+- ext_azure-iot_az_iot_product_test_case_list
+- ext_azure-iot_az_iot_product_test_case_update
+- ext_azure-iot_az_iot_product_test_create
+- ext_azure-iot_az_iot_product_test_run
+- ext_azure-iot_az_iot_product_test_run_show
+- ext_azure-iot_az_iot_product_test_run_submit
+- ext_azure-iot_az_iot_product_test_search
+- ext_azure-iot_az_iot_product_test_show
+- ext_azure-iot_az_iot_product_test_task
+- ext_azure-iot_az_iot_product_test_task_create
+- ext_azure-iot_az_iot_product_test_task_delete
+- ext_azure-iot_az_iot_product_test_task_show
+- ext_azure-iot_az_iot_product_test_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage device tests for product certification.
