@@ -164,10 +164,15 @@ directCommands:
                                       [--auth-type {identity, key}]
                                       [--ik {false, true}]
                                       [--resource-group]
+  examples:
+  - summary: Export all device identities to a configured blob container using an inline SAS uri.
+    syntax: az iot hub device-identity export -n {iothub_name} --bcu {sas_uri}
+  - summary: Export all device identities to a configured blob container using a file path which contains SAS uri.
+    syntax: az iot hub device-identity export -n {iothub_name} --bcu {sas_uri_filepath}
   requiredParameters:
   - isRequired: true
     name: --bcu --blob-container-uri
-    summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication, you must supply an https:// URI.'
+    summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
     description: ''
   - isRequired: true
     name: --hub-name -n
@@ -222,6 +227,11 @@ directCommands:
                                       --obcu
                                       [--auth-type {identity, key}]
                                       [--resource-group]
+  examples:
+  - summary: Import all device identities from a blob using an inline SAS uri.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri}
+  - summary: Import all device identities from a blob using a file path which contains SAS uri.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri_filepath} --obcu {output_sas_uri_filepath}
   requiredParameters:
   - isRequired: true
     name: --hub-name -n
@@ -229,11 +239,11 @@ directCommands:
     description: ''
   - isRequired: true
     name: --ibcu --input-blob-container-uri
-    summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication, you must supply an https:// URI.'
+    summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
     description: ''
   - isRequired: true
     name: --obcu --output-blob-container-uri
-    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication, you must supply an https:// URI.'
+    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
     description: ''
   optionalParameters:
   - name: --auth-type --storage-authentication-type
@@ -476,6 +486,8 @@ directCommands:
     description: ''
 commands:
 - ext_azure-iot_az_iot_hub_device_identity_add_children
+- ext_azure-iot_az_iot_hub_device_identity_connection_string
+- ext_azure-iot_az_iot_hub_device_identity_connection_string_show
 - ext_azure-iot_az_iot_hub_device_identity_create
 - ext_azure-iot_az_iot_hub_device_identity_delete
 - ext_azure-iot_az_iot_hub_device_identity_export
