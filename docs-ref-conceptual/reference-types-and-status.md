@@ -72,11 +72,13 @@ Although most commands and parameters for a single reference have a single statu
 | Full reference command | Parameters | Type | GA | Public preview | Experimental
 |-|-|-|-|-|-|
 | az network dns zone list | All | Core | yes |
-| az network dns zone create | --if-none-match | Core | yes |
-| az network dns zone create | --newFutureParameter | Core | | yes
+| az network dns zone create | --name, --resource-group, --if-none-match, --parent-name | Core | yes |
+|  | --newFutureParameter1 | Core | | yes
+|  | --newFutureParameter2 | Core | | | yes
 | az network vhub list | All |Extension | yes
-| az network vhub create | --sku |Extension | yes
-| az network vhub create | --newFutureParameter |Extension | | yes
+| az network vhub create | --address-prefix, --name, --resource-group, -vwan, --location, --sku |Extension | yes
+|  | --newFutureParameter1 |Extension | | yes
+|  | --newFutureParameter2|Extension | | | yes
 | az network firewall create | All | Extension | | | yes
 
 > [!NOTE]
