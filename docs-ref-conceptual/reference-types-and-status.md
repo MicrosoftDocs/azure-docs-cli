@@ -40,7 +40,7 @@ All Azure CLI references can be run in Windows, macOS, Linux, Docker and Azure C
 
 ### Core
 
-Azure CLI references that have been published as a permanent part of the CLI are called **core references**.  All core references install with the Azure CLI and you cannot choose a subset of references.  If you run the CLI through Azure Cloud Shell, core references are always up to date.  See [Core reference overview](/cli/azure/reference-index) for a complete list of core reference commands.
+Azure CLI references that have been published as a permanent part of the CLI are called **core references**.  All core references install with the Azure CLI and you cannot choose a subset of references.  If you run the CLI through Azure Cloud Shell, core references are always up to date.  See [Core reference list for the Azure CLI](/cli/azure/reference-index) for a complete list of core reference commands.
 
 ### Extension
 
@@ -71,20 +71,18 @@ Although most commands and parameters for a single reference have a single statu
 
 | Full reference command | Parameters | Type | GA | Public preview | Experimental
 |-|-|-|-|-|-|
-| **az network dns zone list** | All | Core | yes |
-| **az network dns zone create** | --if-none-match | Core | yes |
-| **az network dns zone create** | --newParameter | Core | | yes
-| **az network ?? create** | All | Core | | | yes
-| **az network vhub list** | All |Extension | yes
-| **az network vhub create** | --sku |Extension | yes
-| **az network vhub create** | --newParameter |Extension | | yes
-| **az network firewall create** | All | Extension | | | yes
+| az network dns zone list | All | Core | yes |
+| az network dns zone create | --if-none-match | Core | yes |
+| az network dns zone create | --newFutureParameter | Core | | yes
+| az network vhub list | All |Extension | yes
+| az network vhub create | --sku |Extension | yes
+| az network vhub create | --newFutureParameter |Extension | | yes
+| az network firewall create | All | Extension | | | yes
 
 > [!NOTE]
 > Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
 
 ## See also
 
-- article 1
-- article 2
-- article 3
+- [Core reference list for the Azure CLI](/cli/azure/reference-index)
+- [Available extensions for the Azure CLI](azure-cli-extensions-list.md)
