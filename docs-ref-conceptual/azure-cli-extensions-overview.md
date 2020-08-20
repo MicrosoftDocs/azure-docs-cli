@@ -4,7 +4,7 @@ description: Using extensions with the Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 08/06/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -28,6 +28,8 @@ We also host a [list of extensions](azure-cli-extensions-list.md) on the documen
 
 ## Install extensions
 
+### Install extensions manually
+
 Once you have found an extension to install, use [az extension add](https://docs.microsoft.com/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli-interactive
@@ -42,6 +44,28 @@ az extension add --source <URL-or-path>
 
 Once an extension is installed, it's found under the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on
 Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
+
+### Install extensions automatically
+
+When you run an extension command that is not installed, the Azure CLI can recognize the command you run, and automatically install the extension for you starting from version `2.10.0`. This feature, referred to as **dynamic install**, is enabled through configuration.
+```azurecli-interactive
+az config set extension.use_dynamic_install=yes_prompt
+```
+
+Use the following configuration command to enable dynamic install without a prompt.
+```azurecli-interactive
+az config set extension.use_dynamic_install=yes_without_prompt
+```
+
+Use the following configuration command to turn off the dynamic install feature to revert to the default behavior. The extension command will return a command-not-found error if the extension is not installed.
+```azurecli-interactive
+az config set extension.use_dynamic_install=no
+```
+
+By default, an extension command that prompts dynamic install will not continue to run. You can change the default behavior and make the command continue by setting the `run_after_dynamic_install` property to `yes`.
+```azurecli-interactive
+az config set extension.run_after_dynamic_install=yes
+```
 
 ## Update extensions
 
