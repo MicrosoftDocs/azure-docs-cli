@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/06/2020
+ms.date: 08/25/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,125 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 25, 2020
+
+Version 2.11.0
+
+### AKS
+
+* Remove preview tag from Virtual Node add-on
+* Add AKS CMK argument in cluster creation
+* Set network profile when using basic load balancer.
+* Remove max pods validation from CLI and let preflight handle it
+* Fixing add-ons available in the help message in `az aks create`
+* Bring in support for cluster autoscaler profile in core CLI
+
+### AppService
+
+* `az webapp`: Add list-instances command
+* `az webapp ssh`: Add --instance parameter to connect to a specific instance
+* `az webapp create-remote-connection`: Add --instance parameter to connect to a specific instance
+* Fix #14758: az webapp create errors when creating windows app with --runtime dotnetcore
+* Fix #14701: Implement functionapp create --assign-identity
+* Fix #11244: `az webapp auth update`: Add optional parameter to update client-secret-certificate-thumbprint
+* `az functionapp keys`: Added commands that allow users to manage their function app keys
+* `az functionapp function`: Added commands that allow users to manage their individual functions
+* `az functionapp function keys`: Added commands that allow users to manage their function keys
+* Fix #14788: az webapp create not getting correct webapp when names are substrings
+* `az functionapp create`: Removed ability to create 2.x Functions in regions that don't support it
+
+### ARM
+
+* `az resource list`: Extend the return data of `createdTime`, `changedTime` and `provisioningState`
+* `az resource`: Add parameter `--latest-include-preview` to support using the latest api-version whether this version is preview
+
+### ARO
+
+* CLI enhancements, including route table checking permissions
+
+### Cloud
+
+* `az cloud register`: Fix registering clouds with a config file
+
+### Compute
+
+* Update VM SKUs that support accelerated networking
+* `az vm create`: Automatic in-guest patching
+* `az image builder create`: Add --vm-size, --os-disk-size, --vnet, --subnet
+* New command az vm assess-patches
+
+### Container
+
+* Fix #6235: Update help text for ports parameter in container create
+
+### Datalake Store
+
+* Fix issue #14545 for data lake join operation
+
+### EventHub
+
+* `az eventhubs eventhub create/update`: Change documentation of destination_name
+
+### Extension
+
+* Add `az extension list-versions` command to list all available versions of an extension
+
+### HDInsight
+
+* Support creating cluster with autoscale configuration and Support managing autoscale configuration
+* Support creating cluster with encryption at host
+
+### IoTCentral
+
+* CLI documentation improvements
+
+### Monitor
+
+* `az monitor metrics alert create`: support RG and Sub as the scope values
+
+### NetAppFiles
+
+* [BREAKING CHANGE] az netappfiles snapshot create: Removed file-system-id from parameters
+* [BREAKING CHANGE] az netappfiles snapshot show: Snapshot no longer has parameter file-system-id
+* `az netappfiles account`: Model ActiveDirectory has a new parameter backup_operators
+* `az netappfiles volume show`: Model dataProtection has a new parameter snapshot
+* `az netappfiles volume show`: Model Volume has a new parameter snapshot_directory_visible
+
+### Network
+
+* `az network dns export`: export FQDN for MX, PTR, NS and SRV type instead of relative path
+* Support private link for managed disks
+* `az network application-gateway auth-cert show`: Add example to demonstrate certificate format
+* `az network private-endpoint-connection`: support app configuration
+
+### RBAC
+
+* `az ad group create`: support specify description when creating a group
+* `az role definition create`: print human readable message instead of exception when assignableScope is an empty array
+* [BREAKING CHANGE] `az ad sp create-for-rbac`: change default permission of created certificate
+
+### SQL
+
+* `az sql server audit-policy`: Add sql server auditing support
+
+### Storage
+
+* `az storage blob copy start-batch`: Fix #6018 for --source-sas
+* `az storage account or-policy`: Support storage account object replication policy
+* Fix issue #14083 to upgrade azure-multiapi-storage package version for package issue and new api version support
+* `az storage blob generate-sas`: add examples for --ip  and refine error message
+* `az storage blob list`: Fix next_marker issue
+
+### Synapse
+
+* Add workspace, sparkpool, sqlpool related cmdlets
+* Add spark job releated commands based on track2 sdk
+* Add accesscontrol feature related commands based on track2 sdk
+
+### Upgrade
+
+* Add `az upgrade` command to upgrade azure cli and extensions
 
 ## August 11, 2020
 
