@@ -13,15 +13,21 @@ directCommands:
                         --resource-group
                         --type
                         [--assign-identity]
+                        [--autoscale-count]
+                        [--autoscale-max-count]
+                        [--autoscale-min-count]
+                        [--autoscale-type {Load, Schedule}]
                         [--cluster-admin-account]
                         [--cluster-admin-password]
                         [--cluster-configurations]
                         [--cluster-tier {Premium, Standard}]
                         [--cluster-users-group-dns]
                         [--component-version]
+                        [--days {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
                         [--domain]
                         [--edgenode-size]
                         [--encryption-algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}]
+                        [--encryption-at-host {false, true}]
                         [--encryption-in-transit {false, true}]
                         [--encryption-key-name]
                         [--encryption-key-version]
@@ -52,6 +58,8 @@ directCommands:
                         [--subnet]
                         [--subscription]
                         [--tags]
+                        [--time]
+                        [--timezone]
                         [--version]
                         [--vnet-name]
                         [--workernode-count]
@@ -82,6 +90,13 @@ directCommands:
       -p "HttpPassword1234!" \
 
       --storage-account MyStorageAccount --encryption-in-transit true
+  - summary: Create a cluster with encryption at host.
+    syntax: >-
+      az hdinsight create -t spark -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" \
+
+      --storage-account MyStorageAccount --encryption-at-host true
   - summary: Create a cluster with private link settings.
     syntax: >-
       az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
@@ -167,6 +182,22 @@ directCommands:
       --storage-account MyStorageAccount \
 
       --cluster-configuration @config.json
+  - summary: Create a cluster which Load-based Autoscale.
+    syntax: >-
+      az hdinsight create -t spark --version 3.6 -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" --storage-account MyStorageAccount \
+
+      --autoscale-type Load --autoscale-min-workernode-count 3 --autoscale-max-workernode-count 5
+  - summary: Create a cluster which Schedule-based Autoscale.
+    syntax: >-
+      az hdinsight create -t spark --version 3.6 -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" --storage-account MyStorageAccount \
+
+      --autoscale-type Schedule --timezone "Pacific Standard Time" --days Monday \
+
+      --time 09:00 --autoscale-workernode-count 5
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -183,6 +214,19 @@ directCommands:
   optionalParameters:
   - name: --assign-identity
     summary: The name or ID of user assigned identity.
+    description: ''
+  - name: --autoscale-count --autoscale-workernode-count
+    summary: The scheduled workernode count.
+    description: ''
+  - name: --autoscale-max-count --autoscale-max-workernode-count
+    summary: The max workernode count for Load-based atuoscale.
+    description: ''
+  - name: --autoscale-min-count --autoscale-min-workernode-count
+    summary: The minimal workernode count for Load-based atuoscale.
+    description: ''
+  - name: --autoscale-type
+    parameterValueGroup: Load, Schedule
+    summary: The autoscale type.
     description: ''
   - name: --cluster-admin-account
     summary: The domain user account that will have admin privileges on the cluster. Required only when create cluster with Enterprise Security Package.
@@ -203,6 +247,10 @@ directCommands:
   - name: --component-version
     summary: "The versions of various Hadoop components, in space-separated versions in 'component=version' format. Example: Spark=2.0 Hadoop=2.7.3 See also: <a href=\"https://docs.microsoft.com/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions\">https://docs.microsoft.com/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions</a>."
     description: ''
+  - name: --days
+    parameterValueGroup: Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    summary: A space-delimited list of schedule day.
+    description: ''
   - name: --domain
     summary: The name or resource ID of the user's Azure Active Directory Domain Service. Required only when create cluster with Enterprise Security Package.
     description: ''
@@ -213,6 +261,10 @@ directCommands:
     defaultValue: RSA-OAEP
     parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
     summary: Algorithm identifier for encryption.
+    description: ''
+  - name: --encryption-at-host
+    parameterValueGroup: false, true
+    summary: Indicates whether enable encryption at host or not.
     description: ''
   - name: --encryption-in-transit
     parameterValueGroup: false, true
@@ -310,6 +362,12 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --time
+    summary: The 24-hour time in the form of xx:xx in days.
+    description: ''
+  - name: --timezone
+    summary: The timezone for schedule autoscale type. Values from `az hdinsight autoscale list-timezones`.
     description: ''
   - name: --version -v
     defaultValue: default
@@ -585,6 +643,19 @@ commands:
 - az_hdinsight_application_list
 - az_hdinsight_application_show
 - az_hdinsight_application_wait
+- az_hdinsight_autoscale
+- az_hdinsight_autoscale_condition
+- az_hdinsight_autoscale_condition_create
+- az_hdinsight_autoscale_condition_delete
+- az_hdinsight_autoscale_condition_list
+- az_hdinsight_autoscale_condition_update
+- az_hdinsight_autoscale_condition_wait
+- az_hdinsight_autoscale_create
+- az_hdinsight_autoscale_delete
+- az_hdinsight_autoscale_list_timezones
+- az_hdinsight_autoscale_show
+- az_hdinsight_autoscale_update
+- az_hdinsight_autoscale_wait
 - az_hdinsight_create
 - az_hdinsight_delete
 - az_hdinsight_host
@@ -626,7 +697,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/d8f306b22019c781488f53629fad55f30314c5d6/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
-  updated_at: 7/24/2020 6:04:35 AM
-  ms.date: 07/24/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/e9beb25358db1e4ad0366fed4fa288bccc5d326a/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
+  updated_at: 8/19/2020 4:44:16 AM
+  ms.date: 08/19/2020
   description: Manage HDInsight resources.

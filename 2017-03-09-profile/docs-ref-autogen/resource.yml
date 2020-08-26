@@ -13,6 +13,7 @@ directCommands:
                        [--api-version]
                        [--id]
                        [--is-full-object]
+                       [--latest-include-preview]
                        [--location]
                        [--name]
                        [--namespace]
@@ -35,6 +36,8 @@ directCommands:
       az resource create -g myRG -n myWeb --resource-type Microsoft.web/sites \
           --properties "{ \"serverFarmId\":\"/subscriptions/{SubID}/resourcegroups/ \
               {ResourceGroup}/providers/Microsoft.Web/serverfarms/{ServicePlan}\" }"
+  - summary: Create a resource by using the latest api-version whether this version is a preview version.
+    syntax: az resource create -g myRG -n myApiApp --resource-type Microsoft.web/sites --is-full-object --properties @jsonConfigFile --latest-include-preview
   requiredParameters:
   - isRequired: true
     name: --properties -p
@@ -42,13 +45,16 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --id
     summary: Resource ID.
     description: ''
   - name: --is-full-object
-    summary: Indicates that the properties object includes other options such as location, tags, sku, and/or plan.
+    summary: Indicate that the properties object includes other options such as location, tags, sku, and/or plan.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -79,6 +85,7 @@ directCommands:
   syntax: >-
     az resource delete [--api-version]
                        [--ids]
+                       [--latest-include-preview]
                        [--name]
                        [--namespace]
                        [--parent]
@@ -92,12 +99,17 @@ directCommands:
     syntax: az resource delete --ids /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Web/sites/MyWebapp
   - summary: Delete a subnet using a resource identifier.
     syntax: az resource delete --ids /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet
+  - summary: Delete a virtual machine named 'MyVm' by using the latest api-version whether this version is a preview version.
+    syntax: az resource delete -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines" --latest-include-preview
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --name -n
     summary: 'The resource name. (Ex: myC).'
@@ -126,6 +138,7 @@ directCommands:
     az resource invoke-action --action
                               [--api-version]
                               [--ids]
+                              [--latest-include-preview]
                               [--name]
                               [--namespace]
                               [--parent]
@@ -154,10 +167,13 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --name -n
     summary: 'The resource name. (Ex: myC).'
@@ -261,6 +277,7 @@ directCommands:
     az resource show [--api-version]
                      [--ids]
                      [--include-response-body {false, true}]
+                     [--latest-include-preview]
                      [--name]
                      [--namespace]
                      [--parent]
@@ -278,9 +295,11 @@ directCommands:
     syntax: az resource show --ids /subscriptions/0b1f6471-1bf0-4dda-aec3-111111111111/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet
   - summary: Show an application gateway path rule.
     syntax: az resource show -g MyResourceGroup --namespace Microsoft.Network --parent applicationGateways/ag1/urlPathMaps/map1 --resource-type pathRules -n rule1
+  - summary: Show a virtual machine resource named 'MyVm' by using the latest api-version whether this version is a preview version.
+    syntax: az resource show -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines" --latest-include-preview
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
@@ -288,6 +307,9 @@ directCommands:
   - name: --include-response-body
     parameterValueGroup: false, true
     summary: Use if the default command output doesn't capture all of the property data.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --name -n
     summary: 'The resource name. (Ex: myC).'
@@ -317,6 +339,7 @@ directCommands:
                     [--api-version]
                     [--ids]
                     [--is-incremental]
+                    [--latest-include-preview]
                     [--name]
                     [--namespace]
                     [--parent]
@@ -330,6 +353,8 @@ directCommands:
     syntax: az resource tag --tags vmlist=vm1 --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Web/sites/{WebApp}
   - summary: Tag the virtual machine 'MyVm' with the key 'vmlist' and value 'vm1' incrementally. It doesn't empty the existing tags.
     syntax: az resource tag --tags vmlist=vm1 -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines" -i
+  - summary: Tag the virtual machine 'MyVm' with the key 'vmlist' and value 'vm1' by using the latest api-version whether this version is a preview version.
+    syntax: az resource tag --tags vmlist=vm1 -g MyResourceGroup -n MyVm --resource-type "Microsoft.Compute/virtualMachines" --latest-include-preview
   requiredParameters:
   - isRequired: true
     name: --tags
@@ -337,13 +362,16 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). If provided, no other "Resource Id" arguments should be specified.
     description: ''
   - name: --is-incremental -i
     summary: The option to add tags incrementally without deleting the original tags. If the key of new tag and original tag are duplicated, the original value will be overwritten.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --name -n
     summary: 'The resource name. (Ex: myC).'
@@ -374,6 +402,7 @@ directCommands:
                        [--force-string]
                        [--ids]
                        [--include-response-body {false, true}]
+                       [--latest-include-preview]
                        [--name]
                        [--namespace]
                        [--parent]
@@ -383,14 +412,16 @@ directCommands:
                        [--set]
                        [--subscription]
   examples:
-  - summary: Update a resource. (autogenerated)
-    syntax: az resource update --ids $id --set properties.connectionType=Proxy
+  - summary: Update a webapp. (autogenerated)
+    syntax: az resource update --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Web/sites/{WebApp} --set tags.key=value
+  - summary: Update a webapp by using the latest api-version whether this version is a preview version.
+    syntax: az resource update --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Web/sites/{WebApp} --set tags.key=value --latest-include-preview
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -401,6 +432,9 @@ directCommands:
   - name: --include-response-body
     parameterValueGroup: false, true
     summary: Use if the default command output doesn't capture all of the property data.
+    description: ''
+  - name: --latest-include-preview -v
+    summary: 'Indicate that the latest api-version will be used regardless of whether it is preview version (like 2020-01-01-preview) or not. For example, if the supported api-version of resource provider is 2020-01-01-preview and 2019-01-01: when passing in this parameter it will take the latest version 2020-01-01-preview, otherwise it will take the latest stable version 2019-01-01 without passing in this parameter.'
     description: ''
   - name: --name -n
     summary: 'The resource name. (Ex: myC).'
@@ -457,7 +491,7 @@ directCommands:
     syntax: az resource wait --exists --name MyResource --resource-group MyResourceGroup --resource-type subnets
   optionalParameters:
   - name: --api-version
-    summary: The api version of the resource (omit for latest).
+    summary: The api version of the resource (omit for the latest stable version).
     description: ''
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -548,7 +582,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/3da88657420b557637230aa3a2655d5f31f66356/src/azure-cli/azure/cli/command_modules/resource/_help.py
-  updated_at: 7/31/2020 3:35:55 AM
-  ms.date: 07/31/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/fd4f3a3aa3a33e9058d6f5df4b4b35a62058d0cf/src/azure-cli/azure/cli/command_modules/resource/_help.py
+  updated_at: 8/21/2020 4:24:57 AM
+  ms.date: 08/21/2020
   description: Manage Azure resources.

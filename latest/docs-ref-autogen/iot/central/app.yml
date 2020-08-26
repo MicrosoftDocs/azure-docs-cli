@@ -2,17 +2,15 @@
 uid: az_iot_central_app
 name: az iot central app
 summary: Manage IoT Central applications.
-description: ''
+description: Create, delete, view, and update your IoT Central apps.
 directCommands:
 - uid: az_iot_central_app_create
   name: az iot central app create
   summary: Create an IoT Central application.
   description: >-
-    For an introduction to IoT Central, see <a href="https://docs.microsoft.com/azure/iot-central/">https://docs.microsoft.com/azure/iot-central/</a>.
+    An IoT Central app is a cloud-based application that you can use to manage your IoT devices.
 
-    The F1 Sku is no longer supported. Please use the ST2 Sku (default) for app creation.
-
-    For more pricing information, please visit <a href="https://azure.microsoft.com/pricing/details/iot-central/">https://azure.microsoft.com/pricing/details/iot-central/</a>.
+    For more information on deploying an IoT Central app via CLI or a list of available arguments, visit <a href="https://aka.ms/iotcentral-manage-cli">https://aka.ms/iotcentral-manage-cli</a>.
   syntax: >-
     az iot central app create --name
                               --resource-group
@@ -23,14 +21,14 @@ directCommands:
                               [--subscription]
                               [--template]
   examples:
-  - summary: Create an IoT Central application in the standard pricing tier ST2, in the region of the resource group.
-    syntax: az iot central app create --resource-group MyResourceGroup --name my-app-resource --subdomain my-app-subdomain
-  - summary: Create an IoT Central application with the standard pricing tier ST2 in the 'westus' region, with a custom display name, based on the iotc-pnp-preview template.
-    syntax: az iot central app create --resource-group MyResourceGroup --name my-app-resource-name --sku ST2 --location westus --subdomain my-app-subdomain --template iotc-pnp-preview --display-name 'My Custom Display Name'
+  - summary: Create an IoT Central application in the region of the resource group using the default pricing SKU.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates
+  - summary: Create an IoT Central application the in the 'United States' region with the 'ST1' pricing plan and an industry template.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates -p ST1 -t iotc-distribution
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: IoT Central application name.
+    summary: Give your IoT Central app a unique name so you can find it later.This will be used as the resource name in the Azure portal and CLI.Avoid special characters `-` instead, use lower case letters (a-z), numbers (0-9), and dashes (-).
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -38,39 +36,42 @@ directCommands:
     description: ''
   - isRequired: true
     name: --subdomain -s
-    summary: Subdomain for the IoT Central URL. Each application must have a unique subdomain.
+    summary: Enter a unique URL. Your app will be accessible via https://<subdomain>.azureiotcentral.com/. Avoid special characters `-` instead, use lower case letters (a-z), numbers (0-9), and dashes (-).
     description: ''
   optionalParameters:
   - name: --display-name -d
-    summary: Custom display name for the IoT Central application. Default is resource name.
+    summary: Custom display name for the IoT Central app. This will be used in the IoT Central application manager to help you identify your app. Default value is the resource name.
     description: ''
   - name: --location -l
-    summary: Location of your IoT Central application. Default is the location of target resource group.
+    summary: Where your app's info and resources are stored. We will default to the location of the target resource group. See documentation for a full list of supported locations.
     description: ''
-  - name: --sku
+  - name: --sku -p
     defaultValue: ST2
     parameterValueGroup: F1, S1, ST0, ST1, ST2
-    summary: Pricing tier for IoT Central applications. Default value is ST2.
+    summary: Pricing plan for IoT Central application.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --template -t
-    summary: IoT Central application template name. Default is a custom application.
+    summary: IoT Central application template name. Default is "Custom application". See documentation for a list of available templates.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
 - uid: az_iot_central_app_delete
   name: az iot central app delete
   summary: Delete an IoT Central application.
-  description: ''
+  description: >-
+    Permanently delete your IoT Central app.
+
+    -Warning- This operation is irreversible. Once you've deleted your app, you cannot restore it.
   syntax: >-
     az iot central app delete --name
                               --resource-group
                               [--subscription]
                               [--yes]
   examples:
-  - summary: Delete an IoT Central application.
-    syntax: az iot central app delete --name MyIoTCentralApplication --resource-group MyResourceGroup
+  - summary: Delete an IoT Central app called 'my-first-iot-app'.
+    syntax: az iot central app delete -n my-first-iot-app -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -91,15 +92,15 @@ directCommands:
 - uid: az_iot_central_app_list
   name: az iot central app list
   summary: List IoT Central applications.
-  description: ''
+  description: All of the IoT Central apps that are part of your subscription.
   syntax: >-
     az iot central app list [--resource-group]
                             [--subscription]
   examples:
-  - summary: List all IoT Central applications in a subscription.
+  - summary: List all IoT Central apps in my subscription.
     syntax: az iot central app list
-  - summary: List all IoT Central applications in the resource group 'MyGroup'
-    syntax: az iot central app list --resource-group MyGroup
+  - summary: List all IoT Central apps in the resource group 'MyResourceGroup' within my subscription.
+    syntax: az iot central app list -g MyResourceGroup
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -111,14 +112,16 @@ directCommands:
 - uid: az_iot_central_app_show
   name: az iot central app show
   summary: Get the details of an IoT Central application.
-  description: ''
+  description: Information about your app, like app name, subdomain, pricing plan, and location.
   syntax: >-
     az iot central app show --name
                             [--resource-group]
                             [--subscription]
   examples:
-  - summary: Show an IoT Central application.
-    syntax: az iot central app show --name MyApp
+  - summary: Show details for an app named 'my-first-iot-app'.
+    syntax: az iot central app show -n my-first-iot-app
+  - summary: Show details for an app named 'my-first-iot-app' in the resource group 'MyResourceGroup'.
+    syntax: az iot central app show -n my-first-iot-app -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -135,7 +138,7 @@ directCommands:
 - uid: az_iot_central_app_update
   name: az iot central app update
   summary: Update metadata for an IoT Central application.
-  description: ''
+  description: Update metadata, like app name, subdomain, pricing plan, and location.
   syntax: >-
     az iot central app update --name
                               --resource-group
@@ -144,6 +147,11 @@ directCommands:
                               [--remove]
                               [--set]
                               [--subscription]
+  examples:
+  - summary: Update the SKU for 'my-first-iot-app'
+    syntax: az iot central app update -n my-first-iot-app -g MyResourceGroup --set sku.name=ST1
+  - summary: Change the subdomain for 'my-first-iot-app'
+    syntax: az iot central app update -n my-first-iot-app -g MyResourceGroup --set subdomain.name=my-iot-app-new
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -194,7 +202,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/503ec58081fd72515055810241b20e4255b6ce52/src/azure-cli/azure/cli/command_modules/iot/_help.py
-  updated_at: 7/16/2020 1:25:06 AM
-  ms.date: 07/16/2020
-  description: Manage IoT Central applications.
+  gitcommit: https://github.com/Azure/azure-cli/blob/19619028b1a2cdd30195a1f54c5bf570ca56299b/src/azure-cli/azure/cli/command_modules/iot/_help.py
+  updated_at: 8/10/2020 2:03:43 AM
+  ms.date: 08/10/2020
+  description: Create, delete, view, and update your IoT Central apps.
