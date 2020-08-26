@@ -4,6 +4,32 @@ name: az vm
 summary: Manage Linux or Windows virtual machines.
 description: ''
 directCommands:
+- uid: az_vm_assess_patches
+  name: az vm assess-patches
+  summary: Assess patches on a VM.
+  description: ''
+  syntax: >-
+    az vm assess-patches [--ids]
+                         [--name]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: Assess patches on a VM.
+    syntax: az vm assess-patches -g MyResourceGroup -n MyVm
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_auto_shutdown
   name: az vm auto-shutdown
   summary: Manage auto-shutdown for VM.
@@ -159,6 +185,7 @@ directCommands:
                  [--data-disk-encryption-sets]
                  [--data-disk-sizes-gb]
                  [--enable-agent {false, true}]
+                 [--enable-auto-update {false, true}]
                  [--encryption-at-host {false, true}]
                  [--ephemeral-os-disk {false, true}]
                  [--eviction-policy {Deallocate, Delete}]
@@ -178,6 +205,7 @@ directCommands:
                  [--os-disk-name]
                  [--os-disk-size-gb]
                  [--os-type {linux, windows}]
+                 [--patch-mode {AutomaticByOS, AutomaticByPlatform, Manual}]
                  [--plan-name]
                  [--plan-product]
                  [--plan-promotion-code]
@@ -318,6 +346,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
     description: ''
+  - name: --enable-auto-update
+    parameterValueGroup: false, true
+    summary: Indicate whether Automatic Updates is enabled for the Windows virtual machine.
+    description: ''
   - name: --encryption-at-host
     parameterValueGroup: false, true
     summary: Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
@@ -382,6 +414,10 @@ directCommands:
   - name: --os-type
     parameterValueGroup: linux, windows
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    description: ''
+  - name: --patch-mode
+    parameterValueGroup: AutomaticByOS, AutomaticByPlatform, Manual
+    summary: 'Mode of in-guest patching to IaaS virtual machine. Possible values are: Manual - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the paramater --enable-auto-update must be false. AutomaticByOS - The virtual machine will automatically be updated by the OS. The parameter --enable-auto-update must be true. AutomaticByPlatform - the virtual machine will automatically updated by the OS. The parameter --enable-agent and --enable-auto-update must be true.'
     description: ''
   - name: --plan-name
     summary: Plan name.
@@ -1305,6 +1341,7 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 commands:
+- az_vm_assess_patches
 - az_vm_auto_shutdown
 - az_vm_availability_set
 - az_vm_availability_set_convert
@@ -1440,7 +1477,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/d8973251b381f29c530c0f58afb7d5ae650351e2/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  updated_at: 8/5/2020 5:29:01 AM
-  ms.date: 08/05/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/ca680c9a68cb3823d3ffe642a0ac5345d33161b3/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  updated_at: 8/18/2020 9:00:08 AM
+  ms.date: 08/18/2020
   description: Manage Linux or Windows virtual machines.
