@@ -10,20 +10,20 @@ directCommands:
   description: ''
   syntax: >-
     az footprint measurement-endpoint create --endpoint
+                                             --measurement-endpoint-name
                                              --measurement-type
-                                             --name
                                              --profile-name
                                              --resource-group
                                              --weight
-                                             [--cold-path-sampling-percentage-rate-override]
                                              [--description]
                                              [--end-time-utc]
                                              [--experiment-id]
-                                             [--hot-path-sampling-percentage-rate]
                                              [--metadata]
                                              [--object-path]
+                                             [--sample-rate-cold]
+                                             [--sample-rate-hot]
+                                             [--sample-rate-warm]
                                              [--start-time-utc]
-                                             [--warm-path-sampling-percentage-rate]
   examples:
   - summary: Create or update a measurement endpoint.
     syntax: az footprint measurement-endpoint create --name "endpoint1" --endpoint "www.contoso.com" --experiment-id "664cdec4f07d4e1083c9b3969ee2c49b" --measurement-type 2 --object-path "/trans.gif" --weight 10 --profile-name "fpProfile1" --resource-group "rgName"
@@ -33,12 +33,12 @@ directCommands:
     summary: The value of a measurement endpoint.
     description: ''
   - isRequired: true
-    name: --measurement-type
-    summary: The type of a measurement endpoint.
+    name: --measurement-endpoint-name --name -n
+    summary: Name of the Footprint measurement endpoint resource.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the Footprint measurement endpoint resource.
+    name: --measurement-type
+    summary: The type of a measurement endpoint.
     description: ''
   - isRequired: true
     name: --profile-name
@@ -53,9 +53,6 @@ directCommands:
     summary: The weight of a measurement endpoint, higher weight means higher priority.
     description: ''
   optionalParameters:
-  - name: --cold-path-sampling-percentage-rate-override
-    summary: The percentual sampling rate for the cold path logging of a measurement endpoint.
-    description: ''
   - name: --description
     summary: The description of a measurement endpoint.
     description: ''
@@ -65,35 +62,39 @@ directCommands:
   - name: --experiment-id
     summary: The id of an experiment that a measurement endpoint is part of.
     description: ''
-  - name: --hot-path-sampling-percentage-rate
-    summary: The percentual sampling rate for the hot path logging of a measurement endpoint.
-    description: ''
   - name: --metadata
     summary: The metadata of a measurement endpoint.
     description: ''
   - name: --object-path
     summary: The path of the object that a measurement endpoint points to.
     description: ''
+  - name: --sample-rate-cold
+    summary: The percentual sampling rate for the cold path logging of a measurement endpoint.
+    description: ''
+  - name: --sample-rate-hot
+    summary: The percentual sampling rate for the hot path logging of a measurement endpoint.
+    description: ''
+  - name: --sample-rate-warm
+    summary: The percentual sampling rate for the warm path logging of a measurement endpoint.
+    description: ''
   - name: --start-time-utc
     summary: The start time that a measurement endpoint should be served.
-    description: ''
-  - name: --warm-path-sampling-percentage-rate
-    summary: The percentual sampling rate for the warm path logging of a measurement endpoint.
     description: ''
 - uid: ext_footprint_az_footprint_measurement_endpoint_delete
   name: az footprint measurement-endpoint delete
   summary: Deletes an existing measurement endpoint under a Footprint profile.
   description: ''
   syntax: >-
-    az footprint measurement-endpoint delete --name
+    az footprint measurement-endpoint delete --measurement-endpoint-name
                                              --profile-name
                                              --resource-group
+                                             [--yes]
   examples:
   - summary: Delete a measurement endpoint.
     syntax: az footprint measurement-endpoint delete --name "endpoint1" --profile-name "fpProfile1" --resource-group "rgName"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --measurement-endpoint-name --name -n
     summary: Name of the Footprint measurement endpoint resource.
     description: ''
   - isRequired: true
@@ -103,6 +104,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_footprint_az_footprint_measurement_endpoint_list
   name: az footprint measurement-endpoint list
@@ -128,7 +133,7 @@ directCommands:
   summary: Retrieves the information about a single measurement endpoint under a Footprint profile.
   description: ''
   syntax: >-
-    az footprint measurement-endpoint show --name
+    az footprint measurement-endpoint show --measurement-endpoint-name
                                            --profile-name
                                            --resource-group
   examples:
@@ -136,7 +141,7 @@ directCommands:
     syntax: az footprint measurement-endpoint show --name "endpoint1" --profile-name "fpProfile1" --resource-group "rgName"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --measurement-endpoint-name --name -n
     summary: Name of the Footprint measurement endpoint resource.
     description: ''
   - isRequired: true
@@ -153,35 +158,32 @@ directCommands:
   description: ''
   syntax: >-
     az footprint measurement-endpoint update --endpoint
+                                             --measurement-endpoint-name
                                              --measurement-type
-                                             --name
                                              --profile-name
                                              --resource-group
                                              --weight
-                                             [--cold-path-sampling-percentage-rate-override]
                                              [--description]
                                              [--end-time-utc]
                                              [--experiment-id]
-                                             [--hot-path-sampling-percentage-rate]
                                              [--metadata]
                                              [--object-path]
+                                             [--sample-rate-cold]
+                                             [--sample-rate-hot]
+                                             [--sample-rate-warm]
                                              [--start-time-utc]
-                                             [--warm-path-sampling-percentage-rate]
-  examples:
-  - summary: Create or update a measurement endpoint.
-    syntax: az footprint measurement-endpoint update --name "endpoint1" --endpoint "www.contoso.com" --experiment-id "664cdec4f07d4e1083c9b3969ee2c49b" --measurement-type 2 --object-path "/trans.gif" --weight 10 --profile-name "fpProfile1" --resource-group "rgName"
   requiredParameters:
   - isRequired: true
     name: --endpoint
     summary: The value of a measurement endpoint.
     description: ''
   - isRequired: true
-    name: --measurement-type
-    summary: The type of a measurement endpoint.
+    name: --measurement-endpoint-name --name -n
+    summary: Name of the Footprint measurement endpoint resource.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the Footprint measurement endpoint resource.
+    name: --measurement-type
+    summary: The type of a measurement endpoint.
     description: ''
   - isRequired: true
     name: --profile-name
@@ -196,9 +198,6 @@ directCommands:
     summary: The weight of a measurement endpoint, higher weight means higher priority.
     description: ''
   optionalParameters:
-  - name: --cold-path-sampling-percentage-rate-override
-    summary: The percentual sampling rate for the cold path logging of a measurement endpoint.
-    description: ''
   - name: --description
     summary: The description of a measurement endpoint.
     description: ''
@@ -208,20 +207,23 @@ directCommands:
   - name: --experiment-id
     summary: The id of an experiment that a measurement endpoint is part of.
     description: ''
-  - name: --hot-path-sampling-percentage-rate
-    summary: The percentual sampling rate for the hot path logging of a measurement endpoint.
-    description: ''
   - name: --metadata
     summary: The metadata of a measurement endpoint.
     description: ''
   - name: --object-path
     summary: The path of the object that a measurement endpoint points to.
     description: ''
+  - name: --sample-rate-cold
+    summary: The percentual sampling rate for the cold path logging of a measurement endpoint.
+    description: ''
+  - name: --sample-rate-hot
+    summary: The percentual sampling rate for the hot path logging of a measurement endpoint.
+    description: ''
+  - name: --sample-rate-warm
+    summary: The percentual sampling rate for the warm path logging of a measurement endpoint.
+    description: ''
   - name: --start-time-utc
     summary: The start time that a measurement endpoint should be served.
-    description: ''
-  - name: --warm-path-sampling-percentage-rate
-    summary: The percentual sampling rate for the warm path logging of a measurement endpoint.
     description: ''
 commands:
 - ext_footprint_az_footprint_measurement_endpoint_create
