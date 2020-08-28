@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/25/2020
+ms.date: 08/28/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,32 @@ ms.devlang: azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 28, 2020
+
+Version 2.11.1
+
+### ACR
+
+* Add Isolated Tier to Agent Pool
+* Add OCI Artifact Source Context
+
+### AKS
+
+* Fix aks cluster create issue
+
+### Cognitive Services
+
+* [BREAKING CHANGE] Show additional legal term for certain APIs
+
+### Network
+
+* [BREAKING CHANGE] Allow to create both public and private IP while creating an Application Gateway
+* `az network list-service-tags`: add details on location parameter use to the help message
+
+### Storage
+
+* `az storage blob list`: Support OR properties with new api version
 
 ## August 25, 2020
 
