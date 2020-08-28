@@ -16,12 +16,12 @@ directCommands:
                       [--resource-group]
   examples:
   - summary: Create a digital twin from an existing (prior-created) model.
-    syntax: az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id}
+    syntax: az dt twin create -n {instance_or_hostname} --dtmi dtmi:example:Room;1 --twin-id {twin_id}
   - summary: Create a digital twin from an existing (prior-created) model. Instantiate with property values.
-    syntax: "az dt twin create -n {instance_name} --dtmi urn:azureiot:DeviceManagement:DeviceInformation:1 --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
+    syntax: "az dt twin create -n {instance_or_hostname} --dtmi dtmi:com:example:DeviceInformation;1 --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
   - summary: Create a digital twin with component from existing (prior-created) models. Instantiate with property values.
     syntax: >-
-      az dt twin create -n {instance_name} --dtmi dtmi:example:Room;1 --twin-id {twin_id} --properties '{
+      az dt twin create -n {instance_or_hostname} --dtmi dtmi:com:example:TemperatureController;1 --twin-id {twin_id} --properties '{
           "Temperature": 10.2,
           "Thermostat": {
               "$metadata": {},
@@ -31,7 +31,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --dtmi --model-id -m
@@ -58,11 +58,11 @@ directCommands:
                       [--resource-group]
   examples:
   - summary: Remove a digital twin by Id.
-    syntax: az dt twin delete -n {instance_name} --twin-id {twin_id}
+    syntax: az dt twin delete -n {instance_or_hostname} --twin-id {twin_id}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --twin-id -t
@@ -83,13 +83,13 @@ directCommands:
                      [--resource-group]
   examples:
   - summary: Query all digital twins in target instance and project all attributes. Also show cost in query units.
-    syntax: az dt twin query -n {instance_name} -q "select * from digitaltwins" --show-cost
+    syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins" --show-cost
   - summary: Query by model and project all attributes.
-    syntax: az dt twin query -n {instance_name} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:example:Room;2')"
+    syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:example:Room;2')"
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --query-command -q
@@ -113,11 +113,11 @@ directCommands:
                     [--resource-group]
   examples:
   - summary: Show the details of a digital twin.
-    syntax: az dt twin show -n {instance_name} --twin-id {twin_id}
+    syntax: az dt twin show -n {instance_or_hostname} --twin-id {twin_id}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --twin-id -t
@@ -138,19 +138,19 @@ directCommands:
                       [--resource-group]
   examples:
   - summary: Update a digital twin via JSON patch specification.
-    syntax: "az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
+    syntax: "az dt twin update -n {instance_or_hostname} --twin-id {twin_id} --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
   - summary: Update a digital twin via JSON patch specification.
     syntax: >-
-      az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch '[
+      az dt twin update -n {instance_or_hostname} --twin-id {twin_id} --json-patch '[
         {"op":"replace", "path":"/Temperature", "value": 20.5},
         {"op":"add", "path":"/Areas", "value": ["ControlSystem"]}
       ]'
   - summary: Update a digital twin via JSON patch specification defined in a file.
-    syntax: az dt twin update -n {instance_name} --twin-id {twin_id} --json-patch ./my/patch/document.json
+    syntax: az dt twin update -n {instance_or_hostname} --twin-id {twin_id} --json-patch ./my/patch/document.json
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --json-patch --patch

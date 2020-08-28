@@ -62,16 +62,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: ext_azure-iot_az_iot_device_c2d_message_receive
-  name: az iot device c2d-message receive
-  summary: Receive a cloud-to-device message.
+- uid: ext_azure-iot_az_iot_device_c2d_message_purge
+  name: az iot device c2d-message purge
+  summary: Purge cloud-to-device message queue for a target device.
   description: ''
   syntax: >-
-    az iot device c2d-message receive --device-id
-                                      [--hub-name]
-                                      [--lock-timeout]
-                                      [--login]
-                                      [--resource-group]
+    az iot device c2d-message purge --device-id
+                                    [--hub-name]
+                                    [--login]
+                                    [--resource-group]
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -81,12 +80,61 @@ directCommands:
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_device_c2d_message_receive
+  name: az iot device c2d-message receive
+  summary: Receive a cloud-to-device message.
+  description: 'Note: Only one message ack argument [--complete, --reject, --abandon] will be accepted.'
+  syntax: >-
+    az iot device c2d-message receive --device-id
+                                      [--abandon {false, true}]
+                                      [--complete {false, true}]
+                                      [--hub-name]
+                                      [--lock-timeout]
+                                      [--login]
+                                      [--reject {false, true}]
+                                      [--resource-group]
+  examples:
+  - summary: Basic usage
+    syntax: az iot device c2d-message receive -d {device_id} -n {hub_name} -g {resource_group}
+  - summary: Receive a message and set a lock timeout of 30 seconds for that message
+    syntax: az iot device c2d-message receive -d {device_id} -n {hub_name} -g {resource_group} --lt {30}
+  - summary: Receive a message and ack it as 'complete' after it is received
+    syntax: az iot device c2d-message receive -d {device_id} -n {hub_name} -g {resource_group} --complete
+  - summary: Receive a message and reject it after it is received
+    syntax: az iot device c2d-message receive -d {device_id} -n {hub_name} -g {resource_group} --reject
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --abandon
+    parameterValueGroup: false, true
+    summary: Abandon the cloud-to-device message after receipt.
+    description: ''
+  - name: --complete
+    parameterValueGroup: false, true
+    summary: Complete the cloud-to-device message after receipt.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
   - name: --lock-timeout --lt
     defaultValue: "60"
     summary: Specifies the amount of time a message will be invisible to other receive calls.
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --reject
+    parameterValueGroup: false, true
+    summary: Reject the cloud-to-device message after receipt.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -213,6 +261,7 @@ directCommands:
 commands:
 - ext_azure-iot_az_iot_device_c2d_message_abandon
 - ext_azure-iot_az_iot_device_c2d_message_complete
+- ext_azure-iot_az_iot_device_c2d_message_purge
 - ext_azure-iot_az_iot_device_c2d_message_receive
 - ext_azure-iot_az_iot_device_c2d_message_reject
 - ext_azure-iot_az_iot_device_c2d_message_send
