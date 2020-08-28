@@ -37,6 +37,8 @@ directCommands:
     syntax: az acr build -r MyRegistry .
   - summary: Queue a remote GitHub context as a Windows build, tag it, and push it to the registry.
     syntax: az acr build -r MyRegistry https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --platform windows
+  - summary: Queue a remote OCI Artifact context build.
+    syntax: az acr build -r MyRegistry oci://myregistry.azurecr.io/myartifact:mytag
   - summary: Queue a local context as a Linux build on arm/v7 architecture, tag it, and push it to the registry.
     syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry . --platform linux/arm/v7
   requiredParameters:
@@ -92,7 +94,7 @@ directCommands:
     summary: The timeout in seconds.
     description: ''
   - name: <SOURCE_LOCATION>
-    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>').
+    summary: The local source code directory path (e.g., './src'), or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>'), or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag').
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_check_health
@@ -394,6 +396,8 @@ directCommands:
     syntax: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f hello-world.yaml
   - summary: Queue a remote git context with streaming logs and runs the task on Linux platform.
     syntax: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f build-hello-world.yaml --platform linux
+  - summary: Queue a remote OCI Artifact context and runs the task.
+    syntax: az acr run -r MyRegistry oci://myregistry.azurecr.io/myartifact:mytag -f hello-world.yaml
   requiredParameters:
   - isRequired: true
     name: --registry -r
@@ -444,7 +448,7 @@ directCommands:
     summary: The task values file path relative to the source context.
     description: ''
   - name: <SOURCE_LOCATION>
-    summary: The local source code directory path (e.g., './src') or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>') or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>'). If '/dev/null' is specified, the value will be set to None and ignored.
+    summary: The local source code directory path (e.g., './src'), or the URL to a git repository (e.g., '<a href="https://github.com/Azure-Samples/acr-build-helloworld-node.git">https://github.com/Azure-Samples/acr-build-helloworld-node.git</a>'), or a remote tarball (e.g., '<a href="http://server/context.tar.gz">http://server/context.tar.gz</a>'), or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_show
@@ -735,7 +739,7 @@ globalParameters:
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-  gitcommit: https://github.com/Azure/azure-cli/blob/537e4dd63081fb7aee3d051899dd5d045c1edccd/src/azure-cli/azure/cli/command_modules/acr/_help.py
-  updated_at: 4/15/2020 7:14:42 AM
-  ms.date: 04/15/2020
+  gitcommit: https://github.com/Azure/azure-cli/blob/d121af6ab9c259e493480ecb7d3045be0e52bf07/src/azure-cli/azure/cli/command_modules/acr/_help.py
+  updated_at: 8/28/2020 5:21:53 AM
+  ms.date: 08/28/2020
   description: Manage private registries with Azure Container Registries.
