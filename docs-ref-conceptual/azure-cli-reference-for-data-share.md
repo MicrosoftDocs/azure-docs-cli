@@ -9,6 +9,7 @@ ms.devlang: azurecli
 ms.topic: reference
 ms.date: 05/27/2020
 ms.author: dbradish
+ms.custom: devx-track-azurecli
 ---
 
 # Azure CLI for Azure Data Share
