@@ -9,6 +9,7 @@ ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azure-cli
+ms.custom: devx-track-azurecli
 ---
 
 # Available extensions for the Azure CLI

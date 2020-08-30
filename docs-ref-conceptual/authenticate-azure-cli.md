@@ -8,6 +8,7 @@ ms.date: 02/22/2019
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Sign in with Azure CLI 

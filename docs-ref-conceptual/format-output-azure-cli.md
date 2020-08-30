@@ -8,6 +8,7 @@ ms.date: 09/23/2019
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 # Output formats for Azure CLI commands
 

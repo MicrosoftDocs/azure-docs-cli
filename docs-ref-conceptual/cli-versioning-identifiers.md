@@ -8,6 +8,7 @@ ms.date: 07/12/2018
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Differences between Azure CLI products

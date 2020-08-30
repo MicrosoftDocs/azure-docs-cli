@@ -10,6 +10,7 @@ ms.author: dbradish
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.reviewer: robb
+ms.custom: devx-track-azurecli
 ---
 
 # Azure CLI for Azure Monitor
