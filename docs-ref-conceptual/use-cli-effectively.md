@@ -1,5 +1,5 @@
 ---
-title: Tips for using Azure CLI effectively
+title: Use Azure CLI effectively
 description: Tips for using Azure CLI effectively
 author: dbradish-microsoft
 ms.author: dbradish
