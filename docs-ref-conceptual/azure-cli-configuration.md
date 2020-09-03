@@ -8,6 +8,7 @@ ms.date: 06/11/2018
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 # Azure CLI configuration
 

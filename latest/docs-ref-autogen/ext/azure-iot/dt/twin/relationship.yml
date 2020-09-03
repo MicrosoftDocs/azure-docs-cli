@@ -18,13 +18,13 @@ directCommands:
                                    [--resource-group]
   examples:
   - summary: Create a relationship between two digital twins.
-    syntax: az dt twin relationship create -n {instance_name} --relationship-id {relationship_id} --relationship contains --twin-id {source_twin_id} --target {target_twin_id}
+    syntax: az dt twin relationship create -n {instance_or_hostname} --relationship-id {relationship_id} --relationship contains --twin-id {source_twin_id} --target {target_twin_id}
   - summary: Create a relationship with initialized properties between two digital twins.
-    syntax: "az dt twin relationship create -n {instance_name} --relationship-id {relationship_id} --relationship contains --twin-id {source_twin_id} --target {target_twin_id} --properties '{\"ownershipUser\": \"me\", \"ownershipDepartment\": \"Computer Science\"}'"
+    syntax: "az dt twin relationship create -n {instance_or_hostname} --relationship-id {relationship_id} --relationship contains --twin-id {source_twin_id} --target {target_twin_id} --properties '{\"ownershipUser\": \"me\", \"ownershipDepartment\": \"Computer Science\"}'"
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --kind --relationship
@@ -60,11 +60,11 @@ directCommands:
                                    [--resource-group]
   examples:
   - summary: Delete a digital twin relationship.
-    syntax: az dt twin relationship delete -n {instance_name} --twin-id {twin_id} --relationship-id {relationship_id}
+    syntax: az dt twin relationship delete -n {instance_or_hostname} --twin-id {twin_id} --relationship-id {relationship_id}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --relationship-id -r
@@ -90,17 +90,17 @@ directCommands:
                                  [--resource-group]
   examples:
   - summary: List outgoing relationships of a digital twin.
-    syntax: az dt twin relationship list -n {instance_name} --twin-id {twin_id}
+    syntax: az dt twin relationship list -n {instance_or_hostname} --twin-id {twin_id}
   - summary: List outgoing relationships of a digital twin and filter on relationship 'contains'
-    syntax: az dt twin relationship list -n {instance_name} --twin-id {twin_id} --relationship contains
+    syntax: az dt twin relationship list -n {instance_or_hostname} --twin-id {twin_id} --relationship contains
   - summary: List incoming relationships of a digital twin.
-    syntax: az dt twin relationship list -n {instance_name} --twin-id {twin_id} --incoming
+    syntax: az dt twin relationship list -n {instance_or_hostname} --twin-id {twin_id} --incoming
   - summary: List incoming relationships of a digital twin and filter on relationship 'contains'.
-    syntax: az dt twin relationship list -n {instance_name} --twin-id {twin_id} --relationship contains --incoming
+    syntax: az dt twin relationship list -n {instance_or_hostname} --twin-id {twin_id} --relationship contains --incoming
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --source --twin-id -t
@@ -128,11 +128,11 @@ directCommands:
                                  [--resource-group]
   examples:
   - summary: Show details of a digital twin relationship.
-    syntax: az dt twin relationship show -n {instance_name} --twin-id {twin_id} --relationship-id {relationship_id}
+    syntax: az dt twin relationship show -n {instance_or_hostname} --twin-id {twin_id} --relationship-id {relationship_id}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --relationship-id -r
@@ -158,19 +158,19 @@ directCommands:
                                    [--resource-group]
   examples:
   - summary: Update a digital twin relationship via JSON patch specification.
-    syntax: "az dt twin relationship update -n {instance_name} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
+    syntax: "az dt twin relationship update -n {instance_or_hostname} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch '{\"op\":\"replace\", \"path\":\"/Temperature\", \"value\": 20.5}'"
   - summary: Update a digital twin relationship via JSON patch specification.
     syntax: >-
-      az dt twin relationship update -n {instance_name} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch '[
+      az dt twin relationship update -n {instance_or_hostname} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch '[
         {"op":"replace", "path":"/Temperature", "value": 20.5},
         {"op":"add", "path":"/Areas", "value": ["ControlSystem"]}
       ]'
   - summary: Update a digital twin relationship via JSON patch specification defined in a file.
-    syntax: az dt twin relationship update -n {instance_name} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch ./my/patch/document.json
+    syntax: az dt twin relationship update -n {instance_or_hostname} --twin-id {twin_id} --relationship-id {relationship_id} --relationship contains --json-patch ./my/patch/document.json
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
-    summary: Digital Twins instance name.
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
     description: ''
   - isRequired: true
     name: --json-patch --patch

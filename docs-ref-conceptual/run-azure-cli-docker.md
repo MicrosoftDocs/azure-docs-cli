@@ -8,6 +8,7 @@ ms.date: 01/29/2018
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Run Azure CLI in a Docker container

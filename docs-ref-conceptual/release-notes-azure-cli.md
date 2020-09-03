@@ -8,6 +8,7 @@ ms.date: 08/28/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Azure CLI release notes

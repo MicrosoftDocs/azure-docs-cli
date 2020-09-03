@@ -8,6 +8,7 @@ ms.date: 09/07/2018
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # The Azure CLI alias extension

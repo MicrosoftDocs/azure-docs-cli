@@ -1,3 +1,16 @@
+---
+title: Tips for using Azure CLI effectively
+description: Tips for using Azure CLI effectively
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
+ms.date: 09/07/2018
+ms.topic: conceptual
+ms.service: azure-cli
+ms.devlang: azurecli
+ms.custom: devx-track-azurecli
+---
+
 # Tips for using Azure CLI effectively
 
 For clarity, Bash scripts are used inline. Windows batch or PowerShell examples are listed in the appendix, which you can use to build similar examples.
@@ -114,15 +127,15 @@ For example, to update `redirectUris` for an [Application](/graph/api/resources/
 
 # Get the application
 az rest --method GET
-        --url 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
+        --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
 
 # Update `redirectUris` for `web` property
 az rest --method PATCH
-        --url 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
+        --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
         --body '{"web":{"redirectUris":["https://myapp.com"]}}'
 ```
 
-When using `--url-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
+When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
 
 ## Quoting issues
 
