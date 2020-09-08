@@ -12,10 +12,11 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Start Azure Cloud Shell
+# Start Azure Cloud Shell
 
 Azure hosts Azure Cloud Shell, an interactive shell environment that you can use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You can use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
 
+## Options for starting Azure Cloud Shell
 To start Azure Cloud Shell:
 
 | Option | Example/Link |
@@ -24,7 +25,9 @@ To start Azure Cloud Shell:
 | Go to [https://shell.azure.com](https://shell.azure.com), or select the **Launch Cloud Shell** button to open Cloud Shell in your browser. | [![Launch Cloud Shell in a new window](media/cloud-shell-try-it/launch-cloud-shell.png)](https://shell.azure.com) |
 | Select the **Cloud Shell** button on the menu bar at the upper right in the [Azure portal](https://portal.azure.com). | ![Cloud Shell button in the Azure portal](./media/cloud-shell-try-it/cloud-shell-menu.png) |
 
-To run the code in Azure Cloud Shell:
+## How to run code in Azure Cloud Shell
+
+To run code from a Microsoft document in Azure Cloud Shell:
 
 1. Start Cloud Shell.
 
