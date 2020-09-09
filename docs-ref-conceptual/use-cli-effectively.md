@@ -1,5 +1,5 @@
 ---
-title: Tips for using Azure CLI effectively
+title: Use Azure CLI effectively
 description: Tips for using Azure CLI effectively
 author: dbradish-microsoft
 ms.author: dbradish
@@ -11,7 +11,7 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-# Tips for using Azure CLI effectively
+# Use Azure CLI effectively
 
 For clarity, Bash scripts are used inline. Windows batch or PowerShell examples are listed in the appendix, which you can use to build similar examples.
 
