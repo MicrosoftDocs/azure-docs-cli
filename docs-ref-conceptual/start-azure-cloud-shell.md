@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 
 # Start Azure Cloud Shell
 
-Azure hosts Azure Cloud Shell, an interactive shell environment that you can use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You can use the Cloud Shell preinstalled commands to run the code in this article without having to install anything on your local environment.
+Azure hosts Azure Cloud Shell, an interactive shell environment that you can use through your browser. You can use either Bash or PowerShell with Cloud Shell to work with Azure services. You can use the Cloud Shell preinstalled commands to run Azure CLI commands without having to install anything on your local environment.
 
 ## Options for starting Azure Cloud Shell
 To start Azure Cloud Shell:
