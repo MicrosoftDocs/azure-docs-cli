@@ -102,6 +102,6 @@ az cloud unregister --name MyCloud
 
 ## Manage airgapped clouds
 
-If you're working in an airgapped cloud such as `USSec` or `USNat`, you should be able to get a cloud metadata URL from its documentation. You can set the environment variable `ARM_CLOUD_METADATA_URL` to this URL, then CLI will load the available clouds and the corresponding cloud endpoints from the URL. The first cloud in the available cloud list will be set as the active cloud by default if the public `AzureCloud` is (most likly) not available. 
+If you're working in an airgapped cloud such as `USSec` or `USNat`, you should be able to get a cloud metadata URL from its documentation. You can set the environment variable `ARM_CLOUD_METADATA_URL` to this URL, then CLI will load the available clouds and the corresponding cloud endpoints from the URL. The first cloud in the available cloud list will be set as the active cloud by default if the public `AzureCloud` is (most likely) not available. 
 
 All the above commands would also work in airgapped clouds after setting the environment variable.
