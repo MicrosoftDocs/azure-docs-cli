@@ -99,3 +99,9 @@ If you no longer need a created cloud, it can be unregistered with the [az cloud
 ```azurecli-interactive
 az cloud unregister --name MyCloud
 ```
+
+## Manage airgapped clouds
+
+If you're working in an airgapped cloud such as USSec or USNat, you should be able to get a cloud metadata URL from its documentation. You can set the environment variable `ARM_CLOUD_METADATA_URL` to this URL, then CLI will load the available clouds and the corresponding cloud endpoints from the URL. The first cloud in the available cloud list will be set as the active cloud by default if the public AzureCloud is (most likly) not available. 
+
+All the above commands would also work in airgapped clouds after setting the environment variable.
