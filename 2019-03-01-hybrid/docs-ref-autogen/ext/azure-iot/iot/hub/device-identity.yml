@@ -444,17 +444,29 @@ directCommands:
   syntax: >-
     az iot hub device-identity update --device-id
                                       [--add]
+                                      [--am {shared_private_key, x509_ca, x509_thumbprint}]
+                                      [--edge-enabled {false, true}]
                                       [--force-string]
                                       [--hub-name]
                                       [--login]
+                                      [--pk]
+                                      [--primary-thumbprint]
                                       [--remove]
                                       [--resource-group]
+                                      [--secondary-key]
+                                      [--secondary-thumbprint]
                                       [--set]
+                                      [--sta {disabled, enabled}]
+                                      [--star]
   examples:
   - summary: Turn on edge capabilities for device
     syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set capabilities.iotEdge=true
+  - summary: Turn on edge capabilities for device using convenience argument.
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --ee
   - summary: Disable device status
     syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set status=disabled
+  - summary: Disable device status using convenience argument.
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --status disabled
   - summary: In one command
     syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set status=disabled capabilities.iotEdge=true
   requiredParameters:
@@ -466,6 +478,14 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --am --auth-method
+    parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
+    summary: The authorization type an entity is to be created with.
+    description: ''
+  - name: --edge-enabled --ee
+    parameterValueGroup: false, true
+    summary: Flag indicating edge enablement.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
@@ -475,14 +495,33 @@ directCommands:
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
     description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --primary-thumbprint --ptp
+    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --secondary-thumbprint --stp
+    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --sta --status
+    parameterValueGroup: disabled, enabled
+    summary: Set device status upon creation.
+    description: ''
+  - name: --star --status-reason
+    summary: Description for device status.
     description: ''
 commands:
 - ext_azure-iot_az_iot_hub_device_identity_add_children
