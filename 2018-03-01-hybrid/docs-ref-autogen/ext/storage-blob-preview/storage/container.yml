@@ -97,8 +97,114 @@ directCommands:
   - name: --start
     summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
     description: ''
+- uid: ext_storage-blob-preview_az_storage_container_list
+  name: az storage container list
+  summary: List containers in a storage account.
+  description: ''
+  syntax: >-
+    az storage container list [--account-key]
+                              [--account-name]
+                              [--auth-mode {key, login}]
+                              [--connection-string]
+                              [--include-deleted {false, true}]
+                              [--include-metadata {false, true}]
+                              [--marker]
+                              [--num-results]
+                              [--prefix]
+                              [--sas-token]
+                              [--show-next-marker]
+                              [--timeout]
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --include-deleted
+    parameterValueGroup: false, true
+    summary: Specify that deleted containers to be returned in the response. This is for container restore enabled account. The default value is `False`.
+    description: ''
+  - name: --include-metadata
+    parameterValueGroup: false, true
+    summary: Specify that container metadata to be returned in the response.
+    description: ''
+  - name: --marker
+    summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --num-results
+    defaultValue: "5000"
+    summary: Specify the maximum number to return. If the request does not specify num_results, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remaining of the results. Provide "\*" to return all.
+    description: ''
+  - name: --prefix
+    summary: Filter the results to return only blobs whose name begins with the specified prefix.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --show-next-marker
+    summary: Show nextMarker in result when specified.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+- uid: ext_storage-blob-preview_az_storage_container_restore
+  name: az storage container restore
+  summary: Restores soft-deleted container.
+  description: "Operation will only be successful if used within the specified number of days set in the delete retention policy.  .. versionadded:: 12.4.0     This operation was introduced in API version '2019-12-12'."
+  syntax: >-
+    az storage container restore --deleted-version
+                                 --name
+                                 [--account-key]
+                                 [--account-name]
+                                 [--auth-mode {key, login}]
+                                 [--connection-string]
+                                 [--new-name]
+                                 [--sas-token]
+                                 [--timeout]
+  requiredParameters:
+  - isRequired: true
+    name: --deleted-version
+    summary: Specify the version of the deleted container to restore.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Specify the name of the deleted container to restore.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --new-name
+    summary: The new name for the deleted container to be restored to.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
 commands:
 - ext_storage-blob-preview_az_storage_container_generate_sas
+- ext_storage-blob-preview_az_storage_container_list
+- ext_storage-blob-preview_az_storage_container_restore
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
