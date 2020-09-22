@@ -23,11 +23,15 @@ directCommands:
                                                  [--dest-resource]
                                                  [--do-not-start]
                                                  [--endpoint-dest-address]
+                                                 [--endpoint-dest-coverage-level {AboveAverage, Average, BelowAverage, Default, Full, Low}]
                                                  [--endpoint-dest-name]
                                                  [--endpoint-dest-resource-id]
+                                                 [--endpoint-dest-type {AzureSubnet, AzureVM, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork}]
                                                  [--endpoint-source-address]
+                                                 [--endpoint-source-coverage-level {AboveAverage, Average, BelowAverage, Default, Full, Low}]
                                                  [--endpoint-source-name]
                                                  [--endpoint-source-resource-id]
+                                                 [--endpoint-source-type {AzureSubnet, AzureVM, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork}]
                                                  [--frequency]
                                                  [--http-method {Get, Post}]
                                                  [--http-path]
@@ -48,6 +52,7 @@ directCommands:
                                                  [--tags]
                                                  [--tcp-disable-trace-route {false, true}]
                                                  [--tcp-port]
+                                                 [--tcp-port-behavior {ListenIfAvailable, None}]
                                                  [--test-config-name]
                                                  [--test-group-disable {false, true}]
                                                  [--test-group-name]
@@ -84,20 +89,36 @@ directCommands:
   - name: --endpoint-dest-address
     summary: Address of the destination of connection monitor endpoint (IP or domain name).
     description: ''
+  - name: --endpoint-dest-coverage-level
+    parameterValueGroup: AboveAverage, Average, BelowAverage, Default, Full, Low
+    summary: Test coverage for the endpoint.
+    description: ''
   - name: --endpoint-dest-name
     summary: The name of the destination of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
     description: ''
   - name: --endpoint-dest-resource-id
     summary: Resource ID of the destination of connection monitor endpoint.
     description: ''
+  - name: --endpoint-dest-type
+    parameterValueGroup: AzureSubnet, AzureVM, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork
+    summary: The endpoint type.
+    description: ''
   - name: --endpoint-source-address
     summary: Address of the source of connection monitor endpoint (IP or domain name).
+    description: ''
+  - name: --endpoint-source-coverage-level
+    parameterValueGroup: AboveAverage, Average, BelowAverage, Default, Full, Low
+    summary: Test coverage for the endpoint.
     description: ''
   - name: --endpoint-source-name
     summary: The name of the source of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
     description: ''
   - name: --endpoint-source-resource-id
     summary: Resource ID of the source of connection monitor endpoint. If endpoint is intended to used as source, this option is required.
+    description: ''
+  - name: --endpoint-source-type
+    parameterValueGroup: AzureSubnet, AzureVM, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork
+    summary: The endpoint type.
     description: ''
   - name: --frequency
     defaultValue: "60"
@@ -168,6 +189,10 @@ directCommands:
   - name: --tcp-port
     summary: The port to connect to.
     description: ''
+  - name: --tcp-port-behavior
+    parameterValueGroup: ListenIfAvailable, None
+    summary: Destination port behavior.
+    description: ''
   - name: --test-config-name
     summary: The name of the connection monitor test configuration. If you are creating a V2 Connection Monitor, it's required.
     description: ''
@@ -220,6 +245,7 @@ directCommands:
   description: ''
   syntax: >-
     az network watcher connection-monitor list --location
+                                               [--query-examples]
                                                [--subscription]
   examples:
   - summary: List a connection monitor for the given region.
@@ -232,6 +258,9 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -268,6 +297,7 @@ directCommands:
   syntax: >-
     az network watcher connection-monitor show --location
                                                --name
+                                               [--query-examples]
                                                [--subscription]
   examples:
   - summary: Show a connection monitor for the given name.
@@ -282,6 +312,9 @@ directCommands:
     summary: Connection monitor name.
     description: ''
   optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -380,7 +413,10 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/27/2020
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/63d526fe74db2cfc882fbd344ac6c80d7dccb69e/src/azure-cli/azure/cli/command_modules/network/_help.py
+  updated_at: 9/15/2020 5:21:47 PM
+  ms.date: 09/15/2020
   description: >-
     Connection monitor can be used to monitor network connectivity between an Azure virtual machine and an IP address.
      The IP address can be assigned to another Azure resource or a resource on the Internet or on-premises. To learn

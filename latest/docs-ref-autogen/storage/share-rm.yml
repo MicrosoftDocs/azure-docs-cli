@@ -141,7 +141,8 @@ directCommands:
   description: ''
   syntax: >-
     az storage share-rm list --storage-account
-                             [--expand]
+                             [--include-deleted]
+                             [--query-examples]
                              [--resource-group]
                              [--subscription]
   examples:
@@ -149,17 +150,64 @@ directCommands:
     syntax: az storage share-rm list -g MyResourceGroup --storage-account mystorageaccount
   - summary: List the Azure file shares under the storage account 'mystorageaccount' (account id).
     syntax: az storage share-rm list --storage-account mystorageaccount
+  - summary: List all file shares include deleted under the storage account 'mystorageaccount' .
+    syntax: az storage share-rm list --storage-account mystorageaccount --include-deleted
   requiredParameters:
   - isRequired: true
     name: --storage-account
     summary: The name or ID of the storage account.
     description: ''
   optionalParameters:
-  - name: --expand
-    summary: Optional, used to expand the properties within share's properties.
+  - name: --include-deleted
+    summary: Include soft deleted file shares when specified.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_share_rm_restore
+  name: az storage share-rm restore
+  summary: Restore a file share within a valid retention days if share soft delete is enabled.
+  description: ''
+  syntax: >-
+    az storage share-rm restore --deleted-version
+                                [--ids]
+                                [--name]
+                                [--resource-group]
+                                [--restored-name]
+                                [--storage-account]
+                                [--subscription]
+  examples:
+  - summary: Restore a file share within a valid retention days if share soft delete is enabled.
+    syntax: az storage share-rm restore -n deletedshare --deleted-version 01D64EB9886F00C4 -g MyResourceGroup --storage-account mystorageaccount
+  - summary: Restore a file share within a valid retention days if share soft delete is enabled to a new name.
+    syntax: az storage share-rm restore -n deletedshare --deleted-version 01D64EB9886F00C4 --restored-name newname -g MyResourceGroup --storage-account mystorageaccount
+  requiredParameters:
+  - isRequired: true
+    name: --deleted-version
+    summary: Identify the version of the deleted share that will be restored.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The file share name. Identify the name of the deleted share that will be restored.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --restored-name
+    summary: A new file share name to be restored. If not specified, deleted share name will be used.
+    description: ''
+  - name: --storage-account
+    summary: The name or ID of the storage account.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -173,6 +221,7 @@ directCommands:
     az storage share-rm show [--expand]
                              [--ids]
                              [--name]
+                             [--query-examples]
                              [--resource-group]
                              [--storage-account]
                              [--subscription]
@@ -187,6 +236,39 @@ directCommands:
   - name: --expand
     summary: Optional, used to expand the properties within share's properties.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The file share name.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --storage-account
+    summary: The name or ID of the storage account.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_share_rm_stats
+  name: az storage share-rm stats
+  summary: Get the usage bytes of the data stored on the share.
+  description: ''
+  syntax: >-
+    az storage share-rm stats [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--storage-account]
+                              [--subscription]
+  examples:
+  - summary: Get the usage bytes of the data stored on the share.
+    syntax: az storage share-rm stats -g MyResourceGroup --storage-account mystorageaccount --name myfileshare
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -276,7 +358,9 @@ commands:
 - az_storage_share_rm_delete
 - az_storage_share_rm_exists
 - az_storage_share_rm_list
+- az_storage_share_rm_restore
 - az_storage_share_rm_show
+- az_storage_share_rm_stats
 - az_storage_share_rm_update
 globalParameters:
 - name: --debug
@@ -295,5 +379,8 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/28/2020
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/d33dda4255b193ed01d1dacaecc183fcebec51e2/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  updated_at: 9/16/2020 4:27:19 AM
+  ms.date: 09/16/2020
   description: Manage Azure file shares using the Microsoft.Storage resource provider.

@@ -15,6 +15,7 @@ directCommands:
                      --resource-group
                      --subnet
                      [--assign-identity]
+                     [--backup-storage-redundancy]
                      [--capacity]
                      [--collation]
                      [--edition]
@@ -30,6 +31,7 @@ directCommands:
                      [--tags]
                      [--timezone-id]
                      [--vnet-name]
+                     [--yes]
   examples:
   - summary: Create a managed instance with minimal set of parameters
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName}
@@ -37,6 +39,8 @@ directCommands:
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --license-type LicenseIncluded --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --capacity 8 --storage 32GB --edition GeneralPurpose --family Gen5
   - summary: Create managed instance with specified parameters and tags
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --license-type LicenseIncluded --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --capacity 8 --storage 32GB --edition GeneralPurpose --family Gen5 --tags tagName1=tagValue1 tagName2=tagValue2
+  - summary: Create managed instance with specified parameters and backup storage redundancy specified
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --license-type LicenseIncluded --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --capacity 8 --storage 32GB --edition GeneralPurpose --family Gen5 --backup-storage-redundancy Local
   requiredParameters:
   - isRequired: true
     name: --admin-password -p
@@ -61,6 +65,9 @@ directCommands:
   optionalParameters:
   - name: --assign-identity -i
     summary: Generate and assign an Azure Active Directory Identity for this managed instance for use with key management services like Azure KeyVault.
+    description: ''
+  - name: --backup-storage-redundancy --bsr
+    summary: Backup storage redundancy used to store backups.
     description: ''
   - name: --capacity -c
     summary: The capacity of the managed instance in integer number of vcores.
@@ -110,6 +117,9 @@ directCommands:
     description: ''
   - name: --vnet-name
     summary: The virtual network name.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_delete
@@ -187,7 +197,8 @@ directCommands:
   summary: List available managed instances.
   description: ''
   syntax: >-
-    az sql mi list [--resource-group]
+    az sql mi list [--query-examples]
+                   [--resource-group]
                    [--subscription]
   examples:
   - summary: List all managed instances in the current subscription.
@@ -195,6 +206,9 @@ directCommands:
   - summary: List all managed instances in a resource group.
     syntax: az sql mi list -g mygroup
   optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -209,6 +223,7 @@ directCommands:
   syntax: >-
     az sql mi show [--ids]
                    [--name]
+                   [--query-examples]
                    [--resource-group]
                    [--subscription]
   examples:
@@ -220,6 +235,9 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The managed instance name.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -373,5 +391,8 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/20/2020
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/313cc257bad5d453de38fde8370ee8b5adff9d27/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  updated_at: 9/11/2020 2:33:56 AM
+  ms.date: 09/11/2020
   description: Manage SQL managed instances.

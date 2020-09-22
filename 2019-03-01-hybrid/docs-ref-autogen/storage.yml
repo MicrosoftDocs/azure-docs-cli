@@ -9,15 +9,10 @@ directCommands:
   summary: Copy files or directories to or from Azure storage.
   description: ''
   syntax: >-
-    az storage copy [--blob-type {AppendBlob, BlockBlob, PageBlob}]
+    az storage copy --destination
+                    --source
+                    [--blob-type {AppendBlob, BlockBlob, PageBlob}]
                     [--content-type]
-                    [--destination]
-                    [--destination-account-name]
-                    [--destination-blob]
-                    [--destination-container]
-                    [--destination-file-path]
-                    [--destination-local-path]
-                    [--destination-share]
                     [--exclude-path]
                     [--exclude-pattern]
                     [--follow-symlinks]
@@ -26,33 +21,26 @@ directCommands:
                     [--preserve-s2s-access-tier {false, true}]
                     [--put-md5]
                     [--recursive]
-                    [--source]
-                    [--source-account-name]
-                    [--source-blob]
-                    [--source-container]
-                    [--source-file-path]
-                    [--source-local-path]
-                    [--source-share]
                     [--subscription]
   examples:
   - summary: Upload a single file to Azure Blob using url.
     syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob]
   - summary: Upload a single file to Azure Blob using account name and container name.
-    syntax: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-container mycontainer
+    syntax: az storage copy -s /path/to/file.txt --destination-account-name mystorageaccount --destination-container mycontainer
   - summary: Upload a single file to Azure Blob with MD5 hash of the file content and save it as the blob's Content-MD5 property.
     syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob] --put-md5
   - summary: Upload an entire directory to Azure Blob using url.
     syntax: az storage copy -s /path/to/dir -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
   - summary: Upload an entire directory to Azure Blob using account name and container name.
-    syntax: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-container mycontainer --recursive
+    syntax: az storage copy -s /path/to/dir --destination-account-name mystorageaccount --destination-container mycontainer --recursive
   - summary: Upload a set of files to Azure Blob using wildcards with url.
     syntax: az storage copy -s /path/*foo/*bar/*.pdf -d https://[account].blob.core.windows.net/[container]/[path/to/directory]
   - summary: Upload a set of files to Azure Blob using wildcards with account name and container name.
-    syntax: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-container mycontainer
+    syntax: az storage copy -s /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-container mycontainer
   - summary: Upload files and directories to Azure Blob using wildcards with url.
     syntax: az storage copy -s /path/*foo/*bar* -d https://[account].blob.core.windows.net/[container]/[path/to/directory] --recursive
   - summary: Upload files and directories to Azure Blob using wildcards with account name and container name.
-    syntax: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-container mycontainer --recursive
+    syntax: az storage copy -s /path/*foo/*bar* --destination-account-name mystorageaccount --destination-container mycontainer --recursive
   - summary: Download a single file from Azure Blob using url, and you can also specify your storage account and container information as above.
     syntax: az storage copy -s https://[account].blob.core.windows.net/[container]/[path/to/blob] -d /path/to/file.txt
   - summary: Download an entire directory from Azure Blob, and you can also specify your storage account and container information as above.
@@ -76,23 +64,32 @@ directCommands:
   - summary: Upload a single file to Azure File Share using url.
     syntax: az storage copy -s /path/to/file.txt -d https://[account].file.core.windows.net/[share]/[path/to/file]
   - summary: Upload a single file to Azure File Share using account name and share name.
-    syntax: az storage copy --source-local-path /path/to/file.txt --destination-account-name mystorageaccount --destination-share myshare
+    syntax: az storage copy -s /path/to/file.txt --destination-account-name mystorageaccount --destination-share myshare
   - summary: Upload an entire directory to Azure File Share using url.
     syntax: az storage copy -s /path/to/dir -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
   - summary: Upload an entire directory to Azure File Share using account name and container name.
-    syntax: az storage copy --source-local-path /path/to/dir --destination-account-name mystorageaccount --destination-share myshare --recursive
+    syntax: az storage copy -s /path/to/dir --destination-account-name mystorageaccount --destination-share myshare --recursive
   - summary: Upload a set of files to Azure File Share using wildcards with account name and share name.
-    syntax: az storage copy --source-local-path /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-share myshare
+    syntax: az storage copy -s /path/*foo/*bar/*.pdf --destination-account-name mystorageaccount --destination-share myshare
   - summary: Upload files and directories to Azure File Share using wildcards with url.
     syntax: az storage copy -s /path/*foo/*bar* -d https://[account].file.core.windows.net/[share]/[path/to/directory] --recursive
   - summary: Upload files and directories to Azure File Share using wildcards with account name and share name.
-    syntax: az storage copy --source-local-path /path/*foo/*bar* --destination-account-name mystorageaccount --destination-share myshare --recursive
+    syntax: az storage copy -s /path/*foo/*bar* --destination-account-name mystorageaccount --destination-share myshare --recursive
   - summary: Download a single file from Azure File Share using url, and you can also specify your storage account and share information as above.
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/file] -d /path/to/file.txt
   - summary: Download an entire directory from Azure File Share, and you can also specify your storage account and share information as above.
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a set of files from Azure File Share using wildcards, and you can also specify your storage account and share information as above.
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
+  requiredParameters:
+  - isRequired: true
+    name: --destination -d
+    summary: The path/url of copy destination. It can be a local path, an url to azure storage server. If you provide destination parameter here, you do not need to provide arguments in copy destination arguments group and copy destination arguments will be deprecated in future.
+    description: ''
+  - isRequired: true
+    name: --source -s
+    summary: The path/url of copy source. It can be a local path, an url to azure storage server or AWS S3 buckets. If you provide source parameter here, you do not need to provide arguments in copy source arguments group and copy source arguments will be deprecated in future.
+    description: ''
   optionalParameters:
   - name: --blob-type
     parameterValueGroup: AppendBlob, BlockBlob, PageBlob
@@ -100,27 +97,6 @@ directCommands:
     description: ''
   - name: --content-type
     summary: Specify content type of the file.
-    description: ''
-  - name: --destination -d
-    summary: The path/url of copy destination. It can be a local path, an url to azure storage server. If you provide destination parameter here, you do not need to provide arguments in copy destination arguments group and copy destination arguments will be deprecated in future.
-    description: ''
-  - name: --destination-account-name
-    summary: Storage account name of copy destination.
-    description: ''
-  - name: --destination-blob
-    summary: Blob name in blob container of copy destination storage account.
-    description: ''
-  - name: --destination-container
-    summary: Container name of copy destination storage account.
-    description: ''
-  - name: --destination-file-path
-    summary: File path in file share of copy destination storage account.
-    description: ''
-  - name: --destination-local-path
-    summary: Local file path.
-    description: ''
-  - name: --destination-share
-    summary: File share name of copy destination storage account.
     description: ''
   - name: --exclude-path
     summary: 'Exclude these paths. This option does not support wildcard characters (\*). Checks relative path prefix. For example: myFolder;myFolder/subDirName/file.pdf.'
@@ -146,27 +122,6 @@ directCommands:
     description: ''
   - name: --recursive -r
     summary: Look into sub-directories recursively.
-    description: ''
-  - name: --source -s
-    summary: The path/url of copy source. It can be a local path, an url to azure storage server or AWS S3 buckets. If you provide source parameter here, you do not need to provide arguments in copy source arguments group and copy source arguments will be deprecated in future.
-    description: ''
-  - name: --source-account-name
-    summary: Storage account name of copy source.
-    description: ''
-  - name: --source-blob
-    summary: Blob name in blob container of copy source storage account.
-    description: ''
-  - name: --source-container
-    summary: Container name of copy source storage account.
-    description: ''
-  - name: --source-file-path
-    summary: File path in file share of copy source storage account.
-    description: ''
-  - name: --source-local-path
-    summary: Local file path.
-    description: ''
-  - name: --source-share
-    summary: File share name of copy source storage account.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -458,5 +413,8 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/28/2020
+  original_content_git_url: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  gitcommit: https://github.com/Azure/azure-cli/blob/d33dda4255b193ed01d1dacaecc183fcebec51e2/src/azure-cli/azure/cli/command_modules/storage/_help.py
+  updated_at: 9/16/2020 4:27:19 AM
+  ms.date: 09/16/2020
   description: Manage Azure Cloud Storage resources.

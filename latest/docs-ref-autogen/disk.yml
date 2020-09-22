@@ -36,6 +36,7 @@ directCommands:
                    [--image-reference]
                    [--image-reference-lun]
                    [--location]
+                   [--logical-sector-size]
                    [--max-shares]
                    [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
                    [--no-wait]
@@ -46,6 +47,7 @@ directCommands:
                    [--source-storage-account-id]
                    [--subscription]
                    [--tags]
+                   [--tier]
                    [--upload-size-bytes]
                    [--zone {1, 2, 3}]
   examples:
@@ -122,6 +124,9 @@ directCommands:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`. If location is not specified and no default location specified, location will be automatically set as same as the resource group.'
     description: ''
+  - name: --logical-sector-size
+    summary: Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default.
+    description: ''
   - name: --max-shares
     summary: The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time.
     description: ''
@@ -155,6 +160,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --tier
+    summary: 'Performance tier of the disk (e.g, P4, S10) as described here: <a href="https://azure.microsoft.com/en-us/pricing/details/managed-disks/">https://azure.microsoft.com/en-us/pricing/details/managed-disks/</a>. Does not apply to Ultra disks.'
     description: ''
   - name: --upload-size-bytes
     summary: 'The size (in bytes) of the contents of the upload including the VHD footer. Min value: 20972032. Max value: 35183298347520.'
@@ -238,9 +246,13 @@ directCommands:
   summary: List managed disks.
   description: ''
   syntax: >-
-    az disk list [--resource-group]
+    az disk list [--query-examples]
+                 [--resource-group]
                  [--subscription]
   optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -281,6 +293,7 @@ directCommands:
   syntax: >-
     az disk show [--ids]
                  [--name]
+                 [--query-examples]
                  [--resource-group]
                  [--subscription]
   optionalParameters:
@@ -289,6 +302,9 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the managed disk.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -304,11 +320,14 @@ directCommands:
     az disk update [--add]
                    [--disk-access]
                    [--disk-encryption-set]
+                   [--disk-iops-read-only]
                    [--disk-iops-read-write]
+                   [--disk-mbps-read-only]
                    [--disk-mbps-read-write]
                    [--encryption-type]
                    [--force-string]
                    [--ids]
+                   [--max-shares]
                    [--name]
                    [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
                    [--no-wait]
@@ -333,8 +352,14 @@ directCommands:
   - name: --disk-encryption-set
     summary: Name or ID of disk encryption set that is used to encrypt the disk.
     description: ''
+  - name: --disk-iops-read-only
+    summary: The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
+    description: ''
   - name: --disk-iops-read-write
     summary: The number of IOPS allowed for this disk. Only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-mbps-read-only
+    summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
     description: ''
   - name: --disk-mbps-read-write
     summary: The bandwidth allowed for this disk. Only settable for UltraSSD disks. MBps means millions of bytes per second with ISO notation of powers of 10.
@@ -347,6 +372,9 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --max-shares
+    summary: The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time.
     description: ''
   - name: --name -n
     summary: The name of the managed disk.

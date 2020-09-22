@@ -20,7 +20,7 @@ directCommands:
                                [--is-public {false, true}]
                                [--jvm-options]
                                [--memory]
-                               [--runtime-version {Java_11, Java_8}]
+                               [--runtime-version {Java_11, Java_8, NetCore_31}]
   examples:
   - summary: Create an app with the default configuration.
     syntax: az spring-cloud app create -n MyApp -s MyCluster -g MyResourceGroup
@@ -71,7 +71,7 @@ directCommands:
     summary: Number of GB of memory per instance.
     description: ''
   - name: --runtime-version
-    parameterValueGroup: Java_11, Java_8
+    parameterValueGroup: Java_11, Java_8, NetCore_31
     summary: Runtime version of used language.
     description: ''
 - uid: ext_spring-cloud_az_spring_cloud_app_delete
@@ -103,12 +103,13 @@ directCommands:
     az spring-cloud app deploy --name
                                --resource-group
                                --service
+                               [--artifact-path]
                                [--deployment]
                                [--env]
-                               [--jar-path]
                                [--jvm-options]
+                               [--main-entry]
                                [--no-wait]
-                               [--runtime-version {Java_11, Java_8}]
+                               [--runtime-version {Java_11, Java_8, NetCore_31}]
                                [--target-module]
                                [--version]
   examples:
@@ -132,23 +133,26 @@ directCommands:
     summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
     description: ''
   optionalParameters:
+  - name: --artifact-path --jar-path -p
+    summary: If provided, deploy pre-built artifact (jar or netcore zip), otherwise deploy current folder as tar.
+    description: ''
   - name: --deployment -d
     summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
     description: ''
   - name: --env
     summary: Space-separated environment variables in 'key[=value]' format.
     description: ''
-  - name: --jar-path
-    summary: If provided, deploy jar, otherwise deploy current folder as tar.
-    description: ''
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
+    description: ''
+  - name: --main-entry -m
+    summary: A string containing the path to the .NET executable relative to zip root.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --runtime-version
-    parameterValueGroup: Java_11, Java_8
+    parameterValueGroup: Java_11, Java_8, NetCore_31
     summary: Runtime version of used language.
     description: ''
   - name: --target-module
@@ -452,7 +456,8 @@ directCommands:
                                [--https-only {false, true}]
                                [--is-public {false, true}]
                                [--jvm-options]
-                               [--runtime-version {Java_11, Java_8}]
+                               [--main-entry]
+                               [--runtime-version {Java_11, Java_8, NetCore_31}]
   examples:
   - summary: Add an environment variable for the app.
     syntax: az spring-cloud app update -n MyApp -s MyCluster -g MyResourceGroup --env foo=bar
@@ -491,8 +496,11 @@ directCommands:
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
+  - name: --main-entry -m
+    summary: The path to the .NET executable relative to zip root.
+    description: ''
   - name: --runtime-version
-    parameterValueGroup: Java_11, Java_8
+    parameterValueGroup: Java_11, Java_8, NetCore_31
     summary: Runtime version of used language.
     description: ''
 commands:
