@@ -199,6 +199,49 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password /pa
 
 To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
 
+## Create a resource using service principal
+
+The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
+
+* [az login](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest#az_login)
+* [az group create](https://docs.microsoft.com/cli/azure/group?view=azure-cli-latest#az_group_create)
+* [az storage account create](https://docs.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az_storage_account_create)
+* [az storage account keys list](https://docs.microsoft.com/cli/azure/storage/account/keys?view=azure-cli-latest#az_storage_account_keys_list)
+
+To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
+
+1. Log in as the service principal.
+
+    ```azurecli-interactive
+    az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
+    ```
+
+1. Create a resource group to hold all resources used for the same quickstart, tutorial, or development project.
+
+    ```azurecli-interactive
+    az group create --location WESTUS --name MY_RESOURCE_GROUP
+    ```
+
+1. Create a resource to an Azure service. Replace `<SERVICENAME>` with the name of the Azure service.
+
+    For Azure Storage, valid values for the `<KIND>` parameter are:
+
+    * BlobStorage
+    * BlockBlobStorage
+    * FileStorage
+    * Storage
+    * StorageV2
+
+    ```azurecli-interactive
+    az storage account create --name MY_RESOURCE_<SERVICENAME> --resource-group MY_RESOURCE_GROUP --kind <KIND> --sku F0 --location WESTUS --yes
+    ```
+
+1. Get resource keys for the new resource, which you use in your code to authenticate to the Azure service.
+
+    ```azurecli-interactive
+    az storage account keys list --name MY_RESOURCE_<SERVICENAME> --resource-group MY_RESOURCE_GROUP
+    ```
+
 ## Reset credentials
 
 If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same arguments
