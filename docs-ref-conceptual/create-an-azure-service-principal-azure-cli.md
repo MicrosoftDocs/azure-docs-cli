@@ -124,7 +124,7 @@ For certificates stored in Key Vault, retrieve the certificate's private key wit
 is the same as the certificate name. If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
+Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp.yml#az-ad-sp-list).
 
 ## Get an existing service principal
 
@@ -203,10 +203,10 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
-* [az login](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest#az_login)
-* [az group create](https://docs.microsoft.com/cli/azure/group?view=azure-cli-latest#az_group_create)
-* [az storage account create](https://docs.microsoft.com/cli/azure/storage/account?view=azure-cli-latest#az_storage_account_create)
-* [az storage account keys list](https://docs.microsoft.com/cli/azure/storage/account/keys?view=azure-cli-latest#az_storage_account_keys_list)
+* [az login](/cli/azure/reference-index?view=azure-cli-latest#az_login)
+* [az group create](/cli/azure/group?view=azure-cli-latest#az_group_create)
+* [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az_storage_account_create)
+* [az storage account keys list](/cli/azure/storage/account/keys?view=azure-cli-latest#az_storage_account_keys_list)
 
 To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
 

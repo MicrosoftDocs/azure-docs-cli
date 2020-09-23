@@ -14,7 +14,7 @@ manager: barbkess
 
 1. Sign in using the [az login](/cli/azure/reference-index#az-login) command if you're using a local install.  Follow the steps displayed in your terminal to complete the authentication process.  See [Sign in with Azure CLI](authenticate-azure-cli.md) for additional sign in options.
 1. If you don't have a resource group, create one using the [az group create](/cli/azure/group#az-group-create) command.  See [What is Azure Resource Manager](/azure/azure-resource-manager/management/overview) to learn more about resource groups.
-1. When working with extension references for the Azure CLI, you must first install the extension. Azure CLI extensions give you access to experimental and pre-release commands that have not yet shipped as part of the core CLI. To learn more about extensions including updating and uninstalling, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+1. When working with extension references for the Azure CLI, you must first install the extension. Azure CLI extensions give you access to experimental and pre-release commands that have not yet shipped as part of the core CLI. To learn more about extensions including updating and uninstalling, see [Use extensions with Azure CLI](../azure-cli-extensions-overview.md).
 
    Get a list of available extensions
 

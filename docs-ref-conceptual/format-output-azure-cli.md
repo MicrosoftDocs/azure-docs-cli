@@ -135,7 +135,7 @@ RGDEMO001   KBDemo020
 > az vm list --query "[].{objectID:id}" -o table
 > ```
 
-For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](/cli/azure/query-azure-cli).
+For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](./query-azure-cli.md).
 
 ## TSV output format
 
@@ -215,4 +215,4 @@ What default output format would you like?
 Please enter a choice [1]:
 ```
 
-To learn more about configuring your environment, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
+To learn more about configuring your environment, see [Azure CLI configuration](./azure-cli-configuration.md).
