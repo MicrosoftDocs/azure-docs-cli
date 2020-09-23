@@ -124,7 +124,7 @@ For certificates stored in Key Vault, retrieve the certificate's private key wit
 is the same as the certificate name. If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp.yml#az-ad-sp-list).
+Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
 
 ## Get an existing service principal
 

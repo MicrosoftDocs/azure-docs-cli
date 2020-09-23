@@ -58,4 +58,4 @@ az datashare account create --location "West US 2" --tags tag1=Red tag2=White --
 
 * [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-* Discover additional [core](/cli/azure/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+* Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.

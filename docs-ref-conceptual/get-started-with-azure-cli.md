@@ -48,7 +48,7 @@ This table lists some common commands used in the CLI and links to their referen
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
 | [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm.yml) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
 | [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
 | [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
 | [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
