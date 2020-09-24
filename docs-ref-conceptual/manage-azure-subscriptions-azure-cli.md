@@ -31,7 +31,7 @@ To learn more about the differences between tenants, users, and subscriptions, s
 [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).  To learn how to add a new subscription to your Azure Active
 Directory tenant, see
 [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
-To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli).
+To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./authenticate-azure-cli.md).
 
 ## Change the active subscription
 

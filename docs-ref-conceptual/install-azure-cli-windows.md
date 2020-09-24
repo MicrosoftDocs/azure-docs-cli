@@ -39,7 +39,7 @@ Download and install the current release of the Azure CLI.
 
 The beta version of the Azure CLI supports all CLI commands that you will find in the current released version. The beta version is a migration from the released Azure CLI as the AAD authentication platform (v1.0) is being deprecated.  [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview) is the new authentication method and is used by Azure CLI beta.  We recommend that you try the beta version in advance.  
 
-For more information about Azure CLI beta, please see [release notes](release-notes-azure-cli?tabs=azure-cli-beta).
+For more information about Azure CLI beta, please see [release notes](./release-notes-azure-cli.md?tabs=azure-cli-beta).
 
 > [!IMPORTANT]
 >
