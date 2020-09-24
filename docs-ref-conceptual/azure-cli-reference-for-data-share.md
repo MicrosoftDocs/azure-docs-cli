@@ -14,11 +14,11 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Data Share
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Data Share.  There are over 65 different commands for data share!  These commands give you the ability to work effectively with the service from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Data Share.  There are over 65 different commands for data share!  These commands give you the ability to work effectively with the service from a command line.
 
 ## References for Data Share
 
-All Azure CLI commands for Azure Data Share are currently extensions to the Azure CLI.  An extension gives you access to experimental and pre-release commands.  Find out more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+All Azure CLI commands for Azure Data Share are currently extensions to the Azure CLI.  An extension gives you access to experimental and pre-release commands.  Find out more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 |Azure CLI Reference |Description
 |-|-|-|
@@ -56,6 +56,6 @@ az datashare account create --location "West US 2" --tags tag1=Red tag2=White --
 
 ## See also
 
-* [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
+* [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-* Discover additional [core](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
+* Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.

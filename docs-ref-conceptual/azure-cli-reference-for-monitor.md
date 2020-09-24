@@ -15,7 +15,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Monitor
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Monitor.  There are over 100 references for Azure Monitor giving you the ability to work effectively with monitor services from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure Monitor.  There are over 100 references for Azure Monitor giving you the ability to work effectively with monitor services from a command line.
 
 ## References for Azure Monitor
 
@@ -44,7 +44,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 ### Installing extension references
 
-Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.
+Azure CLI extension references must be installed prior to use.  The [az extension add](./azure-cli-extensions-overview.md) command installs an extension reference by name.
 
 ```azurecli
 # install the extension for az monitor app-insights
@@ -82,8 +82,8 @@ az monitor activity-log alert create --name MyAlertName --resource-group MyResou
 
 ## See also
 
-- [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
+- [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-- Discover additional [released](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
+- Discover additional [released](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
 
-- Learn more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+- Learn more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).

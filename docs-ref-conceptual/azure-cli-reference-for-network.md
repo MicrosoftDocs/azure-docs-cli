@@ -15,7 +15,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Network
 
-The Azure Command Line Interface ([Azure CLI](/cli/azure/what-is-azure-cli)) is a set of commands used to create and manage Azure resources.  The CLI is available across many Azure services including Azure Network giving you the ability to manage networking services from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources.  The CLI is available across many Azure services including Azure Network giving you the ability to manage networking services from a command line.
 
 ## References for Azure Network
 
@@ -97,7 +97,7 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 
 ## Installing extension references
 
-Azure CLI extension references must be installed prior to use.  The [az extension add](/cli/azure/azure-cli-extensions-overview) command installs an extension reference by name.  Learn more about extension references in [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+Azure CLI extension references must be installed prior to use.  The [az extension add](./azure-cli-extensions-overview.md) command installs an extension reference by name.  Learn more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 ```azurecli
 ## get a list of available Azure CLI extensions
@@ -135,8 +135,8 @@ az extension add --name peering
 
 ## See also
 
-- [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli) to learn about installation and sign in.
+- [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-- Discover additional [core](/cli/azure/reference-index) and [extension](/cli/azure/azure-cli-extensions-list) references in the Azure CLI documentation.
+- Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
 
 - Manage Linux or Windows virtual machines with [az vm](/cli/azure/vm).

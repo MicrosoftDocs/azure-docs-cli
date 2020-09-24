@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # Select clouds with the Azure CLI
 
-If you work across different regions or use [Azure Stack](https://docs.microsoft.com/azure/azure-stack/user/), you may need to use more than one cloud. Microsoft provides clouds for compliance with regional laws, which are available for your use. This article shows you how to get information on clouds, change the current cloud, and register or unregister new clouds.
+If you work across different regions or use [Azure Stack](/azure/azure-stack/user/), you may need to use more than one cloud. Microsoft provides clouds for compliance with regional laws, which are available for your use. This article shows you how to get information on clouds, change the current cloud, and register or unregister new clouds.
 
 ## List available clouds
 
@@ -69,7 +69,7 @@ az cloud show --name AzureChinaCloud --output json
 
 ## Switch the active cloud
 
-To set the default cloud using a configuration file, see [CLI configuration values and environment variables](/cli/azure/azure-cli-configuration?view=azure-cli-latest#cli-configuration-values-and-environment-variables).  To switch the active cloud, run the [az cloud set](/cli/azure/cloud#az-cloud-set) command. This command takes one required argument, the name of the cloud.
+To set the default cloud using a configuration file, see [CLI configuration values and environment variables](./azure-cli-configuration.md?view=azure-cli-latest#cli-configuration-values-and-environment-variables).  To switch the active cloud, run the [az cloud set](/cli/azure/cloud#az-cloud-set) command. This command takes one required argument, the name of the cloud.
 
 ```azurecli-interactive
 az cloud set --name AzureChinaCloud

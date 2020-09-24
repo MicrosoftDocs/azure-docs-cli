@@ -27,7 +27,7 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 |Virtual Machines | How-to guide: Linux | [Create a shared image gallery using the Azure CLI](/azure/virtual-machines/linux/shared-images) | Create a Shared Image Gallery of custom VM images with others in your organization, within or across regions, or within an AAzure Active Directory tenant.
 |Virtual Machines | How-to guide: Linux | [Deploy Spot VMs using the Azure CLI (preview)](/azure/virtual-machines/linux/spot-cli) | Deploy a Linux Spot virtual machine that will not be evicted based on price.
 |Virtual Machines | Quickstart: Windows | [Create a Windows virtual machine using the Azure CLI](/azure/virtual-machines/windows/quick-create-cli) | Deploy a virtual machine in Azure that runs Windows Server 2016.
-|Virtual Machines | Learn Module | [Manage virtual machines using the Azure CLI](https://docs.microsoft.com/learn/modules/manage-virtual-machines-with-azure-cli/) | Create, start, stop, and perform additional management tasks related to virtual machines.
+|Virtual Machines | Learn Module | [Manage virtual machines using the Azure CLI](/learn/modules/manage-virtual-machines-with-azure-cli/) | Create, start, stop, and perform additional management tasks related to virtual machines.
 |Azure Kubernetes Service (AKS)| Quickstart | [Deploy an Azure Kubernetes Service (AKS) cluster using the Azure CLI](/azure/aks/kubernetes-walkthrough) | Deploy and manage AKS clusters.  See how to monitor the health of the cluster and pods that run your application.
 |Azure Batch|Sample | [Run a job and tasks with Azure Batch using the Azure CLI](/azure/batch/scripts/batch-cli-sample-run-job) | Create a Batch job and add a series of tasks to the job. Monitor a job and its tasks.
 |Azure Batch|Sample | [Create and manage a Windows pool in Azure Batch using the Azure CLI](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) | Create and manage a pool of Windows compute nodes with a Cloud Services configuration.
@@ -103,7 +103,7 @@ File storage |Quickstart |[Create and manage Azure file shares using the Azure C
 
 | | | | |
 |-|-|-|-|
-Service principal |How-to guide |[Create an Azure service principal with the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli) | Create, get information about, and reset a service principal with the Azure CLI.
+Service principal |How-to guide |[Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md) | Create, get information about, and reset a service principal with the Azure CLI.
 RBAC |How-to guide |[Add or remove role assignments using Azure RBAC and the Azure CLI](/azure/role-based-access-control/role-assignments-cli) | Assign roles to Azure role-based access control.
 Key Vault |How-to guide |[Manage Key Vault using the Azure CLI](/azure/key-vault/key-vault-manage-with-cli2) | Create and manage Azure Key Vault.  Register and authorize an application, set advanced access policies, and learn cross-platform command-line interface commands.
 Key Vault |Tutorial |[Manage storage account keys with Key Vault and the Azure CLI](/azure/key-vault/key-vault-ovw-storage-keys) | Manage storage account keys, and generate shared access signature tokens.
