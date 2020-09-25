@@ -106,7 +106,9 @@ sudo zypper update-ca-certificates
 
 ## Update
 
-You can update the package with the `zypper update` command.
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+
+You can also update the package with the `zypper update` command.
 
 ```bash
 sudo zypper refresh

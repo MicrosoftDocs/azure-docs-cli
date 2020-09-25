@@ -82,7 +82,11 @@ the following addresses:
 ## Update
 
 The CLI is regularly updated with bug fixes, improvements, new features, and preview functionality. A new release is available roughly every
-two weeks. Update your local repository information and then upgrade the `azure-cli` package.
+three weeks.
+
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+
+You can also update your local Homebrew repository information and then upgrade the `azure-cli` package.
 
 ```bash
 brew update && brew upgrade azure-cli
