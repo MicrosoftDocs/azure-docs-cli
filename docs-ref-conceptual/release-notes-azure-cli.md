@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/22/2020
+ms.date: 09/29/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## September 29, 2020
+
+Version 2.12.1
+
+### RDBMS
+
+* Hotfix: `az postgres flexible-server create` : Update VnetName to exclude servername and update default region for MySQL
 
 ## September 22, 2020
 
