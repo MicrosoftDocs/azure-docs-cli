@@ -79,7 +79,7 @@ see the [Python documentation on INI](https://docs.python.org/3/library/configpa
 ## CLI configuration values and environment variables
 
 The following table contains all of the sections and option names that can be placed in a configuration file. Their corresponding
-environment variables are set as `AZURE_{section}_{name}`, in all caps. For example, `output` default for `core` is set in the `AZURE_CORE_OUTPUT` variable, the `storage_account` default for `batchai` is set in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable, and the default `location` is set in the `AZURE_DEFAULTS_LOCATION` variable.
+environment variables are set as `AZURE_{SECTION}_{NAME}`, **in all caps**. For example, `output` default for `core` is set in the `AZURE_CORE_OUTPUT` variable, the `storage_account` default for `batchai` is set in the `AZURE_BATCHAI_STORAGE_ACCOUNT` variable, and the default `location` is set in the `AZURE_DEFAULTS_LOCATION` variable.
 
 When you provide a default value, that argument is no longer required by any command. Instead, the default value is used.
 
