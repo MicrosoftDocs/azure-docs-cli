@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/14/2019
+ms.date: 09/25/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 

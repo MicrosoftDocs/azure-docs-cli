@@ -7,9 +7,9 @@ ms.topic: include
 ---
 The CLI provides an in-tool command to update to the latest version:
 
-    ```azurecli-interactive
-    az upgrade
-    ```
+```azurecli-interactive
+az upgrade
+```
 
 > [!NOTE]
 >
