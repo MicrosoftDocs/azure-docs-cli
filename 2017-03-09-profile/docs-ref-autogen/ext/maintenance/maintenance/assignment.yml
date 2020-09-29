@@ -1,43 +1,35 @@
 ### YamlMime:AzureCLIGroup
 uid: ext_maintenance_az_maintenance_assignment
 name: az maintenance assignment
-summary: Manage Azure Maintenance configuration assignment to resource.
+summary: Maintenance assignment.
 description: ''
 directCommands:
 - uid: ext_maintenance_az_maintenance_assignment_create
   name: az maintenance assignment create
-  summary: Creates a Maintenance Assignment.
+  summary: Register configuration for resource.
   description: ''
   syntax: >-
     az maintenance assignment create --configuration-assignment-name
-                                     --location
-                                     --maintenance-configuration-id
                                      --provider-name
                                      --resource-group
                                      --resource-name
                                      --resource-type
+                                     [--config-id]
+                                     [--location]
                                      [--resource-id]
                                      [--resource-parent-name]
                                      [--resource-parent-type]
   examples:
-  - summary: Create a Maintenance Assignment.
-    syntax: az maintenance assignment create -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute --configuration-assignment-name workervms --maintenance-configuration-id "/subscriptions/2b4ce620-bb0f-4964-8428-dea4aefec295/resourcegroups/smdtest/providers/Microsoft.Maintenance/maintenanceConfigurations/workervms" -l eastus2
+  - summary: ConfigurationAssignments_CreateOrUpdateParent
+    syntax: az maintenance assignment create --maintenance-configuration-id "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/policy1" --name "workervmPolicy" --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdvm1" --resource-parent-name "smdtest1" --resource-parent-type "virtualMachineScaleSets" --resource-type "virtualMachines"
   requiredParameters:
   - isRequired: true
-    name: --configuration-assignment-name
-    summary: Configuration assignment name. Same as the configuration name.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
-    name: --maintenance-configuration-id
-    summary: Fully qualified id of the maintenance configuration e.g. /subscriptions/2b4ce620-bb0f-4964-8428-dea4aefec295/resourceGroups/smdtest/providers/Microsoft.Maintenance/maintenanceConfigurations/config1.
+    name: --configuration-assignment-name --name -n
+    summary: Configuration assignment name.
     description: ''
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -45,25 +37,31 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
+    summary: Resource type.
     description: ''
   optionalParameters:
+  - name: --config-id --maintenance-configuration-id
+    summary: The maintenance configuration Id.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
   - name: --resource-id
-    summary: Fully qualified identifier of the Azure resource.
+    summary: The unique resourceId.
     description: ''
   - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
+    summary: Resource parent identifier.
     description: ''
   - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+    summary: Resource parent type.
     description: ''
 - uid: ext_maintenance_az_maintenance_assignment_delete
   name: az maintenance assignment delete
-  summary: Delete a Maintenance Assignment.
+  summary: Unregister configuration for resource.
   description: ''
   syntax: >-
     az maintenance assignment delete --configuration-assignment-name
@@ -73,17 +71,18 @@ directCommands:
                                      --resource-type
                                      [--resource-parent-name]
                                      [--resource-parent-type]
+                                     [--yes]
   examples:
-  - summary: Delete a Maintenance Assignment.
-    syntax: az maintenance assignment delete -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute --configuration-assignment-name workervms
+  - summary: ConfigurationAssignments_DeleteParent
+    syntax: az maintenance assignment delete --name "workervmConfiguration" --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdvm1" --resource-parent-name "smdtest1" --resource-parent-type "virtualMachineScaleSets" --resource-type "virtualMachines"
   requiredParameters:
   - isRequired: true
-    name: --configuration-assignment-name
-    summary: Configuration assignment name. Same as the configuration name.
+    name: --configuration-assignment-name --name -n
+    summary: Unique configuration assignment name.
     description: ''
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -91,37 +90,38 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
+    summary: Resource type.
     description: ''
   optionalParameters:
   - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
+    summary: Resource parent identifier.
     description: ''
   - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+    summary: Resource parent type.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_maintenance_az_maintenance_assignment_list
   name: az maintenance assignment list
-  summary: Lists Maintenance Assignment.
+  summary: List configurationAssignments for resource.
   description: ''
   syntax: >-
     az maintenance assignment list --provider-name
                                    --resource-group
                                    --resource-name
                                    --resource-type
-                                   [--resource-parent-name]
-                                   [--resource-parent-type]
   examples:
-  - summary: List Maintenance Assignment.
-    syntax: az maintenance assignment list -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute
+  - summary: ConfigurationAssignments_List
+    syntax: az maintenance assignment list --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdtest1" --resource-type "virtualMachineScaleSets"
   requiredParameters:
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -129,23 +129,101 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
+    summary: Resource type.
+    description: ''
+- uid: ext_maintenance_az_maintenance_assignment_list_parent
+  name: az maintenance assignment list-parent
+  summary: List configurationAssignments for resource.
+  description: ''
+  syntax: >-
+    az maintenance assignment list-parent --provider-name
+                                          --resource-group
+                                          --resource-name
+                                          --resource-parent-name
+                                          --resource-parent-type
+                                          --resource-type
+  examples:
+  - summary: ConfigurationAssignments_ListParent
+    syntax: az maintenance assignment list-parent --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdtestvm1" --resource-parent-name "smdtest1" --resource-parent-type "virtualMachineScaleSets" --resource-type "virtualMachines"
+  requiredParameters:
+  - isRequired: true
+    name: --provider-name
+    summary: Resource provider name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-name
+    summary: Resource identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-parent-name
+    summary: Resource parent identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-parent-type
+    summary: Resource parent type.
+    description: ''
+  - isRequired: true
+    name: --resource-type
+    summary: Resource type.
+    description: ''
+- uid: ext_maintenance_az_maintenance_assignment_update
+  name: az maintenance assignment update
+  summary: Register configuration for resource.
+  description: ''
+  syntax: >-
+    az maintenance assignment update --configuration-assignment-name
+                                     --provider-name
+                                     --resource-group
+                                     --resource-name
+                                     --resource-type
+                                     [--config-id]
+                                     [--location]
+                                     [--resource-id]
+  requiredParameters:
+  - isRequired: true
+    name: --configuration-assignment-name --name -n
+    summary: Configuration assignment name.
+    description: ''
+  - isRequired: true
+    name: --provider-name
+    summary: Resource provider name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-name
+    summary: Resource identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-type
+    summary: Resource type.
     description: ''
   optionalParameters:
-  - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
+  - name: --config-id --maintenance-configuration-id
+    summary: The maintenance configuration Id.
     description: ''
-  - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --resource-id
+    summary: The unique resourceId.
     description: ''
 commands:
 - ext_maintenance_az_maintenance_assignment_create
 - ext_maintenance_az_maintenance_assignment_delete
 - ext_maintenance_az_maintenance_assignment_list
+- ext_maintenance_az_maintenance_assignment_list_parent
+- ext_maintenance_az_maintenance_assignment_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -162,4 +240,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Azure Maintenance configuration assignment to resource.
+  description: Maintenance assignment.
