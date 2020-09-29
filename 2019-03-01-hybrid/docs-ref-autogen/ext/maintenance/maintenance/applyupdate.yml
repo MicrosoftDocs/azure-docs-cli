@@ -1,12 +1,12 @@
 ### YamlMime:AzureCLIGroup
 uid: ext_maintenance_az_maintenance_applyupdate
 name: az maintenance applyupdate
-summary: Manage Azure Maintenance update applications.
+summary: Maintenance applyupdate.
 description: ''
 directCommands:
 - uid: ext_maintenance_az_maintenance_applyupdate_create
   name: az maintenance applyupdate create
-  summary: Creates a ApplyUpdate request.
+  summary: Apply maintenance updates to resource.
   description: ''
   syntax: >-
     az maintenance applyupdate create --provider-name
@@ -16,12 +16,12 @@ directCommands:
                                       [--resource-parent-name]
                                       [--resource-parent-type]
   examples:
-  - summary: Creates a ApplyUpdate request.
-    syntax: az maintenance applyupdate create -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute
+  - summary: ApplyUpdates_CreateOrUpdateParent
+    syntax: az maintenance applyupdate create --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdvm1" --resource-parent-name "smdtest1" --resource-parent-type "virtualMachineScaleSets" --resource-type "virtualMachines"
   requiredParameters:
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -29,42 +29,42 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
+    summary: Resource type.
     description: ''
   optionalParameters:
   - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
+    summary: Resource parent identifier.
     description: ''
   - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+    summary: Resource parent type.
     description: ''
-- uid: ext_maintenance_az_maintenance_applyupdate_get
-  name: az maintenance applyupdate get
-  summary: Gets the state of a ApplyUpdate request.
+- uid: ext_maintenance_az_maintenance_applyupdate_get_parent
+  name: az maintenance applyupdate get-parent
+  summary: Track maintenance updates to resource with parent.
   description: ''
   syntax: >-
-    az maintenance applyupdate get --apply-update-name
-                                   --provider-name
-                                   --resource-group
-                                   --resource-name
-                                   --resource-type
-                                   [--resource-parent-name]
-                                   [--resource-parent-type]
+    az maintenance applyupdate get-parent --apply-update-name
+                                          --provider-name
+                                          --resource-group
+                                          --resource-name
+                                          --resource-parent-name
+                                          --resource-parent-type
+                                          --resource-type
   examples:
-  - summary: Gets the state of a ApplyUpdate request.
-    syntax: az maintenance applyupdate get -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute --apply-update-name 7b1b66dc-e93a-4183-81ff-591f1b2d4f07
+  - summary: ApplyUpdates_GetParent
+    syntax: az maintenance applyupdate get-parent --name "e9b9685d-78e4-44c4-a81c-64a14f9b87b6" --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdvm1" --resource-parent-name "smdtest1" --resource-parent-type "virtualMachineScaleSets" --resource-type "virtualMachines"
   requiredParameters:
   - isRequired: true
-    name: --apply-update-name
-    summary: Name of apply update resource e.g. default.
+    name: --apply-update-name --name -n
+    summary: ApplyUpdate Id.
     description: ''
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -72,22 +72,23 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-parent-name
+    summary: Resource parent identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-parent-type
+    summary: Resource parent type.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
-    description: ''
-  optionalParameters:
-  - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
-    description: ''
-  - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+    summary: Resource type.
     description: ''
 - uid: ext_maintenance_az_maintenance_applyupdate_show
   name: az maintenance applyupdate show
-  summary: Shows the state of a ApplyUpdate request.
+  summary: Track maintenance updates to resource.
   description: ''
   syntax: >-
     az maintenance applyupdate show --apply-update-name
@@ -95,19 +96,17 @@ directCommands:
                                     --resource-group
                                     --resource-name
                                     --resource-type
-                                    [--resource-parent-name]
-                                    [--resource-parent-type]
   examples:
-  - summary: Shows the state of a ApplyUpdate request.
-    syntax: az maintenance applyupdate show -g smdtest --resource-name smdVM --resource-type virtualMachines --provider-name Microsoft.Compute --apply-update-name 7b1b66dc-e93a-4183-81ff-591f1b2d4f07
+  - summary: ApplyUpdates_Get
+    syntax: az maintenance applyupdate show --name "e9b9685d-78e4-44c4-a81c-64a14f9b87b6" --provider-name "Microsoft.Compute" --resource-group "examplerg" --resource-name "smdtest1" --resource-type "virtualMachineScaleSets"
   requiredParameters:
   - isRequired: true
-    name: --apply-update-name
-    summary: Name of apply update resource e.g. default.
+    name: --apply-update-name --name -n
+    summary: ApplyUpdate Id.
     description: ''
   - isRequired: true
     name: --provider-name
-    summary: Maintenance resource provider - Microsoft.Maintenance.
+    summary: Resource provider name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -115,23 +114,43 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of resource.
+    summary: Resource identifier.
     description: ''
   - isRequired: true
     name: --resource-type
-    summary: Type of the azure resource e.g. virtualmachines, hosts etc.
+    summary: Resource type.
     description: ''
-  optionalParameters:
-  - name: --resource-parent-name
-    summary: Name of the parent resource e.g. for dedicated hosts this would be the name of the dedicated host group, for VMSS VMs this would be the VMSS name.
+- uid: ext_maintenance_az_maintenance_applyupdate_update
+  name: az maintenance applyupdate update
+  summary: Apply maintenance updates to resource.
+  description: ''
+  syntax: >-
+    az maintenance applyupdate update --provider-name
+                                      --resource-group
+                                      --resource-name
+                                      --resource-type
+  requiredParameters:
+  - isRequired: true
+    name: --provider-name
+    summary: Resource provider name.
     description: ''
-  - name: --resource-parent-type
-    summary: Type of the parent resource e.g. for dedicated hosts this would be hostGroups, for VMSS VMs this would be virtualmachinescalesets.
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-name
+    summary: Resource identifier.
+    description: ''
+  - isRequired: true
+    name: --resource-type
+    summary: Resource type.
     description: ''
 commands:
 - ext_maintenance_az_maintenance_applyupdate_create
-- ext_maintenance_az_maintenance_applyupdate_get
+- ext_maintenance_az_maintenance_applyupdate_get_parent
 - ext_maintenance_az_maintenance_applyupdate_show
+- ext_maintenance_az_maintenance_applyupdate_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -148,4 +167,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Azure Maintenance update applications.
+  description: Maintenance applyupdate.
