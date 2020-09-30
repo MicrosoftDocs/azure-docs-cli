@@ -7,10 +7,10 @@ ms.topic: include
 ---
 The CLI provides an in-tool command to update to the latest version:
 
-```azurecli-interactive
+```azurecli
 az upgrade
 ```
 
 > [!NOTE]
 >
-> This command will also update all installed extensions by default. For more `az upgrade` options, please refer to the [command reference page](https://docs.microsoft.com/cli/azure/reference-index?view=azure-cli-latest#az_upgrade).
+> This command will also update all installed extensions by default. For more `az upgrade` options, please refer to the [command reference page](/cli/azure/reference-index#az_upgrade).
