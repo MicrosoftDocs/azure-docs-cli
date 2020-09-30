@@ -5,7 +5,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 06/16/2020
+ms.date: 09/25/2020
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli 
@@ -50,7 +50,9 @@ Download and install the beta version of the Azure CLI.
 > [!div class="nextstepaction"]
 > [Beta release of the Azure CLI](https://aka.ms/installazurecliwindowsbeta)
 
-# [Microsoft Installer (MSI) with PowerShell](#tab/azure-powershell)
+# [Microsoft Installer (MSI) with Command](#tab/azure-powershell)
+
+### Powershell Command
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
@@ -59,6 +61,9 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
    ```
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+
+### Azure CLI Command (for update only)
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
 
 ---
 
