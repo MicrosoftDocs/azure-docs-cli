@@ -4,7 +4,7 @@ description: How to configure the Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/11/2018 
+ms.date: 09/30/2020 
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -94,6 +94,10 @@ When you provide a default value, that argument is no longer required by any com
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs`. |
 | __defaults__ | group | string | The default resource group to use for all commands. |
 | | location | string | The default location to use for all commands. |
+| | web | string | The default app name to use for `az webapp` commands. |
+| | vm | string | The default VM name to use for `az vm` commands. |
+| | vmss | string | The default virtual machine scale set (VMSS) name to use for `az vmss` commands. |
+| | acr | string | The default container registry name to use for `az acr` commands. |
 | __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
 | | account | string | The default account name to use for `az storage` commands. |
 | | key | string | The default account key to use for `az storage` commands. |
