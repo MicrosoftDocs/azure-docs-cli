@@ -4,7 +4,7 @@ description: How to install the Azure CLI on macOS
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/05/2018
+ms.date: 09/25/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -82,7 +82,11 @@ the following addresses:
 ## Update
 
 The CLI is regularly updated with bug fixes, improvements, new features, and preview functionality. A new release is available roughly every
-two weeks. Update your local repository information and then upgrade the `azure-cli` package.
+three weeks.
+
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+
+You can also update your local Homebrew repository information and then upgrade the `azure-cli` package.
 
 ```bash
 brew update && brew upgrade azure-cli

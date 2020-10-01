@@ -4,7 +4,7 @@ description: How to install the Azure CLI with yum
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/26/2019
+ms.date: 09/25/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -93,7 +93,9 @@ allow HTTPS connections to the following address:
 
 ## Update
 
-Update the Azure CLI with the `yum update` command.
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+
+You can also update the Azure CLI with the `yum update` command.
 
 ```bash
 sudo yum update azure-cli
