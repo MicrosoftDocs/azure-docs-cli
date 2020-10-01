@@ -4,7 +4,7 @@ description: How to install the Azure CLI with the apt package manager
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/25/2020
+ms.date: 09/29/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -16,15 +16,17 @@ ms.custom: devx-track-azurecli
 If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
 for the Azure CLI. This package has been tested with and is supported for:
 
-* Ubuntu trusty, xenial, artful, bionic, and disco
-* Debian wheezy, jessie, stretch, and buster
+* Ubuntu trusty, xenial, bionic, eoan and focal
+* Debian jessie, stretch, and buster
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
 > [!NOTE]
 >
 > The package for Azure CLI installs its own Python interpreter, and does not use the
-> system Python.
+> system Python. 
+>
+> On Ubuntu 20.04 (Focal), there is an `azure-cli` package with version `2.0.81` provided by the `focal/universe` repository. It's outdated and not recommended. If you already installed it, please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y` before following the below steps to install the latest `azure-cli` package.
 
 ## Install
 
@@ -88,6 +90,9 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 ## Troubleshooting
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+
+### No module issue on Ubuntu 20.04 (Focal)/WSL
+If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
 
 ### lsb_release does not return the correct base distribution version
 
