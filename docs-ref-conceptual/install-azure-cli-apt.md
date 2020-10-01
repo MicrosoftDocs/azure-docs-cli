@@ -153,8 +153,9 @@ allow HTTPS connections to the following address:
 [!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
 
 ## Update
+[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
 
-Use `apt-get upgrade` to update the CLI package.
+You can also use `apt-get upgrade` to update the CLI package.
 
    ```bash
    sudo apt-get update && sudo apt-get upgrade
