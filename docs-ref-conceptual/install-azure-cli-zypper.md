@@ -57,6 +57,21 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
+### NotImplementedError on OpenSUSE 15 VM
+The OpenSUSE 15 VM has a pre-installed Azure CLI with version `2.0.45`, it's outdated and has issues with `az login`. Please remove it along with its dependencies before following the [Install](#install) instruction to add the latest Azure CLI:
+```bash
+sudo zypper rm -y --clean-deps azure-cli
+```
+
+If you updated Azure CLI without removing the dependencies of version `2.0.45`, its old dependencies may affect the latest version of Azure CLI. You need to add back the old version to link to its dependencies and then remove `azure-cli` along with its dependencies:
+```bash
+# The package name may vary on different system version, run 'zypper --no-refresh info azure-cli' to check the source package format
+sudo zypper install --oldpackage azure-cli-2.0.45-4.22.noarch
+
+sudo zypper rm -y --clean-deps azure-cli
+```
+
+
 ### Install on SLES 12 or other systems without Python 3.6
 
 On SLES 12, the defualt `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [Install](#install) instruction to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
