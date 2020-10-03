@@ -59,21 +59,24 @@ Here are some common problems seen when installing with `zypper`. If you experie
 
 ### Install on SLES 12 or other systems without Python 3.6
 
-On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
+On SLES 12, the defualt `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [Install](#install) instruction to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
 ```bash
+# Please add azure-cli repository first following step 1-3 of the install instruction before running below commands
+$ sudo zypper refresh
 $ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib openssl-devel
 # Download Python source code
 $ PYTHON_VERSION="3.6.9"
 $ PYTHON_SRC_DIR=$(mktemp -d)
 $ wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
 # Build Python
-$ $PYTHON_SRC_DIR/*/configure
+# Please be aware that with --prefix=/usr, the command will override the existing python3 version
+$ $PYTHON_SRC_DIR/*/configure --with-ssl --prefix=/usr
 $ make
 $ sudo make install
-#Download azure-cli package 
+# Download azure-cli package 
 $ AZ_VERSION=$(zypper --no-refresh info azure-cli |grep Version | awk -F': ' '{print $2}' | awk '{$1=$1;print}')
 $ wget https://packages.microsoft.com/yumrepos/azure-cli/azure-cli-$AZ_VERSION.x86_64.rpm
-#Install without dependency
+# Install without dependency
 $ sudo rpm -ivh --nodeps azure-cli-$AZ_VERSION.x86_64.rpm
 ```
 
