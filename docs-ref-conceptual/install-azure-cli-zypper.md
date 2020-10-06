@@ -74,7 +74,7 @@ sudo zypper rm -y --clean-deps azure-cli
 
 ### Install on SLES 12 or other systems without Python 3.6
 
-On SLES 12, the defualt `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [Install](#install) instruction to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
+On SLES 12, the defualt `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
 ```bash
 # Please add azure-cli repository first following step 1-3 of the install instruction before running below commands
 $ sudo zypper refresh
