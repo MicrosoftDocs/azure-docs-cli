@@ -13,4 +13,6 @@ az upgrade
 
 > [!NOTE]
 >
+> The `az upgrade` command was added in version 2.11.0 and will not work with versions prior to 2.11.0.
+>
 > This command will also update all installed extensions by default. For more `az upgrade` options, please refer to the [command reference page](/cli/azure/reference-index#az_upgrade).
