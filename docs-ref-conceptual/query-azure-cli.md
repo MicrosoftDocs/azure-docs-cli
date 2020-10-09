@@ -18,6 +18,10 @@ for JSON, giving you the ability to select and modify data from CLI output. Quer
 The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath with a series of small,
 simple examples.
 
+> [!NOTE]
+>
+> When using Azure CLI in PowerShell on Windows, some extra escaping may be necessary for the query argument. Please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md) for more detail.
+
 ## Dictionary and list CLI results
 
 Even when using an output format other than JSON, CLI command results are first treated as JSON for queries. CLI results are either
