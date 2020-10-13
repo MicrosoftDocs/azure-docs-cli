@@ -35,7 +35,7 @@ Version 2.13.0
 
 ### AMS
 
-* Fix #14687: Mixed resource group and account name in command "az ams streaming-endpoint show" #14687
+* Fix #14687: Mixed resource group and account name in command "az ams streaming-endpoint show"
 
 ### App Config
 
