@@ -16,6 +16,9 @@ directCommands:
                                                                         [--group-name]
                                                                         [--rules]
                                                                         [--subscription]
+  examples:
+  - summary: Disable an attack protection rule
+    syntax: az network application-gateway waf-policy managed-rule rule-set add --policy-name MyPolicy -g MyResourceGroup --type OWASP --version 3.1 --group-name REQUEST-921-PROTOCOL-ATTACK --rules 921110
   requiredParameters:
   - isRequired: true
     name: --policy-name
@@ -40,7 +43,7 @@ directCommands:
     summary: The name of the web application firewall rule set group.
     description: ''
   - name: --rules
-    summary: List of rules that will be disabled.
+    summary: List of rules that will be disabled. If provided, --group-name must be provided too.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -88,7 +91,7 @@ directCommands:
                                                                            [--subscription]
   examples:
   - summary: Remove a managed rule set by rule set group name if rule_group_name is specified. Otherwise, remove all rule set.
-    syntax: az network application-gateway waf-policy managed-rule rule-set remove --policy-name MyPolicy --resource-group MyResourceGroup --type Permanent --version IPv4
+    syntax: az network application-gateway waf-policy managed-rule rule-set remove --policy-name MyPolicy --resource-group MyResourceGroup --type OWASP --version 3.1
   requiredParameters:
   - isRequired: true
     name: --policy-name
@@ -118,25 +121,26 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application_gateway_waf_policy_managed_rule_rule_set_update
   name: az network application-gateway waf-policy managed-rule rule-set update
-  summary: 'Update(Override) existing rule set of a WAF policy managed rules. For rule set and rules, please visit: <a href="https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules">https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules</a>.'
+  summary: 'Manage rules of a WAF policy. If --group-name and --rules are provided, override existing rules. If --group-name is provided, clear all rules under a certain rule group. If neither of them are provided, update rule set and clear all rules under itself. For rule set and rules, please visit: <a href="https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules">https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules</a>.'
   description: ''
   syntax: >-
-    az network application-gateway waf-policy managed-rule rule-set update --group-name
-                                                                           --policy-name
+    az network application-gateway waf-policy managed-rule rule-set update --policy-name
                                                                            --resource-group
                                                                            --type {Microsoft_BotManagerRuleSet, OWASP}
                                                                            --version {0.1, 2.2.9, 3.0, 3.1}
                                                                            [--add]
                                                                            [--force-string]
+                                                                           [--group-name]
                                                                            [--remove]
                                                                            [--rules]
                                                                            [--set]
                                                                            [--subscription]
+  examples:
+  - summary: Override rules under rule group EQUEST-921-PROTOCOL-ATTACK
+    syntax: az network application-gateway waf-policy managed-rule rule-set update --policy-name MyPolicy -g MyResourceGroup --type OWASP --version 3.1 --group-name REQUEST-921-PROTOCOL-ATTACK --rules 921130 921160
+  - summary: Update the OWASP protocol version from 3.1 to 3.0 which will clear the old rules
+    syntax: az network application-gateway waf-policy managed-rule rule-set update --policy-name MyPolicy -g MyResourceGroup --type OWASP --version 3.0
   requiredParameters:
-  - isRequired: true
-    name: --group-name
-    summary: The name of the web application firewall rule set group.
-    description: ''
   - isRequired: true
     name: --policy-name
     summary: The name of the web application firewall policy.
@@ -162,11 +166,14 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --group-name
+    summary: The name of the web application firewall rule set group.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --rules
-    summary: List of rules that will be disabled.
+    summary: List of rules that will be disabled. If provided, --group-name must be provided too.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
@@ -197,5 +204,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/15/2020
+  ms.date: 10/09/2020
   description: Manage managed rule set of managed rules of a WAF policy.

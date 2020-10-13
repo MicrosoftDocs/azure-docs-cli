@@ -11,7 +11,9 @@ directCommands:
   syntax: >-
     az appconfig feature filter add --feature
                                     --filter-name
+                                    [--auth-mode {key, login}]
                                     [--connection-string]
+                                    [--endpoint]
                                     [--filter-parameters]
                                     [--index]
                                     [--label]
@@ -25,6 +27,8 @@ directCommands:
     syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --index 2
   - summary: Add a filter with name 'MyFilter' using connection string.
     syntax: az appconfig feature filter add --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --filter-name MyFilter
+  - summary: Add a filter with name 'MyFilter' using App Configuration endpoint and your 'az login' credentials.
+    syntax: az appconfig feature filter add --endpoint=https://contoso.azconfig.io --feature color --filter-name MyFilter --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --feature
@@ -35,8 +39,16 @@ directCommands:
     summary: Name of the filter to be added.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --filter-parameters
     summary: Space-separated filter parameters in 'name[=value]' format.
@@ -64,7 +76,9 @@ directCommands:
   syntax: >-
     az appconfig feature filter delete --feature
                                        [--all]
+                                       [--auth-mode {key, login}]
                                        [--connection-string]
+                                       [--endpoint]
                                        [--filter-name]
                                        [--index]
                                        [--label]
@@ -87,8 +101,16 @@ directCommands:
   - name: --all
     summary: Delete all filters associated with a feature flag.
     description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --filter-name
     summary: Name of the filter to be deleted.
@@ -116,7 +138,9 @@ directCommands:
   syntax: >-
     az appconfig feature filter list --feature
                                      [--all]
+                                     [--auth-mode {key, login}]
                                      [--connection-string]
+                                     [--endpoint]
                                      [--label]
                                      [--name]
                                      [--query-examples]
@@ -127,6 +151,8 @@ directCommands:
     syntax: az appconfig feature filter list -n MyAppConfiguration --feature color --all
   - summary: List 150 filters for feature flag 'color'
     syntax: az appconfig feature filter list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx  --feature color --top 150
+  - summary: List all filters for feature flag 'color' using your 'az login' credentials.
+    syntax: az appconfig feature filter list --endpoint https://myappconfiguration.azconfig.io --feature color --all --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --feature
@@ -136,8 +162,16 @@ directCommands:
   - name: --all
     summary: List all filters associated with a feature flag.
     description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, display filters from the feature flag with null label by default.
@@ -162,7 +196,9 @@ directCommands:
   syntax: >-
     az appconfig feature filter show --feature
                                      --filter-name
+                                     [--auth-mode {key, login}]
                                      [--connection-string]
+                                     [--endpoint]
                                      [--index]
                                      [--label]
                                      [--name]
@@ -183,8 +219,16 @@ directCommands:
     summary: Name of the filter to be displayed.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --index
     summary: Zero-based index of the filter to be displayed in case there are multiple instances with same filter name.
@@ -224,5 +268,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/04/2020
+  ms.date: 10/09/2020
   description: Manage filters associated with feature flags stored in an App Configuration.

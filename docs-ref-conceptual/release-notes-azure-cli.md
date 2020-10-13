@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/29/2020
+ms.date: 10/13/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,104 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## October 13, 2020
+
+Version 2.13.0
+
+### ACR
+
+* `az acr helm`: Update deprecation url
+* Add logtemplate and systemtask changes for ACR Tasks
+
+### AKS
+
+* Support virtual-node with aks create: `az aks create --enable-addons virtual-node`
+* Add node image only option for CLI
+* Expect kube-dashboard addon be disabled by default
+* `az aks create/update`: Add LicenseType support for Windows
+* Support add Spot node pool
+* Honor addon names defined in Azure CLI
+
+### AMS
+
+* Fix #14687: Mixed resource group and account name in command "az ams streaming-endpoint show"
+
+### App Config
+
+* Fix test bug
+* Support AAD auth for data operations
+
+### App Service
+
+* `az functionapp deployment source config-zip`: Fixed an issue where config-zip could throw an exception on success on linux consumption
+* Bugfix: Better error messages for webapp commands
+* `az appservice domain create, show-terms`: Add ability to create app service domain
+* `az functionapp create`: Removed the preview flag from Java 11 when creating a new function app
+* [BREAKING CHANGE] az webapp create, az webapp up - Update available webapp runtimes
+
+### ARM
+
+* `az ts`: Add new commands for template specs
+* `az deployment` : Add support for --template-spec -s
+
+### Compute
+
+* Fix host group creation FD count limitation
+* Add new command to support upgrading extensions for VMSS
+* Fix the image reference is missing issue
+
+### HDInsight
+
+* `az hdinsight create`: add deprecate information for argument --public-networrk-access-type and --outbound-public-network-access-type
+* `az hdinsight create`: add deprecate information for argument `--public-networrk-access-type` and `--outbound-public-network-access-type`
+* `az hdinsight create`:  add parameter `--idbroker` to support customer to create ESP cluster with HDInsight Id Broker
+
+### IoT Central
+
+* Remove deprecated 'az iotcentral' command module
+
+### Key Vault
+
+* Support `--hsm-name` for `az keyvault key encrypt/decrypt`
+
+### Lab
+
+* Fix #14127: `__init__()` takes 1 positional argument but 2 were given
+
+### Network
+
+* `az network application-gateway ssl-cert show`: Add example to demonstrate certificate format and fetch information
+* `az network application-gateway rule`: Support --priority option
+* `az network application-gateway create`: Fix bug that cannot create without public IP sepcified
+* `az network application-gateway waf-policy managed-rule rule-set add`: Expose server error to user to give more intuitive hint message.
+* `az network application-gateway waf-policy managed-rule rule-set update`: Support to change rule set type version.
+
+### RDBMS
+
+* Bugfix: az postgres flexible-server create Remove hardcoded API version from network client.
+
+### Role
+
+* Fix #15278: `az role assignment list/delete`: Forbid empty string arguments
+
+### SQL
+
+* `az sql midb log-replay`: Support for log replay service on managed database
+* Ignore character casing for backup storage redundancy param value for managed instance
+* [BREAKING CHANGE] az sql db create: Add --backup-storage-redundancy parameter; add warning for unspecified bsr/bsr == Geo.
+
+### SQL VM
+
+* `az sql vm show`: Add configuration options to --expand flag
+
+### Storage
+
+* [BREAKING CHANGE] `az storage blob copy start`: Fix format issue for `--destination-if-modified-since` and `--destination-if-unmodified-since`
+* [BREAKING CHANGE] `az storage blob incremental-copy start`: Fix format issue for `--destination-if-modified-since` and `--destination-if-unmodified-since`
+* `az storage fs`: Fix connection string issue
+* `az storage share-rm`: GA release access tier
+* `az storage container-rm`: Add a new command group to use the Microsoft.Storage resource provider for container management operations.
 
 ## September 29, 2020
 

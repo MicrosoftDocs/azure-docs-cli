@@ -14,6 +14,7 @@ directCommands:
                         --resource-group
                         [--enable-cluster-autoscaler]
                         [--enable-node-public-ip]
+                        [--eviction-policy {Deallocate, Delete}]
                         [--kubernetes-version]
                         [--labels]
                         [--max-count]
@@ -26,6 +27,8 @@ directCommands:
                         [--node-taints]
                         [--node-vm-size]
                         [--os-type]
+                        [--priority {Regular, Spot}]
+                        [--spot-max-price]
                         [--subscription]
                         [--tags]
                         [--vnet-subnet-id]
@@ -49,6 +52,11 @@ directCommands:
     description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
+    description: ''
+  - name: --eviction-policy
+    defaultValue: Delete
+    parameterValueGroup: Deallocate, Delete
+    summary: The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
     description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to use for creating the cluster, such as "1.16.9".
@@ -90,6 +98,15 @@ directCommands:
   - name: --os-type
     defaultValue: Linux
     summary: The OS Type. Linux or Windows.
+    description: ''
+  - name: --priority
+    defaultValue: Regular
+    parameterValueGroup: Regular, Spot
+    summary: The priority of the node pool.
+    description: ''
+  - name: --spot-max-price
+    defaultValue: nan
+    summary: It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -332,19 +349,16 @@ directCommands:
   description: ''
   syntax: >-
     az aks nodepool upgrade --cluster-name
-                            --kubernetes-version
                             --name
                             --resource-group
+                            [--kubernetes-version]
                             [--no-wait]
+                            [--node-image-only]
                             [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
     summary: The cluster name.
-    description: ''
-  - isRequired: true
-    name: --kubernetes-version -k
-    summary: Version of Kubernetes to upgrade the node pool to, such as "1.16.9".
     description: ''
   - isRequired: true
     name: --name -n
@@ -355,8 +369,14 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --kubernetes-version -k
+    summary: Version of Kubernetes to upgrade the node pool to, such as "1.16.9".
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-image-only
+    summary: Only upgrade agent pool's node image.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -388,5 +408,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/10/2020
+  ms.date: 10/06/2020
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

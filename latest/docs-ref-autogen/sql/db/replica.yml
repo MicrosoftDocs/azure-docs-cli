@@ -14,6 +14,7 @@ directCommands:
                              --resource-group
                              --server
                              [--auto-pause-delay]
+                             [--backup-storage-redundancy]
                              [--capacity]
                              [--compute-model {Provisioned, Serverless}]
                              [--elastic-pool]
@@ -33,6 +34,8 @@ directCommands:
     syntax: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb --service-objective S0
   - summary: Create a database with GeneralPurpose edition, Gen4 hardware, and 1 vcore as a secondary replica of an existing GeneralPurpose database
     syntax: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb -f Gen4 -c 1
+  - summary: Create a database with with zone redundant backup storage as a secondary replica of an existing database.
+    syntax: az sql db replica create -g mygroup -s myserver -n originalDb --partner-server newDb --backup-storage-redundancy Zone
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -53,6 +56,9 @@ directCommands:
   optionalParameters:
   - name: --auto-pause-delay
     summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --backup-storage-redundancy --bsr
+    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo.'
     description: ''
   - name: --capacity -c
     summary: The capacity component of the sku in integer number of DTUs or vcores.
@@ -228,5 +234,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/11/2020
+  ms.date: 10/09/2020
   description: Manage replication between databases.

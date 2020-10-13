@@ -10,7 +10,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature delete --feature
+                                [--auth-mode {key, login}]
                                 [--connection-string]
+                                [--endpoint]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -20,14 +22,24 @@ directCommands:
     syntax: az appconfig feature delete -n MyAppConfiguration --feature color --label MyLabel --yes
   - summary: Delete a feature using connection string.
     syntax: az appconfig feature delete --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label MyLabel
+  - summary: Delete a feature using App Configuration endpoint and your 'az login' credentials.
+    syntax: az appconfig feature delete --endpoint https://myappconfiguration.azconfig.io --feature color --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --feature
     summary: Key of the feature to be deleted. Support star sign as filters, for instance \* means all key and abc\* means keys with abc as prefix. Comma separated keys are not supported. Please provide escaped string if your feature name contains comma.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, delete the feature flag with null label by default. Support star sign as filters, for instance \* means all labels and abc\* means labels with abc as prefix.
@@ -48,7 +60,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature disable --feature
+                                 [--auth-mode {key, login}]
                                  [--connection-string]
+                                 [--endpoint]
                                  [--label]
                                  [--name]
                                  [--subscription]
@@ -64,8 +78,16 @@ directCommands:
     summary: Key of the feature to be disabled.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, disable the feature flag with null label by default.
@@ -86,7 +108,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature enable --feature
+                                [--auth-mode {key, login}]
                                 [--connection-string]
+                                [--endpoint]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -102,8 +126,16 @@ directCommands:
     summary: Key of the feature to be enabled.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, enable the feature flag with null label by default.
@@ -124,7 +156,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature list [--all]
+                              [--auth-mode {key, login}]
                               [--connection-string]
+                              [--endpoint]
                               [--feature]
                               [--fields {conditions, description, key, label, last_modified, locked, state}]
                               [--label]
@@ -149,8 +183,16 @@ directCommands:
   - name: --all
     summary: List all feature flags.
     description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --feature
     summary: Key of the feature to be listed. Support star sign as filters, for instance \* means all key and abc\* means keys with abc as prefix. Comma separated keys are not supported. Please provide escaped string if your feature name contains comma.
@@ -181,7 +223,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature lock --feature
+                              [--auth-mode {key, login}]
                               [--connection-string]
+                              [--endpoint]
                               [--label]
                               [--name]
                               [--subscription]
@@ -197,8 +241,16 @@ directCommands:
     summary: Key of the feature to be locked.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, lock the feature flag with null label by default.
@@ -219,8 +271,10 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature set --feature
+                             [--auth-mode {key, login}]
                              [--connection-string]
                              [--description]
+                             [--endpoint]
                              [--label]
                              [--name]
                              [--subscription]
@@ -230,17 +284,27 @@ directCommands:
     syntax: az appconfig feature set -n MyAppConfiguration --feature color --label MyLabel
   - summary: Set a feature flag with null label using connection string and set a description.
     syntax: az appconfig feature set --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --description "This is a colorful feature"
+  - summary: Set a feature flag using your 'az login' credentials.
+    syntax: az appconfig feature set --endpoint https://myappconfiguration.azconfig.io --feature color --label MyLabel --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --feature
     summary: Name of the feature flag to be set. Only alphanumeric characters, '.', '-' and '_' are allowed.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --description
     summary: Description of the feature flag to be set.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, set the feature flag with null label by default.
@@ -261,7 +325,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature show --feature
+                              [--auth-mode {key, login}]
                               [--connection-string]
+                              [--endpoint]
                               [--fields {conditions, description, key, label, last_modified, locked, state}]
                               [--label]
                               [--name]
@@ -272,14 +338,24 @@ directCommands:
     syntax: az appconfig feature show -n MyAppConfiguration --feature color --label MyLabel
   - summary: Show a feature flag using connection string and field filters
     syntax: az appconfig feature show --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --fields key locked conditions state
+  - summary: Show a feature flag using App Configuration endpoint and your 'az login' credentials.
+    syntax: az appconfig feature show --endpoint https://myappconfiguration.azconfig.io --feature color --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --feature
     summary: Name of the feature flag to be retrieved.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --fields
     parameterValueGroup: conditions, description, key, label, last_modified, locked, state
@@ -304,7 +380,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig feature unlock --feature
+                                [--auth-mode {key, login}]
                                 [--connection-string]
+                                [--endpoint]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -320,8 +398,16 @@ directCommands:
     summary: Key of the feature to be unlocked.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, unlock the feature flag with null label by default.
@@ -367,5 +453,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/04/2020
+  ms.date: 10/09/2020
   description: Manage feature flags stored in an App Configuration.

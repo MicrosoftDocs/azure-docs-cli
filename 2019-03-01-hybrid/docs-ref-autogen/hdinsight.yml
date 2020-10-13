@@ -36,6 +36,7 @@ directCommands:
                         [--headnode-size]
                         [--http-password]
                         [--http-user]
+                        [--idbroker]
                         [--kafka-client-group-id]
                         [--kafka-client-group-name]
                         [--kafka-management-node-count]
@@ -111,6 +112,23 @@ directCommands:
   - summary: Create a cluster with the Enterprise Security Package (ESP).
     syntax: >-
       az hdinsight create --esp -t spark -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" \
+
+      --storage-account MyStorageAccount \
+
+      --subnet "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/subnet1" \
+
+      --domain "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRG/providers/Microsoft.AAD/domainServices/MyDomain.onmicrosoft.com" \
+
+      --assign-identity "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/MyMsiRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyMSI" \
+
+      --cluster-admin-account MyAdminAccount@MyDomain.onmicrosoft.com \
+
+      --cluster-users-group-dns MyGroup
+  - summary: Create a cluster with the Enterprise Security Package (ESP) and enable HDInsight ID Broker.
+    syntax: >-
+      az hdinsight create --esp --idbroker -t spark -g MyResourceGroup -n MyCluster \
 
       -p "HttpPassword1234!" \
 
@@ -291,6 +309,9 @@ directCommands:
     description: ''
   - name: --http-user -u
     summary: 'HTTP username for the cluster.  Default: admin.'
+    description: ''
+  - name: --idbroker
+    summary: Specify to create ESP cluster with HDInsight ID Broker. If omitted, creating ESP cluster with HDInsight ID Broker will not not allowed.
     description: ''
   - name: --kafka-client-group-id
     summary: The client AAD security group id for Kafka Rest Proxy.
@@ -704,5 +725,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/19/2020
+  ms.date: 09/28/2020
   description: Manage HDInsight resources.
