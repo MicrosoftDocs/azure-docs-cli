@@ -10,7 +10,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv delete --key
+                           [--auth-mode {key, login}]
                            [--connection-string]
+                           [--endpoint]
                            [--label]
                            [--name]
                            [--subscription]
@@ -20,14 +22,24 @@ directCommands:
     syntax: az appconfig kv delete -n MyAppConfiguration --key color --label MyLabel --yes
   - summary: Delete a key using connection string.
     syntax: az appconfig kv delete --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key color --label MyLabel
+  - summary: Delete a key using your 'az login' credentials and App Configuration endpoint.
+    syntax: az appconfig kv delete --endpoint https://myappconfiguration.azconfig.io --key color --auth-mode login --yes
   requiredParameters:
   - isRequired: true
     name: --key
     summary: Support star sign as filters, for instance \* means all key and abc\* means keys with abc as prefix.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, delete entry with null label. Support star sign as filters, for instance \* means all label and abc\* means labels with abc as prefix.
@@ -49,10 +61,14 @@ directCommands:
   syntax: >-
     az appconfig kv export --destination {appconfig, appservice, file}
                            [--appservice-account]
+                           [--auth-mode {key, login}]
                            [--connection-string]
+                           [--dest-auth-mode {key, login}]
                            [--dest-connection-string]
+                           [--dest-endpoint]
                            [--dest-label]
                            [--dest-name]
+                           [--endpoint]
                            [--format {json, properties, yaml}]
                            [--key]
                            [--label]
@@ -71,13 +87,15 @@ directCommands:
   - summary: Export all keys and feature flags with label test to a json file.
     syntax: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json
   - summary: Export all keys with null label to an App Service application.
-    syntax: az appconfig kv export -n MyAppConfiguration -d appservice  --appservice-account MyAppService
+    syntax: az appconfig kv export -n MyAppConfiguration -d appservice --appservice-account MyAppService
   - summary: Export all keys with label test excluding feature flags to a json file.
     syntax: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json --skip-features
   - summary: Export all keys and feature flags with all labels to another App Configuration.
     syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration --key * --label * --preserve-labels
   - summary: Export all keys and feature flags with all labels to another App Configuration and overwrite destination labels.
     syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration --key * --label * --dest-label ExportedKeys
+  - summary: Export all keys to another App Configuration using your 'az login' credentials.
+    syntax: az appconfig kv export -d appconfig --endpoint https://myappconfiguration.azconfig.io --auth-mode login --dest-endpoint https://anotherappconfiguration.azconfig.io --dest-auth-mode login --key * --label * --preserve-labels
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -88,17 +106,33 @@ directCommands:
   - name: --appservice-account
     summary: ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
     description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
+  - name: --dest-auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Auth mode for connecting to destination App Configuration. For details, refer to "--auth-mode" argument.
+    description: ''
   - name: --dest-connection-string
     summary: Combination of access key and endpoint of the destination store.
+    description: ''
+  - name: --dest-endpoint
+    summary: If --dest-auth-mode is "login", provide endpoint URL of the destination App Configuration.
     description: ''
   - name: --dest-label
     summary: Exported KVs will be labeled with this destination label. If neither --dest-label nor --preserve-labels is specified, will assign null label.
     description: ''
   - name: --dest-name
     summary: The name of the destination App Configuration.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
@@ -157,9 +191,11 @@ directCommands:
   syntax: >-
     az appconfig kv import --source {appconfig, appservice, file}
                            [--appservice-account]
+                           [--auth-mode {key, login}]
                            [--connection-string]
                            [--content-type]
                            [--depth]
+                           [--endpoint]
                            [--format {json, properties, yaml}]
                            [--label]
                            [--name]
@@ -168,7 +204,9 @@ directCommands:
                            [--preserve-labels {false, true}]
                            [--separator]
                            [--skip-features {false, true}]
+                           [--src-auth-mode {key, login}]
                            [--src-connection-string]
+                           [--src-endpoint]
                            [--src-key]
                            [--src-label]
                            [--src-name]
@@ -187,6 +225,8 @@ directCommands:
     syntax: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration --src-key * --src-label * --preserve-labels
   - summary: Import all keys and feature flags from a JSON file and apply JSON content type.
     syntax: az appconfig kv import -n MyAppConfiguration -s file --path D:/abc.json --format json --separator . --content-type application/json
+  - summary: Import all keys to another App Configuration using your 'az login' credentials.
+    syntax: az appconfig kv import -s appconfig --endpoint https://myappconfiguration.azconfig.io --auth-mode login --src-endpoint https://anotherappconfiguration.azconfig.io --src-auth-mode login --src-key * --src-label * --preserve-labels
   requiredParameters:
   - isRequired: true
     name: --source -s
@@ -197,6 +237,11 @@ directCommands:
   - name: --appservice-account
     summary: ARM ID for AppService OR the name of the AppService, assuming it is in the same subscription and resource group as the App Configuration. Required for AppService arguments.
     description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
@@ -205,6 +250,9 @@ directCommands:
     description: ''
   - name: --depth
     summary: Depth for flattening the json or yaml file to key-value pairs. Flatten to the deepest level by default if --separator is provided. Not applicable for property files or feature flags.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --format
     parameterValueGroup: json, properties, yaml
@@ -233,8 +281,16 @@ directCommands:
     parameterValueGroup: false, true
     summary: Import only key values and exclude all feature flags. By default, all feature flags will be imported from file or appconfig. Not applicable for appservice.
     description: ''
+  - name: --src-auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Auth mode for connecting to source App Configuration. For details, refer to "--auth-mode" argument.
+    description: ''
   - name: --src-connection-string
     summary: Combination of access key and endpoint of the source store.
+    description: ''
+  - name: --src-endpoint
+    summary: If --src-auth-mode is "login", provide endpoint URL of the source App Configuration.
     description: ''
   - name: --src-key
     summary: If no key specified, import all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix. Key filtering not applicable for feature flags. By default, all feature flags with specified label will be imported.
@@ -258,8 +314,10 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv list [--all]
+                         [--auth-mode {key, login}]
                          [--connection-string]
                          [--datetime]
+                         [--endpoint]
                          [--fields {content_type, etag, key, label, last_modified, locked, tags, value}]
                          [--key]
                          [--label]
@@ -279,15 +337,25 @@ directCommands:
     syntax: az appconfig kv list -n MyAppConfiguration --key "KVRef_*" --resolve-keyvault --query "[*].{key:key, value:value}"
   - summary: List key-values with multiple labels.
     syntax: az appconfig kv list --label test,prod,\0 -n MyAppConfiguration
+  - summary: List all key-values with all labels using your 'az login' credentials.
+    syntax: az appconfig kv list --endpoint https://myappconfiguration.azconfig.io --auth-mode login
   optionalParameters:
   - name: --all
     summary: List all items.
+    description: ''
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
     description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --datetime
     summary: 'Format: "YYYY-MM-DDThh:mm:ssZ". If no time zone specified, use UTC by default.'
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --fields
     parameterValueGroup: content_type, etag, key, label, last_modified, locked, tags, value
@@ -322,7 +390,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv lock --key
+                         [--auth-mode {key, login}]
                          [--connection-string]
+                         [--endpoint]
                          [--label]
                          [--name]
                          [--subscription]
@@ -338,8 +408,16 @@ directCommands:
     summary: Key to be locked.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, lock entry with null label. Filtering is not supported.
@@ -360,7 +438,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv restore --datetime
+                            [--auth-mode {key, login}]
                             [--connection-string]
+                            [--endpoint]
                             [--key]
                             [--label]
                             [--name]
@@ -377,8 +457,16 @@ directCommands:
     summary: 'Format: "YYYY-MM-DDThh:mm:ssZ". If no time zone specified, use UTC by default.'
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --key
     summary: If no key specified, restore all keys by default. Support star sign as filters, for instance abc\* means keys with abc as prefix.
@@ -402,8 +490,10 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv set --key
+                        [--auth-mode {key, login}]
                         [--connection-string]
                         [--content-type]
+                        [--endpoint]
                         [--label]
                         [--name]
                         [--subscription]
@@ -421,17 +511,27 @@ directCommands:
     syntax: az appconfig kv set -n MyAppConfiguration --key options --value [1,2,3] --content-type application/activity+json;charset=utf-8
   - summary: Set a key with null value and JSON content type.
     syntax: az appconfig kv set -n MyAppConfiguration --key foo --value null --content-type application/json
+  - summary: Set a key-value using your 'az login' credentials.
+    syntax: az appconfig kv set --endpoint https://myappconfiguration.azconfig.io --key color --value red --auth-mode login
   requiredParameters:
   - isRequired: true
     name: --key
     summary: Key to be set. Key cannot be a '.' or '..', or contain the '%' character.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --content-type
     summary: Content type of the keyvalue to be set.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, set the key with null label by default.
@@ -459,7 +559,9 @@ directCommands:
   syntax: >-
     az appconfig kv set-keyvault --key
                                  --secret-identifier
+                                 [--auth-mode {key, login}]
                                  [--connection-string]
+                                 [--endpoint]
                                  [--label]
                                  [--name]
                                  [--subscription]
@@ -480,8 +582,16 @@ directCommands:
     summary: ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, set the key with null label by default.
@@ -505,8 +615,10 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv show --key
+                         [--auth-mode {key, login}]
                          [--connection-string]
                          [--datetime]
+                         [--endpoint]
                          [--label]
                          [--name]
                          [--query-examples]
@@ -516,17 +628,27 @@ directCommands:
     syntax: az appconfig kv show -n MyAppConfiguration --key color --label MyLabel --datetime "2019-05-01T11:24:12Z"
   - summary: Show a key-value using connection string with label
     syntax: az appconfig kv show --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key color --label MyLabel
+  - summary: Show a key-value using your 'az login' credentials.
+    syntax: az appconfig kv show --key color --auth-mode login --endpoint https://myappconfiguration.azconfig.io
   requiredParameters:
   - isRequired: true
     name: --key
     summary: Key to be showed.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
     description: ''
   - name: --datetime
     summary: 'Format: "YYYY-MM-DDThh:mm:ssZ". If no time zone specified, use UTC by default.'
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, show entry with null label. Filtering is not supported.
@@ -547,7 +669,9 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig kv unlock --key
+                           [--auth-mode {key, login}]
                            [--connection-string]
+                           [--endpoint]
                            [--label]
                            [--name]
                            [--subscription]
@@ -563,8 +687,16 @@ directCommands:
     summary: Key to be unlocked.
     description: ''
   optionalParameters:
+  - name: --auth-mode
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac">https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-enable-rbac</a>.
+    description: ''
   - name: --connection-string
     summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --label
     summary: If no label specified, unlock entry with null label. Filtering is not supported.
@@ -607,5 +739,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/04/2020
+  ms.date: 10/09/2020
   description: Manage key-values stored in an App Configuration.

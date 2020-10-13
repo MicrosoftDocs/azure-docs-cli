@@ -38,8 +38,7 @@ directCommands:
   summary: Create a series of steps for building, testing and OS & Framework patching containers. Tasks support triggers from git commits and base image updates.
   description: ''
   syntax: >-
-    az acr task create --context
-                       --name
+    az acr task create --name
                        --registry
                        [--agent-pool]
                        [--arg]
@@ -50,10 +49,13 @@ directCommands:
                        [--base-image-trigger-type {All, Runtime}]
                        [--cmd]
                        [--commit-trigger-enabled {false, true}]
+                       [--context]
                        [--cpu]
                        [--file]
                        [--git-access-token]
                        [--image]
+                       [--is-system-task]
+                       [--log-template]
                        [--no-cache {false, true}]
                        [--no-push {false, true}]
                        [--platform]
@@ -108,10 +110,6 @@ directCommands:
           --assign-identity [system] "/subscriptions/<subscriptionId>/resourcegroups/<myResourceGroup>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<myUserAssignedIdentitiy>"
   requiredParameters:
   - isRequired: true
-    name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the task.
     description: ''
@@ -155,6 +153,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
+  - name: --context -c
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
+    description: ''
   - name: --cpu
     defaultValue: "2"
     summary: The CPU configuration in terms of number of cores required for the run.
@@ -167,6 +168,12 @@ directCommands:
     description: ''
   - name: --image -t
     summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
+    description: ''
+  - name: --is-system-task
+    summary: Indicates whether the task resource is a system task. The name of the task must be 'quicktask'. Only applicable to CMK enabled registry.
+    description: ''
+  - name: --log-template
+    summary: "The repository and tag template for run log artifact using the format: 'log/repo:tag' (e.g., 'acr/logs:{{.Run.ID}}'). Only applicable to CMK enabled registry."
     description: ''
   - name: --no-cache
     parameterValueGroup: false, true
@@ -391,6 +398,7 @@ directCommands:
                     [--arg]
                     [--context]
                     [--file]
+                    [--log-template]
                     [--no-logs]
                     [--no-wait]
                     [--resource-group]
@@ -426,10 +434,13 @@ directCommands:
     summary: Build argument in '--arg name[=value]' format. Multiples supported by passing '--arg` multiple times.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored.
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
     description: ''
   - name: --file -f
     summary: Relative path of the the task/docker file to the source code root folder. Task files must be suffixed with '.yaml' or piped from the standard input using '-'.
+    description: ''
+  - name: --log-template
+    summary: "The repository and tag template for run log artifact using the format: 'log/repo:tag' (e.g., 'acr/logs:{{.Run.ID}}'). Only applicable to CMK enabled registry."
     description: ''
   - name: --no-logs
     summary: Do not show logs after successfully queuing the build.
@@ -545,6 +556,7 @@ directCommands:
                        [--file]
                        [--git-access-token]
                        [--image]
+                       [--log-template]
                        [--no-cache {false, true}]
                        [--no-push {false, true}]
                        [--platform]
@@ -607,7 +619,7 @@ directCommands:
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored.
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
     description: ''
   - name: --cpu
     summary: The CPU configuration in terms of number of cores required for the run.
@@ -620,6 +632,9 @@ directCommands:
     description: ''
   - name: --image -t
     summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
+    description: ''
+  - name: --log-template
+    summary: "The repository and tag template for run log artifact using the format: 'log/repo:tag' (e.g., 'acr/logs:{{.Run.ID}}'). Only applicable to CMK enabled registry."
     description: ''
   - name: --no-cache
     parameterValueGroup: false, true
