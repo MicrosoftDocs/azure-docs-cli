@@ -69,10 +69,7 @@ $ ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl
 $ make
 $ sudo make install
 # configure shared object lookup directory so that libssl.so.1.1 can be found
-$ cd /etc/ld.so.conf.d/
-$ sudo vi openssl-1.1.1d.conf
-# add the following content
-/usr/local/ssl/lib
+$ echo "/usr/local/ssl/lib" | sudo tee /etc/ld.so.conf.d/openssl-1.1.1d.conf
 # reload config
 $ sudo ldconfig -v
 ```
