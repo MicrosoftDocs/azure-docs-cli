@@ -32,9 +32,6 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-## Update
-[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
-
 ## Next Steps
 
 See [What is Azure CLI?](what-is-azure-cli.md) for key characteristics.
