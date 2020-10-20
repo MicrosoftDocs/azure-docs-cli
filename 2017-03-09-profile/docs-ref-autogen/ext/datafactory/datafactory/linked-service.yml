@@ -10,20 +10,20 @@ directCommands:
   description: ''
   syntax: >-
     az datafactory linked-service create --factory-name
-                                         --name
+                                         --linked-service-name
                                          --properties
                                          --resource-group
                                          [--if-match]
   examples:
   - summary: LinkedServices_Create
-    syntax: az datafactory linked-service create --factory-name "myFactoryName" --properties "{\"type\":\"AzureStorage\",\"typeProperties\":{\"connectionString\":{\"type\":\"SecureString\",\"value\":\"DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>\"}}}" --name "myLinkedService" --resource-group "myResourceGroup"
+    syntax: az datafactory linked-service create --factory-name "exampleFactoryName" --properties "{\"type\":\"AzureStorage\",\"typeProperties\":{\"connectionString\":{\"type\":\"SecureString\",\"value\":\"DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>\"}}}" --name "exampleLinkedService" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --linked-service-name --name -n
     summary: The linked service name.
     description: ''
   - isRequired: true
@@ -44,23 +44,28 @@ directCommands:
   description: ''
   syntax: >-
     az datafactory linked-service delete --factory-name
-                                         --name
+                                         --linked-service-name
                                          --resource-group
+                                         [--yes]
   examples:
   - summary: LinkedServices_Delete
-    syntax: az datafactory linked-service delete --factory-name "myFactoryName" --name "myLinkedService" --resource-group "myResourceGroup"
+    syntax: az datafactory linked-service delete --factory-name "exampleFactoryName" --name "exampleLinkedService" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --linked-service-name --name -n
     summary: The linked service name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_datafactory_az_datafactory_linked_service_list
   name: az datafactory linked-service list
@@ -71,7 +76,7 @@ directCommands:
                                        --resource-group
   examples:
   - summary: LinkedServices_ListByFactory
-    syntax: az datafactory linked-service list --factory-name "myFactoryName" --resource-group "myResourceGroup"
+    syntax: az datafactory linked-service list --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
@@ -87,19 +92,19 @@ directCommands:
   description: ''
   syntax: >-
     az datafactory linked-service show --factory-name
-                                       --name
+                                       --linked-service-name
                                        --resource-group
                                        [--if-none-match]
   examples:
   - summary: LinkedServices_Get
-    syntax: az datafactory linked-service show --factory-name "myFactoryName" --name "myLinkedService" --resource-group "myResourceGroup"
+    syntax: az datafactory linked-service show --factory-name "exampleFactoryName" --name "exampleLinkedService" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --linked-service-name --name -n
     summary: The linked service name.
     description: ''
   - isRequired: true
@@ -110,11 +115,77 @@ directCommands:
   - name: --if-none-match
     summary: ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if \* was provided, then no content will be returned.
     description: ''
+- uid: ext_datafactory_az_datafactory_linked_service_update
+  name: az datafactory linked-service update
+  summary: Creates or updates a linked service.
+  description: ''
+  syntax: >-
+    az datafactory linked-service update --factory-name
+                                         --linked-service-name
+                                         --resource-group
+                                         [--add]
+                                         [--annotations]
+                                         [--connect-via]
+                                         [--description]
+                                         [--force-string]
+                                         [--if-match]
+                                         [--if-none-match]
+                                         [--parameters]
+                                         [--remove]
+                                         [--set]
+  examples:
+  - summary: LinkedServices_Update
+    syntax: az datafactory linked-service update --factory-name "exampleFactoryName" --description "Example description" --name "exampleLinkedService" --resource-group "exampleResourceGroup"
+  requiredParameters:
+  - isRequired: true
+    name: --factory-name
+    summary: The factory name.
+    description: ''
+  - isRequired: true
+    name: --linked-service-name --name -n
+    summary: The linked service name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --annotations
+    summary: 'List of tags that can be used for describing the linked service. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --connect-via
+    summary: 'The integration runtime reference. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --description
+    summary: Linked service description.
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --if-match
+    summary: ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be \* for unconditional update.
+    description: ''
+  - name: --if-none-match
+    summary: ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if \* was provided, then no content will be returned.
+    description: ''
+  - name: --parameters
+    summary: 'Parameters for linked service. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
 commands:
 - ext_datafactory_az_datafactory_linked_service_create
 - ext_datafactory_az_datafactory_linked_service_delete
 - ext_datafactory_az_datafactory_linked_service_list
 - ext_datafactory_az_datafactory_linked_service_show
+- ext_datafactory_az_datafactory_linked_service_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
