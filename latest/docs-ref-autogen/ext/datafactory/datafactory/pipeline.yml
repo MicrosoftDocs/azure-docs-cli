@@ -16,14 +16,14 @@ directCommands:
                                    [--if-match]
   examples:
   - summary: Pipelines_Create
-    syntax: az datafactory pipeline create --factory-name "myFactoryName" --pipeline "{\"activities\":[{\"name\":\"ExampleForeachActivity\",\"type\":\"ForEach\",\"typeProperties\":{\"activities\":[{\"name\":\"ExampleCopyActivity\",\"type\":\"Copy\",\"inputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":\"examplecontainer.csv\",\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"myDataset\"}],\"outputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":{\"type\":\"Expression\",\"value\":\"@item()\"},\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"myDataset\"}],\"typeProperties\":{\"dataIntegrationUnits\":32,\"sink\":{\"type\":\"BlobSink\"},\"source\":{\"type\":\"BlobSource\"}}}],\"isSequential\":true,\"items\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.OutputBlobNameList\"}}}],\"parameters\":{\"JobId\":{\"type\":\"String\"},\"OutputBlobNameList\":{\"type\":\"Array\"}},\"variables\":{\"TestVariableArray\":{\"type\":\"Array\"}},\"runDimensions\":{\"JobId\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.JobId\"}}}" --name "myPipeline" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline create --factory-name "exampleFactoryName" --pipeline "{\"activities\":[{\"name\":\"ExampleForeachActivity\",\"type\":\"ForEach\",\"typeProperties\":{\"activities\":[{\"name\":\"ExampleCopyActivity\",\"type\":\"Copy\",\"inputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":\"examplecontainer.csv\",\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"exampleDataset\"}],\"outputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":{\"type\":\"Expression\",\"value\":\"@item()\"},\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"exampleDataset\"}],\"typeProperties\":{\"dataIntegrationUnits\":32,\"sink\":{\"type\":\"BlobSink\"},\"source\":{\"type\":\"BlobSource\"}}}],\"isSequential\":true,\"items\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.OutputBlobNameList\"}}}],\"parameters\":{\"JobId\":{\"type\":\"String\"},\"OutputBlobNameList\":{\"type\":\"Array\"}},\"variables\":{\"TestVariableArray\":{\"type\":\"Array\"}},\"runDimensions\":{\"JobId\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.JobId\"}}}" --name "examplePipeline" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --pipeline-name -n
     summary: The pipeline name.
     description: ''
   - isRequired: true
@@ -53,14 +53,14 @@ directCommands:
                                        [--start-from-failure {false, true}]
   examples:
   - summary: Pipelines_CreateRun
-    syntax: az datafactory pipeline create-run --factory-name "myFactoryName" --parameters "{\"OutputBlobNameList\":[\"exampleoutput.csv\"]}" --name "myPipeline" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline create-run --factory-name "exampleFactoryName" --parameters "{\"OutputBlobNameList\":[\"exampleoutput.csv\"]}" --name "examplePipeline" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --pipeline-name -n
     summary: The pipeline name.
     description: ''
   - isRequired: true
@@ -93,21 +93,26 @@ directCommands:
     az datafactory pipeline delete --factory-name
                                    --name
                                    --resource-group
+                                   [--yes]
   examples:
   - summary: Pipelines_Delete
-    syntax: az datafactory pipeline delete --factory-name "myFactoryName" --name "myPipeline" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline delete --factory-name "exampleFactoryName" --name "examplePipeline" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --pipeline-name -n
     summary: The pipeline name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_datafactory_az_datafactory_pipeline_list
   name: az datafactory pipeline list
@@ -118,7 +123,7 @@ directCommands:
                                  --resource-group
   examples:
   - summary: Pipelines_ListByFactory
-    syntax: az datafactory pipeline list --factory-name "myFactoryName" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline list --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
@@ -139,14 +144,14 @@ directCommands:
                                  [--if-none-match]
   examples:
   - summary: Pipelines_Get
-    syntax: az datafactory pipeline show --factory-name "myFactoryName" --name "myPipeline" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline show --factory-name "exampleFactoryName" --name "examplePipeline" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --pipeline-name -n
     summary: The pipeline name.
     description: ''
   - isRequired: true
@@ -181,14 +186,14 @@ directCommands:
                                    [--variables]
   examples:
   - summary: Pipelines_Update
-    syntax: az datafactory pipeline update --factory-name "myFactoryName" --description "Example description" --activities "[{\"name\":\"ExampleForeachActivity\",\"type\":\"ForEach\",\"typeProperties\":{\"activities\":[{\"name\":\"ExampleCopyActivity\",\"type\":\"Copy\",\"inputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":\"examplecontainer.csv\",\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"myDataset\"}],\"outputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":{\"type\":\"Expression\",\"value\":\"@item()\"},\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"myDataset\"}],\"typeProperties\":{\"dataIntegrationUnits\":32,\"sink\":{\"type\":\"BlobSink\"},\"source\":{\"type\":\"BlobSource\"}}}],\"isSequential\":true,\"items\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.OutputBlobNameList\"}}}]" --parameters "{\"OutputBlobNameList\":{\"type\":\"Array\"}}" --name "myPipeline" --resource-group "myResourceGroup"
+    syntax: az datafactory pipeline update --factory-name "exampleFactoryName" --description "Example description" --activities "[{\"name\":\"ExampleForeachActivity\",\"type\":\"ForEach\",\"typeProperties\":{\"activities\":[{\"name\":\"ExampleCopyActivity\",\"type\":\"Copy\",\"inputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":\"examplecontainer.csv\",\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"exampleDataset\"}],\"outputs\":[{\"type\":\"DatasetReference\",\"parameters\":{\"MyFileName\":{\"type\":\"Expression\",\"value\":\"@item()\"},\"MyFolderPath\":\"examplecontainer\"},\"referenceName\":\"exampleDataset\"}],\"typeProperties\":{\"dataIntegrationUnits\":32,\"sink\":{\"type\":\"BlobSink\"},\"source\":{\"type\":\"BlobSource\"}}}],\"isSequential\":true,\"items\":{\"type\":\"Expression\",\"value\":\"@pipeline().parameters.OutputBlobNameList\"}}}]" --parameters "{\"OutputBlobNameList\":{\"type\":\"Array\"}}" --name "examplePipeline" --resource-group "exampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --factory-name
     summary: The factory name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --pipeline-name -n
     summary: The pipeline name.
     description: ''
   - isRequired: true
