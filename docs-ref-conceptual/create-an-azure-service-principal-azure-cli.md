@@ -254,5 +254,4 @@ az ad sp credential reset --name APP_ID
 ## See also
 
 * [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)
-* [How to: Use the portal to create an Azure AD application and service principal](/azure/active-directory/develop/*owto-create-service-principal-portal)
 * [How to manage service principals](/azure/developer/python/how-to-manage-service-principals)
