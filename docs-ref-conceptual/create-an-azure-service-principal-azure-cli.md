@@ -203,10 +203,10 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
-* [az login](/cli/azure/reference-index?view=azure-cli-latest#az_login)
-* [az group create](/cli/azure/group?view=azure-cli-latest#az_group_create)
-* [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az_storage_account_create)
-* [az storage account keys list](/cli/azure/storage/account/keys?view=azure-cli-latest#az_storage_account_keys_list)
+* [az login](/cli/azure/reference-index?#az_login)
+* [az group create](/cli/azure/group#az_group_create)
+* [az storage account create](/cli/azure/storage/account#az_storage_account_create)
+* [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
 
 To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
 
@@ -250,3 +250,8 @@ as `az ad sp create-for-rbac`.
 ```azurecli-interactive
 az ad sp credential reset --name APP_ID
 ```
+
+## See also
+
+* [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)
+* [How to manage service principals](/azure/developer/python/how-to-manage-service-principals)
