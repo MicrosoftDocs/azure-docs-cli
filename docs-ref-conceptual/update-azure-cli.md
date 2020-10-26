@@ -18,9 +18,13 @@ You can rely on package managers to update Azure CLI on Windows, macOS and Linux
 ## Manual Update
 [!INCLUDE [az-upgrade](includes/az-upgrade.md)]
 
+`az upgrade` is supported on Windows, macOS and some Linux distros as long as installation is supported. It only supports upgrading to the latest version.
+
+When `azure-cli` is already the latest version, running `az upgrade` will check and update all installed [extensions](azure-cli-extensions-overview.md).
+
 ## Automatic Update
 
-You can enable Azure CLI to upgrade automatically through [configuration](/cli/azure/config).
+If you would like to keep up with the latest version of Azure CLI, you can enable the CLI to upgrade automatically through [configuration](/cli/azure/config).
 
 ```azurecli
 az config set auto-upgrade.enable=yes
@@ -42,3 +46,8 @@ az config auto-upgrade.all=no
 
 > [!NOTE]
 > Please wait for `az upgrade` to complete before proceeding to the next set of commands, else the new versions of the CLI (+extensions) may have breaking changes.
+
+If you decide not to use the automatic update feature any more for cases like keeping command scripts running stably, you can turn it off through configuration.
+```azurecli
+az config set auto-upgrade.enable=no
+```
