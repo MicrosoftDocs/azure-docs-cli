@@ -57,7 +57,15 @@ Here are some common problems seen when installing with `yum`. If you experience
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you can, please upgrade your system to a version with official support for `python3` package. Otherwise, you need to first install a `python3` package, you can choose to build it from source. Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source first before building `python3`:
+If you can, please upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency. 
+
+You can use the following one command to install Azure CLI with `python 3.6` built from source:
+```bash
+curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo bash
+```
+You can also do it step by step:
+
+First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 ```bash
 $ sudo yum install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
 # build openssl from source
