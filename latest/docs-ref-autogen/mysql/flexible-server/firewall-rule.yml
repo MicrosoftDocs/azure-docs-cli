@@ -12,14 +12,14 @@ directCommands:
     az mysql flexible-server firewall-rule create --end-ip-address
                                                   --name
                                                   --resource-group
-                                                  --server-name
+                                                  --rule-name
                                                   --start-ip-address
                                                   [--subscription]
   examples:
   - summary: Create a firewall rule allowing connections from a specific IP address.
-    syntax: az mysql flexible-server firewall-rule create --resource-group testGroup --server-name testServer --name allowip --start-ip-address 107.46.14.221 --end-ip-address 107.46.14.221
+    syntax: az mysql flexible-server firewall-rule create --resource-group testGroup --name testServer --rule-name allowip --start-ip-address 107.46.14.221 --end-ip-address 107.46.14.221
   - summary: Create a firewall rule allowing connections from an IP address range.
-    syntax: az mysql flexible-server firewall-rule create --resource-group testGroup --server-name testServer --name allowiprange --start-ip-address 107.46.14.0 --end-ip-address 107.46.14.221
+    syntax: az mysql flexible-server firewall-rule create --resource-group testGroup --name testServer --rule-name allowiprange --start-ip-address 107.46.14.0 --end-ip-address 107.46.14.221
   requiredParameters:
   - isRequired: true
     name: --end-ip-address
@@ -27,15 +27,15 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --server-name -s
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    name: --rule-name -r
+    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
     description: ''
   - isRequired: true
     name: --start-ip-address
@@ -52,49 +52,49 @@ directCommands:
   syntax: >-
     az mysql flexible-server firewall-rule delete [--ids]
                                                   [--name]
-                                                  [--prompt]
                                                   [--resource-group]
-                                                  [--server-name]
+                                                  [--rule-name]
                                                   [--subscription]
+                                                  [--yes]
   examples:
   - summary: Delete a firewall rule.
-    syntax: az mysql flexible-server firewall-rule delete --name testRule --resource-group testGroup --server-name testServer
+    syntax: az mysql flexible-server firewall-rule delete --rule-name testRule --resource-group testGroup --name testServer
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
-    description: ''
-  - name: --prompt
-    summary: Turn confirmation prompt on/off. If off, the rule will be deleted without confirmation.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --server-name -s
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --rule-name -r
+    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_mysql_flexible_server_firewall_rule_list
   name: az mysql flexible-server firewall-rule list
   summary: List all firewall rules for a flexible server.
   description: ''
   syntax: >-
-    az mysql flexible-server firewall-rule list --resource-group
-                                                --server-name
+    az mysql flexible-server firewall-rule list --name
+                                                --resource-group
                                                 [--query-examples]
                                                 [--subscription]
   requiredParameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - isRequired: true
-    name: --server-name -s
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --query-examples
@@ -112,17 +112,17 @@ directCommands:
                                                 [--name]
                                                 [--query-examples]
                                                 [--resource-group]
-                                                [--server-name]
+                                                [--rule-name]
                                                 [--subscription]
   examples:
   - summary: Get the details of a firewall rule.
-    syntax: az mysql flexible-server firewall-rule show --name testRule --resource-group testGroup --server-name testServer
+    syntax: az mysql flexible-server firewall-rule show --rule-name testRule --resource-group testGroup --name testServer
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
@@ -130,8 +130,8 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --server-name -s
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --rule-name -r
+    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -148,15 +148,15 @@ directCommands:
                                                   [--name]
                                                   [--remove]
                                                   [--resource-group]
-                                                  [--server-name]
+                                                  [--rule-name]
                                                   [--set]
                                                   [--start-ip-address]
                                                   [--subscription]
   examples:
   - summary: Update a firewall rule's start IP address.
-    syntax: az mysql flexible-server firewall-rule update --resource-group testGroup --server-name testServer --name allowiprange --start-ip-address 107.46.14.1
+    syntax: az mysql flexible-server firewall-rule update --resource-group testGroup --name testServer --rule-name allowiprange --start-ip-address 107.46.14.1
   - summary: Update a firewall rule's start and end IP address.
-    syntax: az mysql flexible-server firewall-rule update --resource-group testGroup --server-name testServer --name allowiprange --start-ip-address 107.46.14.2 --end-ip-address 107.46.14.218
+    syntax: az mysql flexible-server firewall-rule update --resource-group testGroup --name testServer --rule-name allowiprange --start-ip-address 107.46.14.2 --end-ip-address 107.46.14.218
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -171,7 +171,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -179,8 +179,8 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --server-name -s
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+  - name: --rule-name -r
+    summary: The name of the firewall rule. If name is omitted, default name will be chosen for firewall name. The firewall rule name can only contain 0-9, a-z, A-Z, '-' and '_'. Additionally, the firewall rule name cannot exceed 128 characters.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'

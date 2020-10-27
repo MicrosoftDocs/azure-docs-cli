@@ -7,7 +7,10 @@ directCommands:
 - uid: ext_azure-iot_az_dt_twin_create
   name: az dt twin create
   summary: Create a digital twin on an instance.
-  description: --properties can be inline JSON or file path.
+  description: >-
+    --properties can be inline JSON or file path.
+
+    Note: --properties are required for twins that contain components.
   syntax: >-
     az dt twin create --dt-name
                       --dtmi
@@ -16,12 +19,19 @@ directCommands:
                       [--resource-group]
   examples:
   - summary: Create a digital twin from an existing (prior-created) model.
-    syntax: az dt twin create -n {instance_or_hostname} --dtmi dtmi:example:Room;1 --twin-id {twin_id}
+    syntax: az dt twin create -n {instance_or_hostname} --dtmi "dtmi:com:example:Room;1" --twin-id {twin_id}
   - summary: Create a digital twin from an existing (prior-created) model. Instantiate with property values.
-    syntax: "az dt twin create -n {instance_or_hostname} --dtmi dtmi:com:example:DeviceInformation;1 --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
+    syntax: "az dt twin create -n {instance_or_hostname} --dtmi \"dtmi:com:example:DeviceInformation;1\" --twin-id {twin_id} --properties '{\"manufacturer\": \"Microsoft\"}'"
+  - summary: Create a digital twin with component from existing (prior-created) models. Instantiate component with minimum properties.
+    syntax: >-
+      az dt twin create -n {instance_or_hostname} --dtmi "dtmi:com:example:TemperatureController;1" --twin-id {twin_id} --properties '{
+          "Thermostat": {
+              "$metadata": {},
+          }
+      }'
   - summary: Create a digital twin with component from existing (prior-created) models. Instantiate with property values.
     syntax: >-
-      az dt twin create -n {instance_or_hostname} --dtmi dtmi:com:example:TemperatureController;1 --twin-id {twin_id} --properties '{
+      az dt twin create -n {instance_or_hostname} --dtmi "dtmi:com:example:TemperatureController;1" --twin-id {twin_id} --properties '{
           "Temperature": 10.2,
           "Thermostat": {
               "$metadata": {},
@@ -35,7 +45,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --dtmi --model-id -m
-    summary: 'Digital Twins model Id. Example: dtmi:example:Room;2.'
+    summary: 'Digital Twins model Id. Example: dtmi:com:example:Room;2.'
     description: ''
   - isRequired: true
     name: --twin-id -t
@@ -43,7 +53,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --properties -p
-    summary: Initial property values for instantiating a digital twin or related components. Provide file path or inline JSON.
+    summary: Initial property values for instantiating a digital twin or related components. Provide file path or inline JSON. Properties are required for twins that contain components, at the minimum you must provide an empty $metadata object for each component.
     description: ''
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -85,7 +95,7 @@ directCommands:
   - summary: Query all digital twins in target instance and project all attributes. Also show cost in query units.
     syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins" --show-cost
   - summary: Query by model and project all attributes.
-    syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:example:Room;2')"
+    syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:com:example:Room;2')"
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n

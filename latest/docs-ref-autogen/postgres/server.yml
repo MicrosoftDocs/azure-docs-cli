@@ -9,11 +9,8 @@ directCommands:
   summary: Create a server.
   description: ''
   syntax: >-
-    az postgres server create --admin-password
-                              --admin-user
-                              --name
-                              --resource-group
-                              --sku-name
+    az postgres server create [--admin-password]
+                              [--admin-user]
                               [--assign-identity]
                               [--auto-grow {Disabled, Enabled}]
                               [--backup-retention]
@@ -21,7 +18,10 @@ directCommands:
                               [--infrastructure-encryption {Disabled, Enabled}]
                               [--location]
                               [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
-                              [--public {Disabled, Enabled}]
+                              [--name]
+                              [--public]
+                              [--resource-group]
+                              [--sku-name]
                               [--ssl-enforcement {Disabled, Enabled}]
                               [--storage-size]
                               [--subscription]
@@ -38,28 +38,14 @@ directCommands:
           --sku-name B_Gen5_1 --ssl-enforcement Enabled --minimal-tls-version TLS1_0 --public-network-access Disabled \
           --backup-retention 10 --geo-redundant-backup Enabled --storage-size 51200 \
           --tags "key=value" --version 11.0
-  requiredParameters:
-  - isRequired: true
-    name: --admin-password -p
+  optionalParameters:
+  - name: --admin-password -p
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
-  - isRequired: true
-    name: --admin-user -u
+  - name: --admin-user -u
+    defaultValue: grouchyFalcon9
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --sku-name
-    summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
-    description: ''
-  optionalParameters:
   - name: --assign-identity
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
     description: ''
@@ -86,15 +72,25 @@ directCommands:
     parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
     summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
     description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
   - name: --public --public-network-access
-    parameterValueGroup: Disabled, Enabled
-    summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
+    summary: 'Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Allowed values are : Enabled, Disabled, all, 0.0.0.0, <SingleIP>, <StartIP-DestinationIP>. Default is Enabled.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sku-name
+    defaultValue: GP_Gen5_2
+    summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --ssl-enforcement
     parameterValueGroup: Disabled, Enabled
     summary: Enable or disable ssl enforcement for connections to server. Default is Enabled.
     description: ''
   - name: --storage-size
+    defaultValue: "51200"
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
   - name: --subscription
@@ -217,6 +213,25 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_postgres_server_list_skus
+  name: az postgres server list-skus
+  summary: List available sku's in the given region.
+  description: ''
+  syntax: >-
+    az postgres server list-skus --location
+                                 [--subscription]
+  examples:
+  - summary: List available sku's in the given region.
+    syntax: az postgres server list-skus -l eastus
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: The name of the location.
+    description: ''
+  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_postgres_server_restart
   name: az postgres server restart
   summary: Restart a server.
@@ -330,7 +345,7 @@ directCommands:
                               [--ids]
                               [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
                               [--name]
-                              [--public {Disabled, Enabled}]
+                              [--public]
                               [--remove]
                               [--resource-group]
                               [--set]
@@ -377,8 +392,7 @@ directCommands:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --public --public-network-access
-    parameterValueGroup: Disabled, Enabled
-    summary: Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Default is Enabled.
+    summary: 'Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Allowed values are : Enabled, Disabled, all, 0.0.0.0, <SingleIP>, <StartIP-DestinationIP>. Default is Enabled.'
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -471,6 +485,7 @@ commands:
 - az_postgres_server_key_list
 - az_postgres_server_key_show
 - az_postgres_server_list
+- az_postgres_server_list_skus
 - az_postgres_server_private_endpoint_connection
 - az_postgres_server_private_endpoint_connection_approve
 - az_postgres_server_private_endpoint_connection_delete
