@@ -14,14 +14,15 @@ directCommands:
                       --sku
                       [--allowed-origins]
                       [--default-action {Allow, Deny}]
+                      [--enable-message-logs {false, true}]
                       [--location]
                       [--service-mode {Classic, Default, Serverless}]
                       [--subscription]
                       [--tags]
                       [--unit-count]
   examples:
-  - summary: Create a SignalR Service with the Standard SKU and serverless mode.
-    syntax: az signalr create -n MySignalR -g MyResourceGroup --sku Standard_S1 --unit-count 1 --service-mode Serverless
+  - summary: Create a SignalR Service with the Standard SKU and serverless mode and enable messaging logs.
+    syntax: az signalr create -n MySignalR -g MyResourceGroup --sku Standard_S1 --unit-count 1 --service-mode Serverless --enable-message-logs True
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -43,6 +44,10 @@ directCommands:
     defaultValue: Allow
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches.
+    description: ''
+  - name: --enable-message-logs
+    parameterValueGroup: false, true
+    summary: The switch for messaging logs which signalr service will generate or not.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -176,6 +181,7 @@ directCommands:
                       [--add]
                       [--allowed-origins]
                       [--default-action {Allow, Deny}]
+                      [--enable-message-logs {false, true}]
                       [--force-string]
                       [--remove]
                       [--service-mode {Classic, Default, Serverless}]
@@ -189,6 +195,8 @@ directCommands:
     syntax: az signalr update -n MySignalR -g MyResourceGroup --sku Standard_S1 --unit-count 50
   - summary: Update service mode.
     syntax: az signalr update -n MySignalR -g MyResourceGroup --service-mode Serverless
+  - summary: Update for enabling messaging logs in the service.
+    syntax: az signalr update -n MySignalR -g MyResourceGroup --enable-message-logs True
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -208,6 +216,10 @@ directCommands:
   - name: --default-action
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches.
+    description: ''
+  - name: --enable-message-logs
+    parameterValueGroup: false, true
+    summary: The switch for messaging logs which signalr service will generate or not.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -274,5 +286,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/29/2020
+  ms.date: 10/16/2020
   description: Manage Azure SignalR Service.
