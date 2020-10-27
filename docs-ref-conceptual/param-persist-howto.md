@@ -186,4 +186,4 @@ Even with a global variable set for resource group with a value of `myGlobalVari
 ## See also
 
 * [Azure CLI Configuration using az config](azure-cli-configuration.md)
-* [Tutorial: Use parameter persistence with the Azure CLI](azure-cli-param-persist-tutorial.md)
+* [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)

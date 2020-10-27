@@ -116,3 +116,8 @@ When you provide a default value, that argument is no longer required by any com
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
 > including **az configure**. The ones listed in the table above are the only values you should change yourself.
+
+## See also
+
+- [Azure CLI parameter persistence](param-persist-howto.md)
+- [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)

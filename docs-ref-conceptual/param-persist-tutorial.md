@@ -110,7 +110,7 @@ az config param-persist show
 }
 ```
 
-If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](azure-cli-param-persist#param-persist-parameters) for a full list of supported parameters, and the storage action needed to retain values.  This example also removes all prior parameter persistence entries by using the [az config param-persist delete](/cli/azure/param-persist#az-param-persist-delete) command.
+If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](param-persist#compare-parameter-persistence-and-global-variables) for a full list of supported parameters, and the action needed to retain values.  This example also removes all prior parameter persistence entries by using the [az config param-persist delete](/cli/azure/param-persist#az-param-persist-delete) command.
 
 ```azurecli
 # Clear all parameter persistence values for demonstration
@@ -293,4 +293,4 @@ az group delete --name RG1forTutorial
 
 ## See also
 
-- [Azure CLI parameter persistence](azure-cli-param-persist.md)
+- [Azure CLI parameter persistence](param-persist-howto.md)
