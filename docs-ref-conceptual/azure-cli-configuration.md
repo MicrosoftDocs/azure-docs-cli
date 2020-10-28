@@ -19,7 +19,7 @@ configuration file or with environment variables.
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
-1. Persisted parameter values set with **az config persist-param**
+1. Parameter persisted values set with **az config param-persist**
 1. Environment variables
 1. Values in the configuration file set with **az configure**
 
@@ -120,4 +120,4 @@ When you provide a default value, that argument is no longer required by any com
 ## See also
 
 - [Azure CLI parameter persistence](param-persist-howto.md)
-- [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)
+- [Tutorial: Use parameter persistence with sequential Azure CLI commands](param-persist-tutorial.md)

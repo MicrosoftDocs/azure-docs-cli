@@ -29,7 +29,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 Parameter persistence data is kept in a file named **.param_persist** which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the parameter persistence file is a hidden file and should not be manually updated.
 
-## Parameter persistence parameters
+## Parameter persistence storage and support
 
 The following Azure CLI parameters are supported by parameter persistence.  The **resource_group_name** and **location** parameters are stored differently in that you can add them to parameter persistence _without_ executing a create command.
 
@@ -185,5 +185,6 @@ Even with a global variable set for resource group with a value of `myGlobalVari
 
 ## See also
 
+* [Tutorial: Use parameter persistence with sequential Azure CLI commands](param-persist-tutorial.md)
 * [Azure CLI Configuration using az config](azure-cli-configuration.md)
-* [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)
+
