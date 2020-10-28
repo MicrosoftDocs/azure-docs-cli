@@ -16,4 +16,6 @@ ms.topic: include
     Otherwise, open a browser page at [https://aka.ms/devicelogin](https://aka.ms/devicelogin) and enter the
     authorization code displayed in your terminal.
 
+    If no web browser is available or the web browser fails to open, use device code flow with **az login --use-device-code**.
+
 2. Sign in with your account credentials in the browser.
