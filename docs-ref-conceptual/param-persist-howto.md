@@ -33,7 +33,7 @@ Parameter persistence data is kept in a file named **.param_persist** which is s
 
 The following Azure CLI parameters are supported by parameter persistence.  The **resource_group_name** and **location** parameters are stored differently in that you can add them to parameter persistence _without_ executing a create command.
 
-| parameter persistence parameter | Storage action | Supported by
+| Persisted parameter | Storage action | Supported by
 |-|-|-|
 | location | Execute any command | All Azure CLI references
 | resource_group_name | Execute any command | All Azure CLI references
