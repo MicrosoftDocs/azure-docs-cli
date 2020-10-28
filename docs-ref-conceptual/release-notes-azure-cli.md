@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/13/2020
+ms.date: 10/27/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,105 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## October 27, 2020
+
+Version 2.14.0
+
+### AKS
+
+* Add PPG support
+* Update max standard load balancer timeout to 100 minutes
+
+### APIM
+
+* Fix issue with creating consumption tier instance
+
+### App Config
+
+* Fix querying key-values by comma separated labels
+
+### App Service
+
+* Bugfix: az webapp up fails when user doesn't have write permissions to project's parent directory
+* Fix #13777: Fix to remove escape chars from XML
+* Fix #15441: az webapp create-remote-connection fails with AttributeError: 'Thread' object has no attribute 'isAlive'
+* [BREAKING CHANGE] az webapp up: add optional params (os & runtime) and updated runtimes
+
+### ARM
+
+* Make template deployment What-If commands GA
+* [BREAKING CHANGE] Add user confirmation for az ts create
+* Fix the returned data when tagging multiple resources
+
+### Backup
+
+* `az backup policy create`: Add support for IaaSVM backup policy creation from CLI
+* Increasing VM protection limit from 100 to 1000
+
+### Compute
+
+* sig image-definition create: add --features
+* New API version of gallery_images 2020-09-30
+* `az vm update / az sig image-version update`: Support update vm/image-version even it uses a cross tenant image
+* Remove validation of vm host SKUs
+
+### Cosmos DB
+
+* `az cosmosdb create/update`: Improve error message from incorrect --locations input
+* `az cosmosdb sql container create/update`: Add --analytical-storage-ttl parameter
+
+### HDInsight
+
+* [BREAKING CHANGE] az hdinsight create: remove two parameters: --public-network-access-type and  --outbound-public-network-access-type
+
+### IoT Central
+
+* Remove preview warning since it is already GAed
+
+### Key Vault
+
+* Invalidate `--enable-soft-delete false` while creating or updating vaults
+* Make `--bypass` and `--default-action` work together with network acl parameters while creating vaults
+
+### Misc.
+
+* Add bash-completion to Dockerfile
+
+### RDBMS
+
+* Add List-SKUS Command, Table Transformers, Local Context for Postgres, MySQL, Mariadb Single Server
+* [BREAKING CHANGE] Parameter name updates. Improvements to Management Plane for MySQL and PostgreSQL
+* `az postgres|mariadb|mysql server create` : Update create experience for Postgres, MySQL and MariaDB - new fields in the output , Introduce new values for `--public` parameter in create command (all,<IP>,<IPRange>,0.0.0.0)
+
+### SignalR
+
+* `az signalr create`: Add new option `--enable-messaging-logs` for controling service generate messaging logs or not
+* `az signalr update`: Add new option `--enable-messaging-logs` for controling service generate messaging logs or not
+
+### SQL
+
+* [BREAKING CHANGE] Fix response for backup storage redundancy param name and value for MI
+* `az sql db audit-policy show`: extend to show database's audit policy including LA and EH data
+* `az sql db audit-policy update`: extend to allow LA and EH update along with database's audit policy
+* `az sql db audit-policy wait`: place the CLI in a waiting state until a condition of the database's audit policy is met.
+* `az sql server audit-policy show`: extend to show servers's audit policy including LA and EH data
+* `az sql server audit-policy update`: extend to allow LA and EH update along with server's audit policy
+* `az sql server audit-policy wait`: place the CLI in a waiting state until a condition of the server's audit policy is met.
+* Add AAD-only Support for SQL Managed Instances and Servers
+* `az sql db replica create`: Add --partner-database argument
+
+### Storage
+
+* Fix #15111: `az storage logging update` fails without optional argument
+* Fix bug when using set-tier command with service principal login
+* Upgrade version for file datalake to 2020-02-10
+* `az storage queue list`: Track2 supported
+* `az storage fs access`: Support managing ACLs recursively
+
+### Synapse
+
+* Add pipeline, linked service, trigger, notebook, data flow and dataset related cmdlets
 
 ## October 13, 2020
 

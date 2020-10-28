@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_sql_db_audit_policy_show
   name: az sql db audit-policy show
-  summary: Gets a database's blob auditing policy.
+  summary: Show database audit policy.
   description: ''
   syntax: >-
     az sql db audit-policy show [--ids]
@@ -42,8 +42,14 @@ directCommands:
   syntax: >-
     az sql db audit-policy update [--actions]
                                   [--add]
+                                  [--blob-storage-target-state {Disabled, Enabled}]
+                                  [--eh]
+                                  [--ehari]
+                                  [--ehts {Disabled, Enabled}]
                                   [--force-string]
                                   [--ids]
+                                  [--lats {Disabled, Enabled}]
+                                  [--lawri]
                                   [--name]
                                   [--remove]
                                   [--resource-group]
@@ -57,23 +63,45 @@ directCommands:
                                   [--subscription]
   examples:
   - summary: Enable by storage account name.
-    syntax: az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled --storage-account mystorage
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled \
+          --bsts Enabled --storage-account mystorage
   - summary: Enable by storage endpoint and key.
     syntax: >-
       az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled \
-          --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY==
+          --bsts Enabled --storage-endpoint https://mystorage.blob.core.windows.net \
+          --storage-key MYKEY==
   - summary: Set the list of audit actions.
     syntax: >-
       az sql db audit-policy update -g mygroup -s myserver -n mydb \
           --actions FAILED_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public'
-  - summary: Add an audit action.
-    syntax: >-
-      az sql db audit-policy update -g mygroup -s myserver -n mydb \
-          --add auditActionsAndGroups FAILED_DATABASE_AUTHENTICATION_GROUP
-  - summary: Remove an audit action by list index.
-    syntax: az sql db audit-policy update -g mygroup -s myserver -n mydb --remove auditActionsAndGroups 0
   - summary: Disable an auditing policy.
     syntax: az sql db audit-policy update -g mygroup -s myserver -n mydb --state Disabled
+  - summary: Disable a blob storage auditing policy.
+    syntax: az sql db audit-policy update -g mygroup -s myserver -n mydb --bsts Disabled
+  - summary: Enable a log analytics auditing policy.
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled \
+          --lats Enabled --lawri myworkspaceresourceid
+  - summary: Disable a log analytics auditing policy.
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb
+          --lats Disabled
+  - summary: Enable an event hub auditing policy.
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled \
+          --event-hub-target-state Enabled \
+          --event-hub-authorization-rule-id eventhubauthorizationruleid \
+          --event-hub eventhubname
+  - summary: Enable an event hub auditing policy for default event hub.
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb --state Enabled \
+          --event-hub-target-state Enabled \
+          --event-hub-authorization-rule-id eventhubauthorizationruleid
+  - summary: Disable an event hub auditing policy.
+    syntax: >-
+      az sql db audit-policy update -g mygroup -s myserver -n mydb
+          --event-hub-target-state Disabled
   optionalParameters:
   - name: --actions
     summary: List of actions and action groups to audit.
@@ -81,11 +109,32 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --blob-storage-target-state --bsts
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether blob storage is a destination for audit records.
+    description: ''
+  - name: --eh --event-hub
+    summary: The name of the event hub. If none is specified when providing event_hub_authorization_rule_id, the default event hub will be selected.
+    description: ''
+  - name: --ehari --event-hub-authorization-rule-id
+    summary: The resource Id for the event hub authorization rule.
+    description: ''
+  - name: --ehts --event-hub-target-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether event hub is a destination for audit records.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --lats --log-analytics-target-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether log analytics is a destination for audit records.
+    description: ''
+  - name: --lawri --log-analytics-workspace-resource-id
+    summary: The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Audit Logs.
     description: ''
   - name: --name -n
     summary: Name of the Azure SQL Database.
@@ -122,9 +171,70 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+- uid: az_sql_db_audit_policy_wait
+  name: az sql db audit-policy wait
+  summary: Place the CLI in a waiting state until a condition of the database's audit policy is met.
+  description: ''
+  syntax: >-
+    az sql db audit-policy wait [--created]
+                                [--custom]
+                                [--deleted]
+                                [--exists]
+                                [--ids]
+                                [--interval]
+                                [--name]
+                                [--resource-group]
+                                [--server]
+                                [--subscription]
+                                [--timeout]
+                                [--updated]
+  examples:
+  - summary: Place the CLI in a waiting state until it determines that database's audit policy exists
+    syntax: az sql db audit-policy wait -g mygroup -s myserver -n mydb --exists
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure SQL Database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
 - az_sql_db_audit_policy_show
 - az_sql_db_audit_policy_update
+- az_sql_db_audit_policy_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -142,5 +252,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/09/2020
+  ms.date: 10/22/2020
   description: Manage a database's auditing policy.

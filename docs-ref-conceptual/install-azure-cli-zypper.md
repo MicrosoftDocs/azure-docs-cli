@@ -57,23 +57,49 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
+### NotImplementedError on OpenSUSE 15 VM
+The OpenSUSE 15 VM has a pre-installed Azure CLI with version `2.0.45`, it's outdated and has issues with `az login`. Please remove it along with its dependencies before following the [Install](#install) instruction to add the latest Azure CLI:
+```bash
+sudo zypper rm -y --clean-deps azure-cli
+```
+
+If you updated Azure CLI without removing the dependencies of version `2.0.45`, its old dependencies may affect the latest version of Azure CLI. You need to add back the old version to link to its dependencies and then remove `azure-cli` along with its dependencies:
+```bash
+# The package name may vary on different system version, run 'zypper --no-refresh info azure-cli' to check the source package format
+sudo zypper install --oldpackage azure-cli-2.0.45-4.22.noarch
+
+sudo zypper rm -y --clean-deps azure-cli
+```
+
+
 ### Install on SLES 12 or other systems without Python 3.6
 
-On SLES 12, the defualt python3 package is 3.4 and not supported by Azure CLI. You can first build a higher version python3 from source. Then you can download the Azure CLI package and install it without dependency.
+On SLES 12, the default `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
+
+You can use the following one command to install Azure CLI (be aware that your existing Python 3 version will be overridden by Python 3.6):
 ```bash
+curl -sL https://azurecliprod.blob.core.windows.net/sles12_install.sh | sudo bash
+```
+
+Or you can do it step by step:
+
+```bash
+# !Please add azure-cli repository first following step 1-3 of the install instruction before running below commands
+$ sudo zypper refresh
 $ sudo zypper install -y gcc gcc-c++ make ncurses patch wget tar zlib-devel zlib openssl-devel
 # Download Python source code
 $ PYTHON_VERSION="3.6.9"
 $ PYTHON_SRC_DIR=$(mktemp -d)
 $ wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
 # Build Python
-$ $PYTHON_SRC_DIR/*/configure
+# Please be aware that with --prefix=/usr, the command will override the existing Python 3 version
+$ $PYTHON_SRC_DIR/*/configure --prefix=/usr
 $ make
 $ sudo make install
-#Download azure-cli package 
+# Download azure-cli package 
 $ AZ_VERSION=$(zypper --no-refresh info azure-cli |grep Version | awk -F': ' '{print $2}' | awk '{$1=$1;print}')
 $ wget https://packages.microsoft.com/yumrepos/azure-cli/azure-cli-$AZ_VERSION.x86_64.rpm
-#Install without dependency
+# Install without dependency
 $ sudo rpm -ivh --nodeps azure-cli-$AZ_VERSION.x86_64.rpm
 ```
 
