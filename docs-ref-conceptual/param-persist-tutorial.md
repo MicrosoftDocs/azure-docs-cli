@@ -16,6 +16,14 @@ ms.custom: devex-track-azurecli
 
 Azure CLI offers persisted parameters that enable you to store parameter values for continued use.  In this tutorial, you learn how to work with persisted values, and use these local values to efficiently execute sequential commands.
 
+In this tutorial, you will learn to:
+
+> [!div class="checklist"]
+> * Turn paramter persistence on/off
+> * Create and update stored parameter values
+> * Execute sequential commands using parameter persistence
+> * Delete stored parameter values
+
 If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
 
 ## Prepare your environment
@@ -24,21 +32,17 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
    If you prefer, you can also use Azure Cloud Shell to complete the steps in this tutorial.  Azure Cloud Shell is an interactive shell environment that you use through your browser.  Start Cloud Shell by using one of these methods:
 
-   - Select **Try It** in the upper-right corner of a code block. **Try It** will open Azure Cloud Shell, but it doesn't automatically copy the code to Cloud Shell.
-
    - Open Cloud Shell by going to [https://shell.azure.com](https://shell.azure.com)
 
    - Select the **Cloud Shell** button on the menu bar at the upper right corner in the [Azure portal](https://portal.azure.com)
 
-1. Sign in.
+1. If you are using a local install of the Azure CLI, complete the following:
+   - Sign in using the [az login](/cli/azure/reference-index#az-login) command, then follow the steps displayed in your terminal to complete the authentication process.
 
-   Sign in using the [az login](/cli/azure/reference-index#az-login) command if you're using a local install of the CLI.
-
-    ```azurecli
-    az login
-    ```
-
-    Follow the steps displayed in your terminal to complete the authentication process.
+     ```azurecli
+     az login
+     ```
+    - This tutorial requires version x.x.x or later of the Azure CLI.  Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).
 
 ## Determine your local directory
 
@@ -46,7 +50,7 @@ Persisted parameter values are stored in the working directory of the Azure stor
 
 To find, create or change the working directory being used by the Azure CLI, use these familiar CLI commands.
 
-```azurecli-interactive
+```azurecli
 # List directories
 dir
 
@@ -59,7 +63,7 @@ cd azCLI
 
 ## Turn parameter persistence on
 
-[Parameter persistence](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until **az config param-persist** moves out of the experimental stage.
+[Parameter persistence](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until **az config param-persist** moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
@@ -69,118 +73,122 @@ az config param-persist on
 Command group 'config param-persist' is experimental and not covered by customer support. Please use with discretion.
 ```
 
-## Add parameters and values to parameter persistence
+## Add values to parameter persistence
 
-To create entries for parameter persistence, you need to execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the **--location** and **--name** parameters are stored for future use.
+To create entries for parameter persistence, execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the **--location** and **--name** parameters are stored for future use.
 
-```azurecli
-# With parameter persistence turned on, create a resource group
-az group create --name RG1forTutorial --location eastus2
+1. Persist the location and resource group name.
+   ```azurecli
+   # With parameter persistence turned on, create a resource group
+   az group create --name RG1forTutorial --location eastus2
 
-# See new parameter persistence values
-az config param-persist show
-```
+   # See new parameter persistence values
+   az config param-persist show
+   ```
 
-```output
-{
-  "all": {
-    "location": "eastus2",
-    "resource_group_name": "RG1forTutorial"
-  }
-}
-```
+   ```output
+   {
+     "all": {
+       "location": "eastus2",
+       "resource_group_name": "RG1forTutorial"
+     }
+   }
+   ```
 
-Using the new parameter persisted values, now create a storage account.
+1. Using the new parameter persisted values, create a storage account.
 
-```azurecli
-# Create a storage account
-az storage account create --name sa1fortutorial
+   ```azurecli
+   # Create a storage account
+   az storage account create --name sa1fortutorial
 
-# See that storage_account_name has been added to parameter persistence
-az config param-persist show
-```
+   # See that storage_account_name has been added to parameter persistence
+   az config param-persist show
+   ```
 
-```output
-{
-  "all": {
-    "location": "eastus2",
-    "resource_group_name": "RG1forTutorial",
-    "storage_account_name": "sa1fortutorial"
-  }
-}
-```
+   ```output
+   {
+     "all": {
+       "location": "eastus2",
+       "resource_group_name": "RG1forTutorial",
+       "storage_account_name": "sa1fortutorial"
+     }
+   }
+   ```
 
-If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](param-persist#compare-parameter-persistence-and-global-variables) for a full list of supported parameters, and the action needed to retain values.  This example also removes all prior parameter persistence entries by using the [az config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
+1. Persist parameter values without creating a new resource.
 
-```azurecli
-# Clear all parameter persistence values for demonstration
-az config param-persist delete --all
+   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](param-persist#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az    config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
 
-# List all storage accounts which will create or update the **resource_group_name** stored parameter value
-az storage account show --resource-group RG1forTutorial --name sa1fortutorial
+   ```azurecli
+   # Clear all persisted parameters for demonstration.
+   az config param-persist delete --all
 
-# See the new parameter persistence value created only for resource group
-az config param-persist show
-```
+   # List all storage accounts which will create the **resource_group_name** stored parameter value.
+   az storage account show --resource-group RG1forTutorial --name sa1fortutorial
 
-```output
-{
-  "all": {
-    "resource_group_name": "RG1forTutorial"
-  }
-}
-```
+   # See the new stored value created for resource group.  The storage account name will not be saved.
+   az config param-persist show
+   ```
+
+   ```output
+   {
+     "all": {
+       "resource_group_name": "RG1forTutorial"
+     }
+   }
+   ```
 
 ## Replace parameter persisted values
 
 Updating a stored parameter value is as simple as executing a command containing a replacement value.
 
-```azurecli
-# Clear all parameter persistence values for demonstration
-az config param-persist delete --all
+1. Create new persisted parameters.
+   ```azurecli
+   # Clear all parameter persistence values for demonstration
+   az config param-persist delete --all
 
-# Create a storage account placing "*location", "resource_group_name", and "storage_account_name" into parameter persistence
-az storage account create --name sa1fortutorial --resource-group RG1forTutorial --location eastus2
+   # Create a storage account placing "*location", "resource_group_name", and "storage_account_name" into parameter persistence
+   az storage account create --name sa1fortutorial --resource-group RG1forTutorial --location eastus2
 
-# See parameter persistence entries
-az config param-persist show
-```
+   # See parameter persistence entries
+   az config param-persist show
+   ```
 
-```output
-{
-  "all": {
-    "location": "eastus2",
-    "resource_group_name": "RG1forTutorial",
-    "storage_account_name": "sa1fortutorial"
-  }
-}
-```
+   ```output
+   {
+     "all": {
+       "location": "eastus2",
+       "resource_group_name": "RG1forTutorial",
+       "storage_account_name": "sa1fortutorial"
+     }
+   }
+   ```
 
-Replace current parameter persistence entries.
+1. Replace the newly stored values.
 
-```azurecli
-# Create a second storage account while changing both the "storage_account_name" and "location" parameter persisted values
-az storage account create --name sa2fortutorial --location westeurope
+   ```azurecli
+   # Create a second storage account while changing both the "storage_account_name" and "location" parameter persisted values
+   az storage account create --name sa2fortutorial --location westeurope
 
-# See new parameter persistence values
-az config param-persist show
-```
+   # See new parameter persistence values
+   az config param-persist show
+   ```
 
-```output
-{
-  "all": {
-    "location": "westeurope",
-    "resource_group_name": "RG1forTutorial",
-    "storage_account_name": "sa2fortutorial"
-  }
-}
-```
+   ```output
+   {
+     "all": {
+       "location": "westeurope",
+       "resource_group_name": "RG1forTutorial",
+       "storage_account_name": "sa2fortutorial"
+     }
+   }
+   ```
 
-> [!NOTE]
->
-> Even if parameter persistence is turned on, you don't have to use it.  You can still
-> execute commands with all parameter values specified.  However, be aware that with parameter persistence
-> turned on, _you will be creating new parameter persistence entries, or overwriting existing ones._
+   > [!NOTE]
+   >
+   > Even if parameter persistence is turned on, you don't have to use it.  You can still
+   > execute commands with all parameter values specified.  However, be aware that with parameter persistence
+   > turned on, _you will be creating new parameter persistence entries, or overwriting existing ones._
 
 ## Execute sequential commands
 
@@ -264,7 +272,7 @@ az config param-persist delete --all --yes
 > # verify that the resource group no longer exists
 > az group list --output table
 >
-> # See that the resource group name persists in parameter persistence
+> # See that the resource group name remains in parameter persistence
 > az config param-persist show
 > ```
 
@@ -294,3 +302,4 @@ az group delete --name RG1forTutorial
 ## See also
 
 - [Azure CLI parameter persistence](param-persist-howto.md)
+- [Azure CLI Configuration using az config](/cli/azure/azure-cli-configuration)
