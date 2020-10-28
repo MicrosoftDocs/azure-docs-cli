@@ -119,5 +119,5 @@ When you provide a default value, that argument is no longer required by any com
 
 ## See also
 
-- [Azure CLI parameter persistence](param-persist-howto.md)
-- [Tutorial: Use parameter persistence with sequential Azure CLI commands](param-persist-tutorial.md)
+- [How-to work with Azure CLI parameter persist](param-persist-howto.md)
+- [Tutorial: Use parameter persist with sequential Azure CLI commands](param-persist-tutorial.md)
