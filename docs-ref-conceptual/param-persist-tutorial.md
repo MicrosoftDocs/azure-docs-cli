@@ -117,7 +117,7 @@ To create entries for parameter persistence, execute an Azure CLI command of you
 
 1. Persist parameter values without creating a new resource.
 
-   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](param-persist#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az    config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
+   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI parameter persistence](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
