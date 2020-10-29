@@ -1,6 +1,6 @@
 ---
-title: Azure CLI parameter persist options
-description: How-to use Azure CLI parameter persist to store reusable parameter values
+title: Azure CLI persisted parameter options
+description: How-to use Azure CLI persisted parameter to store reusable parameter values
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -12,9 +12,9 @@ ms.technology: azure-cli
 ms.custom: devex-track-azurecli
 ---
 
-# Azure CLI parameter persist
+# Azure CLI persisted parameter
 
-The Azure CLI [az config param-persist](/cli/azure/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  When you store parameter values with parameter persist, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az config param-persist](/cli/azure/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
@@ -25,13 +25,13 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 [Install the Azure CLI](install-azure-cli.md) or open [Azure Cloud Shell](https://shell.azure.com) to run the scripts in this article.
 
-## Parameter persist data file
+## Persisted parameter data file
 
-parameter persist data is kept in a file named **.param_persist** which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either case, the parameter persist file is a hidden file and should not be manually updated.
+Persisted parameter values are kept in a file named **.param_persist** which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either location, the **.param_persist** file is hidden and should not be manually updated.
 
-## Parameter persist storage and support
+## Persisted parameter storage and support
 
-The following Azure CLI parameters are supported by parameter persist.  The **resource_group_name** and **location** parameters are stored differently in that you can add them to parameter persist _without_ executing a create command.
+The following Azure CLI parameters are supported by persisted parameter.  The **resource_group_name** and **location** parameters are stored differently in that you can add them to persisted parameter _without_ executing a create command.
 
 | Persisted parameter | Storage action | Supported by
 |-|-|-|
@@ -42,54 +42,27 @@ The following Azure CLI parameters are supported by parameter persist.  The **re
 | webapp_name | Execute a create command | Azure Web Apps only
 | function_app_name | Execute a create command | Azure Functions only
 
-## Sample script without parameter persist
+## Sample script without persisted parameters
 
-Without parameter persist, sequential CLI commands must repeat the same parameter values.  In this example, the **location**, **resource group name** or **storage account name** are repeated in subsequent commands.
+Without persisted parameter, sequential CLI commands must repeat the same parameter values.  With persisted parameters enabled, your stored parameter values can be omitted from sequential commands.  In this example, the **location**, **resource group name** or **storage account name** are repeated in subsequent commands.
 
-```azurecli
-# Reminder: function app and storage account names must be unique.
-
-# turn parameter persist off for demonstration purposes
-az config param-persist off
-
-# Create a resource group.
-az group create --name RGlocalContext --location westeurope
-
-# Create an Azure storage account in the resource group.
-az storage account create \
-  --name sa1localcontext \
-  --location westeurope \
-  --resource-group RGlocalContext \
-  --sku Standard_LRS
-
-# Create a serverless function app in the resource group.
-az functionapp create \
-  --name FAlocalContext \
-  --storage-account sa1localcontext \
-  --consumption-plan-location westeurope \
-  --resource-group RGlocalContext \
-  --functions-version 2
-```
-
-## Sample script with parameter persist
-
-With parameter persist enabled, stored parameter values can be omitted from sequential commands.
+## Sample script using persisted parameters
 
 ```azurecli
 # Reminder: function app and storage account names must be unique.
 
-# turn parameter persist on
+# turn persisted parameters on
 az config param-persist on
 
-# Create a resource group which will store group and location in parameter persist
+# Create a resource group which will store "resource group" and "location" in persisted parameter.
 az group create --name RGlocalContext --location westeurope
 
-# Create an Azure storage account omitting location and resource group
+# Create an Azure storage account omitting location and resource group.
 az storage account create \
   --name sa1localcontext \
   --sku Standard_LRS
 
-# Create a serverless function app in the resource group omitting storage account and resource group
+# Create a serverless function app in the resource group omitting storage account and resource group.
 az functionapp create \
   --name FAlocalContext \
   --consumption-plan-location westeurope \
@@ -99,18 +72,18 @@ az functionapp create \
 az config param-persist show
 ```
 
-## Compare parameter persist and global variables
+## Compare persisted parameters and global variables
 
-There are two Azure CLI commands that can be used to default parameter values: **az config** and **az config param-persist**.  Use the **az config** command to specify _global variables_ such as group, location, or web.  Use **az param-persist** to specify _local default values_ unique to your workload.  In both cases, the stored values are used by the CLI in place of required arguments.
+There are two Azure CLI commands that can be used to default parameter values: **az config** and **az config param-persist**.  Use the **az config** command to specify _global variables_ such as group, location, or web.  Use **az param-persist** to specify _local default values_ unique to your workload.  Stored values are used by the CLI in place of required arguments.
 
 > [!Important]
-> parameter persist overrides global context values.
+> Persisted parameters override global context values.
 >
 
 | Reference | Scope | Set | Use
 |-|-|-|-|
 [az config](//cli/azure/config) | Scoped globally across the CLI | Set explicitly using **az config set** | Use for settings such as logging, data collection, and default argument values
-[az config param-persist](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once parameter persist is turned on | Use for individual workload sequential commands.
+[az config param-persist](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
 
 ### Command examples
 
@@ -147,16 +120,16 @@ CLI command output shows that a new storage account was created in the resource 
 ...
 ```
 
-Use **az config param-persist** to set parameter persist used in the creation of an Azure storage account.  If a global variable is set for the same object, parameter persist will override the global variable.
+Use **az config param-persist** to set persisted parameter used in the creation of an Azure storage account.  If a global variable is set for the same object, persisted parameter will override the global variable.
 
 ```azurecli
-# turn parameter persist on
+# turn persisted parameter on
 az config param-persist on
 
-# Create a resource group in order to write to parameter persist
+# Create a resource group in order to write to persisted parameter
 az group create --name myParamPersistRG --location westeurope
 
-# Create an Azure storage account omitting the resource group relying on the parameter persist value
+# Create an Azure storage account omitting the resource group relying on the persisted parameter value
 # Substitute the storage account name parameter with a unique value
 az storage account create \
   --name mystorageaccount2 \
@@ -164,7 +137,7 @@ az storage account create \
   --sku Standard_LRS
 ```
 
-Even with a global variable set for resource group with a value of `myGlobalVariableRG`, with parameter persist turned on, the new storage account was created with `myParamPersistRG`.
+Even with a global variable set for resource group with a value of `myGlobalVariableRG`, with persisted parameter turned on, the new storage account was created with `myParamPersistRG`.
 
 ```output
 ...
@@ -185,6 +158,6 @@ Even with a global variable set for resource group with a value of `myGlobalVari
 
 ## See also
 
-* [Tutorial: Use parameter persist with sequential Azure CLI commands](param-persist-tutorial.md)
+* [Tutorial: Use persisted parameter with sequential Azure CLI commands](param-persist-tutorial.md)
 * [Azure CLI Configuration using az config](azure-cli-configuration.md)
 
