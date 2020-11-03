@@ -15,10 +15,10 @@ directCommands:
                                             [--value]
   examples:
   - summary: KustoClusterAddLanguageExtensions
-    syntax: az kusto cluster add-language-extension --cluster-name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
+    syntax: az kusto cluster add-language-extension --name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -52,7 +52,8 @@ directCommands:
                             [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
                             [--enable-streaming-ingest {false, true}]
-                            [--identity-type {None, SystemAssigned}]
+                            [--engine-type {V2, V3}]
+                            [--identity-type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
                             [--identity-user-assigned-identities]
                             [--key-vault-properties]
                             [--no-wait]
@@ -63,10 +64,10 @@ directCommands:
                             [--zones]
   examples:
   - summary: KustoClustersCreateOrUpdate
-    syntax: az kusto cluster create --cluster-name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
+    syntax: az kusto cluster create --name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -106,9 +107,13 @@ directCommands:
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the streaming ingest is enabled.
     description: ''
+  - name: --engine-type
+    parameterValueGroup: V2, V3
+    summary: The engine type.
+    description: ''
   - name: --identity-type
-    parameterValueGroup: None, SystemAssigned
-    summary: The identity type.
+    parameterValueGroup: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
+    summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
   - name: --identity-user-assigned-identities
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
@@ -116,14 +121,16 @@ directCommands:
   - name: --key-vault-properties
     summary: KeyVault properties for the cluster encryption.
     description: >-
-      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX
+      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
       key-name: Required. The name of the key vault key.
 
-      key-version: Required. The version of the key vault key.
+      key-version: The version of the key vault key.
 
       key-vault-uri: Required. The Uri of the key vault.
+
+      user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -175,12 +182,13 @@ directCommands:
     az kusto cluster delete --cluster-name
                             --resource-group
                             [--no-wait]
+                            [--yes]
   examples:
   - summary: KustoClustersDelete
-    syntax: az kusto cluster delete --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster delete --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -190,6 +198,9 @@ directCommands:
   optionalParameters:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_kusto_az_kusto_cluster_detach_follower_database
   name: az kusto cluster detach-follower-database
@@ -203,14 +214,14 @@ directCommands:
                                               [--no-wait]
   examples:
   - summary: KustoClusterDetachFollowerDatabases
-    syntax: az kusto cluster detach-follower-database --cluster-name "kustoclusterrptest4" --attached-database-configuration-name "myAttachedDatabaseConfiguration" --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/clusters/leader4" --resource-group "kustorptest"
+    syntax: az kusto cluster detach-follower-database --name "kustoclusterrptest4" --attached-database-configuration-name "myAttachedDatabaseConfiguration" --cluster-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Kusto/clusters/leader4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --attached-database-configuration-name
     summary: Resource name of the attached database configuration in the follower cluster.
     description: ''
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -235,10 +246,10 @@ directCommands:
                                               [--no-wait]
   examples:
   - summary: KustoClusterDiagnoseVirtualNetwork
-    syntax: az kusto cluster diagnose-virtual-network --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster diagnose-virtual-network --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -270,10 +281,10 @@ directCommands:
                                             --resource-group
   examples:
   - summary: KustoClusterListFollowerDatabases
-    syntax: az kusto cluster list-follower-database --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-follower-database --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -289,10 +300,10 @@ directCommands:
                                              --resource-group
   examples:
   - summary: KustoClusterListLanguageExtensions
-    syntax: az kusto cluster list-language-extension --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-language-extension --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -308,9 +319,9 @@ directCommands:
                               [--resource-group]
   examples:
   - summary: KustoClustersListResourceSkus
-    syntax: az kusto cluster list-sku --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster list-sku --name "kustoclusterrptest4" --resource-group "kustorptest"
   optionalParameters:
-  - name: --cluster-name
+  - name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - name: --resource-group -g
@@ -327,10 +338,10 @@ directCommands:
                                                [--value]
   examples:
   - summary: KustoClusterRemoveLanguageExtensions
-    syntax: az kusto cluster remove-language-extension --cluster-name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
+    syntax: az kusto cluster remove-language-extension --name "kustoclusterrptest4" --value language-extension-name="PYTHON" --value language-extension-name="R" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -360,10 +371,10 @@ directCommands:
                           --resource-group
   examples:
   - summary: KustoClustersGet
-    syntax: az kusto cluster show --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster show --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -380,10 +391,10 @@ directCommands:
                            [--no-wait]
   examples:
   - summary: KustoClustersStart
-    syntax: az kusto cluster start --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster start --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -404,10 +415,10 @@ directCommands:
                           [--no-wait]
   examples:
   - summary: KustoClustersStop
-    syntax: az kusto cluster stop --cluster-name "kustoclusterrptest4" --resource-group "kustorptest"
+    syntax: az kusto cluster stop --name "kustoclusterrptest4" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -429,7 +440,8 @@ directCommands:
                             [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
                             [--enable-streaming-ingest {false, true}]
-                            [--identity-type {None, SystemAssigned}]
+                            [--engine-type {V2, V3}]
+                            [--identity-type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
                             [--identity-user-assigned-identities]
                             [--key-vault-properties]
                             [--location]
@@ -441,10 +453,10 @@ directCommands:
                             [--virtual-network-configuration]
   examples:
   - summary: KustoClustersUpdate
-    syntax: az kusto cluster update --cluster-name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
+    syntax: az kusto cluster update --name "kustoclusterrptest4" --identity-type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --engine-type "V2" --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
@@ -468,9 +480,13 @@ directCommands:
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the streaming ingest is enabled.
     description: ''
+  - name: --engine-type
+    parameterValueGroup: V2, V3
+    summary: The engine type.
+    description: ''
   - name: --identity-type
-    parameterValueGroup: None, SystemAssigned
-    summary: The identity type.
+    parameterValueGroup: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
+    summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
   - name: --identity-user-assigned-identities
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
@@ -478,14 +494,16 @@ directCommands:
   - name: --key-vault-properties
     summary: KeyVault properties for the cluster encryption.
     description: >-
-      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX
+      Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
       key-name: Required. The name of the key vault key.
 
-      key-version: Required. The version of the key vault key.
+      key-version: The version of the key vault key.
 
       key-vault-uri: Required. The Uri of the key vault.
+
+      user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
@@ -556,14 +574,14 @@ directCommands:
                           [--updated]
   examples:
   - summary: Pause executing next line of CLI script until the kusto cluster is successfully created.
-    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --created
+    syntax: az kusto cluster wait --name "kustoclusterrptest4" --resource-group "kustorptest" --created
   - summary: Pause executing next line of CLI script until the kusto cluster is successfully updated.
-    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --updated
+    syntax: az kusto cluster wait --name "kustoclusterrptest4" --resource-group "kustorptest" --updated
   - summary: Pause executing next line of CLI script until the kusto cluster is successfully deleted.
-    syntax: az kusto cluster wait --cluster-name "kustoclusterrptest4" --resource-group "kustorptest" --deleted
+    syntax: az kusto cluster wait --name "kustoclusterrptest4" --resource-group "kustorptest" --deleted
   requiredParameters:
   - isRequired: true
-    name: --cluster-name
+    name: --cluster-name --name -n
     summary: The name of the Kusto cluster.
     description: ''
   - isRequired: true
