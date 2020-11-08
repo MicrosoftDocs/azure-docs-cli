@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/06/2020
+ms.date: 11/08/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -1065,7 +1065,7 @@ Version 2.6.0
 * Fix ttl value changed unintended for dns add-record
 * `az network public-ip create`: Inform customers of a coming breaking change
 * Support generic commands for private link scenario
-* `az network private-endpoint-connection`: Support mysql, postgre and mariadb types
+* `az network private-endpoint-connection`: Support mysql, postgres and mariadb types
 * `az network private-endpoint-connection`: Support cosmosdb types
 * `az network private-endpoint`: deprecate --group-ids and redirect to --group-id
 
