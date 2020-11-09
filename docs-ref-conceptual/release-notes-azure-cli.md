@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/06/2020
+ms.date: 11/09/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## November 09, 2020
+
+Version 2.14.2
+
+### App Service
+
+* Fix #15604, #15605: Add Dotnet5 support
 
 ## November 06, 2020
 
