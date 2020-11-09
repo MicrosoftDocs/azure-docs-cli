@@ -15,7 +15,7 @@ ms.custom: devx-track-azurecli
 
 # [Current release notes](#tab/azure-cli)
 
-## November 10, 2020
+## November 09, 2020
 
 Version 2.14.2
 
