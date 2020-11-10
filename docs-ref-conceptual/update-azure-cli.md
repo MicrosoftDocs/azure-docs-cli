@@ -24,7 +24,7 @@ When `azure-cli` is already the latest version, running `az upgrade` will check 
 
 ## Automatic Update
 
-If you would like to keep up with the latest version of Azure CLI, you can enable the CLI to upgrade automatically through [configuration](/cli/azure/config).
+By default, auto-upgrade for Azure CLI is disabled. If you would like to keep up with the latest version, you can enable auto-upgrade through [configuration](/cli/azure/config).
 
 ```azurecli
 az config set auto-upgrade.enable=yes
