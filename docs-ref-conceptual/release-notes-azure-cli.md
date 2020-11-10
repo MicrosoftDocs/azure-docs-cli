@@ -1073,7 +1073,7 @@ Version 2.6.0
 * Fix ttl value changed unintended for dns add-record
 * `az network public-ip create`: Inform customers of a coming breaking change
 * Support generic commands for private link scenario
-* `az network private-endpoint-connection`: Support mysql, postgre and mariadb types
+* `az network private-endpoint-connection`: Support mysql, postgres and mariadb types
 * `az network private-endpoint-connection`: Support cosmosdb types
 * `az network private-endpoint`: deprecate --group-ids and redirect to --group-id
 
