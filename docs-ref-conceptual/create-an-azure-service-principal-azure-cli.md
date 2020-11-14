@@ -133,6 +133,14 @@ __Make sure__ that you copy the certificate to a secure location, or you can't s
 For certificates stored in Key Vault, retrieve the certificate's private key with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show). In Key Vault, the name of the certificate's secret
 is the same as the certificate name. If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
 
+> [!TIP]
+>
+> If your service principal was created using the `create-for-rbac` with the `--create-cert --keyvault <your-key-vault>` flags,
+> in order to successfully pass your pem file to the `az login` you must run the following conversions
+> `az keyvault secret download --file /save/path/for/pfx --vault-name <your-vault-name> --name <your-key-name> --encoding base64`
+> then to convert to a valid pem file
+> `openssl pkcs12 -in /path/for/pfx.pfx -clcerts -nodes -out /save/path/for/pem.pem`
+
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
 Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
 
