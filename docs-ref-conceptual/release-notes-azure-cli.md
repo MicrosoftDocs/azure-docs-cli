@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/09/2020
+ms.date: 11/17/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,138 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## November 17, 2020
+
+Version 2.15.0
+
+### ACS
+
+* Add v3 deprecation warnings
+
+### AKS
+
+* Add ephemeral os functionality
+* Engineering improvement: Replace addon strings with constants
+* `az aks install-cli`: Support customize download url
+* `az aks browse`: Point to Azure Portal Kubernetes resources view if k8s >=1.19 or kube-dashboard not enabled
+* Support BYO control plane identity
+* `az aks use-dev-spaces`: Indicate that dev-spaces commands are deprecated
+
+### AMS
+
+* Change "region" to "location" in output string: az ams account sp create
+
+### App Config
+
+* Fix key vault client initialization
+
+### App Service
+
+* Fix #13646: Unable to create App Service Plan in a different resource group to App Service Environment
+* Fix #11698 #15198 #14862 #15409: az webapp/functionapp config access-restriction add
+* `az functionapp create`: Add Node 14 preview support.
+* `az functionapp create`: Remove preview flag from custom handlers.
+* [BREAKING CHANGE] az functionapp update: Migrate a functionapp from Premium to Consumption plans now requires the '--force' flag.
+* `az functionapp update`: Add error message if functionapp migration involves any plans on Linux.
+* `az functionapp update`: Add more descriptive error message if functionapp migration fails.
+
+### ARM
+
+* Fix an issue where What-If shows two resource group scopes with different casing
+* `az deployment`: Print out error details for deployment
+
+### Backup
+
+* Fix #14976: KeyError fixed and help text improved
+
+### Batch
+
+* Fix #15464: Update check for pfx file without password in batch create_certificate
+
+### Billing
+
+* [BREAKING CHANGE] az billing invoice: Remove properties BillingPeriodsNames and DownloadUrlExpiry from the response.
+* `az billing invoice`: Support many other scopes like BillingAccount, BillingProfile and existing subscription.
+* `az billing account`: New commands to support display and update existing billing accounts.
+* `az billing balance`: New commands to support display balance of a billing profile.
+* `az billing customer`: New commands to support display customer of billing account.
+* `az billing policy`: New commands to support display and update policy of a customer or a billing profile.
+* `az billing product`: New commands to manage products of a billing account.
+* `az billing profile`: New commands to manage a billing profile.
+* `az billing property`: New commands to display and update a billing account's properties.
+* `az billing subscription`: New commands to manage the subscriptions for a billing account.
+* `az billing transaction`: New commands to list transaction of an invoice.
+* `az billing agreement`: New commands to manage billing agreement.
+* `az billing permission`: New commands to manage billing permission.
+* `az billing role-assignment`: New commands to manage role assignment.
+* `az billing role-definition`: New commands to display role definition.
+* `az billing instruction`: New commands to manage instructions of billing.
+
+### Compute
+
+* Fix update permission check issue
+* Enhancement of vm list-skus table format
+* vm host group create: Make --platform-fault-domain-count required and update help
+* Support update vm/image version when they use cross tenant images
+
+### DPS
+
+* Allow tags in IoT DPS create command
+
+### HDInsight
+
+* az hdinsight create: Add two parameters `--resource-provider-connection` and `--enable-private-link` to support relay outbound and private link feature.
+
+### Key Vault
+
+* Refine error messages for HSM `list-deleted` and `purge`
+* Support selective key restore for managed HSMs
+
+### NetAppFiles
+
+* [BREAKING CHANGE] az netappfiles pool update: Remove service-level from parameters.
+* `az netappfiles pool update`: Add optional parameter qos-type.
+* `az netappfiles pool create`: Add optional parameter qos-type.
+* `az netappfiles volume replication suspend`: Add force-break-replication as optional parameter.
+* Add az netappfiles volume replication re-initialize: New command is added to re-initialise replication.
+* Add az netappfiles volume pool-change: New command to change the pool of a volume.
+* Add az netappfiles snapshot policy: New command group with list, delete, update, show, create and volumes commands.
+* Add az netappfiles account backup: New command group with show, list and delete commands
+* Add az netappfiles volume backups: New command group with show, list, delete, update and create commands.
+* Add az netappfiles account backup-policy: New command group with show, list, delete, update and delete commands.
+* Add az netappfiles vault list: New command is added.
+* `az netappfiles account ad add`: Add optional parameters kdc-ip, ad-name, server-root-ca-certificate and backup-operators
+* `az netappfiles volumes create`: Add optional parameters snapshot-policy-id, backup-policy-id, backup-enabled, backup-id, policy-enforced, vault-id, kerberos-enabled, throughput-mibps, snapshot-directory-visible, security-style, kerberos5-read-only, kerberos5-read-write, kerberos5i-read-only, kerberos5i-read-write, kerberos5p-read-only, kerberos5p-read-write and has-root-access.
+* `az netappfiles volume update`: Add optional parameters vault-id, backup-enabled, backup-policy-id, policy-enforced and throughput-mibps
+
+### Network
+
+* Fix bug that can't create a Standard_v2 application-gateway without a private static IP address
+* `az network dns zone import`: Raise FileOperationError instead of FileNotFoundError if zone file doesn't exist
+* Fix NoneType error crash while deleting nonexisting resources of ApplicationGateway, LoadBalancer, Nic
+
+### Private DNS
+
+* `az network private-dns zone import`: Raise FileOperationError instead of FileNotFoundError if zone file doesn't exist
+
+### Profile
+
+* `az login`: Add back the warning that a browser is opened
+
+### Role
+
+* `az role assignment create`: Make `--description`, `--condition`, `--condition-version` preview
+
+### Security
+
+* `az security pricing`: Update help to reflect current API version being called
+
+### Storage
+
+* Fix #15600: az storage fs exists: in case fs does not exist ResourceNotFoundError is returned
+* Fix #15706: The examples for storage container create are incorrect
+* `az storage blob delete-batch`: Correct typo in documentation.
 
 ## November 09, 2020
 
