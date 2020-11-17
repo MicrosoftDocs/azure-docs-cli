@@ -36,11 +36,11 @@ To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./aut
 ## Change the active subscription
 
 To access the resources for a subscription, switch your active subscription or use the `--subscription` argument. Switching your subscription
-for all commands is done with [az account set](/cli/azure/account#az-account-set).
+for all commands is done with [az account set](/cli/azure/account#az_account_set).
 
 To switch your active subscription:
 
-1. Get a list of your subscriptions with the [az account list](/cli/azure/account#az-account-list) command:
+1. Get a list of your subscriptions with the [az account list](/cli/azure/account#az_account_list) command:
 
     ```azurecli-interactive
     az account list --output table

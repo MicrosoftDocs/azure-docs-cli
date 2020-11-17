@@ -46,7 +46,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
    - Select the **Cloud Shell** button on the menu bar at the upper right corner in the [Azure portal](https://portal.azure.com)
 
 1. If you are using a local install of the Azure CLI, complete the following:
-   - Sign in using the [az login](/cli/azure/reference-index#az-login) command, then follow the steps displayed in your terminal to complete the authentication process.
+   - Sign in using the [az login](/cli/azure/reference-index#az_login) command, then follow the steps displayed in your terminal to complete the authentication process.
 
      ```azurecli
      az login
@@ -122,7 +122,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
+   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.

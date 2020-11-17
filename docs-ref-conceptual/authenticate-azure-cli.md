@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 # Sign in with Azure CLI 
 
 There are several authentication types for the Azure CLI. The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
-Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When writing scripts, the recommended approach is
+Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az_login) command. When writing scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
 None of your sign-in information is stored by the CLI. Instead, an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens)

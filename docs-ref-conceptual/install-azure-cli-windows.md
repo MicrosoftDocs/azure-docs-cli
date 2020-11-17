@@ -70,7 +70,7 @@ This will download and install the latest version of the Azure CLI for Windows. 
 ## Run the Azure CLI
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
-not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az-login) command.
+not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az_login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 

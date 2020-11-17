@@ -81,7 +81,7 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
     sudo apt-get install azure-cli
     ```
 
-Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
+Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az_login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 

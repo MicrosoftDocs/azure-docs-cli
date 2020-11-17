@@ -19,7 +19,7 @@ The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set 
 
 ## References for Azure Monitor
 
-The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.  Azure CLI extension references must be installed prior to use. The [az extension add](/cli/azure/extension?view=azure-cli-latest#az-extension-add) command installs an extension reference by name.
+The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.  Azure CLI extension references must be installed prior to use. The [az extension add](/cli/azure/extension?view=azure-cli-latest#az_extension_add) command installs an extension reference by name.
 
 > [!IMPORTANT]
 >
@@ -37,7 +37,7 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor autoscale](/cli/azure/monitor/autoscale) | | Manage autoscale settings. | [Autoscale overview](/azure/azure-monitor/platform/autoscale-overview)
 | [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | | Manage service diagnostic settings, which sets up collection and routing of many types of platform metrics and logs. | [Create diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings)
 | [az monitor log-analytics](/cli/azure/monitor/log-analytics) | | Manage log clusters and work spaces. | [Designing your Azure Monitor Logs deployment](/azure/azure-monitor/platform/design-logs-deployment)
-| [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext-log-analytics-az-monitor-log-analytics-query) | yes | Commands for querying data in Log Analytics workspaces.  | [Get started with Log Analytics queries](/azure/azure-monitor/log-query/get-started-portal)
+| [az monitor log-analytics query](/cli/azure/ext/log-analytics/monitor/log-analytics#ext_log_analytics_az_monitor_log_analytics_query) | yes | Commands for querying data in Log Analytics workspaces.  | [Get started with Log Analytics queries](/azure/azure-monitor/log-query/get-started-portal)
 | [az monitor log-profiles](/cli/azure/monitor/log-profiles) | | DO NOT USE for new development.  This command was previously used to route activity logs to Azure Monitor Logs and Log Analytics.  Use [diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings) instead.  | [Send the Activity log to a Log Analytics workspace](/azure/azure-monitor/platform/activity-log#send-to-log-analytics-workspace)
 | [az monitor metrics](/cli/azure/monitor/metrics) | | Manage platform metrics and near-realtime metric alert rules. | [Overview of metrics in Azure Monitor](/azure/azure-monitor/platform/data-platform-metrics) and [Understand how metric alerts work](/azure/azure-monitor/platform/alerts-metric-overview)
 | [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resource. | [Use Azure Private Link to securely connect networks to Azure Monitor](/azure/azure-monitor/platform/private-link-security)
