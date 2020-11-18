@@ -4,7 +4,7 @@ description: Tips for using Azure CLI effectively
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 11/18/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -238,7 +238,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 Proxy is common behind corporate network or introduced by tracing tools like Fiddler, mitmproxy, etc. If the proxy uses self-signed certificates, the Python [Requests](https://github.com/kennethreitz/requests) library which CLI uses will throw `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. There are 2 ways to handle this error:
 
-1. Set environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format. This is recommended if you use CLI frequently behind a corporate proxy. The default CA bundle which CLI uses is located at `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` on Windows and ` /opt/az/lib/python3.6/site-packages/certifi/cacert.pem` on Linux. You may append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. For example:
+1. Set environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format. This is recommended if you use CLI frequently behind a corporate proxy. The default CA bundle which CLI uses is located at `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` on Windows and ` /opt/az/lib/python3.6/site-packages/certifi/cacert.pem` on Ubuntu/Debian or `/usr/lib64/az/lib/python3.6/site-packages/certifi/cacert.pem` on CentOS/RHEL/SUSE on Linux. You may append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. For example:
 
     ```
     <Original cacert.pem>
