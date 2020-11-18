@@ -37,6 +37,14 @@ tutorial instructions here
 
 * * *
 
+a
+b
+c
+d
+e
+f
+g
+
 ### [Get started](#tab/quickstart)
 
 simple / quickstart instructions here
@@ -47,6 +55,13 @@ deep dive / tutorial instructions here
 
 * * *
 
+a
+b
+c
+d
+e
+f
+g
 
 ### [I'm new to CLI](#tab/quickstart)
 
@@ -58,3 +73,10 @@ in-depth / tutorial instructions here
 
 * * *
 
+a
+b
+c
+d
+e
+f
+g
