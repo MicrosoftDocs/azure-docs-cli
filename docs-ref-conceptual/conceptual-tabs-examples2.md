@@ -38,7 +38,9 @@ tutorial instructions here
 * * *
 
 article text
+
 article text
+
 article text
 
 ### [Get started](#tab/quickstart)
@@ -52,7 +54,9 @@ deep dive / tutorial instructions here
 * * *
 
 article text
+
 article text
+
 article text
 
 ### [I'm new to CLI](#tab/quickstart)
@@ -66,7 +70,9 @@ in-depth / tutorial instructions here
 * * *
 
 article text
+
 article text
+
 article text
 
 ## See also
