@@ -69,6 +69,7 @@ directCommands:
                   [--docker-bridge-address]
                   [--enable-aad]
                   [--enable-addons]
+                  [--enable-ahub]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-managed-identity]
@@ -146,6 +147,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-diskencryptionset-id <disk-encryption-set-resource-id>
   - summary: Create a kubernetes cluster with userDefinedRouting, standard load balancer SKU and a custom subnet preconfigured with a route table
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --outbound-type userDefinedRouting --load-balancer-sku standard --vnet-subnet-id customUserSubnetVnetID
+  - summary: Create a kubernetes cluster with supporting Windows agent pools with AHUB enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-ahub
   - summary: Create a kubernetes cluster with managed AAD enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   - summary: Create a kubernetes cluster with ephemeral os enabled.
@@ -243,6 +246,9 @@ directCommands:
           ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
           confcom                   - enable confcom addon, this will enable SGX device plugin and quote helper by default(PREVIEW).
           open-service-mesh         - enable Open Service Mesh addon (PREVIEW).
+  - name: --enable-ahub
+    summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+    description: ''
   - name: --enable-azure-rbac
     summary: Whether to enable Azure RBAC for Kubernetes authorization.
     description: ''
@@ -393,10 +399,26 @@ directCommands:
     description: ''
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
-    description: ''
+    description: >-
+      Rules for windows-admin-password:
+          - Minimum-length: 8 characters
+          - Max-length: 123 characters
+          - Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+            * Has lower characters
+            * Has upper characters
+            * Has a digit
+            * Has a special character (Regex match [W_])
+          - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+      Reference: <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet">https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet</a>.
   - name: --windows-admin-username
     summary: User account to create on windows node VMs.
-    description: ''
+    description: >-
+      Rules for windows-admin-username:
+          - restriction: Cannot end in "."
+          - Disallowed values: "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
+          - Minimum-length: 1 character
+          - Max-length: 20 characters
+      Reference: <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet">https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet</a>.
   - name: --workspace-resource-id
     summary: The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
     description: ''
@@ -789,9 +811,11 @@ directCommands:
                   [--attach-acr]
                   [--cluster-autoscaler-profile]
                   [--detach-acr]
+                  [--disable-ahub]
                   [--disable-cluster-autoscaler]
                   [--disable-pod-security-policy]
                   [--enable-aad]
+                  [--enable-ahub]
                   [--enable-cluster-autoscaler]
                   [--enable-pod-security-policy]
                   [--load-balancer-idle-timeout]
@@ -833,6 +857,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   - summary: Migrate a AKS AAD-Integrated cluster or a non-AAAAD cluster to a AKS-managed AAD cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
+  - summary: Enable Azure Hybrid User Benefits featture for a kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-ahub
+  - summary: Disable Azure Hybrid User Benefits featture for a kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-ahub
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -864,6 +892,9 @@ directCommands:
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
+  - name: --disable-ahub
+    summary: Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
@@ -872,6 +903,9 @@ directCommands:
     description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
+    description: ''
+  - name: --enable-ahub
+    summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.

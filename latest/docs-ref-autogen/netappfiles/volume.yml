@@ -17,15 +17,32 @@ directCommands:
                                  --resource-group
                                  --usage-threshold
                                  --vnet
+                                 [--backup-enabled {false, true}]
+                                 [--backup-id]
+                                 [--backup-policy-id]
                                  [--endpoint-type]
+                                 [--has-root-access]
+                                 [--kerberos-enabled]
+                                 [--kerberos5-r]
+                                 [--kerberos5-rw]
+                                 [--kerberos5i-r]
+                                 [--kerberos5i-rw]
+                                 [--kerberos5p-r]
+                                 [--kerberos5p-rw]
+                                 [--policy-enforced {false, true}]
                                  [--protocol-types]
                                  [--remote-volume-resource-id]
                                  [--replication-schedule]
+                                 [--security-style]
                                  [--service-level {Premium, Standard, Ultra}]
+                                 [--snapshot-dir-visible]
                                  [--snapshot-id]
+                                 [--snapshot-policy-id]
                                  [--subnet]
                                  [--subscription]
                                  [--tags]
+                                 [--throughput-mibps]
+                                 [--vault-id]
                                  [--volume-type]
   examples:
   - summary: Create an ANF volume
@@ -64,8 +81,46 @@ directCommands:
     summary: The ARM Id or name of the vnet for the volume.
     description: ''
   optionalParameters:
+  - name: --backup-enabled
+    parameterValueGroup: false, true
+    summary: Backup Enabled.
+    description: ''
+  - name: --backup-id
+    summary: Backup ID. UUID v4 or resource identifier used to identify the Backup.
+    description: ''
+  - name: --backup-policy-id
+    summary: Backup Policy Resource ID.
+    description: ''
   - name: --endpoint-type
     summary: Whether the volume is source ("src") or destination ("dst").
+    description: ''
+  - name: --has-root-access
+    summary: Has root access to volume.
+    description: ''
+  - name: --kerberos-enabled
+    summary: Describe if a volume is KerberosEnabled.
+    description: ''
+  - name: --kerberos5-r
+    summary: Kerberos5 Read only access.
+    description: ''
+  - name: --kerberos5-rw
+    summary: Kerberos5 Read and write access.
+    description: ''
+  - name: --kerberos5i-r
+    summary: Kerberos5i Read only access.
+    description: ''
+  - name: --kerberos5i-rw
+    summary: Kerberos5i Read and write access.
+    description: ''
+  - name: --kerberos5p-r
+    summary: Kerberos5p Read only access.
+    description: ''
+  - name: --kerberos5p-rw
+    summary: Kerberos5p Read and write access.
+    description: ''
+  - name: --policy-enforced
+    parameterValueGroup: false, true
+    summary: Policy Enforced.
     description: ''
   - name: --protocol-types
     summary: Space seperated list of protocols that the volume can use, available protocols are "NFSv4.1", "NFSv3", "CIFS".
@@ -76,12 +131,21 @@ directCommands:
   - name: --replication-schedule
     summary: The replication schedule, e.g. "_10minutely, hourly, daily, weekly, monthly".
     description: ''
+  - name: --security-style
+    summary: The security style of volume.
+    description: ''
   - name: --service-level
     parameterValueGroup: Premium, Standard, Ultra
     summary: The service level.
     description: ''
+  - name: --snapshot-dir-visible
+    summary: If enabled (true) the volume will contain a read-only .snapshot directory which provides access to each of the volume's snapshots (default to true).
+    description: ''
   - name: --snapshot-id
-    summary: Create a volume created from this snapshot. UUID v4 or resource identifier used to identify the Snapshot. example snapshot_id "9760acf5-4638-11e7-9bdb-020073ca3333".
+    summary: Create a volume created from this snapshot. UUID v4 or resource identifier used to identify the Snapshot. example snapshot-id "9760acf5-4638-11e7-9bdb-020073ca3333".
+    description: ''
+  - name: --snapshot-policy-id
+    summary: Snapshot Policy ResourceId.
     description: ''
   - name: --subnet
     defaultValue: default
@@ -92,6 +156,12 @@ directCommands:
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
+    description: ''
+  - name: --throughput-mibps
+    summary: Maximum throughput in Mibps that can be achieved by this volume.
+    description: ''
+  - name: --vault-id
+    summary: Vault Resource ID.
     description: ''
   - name: --volume-type
     summary: Whether the volume should be a data protection volume ("DataProtection"), empty if this is not a data protection volume.
@@ -165,6 +235,46 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_pool_change
+  name: az netappfiles volume pool-change
+  summary: Get the specified ANF volume.
+  description: ''
+  syntax: >-
+    az netappfiles volume pool-change --new-pool-resource-id
+                                      [--account-name]
+                                      [--ids]
+                                      [--name]
+                                      [--pool-name]
+                                      [--resource-group]
+                                      [--subscription]
+  examples:
+  - summary: Returns the properties of the given ANF volume
+    syntax: az netappfiles volume pool-change -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --new-pool-resource-id mynewresourceid
+  requiredParameters:
+  - isRequired: true
+    name: --new-pool-resource-id -d
+    summary: The resource id of the new ANF pool.
+    description: ''
+  optionalParameters:
+  - name: --account-name -a
+    summary: The name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: The name of the ANF volume.
+    description: ''
+  - name: --pool-name -p
+    summary: The name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_volume_revert
   name: az netappfiles volume revert
   summary: Revert a volume to one of its snapshots.
@@ -198,7 +308,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --snapshot-id -s
-    summary: Snapshot_Id of the snapshot. UUID v4 used to identify the Snapshot, example "9760acf5-4638-11e7-9bdb-020073ca3333".
+    summary: SnapshotId of the snapshot. UUID v4 used to identify the Snapshot, example "9760acf5-4638-11e7-9bdb-020073ca3333".
     description: ''
   optionalParameters:
   - name: --subscription
@@ -250,9 +360,12 @@ directCommands:
   syntax: >-
     az netappfiles volume update [--account-name]
                                  [--add]
+                                 [--backup-enabled {false, true}]
+                                 [--backup-policy-id]
                                  [--force-string]
                                  [--ids]
                                  [--name]
+                                 [--policy-enforced {false, true}]
                                  [--pool-name]
                                  [--protocol-types]
                                  [--remove]
@@ -261,7 +374,9 @@ directCommands:
                                  [--set]
                                  [--subscription]
                                  [--tags]
+                                 [--throughput-mibps]
                                  [--usage-threshold]
+                                 [--vault-id]
   examples:
   - summary: Update an ANF volume
     syntax: az netappfiles volume update -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --service-level ultra --usage-threshold 100 --tags mytag=specialvol
@@ -272,6 +387,13 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --backup-enabled
+    parameterValueGroup: false, true
+    summary: Backup Enabled.
+    description: ''
+  - name: --backup-policy-id
+    summary: Backup Policy Resource ID.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
@@ -280,6 +402,10 @@ directCommands:
     description: ''
   - name: --name --volume-name -n -v
     summary: The name of the ANF volume.
+    description: ''
+  - name: --policy-enforced
+    parameterValueGroup: false, true
+    summary: Backup Policy Enforced.
     description: ''
   - name: --pool-name -p
     summary: The name of the ANF pool.
@@ -306,11 +432,23 @@ directCommands:
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
     description: ''
+  - name: --throughput-mibps
+    summary: Maximum throughput in Mibps that can be achieved by this volume.
+    description: ''
   - name: --usage-threshold
     summary: The maximum storage quota allowed for a file system as integer number of GiB. Min 100 GiB, max 100TiB".
     description: ''
+  - name: --vault-id
+    summary: Vault Resource ID.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 commands:
+- az_netappfiles_volume_backup
+- az_netappfiles_volume_backup_create
+- az_netappfiles_volume_backup_delete
+- az_netappfiles_volume_backup_list
+- az_netappfiles_volume_backup_show
+- az_netappfiles_volume_backup_update
 - az_netappfiles_volume_create
 - az_netappfiles_volume_delete
 - az_netappfiles_volume_export_policy
@@ -318,8 +456,10 @@ commands:
 - az_netappfiles_volume_export_policy_list
 - az_netappfiles_volume_export_policy_remove
 - az_netappfiles_volume_list
+- az_netappfiles_volume_pool_change
 - az_netappfiles_volume_replication
 - az_netappfiles_volume_replication_approve
+- az_netappfiles_volume_replication_re_initialize
 - az_netappfiles_volume_replication_remove
 - az_netappfiles_volume_replication_resume
 - az_netappfiles_volume_replication_status
@@ -344,5 +484,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/20/2020
+  ms.date: 11/08/2020
   description: Manage Azure NetApp Files (ANF) Volume Resources.

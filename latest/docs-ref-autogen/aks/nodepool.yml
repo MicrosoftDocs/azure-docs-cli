@@ -24,15 +24,20 @@ directCommands:
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
+                        [--node-osdisk-type]
                         [--node-taints]
                         [--node-vm-size]
                         [--os-type]
+                        [--ppg]
                         [--priority {Regular, Spot}]
                         [--spot-max-price]
                         [--subscription]
                         [--tags]
                         [--vnet-subnet-id]
                         [--zones {1, 2, 3}]
+  examples:
+  - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -89,6 +94,9 @@ directCommands:
   - name: --node-osdisk-size
     summary: Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
     description: ''
+  - name: --node-osdisk-type
+    summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation.
+    description: ''
   - name: --node-taints
     summary: The node taints for the node pool. You can't change the node taints through CLI after the node pool is created.
     description: ''
@@ -98,6 +106,9 @@ directCommands:
   - name: --os-type
     defaultValue: Linux
     summary: The OS Type. Linux or Windows.
+    description: ''
+  - name: --ppg
+    summary: The ID of a PPG.
     description: ''
   - name: --priority
     defaultValue: Regular
@@ -408,5 +419,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/06/2020
+  ms.date: 11/12/2020
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

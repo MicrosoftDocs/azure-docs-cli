@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/13/2020
+ms.date: 11/17/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,253 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## November 17, 2020
+
+Version 2.15.0
+
+### ACS
+
+* Add v3 deprecation warnings
+
+### AKS
+
+* Add ephemeral os functionality
+* Engineering improvement: Replace addon strings with constants
+* `az aks install-cli`: Support customize download url
+* `az aks browse`: Point to Azure Portal Kubernetes resources view if k8s >=1.19 or kube-dashboard not enabled
+* Support BYO control plane identity
+* `az aks use-dev-spaces`: Indicate that dev-spaces commands are deprecated
+
+### AMS
+
+* Change "region" to "location" in output string: az ams account sp create
+
+### App Config
+
+* Fix key vault client initialization
+
+### App Service
+
+* Fix #13646: Unable to create App Service Plan in a different resource group to App Service Environment
+* Fix #11698 #15198 #14862 #15409: az webapp/functionapp config access-restriction add
+* `az functionapp create`: Add Node 14 preview support.
+* `az functionapp create`: Remove preview flag from custom handlers.
+* [BREAKING CHANGE] az functionapp update: Migrate a functionapp from Premium to Consumption plans now requires the '--force' flag.
+* `az functionapp update`: Add error message if functionapp migration involves any plans on Linux.
+* `az functionapp update`: Add more descriptive error message if functionapp migration fails.
+
+### ARM
+
+* Fix an issue where What-If shows two resource group scopes with different casing
+* `az deployment`: Print out error details for deployment
+
+### Backup
+
+* Fix #14976: KeyError fixed and help text improved
+
+### Batch
+
+* Fix #15464: Update check for pfx file without password in batch create_certificate
+
+### Billing
+
+* [BREAKING CHANGE] az billing invoice: Remove properties BillingPeriodsNames and DownloadUrlExpiry from the response.
+* `az billing invoice`: Support many other scopes like BillingAccount, BillingProfile and existing subscription.
+* `az billing account`: New commands to support display and update existing billing accounts.
+* `az billing balance`: New commands to support display balance of a billing profile.
+* `az billing customer`: New commands to support display customer of billing account.
+* `az billing policy`: New commands to support display and update policy of a customer or a billing profile.
+* `az billing product`: New commands to manage products of a billing account.
+* `az billing profile`: New commands to manage a billing profile.
+* `az billing property`: New commands to display and update a billing account's properties.
+* `az billing subscription`: New commands to manage the subscriptions for a billing account.
+* `az billing transaction`: New commands to list transaction of an invoice.
+* `az billing agreement`: New commands to manage billing agreement.
+* `az billing permission`: New commands to manage billing permission.
+* `az billing role-assignment`: New commands to manage role assignment.
+* `az billing role-definition`: New commands to display role definition.
+* `az billing instruction`: New commands to manage instructions of billing.
+
+### Compute
+
+* Fix update permission check issue
+* Enhancement of vm list-skus table format
+* vm host group create: Make --platform-fault-domain-count required and update help
+* Support update vm/image version when they use cross tenant images
+
+### DPS
+
+* Allow tags in IoT DPS create command
+
+### HDInsight
+
+* az hdinsight create: Add two parameters `--resource-provider-connection` and `--enable-private-link` to support relay outbound and private link feature.
+
+### Key Vault
+
+* Refine error messages for HSM `list-deleted` and `purge`
+* Support selective key restore for managed HSMs
+
+### NetAppFiles
+
+* [BREAKING CHANGE] az netappfiles pool update: Remove service-level from parameters.
+* `az netappfiles pool update`: Add optional parameter qos-type.
+* `az netappfiles pool create`: Add optional parameter qos-type.
+* `az netappfiles volume replication suspend`: Add force-break-replication as optional parameter.
+* Add az netappfiles volume replication re-initialize: New command is added to re-initialise replication.
+* Add az netappfiles volume pool-change: New command to change the pool of a volume.
+* Add az netappfiles snapshot policy: New command group with list, delete, update, show, create and volumes commands.
+* Add az netappfiles account backup: New command group with show, list and delete commands
+* Add az netappfiles volume backups: New command group with show, list, delete, update and create commands.
+* Add az netappfiles account backup-policy: New command group with show, list, delete, update and delete commands.
+* Add az netappfiles vault list: New command is added.
+* `az netappfiles account ad add`: Add optional parameters kdc-ip, ad-name, server-root-ca-certificate and backup-operators
+* `az netappfiles volumes create`: Add optional parameters snapshot-policy-id, backup-policy-id, backup-enabled, backup-id, policy-enforced, vault-id, kerberos-enabled, throughput-mibps, snapshot-directory-visible, security-style, kerberos5-read-only, kerberos5-read-write, kerberos5i-read-only, kerberos5i-read-write, kerberos5p-read-only, kerberos5p-read-write and has-root-access.
+* `az netappfiles volume update`: Add optional parameters vault-id, backup-enabled, backup-policy-id, policy-enforced and throughput-mibps
+
+### Network
+
+* Fix bug that can't create a Standard_v2 application-gateway without a private static IP address
+* `az network dns zone import`: Raise FileOperationError instead of FileNotFoundError if zone file doesn't exist
+* Fix NoneType error crash while deleting nonexisting resources of ApplicationGateway, LoadBalancer, Nic
+
+### Private DNS
+
+* `az network private-dns zone import`: Raise FileOperationError instead of FileNotFoundError if zone file doesn't exist
+
+### Profile
+
+* `az login`: Add back the warning that a browser is opened
+
+### Role
+
+* `az role assignment create`: Make `--description`, `--condition`, `--condition-version` preview
+
+### Security
+
+* `az security pricing`: Update help to reflect current API version being called
+
+### Storage
+
+* Fix #15600: az storage fs exists: in case fs does not exist ResourceNotFoundError is returned
+* Fix #15706: The examples for storage container create are incorrect
+* `az storage blob delete-batch`: Correct typo in documentation.
+
+## November 09, 2020
+
+Version 2.14.2
+
+### App Service
+
+* Fix #15604, #15605: Add Dotnet5 support
+
+## November 06, 2020
+
+Version 2.14.1
+
+### ARM
+
+* Hotfix: Add TS multiline string support for template inputs
+
+## October 27, 2020
+
+Version 2.14.0
+
+### AKS
+
+* Add PPG support
+* Update max standard load balancer timeout to 100 minutes
+
+### APIM
+
+* Fix issue with creating consumption tier instance
+
+### App Config
+
+* Fix querying key-values by comma separated labels
+
+### App Service
+
+* Bugfix: az webapp up fails when user doesn't have write permissions to project's parent directory
+* Fix #13777: Fix to remove escape chars from XML
+* Fix #15441: az webapp create-remote-connection fails with AttributeError: 'Thread' object has no attribute 'isAlive'
+* [BREAKING CHANGE] az webapp up: add optional params (os & runtime) and updated runtimes
+
+### ARM
+
+* Make template deployment What-If commands GA
+* [BREAKING CHANGE] Add user confirmation for az ts create
+* Fix the returned data when tagging multiple resources
+
+### Backup
+
+* `az backup policy create`: Add support for IaaSVM backup policy creation from CLI
+* Increasing VM protection limit from 100 to 1000
+
+### Compute
+
+* sig image-definition create: add --features
+* New API version of gallery_images 2020-09-30
+* `az vm update / az sig image-version update`: Support update vm/image-version even it uses a cross tenant image
+* Remove validation of vm host SKUs
+
+### Cosmos DB
+
+* `az cosmosdb create/update`: Improve error message from incorrect --locations input
+* `az cosmosdb sql container create/update`: Add --analytical-storage-ttl parameter
+
+### HDInsight
+
+* [BREAKING CHANGE] az hdinsight create: remove two parameters: --public-network-access-type and  --outbound-public-network-access-type
+
+### IoT Central
+
+* Remove preview warning since it is already GAed
+
+### Key Vault
+
+* Invalidate `--enable-soft-delete false` while creating or updating vaults
+* Make `--bypass` and `--default-action` work together with network acl parameters while creating vaults
+
+### Misc.
+
+* Add bash-completion to Dockerfile
+
+### RDBMS
+
+* Add List-SKUS Command, Table Transformers, Local Context for Postgres, MySQL, Mariadb Single Server
+* [BREAKING CHANGE] Parameter name updates. Improvements to Management Plane for MySQL and PostgreSQL
+* `az postgres|mariadb|mysql server create` : Update create experience for Postgres, MySQL and MariaDB - new fields in the output , Introduce new values for `--public` parameter in create command (all,<IP>,<IPRange>,0.0.0.0)
+
+### SignalR
+
+* `az signalr create`: Add new option `--enable-messaging-logs` for controling service generate messaging logs or not
+* `az signalr update`: Add new option `--enable-messaging-logs` for controling service generate messaging logs or not
+
+### SQL
+
+* [BREAKING CHANGE] Fix response for backup storage redundancy param name and value for MI
+* `az sql db audit-policy show`: extend to show database's audit policy including LA and EH data
+* `az sql db audit-policy update`: extend to allow LA and EH update along with database's audit policy
+* `az sql db audit-policy wait`: place the CLI in a waiting state until a condition of the database's audit policy is met.
+* `az sql server audit-policy show`: extend to show servers's audit policy including LA and EH data
+* `az sql server audit-policy update`: extend to allow LA and EH update along with server's audit policy
+* `az sql server audit-policy wait`: place the CLI in a waiting state until a condition of the server's audit policy is met.
+* Add AAD-only Support for SQL Managed Instances and Servers
+* `az sql db replica create`: Add --partner-database argument
+
+### Storage
+
+* Fix #15111: `az storage logging update` fails without optional argument
+* Fix bug when using set-tier command with service principal login
+* Upgrade version for file datalake to 2020-02-10
+* `az storage queue list`: Track2 supported
+* `az storage fs access`: Support managing ACLs recursively
+
+### Synapse
+
+* Add pipeline, linked service, trigger, notebook, data flow and dataset related cmdlets
 
 ## October 13, 2020
 
@@ -958,7 +1205,7 @@ Version 2.6.0
 * Fix ttl value changed unintended for dns add-record
 * `az network public-ip create`: Inform customers of a coming breaking change
 * Support generic commands for private link scenario
-* `az network private-endpoint-connection`: Support mysql, postgre and mariadb types
+* `az network private-endpoint-connection`: Support mysql, postgres and mariadb types
 * `az network private-endpoint-connection`: Support cosmosdb types
 * `az network private-endpoint`: deprecate --group-ids and redirect to --group-id
 

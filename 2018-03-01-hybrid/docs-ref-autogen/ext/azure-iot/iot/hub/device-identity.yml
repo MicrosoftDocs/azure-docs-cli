@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: ext_azure-iot_az_iot_hub_device_identity_add_children
   name: az iot hub device-identity add-children
-  summary: Add specified comma-separated list of non edge device ids as children of specified edge device.
+  summary: Add specified comma-separated list of device ids as children of specified edge device.
   description: ''
   syntax: >-
     az iot hub device-identity add-children --child-list
@@ -16,14 +16,14 @@ directCommands:
                                             [--login]
                                             [--resource-group]
   examples:
-  - summary: Add non-edge devices as a children to the edge device.
-    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_non_edge_device_id} -n {iothub_name}
-  - summary: Add non-edge devices as a children to the edge device irrespectively the non-edge device is already a child of other edge device.
-    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_non_edge_device_id} -n {iothub_name} -f
+  - summary: Add devices as a children to the edge device.
+    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
+  - summary: Add devices as a children to the edge device irrespectively the device is already a child of other edge device.
+    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name} -f
   requiredParameters:
   - isRequired: true
     name: --child-list --cl
-    summary: Child device list (comma separated) includes only non-edge devices.
+    summary: Child device list (comma separated).
     description: ''
   - isRequired: true
     name: --device-id -d
@@ -31,7 +31,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --force -f
-    summary: Overwrites the non-edge device's parent device.
+    summary: Overwrites the child device's parent device.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -51,7 +51,7 @@ directCommands:
                                       [--add-children]
                                       [--am {shared_private_key, x509_ca, x509_thumbprint}]
                                       [--edge-enabled {false, true}]
-                                      [--force]
+                                      [--force {false, true}]
                                       [--hub-name]
                                       [--login]
                                       [--od]
@@ -84,7 +84,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --add-children --cl
-    summary: Child device list (comma separated) includes only non-edge devices.
+    summary: Child device list (comma separated). This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity children add' instead.
     description: ''
   - name: --am --auth-method
     defaultValue: shared_private_key
@@ -96,7 +96,8 @@ directCommands:
     summary: Flag indicating edge enablement.
     description: ''
   - name: --force -f
-    summary: Overwrites the non-edge device's parent device.
+    parameterValueGroup: false, true
+    summary: Overwrites the device's parent device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -108,7 +109,7 @@ directCommands:
     summary: Generate self-signed cert and use its thumbprint. Output to specified target directory.
     description: ''
   - name: --pd --set-parent
-    summary: Id of edge device.
+    summary: Id of edge device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
     description: ''
   - name: --primary-thumbprint --ptp
     summary: Explicit self-signed certificate thumbprint to use for primary key.
@@ -201,11 +202,11 @@ directCommands:
                                           [--resource-group]
   examples:
   - summary: Get the parent device of the specified device.
-    syntax: az iot hub device-identity get-parent -d {non_edge_device_id} -n {iothub_name}
+    syntax: az iot hub device-identity get-parent -d {device_id} -n {iothub_name}
   requiredParameters:
   - isRequired: true
     name: --device-id -d
-    summary: Id of non-edge device.
+    summary: Id of device.
     description: ''
   optionalParameters:
   - name: --hub-name -n
@@ -283,7 +284,7 @@ directCommands:
     description: ''
 - uid: ext_azure-iot_az_iot_hub_device_identity_list_children
   name: az iot hub device-identity list-children
-  summary: Print comma-separated list of assigned child devices.
+  summary: Outputs comma-separated list of assigned child devices.
   description: ''
   syntax: >-
     az iot hub device-identity list-children --device-id
@@ -291,7 +292,7 @@ directCommands:
                                              [--login]
                                              [--resource-group]
   examples:
-  - summary: Show all assigned non-edge devices as comma-separated list.
+  - summary: Show all assigned devices as comma-separated list.
     syntax: az iot hub device-identity list-children -d {edge_device_id} -n {iothub_name}
   requiredParameters:
   - isRequired: true
@@ -346,7 +347,7 @@ directCommands:
     description: ''
 - uid: ext_azure-iot_az_iot_hub_device_identity_remove_children
   name: az iot hub device-identity remove-children
-  summary: Remove non edge devices as children from specified edge device.
+  summary: Remove devices as children from specified edge device.
   description: ''
   syntax: >-
     az iot hub device-identity remove-children --device-id
@@ -357,8 +358,8 @@ directCommands:
                                                [--resource-group]
   examples:
   - summary: Remove all mentioned devices as children of specified device.
-    syntax: az iot hub device-identity remove-children -d {edge_device_id} --child-list {comma_separated_non_edge_device_id} -n {iothub_name}
-  - summary: Remove all non-edge devices as children specified edge device.
+    syntax: az iot hub device-identity remove-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
+  - summary: Remove all devices as children specified edge device.
     syntax: az iot hub device-identity remove-children -d {edge_device_id} --remove-all
   requiredParameters:
   - isRequired: true
@@ -367,7 +368,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --child-list --cl
-    summary: Child device list (comma separated) includes only non-edge devices.
+    summary: Child device list (comma separated).
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -383,7 +384,7 @@ directCommands:
     description: ''
 - uid: ext_azure-iot_az_iot_hub_device_identity_set_parent
   name: az iot hub device-identity set-parent
-  summary: Set the parent device of the specified non-edge device.
+  summary: Set the parent device of the specified device.
   description: ''
   syntax: >-
     az iot hub device-identity set-parent --device-id
@@ -393,14 +394,14 @@ directCommands:
                                           [--login]
                                           [--resource-group]
   examples:
-  - summary: Set the parent device of the specified non-edge device.
-    syntax: az iot hub device-identity set-parent -d {non_edge_device_id} --pd {edge_device_id} -n {iothub_name}
-  - summary: Set the parent device of the specified non-edge device irrespectively the non-edge device is already a child of other edge device.
-    syntax: az iot hub device-identity set-parent -d {non_edge_device_id} --pd {edge_device_id} --force -n {iothub_name}
+  - summary: Set the parent device of the specified device.
+    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} -n {iothub_name}
+  - summary: Set the parent device of the specified device irrespectively the device is already a child of other edge device.
+    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} --force -n {iothub_name}
   requiredParameters:
   - isRequired: true
     name: --device-id -d
-    summary: Id of non-edge device.
+    summary: Id of device.
     description: ''
   - isRequired: true
     name: --parent-device-id --pd
@@ -408,7 +409,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --force -f
-    summary: Overwrites the non-edge device's parent device.
+    summary: Overwrites the device's parent device.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -561,6 +562,10 @@ directCommands:
     description: ''
 commands:
 - ext_azure-iot_az_iot_hub_device_identity_add_children
+- ext_azure-iot_az_iot_hub_device_identity_children
+- ext_azure-iot_az_iot_hub_device_identity_children_add
+- ext_azure-iot_az_iot_hub_device_identity_children_list
+- ext_azure-iot_az_iot_hub_device_identity_children_remove
 - ext_azure-iot_az_iot_hub_device_identity_connection_string
 - ext_azure-iot_az_iot_hub_device_identity_connection_string_show
 - ext_azure-iot_az_iot_hub_device_identity_create
@@ -570,6 +575,9 @@ commands:
 - ext_azure-iot_az_iot_hub_device_identity_import
 - ext_azure-iot_az_iot_hub_device_identity_list
 - ext_azure-iot_az_iot_hub_device_identity_list_children
+- ext_azure-iot_az_iot_hub_device_identity_parent
+- ext_azure-iot_az_iot_hub_device_identity_parent_set
+- ext_azure-iot_az_iot_hub_device_identity_parent_show
 - ext_azure-iot_az_iot_hub_device_identity_regenerate_key
 - ext_azure-iot_az_iot_hub_device_identity_remove_children
 - ext_azure-iot_az_iot_hub_device_identity_set_parent
