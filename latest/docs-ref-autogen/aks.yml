@@ -58,6 +58,7 @@ directCommands:
                   [--aci-subnet-name]
                   [--admin-username]
                   [--api-server-authorized-ip-ranges]
+                  [--assign-identity]
                   [--attach-acr]
                   [--ca-profile]
                   [--client-secret]
@@ -92,6 +93,7 @@ directCommands:
                   [--node-count]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
+                  [--node-osdisk-type]
                   [--node-vm-size]
                   [--nodepool-labels]
                   [--nodepool-name]
@@ -147,6 +149,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --aad-admin-group-object-ids <id-1,id-2> --aad-tenant-id <id>
   - summary: Create a kubernetes cluster with server side encryption using your owned key.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-diskencryptionset-id <disk-encryption-set-resource-id>
+  - summary: Create a kubernetes cluster with ephemeral OS enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -181,6 +185,9 @@ directCommands:
     description: ''
   - name: --api-server-authorized-ip-ranges
     summary: Comma seperated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    description: ''
+  - name: --assign-identity
+    summary: Specify an existing user assigned identity for control plane's usage in order to manage cluster resource group.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -301,6 +308,9 @@ directCommands:
     description: ''
   - name: --node-osdisk-size
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
+    description: ''
+  - name: --node-osdisk-type
+    summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation.
     description: ''
   - name: --node-vm-size -s
     defaultValue: Standard_DS2_v2
@@ -576,12 +586,17 @@ directCommands:
   summary: Download and install kubectl, the Kubernetes command-line tool. Download and install kubelogin, a client-go credential (exec) plugin implementing azure authentication.
   description: ''
   syntax: >-
-    az aks install-cli [--client-version]
+    az aks install-cli [--base-src-url]
+                       [--client-version]
                        [--install-location]
+                       [--kubelogin-base-src-url]
                        [--kubelogin-install-location]
                        [--kubelogin-version]
                        [--subscription]
   optionalParameters:
+  - name: --base-src-url
+    summary: Base download source URL for kubectl releases.
+    description: ''
   - name: --client-version
     defaultValue: latest
     summary: Version of kubectl to install.
@@ -589,6 +604,9 @@ directCommands:
   - name: --install-location
     defaultValue: ~/.azure-kubectl/kubectl.exe
     summary: Path at which to install kubectl.
+    description: ''
+  - name: --kubelogin-base-src-url -l
+    summary: Base download source URL for kubelogin releases.
     description: ''
   - name: --kubelogin-install-location
     defaultValue: ~/.azure-kubelogin/kubelogin.exe
@@ -1141,5 +1159,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/21/2020
+  ms.date: 11/12/2020
   description: Manage Azure Kubernetes Services.
