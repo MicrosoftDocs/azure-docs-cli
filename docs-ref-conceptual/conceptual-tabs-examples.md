@@ -19,6 +19,14 @@ This article uses the following Azure CLI commands:
 
 ## Prerequisites
 
+- Use [Azure Cloud Shell](/azure/cloud-shell/quickstart) using the bash environment.
+
+   [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)  
+- If you prefer, [install](/cli/azure/install-azure-cli) the Azure CLI to run CLI reference commands.
+   - If you're using a local install, sign in with Azure CLI by using the [az login](/cli/azure/reference-index#az-login) command.  To finish the authentication process, follow the steps displayed in your terminal.  See [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli) for additional sign-in options.
+  - When you're prompted, install Azure CLI extensions on first use.  For more information about extensions, see [Use extensions with Azure CLI](/cli/azure/azure-cli-extensions-overview).
+  - Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).
+
 ### [Quickstart](#tab/quickstart)
 
 quickstart instructions here
@@ -31,22 +39,22 @@ tutorial instructions here
 
 ### [Get started](#tab/quickstart)
 
-quickstart instructions here
+simple / quickstart instructions here
 
 ### [Go farther](#tab/tutorial)
 
-tutorial instructions here
+deep dive / tutorial instructions here
 
 * * *
 
 
 ### [I'm new to CLI](#tab/quickstart)
 
-quickstart instructions here
+simple / quickstart instructions here
 
 ### [I'm a CLI rockstar!](#tab/tutorial)
 
-tutorial instructions here
+in-depth / tutorial instructions here
 
 * * *
 
