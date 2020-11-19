@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/18/2020
+ms.date: 11/19/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -29,7 +29,7 @@ az extension list-available --output table
 | [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.65 | Provides a preview for upcoming AKS features | Yes |
 | [alertsmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Alerts Extension |  |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
-| [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.11 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
+| [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.12 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
 | [attestation](https://github.com/Azure/azure-cli-extensions/tree/master/src/attestation) | 0.1.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension |  |
 | [automation](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation) | 0.1.0 | Microsoft Azure Command-Line Tools AutomationClient Extension |  |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 6.0.0 | Additional commands for working with Azure Batch service |  |
@@ -38,11 +38,12 @@ az extension list-available --output table
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.18.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.7.0 | Manage Azure Firewall resources. | Yes |
 | [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.10.6 | The Azure IoT extension for Azure CLI. |  |
-| [baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 0.0.1 | Additional commands for working with BareMetal instances. |  |
+| [baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 0.0.2 | Additional commands for working with BareMetal instances. |  |
 | [blockchain](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools BlockchainManagementClient Extension |  |
 | [blueprint](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools Blueprint Extension |  |
 | [cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 0.2.0 | Translate ARM template to executable Azure CLI scripts. |  |
 | [codespaces](https://github.com/Azure/azure-cli-extensions) | 0.3.0 | The Azure CLI Codespaces extension | Yes |
+| [communication](https://github.com/Azure/azure-cli-extensions/tree/master/src/communication) | 0.1.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension |  |
 | [connectedk8s](https://github.com/Azure/azure-cli-extensions) | 0.2.7 | Microsoft Azure Command-Line Tools Connectedk8s Extension | Yes |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/master/src/connectedmachine) | 0.3.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension |  |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
@@ -56,7 +57,7 @@ az extension list-available --output table
 | [db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 0.2.0 | Additional commands to simplify Azure Database workflows. | Yes |
 | [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 0.2.0 | Deploy to Azure using Github Actions. | Yes |
 | [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization) | 0.1.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension |  |
-| [dev-spaces](https://github.com/Azure/azure-cli-extensions) | 1.0.5 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
+| [dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 1.0.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. |  |
 | [dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.6 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Yes |
 | [dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 0.12.0 | Support for new Database Migration Service scenarios. | Yes |
 | [eventgrid](https://github.com/Azure/azure-cli-extensions) | 0.4.9 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Yes |
@@ -80,7 +81,7 @@ az extension list-available --output table
 | [kusto](https://github.com/Azure/azure-cli-extensions/tree/master/src/kusto) | 0.2.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension |  |
 | [log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 0.2.1 | Support for Azure Log Analytics query capabilities. | Yes |
 | [log-analytics-solution](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Support for Azure Log Analytics Solution |  |
-| [logic](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools LogicManagementClient Extension |  |
+| [logic](https://github.com/Azure/azure-cli-extensions/tree/master/src/logic) | 0.1.1 | Microsoft Azure Command-Line Tools LogicManagementClient Extension |  |
 | [maintenance](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance) | 1.1.0 | Microsoft Azure Command-Line Tools MaintenanceClient Extension | Yes |
 | [managementpartner](https://github.com/Azure/azure-cli-extensions) | 0.1.3 | Support for Management Partner preview |  |
 | [mesh](https://github.com/Azure/azure-cli-extensions) | 0.10.6 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Yes |
