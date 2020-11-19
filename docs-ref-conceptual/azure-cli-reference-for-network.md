@@ -3,7 +3,6 @@ title: Azure CLI references for Azure Network
 description: Azure CLI reference landing page for Azure Network
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azurecli
 ms.topic: reference
 ms.date: 06/30/2020
 ms.author: dbradish

@@ -3,7 +3,6 @@ title: Azure CLI references for Azure IoT
 description: Azure CLI reference landing page for Azure IoT
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azurecli
 ms.topic: reference
 ms.date: 06/05/2020
 ms.author: dbradish

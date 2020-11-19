@@ -3,7 +3,6 @@ title: Azure CLI references for Azure Monitor
 description: Azure CLI reference landing page for Azure Monitor
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azurecli
 ms.topic: reference
 ms.date: 06/30/2020
 ms.author: dbradish
