@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/17/2020
+ms.date: 11/20/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## November 20, 2020
+
+Version 2.15.1
+
+### Profile
+
+* Hotfix: Fix #15961: az login: UnboundLocalError: local variable 'token_entry' referenced before assignment
 
 ## November 17, 2020
 
