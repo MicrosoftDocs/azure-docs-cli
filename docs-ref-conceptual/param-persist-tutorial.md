@@ -53,6 +53,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
      ```
     - This tutorial requires version 2.12.0 or later of the Azure CLI.  Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).
 
+---
 ## 1. Determine your local directory
 
 Persisted parameter values are stored in the working directory of the Azure storage account used by Azure Cloud Shell.  If you are using a local install of the Azure CLI, values are stored in the working directory on your machine.
@@ -69,7 +70,7 @@ mkdir azCLI
 # Change directory
 cd azCLI
 ```
-
+---
 ## 2. Turn on Persisted parameters
 
 [Persisted parameters](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until **az config param-persist** moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
@@ -77,7 +78,7 @@ cd azCLI
 ```azurecli
 az config param-persist on
 ```
-
+---
 ## 3. Create persisted parameters
 
 To store values for persisted parameters, execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the **--location** and **--name** parameters are stored for future use.
@@ -142,7 +143,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
      }
    }
    ```
-
+---
 ## 4. Replace persisted parameters
 
 Replacing a stored parameter value is as simple as executing a command containing a different value.
@@ -194,7 +195,7 @@ Replacing a stored parameter value is as simple as executing a command containin
    > Even if persisted parameters are turned on, you don't have to use them.  You can still
    > execute commands with all parameter values specified.  However, be aware that with persisted parameters
    > turned on, _you will be creating new persisted parameters, or overwriting existing ones._
-
+---
 ## 5. Execute sequential commands
 
 These scripts create an Azure Function app using the Consumption plan.
@@ -253,7 +254,7 @@ az functionapp create \
 ```
 
 * * *
-
+---
 ## 6. Delete persisted parameters
 
 Use the [az config param-persist delete](/cli/azure/param-persist#az-param-persist-delete) command to remove entries.
@@ -280,7 +281,7 @@ az config param-persist delete --all --yes
 > # See that the resource group name remains in persisted parameters
 > az config param-persist show
 > ```
-
+---
 ## 7. Turn persisted parameters off
 
 You can turn persisted parameters off by using the [az config param-persist off](/cli/azure/param-persist#az-param-persist-off) command, but your saved persisted parameters data won't be deleted.
@@ -295,7 +296,7 @@ az config param-persist show
 # Try to create a new resource relying on persisted parameters and receive error "...the following arguments are required:..."
 az storage account create --name SA4inAzCLI --sku Standard_LRS
 ```
-
+---
 ## 8. Clean up resources
 
 When no longer needed, use the [az group delete](/cli/azure/group) command to remove the resource group, and all related resources.
@@ -303,7 +304,7 @@ When no longer needed, use the [az group delete](/cli/azure/group) command to re
 ```azurecli
 az group delete --name RG1forTutorial
 ```
-
+---
 ## See also
 
 - [(How to work with Azure CLI persisted parameters](param-persist-howto.md)
