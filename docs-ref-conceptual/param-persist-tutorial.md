@@ -70,6 +70,7 @@ mkdir azCLI
 # Change directory
 cd azCLI
 ```
+
 ---
 ## 2. Turn on Persisted parameters
 
@@ -78,6 +79,7 @@ cd azCLI
 ```azurecli
 az config param-persist on
 ```
+
 ---
 ## 3. Create persisted parameters
 
@@ -143,6 +145,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
      }
    }
    ```
+
 ---
 ## 4. Replace persisted parameters
 
@@ -195,6 +198,7 @@ Replacing a stored parameter value is as simple as executing a command containin
    > Even if persisted parameters are turned on, you don't have to use them.  You can still
    > execute commands with all parameter values specified.  However, be aware that with persisted parameters
    > turned on, _you will be creating new persisted parameters, or overwriting existing ones._
+
 ---
 ## 5. Execute sequential commands
 
@@ -254,6 +258,7 @@ az functionapp create \
 ```
 
 * * *
+
 ---
 ## 6. Delete persisted parameters
 
@@ -281,6 +286,7 @@ az config param-persist delete --all --yes
 > # See that the resource group name remains in persisted parameters
 > az config param-persist show
 > ```
+
 ---
 ## 7. Turn persisted parameters off
 
@@ -296,6 +302,7 @@ az config param-persist show
 # Try to create a new resource relying on persisted parameters and receive error "...the following arguments are required:..."
 az storage account create --name SA4inAzCLI --sku Standard_LRS
 ```
+
 ---
 ## 8. Clean up resources
 
@@ -304,6 +311,7 @@ When no longer needed, use the [az group delete](/cli/azure/group) command to re
 ```azurecli
 az group delete --name RG1forTutorial
 ```
+
 ---
 ## See also
 
