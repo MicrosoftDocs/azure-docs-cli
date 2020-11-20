@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/29/2020
+ms.date: 11/18/2020
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -25,25 +25,26 @@ az extension list-available --output table
 |------|---------|---------|---------|
 | [account](https://github.com/Azure/azure-cli-extensions/tree/master/src/account) | 0.2.1 | Microsoft Azure Command-Line Tools SubscriptionClient Extension |  |
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
-| [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.4 | Add AI powered examples to help content. | Yes |
-| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.64 | Provides a preview for upcoming AKS features | Yes |
+| [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.5 | Add AI powered examples to help content. | Yes |
+| [aks-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/aks-preview) | 0.4.65 | Provides a preview for upcoming AKS features | Yes |
 | [alertsmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Alerts Extension |  |
 | [alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.11 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
 | [attestation](https://github.com/Azure/azure-cli-extensions/tree/master/src/attestation) | 0.1.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension |  |
+| [automation](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation) | 0.1.0 | Microsoft Azure Command-Line Tools AutomationClient Extension |  |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 6.0.0 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.10 | Deprecated: please remove 'azure-cli-iot-ext' and install the 'azure-iot' extension instead. The legacy extension 'azure-cli-iot-ext' is scheduled for removal after 9/15/2020. |  |
-| [azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 1.16.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
+| [azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 1.18.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.18.0 | Tools for managing Azure DevOps. |  |
-| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.6.2 | Manage Azure Firewall resources. | Yes |
-| [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.10.4 | The Azure IoT extension for Azure CLI. |  |
+| [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.7.0 | Manage Azure Firewall resources. | Yes |
+| [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.10.6 | The Azure IoT extension for Azure CLI. |  |
 | [baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 0.0.1 | Additional commands for working with BareMetal instances. |  |
 | [blockchain](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools BlockchainManagementClient Extension |  |
 | [blueprint](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools Blueprint Extension |  |
-| [cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 0.1.0 | Translate ARM template to executable Azure CLI scripts. |  |
+| [cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 0.2.0 | Translate ARM template to executable Azure CLI scripts. |  |
 | [codespaces](https://github.com/Azure/azure-cli-extensions) | 0.3.0 | The Azure CLI Codespaces extension | Yes |
 | [connectedk8s](https://github.com/Azure/azure-cli-extensions) | 0.2.7 | Microsoft Azure Command-Line Tools Connectedk8s Extension | Yes |
-| [connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/master/src/connectedmachine) | 0.2.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension |  |
+| [connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/master/src/connectedmachine) | 0.3.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension |  |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
 | [costmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension |  |
 | [csvmware](https://github.com/Azure/az-vmware-cli) | 0.3.0 | Manage Azure VMware Solution by CloudSimple. | Yes |
@@ -95,10 +96,10 @@ az extension list-available --output table
 | [scheduled-query](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Yes |
 | [spring-cloud](https://github.com/Azure/azure-cli-extensions) | 1.1.1 | Microsoft Azure Command-Line Tools spring-cloud Extension |  |
 | [ssh](https://github.com/Azure/azure-cli-extensions/tree/master/src/ssh) | 0.1.0 | SSH into VMs | Yes |
-| [stack-hci](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci) | 0.1.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension |  |
+| [stack-hci](https://github.com/Azure/azure-cli-extensions/tree/master/src/stack-hci) | 0.1.1 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension |  |
 | [storage-blob-preview](https://github.com/Azure/azure-cli-extensions) | 0.3.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Yes |
 | [storage-or-preview](https://github.com/Azure/azure-cli-extensions) | 0.4.0 | Microsoft Azure Command-Line Tools Storage-ors-preview Extension | Yes |
-| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.4.0 | Provides a preview for upcoming storage features. | Yes |
+| [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 0.5.0 | Provides a preview for upcoming storage features. | Yes |
 | [storagesync](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension |  |
 | [stream-analytics](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools stream-analytics Extension |  |
 | [subscription](https://github.com/Azure/azure-cli-extensions) | 0.1.4 | Support for subscription management preview. | Yes |
@@ -107,6 +108,6 @@ az extension list-available --output table
 | [timeseriesinsights](https://github.com/Azure/azure-cli-extensions/src/timeseriesinsights) | 0.1.3 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension |  |
 | [virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 0.1.0 | Manage virtual network taps (VTAP). | Yes |
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.2.1 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
-| [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.3.3 | Auto repair commands to fix VMs. |  |
-| [vmware](https://github.com/Azure/az-vmware-cli) | 0.7.2 | Azure VMware Solution commands. |  |
+| [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.3.4 | Auto repair commands to fix VMs. |  |
+| [vmware](https://github.com/Azure/az-vmware-cli) | 1.0.0 | Azure VMware Solution commands. |  |
 | [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.2.24 | Additional commands for Azure AppService. | Yes |

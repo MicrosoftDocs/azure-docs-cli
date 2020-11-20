@@ -18,22 +18,32 @@ directCommands:
                                [--enable-helm-operator {false, true}]
                                [--helm-operator-params]
                                [--helm-operator-version]
+                               [--https-key]
+                               [--https-user]
                                [--operator-instance-name]
                                [--operator-namespace]
                                [--operator-params]
                                [--operator-type]
+                               [--ssh-known-hosts]
+                               [--ssh-known-hosts-file]
+                               [--ssh-private-key]
+                               [--ssh-private-key-file]
   examples:
   - summary: Create a Kubernetes configuration
     syntax: >-
       az k8sconfiguration create --resource-group MyResourceGroup --cluster-name MyClusterName \
 
-      --cluster-type connectedClusters --name MyConfigurationName --operator-instance-name OperatorInst01 \
+      --cluster-type connectedClusters --name MyGitConfig --operator-instance-name OperatorInst01 \
 
-      --operator-namespace OperatorNamespace01 --repository-url git://github.com/fluxHowTo/flux-get-started \
+      --operator-namespace OperatorNamespace01 --operator-type flux --operator-params "'--git-readonly'" \
 
-      --operator-params "'--git-readonly'" --enable-helm-operator --helm-operator-version 0.6.0 \
+      --repository-url git://github.com/fluxHowTo/flux-get-started --enable-helm-operator  \
 
-      --scope namespace --helm-operator-params '--set helm.versions=v3'
+      --helm-operator-version 1.2.0 --scope namespace --helm-operator-params '--set helm.versions=v3' \
+
+      --ssh-private-key '' --ssh-private-key-file '' --https-user '' --https-key '' \
+
+      --ssh-known-hosts '' --ssh-known-hosts-file ''
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -70,8 +80,14 @@ directCommands:
     summary: Chart values for the Helm Operator (if enabled).
     description: ''
   - name: --helm-operator-version
-    defaultValue: 0.3.0
+    defaultValue: 1.2.0
     summary: Chart version of the Helm Operator (if enabled).
+    description: ''
+  - name: --https-key
+    summary: Specify HTTPS token/password for private repository sync.
+    description: ''
+  - name: --https-user
+    summary: Specify HTTPS username for private repository sync.
     description: ''
   - name: --operator-instance-name
     summary: Instance name of the Operator.
@@ -86,6 +102,18 @@ directCommands:
   - name: --operator-type
     defaultValue: flux
     summary: Type of the operator. Valid value is 'flux'.
+    description: ''
+  - name: --ssh-known-hosts
+    summary: Specify base64-encoded known_hosts contents containing public SSH keys required to access private Git instances.
+    description: ''
+  - name: --ssh-known-hosts-file
+    summary: Specify filepath to known_hosts contents containing public SSH keys required to access private Git instances.
+    description: ''
+  - name: --ssh-private-key
+    summary: Specify private ssh key for private repository sync (either base64 encoded or raw).
+    description: ''
+  - name: --ssh-private-key-file
+    summary: Specify filepath to private ssh key for private repository sync.
     description: ''
 - uid: ext_k8sconfiguration_az_k8sconfiguration_delete
   name: az k8sconfiguration delete
@@ -200,6 +228,8 @@ directCommands:
                                [--helm-operator-version]
                                [--operator-params]
                                [--repository-url]
+                               [--ssh-known-hosts]
+                               [--ssh-known-hosts-file]
   examples:
   - summary: Update an existing Kubernetes configuration
     syntax: >-
@@ -209,7 +239,7 @@ directCommands:
 
       --repository-url git://github.com/fluxHowTo/flux-get-started --operator-params "'--git-readonly'" \
 
-      --helm-operator-version 0.6.0 --helm-operator-params '--set helm.versions=v3'
+      --helm-operator-version 1.2.0 --helm-operator-params '--set helm.versions=v3'
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -244,6 +274,12 @@ directCommands:
     description: ''
   - name: --repository-url -u
     summary: Url of the source control repository.
+    description: ''
+  - name: --ssh-known-hosts
+    summary: Specify base64-encoded known_hosts contents containing public SSH keys required to access private Git instances.
+    description: ''
+  - name: --ssh-known-hosts-file
+    summary: Specify filepath to known_hosts contents containing public SSH keys required to access private Git instances.
     description: ''
 commands:
 - ext_k8sconfiguration_az_k8sconfiguration_create

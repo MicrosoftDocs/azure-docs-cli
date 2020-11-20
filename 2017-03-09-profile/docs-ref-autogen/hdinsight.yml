@@ -26,6 +26,7 @@ directCommands:
                         [--days {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
                         [--domain]
                         [--edgenode-size]
+                        [--enable-private-link {false, true}]
                         [--encryption-algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}]
                         [--encryption-at-host {false, true}]
                         [--encryption-in-transit {false, true}]
@@ -46,6 +47,7 @@ directCommands:
                         [--minimal-tls-version {1.0, 1.1, 1.2}]
                         [--no-validation-timeout]
                         [--no-wait]
+                        [--resource-provider-connection {Inbound, Outbound}]
                         [--ssh-password]
                         [--ssh-public-key]
                         [--ssh-user]
@@ -203,6 +205,15 @@ directCommands:
       --autoscale-type Schedule --timezone "Pacific Standard Time" --days Monday \
 
       --time 09:00 --autoscale-workernode-count 5
+  - summary: Create a cluster with Relay Outbound and Private Link feature.
+    syntax: >-
+      az hdinsight create -t spark --version 3.6 -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" --storage-account MyStorageAccount \
+
+      --subnet "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default" \
+
+      --resource-provider-connection Outbound --enable-private-link
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -261,6 +272,10 @@ directCommands:
     description: ''
   - name: --edgenode-size
     summary: 'The size of the node. See also: <a href="https://docs.microsoft.com/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size">https://docs.microsoft.com/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size</a>.'
+    description: ''
+  - name: --enable-private-link
+    parameterValueGroup: false, true
+    summary: Indicate whether enable the private link or not.
     description: ''
   - name: --encryption-algorithm
     defaultValue: RSA-OAEP
@@ -328,6 +343,10 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-provider-connection --rp-connection
+    parameterValueGroup: Inbound, Outbound
+    summary: The resource provider connection type.
     description: ''
   - name: --ssh-password -P
     summary: SSH password for the cluster nodes. If none specified, uses the HTTP password.
@@ -704,5 +723,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/20/2020
+  ms.date: 11/12/2020
   description: Manage HDInsight resources.

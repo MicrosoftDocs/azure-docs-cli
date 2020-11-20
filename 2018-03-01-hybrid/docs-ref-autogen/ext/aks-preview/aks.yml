@@ -246,6 +246,7 @@ directCommands:
           ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
           confcom                   - enable confcom addon, this will enable SGX device plugin and quote helper by default(PREVIEW).
           open-service-mesh         - enable Open Service Mesh addon (PREVIEW).
+          gitops                    - enable GitOps (PREVIEW).
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
     description: ''
@@ -282,7 +283,7 @@ directCommands:
     valueFrom: '`az aks get-versions`'
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
-    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -464,6 +465,7 @@ directCommands:
                                     Learn more at aka.ms/aks/policy.
         ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
         open-service-mesh         - enable Open Service Mesh addon (PREVIEW).
+        gitops                    - Enable GitOps (PREVIEW).
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -808,6 +810,7 @@ directCommands:
                   [--aad-tenant-id]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--assign-identity]
                   [--attach-acr]
                   [--cluster-autoscaler-profile]
                   [--detach-acr]
@@ -817,6 +820,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-cluster-autoscaler]
+                  [--enable-managed-identity]
                   [--enable-pod-security-policy]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
@@ -828,6 +832,7 @@ directCommands:
                   [--no-wait]
                   [--update-cluster-autoscaler]
                   [--uptime-sla]
+                  [--yes]
   examples:
   - summary: Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n MyManagedCluster
@@ -861,6 +866,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-ahub
   - summary: Disable Azure Hybrid User Benefits featture for a kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-ahub
+  - summary: Update the cluster to use system assigned managed identity in control plane.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity
+  - summary: Update the cluster to use user assigned managed identity in control plane.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -882,6 +891,9 @@ directCommands:
     description: ''
   - name: --api-server-authorized-ip-ranges
     summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    description: ''
+  - name: --assign-identity
+    summary: (PREVIEW) Specify an existing user assigned identity to manage cluster resource group.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -910,12 +922,15 @@ directCommands:
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
+  - name: --enable-managed-identity
+    summary: (PREVIEW) Update current cluster to managed identity to manage cluster resource group.
+    description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
     description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
-    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 120].
+    description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
@@ -942,6 +957,9 @@ directCommands:
     description: ''
   - name: --uptime-sla
     summary: Enable a paid managed cluster service with a financially backed SLA.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: ext_aks-preview_az_aks_upgrade
   name: az aks upgrade

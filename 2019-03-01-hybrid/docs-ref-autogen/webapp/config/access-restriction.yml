@@ -23,6 +23,7 @@ directCommands:
                                             [--subnet]
                                             [--subscription]
                                             [--vnet-name]
+                                            [--vnet-resource-group]
   examples:
   - summary: Add Access Restriction opening (Allow) named developers for IPv4 address 130.220.0.0/27 with priority 200 to main site.
     syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name developers --action Allow --ip-address 130.220.0.0/27 --priority 200
@@ -32,6 +33,10 @@ directCommands:
     syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name app_gateway --action Allow --vnet-name core_weu --subnet app_gateway --priority 300
   - summary: Add Access Restriction opening (Allow) named internal_agents for Subnet build_agents in vNet corp01 with priority 500 to scm site; and ignore service endpoint registration on the Subnet.
     syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name internal_agents --action Allow --vnet-name corp01 --subnet build_agents --priority 500 --scm-site true --ignore-missing-endpoint true
+  - summary: Add Access Restriction opening (Allow) named remote_agents in vNet 'corp01' in rg 'vnets' with subnet 'agents'
+    syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name remote_agents --action Allow --vnet-name corp01 --subnet agents --priority 500 --vnet-resource-group vnets
+  - summary: Add Access Restriction opening (Allow) named agents in vNet 'corp01' in rg 'vnets' with subnet 'agents' (using subnet resource id)
+    syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name remote_agents --action Allow --priority 800 --subnet '/subscriptions/<subscription-id>/resourceGroups/vnets/providers/Microsoft.Network/virtualNetworks/corp01/subnets/agents'
   requiredParameters:
   - isRequired: true
     name: --priority -p
@@ -80,6 +85,9 @@ directCommands:
     description: ''
   - name: --vnet-name
     summary: VNet name.
+    description: ''
+  - name: --vnet-resource-group
+    summary: Resource group of virtual network (default is web app resource group).
     description: ''
 - uid: az_webapp_config_access_restriction_remove
   name: az webapp config access-restriction remove
