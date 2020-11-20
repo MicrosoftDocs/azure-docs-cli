@@ -276,12 +276,12 @@ TestVM  azureuser
 > In JMESPath, strings are always surrounded by single quotes (`'`). If you use double quotes as part of a string in a filter predicate,
 > you'll get empty output.
 
-JMESPath also has built-in functions that can help with filtering. One such function is `contains(string, substring)`,
+JMESPath also has built-in functions that can help with filtering. One such function is `? contains(string, substring)`,
 which checks to see if a string contains a substring. Expressions are evaluated before calling the function, so the first
 argument can be a full JMESPath expression. The next example finds all VMs using SSD storage for their OS disk:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
+az vm list -g QueryDemo --query "[? contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
 ```
 
 ```json
@@ -302,7 +302,7 @@ is mentioned twice, and rekeyed in the output. One way to shorten it is to apply
 after flattening and selecting data.
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[?contains(Storage,'SSD')]" -o json
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
 ```
 
 ```json
