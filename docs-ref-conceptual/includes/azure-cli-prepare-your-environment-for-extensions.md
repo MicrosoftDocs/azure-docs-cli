@@ -8,8 +8,6 @@ manager: barbkess
 
 ## Prepare your environment
 
-## Prepare your environment
-
 1. Do a [local install](install-azure-cli.md) of the Azure CLI or start [Azure Cloud Shell](start-azure-cloud-shell.md) to run Azure CLI commands.
 
 1. Sign in using the [az login](/cli/azure/reference-index#az-login) command if you're using a local install.  Follow the steps displayed in your terminal to complete the authentication process.  See [Sign in with Azure CLI](authenticate-azure-cli.md) for additional sign in options.
