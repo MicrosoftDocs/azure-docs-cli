@@ -4,7 +4,7 @@ description: An explanation of reference types and status
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/14/2020
+ms.date: 11/19/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -64,7 +64,7 @@ Regardless of type, Azure CLI references fall into three status categories: **GA
 
 | | GA  | Public preview | Experimental
 |-|-|-|-|
-| **Stability** | Permanent | Can change in response to customer feedback.  Is subject to the terms of [Microsoft Azure Previews](/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback.  Will often migrate to public preview.  Can be removed.
+| **Stability** | Permanent | Can change in response to customer feedback.  Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback.  Will often migrate to public preview.  Can be removed.
 | **Support level** | Full | Partial | None
 
 Although most commands and parameters for a single reference have a single status, this is not always the case.  A GA reference that is being built out to offer more commands can have GA, preview, and experimental reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories.  Here are example references that have different statuses:
