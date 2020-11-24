@@ -66,7 +66,7 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
         sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
 
-3. <div id="set-release"/>Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the Azure CLI software repository (Skip this step on ARM64 Linux distributions):
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
