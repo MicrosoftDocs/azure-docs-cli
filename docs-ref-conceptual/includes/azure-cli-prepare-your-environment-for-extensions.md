@@ -4,23 +4,15 @@ ms.date: 09/10/2020
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
+ms.custom: devx-track-azurecli
 ---
 
 ## Prepare your environment
 
-1. Do a [local install](install-azure-cli.md) of the Azure CLI or start [Azure Cloud Shell](start-azure-cloud-shell.md) to run Azure CLI commands.
+- Use [Azure Cloud Shell](/azure/cloud-shell/quickstart) using the bash environment.
 
-1. Sign in using the [az login](/cli/azure/reference-index#az-login) command if you're using a local install.  Follow the steps displayed in your terminal to complete the authentication process.  See [Sign in with Azure CLI](authenticate-azure-cli.md) for additional sign in options.
-1. If you don't have a resource group, create one using the [az group create](/cli/azure/group#az-group-create) command.  See [What is Azure Resource Manager](/azure/azure-resource-manager/management/overview) to learn more about resource groups.
-1. When working with extension references for the Azure CLI, you must first install the extension. Azure CLI extensions give you access to experimental and pre-release commands that have not yet shipped as part of the core CLI. To learn more about extensions including updating and uninstalling, see [Use extensions with Azure CLI](../azure-cli-extensions-overview.md).
-
-   Get a list of available extensions
-
-    ```azurecli
-    az extension list-available
-   ```
-
-   Install an extension substituting **extensionName** with a valid extension name.
-   ```azurecli
-   az extension add --name extensionName
-   ```
+   [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)   
+- If you prefer, [install](../install-azure-cli.md) the Azure CLI to run CLI reference commands.
+   - If you're using a local install, sign in with Azure CLI by using the [az login](/cli/azure/reference-index#az_login) command.  To finish the authentication process, follow the steps displayed in your terminal.  See [Sign in with Azure CLI](../authenticate-azure-cli.md) for additional sign-in options.
+  - When you're prompted, install Azure CLI extensions on first use.  For more information about extensions, see [Use extensions with Azure CLI](../azure-cli-extensions-overview.md).
+  - Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).
