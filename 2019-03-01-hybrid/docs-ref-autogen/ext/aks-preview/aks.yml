@@ -60,6 +60,7 @@ directCommands:
                   [--appgw-watch-namespace]
                   [--assign-identity]
                   [--attach-acr]
+                  [--auto-upgrade-channel {none, patch, rapid, stable}]
                   [--client-secret]
                   [--cluster-autoscaler-profile]
                   [--disable-rbac]
@@ -74,6 +75,7 @@ directCommands:
                   [--enable-cluster-autoscaler]
                   [--enable-managed-identity]
                   [--enable-node-public-ip]
+                  [--enable-pod-identity]
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
                   [--enable-rbac]
@@ -108,6 +110,7 @@ directCommands:
                   [--nodepool-tags]
                   [--outbound-type {loadBalancer, userDefinedRouting}]
                   [--pod-cidr]
+                  [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone {none, system}]
                   [--service-cidr]
@@ -212,6 +215,10 @@ directCommands:
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
+  - name: --auto-upgrade-channel
+    parameterValueGroup: none, patch, rapid, stable
+    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch or none, none means disable autoupgrade.
+    description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
@@ -264,6 +271,9 @@ directCommands:
     description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
+    description: ''
+  - name: --enable-pod-identity
+    summary: (PREVIEW) Enable pod identity addon.
     description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
@@ -379,6 +389,9 @@ directCommands:
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
+    description: ''
   - name: --ppg
     summary: The ID of a PPG.
     description: ''
@@ -825,15 +838,18 @@ directCommands:
                   [--api-server-authorized-ip-ranges]
                   [--assign-identity]
                   [--attach-acr]
+                  [--auto-upgrade-channel {none, patch, rapid, stable}]
                   [--cluster-autoscaler-profile]
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-cluster-autoscaler]
+                  [--disable-pod-identity]
                   [--disable-pod-security-policy]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-cluster-autoscaler]
                   [--enable-managed-identity]
+                  [--enable-pod-identity]
                   [--enable-pod-security-policy]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
@@ -883,6 +899,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity
   - summary: Update the cluster to use user assigned managed identity in control plane.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
+  - summary: Enable pod identity addon.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-pod-identity
+  - summary: Disable pod identity addon.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-pod-identity
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -911,6 +931,10 @@ directCommands:
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
+  - name: --auto-upgrade-channel
+    parameterValueGroup: none, patch, rapid, stable
+    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch or none, none means disable autoupgrade.
+    description: ''
   - name: --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
@@ -922,6 +946,9 @@ directCommands:
     description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --disable-pod-identity
+    summary: (PREVIEW) Disable Pod Identity addon for cluster.
     description: ''
   - name: --disable-pod-security-policy
     summary: (PREVIEW) Disable pod security policy.
@@ -937,6 +964,9 @@ directCommands:
     description: ''
   - name: --enable-managed-identity
     summary: (PREVIEW) Update current cluster to managed identity to manage cluster resource group.
+    description: ''
+  - name: --enable-pod-identity
+    summary: (PREVIEW) Enable Pod Identity addon for cluster.
     description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
@@ -1083,6 +1113,15 @@ commands:
 - ext_aks-preview_az_aks_nodepool_show
 - ext_aks-preview_az_aks_nodepool_update
 - ext_aks-preview_az_aks_nodepool_upgrade
+- ext_aks-preview_az_aks_pod_identity
+- ext_aks-preview_az_aks_pod_identity_add
+- ext_aks-preview_az_aks_pod_identity_delete
+- ext_aks-preview_az_aks_pod_identity_exception
+- ext_aks-preview_az_aks_pod_identity_exception_add
+- ext_aks-preview_az_aks_pod_identity_exception_delete
+- ext_aks-preview_az_aks_pod_identity_exception_list
+- ext_aks-preview_az_aks_pod_identity_exception_update
+- ext_aks-preview_az_aks_pod_identity_list
 - ext_aks-preview_az_aks_rotate_certs
 - ext_aks-preview_az_aks_scale
 - ext_aks-preview_az_aks_show
