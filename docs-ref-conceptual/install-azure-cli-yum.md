@@ -4,7 +4,7 @@ description: How to install the Azure CLI with yum
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/25/2020
+ms.date: 11/24/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
@@ -31,12 +31,12 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
 2. Create local `azure-cli` repository information.
 
    ```bash
-   sudo sh -c 'echo -e "[azure-cli]
+   echo -e "[azure-cli]
    name=Azure CLI
    baseurl=https://packages.microsoft.com/yumrepos/azure-cli
    enabled=1
    gpgcheck=1
-   gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
+   gpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/azure-cli.repo
    ```
 
 3. Install with the `yum install` command.

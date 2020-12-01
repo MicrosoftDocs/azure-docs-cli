@@ -5,7 +5,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 10/30/2020
+ms.date: 11/25/2020
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
@@ -260,7 +260,7 @@ Use the [az config param-persist delete](/cli/azure/param-persist#az-param-persi
 
 ```azurecli
 # Remove a single persisted parameters entry by specifying the name, not the value
-az config param-persist delete --name resource_group_name
+az config param-persist delete resource_group_name
 
 # Remove all persisted parameters entries and do not prompt for confirmation
 az config param-persist delete --all --yes
