@@ -4,10 +4,13 @@ ms.date: 09/10/2020
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
+ms.technology: azure-cli
+ms.service: azure-cli
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Prerequisites
+### Prepare your environment for the Azure CLI
 
 - Use [Azure Cloud Shell](/azure/cloud-shell/quickstart) using the bash environment.
 
