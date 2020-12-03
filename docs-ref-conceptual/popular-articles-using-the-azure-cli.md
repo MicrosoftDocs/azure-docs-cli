@@ -53,7 +53,7 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 |-|-|-|-|
 |Azure App Configuration|Samples |[Azure CLI samples for Azure App Configuration](/azure/azure-app-configuration/cli-samples) | Get links to bash scripts that use the Azure CLI for Azure App Configuration.
 |Azure DevOps| Get Started: DevOps Pipeline |[Create your first Azure Pipeline using the Azure CLI](/azure/devops/pipelines/create-first-pipeline-cli) | Create a new pipeline in a cloned GitHub directory, manage and run your pipelines.
-|Azure DevOps| How-to guide: DevOps Pipeline |[Azure Pipeline deployment tasks using the Azure CLI](/azure/devops/pipelines/tasks/deploy/azure-cli?view=azure-devops) | In a build or release pipeline, run a shell or batch script containing the Azure CLI.  Commands run on cross-platform agents running on Linux, macOS, or Windows operating systems.
+|Azure DevOps| How-to guide: DevOps Pipeline |[Azure Pipeline deployment tasks using the Azure CLI](/azure/devops/pipelines/tasks/deploy/azure-cli) | In a build or release pipeline, run a shell or batch script containing the Azure CLI.  Commands run on cross-platform agents running on Linux, macOS, or Windows operating systems.
 |Azure DevOps| Tutorial: Jenkins Pipeline |[Deploy to Azure App Service with Jenkins using the Azure CLI](/azure/jenkins/execute-cli-jenkins-pipeline) | Create and configure a Jenkins virtual machine, create a web app in Azure, and prepare a GitHub repository.  Create and run the Jenkins pipeline.
 
 ## Databases
