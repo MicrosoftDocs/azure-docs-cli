@@ -7,8 +7,6 @@ manager: barbkess
 ms.custom: devx-track-azurecli
 ---
 
-## Prerequisites
-
 - Use [Azure Cloud Shell](/azure/cloud-shell/quickstart) using the bash environment.
 
    [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)   
