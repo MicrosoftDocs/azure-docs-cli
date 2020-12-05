@@ -118,9 +118,9 @@ There may be cases where a service you are interested in does not have CLI comma
 
 If neither generic update arguments nor `az resource` meets your needs, you can use `az rest` command to call the REST API. It automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`.
 
-This is extremely useful for calling [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json&view=graph-rest-1.0) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
+This is extremely useful for calling [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
 
-For example, to update `redirectUris` for an [Application](/graph/api/resources/application?view=graph-rest-1.0), we call the [Update application](/graph/api/application-update?view=graph-rest-1.0&tabs=http) REST API with:
+For example, to update `redirectUris` for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API with:
 
 ```sh
 # Line breaks for legibility only
