@@ -51,7 +51,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
      ```azurecli
      az login
      ```
-    - This tutorial requires version 2.12.0 or later of the Azure CLI.  Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).
+    - This tutorial requires version 2.12.0 or later of the Azure CLI.  Run [az version](/cli/azure/reference-index#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index#az_upgrade).
 
 ## 1. Determine your local directory
 

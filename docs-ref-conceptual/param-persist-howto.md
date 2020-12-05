@@ -14,7 +14,7 @@ ms.custom: devex-track-azurecli
 
 # Azure CLI persisted parameter
 
-The Azure CLI [az config param-persist](/cli/azure/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don’t contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az config param-persist](/cli/azure/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don't contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
@@ -23,7 +23,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 1. Environment variables
 1. Values in the configuration file or set with **az config**
 
-[Install the Azure CLI](install-azure-cli.md) or open [Azure Cloud Shell](https://shell.azure.com) to run the scripts in this article.  If you are using a local install of the Azure CLI, version 2.12.0 or later is needed to run **az config param-persist** commands.  Run [az version](/cli/azure/reference-index?#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index?#az_upgrade).  Azure Cloud Shell always has the latest version of the Azure CLI.
+[Install the Azure CLI](install-azure-cli.md) or open [Azure Cloud Shell](https://shell.azure.com) to run the scripts in this article.  If you are using a local install of the Azure CLI, version 2.12.0 or later is needed to run **az config param-persist** commands.  Run [az version](/cli/azure/reference-index#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index#az_upgrade).  Azure Cloud Shell always has the latest version of the Azure CLI.
 
 ## Persisted parameter data file
 
