@@ -1,0 +1,400 @@
+### YamlMime:AzureCLIGroup
+uid: ext_aks-preview_az_aks_nodepool
+name: az aks nodepool
+summary: Commands to manage node pools in managed Kubernetes cluster.
+description: ''
+directCommands:
+- uid: ext_aks-preview_az_aks_nodepool_add
+  name: az aks nodepool add
+  summary: Add a node pool to the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool add --cluster-name
+                        --name
+                        --resource-group
+                        [--aks-custom-headers]
+                        [--enable-cluster-autoscaler]
+                        [--enable-node-public-ip]
+                        [--eviction-policy {Deallocate, Delete}]
+                        [--kubelet-config]
+                        [--kubernetes-version]
+                        [--labels]
+                        [--linux-os-config]
+                        [--max-count]
+                        [--max-pods]
+                        [--max-surge]
+                        [--min-count]
+                        [--mode {System, User}]
+                        [--no-wait]
+                        [--node-count]
+                        [--node-osdisk-size]
+                        [--node-osdisk-type]
+                        [--node-taints]
+                        [--node-vm-size]
+                        [--node-zones {1, 2, 3}]
+                        [--os-type]
+                        [--pod-subnet-id]
+                        [--ppg]
+                        [--priority {Regular, Spot}]
+                        [--spot-max-price]
+                        [--tags]
+                        [--vnet-subnet-id]
+  examples:
+  - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-node-public-ip
+    summary: Enable VMSS node public IP.
+    description: ''
+  - name: --eviction-policy
+    defaultValue: Delete
+    parameterValueGroup: Deallocate, Delete
+    summary: The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
+    description: ''
+  - name: --kubelet-config
+    summary: Kubelet configurations for agent nodes.
+    description: ''
+  - name: --kubernetes-version -k
+    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
+    description: ''
+    valueFrom: '`az aks get-versions`'
+  - name: --labels
+    summary: The node labels for the node pool. You can't change the node labels through CLI after the node pool is created. See <a href="https://aka.ms/node-labels">https://aka.ms/node-labels</a> for syntax of labels.
+    description: ''
+  - name: --linux-os-config
+    summary: OS configurations for Linux agent nodes.
+    description: ''
+  - name: --max-count
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
+  - name: --max-pods -m
+    summary: The maximum number of pods deployable to a node.
+    description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+  - name: --max-surge
+    summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
+    description: ''
+  - name: --min-count
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
+  - name: --mode
+    defaultValue: User
+    parameterValueGroup: System, User
+    summary: The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at <a href="https://aka.ms/aks/nodepool/mode">https://aka.ms/aks/nodepool/mode</a>.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-count -c
+    defaultValue: "3"
+    summary: Number of nodes in the Kubernetes agent pool. After creating a cluster, you can change the size of its node pool with `az aks scale`.
+    description: ''
+  - name: --node-osdisk-size
+    summary: Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
+    description: ''
+  - name: --node-osdisk-type
+    summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+    description: ''
+  - name: --node-taints
+    summary: The node taints for the node pool. You can't change the node taints through CLI after the node pool is created.
+    description: ''
+  - name: --node-vm-size -s
+    summary: Size of Virtual Machines to create as Kubernetes nodes.
+    description: ''
+  - name: --node-zones --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: (will be deprecated, use --zones) Availability zones where agent nodes will be placed.
+    description: ''
+  - name: --os-type
+    defaultValue: Linux
+    summary: The OS Type. Linux or Windows.
+    description: ''
+  - name: --pod-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
+    description: ''
+  - name: --ppg
+    summary: The ID of a PPG.
+    description: ''
+  - name: --priority
+    defaultValue: Regular
+    parameterValueGroup: Regular, Spot
+    summary: The priority of the node pool.
+    description: ''
+  - name: --spot-max-price
+    defaultValue: nan
+    summary: It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --vnet-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_delete
+  name: az aks nodepool delete
+  summary: Delete the agent pool in the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool delete --cluster-name
+                           --name
+                           --resource-group
+                           [--no-wait]
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_get_upgrades
+  name: az aks nodepool get-upgrades
+  summary: Get the available upgrade versions for an agent pool of the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool get-upgrades --cluster-name
+                                 --nodepool-name
+                                 --resource-group
+  examples:
+  - summary: Get the available upgrade versions for an agent pool of the managed Kubernetes cluster.
+    syntax: az aks nodepool get-upgrades --resource-group MyResourceGroup --cluster-name MyManagedCluster --nodepool-name MyNodePool
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --nodepool-name
+    summary: Name of the node pool.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_list
+  name: az aks nodepool list
+  summary: List node pools in the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool list --cluster-name
+                         --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_scale
+  name: az aks nodepool scale
+  summary: Scale the node pool in a managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool scale --cluster-name
+                          --name
+                          --resource-group
+                          [--no-wait]
+                          [--node-count]
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-count -c
+    defaultValue: "3"
+    summary: Number of nodes in the Kubernetes node pool.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_show
+  name: az aks nodepool show
+  summary: Show the details for a node pool in the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool show --cluster-name
+                         --name
+                         --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_update
+  name: az aks nodepool update
+  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
+  description: ''
+  syntax: >-
+    az aks nodepool update --cluster-name
+                           --name
+                           --resource-group
+                           [--disable-cluster-autoscaler]
+                           [--enable-cluster-autoscaler]
+                           [--max-count]
+                           [--max-surge]
+                           [--min-count]
+                           [--mode {System, User}]
+                           [--no-wait]
+                           [--tags]
+                           [--update-cluster-autoscaler]
+  examples:
+  - summary: Enable cluster-autoscaler within node count range [1,5]
+    syntax: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: Disable cluster-autoscaler for an existing cluster
+    syntax: az aks nodepool update --disable-cluster-autoscaler -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: Update min-count or max-count for cluster autoscaler.
+    syntax: az aks nodepool update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  - summary: Change a node pool to system mode
+    syntax: az aks nodepool update --mode System -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --disable-cluster-autoscaler -d
+    summary: Disable cluster autoscaler.
+    description: ''
+  - name: --enable-cluster-autoscaler -e
+    summary: Enable cluster autoscaler.
+    description: ''
+  - name: --max-count
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
+  - name: --max-surge
+    summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
+    description: ''
+  - name: --min-count
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    description: ''
+  - name: --mode
+    parameterValueGroup: System, User
+    summary: The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at <a href="https://aka.ms/aks/nodepool/mode">https://aka.ms/aks/nodepool/mode</a>.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --update-cluster-autoscaler -u
+    summary: Update min-count or max-count for cluster autoscaler.
+    description: ''
+- uid: ext_aks-preview_az_aks_nodepool_upgrade
+  name: az aks nodepool upgrade
+  summary: Upgrade the node pool in a managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool upgrade --cluster-name
+                            --name
+                            --resource-group
+                            [--kubernetes-version]
+                            [--max-surge]
+                            [--no-wait]
+                            [--node-image-only]
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --kubernetes-version -k
+    summary: Version of Kubernetes to upgrade the node pool to, such as "1.11.12".
+    description: ''
+  - name: --max-surge
+    summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-image-only
+    summary: Only upgrade agent pool's node image.
+    description: ''
+commands:
+- ext_aks-preview_az_aks_nodepool_add
+- ext_aks-preview_az_aks_nodepool_delete
+- ext_aks-preview_az_aks_nodepool_get_upgrades
+- ext_aks-preview_az_aks_nodepool_list
+- ext_aks-preview_az_aks_nodepool_scale
+- ext_aks-preview_az_aks_nodepool_show
+- ext_aks-preview_az_aks_nodepool_update
+- ext_aks-preview_az_aks_nodepool_upgrade
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to manage node pools in managed Kubernetes cluster.

@@ -40,9 +40,9 @@ directCommands:
   description: ''
   syntax: >-
     az apim backup --backup-name
+                   --container-name
                    --name
                    --resource-group
-                   --storage-account-container
                    --storage-account-key
                    --storage-account-name
                    [--no-wait]
@@ -56,16 +56,16 @@ directCommands:
     summary: The name of the backup file to create.
     description: ''
   - isRequired: true
+    name: --container-name --storage-account-container
+    summary: The name of the storage account container used to place the backup.
+    description: ''
+  - isRequired: true
     name: --name -n
     summary: The name of the api management service instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --storage-account-container
-    summary: The name of the storage account container used to place the backup.
     description: ''
   - isRequired: true
     name: --storage-account-key
@@ -228,6 +228,55 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/apim/_help.py
+- uid: az_apim_restore
+  name: az apim restore
+  summary: Restores a backup of an API Management service created using the ApiManagementService_Backup operation on the current service. This is a long running operation and could take several minutes to complete.
+  description: ''
+  syntax: >-
+    az apim restore --backup-name
+                    --container-name
+                    --name
+                    --resource-group
+                    --storage-account-key
+                    --storage-account-name
+                    [--no-wait]
+                    [--subscription]
+  examples:
+  - summary: Restores a backup of the API Management service instance
+    syntax: az apim restore --name MyApim -g MyResourceGroup --backup-name myBackup              --storage-account-name mystorageaccount --storage-account-container backups              --storage-account-key Ay2ZbdxLnD4OJPT29F6jLPkB6KynOzx85YCObhrw==
+  requiredParameters:
+  - isRequired: true
+    name: --backup-name
+    summary: The name of the backup file to restore.
+    description: ''
+  - isRequired: true
+    name: --container-name --storage-account-container
+    summary: The name of the storage account container used to retrieve the backup from.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the api management service instance.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --storage-account-key
+    summary: The access key of the storage account used to retrieve the backup from.
+    description: ''
+  - isRequired: true
+    name: --storage-account-name
+    summary: The name of the storage account used to retrieve the backup from.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -446,6 +495,8 @@ commands:
 - az_apim_product_list
 - az_apim_product_show
 - az_apim_product_update
+- az_apim_product_wait
+- az_apim_restore
 - az_apim_show
 - az_apim_update
 - az_apim_wait
@@ -466,5 +517,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/22/2020
+  ms.date: 12/01/2020
   description: Manage Azure API Management services.

@@ -1,0 +1,185 @@
+### YamlMime:AzureCLIGroup
+uid: ext_storage-preview_az_storage_blob
+name: az storage blob
+summary: Manage object storage for unstructured data (blobs).
+description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
+directCommands:
+- uid: ext_storage-preview_az_storage_blob_list
+  name: az storage blob list
+  summary: List blobs in a given container.
+  description: ''
+  syntax: >-
+    az storage blob list --container-name
+                         [--account-key]
+                         [--account-name]
+                         [--auth-mode {key, login}]
+                         [--connection-string]
+                         [--delimiter]
+                         [--include]
+                         [--marker]
+                         [--num-results]
+                         [--prefix]
+                         [--sas-token]
+                         [--timeout]
+  examples:
+  - summary: List all storage blobs in a container whose names start with 'foo'; will match names such as 'foo', 'foobar', and 'foo/bar'
+    syntax: az storage blob list -c MyContainer --prefix foo
+  requiredParameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --delimiter
+    summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
+    description: ''
+  - name: --include
+    defaultValue: mc
+    summary: Specifies one or more additional datasets to include in the response.
+    description: ''
+  - name: --marker
+    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --num-results
+    defaultValue: "5000"
+    summary: Specifies the maximum number of results to return. Provide "\*" to return all.
+    description: ''
+  - name: --prefix
+    summary: Filters the results to return only blobs whose names begin with the specified prefix.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+- uid: ext_storage-preview_az_storage_blob_move
+  name: az storage blob move
+  summary: Move a blob in a storage container.
+  description: ''
+  syntax: >-
+    az storage blob move --container-name
+                         --destination-blob
+                         --source-blob
+                         [--account-key]
+                         [--account-name]
+                         [--auth-mode {key, login}]
+                         [--connection-string]
+                         [--lease-id]
+                         [--sas-token]
+                         [--source-if-match]
+                         [--source-if-modified-since]
+                         [--source-if-none-match]
+                         [--source-if-unmodified-since]
+                         [--source-lease-id]
+                         [--timeout]
+  examples:
+  - summary: Move a blob in a storage container.
+    syntax: az storage blob move -c MyContainer -d DestinationBlobPath -s SourceBlobPath --account-name MyStorageAccount
+  requiredParameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --destination-blob -d
+    summary: The destination blob name. It should be an absolute path under the container. e.g.'topdir1/dirbar'.
+    description: ''
+  - isRequired: true
+    name: --source-blob -s
+    summary: The source blob name. It should be an absolute path under the container. e.g.'topdir1/dirsubfoo'.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --lease-id
+    summary: Optional. A lease ID for the new_path. The new_path must have an active lease and the lease ID must match.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --source-if-match
+    summary: Optional. An ETag value. Specify this header to perform the rename operation only if the source's ETag matches the value specified.
+    description: ''
+  - name: --source-if-modified-since
+    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has been modified since the specified date and time.
+    description: ''
+  - name: --source-if-none-match
+    summary: Optional. An ETag value or the special wildcard ("\*") value. Specify this header to perform the rename operation only if the source's ETag does not match the value specified.
+    description: ''
+  - name: --source-if-unmodified-since
+    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has not been modified since the specified date and time.
+    description: ''
+  - name: --source-lease-id
+    summary: Optional. A lease ID for the source_path. The source_path must have an active lease and the lease ID must match.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+commands:
+- ext_storage-preview_az_storage_blob_access
+- ext_storage-preview_az_storage_blob_access_set
+- ext_storage-preview_az_storage_blob_access_show
+- ext_storage-preview_az_storage_blob_access_update
+- ext_storage-preview_az_storage_blob_directory
+- ext_storage-preview_az_storage_blob_directory_access
+- ext_storage-preview_az_storage_blob_directory_access_set
+- ext_storage-preview_az_storage_blob_directory_access_show
+- ext_storage-preview_az_storage_blob_directory_access_update
+- ext_storage-preview_az_storage_blob_directory_create
+- ext_storage-preview_az_storage_blob_directory_delete
+- ext_storage-preview_az_storage_blob_directory_download
+- ext_storage-preview_az_storage_blob_directory_exists
+- ext_storage-preview_az_storage_blob_directory_list
+- ext_storage-preview_az_storage_blob_directory_metadata
+- ext_storage-preview_az_storage_blob_directory_metadata_show
+- ext_storage-preview_az_storage_blob_directory_metadata_update
+- ext_storage-preview_az_storage_blob_directory_move
+- ext_storage-preview_az_storage_blob_directory_show
+- ext_storage-preview_az_storage_blob_directory_upload
+- ext_storage-preview_az_storage_blob_list
+- ext_storage-preview_az_storage_blob_move
+- ext_storage-preview_az_storage_blob_service_properties
+- ext_storage-preview_az_storage_blob_service_properties_show
+- ext_storage-preview_az_storage_blob_service_properties_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
