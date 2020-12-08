@@ -1,0 +1,382 @@
+### YamlMime:AzureCLIGroup
+uid: ext_keyvault-preview_az_keyvault_certificate
+name: az keyvault certificate
+summary: Manage certificates.
+description: ''
+directCommands:
+- uid: ext_keyvault-preview_az_keyvault_certificate_create
+  name: az keyvault certificate create
+  summary: Create a Key Vault certificate.
+  description: Certificates can be used as a secrets for provisioned virtual machines.
+  syntax: >-
+    az keyvault certificate create --name
+                                   --policy
+                                   --vault-name
+                                   [--disabled {false, true}]
+                                   [--tags]
+                                   [--validity]
+  examples:
+  - summary: Create a self-signed certificate with the default policy and add it to a virtual machine.
+    syntax: "az keyvault certificate create --vault-name vaultname -n cert1 \\\n  -p \"$(az keyvault certificate get-default-policy)\"\n\nsecrets=$(az keyvault secret list-versions --vault-name vaultname \\\n  -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n\nvm_secrets=$(az vm secret format -s \"$secrets\") \n\naz vm create -g group-name -n vm-name --admin-username deploy  \\\n  --image debian --secrets \"$vm_secrets\""
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Create certificate in disabled state.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --validity
+    summary: Number of months the certificate is valid for. Overrides the value specified with --policy/-p.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_delete
+  name: az keyvault certificate delete
+  summary: Deletes a certificate from a specified key vault.
+  description: Deletes all versions of a certificate object along with its associated policy. Delete certificate cannot be used to remove individual versions of a certificate object. This operation requires the certificates/delete permission.
+  syntax: >-
+    az keyvault certificate delete [--id]
+                                   [--name]
+                                   [--vault-name]
+  optionalParameters:
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_download
+  name: az keyvault certificate download
+  summary: Download the public portion of a Key Vault certificate.
+  description: The certificate formatted as either PEM or DER. PEM is the default.
+  syntax: >-
+    az keyvault certificate download --file
+                                     [--encoding {DER, PEM}]
+                                     [--id]
+                                     [--name]
+                                     [--vault-name]
+                                     [--version]
+  examples:
+  - summary: Download a certificate as PEM and check its fingerprint in openssl.
+    syntax: az keyvault certificate download --vault-name vault -n cert-name -f cert.pem && \ openssl x509 -in cert.pem -inform PEM  -noout -sha1 -fingerprint
+  - summary: Download a certificate as DER and check its fingerprint in openssl.
+    syntax: az keyvault certificate download --vault-name vault -n cert-name -f cert.crt -e DER && \ openssl x509 -in cert.crt -inform DER  -noout -sha1 -fingerprint
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: File to receive the binary certificate contents.
+    description: ''
+  optionalParameters:
+  - name: --encoding -e
+    defaultValue: PEM
+    parameterValueGroup: DER, PEM
+    summary: Encoding of the certificate. DER will create a binary DER formatted x509 certificate, and PEM will create a base64 PEM x509 certificate.
+    description: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_get_default_policy
+  name: az keyvault certificate get-default-policy
+  summary: Get the default policy for self-signed certificates.
+  description: >-
+    This default policy can be used in conjunction with `az keyvault create` to create a self-signed certificate. The default policy can also be used as a starting point to create derivative policies.
+
+
+    For more details, see: <a href="https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies">https://docs.microsoft.com/en-us/rest/api/keyvault/certificates-and-policies</a>.
+  syntax: az keyvault certificate get-default-policy [--scaffold]
+  examples:
+  - summary: Create a self-signed certificate with the default policy
+    syntax: >-
+      az keyvault certificate create --vault-name vaultname -n cert1 \
+        -p "$(az keyvault certificate get-default-policy)"
+  optionalParameters:
+  - name: --scaffold
+    summary: Create a fully formed policy structure with default values.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_import
+  name: az keyvault certificate import
+  summary: Import a certificate into KeyVault.
+  description: Certificates can also be used as a secrets in provisioned virtual machines.
+  syntax: >-
+    az keyvault certificate import --file
+                                   --name
+                                   --vault-name
+                                   [--disabled {false, true}]
+                                   [--password]
+                                   [--policy]
+                                   [--tags]
+  examples:
+  - summary: Create a service principal with a certificate, add the certificate to Key Vault and provision a VM with that certificate.
+    syntax: "service_principal=$(az ad sp create-for-rbac --create-cert) \n\ncert_file=$(echo $service_principal | jq .fileWithCertAndPrivateKey -r) \n\naz keyvault create -g my-group -n vaultname \n\naz keyvault certificate import --vault-name vaultname -n cert_file \n\nsecrets=$(az keyvault secret list-versions --vault-name vaultname \\\n  -n cert1 --query \"[?attributes.enabled].id\" -o tsv)\n\nvm_secrets=$(az vm secret format -s \"$secrets\") \n\naz vm create -g group-name -n vm-name --admin-username deploy  \\\n  --image debian --secrets \"$vm_secrets\""
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: PKCS12 file or PEM file containing the certificate and private key.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --disabled
+    parameterValueGroup: false, true
+    summary: Import the certificate in disabled state.
+    description: ''
+  - name: --password
+    summary: If the private key in certificate is encrypted, the password used for encryption.
+    description: ''
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_list
+  name: az keyvault certificate list
+  summary: List certificates in a specified key vault.
+  description: The GetCertificates operation returns the set of certificates resources in the specified key vault. This operation requires the certificates/list permission.
+  syntax: >-
+    az keyvault certificate list --vault-name
+                                 [--include-pending]
+                                 [--maxresults]
+  requiredParameters:
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --include-pending
+    summary: Specifies whether to include certificates which are not completely provisioned.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_list_deleted
+  name: az keyvault certificate list-deleted
+  summary: Lists the deleted certificates in the specified vault currently available for recovery.
+  description: The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
+  syntax: >-
+    az keyvault certificate list-deleted --vault-name
+                                         [--include-pending]
+                                         [--maxresults]
+  requiredParameters:
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --include-pending
+    summary: Specifies whether to include certificates which are not completely provisioned.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_list_versions
+  name: az keyvault certificate list-versions
+  summary: List the versions of a certificate.
+  description: The GetCertificateVersions operation returns the versions of a certificate in the specified key vault. This operation requires the certificates/list permission.
+  syntax: >-
+    az keyvault certificate list-versions --name
+                                          --vault-name
+                                          [--maxresults]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the certificate.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the key vault.
+    description: ''
+  optionalParameters:
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_purge
+  name: az keyvault certificate purge
+  summary: Permanently deletes the specified deleted certificate.
+  description: The PurgeDeletedCertificate operation performs an irreversible deletion of the specified certificate, without possibility for recovery. The operation is not available if the recovery level does not specify 'Purgeable'. This operation requires the certificate/purge permission.
+  syntax: >-
+    az keyvault certificate purge [--id]
+                                  [--name]
+                                  [--vault-name]
+  optionalParameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_recover
+  name: az keyvault certificate recover
+  summary: Recovers the deleted certificate back to its current version under /certificates.
+  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
+  syntax: >-
+    az keyvault certificate recover [--id]
+                                    [--name]
+                                    [--vault-name]
+  optionalParameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_set_attributes
+  name: az keyvault certificate set-attributes
+  summary: Updates the specified attributes associated with the given certificate.
+  description: The UpdateCertificate operation applies the specified update on the given certificate; the only elements updated are the certificate's attributes. This operation requires the certificates/update permission.
+  syntax: >-
+    az keyvault certificate set-attributes [--enabled {false, true}]
+                                           [--id]
+                                           [--name]
+                                           [--policy]
+                                           [--tags]
+                                           [--vault-name]
+                                           [--version]
+  optionalParameters:
+  - name: --enabled
+    parameterValueGroup: false, true
+    summary: Enable the certificate.
+    description: ''
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --policy -p
+    summary: JSON encoded policy defintion. Use @{file} to load from a file.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_show
+  name: az keyvault certificate show
+  summary: Gets information about a certificate.
+  description: Gets information about a specific certificate. This operation requires the certificates/get permission.
+  syntax: >-
+    az keyvault certificate show [--id]
+                                 [--name]
+                                 [--vault-name]
+                                 [--version]
+  optionalParameters:
+  - name: --id
+    summary: Id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+  - name: --version -v
+    summary: The certificate version. If omitted, uses the latest version.
+    description: ''
+- uid: ext_keyvault-preview_az_keyvault_certificate_show_deleted
+  name: az keyvault certificate show-deleted
+  summary: Retrieves information about the specified deleted certificate.
+  description: The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission.
+  syntax: >-
+    az keyvault certificate show-deleted [--id]
+                                         [--name]
+                                         [--vault-name]
+  optionalParameters:
+  - name: --id
+    summary: The recovery id of the certificate.  If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the certificate. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the key vault. Required if --id is not specified.
+    description: ''
+commands:
+- ext_keyvault-preview_az_keyvault_certificate_contact
+- ext_keyvault-preview_az_keyvault_certificate_contact_add
+- ext_keyvault-preview_az_keyvault_certificate_contact_delete
+- ext_keyvault-preview_az_keyvault_certificate_contact_list
+- ext_keyvault-preview_az_keyvault_certificate_create
+- ext_keyvault-preview_az_keyvault_certificate_delete
+- ext_keyvault-preview_az_keyvault_certificate_download
+- ext_keyvault-preview_az_keyvault_certificate_get_default_policy
+- ext_keyvault-preview_az_keyvault_certificate_import
+- ext_keyvault-preview_az_keyvault_certificate_issuer
+- ext_keyvault-preview_az_keyvault_certificate_issuer_admin
+- ext_keyvault-preview_az_keyvault_certificate_issuer_admin_add
+- ext_keyvault-preview_az_keyvault_certificate_issuer_admin_delete
+- ext_keyvault-preview_az_keyvault_certificate_issuer_admin_list
+- ext_keyvault-preview_az_keyvault_certificate_issuer_create
+- ext_keyvault-preview_az_keyvault_certificate_issuer_delete
+- ext_keyvault-preview_az_keyvault_certificate_issuer_list
+- ext_keyvault-preview_az_keyvault_certificate_issuer_show
+- ext_keyvault-preview_az_keyvault_certificate_issuer_update
+- ext_keyvault-preview_az_keyvault_certificate_list
+- ext_keyvault-preview_az_keyvault_certificate_list_deleted
+- ext_keyvault-preview_az_keyvault_certificate_list_versions
+- ext_keyvault-preview_az_keyvault_certificate_pending
+- ext_keyvault-preview_az_keyvault_certificate_pending_delete
+- ext_keyvault-preview_az_keyvault_certificate_pending_merge
+- ext_keyvault-preview_az_keyvault_certificate_pending_show
+- ext_keyvault-preview_az_keyvault_certificate_purge
+- ext_keyvault-preview_az_keyvault_certificate_recover
+- ext_keyvault-preview_az_keyvault_certificate_set_attributes
+- ext_keyvault-preview_az_keyvault_certificate_show
+- ext_keyvault-preview_az_keyvault_certificate_show_deleted
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage certificates.

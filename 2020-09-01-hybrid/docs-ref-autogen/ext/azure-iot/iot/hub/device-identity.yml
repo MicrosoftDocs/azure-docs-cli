@@ -1,0 +1,603 @@
+### YamlMime:AzureCLIGroup
+uid: ext_azure-iot_az_iot_hub_device_identity
+name: az iot hub device-identity
+summary: Manage IoT devices.
+description: ''
+directCommands:
+- uid: ext_azure-iot_az_iot_hub_device_identity_add_children
+  name: az iot hub device-identity add-children
+  summary: Add specified comma-separated list of device ids as children of specified edge device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity add-children --child-list
+                                            --device-id
+                                            [--force]
+                                            [--hub-name]
+                                            [--login]
+                                            [--resource-group]
+  examples:
+  - summary: Add devices as a children to the edge device.
+    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
+  - summary: Add devices as a children to the edge device irrespectively the device is already a child of other edge device.
+    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name} -f
+  requiredParameters:
+  - isRequired: true
+    name: --child-list --cl
+    summary: Child device list (comma separated).
+    description: ''
+  - isRequired: true
+    name: --device-id -d
+    summary: Id of edge device.
+    description: ''
+  optionalParameters:
+  - name: --force -f
+    summary: Overwrites the child device's parent device.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_create
+  name: az iot hub device-identity create
+  summary: Create a device in an IoT Hub.
+  description: ''
+  syntax: >-
+    az iot hub device-identity create --device-id
+                                      [--add-children]
+                                      [--am {shared_private_key, x509_ca, x509_thumbprint}]
+                                      [--edge-enabled {false, true}]
+                                      [--force {false, true}]
+                                      [--hub-name]
+                                      [--login]
+                                      [--od]
+                                      [--pd]
+                                      [--primary-thumbprint]
+                                      [--resource-group]
+                                      [--secondary-thumbprint]
+                                      [--sta {disabled, enabled}]
+                                      [--star]
+                                      [--valid-days]
+  examples:
+  - summary: Create an edge enabled IoT device with default authorization (shared private key).
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --ee
+  - summary: Create an edge enabled IoT device with default authorization (shared private key) and add child devices as well.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --ee --cl {child_device_id}
+  - summary: Create an IoT device with default authorization (shared private key) and set parent device as well.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --pd {edge_device_id}
+  - summary: Create an IoT device with self-signed certificate authorization, generate a cert valid for 10 days then use its thumbprint.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --valid-days 10
+  - summary: Create an IoT device with self-signed certificate authorization, generate a cert of default expiration (365 days) and output to target directory.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --output-dir /path/to/output
+  - summary: Create an IoT device with self-signed certificate authorization and explicitly provide primary and secondary thumbprints.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --ptp {thumbprint_1} --stp {thumbprint_2}
+  - summary: Create an IoT device with root CA authorization with disabled status and reason
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_ca --status disabled --status-reason 'for reasons'
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --add-children --cl
+    summary: Child device list (comma separated). This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity children add' instead.
+    description: ''
+  - name: --am --auth-method
+    defaultValue: shared_private_key
+    parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
+    summary: The authorization type an entity is to be created with.
+    description: ''
+  - name: --edge-enabled --ee
+    parameterValueGroup: false, true
+    summary: Flag indicating edge enablement.
+    description: ''
+  - name: --force -f
+    parameterValueGroup: false, true
+    summary: Overwrites the device's parent device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --od --output-dir
+    summary: Generate self-signed cert and use its thumbprint. Output to specified target directory.
+    description: ''
+  - name: --pd --set-parent
+    summary: Id of edge device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
+    description: ''
+  - name: --primary-thumbprint --ptp
+    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --secondary-thumbprint --stp
+    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    description: ''
+  - name: --sta --status
+    defaultValue: enabled
+    parameterValueGroup: disabled, enabled
+    summary: Set device status upon creation.
+    description: ''
+  - name: --star --status-reason
+    summary: Description for device status.
+    description: ''
+  - name: --valid-days --vd
+    summary: 'Generate self-signed cert and use its thumbprint. Valid for specified number of days. Default: 365.'
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_delete
+  name: az iot hub device-identity delete
+  summary: Delete an IoT Hub device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity delete --device-id
+                                      [--hub-name]
+                                      [--login]
+                                      [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_export
+  name: az iot hub device-identity export
+  summary: Export all device identities from an IoT Hub to an Azure Storage blob container. For inline blob container SAS uri input, please review the input rules of your environment.
+  description: For more information, see <a href="https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities</a>.
+  syntax: >-
+    az iot hub device-identity export --bcu
+                                      --hub-name
+                                      [--auth-type {identity, key}]
+                                      [--ik {false, true}]
+                                      [--resource-group]
+  examples:
+  - summary: Export all device identities to a configured blob container and include device keys. Uses an inline SAS uri example.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices?sv=2019-02-02&st=2020-08-23T22%3A35%3A00Z&se=2020-08-24T22%3A35%3A00Z&sr=c&sp=rwd&sig=VrmJ5sQtW3kLzYg10VqmALGCp4vtYKSLNjZDDJBSh9s%3D'
+  - summary: Export all device identities to a configured blob container using a file path which contains the SAS uri.
+    syntax: az iot hub device-identity export -n {iothub_name} --bcu {sas_uri_filepath}
+  requiredParameters:
+  - isRequired: true
+    name: --bcu --blob-container-uri
+    summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --auth-type --storage-authentication-type
+    parameterValueGroup: identity, key
+    summary: Authentication type for communicating with the storage container.
+    description: ''
+  - name: --ik --include-keys
+    parameterValueGroup: false, true
+    summary: If set, keys are exported normally. Otherwise, keys are set to null in export output.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_get_parent
+  name: az iot hub device-identity get-parent
+  summary: Get the parent device of the specified device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity get-parent --device-id
+                                          [--hub-name]
+                                          [--login]
+                                          [--resource-group]
+  examples:
+  - summary: Get the parent device of the specified device.
+    syntax: az iot hub device-identity get-parent -d {device_id} -n {iothub_name}
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Id of device.
+    description: ''
+  optionalParameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_import
+  name: az iot hub device-identity import
+  summary: Import device identities to an IoT Hub from a blob. For inline blob container SAS uri input, please review the input rules of your environment.
+  description: For more information, see <a href="https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities">https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities</a>.
+  syntax: >-
+    az iot hub device-identity import --hub-name
+                                      --ibcu
+                                      --obcu
+                                      [--auth-type {identity, key}]
+                                      [--resource-group]
+  examples:
+  - summary: Import all device identities from a blob using an inline SAS uri.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri}
+  - summary: Import all device identities from a blob using a file path which contains SAS uri.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri_filepath} --obcu {output_sas_uri_filepath}
+  requiredParameters:
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - isRequired: true
+    name: --ibcu --input-blob-container-uri
+    summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    description: ''
+  - isRequired: true
+    name: --obcu --output-blob-container-uri
+    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    description: ''
+  optionalParameters:
+  - name: --auth-type --storage-authentication-type
+    parameterValueGroup: identity, key
+    summary: Authentication type for communicating with the storage container.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_list
+  name: az iot hub device-identity list
+  summary: List devices in an IoT Hub.
+  description: ''
+  syntax: >-
+    az iot hub device-identity list [--edge-enabled {false, true}]
+                                    [--hub-name]
+                                    [--login]
+                                    [--resource-group]
+                                    [--top]
+  optionalParameters:
+  - name: --edge-enabled --ee
+    parameterValueGroup: false, true
+    summary: Flag indicating edge enablement.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --top
+    defaultValue: "1000"
+    summary: Maximum number of elements to return. Use -1 for unlimited.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_list_children
+  name: az iot hub device-identity list-children
+  summary: Outputs comma-separated list of assigned child devices.
+  description: ''
+  syntax: >-
+    az iot hub device-identity list-children --device-id
+                                             [--hub-name]
+                                             [--login]
+                                             [--resource-group]
+  examples:
+  - summary: Show all assigned devices as comma-separated list.
+    syntax: az iot hub device-identity list-children -d {edge_device_id} -n {iothub_name}
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Id of edge device.
+    description: ''
+  optionalParameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_remove_children
+  name: az iot hub device-identity remove-children
+  summary: Remove devices as children from specified edge device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity remove-children --device-id
+                                               [--child-list]
+                                               [--hub-name]
+                                               [--login]
+                                               [--remove-all]
+                                               [--resource-group]
+  examples:
+  - summary: Remove all mentioned devices as children of specified device.
+    syntax: az iot hub device-identity remove-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
+  - summary: Remove all devices as children specified edge device.
+    syntax: az iot hub device-identity remove-children -d {edge_device_id} --remove-all
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Id of edge device.
+    description: ''
+  optionalParameters:
+  - name: --child-list --cl
+    summary: Child device list (comma separated).
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --remove-all -a
+    summary: To remove all children.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_renew_key
+  name: az iot hub device-identity renew-key
+  summary: Renew target keys of an IoT Hub device with sas authentication.
+  description: ''
+  syntax: >-
+    az iot hub device-identity renew-key --device-id
+                                         --hub-name
+                                         --key-type {primary, secondary, swap}
+                                         [--login]
+                                         [--resource-group]
+  examples:
+  - summary: Renew the primary key.
+    syntax: az iot hub device-identity renew-key -d {device_id} -n {iothub_name} --kt primary
+  - summary: Swap the primary and secondary keys.
+    syntax: az iot hub device-identity renew-key -d {device_id} -n {iothub_name} --kt swap
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - isRequired: true
+    name: --key-type --kt
+    parameterValueGroup: primary, secondary, swap
+    summary: Target key type to regenerate.
+    description: ''
+  optionalParameters:
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_set_parent
+  name: az iot hub device-identity set-parent
+  summary: Set the parent device of the specified device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity set-parent --device-id
+                                          --parent-device-id
+                                          [--force]
+                                          [--hub-name]
+                                          [--login]
+                                          [--resource-group]
+  examples:
+  - summary: Set the parent device of the specified device.
+    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} -n {iothub_name}
+  - summary: Set the parent device of the specified device irrespectively the device is already a child of other edge device.
+    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} --force -n {iothub_name}
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Id of device.
+    description: ''
+  - isRequired: true
+    name: --parent-device-id --pd
+    summary: Id of edge device.
+    description: ''
+  optionalParameters:
+  - name: --force -f
+    summary: Overwrites the device's parent device.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_show
+  name: az iot hub device-identity show
+  summary: Get the details of an IoT Hub device.
+  description: ''
+  syntax: >-
+    az iot hub device-identity show --device-id
+                                    [--hub-name]
+                                    [--login]
+                                    [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_show_connection_string
+  name: az iot hub device-identity show-connection-string
+  summary: Show a given IoT Hub device connection string.
+  description: ''
+  syntax: >-
+    az iot hub device-identity show-connection-string --device-id
+                                                      [--hub-name]
+                                                      [--key-type {primary, secondary}]
+                                                      [--login]
+                                                      [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --key-type --kt
+    defaultValue: primary
+    parameterValueGroup: primary, secondary
+    summary: Shared access policy key type for auth.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_azure-iot_az_iot_hub_device_identity_update
+  name: az iot hub device-identity update
+  summary: Update an IoT Hub device.
+  description: Use --set followed by property assignments for updating a device. Leverage parameters returned from 'iot hub device-identity show'.
+  syntax: >-
+    az iot hub device-identity update --device-id
+                                      [--add]
+                                      [--am {shared_private_key, x509_ca, x509_thumbprint}]
+                                      [--edge-enabled {false, true}]
+                                      [--force-string]
+                                      [--hub-name]
+                                      [--login]
+                                      [--pk]
+                                      [--primary-thumbprint]
+                                      [--remove]
+                                      [--resource-group]
+                                      [--secondary-key]
+                                      [--secondary-thumbprint]
+                                      [--set]
+                                      [--sta {disabled, enabled}]
+                                      [--star]
+  examples:
+  - summary: Turn on edge capabilities for device
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set capabilities.iotEdge=true
+  - summary: Turn on edge capabilities for device using convenience argument.
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --ee
+  - summary: Disable device status
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set status=disabled
+  - summary: Disable device status using convenience argument.
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --status disabled
+  - summary: In one command
+    syntax: az iot hub device-identity update -d {device_id} -n {iothub_name} --set status=disabled capabilities.iotEdge=true
+  requiredParameters:
+  - isRequired: true
+    name: --device-id -d
+    summary: Target Device.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --am --auth-method
+    parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
+    summary: The authorization type an entity is to be created with.
+    description: ''
+  - name: --edge-enabled --ee
+    parameterValueGroup: false, true
+    summary: Flag indicating edge enablement.
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --primary-thumbprint --ptp
+    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
+    description: ''
+  - name: --secondary-thumbprint --stp
+    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --sta --status
+    parameterValueGroup: disabled, enabled
+    summary: Set device status upon creation.
+    description: ''
+  - name: --star --status-reason
+    summary: Description for device status.
+    description: ''
+commands:
+- ext_azure-iot_az_iot_hub_device_identity_add_children
+- ext_azure-iot_az_iot_hub_device_identity_children
+- ext_azure-iot_az_iot_hub_device_identity_children_add
+- ext_azure-iot_az_iot_hub_device_identity_children_list
+- ext_azure-iot_az_iot_hub_device_identity_children_remove
+- ext_azure-iot_az_iot_hub_device_identity_connection_string
+- ext_azure-iot_az_iot_hub_device_identity_connection_string_show
+- ext_azure-iot_az_iot_hub_device_identity_create
+- ext_azure-iot_az_iot_hub_device_identity_delete
+- ext_azure-iot_az_iot_hub_device_identity_export
+- ext_azure-iot_az_iot_hub_device_identity_get_parent
+- ext_azure-iot_az_iot_hub_device_identity_import
+- ext_azure-iot_az_iot_hub_device_identity_list
+- ext_azure-iot_az_iot_hub_device_identity_list_children
+- ext_azure-iot_az_iot_hub_device_identity_parent
+- ext_azure-iot_az_iot_hub_device_identity_parent_set
+- ext_azure-iot_az_iot_hub_device_identity_parent_show
+- ext_azure-iot_az_iot_hub_device_identity_remove_children
+- ext_azure-iot_az_iot_hub_device_identity_renew_key
+- ext_azure-iot_az_iot_hub_device_identity_set_parent
+- ext_azure-iot_az_iot_hub_device_identity_show
+- ext_azure-iot_az_iot_hub_device_identity_show_connection_string
+- ext_azure-iot_az_iot_hub_device_identity_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage IoT devices.

@@ -1,0 +1,166 @@
+### YamlMime:AzureCLIGroup
+uid: ext_vm-repair_az_vm_repair
+name: az vm repair
+summary: Auto repair commands to fix VMs.
+description: VM repair command will enable Azure users to self-repair non-bootable VMs by copying the source VM's OS disk and attaching it to a newly created repair VM.
+directCommands:
+- uid: ext_vm-repair_az_vm_repair_create
+  name: az vm repair create
+  summary: Create a new repair VM and attach the source VM's copied OS disk as a data disk.
+  description: ''
+  syntax: >-
+    az vm repair create --name
+                        --resource-group
+                        [--copy-disk-name]
+                        [--repair-group-name]
+                        [--repair-password]
+                        [--repair-username]
+                        [--repair-vm-name]
+                        [--unlock-encrypted-vm]
+  examples:
+  - summary: Create a repair VM
+    syntax: az vm repair create -g MyResourceGroup -n myVM --verbose
+  - summary: Create a repair VM and set the VM authentication
+    syntax: az vm repair create -g MyResourceGroup -n myVM --repair-username username --repair-password password!234 --verbose
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --copy-disk-name
+    summary: Name of OS disk copy.
+    description: ''
+  - name: --repair-group-name
+    summary: Repair resource group name.
+    description: ''
+  - name: --repair-password
+    summary: Admin password for the repair VM.
+    description: ''
+  - name: --repair-username
+    summary: Admin username for repair VM.
+    description: ''
+  - name: --repair-vm-name
+    summary: Name of repair VM.
+    description: ''
+  - name: --unlock-encrypted-vm
+    summary: Option to auto-unlock encrypted VMs using current subscription auth.
+    description: ''
+- uid: ext_vm-repair_az_vm_repair_list_scripts
+  name: az vm repair list-scripts
+  summary: List available scripts. Located <a href="https://github.com/Azure/repair-script-library">https://github.com/Azure/repair-script-library</a>.
+  description: ''
+  syntax: az vm repair list-scripts
+  examples:
+  - summary: List scripts
+    syntax: az vm repair list-scripts --verbose
+  - summary: List windows scripts only.
+    syntax: az vm repair list-scripts --query "[?starts_with(id, 'win')]"
+  - summary: List scripts with test in its description.
+    syntax: az vm repair list-scripts --query "[?contains(description, 'test')]"
+- uid: ext_vm-repair_az_vm_repair_restore
+  name: az vm repair restore
+  summary: Replace source VM's OS disk with data disk from repair VM.
+  description: ''
+  syntax: >-
+    az vm repair restore --name
+                         --resource-group
+                         [--disk-name]
+                         [--repair-vm-id]
+                         [--yes]
+  examples:
+  - summary: Restore from the repair VM, command will auto-search for repair-vm
+    syntax: az vm repair restore -g MyResourceGroup -n MyVM --verbose
+  - summary: Restore from the repair VM, specify the disk to restore
+    syntax: az vm repair restore -g MyResourceGroup -n MyVM --disk-name MyDiskCopy --verbose
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --disk-name
+    summary: Name of fixed data disk. Defaults to the first data disk in the repair VM.
+    description: ''
+  - name: --repair-vm-id
+    summary: Repair VM resource id.
+    description: ''
+  - name: --yes
+    summary: Deletes the repair resources without confirmation.
+    description: ''
+- uid: ext_vm-repair_az_vm_repair_run
+  name: az vm repair run
+  summary: Run verified scripts from GitHub on a VM. 'az vm repair list-scripts' to view available scripts.
+  description: ''
+  syntax: >-
+    az vm repair run --name
+                     --resource-group
+                     [--custom-script-file]
+                     [--parameters]
+                     [--repair-vm-id]
+                     [--run-id]
+                     [--run-on-repair]
+  examples:
+  - summary: Run the script with <run-id> directly on the VM.
+    syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --verbose
+  - summary: Run the script with <run-id> on the linked repair VM.
+    syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --run-on-repair --verbose
+  - summary: Run a script with parameters on the VM.
+    syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --parameters hello=hi world=earth --verbose
+  - summary: Run a local custom script on the VM.
+    syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --custom-script-file ./file.ps1 --verbose
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --custom-script-file
+    summary: Custom script file to run on VM. Script should be PowerShell for windows, Bash for Linux.
+    description: ''
+  - name: --parameters
+    summary: Space-separated parameters in the format of '[name=]value'. Positional for bash scripts.
+    description: ''
+  - name: --repair-vm-id
+    summary: Repair VM resource id.
+    description: ''
+  - name: --run-id
+    summary: Unique run id for run scripts.
+    description: ''
+  - name: --run-on-repair
+    summary: Script will be run on the linked repair VM.
+    description: ''
+commands:
+- ext_vm-repair_az_vm_repair_create
+- ext_vm-repair_az_vm_repair_list_scripts
+- ext_vm-repair_az_vm_repair_restore
+- ext_vm-repair_az_vm_repair_run
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: VM repair command will enable Azure users to self-repair non-bootable VMs by copying the source VM's OS disk and attaching it to a newly created repair VM.

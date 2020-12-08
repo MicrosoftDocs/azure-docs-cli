@@ -48,14 +48,34 @@ directCommands:
     syntax: >-
       az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID1} {VirtualMachineID2} {VirtualMachineID3} \
           --condition "avg Percentage CPU > 90" --description "High CPU"
+  - summary: Create a dynamic CPU usage alert on several VMs with no actions.
+    syntax: >-
+      az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID1} {VirtualMachineID2} {VirtualMachineID3} \
+          --condition "avg Percentage CPU > dynamic medium 2 of 4 since 2020-10-01T10:23:00.000Z"
+          --description "Dynamic CPU"
+          --window-size 5m
   requiredParameters:
   - isRequired: true
     name: --condition
-    summary: The condition which triggers the rule.
+    summary: The condition which triggers the rule. It can be created by 'az monitor metrics alert condition create' command.
     description: >-
-      Usage:  --condition {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,>,>=,<,<=} THRESHOLD
+      Usage:  --condition {avg,min,max,total,count} [NAMESPACE.]METRIC
+                         [{=,!=,>,>=,<,<=} THRESHOLD]
+                         [{<,>,><} dynamic SENSITIVITY VIOLATIONS of EVALUATIONS [since DATETIME]]
                          [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
                          [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
+
+      Sensitivity can be 'low', 'medium', 'high'.
+
+
+      Violations can be the number of violations to trigger an alert. It should be smaller or equal to evaluation.
+
+
+      Evaluations can be the number of evaluation periods for dynamic threshold.
+
+
+      Datetime can be the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format).
+
 
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
 
@@ -245,9 +265,23 @@ directCommands:
   - name: --add-condition
     summary: Add a condition which triggers the rule.
     description: >-
-      Usage:  --add-condition {avg,min,max,total,count} [NAMESPACE.]METRIC {=,!=,>,>=,<,<=} THRESHOLD
-                             [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
-                             [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
+      Usage:  --add-condition {avg,min,max,total,count} [NAMESPACE.]METRIC
+                         [{=,!=,>,>=,<,<=} THRESHOLD]
+                         [{<,>,><} dynamic SENSITIVITY VIOLATIONS of EVALUATIONS [since DATETIME]]
+                         [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
+                         [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
+
+      Sensitivity can be 'low', 'medium', 'high'.
+
+
+      Violations can be the number of violations to trigger an alert. It should be smaller or equal to evaluation.
+
+
+      Evaluations can be the number of evaluation periods for dynamic threshold.
+
+
+      Datetime can be the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format).
+
 
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
 
@@ -314,8 +348,12 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 commands:
+- az_monitor_metrics_alert_condition
+- az_monitor_metrics_alert_condition_create
 - az_monitor_metrics_alert_create
 - az_monitor_metrics_alert_delete
+- az_monitor_metrics_alert_dimension
+- az_monitor_metrics_alert_dimension_create
 - az_monitor_metrics_alert_list
 - az_monitor_metrics_alert_show
 - az_monitor_metrics_alert_update
@@ -336,5 +374,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/11/2020
+  ms.date: 12/04/2020
   description: Manage near-realtime metric alert rules.

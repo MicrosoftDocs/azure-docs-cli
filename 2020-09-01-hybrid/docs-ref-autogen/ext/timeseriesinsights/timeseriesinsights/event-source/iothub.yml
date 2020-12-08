@@ -1,0 +1,138 @@
+### YamlMime:AzureCLIGroup
+uid: ext_timeseriesinsights_az_timeseriesinsights_event_source_iothub
+name: az timeseriesinsights event-source iothub
+summary: Create or update an iothub event source under the specified environment.
+description: ''
+directCommands:
+- uid: ext_timeseriesinsights_az_timeseriesinsights_event_source_iothub_create
+  name: az timeseriesinsights event-source iothub create
+  summary: Create or update an iothub event source under the specified environment.
+  description: ''
+  syntax: >-
+    az timeseriesinsights event-source iothub create --consumer-group-name
+                                                     --environment-name
+                                                     --event-source-resource-id
+                                                     --key-name
+                                                     --name
+                                                     --resource-group
+                                                     --shared-access-key
+                                                     [--location]
+                                                     [--tags]
+                                                     [--timestamp-property-name]
+  examples:
+  - summary: Create an iothub and use it for event source
+    syntax: >-
+      rg={rg}
+
+      iothub={iothub_name}
+
+      es_resource_id=$(az iot hub create -g $rg -n $iothub --query id --output tsv)
+
+      shared_access_key=$(az iot hub policy list -g $rg --hub-name $iothub --query "[?keyName=='iothubowner'].primaryKey" --output tsv)
+
+      az timeseriesinsights event-source iothub create -g $rg --environment-name {env} -n es2 --consumer-group-name '$Default' --key-name iothubowner --shared-access-key $shared_access_key --event-source-resource-id $es_resource_id --timestamp-property-name DeviceId
+  requiredParameters:
+  - isRequired: true
+    name: --consumer-group-name
+    summary: Required. The name of the iot hub's consumer group that holds the partitions from which events will be read.
+    description: ''
+  - isRequired: true
+    name: --environment-name
+    summary: The name of the Time Series Insights environment associated with the specified resource group.
+    description: ''
+  - isRequired: true
+    name: --event-source-resource-id
+    summary: Required. The resource id of the event source in Azure Resource Manager.
+    description: ''
+  - isRequired: true
+    name: --key-name
+    summary: Required. The name of the Shared Access Policy key that grants the Time Series Insights service access to the iot hub. This shared access policy key must grant 'service connect' permissions to the iot hub.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Time Series Insights event source associated with the specified environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --shared-access-key
+    summary: Required. The value of the Shared Access Policy key that grants the Time Series Insights service read access to the iot hub. This property is not shown in event source responses.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --timestamp-property-name
+    summary: The event property that will be used as the event source's timestamp. If a value isn't specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used.
+    description: ''
+- uid: ext_timeseriesinsights_az_timeseriesinsights_event_source_iothub_update
+  name: az timeseriesinsights event-source iothub update
+  summary: Create or update an event source under the specified environment.
+  description: ''
+  syntax: >-
+    az timeseriesinsights event-source iothub update --environment-name
+                                                     --name
+                                                     --resource-group
+                                                     [--local-timestamp-format {Embedded, Iana, TimeSpan}]
+                                                     [--shared-access-key]
+                                                     [--tags]
+                                                     [--timestamp-property-name]
+  examples:
+  - summary: Update timestampPropertyName
+    syntax: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} -n {es} --timestamp-property-name DeviceId1
+  - summary: Update localTimestamp (Currently only Embedded is supported)
+    syntax: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} -n {es} --local-timestamp-format Embedded
+  - summary: Update sharedAccessKey
+    syntax: az timeseriesinsights event-source iothub update -g {rg} --environment-name {env} -n {es} --shared-access-key {shared_access_key}
+  requiredParameters:
+  - isRequired: true
+    name: --environment-name
+    summary: The name of the Time Series Insights environment associated with the specified resource group.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Time Series Insights event source associated with the specified environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --local-timestamp-format
+    parameterValueGroup: Embedded, Iana, TimeSpan
+    summary: An enum that represents the format of the local timestamp property that needs to be set. Currently only Embedded is supported.
+    description: ''
+  - name: --shared-access-key
+    summary: The value of the shared access key that grants the Time Series Insights service read access to the iot hub. This property is not shown in event source responses.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --timestamp-property-name
+    summary: The event property that will be used as the event source's timestamp. If a value isn't specified for timestampPropertyName, or if null or empty-string is specified, the event creation time will be used.
+    description: ''
+commands:
+- ext_timeseriesinsights_az_timeseriesinsights_event_source_iothub_create
+- ext_timeseriesinsights_az_timeseriesinsights_event_source_iothub_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Create or update an iothub event source under the specified environment.

@@ -1,0 +1,312 @@
+### YamlMime:AzureCLIGroup
+uid: ext_stream-analytics_az_stream_analytics_output
+name: az stream-analytics output
+summary: Commands to manage stream-analytics output.
+description: ''
+directCommands:
+- uid: ext_stream-analytics_az_stream_analytics_output_create
+  name: az stream-analytics output create
+  summary: Create an output or replaces an already existing output under an existing streaming job.
+  description: ''
+  syntax: >-
+    az stream-analytics output create --datasource
+                                      --job-name
+                                      --name
+                                      --resource-group
+                                      [--serialization]
+  examples:
+  - summary: Create an output
+    syntax: >-
+      az stream-analytics output create --resource-group MyResourceGroup --job-name MyJobName \
+
+      --name MyOutputName --datasource @datasource.json --serialization @serialization.json
+       (below is an example of DataLake for "datasource.json")
+       {
+           "type": "Microsoft.DataLake/Accounts",
+           "properties": {
+               "accountName": "someaccount",
+               "tenantId": "cea4e98b-c798-49e7-8c40-4a2b3beb47dd",
+               "refreshToken": "someRefreshToken==",
+               "tokenUserPrincipalName": "bobsmith@contoso.com",
+               "tokenUserDisplayName": "Bob Smith",
+               "filePathPrefix": "{date}/{time}",
+               "dateFormat": "yyyy/MM/dd",
+               "timeFormat": "HH"
+           }
+       }
+       (below is an example of SQL Database for "datasource.json")
+       {
+           "type": "Microsoft.Sql/Server/Database",
+           "properties": {
+               "server": "someServer",
+               "database": "someDatabase",
+               "user": "someUser",
+               "password": "somePassword",
+               "table": "someTable"
+           }
+       }
+       (below is an example of Table Storage for "datasource.json")
+       {
+           "type": "Microsoft.Storage/Table",
+           "properties": {
+               "accountName": "someAccountName",
+               "accountKey": "accountKey==",
+               "table": "samples",
+               "partitionKey": "partitionKey",
+               "rowKey": "rowKey",
+               "columnsToRemove": [
+                   "column1",
+                   "column2"
+               ],
+               "batchSize": 25
+           }
+       }
+       (below is an example of Blob Storage for "datasource.json")
+       {
+           "type": "Microsoft.Storage/Blob",
+           "properties": {
+               "storageAccounts": [
+                   {
+                       "accountName": "someAccountName",
+                       "accountKey": "accountKey=="
+                   }
+               ],
+               "container": "state",
+               "pathPattern": "{date}/{time}",
+               "dateFormat": "yyyy/MM/dd",
+               "timeFormat": "HH"
+           }
+       }
+       (below is an example of DocumentDB for "datasource.json")
+       {
+           "type": "Microsoft.Storage/DocumentDB",
+           "properties": {
+               "accountId": "someAccountId",
+               "accountKey": "accountKey==",
+               "database": "db01",
+               "collectionNamePattern": "collection",
+               "partitionKey": "key",
+               "documentId": "documentId"
+           }
+       }
+       (below is an example of Event Hub for "datasource.json")
+       {
+           "type": "Microsoft.ServiceBus/EventHub",
+           "properties": {
+               "serviceBusNamespace": "sdktest",
+               "sharedAccessPolicyName": "RootManageSharedAccessKey",
+               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
+               "eventHubName": "sdkeventhub",
+               "partitionKey": "partitionKey"
+           }
+       }
+       (below is an example of PowerBI for "datasource.json")
+       {
+           "type": "PowerBI",
+           "properties": {
+               "dataset": "someDataset",
+               "table": "someTable",
+               "refreshToken": "someRefreshToken==",
+               "tokenUserPrincipalName": "bobsmith@contoso.com",
+               "tokenUserDisplayName": "Bob Smith",
+               "groupId": "ac40305e-3e8d-43ac-8161-c33799f43e95",
+               "groupName": "MyPowerBIGroup"
+           }
+       }
+       (below is an example of Service Bus Queue for "datasource.json")
+       {
+           "type": "Microsoft.ServiceBus/Queue",
+           "properties": {
+               "serviceBusNamespace": "sdktest",
+               "sharedAccessPolicyName": "RootManageSharedAccessKey",
+               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
+               "queueName": "sdkqueue",
+               "propertyColumns": [
+                   "column1",
+                   "column2"
+               ]
+           }
+       }
+       (below is an example of Service Bus Topic for "datasource.json")
+       {
+           "type": "Microsoft.ServiceBus/Topic",
+           "properties": {
+               "serviceBusNamespace": "sdktest",
+               "sharedAccessPolicyName": "RootManageSharedAccessKey",
+               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
+               "topicName": "sdktopic",
+               "propertyColumns": [
+                   "column1",
+                   "column2"
+               ]
+           }
+       }
+       (below is an example of Csv for "serialization.json")
+       {
+           "type": "Csv",
+           "properties": {
+               "fieldDelimiter": ",",
+               "encoding": "UTF8"
+           }
+       }
+       (below is an example of Json for "serialization.json")
+       {
+           "type": "Json",
+           "properties": {
+               "encoding": "UTF8",
+               "format": "Array"
+           }
+       }
+       (below is an example of Avro for "serialization.json")
+       {
+           "type": "Avro"
+       }
+  requiredParameters:
+  - isRequired: true
+    name: --datasource
+    summary: The datasource of the output.
+    description: ''
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --serialization
+    summary: The serialization of the output.
+    description: ''
+- uid: ext_stream-analytics_az_stream_analytics_output_delete
+  name: az stream-analytics output delete
+  summary: Delete an output from the streaming job.
+  description: ''
+  syntax: >-
+    az stream-analytics output delete --job-name
+                                      --name
+                                      --resource-group
+  examples:
+  - summary: Delete an output
+    syntax: >-
+      az stream-analytics output delete --resource-group MyResourceGroup --job-name MyJobName --name \
+
+      MyOutputName
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_stream-analytics_az_stream_analytics_output_list
+  name: az stream-analytics output list
+  summary: List all of the outputs under the specified streaming job.
+  description: ''
+  syntax: >-
+    az stream-analytics output list --job-name
+                                    --resource-group
+  examples:
+  - summary: List all outputs in a streaming job
+    syntax: az stream-analytics output list --resource-group MyResourceGroup --job-name MyJobName
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_stream-analytics_az_stream_analytics_output_show
+  name: az stream-analytics output show
+  summary: Get details about the specified output.
+  description: ''
+  syntax: >-
+    az stream-analytics output show --job-name
+                                    --name
+                                    --resource-group
+  examples:
+  - summary: Get details about an output
+    syntax: >-
+      az stream-analytics output show --resource-group MyResourceGroup --job-name MyJobName --name \
+
+      MyOutputName
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_stream-analytics_az_stream_analytics_output_test
+  name: az stream-analytics output test
+  summary: Test an output.
+  description: ''
+  syntax: >-
+    az stream-analytics output test --job-name
+                                    --name
+                                    --resource-group
+                                    [--no-wait]
+  examples:
+  - summary: Test the connection for an output
+    syntax: >-
+      az stream-analytics output test --resource-group MyResourceGroup --job-name MyJobName --name \
+
+      MyOutputName
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+commands:
+- ext_stream-analytics_az_stream_analytics_output_create
+- ext_stream-analytics_az_stream_analytics_output_delete
+- ext_stream-analytics_az_stream_analytics_output_list
+- ext_stream-analytics_az_stream_analytics_output_show
+- ext_stream-analytics_az_stream_analytics_output_test
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to manage stream-analytics output.

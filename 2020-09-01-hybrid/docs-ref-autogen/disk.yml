@@ -1,0 +1,497 @@
+### YamlMime:AzureCLIGroup
+uid: az_disk
+name: az disk
+summary: Manage Azure Managed Disks.
+description: >-
+  Azure Virtual Machines use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.
+
+  Azure Managed and Unmanaged Data Disks have a maximum size of 4095 GB (with the exception of larger disks in preview). Azure Unmanaged Disks also have a maximum capacity of 4095 GB.
+
+  For more information, see:
+
+  - Azure Disks - <a href="https://docs.microsoft.com/azure/virtual-machines/linux/about-disks-and-vhds">https://docs.microsoft.com/azure/virtual-machines/linux/about-disks-and-vhds</a> and <a href="https://docs.microsoft.com/azure/virtual-machines/windows/about-disks-and-vhds">https://docs.microsoft.com/azure/virtual-machines/windows/about-disks-and-vhds</a>.
+
+  - Larger Managed Disks in Public Preview - <a href="https://azure.microsoft.com/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/">https://azure.microsoft.com/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/</a>
+
+  - Ultra SSD Managed Disks in Public Preview - <a href="https://docs.microsoft.com/azure/virtual-machines/windows/disks-ultra-ssd">https://docs.microsoft.com/azure/virtual-machines/windows/disks-ultra-ssd</a>.
+directCommands:
+- uid: az_disk_create
+  name: az disk create
+  summary: Create a managed disk.
+  description: ''
+  syntax: >-
+    az disk create --name
+                   --resource-group
+                   [--disk-access]
+                   [--disk-encryption-set]
+                   [--disk-iops-read-only]
+                   [--disk-iops-read-write]
+                   [--disk-mbps-read-only]
+                   [--disk-mbps-read-write]
+                   [--encryption-type]
+                   [--for-upload {false, true}]
+                   [--gallery-image-reference]
+                   [--gallery-image-reference-lun]
+                   [--hyper-v-generation {V1, V2}]
+                   [--image-reference]
+                   [--image-reference-lun]
+                   [--location]
+                   [--logical-sector-size]
+                   [--max-shares]
+                   [--network-access-policy]
+                   [--no-wait]
+                   [--os-type {Linux, Windows}]
+                   [--size-gb]
+                   [--sku {Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS}]
+                   [--source]
+                   [--source-storage-account-id]
+                   [--subscription]
+                   [--tags]
+                   [--tier]
+                   [--upload-size-bytes]
+                   [--zone {1, 2, 3}]
+  examples:
+  - summary: Create a managed disk by importing from a blob uri.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --source https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd
+  - summary: Create an empty managed disk.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10
+  - summary: Create a managed disk by copying an existing disk or snapshot.
+    syntax: az disk create -g MyResourceGroup -n MyDisk2 --source MyDisk
+  - summary: Create a disk in an availability zone in the region of "East US 2"
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --location eastus2 --zone 1
+  - summary: Create a disk from image.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:UbuntuServer:18.04-LTS:18.04.202002180
+  - summary: Create a disk from gallery image.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference $id
+  - summary: Create a disk with total number of IOPS and total throughput (MBps) limitation.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --sku UltraSSD_LRS --disk-iops-read-only 200 --disk-mbps-read-only 30
+  - summary: Create a disk and specify maximum number of VMs that can attach to the disk at the same time.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 256 --max-shares 2 -l centraluseuap
+  - summary: Create a disk and associate it with a disk access resource.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --network-access-policy AllowPrivate --disk-access MyDiskAccessID
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --disk-access
+    summary: Name or ID of the disk access resource for using private endpoints on disks.
+    description: ''
+  - name: --disk-encryption-set
+    summary: Name or ID of disk encryption set that is used to encrypt the disk.
+    description: ''
+  - name: --disk-iops-read-only
+    summary: The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-iops-read-write
+    summary: The number of IOPS allowed for this disk. Only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-mbps-read-only
+    summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
+    description: ''
+  - name: --disk-mbps-read-write
+    summary: The bandwidth allowed for this disk. Only settable for UltraSSD disks. MBps means millions of bytes per second with ISO notation of powers of 10.
+    description: ''
+  - name: --encryption-type
+    summary: 'Encryption type. EncryptionAtRestWithPlatformKey: Disk is encrypted with XStore managed key at rest. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted with Customer managed key at rest.'
+    description: ''
+  - name: --for-upload
+    parameterValueGroup: false, true
+    summary: Create the disk for uploading blobs later on through storage commands. Run "az disk grant-access --access-level Write" to retrieve the disk's SAS token.
+    description: ''
+  - name: --gallery-image-reference
+    summary: ID of the shared galley image version from which to create a disk.
+    description: ''
+  - name: --gallery-image-reference-lun
+    summary: If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
+    description: ''
+  - name: --hyper-v-generation
+    defaultValue: V1
+    parameterValueGroup: V1, V2
+    summary: The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
+    description: ''
+  - name: --image-reference
+    summary: ID or URN (publisher:offer:sku:version) of the image from which to create a disk.
+    description: ''
+  - name: --image-reference-lun
+    summary: If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`. If location is not specified and no default location specified, location will be automatically set as same as the resource group.'
+    description: ''
+  - name: --logical-sector-size
+    summary: Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default.
+    description: ''
+  - name: --max-shares
+    summary: The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time.
+    description: ''
+  - name: --network-access-policy
+    summary: Policy for accessing the disk via network.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --os-type
+    parameterValueGroup: Linux, Windows
+    summary: The Operating System type of the Disk.
+    description: ''
+  - name: --size-gb -z
+    summary: 'Size in GB. Max size: 4095 GB (certain preview disks can be larger).'
+    description: ''
+  - name: --sku
+    defaultValue: Premium_LRS
+    parameterValueGroup: Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS
+    summary: Underlying storage SKU.
+    description: ''
+  - name: --source
+    summary: Source to create the disk/snapshot from, including unmanaged blob uri, managed disk id or name, or snapshot id or name.
+    description: ''
+  - name: --source-storage-account-id
+    summary: Used when source blob is in a different subscription.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --tier
+    summary: 'Performance tier of the disk (e.g, P4, S10) as described here: <a href="https://azure.microsoft.com/en-us/pricing/details/managed-disks/">https://azure.microsoft.com/en-us/pricing/details/managed-disks/</a>. Does not apply to Ultra disks.'
+    description: ''
+  - name: --upload-size-bytes
+    summary: 'The size (in bytes) of the contents of the upload including the VHD footer. Min value: 20972032. Max value: 35183298347520.'
+    description: ''
+  - name: --zone
+    parameterValueGroup: 1, 2, 3
+    summary: Availability zone into which to provision the resource.
+    description: ''
+- uid: az_disk_delete
+  name: az disk delete
+  summary: Delete a managed disk.
+  description: ''
+  syntax: >-
+    az disk delete [--ids]
+                   [--name]
+                   [--no-wait]
+                   [--resource-group]
+                   [--subscription]
+                   [--yes]
+  examples:
+  - summary: Delete a managed disk. (autogenerated)
+    syntax: az disk delete --name MyManagedDisk --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_disk_grant_access
+  name: az disk grant-access
+  summary: Grant a resource access to a managed disk.
+  description: ''
+  syntax: >-
+    az disk grant-access --duration-in-seconds
+                         [--access-level {Read, Write}]
+                         [--ids]
+                         [--name]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: Grant a resource read access to a managed disk. (autogenerated)
+    syntax: az disk grant-access --access-level Read --duration-in-seconds 3600 --name MyManagedDisk --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --duration-in-seconds
+    summary: Time duration in seconds until the SAS access expires.
+    description: ''
+  optionalParameters:
+  - name: --access-level
+    defaultValue: Read
+    parameterValueGroup: Read, Write
+    summary: Access level.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_disk_list
+  name: az disk list
+  summary: List managed disks.
+  description: ''
+  syntax: >-
+    az disk list [--query-examples]
+                 [--resource-group]
+                 [--subscription]
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_disk_revoke_access
+  name: az disk revoke-access
+  summary: Revoke a resource's read access to a managed disk.
+  description: ''
+  syntax: >-
+    az disk revoke-access [--ids]
+                          [--name]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: Revoke a resource's read access to a managed disk. (autogenerated)
+    syntax: az disk revoke-access --ids $id
+  - summary: Revoke a resource's read access to a managed disk. (autogenerated)
+    syntax: az disk revoke-access --name MyManagedDisk --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_disk_show
+  name: az disk show
+  summary: Gets information about a disk.
+  description: ''
+  syntax: >-
+    az disk show [--ids]
+                 [--name]
+                 [--query-examples]
+                 [--resource-group]
+                 [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_disk_update
+  name: az disk update
+  summary: Update a managed disk.
+  description: ''
+  syntax: >-
+    az disk update [--add]
+                   [--disk-access]
+                   [--disk-encryption-set]
+                   [--disk-iops-read-only]
+                   [--disk-iops-read-write]
+                   [--disk-mbps-read-only]
+                   [--disk-mbps-read-write]
+                   [--encryption-type]
+                   [--force-string]
+                   [--ids]
+                   [--max-shares]
+                   [--name]
+                   [--network-access-policy]
+                   [--no-wait]
+                   [--remove]
+                   [--resource-group]
+                   [--set]
+                   [--size-gb]
+                   [--sku {Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS}]
+                   [--subscription]
+  examples:
+  - summary: Update a managed disk. (autogenerated)
+    syntax: az disk update --name MyManagedDisk --resource-group MyResourceGroup --size-gb 20
+  - summary: Update a managed disk and associate it with a disk access resource.
+    syntax: az disk update --name MyManagedDisk --resource-group MyResourceGroup --network-access-policy AllowPrivate --disk-access MyDiskAccessID
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --disk-access
+    summary: Name or ID of the disk access resource for using private endpoints on disks.
+    description: ''
+  - name: --disk-encryption-set
+    summary: Name or ID of disk encryption set that is used to encrypt the disk.
+    description: ''
+  - name: --disk-iops-read-only
+    summary: The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-iops-read-write
+    summary: The number of IOPS allowed for this disk. Only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes.
+    description: ''
+  - name: --disk-mbps-read-only
+    summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
+    description: ''
+  - name: --disk-mbps-read-write
+    summary: The bandwidth allowed for this disk. Only settable for UltraSSD disks. MBps means millions of bytes per second with ISO notation of powers of 10.
+    description: ''
+  - name: --encryption-type
+    summary: 'Encryption type. EncryptionAtRestWithPlatformKey: Disk is encrypted with XStore managed key at rest. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted with Customer managed key at rest.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --max-shares
+    summary: The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --network-access-policy
+    summary: Policy for accessing the disk via network.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --size-gb -z
+    summary: 'Size in GB. Max size: 4095 GB (certain preview disks can be larger).'
+    description: ''
+  - name: --sku
+    parameterValueGroup: Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS
+    summary: Underlying storage SKU.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_disk_wait
+  name: az disk wait
+  summary: Place the CLI in a waiting state until a condition of a managed disk is met.
+  description: ''
+  syntax: >-
+    az disk wait [--created]
+                 [--custom]
+                 [--deleted]
+                 [--exists]
+                 [--ids]
+                 [--interval]
+                 [--name]
+                 [--resource-group]
+                 [--subscription]
+                 [--timeout]
+                 [--updated]
+  examples:
+  - summary: Place the CLI in a waiting state until a condition of a managed disk is met. (autogenerated)
+    syntax: az disk wait --created --name MyManagedDisk --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: The name of the managed disk.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+commands:
+- az_disk_create
+- az_disk_delete
+- az_disk_grant_access
+- az_disk_list
+- az_disk_revoke_access
+- az_disk_show
+- az_disk_update
+- az_disk_wait
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: >-
+    Azure Virtual Machines use disks as a place to store an operating system, applications, and data. All Azure virtual machines have at least two disks: An operating system disk, and a temporary disk. The operating system disk is created from an image, and both the operating system disk and the image are actually virtual hard disks (VHDs) stored in an Azure storage account. Virtual machines also can have one or more data disks, that are also stored as VHDs.
+
+    Azure Managed and Unmanaged Data Disks have a maximum size of 4095 GB (with the exception of larger disks in preview). Azure Unmanaged Disks also have a maximum capacity of 4095 GB.
+
+    For more information, see:
+
+    - Azure Disks - <a href="https://docs.microsoft.com/azure/virtual-machines/linux/about-disks-and-vhds">https://docs.microsoft.com/azure/virtual-machines/linux/about-disks-and-vhds</a> and <a href="https://docs.microsoft.com/azure/virtual-machines/windows/about-disks-and-vhds">https://docs.microsoft.com/azure/virtual-machines/windows/about-disks-and-vhds</a>.
+
+    - Larger Managed Disks in Public Preview - <a href="https://azure.microsoft.com/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/">https://azure.microsoft.com/blog/introducing-the-public-preview-of-larger-managed-disks-sizes/</a>
+
+    - Ultra SSD Managed Disks in Public Preview - <a href="https://docs.microsoft.com/azure/virtual-machines/windows/disks-ultra-ssd">https://docs.microsoft.com/azure/virtual-machines/windows/disks-ultra-ssd</a>.
