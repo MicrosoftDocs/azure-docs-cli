@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/20/2020
+ms.date: 12/08/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,98 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## December 08, 2020
+
+Version 2.16.0
+
+### ACR
+
+* Update description for KEK param
+
+### AKS
+
+* `az aks nodepool add/update/upgrade`: Take max surge parameter
+* Add support for AGIC addon
+* Change MSI cluster to default
+
+### APIM
+
+* `az apim restore`: New command to restore a backup of an API Management service
+
+### App Service
+
+* Fix #14857: Let users update webapp config even with access restriction
+* `az functionapp create`: Accept `--runtime python` and  `--runtime-version 3.9` as Azure Functions v3 parameter
+* Fix #16041: az webapp config ssl create results in unknown error
+
+### ARM
+
+* `az deployment-scripts`: Remove preview flag
+
+### Backup
+
+* Fix #14976: CLI error improvements for ValueError and AttributeError cases
+* `az backup protection undelete`: Add support for AzureWorkload protection undelete using CLI
+* Fix Bad Request Error for Correct Workload Type Input
+
+### CDN
+
+* Add preview multi-origin support.
+* Add BYOC auto-rotation.
+
+### Key Vault
+
+* `az keyvault key/secret list`: Add a parameter `--include-managed` to list managed resources
+
+### Monitor
+
+* `az monitor metrics alert create`: Support dynamic thresholds for condition parameter
+* `az monitor metrics alert update`: Support dynamic thresholds for condition parameter
+* `az monitor metrics alert dimension create`: Build a metric alert rule dimension
+* `az monitor metrics alert condition create`: Build a metric alert rule condition
+
+### MySQL
+
+* Add MySQL version upgrade CLI
+
+### NetAppFiles
+
+* `az netappfiles account ad add`: Two optional parameters added, aes_encryption and ldap_signing
+* `az netappfiles account backup-policy update`: Three optional parameters added named tags, type and id
+* `az netappfiles snapshot policy create`: An optional parameter added named provisioning_state
+
+### Network
+
+* `az network network watcher configure`: Fix NetworkWatcherCountLimitReached error caused by case sensitivity of location value
+* `az network application-gateway http-listener`: Fix bug that cannot create and update with WAF policy name
+* `az network route-table`: Deprecate route table V1
+* `az network cross-region-lb`: Support cross-region load balancer
+* `az network express-route port generate-loa`: New command to generate and download the PDF letter of authorization for a ExpressRoutePort
+
+### Packaging
+
+* Add Ubuntu Groovy package
+
+### RDBMS
+
+* Add single server show-connection-string and tests for local-context commands, server creation
+
+### Role
+
+* Add long-summary/warning for commands generating credentials
+
+### Search
+
+* Add SKU option
+
+### Service Fabric
+
+* Update SF app docs. only support for arm deployed resources
+
+### Synapse
+
+* Support synapse sql dw cmdlets and update az synapse workspace create cmdlet
 
 ## November 20, 2020
 

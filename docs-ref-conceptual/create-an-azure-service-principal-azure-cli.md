@@ -203,7 +203,7 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
-* [az login](/cli/azure/reference-index?#az_login)
+* [az login](/cli/azure/reference-index#az_login)
 * [az group create](/cli/azure/group#az_group_create)
 * [az storage account create](/cli/azure/storage/account#az_storage_account_create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
