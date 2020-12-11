@@ -35,24 +35,129 @@ To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./aut
 
 ## Change the active subscription
 
-To access the resources for a subscription, switch your active subscription or use the `--subscription` argument. Switching your subscription
+To access the resources for a subscription, switch your active subscription or use the **--subscription** argument. Switching your subscription
 for all commands is done with [az account set](/cli/azure/account#az-account-set).
 
 To switch your active subscription:
 
 1. Get a list of your subscriptions with the [az account list](/cli/azure/account#az-account-list) command:
 
-    ```azurecli-interactive
+    ```azurecli
     az account list --output table
     ```
-2. Use `az account set` with the subscription ID or name you want to switch to.
 
-    ```azurecli-interactive
+   This command lists all the subscriptions you can access. If you don't see a subscription you expect, add the **--refresh** parameter to get the most current list of subscriptions.
+
+   > [!TIP]
+   > The **--output** parameter is a global parameter, available for all commands. The `table` value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+
+1. To see the subscription you are currently using, run the [az account show](/cli/azure/account#az_account_show) command:
+
+   ```azurecli
+   az account show --output table
+   ```
+
+1. Use [az account set](/cli/azure/account#az-account-set) with the subscription ID or name you want to switch to.
+
+    ```azurecli
     az account set --subscription "My Demos"
     ```
 
-To run only a single command with a different subscription, use the `--subscription` argument. This argument takes either a subscription ID or subscription name:
+   Your subscriptions have both a name and an ID, which is a GUID. You can use either for these commands. If you use a name that includes spaces, use quotation marks.
 
-```azurecli-interactive
+To run only a single command with a different subscription, use the **--subscription** argument. This argument takes either a subscription ID or subscription name:
+
+```azurecli
 az vm create --subscription "My Demos" --resource-group MyGroup --name NewVM --image Ubuntu
 ```
+
+## Azure CLI config file
+
+There is a configuration file, named *config,* in this location on the computer where you run Azure CLI:
+
+- $HOME/.azure on Linux and macOS
+- %USERPROFILE%\.azure on Windows
+
+In general, don't edit this file directly. Instead, use the [az config](/cli/azure/config) commands.
+
+Try setting your default location by using the [az config set](/cli/azure/config#az_config_set) command:
+
+```azurecli
+az config set defaults.location=eastus
+```
+
+> [!TIP]
+> To see all available locations for the current subscription, use the [az account list-locations](/cli/azure/account#az_account_list_locations) command.
+
+## Set Azure CLI configuration values
+
+To see your current configuration, run the [az config get](/cli/azure/config#az_config_get) command:
+
+```config
+az config get
+```
+
+This shows the default location that you set:
+
+```output
+  "defaults": [
+    {
+      "name": "location",
+      "source": "%USERPROFILE%\\.azure\\config",
+      "value": "eastus"
+    }
+```
+
+You can set your default subscription for storage commands:
+
+```azurecli
+az config set storage.account="My Demos"
+```
+
+The command sets a key-value pair, in this case `storage.account`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
+
+Run [az config get](/cli/azure/config#az_config_get) again to see the value for `storage.account`:
+
+```output
+  "storage": [
+    {
+      "name": "account",
+      "source": "%USERPROFILE%\\.azure\\config",
+      "value": "My Demos"
+    }
+```
+
+You can change an existing value by using the [az config set](/cli/azure/config#az_config_set) command again or remove the value by running [az config unset](/cli/azure/config#az_config_unset):
+
+```azurecli
+az config unset storage.account
+```
+
+The value for `storage` is now empty:
+
+```output
+  "storage": []
+```
+
+## Access tokens
+
+Azure CLI creates an access token when you sign in by using [az login](/cli/azure/reference-index#az_login). This access token is stored in the *accessTokens.json* file in the *.azure* directory.
+
+> [!CAUTION]
+> The *accessTokens.json* file and other files in this directory contain unencrypted values. Do not share the contents of this directory.
+
+The access token expires after an hour, but Azure CLI uses a second token, called a refresh token, to get a new token when needed. The refresh token is also stored in the *accessTokens.json* file, but it is managed from the server.
+
+Unless you sign out by using [az logout](https://docs.microsoft.com/en-us/cli/azure/reference-index#az_logout), you can continue to run commands without signing in again.
+
+## Azure Cloud Shell working directory
+
+Azure Cloud Shell runs Azure CLI as part of the Azure portal instead of locally. 
+
+> [!NOTE]
+> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the console. See [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart) for more information.
+
+When you first use Azure Cloud Shell, the portal requires you to create a storage account that hosts a file share to support Azure CLI.
+Azure Cloud Shell mounts the file share as *clouddrive* in your working directory. For **clouddrive** commands and more details, see [How Cloud Shell storage works](/azure/cloud-shell/persisting-shell-storage#how-cloud-shell-storage-works).
+
+Just like your local Azure CLI, there is an *.azure* directory. It contains the same files and works the same way as your local version.
