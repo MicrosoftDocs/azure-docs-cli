@@ -147,7 +147,7 @@ Azure CLI creates an access token when you sign in by using [az login](/cli/azur
 
 The access token expires after, at most, an hour. Azure CLI uses a second token, called a refresh token, to get a new token when needed. The refresh token is also stored in the *accessTokens.json* file. The server manages this token.
 
-Unless you sign out by using [az logout](https://docs.microsoft.com/en-us/cli/azure/reference-index#az_logout), you can continue to run commands without signing in again.
+Unless you sign out by using [az logout](/cli/azure/reference-index#az_logout), you can continue to run commands without signing in again.
 
 ## Azure Cloud Shell working directory
 
