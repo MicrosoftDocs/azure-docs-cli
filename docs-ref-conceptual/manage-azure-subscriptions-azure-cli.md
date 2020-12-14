@@ -1,41 +1,34 @@
 ---
 title: Manage Azure subscriptions with the Azure CLI
-description: Manage Azure subscriptions with the Azure CLI.
+description: Learn about Azure tenants, users, and subscriptions. Use the Azure CLI to manage your subscriptions.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/09/2018
+ms.date: 12/22/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-# Use multiple Azure subscriptions
+# Use Azure subscriptions with the Azure CLI
 
-Most Azure users will only ever have a single subscription.
-You might have multiple subscriptions within Azure.
-You can be part of more than one organization or your organization might divide access to certain resources across groupings.
-The CLI supports selecting a subscription both globally and per command.
+You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
 
 For detailed information on subscriptions, billing, and cost management, see the [billing and cost management documentation](/azure/billing/).
 
 ## Tenants, users, and subscriptions
 
-You might have some confusion over the difference between tenants, users, and subscriptions within Azure. A _tenant_ is the Azure Active Directory
-entity that encompasses a whole organization. This tenant one or more _subscription_ and _user_. A user is an individual and is associated
-with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources.
-A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource
-is associated with a subscription.
+A _tenant_ is the Azure Active Directory
+entity that encompasses a whole organization. A tenant has one or more _subscription_ and _user_. A user is an individual and is associated with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
 
 * To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
 * To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
-* To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./authenticate-azure-cli.md).
+* To learn how to sign in to a specific tenant, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
 ## Change the active subscription
 
-To access the resources for a subscription, switch your active subscription or use the **--subscription** argument. Switching your subscription
-for all commands is done with [az account set](/cli/azure/account#az-account-set).
+To access the resources for a subscription, switch your active subscription or use the **--subscription** argument. Switching your subscription for all commands is done with [az account set](/cli/azure/account#az-account-set).
 
 To switch your active subscription:
 
@@ -56,7 +49,7 @@ To switch your active subscription:
    az account show --output table
    ```
 
-1. Use [az account set](/cli/azure/account#az-account-set) with the subscription ID or name you want to switch to.
+1. To switch to a different subscription, use [az account set](/cli/azure/account#az-account-set) with the subscription ID or name you want to switch to.
 
     ```azurecli
     az account set --subscription "My Demos"
@@ -64,7 +57,7 @@ To switch your active subscription:
 
    Your subscriptions have both a name and an ID, which is a GUID. You can use either for these commands. If you use a name that includes spaces, use quotation marks.
 
-To run only a single command with a different subscription, use the **--subscription** argument. This argument takes either a subscription ID or subscription name:
+To run only a single command with a different subscription, use the **--subscription** argument:
 
 ```azurecli
 az vm create --subscription "My Demos" --resource-group MyGroup --name NewVM --image Ubuntu
@@ -92,7 +85,7 @@ az config set defaults.location=eastus
 
 To see your current configuration, run the [az config get](/cli/azure/config#az_config_get) command:
 
-```config
+```azurecli
 az config get
 ```
 
@@ -107,13 +100,13 @@ This output shows the default location that you set:
     }
 ```
 
-You can set your default subscription for storage commands:
+To set your default subscription for storage commands:
 
 ```azurecli
 az config set storage.account="My Demos"
 ```
 
-The command sets a key-value pair, in this case `storage.account`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
+The command sets a value for a specified key, in this case `storage.account`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
 
 Run [az config get](/cli/azure/config#az_config_get) again to see the value for `storage.account`:
 
@@ -126,7 +119,7 @@ Run [az config get](/cli/azure/config#az_config_get) again to see the value for 
     }
 ```
 
-You can change an existing value by using the [az config set](/cli/azure/config#az_config_set) command again or remove the value by running [az config unset](/cli/azure/config#az_config_unset):
+You can change an existing value by using the [az config set](/cli/azure/config#az_config_set) command again, or remove the value by running [az config unset](/cli/azure/config#az_config_unset):
 
 ```azurecli
 az config unset storage.account
@@ -151,12 +144,12 @@ Unless you sign out by using [az logout](/cli/azure/reference-index#az_logout), 
 
 ## Azure Cloud Shell working directory
 
-Azure Cloud Shell runs Azure CLI as part of the Azure portal instead of locally. 
+Azure Cloud Shell runs Azure CLI in the Azure portal instead of locally.
 
 > [!NOTE]
-> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the console. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the Cloud Shell console. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-When you first use Azure Cloud Shell, the portal requires you to create a storage account. The account hosts a file share to support Azure CLI.
+When you first use Azure Cloud Shell, the portal creates a storage account. The account hosts a file share to support Azure CLI.
 Azure Cloud Shell mounts the file share as *clouddrive* in your working directory. For commands and more details, see [How Cloud Shell storage works](/azure/cloud-shell/persisting-shell-storage#how-cloud-shell-storage-works).
 
 Just like your local Azure CLI, there's an *.azure* directory. It contains the same files and works the same way as your local version.
