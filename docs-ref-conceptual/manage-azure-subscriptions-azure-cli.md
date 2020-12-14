@@ -13,25 +13,24 @@ ms.custom: devx-track-azurecli
 
 # Use multiple Azure subscriptions
 
-Most Azure users will only ever have a single subscription. However, if you are part of more than one organization or your organization has
-divided up access to certain resources across groupings, you may have multiple subscriptions within Azure. The CLI supports selecting a subscription
-both globally and per command.
+Most Azure users will only ever have a single subscription.
+You might have multiple subscriptions within Azure.
+You can be part of more than one organization or your organization might divide access to certain resources across groupings.
+The CLI supports selecting a subscription both globally and per command.
 
 For detailed information on subscriptions, billing, and cost management, see the [billing and cost management documentation](/azure/billing/).
 
 ## Tenants, users, and subscriptions
 
 You might have some confusion over the difference between tenants, users, and subscriptions within Azure. A _tenant_ is the Azure Active Directory
-entity that encompasses a whole organization. This tenant has at least one _subscription_ and _user_. A user is an individual and is associated
+entity that encompasses a whole organization. This tenant one or more _subscription_ and _user_. A user is an individual and is associated
 with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources.
 A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource
 is associated with a subscription.
 
-To learn more about the differences between tenants, users, and subscriptions, see the
-[Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).  To learn how to add a new subscription to your Azure Active
-Directory tenant, see
-[Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
-To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./authenticate-azure-cli.md).
+* To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
+* To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+* To learn how to sign in to a specific tenant, see [Sign in with Azure CLI](./authenticate-azure-cli.md).
 
 ## Change the active subscription
 
@@ -51,7 +50,7 @@ To switch your active subscription:
    > [!TIP]
    > The **--output** parameter is a global parameter, available for all commands. The `table` value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
-1. To see the subscription you are currently using, run the [az account show](/cli/azure/account#az_account_show) command:
+1. To see the subscription you're currently using, run the [az account show](/cli/azure/account#az_account_show) command:
 
    ```azurecli
    az account show --output table
@@ -73,10 +72,10 @@ az vm create --subscription "My Demos" --resource-group MyGroup --name NewVM --i
 
 ## Azure CLI config file
 
-There is a configuration file, named *config,* in this location on the computer where you run Azure CLI:
+There's a configuration file, named *config,* in this location on the computer where you run Azure CLI:
 
-- $HOME/.azure on Linux and macOS
-- %USERPROFILE%\.azure on Windows
+- *$HOME/.azure* on Linux and macOS
+- *%USERPROFILE%\.azure* on Windows
 
 In general, don't edit this file directly. Instead, use the [az config](/cli/azure/config) commands.
 
@@ -97,7 +96,7 @@ To see your current configuration, run the [az config get](/cli/azure/config#az_
 az config get
 ```
 
-This shows the default location that you set:
+This output shows the default location that you set:
 
 ```output
   "defaults": [
@@ -146,7 +145,7 @@ Azure CLI creates an access token when you sign in by using [az login](/cli/azur
 > [!CAUTION]
 > The *accessTokens.json* file and other files in this directory contain unencrypted values. Do not share the contents of this directory.
 
-The access token expires after an hour, but Azure CLI uses a second token, called a refresh token, to get a new token when needed. The refresh token is also stored in the *accessTokens.json* file, but it is managed from the server.
+The access token expires after, at most, an hour. Azure CLI uses a second token, called a refresh token, to get a new token when needed. The refresh token is also stored in the *accessTokens.json* file. The server manages this token.
 
 Unless you sign out by using [az logout](https://docs.microsoft.com/en-us/cli/azure/reference-index#az_logout), you can continue to run commands without signing in again.
 
@@ -155,9 +154,15 @@ Unless you sign out by using [az logout](https://docs.microsoft.com/en-us/cli/az
 Azure Cloud Shell runs Azure CLI as part of the Azure portal instead of locally. 
 
 > [!NOTE]
-> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the console. See [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart) for more information.
+> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the console. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-When you first use Azure Cloud Shell, the portal requires you to create a storage account that hosts a file share to support Azure CLI.
-Azure Cloud Shell mounts the file share as *clouddrive* in your working directory. For **clouddrive** commands and more details, see [How Cloud Shell storage works](/azure/cloud-shell/persisting-shell-storage#how-cloud-shell-storage-works).
+When you first use Azure Cloud Shell, the portal requires you to create a storage account. The account hosts a file share to support Azure CLI.
+Azure Cloud Shell mounts the file share as *clouddrive* in your working directory. For commands and more details, see [How Cloud Shell storage works](/azure/cloud-shell/persisting-shell-storage#how-cloud-shell-storage-works).
 
-Just like your local Azure CLI, there is an *.azure* directory. It contains the same files and works the same way as your local version.
+Just like your local Azure CLI, there's an *.azure* directory. It contains the same files and works the same way as your local version.
+
+## See also
+
+* [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology)
+* [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory)
+* [Sign in with Azure CLI](./authenticate-azure-cli.md)
