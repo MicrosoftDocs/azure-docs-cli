@@ -35,13 +35,13 @@ The Azure CLI will check new versions regularly and prompt you to upgrade after 
 The prompt message and output messages during upgrade may interrupt your command result if it is assigned to some variable or in an automated flow. To avoid interruption, you can use the following configuration to allow the update to happen automatically without confirmation and only show warnings and errors during the upgrade.
 
 ```azurecli
-az config auto-upgrade.prompt=no
+az config set auto-upgrade.prompt=no
 ```
 
 By default, all installed extensions will also be updated. You can disable extension update through configuration.
 
 ```azurecli
-az config auto-upgrade.all=no
+az config set auto-upgrade.all=no
 ```
 
 > [!NOTE]
