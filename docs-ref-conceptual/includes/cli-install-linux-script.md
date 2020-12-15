@@ -18,7 +18,7 @@ ms.custom: devx-track-azurecli
 
 The CLI requires the following software:
 
-* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/). 
+* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/).
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
@@ -39,9 +39,9 @@ The script can also be downloaded and run locally. You may have to restart your 
 
 You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [interactive-login](interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 
@@ -75,7 +75,7 @@ of the `az` command is
 
 ### Proxy blocks connection
 
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+[!INCLUDE[configure-proxy](configure-proxy.md)]
 
 In order to get the installation scripts, your proxy needs to allow HTTPS connections to the
 following addresses:
@@ -85,11 +85,11 @@ following addresses:
 * `https://pypi.python.org`
 * Endpoints used by your distribution's package manager (if any) for core packages
 
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+[!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 ## Uninstall
 
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
 Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is `$HOME`.
 
