@@ -10,9 +10,9 @@ ms.custom: devx-track-azurecli
 For Linux distributions with `yum` such as RHEL, Fedora, or CentOS, there's a package
 for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24 and higher, CentOS 7 and CentOS 8.
 
-[!INCLUDE [current-version](includes/current-version.md)]
+[!INCLUDE [current-version](current-version.md)]
 
-[!INCLUDE [rpm-warning](includes/rpm-warning.md)]
+[!INCLUDE [rpm-warning](rpm-warning.md)]
 
 ## Install
 
@@ -41,7 +41,7 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
 
 Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [interactive-login](../interactive-login.md)]
 
 To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
@@ -107,7 +107,7 @@ $ scl enable rh-python36 bash
 
 ### Proxy blocks connection
 
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+[!INCLUDE[configure-proxy](configure-proxy.md)]
 
 You may also want to explicitly configure `yum` to use this proxy at all times. Make sure that the following
 lines appear under the `[main]` section of `/etc/yum.conf`:
@@ -125,11 +125,11 @@ allow HTTPS connections to the following address:
 
 * `https://packages.microsoft.com`
 
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+[!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 ## Update
 
-[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+[!INCLUDE [az-upgrade](az-upgrade.md)]
 
 You can also update the Azure CLI with the `yum update` command.
 
@@ -139,7 +139,7 @@ sudo yum update azure-cli
 
 ## Uninstall
 
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
 1. Remove the package from your system.
 

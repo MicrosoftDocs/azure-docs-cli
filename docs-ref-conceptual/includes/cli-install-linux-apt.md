@@ -69,9 +69,9 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [interactive-login](interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 
@@ -79,7 +79,7 @@ Here are some common problems seen when installing with `apt`. If you experience
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
-If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
+If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#option-1-install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
 
 ### lsb_release does not return the correct base distribution version
 
@@ -113,7 +113,7 @@ deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main
 
 ### Proxy blocks connection
 
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+[!INCLUDE[configure-proxy](configure-proxy.md)]
 
 You may also want to explicitly configure `apt` to use this proxy at all times. Make sure that the
 following lines appear in an `apt` configuration file in `/etc/apt/apt.conf.d/`. We recommend using
@@ -137,10 +137,10 @@ allow HTTPS connections to the following address:
 
 * `https://packages.microsoft.com`
 
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+[!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 ## Update
-[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+[!INCLUDE [az-upgrade](az-upgrade.md)]
 
 You can also use `apt-get upgrade` to update the CLI package.
 
@@ -158,7 +158,7 @@ You can also use `apt-get upgrade` to update the CLI package.
 
 ## Uninstall
 
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
 1. Uninstall with `apt-get remove`:
 

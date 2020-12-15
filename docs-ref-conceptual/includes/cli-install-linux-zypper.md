@@ -12,9 +12,9 @@ ms.custom: devx-track-azurecli
 For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
 for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLES 15.
 
-[!INCLUDE [current-version](includes/current-version.md)]
+[!INCLUDE [current-version](current-version.md)]
 
-[!INCLUDE [rpm-warning](includes/rpm-warning.md)]
+[!INCLUDE [rpm-warning](rpm-warning.md)]
 
 ## Install
 
@@ -46,9 +46,9 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 
 You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [interactive-login](interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 
@@ -104,7 +104,7 @@ $ sudo rpm -ivh --nodeps azure-cli-$AZ_VERSION.x86_64.rpm
 
 ### Proxy blocks connection
 
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+[!INCLUDE[configure-proxy](configure-proxy.md)]
 
 You may also want to explicitly configure `zypper` (via `yast2`) to use this proxy at all times. To do so,
 run the `yast2 proxy` command as superuser, and fill in the information presented in the form. If you have a window
@@ -119,7 +119,7 @@ allow HTTPS connections to the following addresses:
 * `https://packages.microsoft.com`
 * `https://download.opensuse.org`
 
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+[!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 ### SSL certificate problem
 
@@ -131,7 +131,7 @@ sudo zypper update-ca-certificates
 
 ## Update
 
-[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+[!INCLUDE [az-upgrade](az-upgrade.md)]
 
 You can also update the package with the `zypper update` command.
 
@@ -142,7 +142,7 @@ sudo zypper update azure-cli
 
 ## Uninstall
 
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
 1. Remove the package from your system.
 

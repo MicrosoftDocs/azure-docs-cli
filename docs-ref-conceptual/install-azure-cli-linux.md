@@ -20,25 +20,25 @@ It is recommended to install the Azure CLI using your distribution's package man
 
 ::: zone pivot="apt"
 
-[!INCLUDE [includes/cli-install-linux-apt](includes/cli-install-linux-apt.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-apt.md)]
 
 ::: zone-end
 
 ::: zone pivot="yum"
 
-[!INCLUDE [includes/cli-install-linux-apt](includes/cli-install-linux-yum.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-yum.md)]
 
 ::: zone-end
 
 ::: zone pivot="zypper"
 
-[!INCLUDE [includes/cli-install-linux-apt](includes/cli-install-linux-zypper.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-zypper.md)]
 
 ::: zone-end
 
 ::: zone pivot="script"
 
-[!INCLUDE [includes/cli-install-linux-apt](includes/cli-install-linux-script.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-script.md)]
 
 ::: zone-end
 
