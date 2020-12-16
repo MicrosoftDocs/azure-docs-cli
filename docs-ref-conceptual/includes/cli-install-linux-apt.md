@@ -19,7 +19,7 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 ## Installation Options
 
-There are two options to install the Azure CLI on your system.  First, you may execute a single command which will download an install script and run the install commands for you.  Or if you prefer, you can execute the install commands yourself in a step-by-step process.  Both methods are provided below.
+There are two options to install the Azure CLI on your system.  First, you may execute a single command that will download an install script and run the install commands for you.  Or if you prefer, you can execute the install commands yourself in a step-by-step process.  Both methods are provided below.
 
 ## Option 1: Install with one command
 

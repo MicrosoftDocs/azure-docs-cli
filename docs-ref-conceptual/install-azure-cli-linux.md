@@ -15,7 +15,7 @@ zone_pivot_groups: cli-linux-installation-method
 
 # Install the Azure CLI on Linux
 
-It is recommended to install the Azure CLI using your distribution's package manager. Select the appropriate package manager for your distribution from the options above.  If you do not have one of the listed package managers, you may manually install the Azure CLI by selecting the *Install script* option.
+It is recommended to install the Azure CLI using your Linux distribution's package manager. Select the appropriate package manager for your distribution from the options above.  If you do not have one of the listed package managers, you may manually install the Azure CLI by selecting the *Install script* option.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 

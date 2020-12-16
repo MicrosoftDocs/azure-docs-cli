@@ -47,11 +47,11 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `yum`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `yum`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you can, please upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency. 
+If you can, please upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
 
 You can use the following one command to install Azure CLI with `python 3.6` built from source:
 

@@ -52,7 +52,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### NotImplementedError on OpenSUSE 15 VM
 The OpenSUSE 15 VM has a pre-installed Azure CLI with version `2.0.45`, it's outdated and has issues with `az login`. Please remove it along with its dependencies before following the [Install](#install) instruction to add the latest Azure CLI:
