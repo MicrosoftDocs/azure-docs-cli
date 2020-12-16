@@ -9,6 +9,7 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
 ms.custom: devx-track-azurecli
+zone_pivot_group_filename: zone-pivot-groups.json
 zone_pivot_groups: cli-linux-installation-method
 ---
 
