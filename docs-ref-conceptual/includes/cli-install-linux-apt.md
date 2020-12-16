@@ -7,11 +7,13 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
+## Overview
+
 The `apt` package manager contains an x86_64 package for the Azure CLI that has been tested on the following distributions.
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 14.04 LTS (Trusty Tahir), 16.04 LTS (Xenial Xerus), 18.04 (Bionic Beaver), 19.10 (Eoan Ermine), 20.04 LTS (Focal Fossa) |
+| Ubuntu       | 14.04 LTS (Trusty Tahir), 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 19.10 (Eoan Ermine), 20.04 LTS (Focal Fossa) |
 | Debian       | Debian 8 (Jessie), Debian 9 (Stretch), Debian 10 (Buster) |
 
 > [!WARNING]

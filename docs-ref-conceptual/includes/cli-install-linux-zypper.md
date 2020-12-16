@@ -9,6 +9,8 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
+## Overview
+
 For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
 for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLES 15.
 

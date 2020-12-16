@@ -9,12 +9,12 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
+## Overview
+
 > [!NOTE]
 > It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
 > and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
 > installing manually.
-
-## Prerequisites
 
 The CLI requires the following software:
 
