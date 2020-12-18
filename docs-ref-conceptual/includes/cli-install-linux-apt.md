@@ -1,55 +1,41 @@
 ---
-title: Install the Azure CLI on Linux with apt
-description: How to install the Azure CLI with the apt package manager
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.date: 09/29/2020
-ms.topic: conceptual
-ms.service: azure-cli
-ms.devlang: azurecli 
+ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-# Install Azure CLI with apt
+## Overview
 
-If you are running a distribution that comes with `apt`, such as Ubuntu or Debian, there's an x86_64 package available
-for the Azure CLI. This package has been tested with and is supported for:
+The `apt` package manager contains an x86_64 package for the Azure CLI that has been tested on the following distributions.
 
-* Ubuntu trusty, xenial, bionic, eoan and focal
-* Debian jessie, stretch, and buster
+| Distribution | Version |
+|:-------------|:--------|
+| Ubuntu       | 14.04 LTS (Trusty Tahir), 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 19.10 (Eoan Ermine), 20.04 LTS (Focal Fossa) |
+| Debian       | Debian 8 (Jessie), Debian 9 (Stretch), Debian 10 (Buster) |
 
-[!INCLUDE [current-version](includes/current-version.md)]
+> [!WARNING]
+> Ubuntu 20.04 (Focal Fossa), includes an `azure-cli` package with version `2.0.81` provided by the `focal/universe` repository. This package is outdated and and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.
 
-> [!NOTE]
->
-> The package for Azure CLI installs its own Python interpreter, and does not use the
-> system Python. 
->
-> On Ubuntu 20.04 (Focal), there is an `azure-cli` package with version `2.0.81` provided by the `focal/universe` repository. It's outdated and not recommended. If you already installed it, please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y` before following the below steps to install the latest `azure-cli` package.
+## Installation Options
 
-## Install
+There are two options to install the Azure CLI on your system.  First, you may execute a single command that will download an install script and run the install commands for you.  Or if you prefer, you can execute the install commands yourself in a step-by-step process.  Both methods are provided below.
 
-We offer two ways to install the Azure CLI with distributions that support `apt`: As an all-in-one script that
-runs the install commands for you, and instructions that you can run as a step-by-step process on your own.
+## Option 1: Install with one command
 
-### Install with one command
+The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `cul` and piped directly to `bash` to install the CLI.
 
-We offer and maintain a script which runs all of the installation commands in one step. Run it by using `curl`
-and pipe directly to `bash`, or download the script to a file and inspect it before running.
-
-> [!IMPORTANT]
-> This script is only verified for Ubuntu 16.04+ and Debian 8+. It may not work on other distributions.
-> If you're using a derived distribution such as Linux Mint, follow the manual install instructions and perform
-> any necessary troubleshooting.
+If you wish to inspect the contents of the script yourself before executing, simply download the script first using `curl` and inspect it in your favorite text editor.
 
 ```bash
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
-### Manual install instructions
+## Option 2: Step-by-step installation instructions
 
-If you don't want to run a script as superuser or the all-in-one script fails, follow these steps to install the Azure CLI.
+If you prefer a step-by-step installation process, complete the following steps to install the Azure CLI.
 
 1. Get packages needed for the install process:
 
@@ -81,18 +67,21 @@ If you don't want to run a script as superuser or the all-in-one script fails, f
     sudo apt-get install azure-cli
     ```
 
+## Sign in to Azure with the Azure CLI
+
 Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az-login) command.
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [interactive-login](interactive-login.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
-If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
+
+If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#option-1-install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
 
 ### lsb_release does not return the correct base distribution version
 
@@ -126,7 +115,7 @@ deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main
 
 ### Proxy blocks connection
 
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
+[!INCLUDE[configure-proxy](configure-proxy.md)]
 
 You may also want to explicitly configure `apt` to use this proxy at all times. Make sure that the
 following lines appear in an `apt` configuration file in `/etc/apt/apt.conf.d/`. We recommend using
@@ -150,10 +139,10 @@ allow HTTPS connections to the following address:
 
 * `https://packages.microsoft.com`
 
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
+[!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
 ## Update
-[!INCLUDE [az-upgrade](includes/az-upgrade.md)]
+[!INCLUDE [az-upgrade](az-upgrade.md)]
 
 You can also use `apt-get upgrade` to update the CLI package.
 
@@ -171,7 +160,7 @@ You can also use `apt-get upgrade` to update the CLI package.
 
 ## Uninstall
 
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
 1. Uninstall with `apt-get remove`:
 
@@ -196,10 +185,3 @@ You can also use `apt-get upgrade` to update the CLI package.
    ```bash
    sudo apt autoremove
    ```
-
-## Next Steps
-
-Now that you've installed the Azure CLI, take a short tour of its features and common commands.
-
-> [!div class="nextstepaction"]
-> [Get started with the Azure CLI](get-started-with-azure-cli.md)
