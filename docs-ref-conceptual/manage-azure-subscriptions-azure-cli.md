@@ -60,7 +60,7 @@ To switch your active subscription:
 To run only a single command with a different subscription, use the **--subscription** argument:
 
 ```azurecli
-az vm create --subscription "My Demos" --resource-group MyGroup --name NewVM --image Ubuntu
+az vm create --subscription "My Second Demos" --resource-group MySecondGroup --name NewVM --image Ubuntu
 ```
 
 ## Azure CLI config file
@@ -72,63 +72,12 @@ There's a configuration file, named *config,* in this location on the computer w
 
 In general, don't edit this file directly. Instead, use the [az config](/cli/azure/config) commands.
 
-Try setting your default location by using the [az config set](/cli/azure/config#az_config_set) command:
-
-```azurecli
-az config set defaults.location=eastus
-```
-
-> [!TIP]
-> To see all available locations for the current subscription, use the [az account list-locations](/cli/azure/account#az_account_list_locations) command.
-
 ## Set Azure CLI configuration values
 
 To see your current configuration, run the [az config get](/cli/azure/config#az_config_get) command:
 
 ```azurecli
 az config get
-```
-
-This output shows the default location that you set:
-
-```output
-  "defaults": [
-    {
-      "name": "location",
-      "source": "%USERPROFILE%\\.azure\\config",
-      "value": "eastus"
-    }
-```
-
-To set your default subscription for storage commands:
-
-```azurecli
-az config set storage.account="My Demos"
-```
-
-The command sets a value for a specified key, in this case `storage.account`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
-
-Run [az config get](/cli/azure/config#az_config_get) again to see the value for `storage.account`:
-
-```output
-  "storage": [
-    {
-      "name": "account",
-      "source": "%USERPROFILE%\\.azure\\config",
-      "value": "My Demos"
-    }
-```
-
-You can change an existing value by using the [az config set](/cli/azure/config#az_config_set) command again, or remove the value by running [az config unset](/cli/azure/config#az_config_unset):
-
-```azurecli
-az config unset storage.account
-```
-
-The value for `storage` is now empty:
-
-```output
-  "storage": []
 ```
 
 ## Access tokens
