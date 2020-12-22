@@ -61,7 +61,7 @@ If you use a Mac or Windows computer, DMG and MSI installers are available from 
 If you have set up your computer as a [Docker](https://docs.docker.com/engine/understanding-docker/) host, you can run the Azure classic CLI in a Docker container. Run the following command (on Linux distributions you might need to use `sudo`):
 
 ```bash
-docker run -it microsoft/azure-cli:0.10.17
+docker run -it mcr.microsoft.com/azure-cli:0.10.14
 ```
 
 ## Run Azure classic CLI commands
