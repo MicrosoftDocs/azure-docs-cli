@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 12/08/2020
+ms.date: 12/29/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,260 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## December 29, 2020
+
+Version 2.17.0
+
+### ACR
+
+* Support zone redundancy
+* `az acr connected-registry`: New feature for on-prem Azure Container Registry
+* `az acr scope-map update`: --add and --remove are deprecated, they are renamed to --add-repo --remove-repo
+* `az acr scope-map create/update`: Add support to handle Gateway actions.
+* `az acr token create`: support added for gateway actions
+
+### AKS
+
+* Fix: add arguments removed by a previous PR
+* `az aks get-credentials`: Clarify documentation for get-credentials
+
+### App Service
+
+* Allow customer to create Python 3.9 function app
+* Fix #14583: az webapp up should generate default name if name isn't provided
+* Fix: Better error handling when trying to create duplicate ASP in diff location
+
+### ARM
+
+* `az ts`:  Add support for --tags
+* `az ts`: Support deleting a single version
+* `az provider register`: Add --accept-terms for registering RPaaS
+* Fix parsing JSON files with multi-line strings
+
+### ARO
+
+* `az aro delete`: Add RBAC validation on cluster deletion
+* `az aro update`: Add RBAC validation on cluster update
+* Ensure worker_profile is not None before getting the subnets from
+
+### Backup
+
+* `az backup job list`: Solve -o table bug and added backup_management_type as command input
+
+### Batch
+
+* Upgrade data plane to [azure batch 10.0.0](https://pypi.org/project/azure-batch/10.0.0/)
+* [BREAKING CHANGE] az batch job task-counts: Change the output from a JSON object returning task counts to a complex JSON object that includes task counts (`taskCounts`) as well as task slot counts (`taskSlotCounts`).
+
+### Compute
+
+* New license type RHEL_ELS_6
+* Adopt track2 SDK, azure-mgmt-compute==18.0.0
+
+### Container
+
+* Fix misspelling in `az container create` CLI example text.
+
+### DataBoxEdge
+
+* New command module: support for data-box-edge devices and management
+
+### IoT
+
+* Update device key generation
+* Update identity-enabled hub tests to fix endpoint RBAC issues
+
+### Key Vault
+
+* `az keyvault key import`: Support `--kty` for importing BYOK keys
+
+### Monitor
+
+* `az monitor metrics alert create`: Improve error message to give more actionable insight
+
+### Network
+
+* `az network private-endpoint create`: Add more declaration of '--subnet' and '--private-connection-resource-id'
+* Change validator of application-gateway ssl-cert create
+* Migrate network to track2 SDK
+* Fix bug for "az network traffic-manager profile create" when using "--routing-method MultiValue"
+
+### Profile
+
+* Fix "missing secret or certificate in order to authenticate through a service principal"
+
+### Role
+
+* `az ad sp create-for-rbac`: Deprecate creating Contributor role assignment by default
+
+### Security
+
+* Add secure score commands
+* Fix update alert command and support new value
+
+### SQL
+
+* `az sql dw update`: do not accept backup-storage-redundancy argument
+* `az sql db update`: update backup storage redundancy as requested from command
+
+### Storage
+
+* Fix issue #15965: Clarify how to remove multiple legal hold tags with `az storage container legal-hold [clear|set]`
+* `az storage account encryption-scope`: GA support
+* Fix issue #9959: Trying to download a snapshot version of a file share fails with ResourceNotFound
+
+### Synapse
+
+* Add new cmdlets az synapse sql ad-admin show, create, update, delete
+* Add new cmdlet az synapse workspace firewall-rule update
+* Add new cmdlets az synapse sql audit-policy show, update
+* Add integration runtime related cmdlets
+
+2.16.0
+2.0.18 (2017-09-22)
++++++++++++++++++++
+* no changes
+
+2.0.17 (2017-09-11)
++++++++++++++++++++
+* no changes
+
+2.0.16 (2017-08-31)
++++++++++++++++++++
+* no changes
+
+2.0.15 (2017-08-28)
++++++++++++++++++++
+* no changes
+
+2.0.14 (2017-08-15)
++++++++++++++++++++
+* no changes
+
+2.0.13 (2017-08-11)
++++++++++++++++++++
+* no changes
+
+2.0.12 (2017-07-28)
++++++++++++++++++++
+* no changes
+
+2.0.11 (2017-07-27)
++++++++++++++++++++
+* Allow finer grained chunking for Data Lake Store transfer
+
+2.0.10 (2017-07-07)
++++++++++++++++++++
+* no changes
+
+2.0.9 (2017-06-21)
+++++++++++++++++++
+* no changes
+
+2.0.8 (2017-06-13)
+++++++++++++++++++
+* no changes
+
+2.0.7 (2017-05-30)
+++++++++++++++++++
+
+* Add billing modules to setup
+
+2.0.6 (2017-05-09)
+++++++++++++++++++
+
+* documentdb renamed to cosmosdb
+* Add rdbms
+
+2.0.5 (2017-05-05)
+++++++++++++++++++
+
+* Include Data Lake Analytics and Data Lake Store modules.
+* Include Cognitive Services module.
+* Include Service Fabric module.
+* Include Interactive module.
+* Remove Container module
+
+2.0.4 (2017-04-28)
+++++++++++++++++++
+
+* Add 'az -v' as shortcut for 'az --version'
+
+2.0.3 (2017-04-17)
+++++++++++++++++++
+
+* Improve performance of package load and command execution
+* Alter JSON string parsing from shell
+
+2.0.2 (2017-04-03)
+++++++++++++++++++
+
+* Add acr, lab and monitor modules to default list.
+
+2.0.1 (2017-03-13)
+++++++++++++++++++
+
+* Add 'az find' module
+
+2.0.0 (2017-02-27)
+++++++++++++++++++
+
+* GA release.
+
+0.1.2rc2 (2017-02-22)
++++++++++++++++++++++
+
+* Fix format of package readme on PyPI.
+
+
+0.1.2rc1 (2017-02-17)
++++++++++++++++++++++
+
+* Handle cloud switching in more user friendly way + remove context
+* Include the following command modules by default:
+
+azure-cli-acs
+azure-cli-appservice
+azure-cli-batch
+azure-cli-cloud
+azure-cli-component
+azure-cli-configure
+azure-cli-container
+azure-cli-documentdb
+azure-cli-feedback
+azure-cli-iot
+azure-cli-keyvault
+azure-cli-network
+azure-cli-profile
+azure-cli-redis
+azure-cli-resource
+azure-cli-role
+azure-cli-sql
+azure-cli-storage
+azure-cli-vm
+
+
+0.1.1b3 (2017-01-30)
+++++++++++++++++++++
+
+* Support Python 3.6.
+
+
+0.1.1b2 (2017-01-19)
+++++++++++++++++++++
+
+* Modify telemetry code to be compatible with the change to azure-cli-core 0.1.1b2.
+
+
+0.1.1b1 (2017-01-17)
+++++++++++++++++++++
+
+* [Tab completion] Enable zsh compatibility mode for zsh shell for 'pip' installed CLI.
+* Modify telemetry code to be compatible with the change to azure-cli-core.
+
+0.1.0b11 (2016-12-12)
++++++++++++++++++++++
 
 ## December 08, 2020
 
