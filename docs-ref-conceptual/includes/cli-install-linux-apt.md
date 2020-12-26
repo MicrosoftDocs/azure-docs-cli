@@ -25,7 +25,7 @@ There are two options to install the Azure CLI on your system.  First, you may e
 
 ## Option 1: Install with one command
 
-The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `cul` and piped directly to `bash` to install the CLI.
+The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `curl` and piped directly to `bash` to install the CLI.
 
 If you wish to inspect the contents of the script yourself before executing, simply download the script first using `curl` and inspect it in your favorite text editor.
 
