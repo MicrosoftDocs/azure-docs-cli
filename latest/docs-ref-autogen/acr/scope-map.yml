@@ -11,13 +11,19 @@ directCommands:
   syntax: >-
     az acr scope-map create --name
                             --registry
-                            --repository
                             [--description]
+                            [--gateway]
+                            [--repository]
                             [--resource-group]
                             [--subscription]
   examples:
   - summary: Create a scope map that allows content/write and metadata/read actions for `hello-world` repository, and content/read action for `hello-world-again`.
     syntax: az acr scope-map create -n MyScopeMap -r MyRegistry --repository hello-world content/write metadata/read --repository hello-world-again content/read --description "Sample scope map."
+  - summary: Create a scope map that allows all repository actions for `test`, and all gateway actions for `connectedRegistry`.
+    syntax: >-
+      az acr scope-map create -n MyScopeMap -r MyRegistry --description "Sample scope map."
+        --repository test content/delete content/read content/write metadata/read metadata/write
+        --gateway connectedRegistry config/read config/write message/read message/write
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -27,13 +33,15 @@ directCommands:
     name: --registry -r
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
-  - isRequired: true
-    name: --repository
-    summary: Repository permissions. Use the format "--repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/write', 'content/read', 'content/delete', 'metadata/write', 'metadata/read'}.
-    description: ''
   optionalParameters:
   - name: --description
     summary: Description for the scope map. Maximum 256 characters are allowed.
+    description: ''
+  - name: --gateway
+    summary: Gateway permissions. Use the format "--gateway GATEWAY [ACTION1 ACTION2 ...]" per flag. Valid actions are {'config/write', 'message/write', 'config/read', 'message/read'}.
+    description: ''
+  - name: --repository
+    summary: Repository permissions. Use the format "--repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/delete', 'content/write', 'metadata/read', 'metadata/write', 'content/read'}.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -143,14 +151,16 @@ directCommands:
   syntax: >-
     az acr scope-map update --name
                             --registry
-                            [--add]
+                            [--add-gateway]
+                            [--add-repository]
                             [--description]
-                            [--remove]
+                            [--remove-gateway]
+                            [--remove-repository]
                             [--resource-group]
                             [--subscription]
   examples:
-  - summary: Update the scope map 'MyScopeMap' removing metadata/read and content/read actions for `hello-world` repository, and metadata/write action for `hello-world-again`.
-    syntax: az acr scope-map update -n MyScopeMap -r MyRegistry --remove hello-world metadata/read content/read --remove hello-world-again metadata/write
+  - summary: Update the scope map 'MyScopeMap' removing metadata/read and content/read actions for `hello-world` repository, and message/write action for `connectedRegistry`.
+    syntax: az acr scope-map update -n MyScopeMap -r MyRegistry --remove-repo hello-world metadata/read content/read --remove-gateway connectedRegistry message/write
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -161,14 +171,20 @@ directCommands:
     summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
-  - name: --add
-    summary: Repository permissions to be added. Use the format "--add REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/write', 'content/read', 'content/delete', 'metadata/write', 'metadata/read'}.
+  - name: --add-gateway
+    summary: Gateway permissions to be added. Use the format "--add-gateway GATEWAY [ACTION1 ACTION2 ...]" per flag. Valid actions are {'config/write', 'message/write', 'config/read', 'message/read'}.
+    description: ''
+  - name: --add-repository
+    summary: Repository permissions to be added. Use the format "--add-repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/delete', 'content/write', 'metadata/read', 'metadata/write', 'content/read'}.
     description: ''
   - name: --description
     summary: Description for the scope map. Maximum 256 characters are allowed.
     description: ''
-  - name: --remove
-    summary: Respsitory permissions to be removed. Use the format "--remove REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/write', 'content/read', 'content/delete', 'metadata/write', 'metadata/read'}.
+  - name: --remove-gateway
+    summary: Gateway permissions to be removed. Use the format "--remove-gateway GATEWAY [ACTION1 ACTION2 ...]" per flag. Valid actions are {'config/write', 'message/write', 'config/read', 'message/read'}.
+    description: ''
+  - name: --remove-repository
+    summary: Respsitory permissions to be removed. Use the format "--remove-repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/delete', 'content/write', 'metadata/read', 'metadata/write', 'content/read'}.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -200,5 +216,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/28/2020
+  ms.date: 12/24/2020
   description: Manage scope access maps for Azure Container Registries.
