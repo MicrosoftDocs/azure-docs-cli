@@ -52,7 +52,7 @@ If you prefer a step-by-step installation process, complete the following steps 
         sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
 
-3. <div id="set-release"/>Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the Azure CLI software repository (skip this step on ARM64 Linux distributions):
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
