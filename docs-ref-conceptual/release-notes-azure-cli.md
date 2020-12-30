@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 12/08/2020
+ms.date: 12/29/2020
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,115 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## December 29, 2020
+
+Version 2.17.0
+
+### ACR
+
+* Support zone redundancy
+* `az acr connected-registry`: New feature for on-prem Azure Container Registry
+* `az acr scope-map update`: --add and --remove are deprecated, they are renamed to --add-repo --remove-repo
+* `az acr scope-map create/update`: Add support to handle Gateway actions.
+* `az acr token create`: support added for gateway actions
+
+### AKS
+
+* Fix: add arguments removed by a previous PR
+* `az aks get-credentials`: Clarify documentation for get-credentials
+
+### App Service
+
+* Allow customer to create Python 3.9 function app
+* Fix #14583: az webapp up should generate default name if name isn't provided
+* Fix: Better error handling when trying to create duplicate ASP in diff location
+
+### ARM
+
+* `az ts`:  Add support for --tags
+* `az ts`: Support deleting a single version
+* `az provider register`: Add --accept-terms for registering RPaaS
+* Fix parsing JSON files with multi-line strings
+
+### ARO
+
+* `az aro delete`: Add RBAC validation on cluster deletion
+* `az aro update`: Add RBAC validation on cluster update
+* Ensure worker_profile is not None before getting the subnets from
+
+### Backup
+
+* `az backup job list`: Solve -o table bug and added backup_management_type as command input
+
+### Batch
+
+* Upgrade data plane to [azure batch 10.0.0](https://pypi.org/project/azure-batch/10.0.0/)
+* [BREAKING CHANGE] az batch job task-counts: Change the output from a JSON object returning task counts to a complex JSON object that includes task counts (`taskCounts`) as well as task slot counts (`taskSlotCounts`).
+
+### Compute
+
+* New license type RHEL_ELS_6
+* Adopt track2 SDK, azure-mgmt-compute==18.0.0
+
+### Container
+
+* Fix misspelling in `az container create` CLI example text.
+
+### DataBoxEdge
+
+* New command module: support for data-box-edge devices and management
+
+### IoT
+
+* Update device key generation
+* Update identity-enabled hub tests to fix endpoint RBAC issues
+
+### Key Vault
+
+* `az keyvault key import`: Support `--kty` for importing BYOK keys
+
+### Monitor
+
+* `az monitor metrics alert create`: Improve error message to give more actionable insight
+
+### Network
+
+* `az network private-endpoint create`: Add more declaration of '--subnet' and '--private-connection-resource-id'
+* Change validator of application-gateway ssl-cert create
+* Migrate network to track2 SDK
+* Fix bug for "az network traffic-manager profile create" when using "--routing-method MultiValue"
+
+### Profile
+
+* Fix "missing secret or certificate in order to authenticate through a service principal"
+
+### Role
+
+* `az ad sp create-for-rbac`: Deprecate creating Contributor role assignment by default
+
+### Security
+
+* Add secure score commands
+* Fix update alert command and support new value
+
+### SQL
+
+* `az sql dw update`: do not accept backup-storage-redundancy argument
+* `az sql db update`: update backup storage redundancy as requested from command
+
+### Storage
+
+* Fix issue #15965: Clarify how to remove multiple legal hold tags with `az storage container legal-hold [clear|set]`
+* `az storage account encryption-scope`: GA support
+* Fix issue #9959: Trying to download a snapshot version of a file share fails with ResourceNotFound
+
+### Synapse
+
+* Add new cmdlets az synapse sql ad-admin show, create, update, delete
+* Add new cmdlet az synapse workspace firewall-rule update
+* Add new cmdlets az synapse sql audit-policy show, update
+* Add integration runtime related cmdlets
 
 ## December 08, 2020
 
