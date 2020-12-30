@@ -137,7 +137,12 @@ az rest --method PATCH
 
 When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
 
-## Quoting issues
+## Pass arguments
+
+1. If an argument's value starts with a dash (like `-VerySecret`), it will be parsed as an option (argument name, like `-n`) by [argparse](https://docs.python.org/3/library/argparse.html) (https://bugs.python.org/issue9334). To force it to be parsed as value, use `--password="-VerySecret"`. ([Azure/azure-cli#7054](https://github.com/Azure/azure-cli/issues/7054)).
+2. If an argument's value contains special characters, like whitespace (` `) or quote (`"`, `'`), some quoting rules will apply. See below section:
+
+### Quoting issues
 
 This becomes an issue because when the command shell (Bash, Zsh, Windows Command Prompt, PowerShell, etc) parses the CLI command, it will interpret the quotes and spaces. Always refer to the documents when you are uncertain about the usage of a shell:
 
