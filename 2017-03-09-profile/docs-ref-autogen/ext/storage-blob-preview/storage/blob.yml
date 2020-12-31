@@ -4,7 +4,7 @@ name: az storage blob
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **storage-blob-preview** extension for Azure CLI and requires version 2.12.0 or higher.  The extension will automatically install the first time you run an **az storage blob** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **storage-blob-preview** extension for Azure CLI and requires version 2.14.0 or higher.  The extension will automatically install the first time you run an **az storage blob** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage object storage for unstructured data (blobs).
 description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'
 directCommands:
@@ -13,18 +13,19 @@ directCommands:
   summary: Mark a blob or snapshot for deletion.
   description: The blob is marked for later deletion during garbage collection.  In order to delete a blob, all of its snapshots must also be deleted. Both can be removed at the same time.
   syntax: >-
-    az storage blob delete --container-name
-                           --name
-                           [--account-key]
+    az storage blob delete [--account-key]
                            [--account-name]
                            [--auth-mode {key, login}]
+                           [--blob-url]
                            [--connection-string]
-                           [--delete-snapshots]
+                           [--container-name]
+                           [--delete-snapshots {include, only}]
                            [--if-match]
                            [--if-modified-since]
                            [--if-none-match]
                            [--if-unmodified-since]
                            [--lease-id]
+                           [--name]
                            [--sas-token]
                            [--snapshot]
                            [--tags-condition]
@@ -35,15 +36,6 @@ directCommands:
     syntax: az storage blob delete -c mycontainer -n MyBlob
   - summary: Delete a blob using login credentials.
     syntax: az storage blob delete -c mycontainer -n MyBlob --account-name mystorageaccount --auth-mode login
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -55,11 +47,18 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
   - name: --delete-snapshots
-    summary: "Required if the blob has associated snapshots. Values include: - \"only\": Deletes only the blobs snapshots. - \"include\": Deletes the blob along with all snapshots. :keyword str version_id: The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to delete. .. versionadded:: 12.4.0 This keyword argument was introduced in API version '2019-12-12'. :keyword lease: Required if the blob has an active lease. If specified, delete_blob only succeeds if the blob's lease is active and matches this ID. Value can be a BlobLeaseClient object or the lease ID as a string."
+    parameterValueGroup: include, only
+    summary: 'Required if the blob has associated snapshots. "only": Deletes only the blobs snapshots. "include": Deletes the blob along with all snapshots.'
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -75,6 +74,9 @@ directCommands:
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -96,13 +98,13 @@ directCommands:
   summary: Download a blob to a file path, with automatic chunking and progress notifications.
   description: ''
   syntax: >-
-    az storage blob download --container-name
-                             --file
-                             --name
+    az storage blob download --file
                              [--account-key]
                              [--account-name]
                              [--auth-mode {key, login}]
+                             [--blob-url]
                              [--connection-string]
+                             [--container-name]
                              [--end-range]
                              [--if-match]
                              [--if-modified-since]
@@ -110,6 +112,7 @@ directCommands:
                              [--if-unmodified-since]
                              [--lease-id]
                              [--max-connections]
+                             [--name]
                              [--no-progress]
                              [--open-mode]
                              [--sas-token]
@@ -122,16 +125,8 @@ directCommands:
                              [--version-id]
   requiredParameters:
   - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
     name: --file -f
     summary: Path of file to write out to.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
     description: ''
   optionalParameters:
   - name: --account-key
@@ -144,8 +139,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --end-range
     summary: 'End of byte range to use for downloading a section of the blob. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of blob.'
@@ -168,6 +169,9 @@ directCommands:
   - name: --max-connections
     defaultValue: "2"
     summary: The number of parallel connections with which to download.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
@@ -205,26 +209,18 @@ directCommands:
   summary: Check for the existence of a blob in a container.
   description: ''
   syntax: >-
-    az storage blob exists --container-name
-                           --name
-                           [--account-key]
+    az storage blob exists [--account-key]
                            [--account-name]
                            [--auth-mode {key, login}]
+                           [--blob-url]
                            [--connection-string]
+                           [--container-name]
+                           [--name]
                            [--sas-token]
                            [--timeout]
   examples:
   - summary: Check for the existence of a blob in a container. (autogenerated)
     syntax: az storage blob exists --account-key 00000000 --account-name MyAccount --container-name mycontainer --name MyBlob
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -236,8 +232,17 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -455,13 +460,14 @@ directCommands:
   summary: Set the block or page tiers on the blob.
   description: For block blob this command only supports block blob on standard storage accounts. For page blob, this command only supports for page blobs on premium accounts.
   syntax: >-
-    az storage blob set-tier --container-name
-                             --name
-                             --tier
+    az storage blob set-tier --tier
                              [--account-key]
                              [--account-name]
                              [--auth-mode {key, login}]
+                             [--blob-url]
                              [--connection-string]
+                             [--container-name]
+                             [--name]
                              [--rehydrate-priority {High, Standard}]
                              [--sas-token]
                              [--tags-condition]
@@ -472,14 +478,6 @@ directCommands:
   - summary: Set the block or page tiers on the blob. (autogenerated)
     syntax: az storage blob set-tier --account-key 00000000 --account-name MyAccount --container-name mycontainer --name MyBlob --tier P10
   requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   - isRequired: true
     name: --tier
     summary: The tier value to set the blob to.
@@ -495,8 +493,17 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --rehydrate-priority -r
     parameterValueGroup: High, Standard
@@ -524,17 +531,18 @@ directCommands:
   summary: Get the details of a blob.
   description: ''
   syntax: >-
-    az storage blob show --container-name
-                         --name
-                         [--account-key]
+    az storage blob show [--account-key]
                          [--account-name]
                          [--auth-mode {key, login}]
+                         [--blob-url]
                          [--connection-string]
+                         [--container-name]
                          [--if-match]
                          [--if-modified-since]
                          [--if-none-match]
                          [--if-unmodified-since]
                          [--lease-id]
+                         [--name]
                          [--sas-token]
                          [--snapshot]
                          [--tags-condition]
@@ -545,15 +553,6 @@ directCommands:
     syntax: az storage blob show -c mycontainer -n MyBlob
   - summary: Get the details of a blob (autogenerated)
     syntax: az storage blob show --account-name mystorageccount --account-key 00000000 --container-name mycontainer --name MyBlob
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -565,8 +564,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -582,6 +587,9 @@ directCommands:
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -603,30 +611,22 @@ directCommands:
   summary: Creates a snapshot of the blob.
   description: A snapshot is a read-only version of a blob that's taken at a point in time. It can be read, copied, or deleted, but not modified. Snapshots provide a way to back up a blob as it appears at a moment in time.  A snapshot of a blob has the same name as the base blob from which the snapshot is taken, with a DateTime value appended to indicate the time at which the snapshot was taken.
   syntax: >-
-    az storage blob snapshot --container-name
-                             --name
-                             [--account-key]
+    az storage blob snapshot [--account-key]
                              [--account-name]
                              [--auth-mode {key, login}]
+                             [--blob-url]
                              [--connection-string]
+                             [--container-name]
                              [--if-match]
                              [--if-modified-since]
                              [--if-none-match]
                              [--if-unmodified-since]
                              [--lease-id]
                              [--metadata]
+                             [--name]
                              [--sas-token]
                              [--tags-condition]
                              [--timeout]
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -638,8 +638,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -659,6 +665,9 @@ directCommands:
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
+  - name: --name -n
+    summary: The blob name.
+    description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
@@ -670,26 +679,21 @@ directCommands:
     description: ''
 - uid: ext_storage-blob-preview_az_storage_blob_undelete
   name: az storage blob undelete
-  summary: Restores soft-deleted blobs or snapshots.
-  description: 'Operation will only be successful if used within the specified number of days set in the delete retention policy.  :keyword int timeout:     The timeout parameter is expressed in seconds. :rtype: None  .. admonition:: Example:      .. literalinclude:: ../samples/blob_samples_common.py         :start-after: [START undelete_blob]         :end-before: [END undelete_blob]         :language: python         :dedent: 8         :caption: Undeleting a blob.'
+  summary: Restore soft-deleted blobs or snapshots.
+  description: Operation will only be successful if used within the specified number of days set in the delete retention policy.
   syntax: >-
-    az storage blob undelete --container-name
-                             --name
-                             [--account-key]
+    az storage blob undelete [--account-key]
                              [--account-name]
                              [--auth-mode {key, login}]
+                             [--blob-url]
                              [--connection-string]
+                             [--container-name]
+                             [--name]
                              [--sas-token]
                              [--timeout]
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
+  examples:
+  - summary: Restore soft-deleted blob.
+    syntax: az storage blob undelete -n myblob -c mycontainer --account-name mystorageaccount --account-key 0000-0000
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -701,8 +705,17 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -715,28 +728,31 @@ directCommands:
   summary: Upload a file to a storage blob.
   description: Creates a new blob from a file path, or updates the content of an existing blob with automatic chunking and progress notifications.
   syntax: >-
-    az storage blob upload --container-name
-                           --file
-                           --name
-                           [--account-key]
+    az storage blob upload [--account-key]
                            [--account-name]
                            [--auth-mode {key, login}]
+                           [--blob-url]
                            [--connection-string]
+                           [--container-name]
                            [--content-cache-control]
                            [--content-disposition]
                            [--content-encoding]
                            [--content-language]
                            [--content-md5]
                            [--content-type]
+                           [--data]
                            [--encryption-scope]
+                           [--file]
                            [--if-match]
                            [--if-modified-since]
                            [--if-none-match]
                            [--if-unmodified-since]
                            [--lease-id]
+                           [--length]
                            [--max-connections]
                            [--maxsize-condition]
                            [--metadata]
+                           [--name]
                            [--no-progress]
                            [--overwrite {false, true}]
                            [--sas-token]
@@ -749,21 +765,14 @@ directCommands:
   examples:
   - summary: Upload to a blob.
     syntax: az storage blob upload -f /path/to/file -c mycontainer -n MyBlob
+  - summary: Upload to a blob with blob sas url.
+    syntax: az storage blob upload -f /path/to/file --blob-url https://mystorageaccount.blob.core.windows.net/mycontainer/myblob?sv=2019-02-02&st=2020-12-22T07%3A07%3A29Z&se=2020-12-23T07%3A07%3A29Z&sr=b&sp=racw&sig=redacted
   - summary: Upload a file to a storage blob. (autogenerated)
     syntax: az storage blob upload --account-name mystorageaccount --account-key 0000-0000 --container-name mycontainer --file /path/to/file --name myblob
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --file -f
-    summary: Path of the file to upload as the blob content.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
+  - summary: Upload a string to a blob.
+    syntax: az storage blob upload --data "teststring" -c mycontainer -n myblob --account-name mystorageaccount --account-key 0000-0000
+  - summary: Upload to a through pipe.
+    syntax: echo $data | az storage blob upload --data @- -c mycontainer -n myblob --account-name mystorageaccount --account-key 0000-0000
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -775,8 +784,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --content-cache-control
     summary: The cache control string.
@@ -796,8 +811,14 @@ directCommands:
   - name: --content-type
     summary: The content MIME type.
     description: ''
+  - name: --data
+    summary: The blob data to upload.
+    description: ''
   - name: --encryption-scope
     summary: A predefined encryption scope used to encrypt the data on the service.
+    description: ''
+  - name: --file -f
+    summary: Path of the file to upload as the blob content.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -814,6 +835,9 @@ directCommands:
   - name: --lease-id
     summary: Required if the blob has an active lease.
     description: ''
+  - name: --length
+    summary: Number of bytes to read from the stream. This is optional, but should be supplied for optimal performance. Cooperate with --data.
+    description: ''
   - name: --max-connections
     defaultValue: "2"
     summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
@@ -823,6 +847,9 @@ directCommands:
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
