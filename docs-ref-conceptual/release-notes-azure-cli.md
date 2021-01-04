@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 12/29/2020
+ms.date: 01/04/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## January 04, 2021
+
+Version 2.17.1
+
+### RDBMS
+
+* Hotfix: `az mysql create`: Revert incorrect parameter name 'serv_name' to 'service_name'
 
 ## December 29, 2020
 
