@@ -25,7 +25,7 @@ There are two options to install the Azure CLI on your system.  First, you may e
 
 ## Option 1: Install with one command
 
-The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `cul` and piped directly to `bash` to install the CLI.
+The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `curl` and piped directly to `bash` to install the CLI.
 
 If you wish to inspect the contents of the script yourself before executing, simply download the script first using `curl` and inspect it in your favorite text editor.
 
@@ -52,7 +52,7 @@ If you prefer a step-by-step installation process, complete the following steps 
         sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
 
-3. <div id="set-release"/>Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the Azure CLI software repository (skip this step on ARM64 Linux distributions):
 
     ```bash
     AZ_REPO=$(lsb_release -cs)

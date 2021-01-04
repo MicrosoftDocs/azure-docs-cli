@@ -118,9 +118,9 @@ There may be cases where a service you are interested in does not have CLI comma
 
 If neither generic update arguments nor `az resource` meets your needs, you can use `az rest` command to call the REST API. It automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`.
 
-This is extremely useful for calling [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json&view=graph-rest-1.0) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
+This is extremely useful for calling [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json) which is not currently supported by CLI commands ([#12946](https://github.com/Azure/azure-cli/issues/12946)).
 
-For example, to update `redirectUris` for an [Application](/graph/api/resources/application?view=graph-rest-1.0), we call the [Update application](/graph/api/application-update?view=graph-rest-1.0&tabs=http) REST API with:
+For example, to update `redirectUris` for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API with:
 
 ```sh
 # Line breaks for legibility only
@@ -137,7 +137,12 @@ az rest --method PATCH
 
 When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
 
-## Quoting issues
+## Pass arguments
+
+1. If an argument's value starts with a dash (like `-VerySecret`), it will be parsed as an option (argument name, like `-n`) by [argparse](https://docs.python.org/3/library/argparse.html) (https://bugs.python.org/issue9334). To force it to be parsed as value, use `--password="-VerySecret"`. ([Azure/azure-cli#7054](https://github.com/Azure/azure-cli/issues/7054)).
+2. If an argument's value contains special characters, like whitespace (` `) or quote (`"`, `'`), some quoting rules will apply. See below section:
+
+### Quoting issues
 
 This becomes an issue because when the command shell (Bash, Zsh, Windows Command Prompt, PowerShell, etc) parses the CLI command, it will interpret the quotes and spaces. Always refer to the documents when you are uncertain about the usage of a shell:
 
