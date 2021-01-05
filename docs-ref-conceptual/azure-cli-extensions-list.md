@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/01/2021
+ms.date: 01/05/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -112,4 +112,4 @@ az extension list-available --output table
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.2.3 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
 | [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.3.4 | Auto repair commands to fix VMs. |  |
 | [vmware](https://github.com/Azure/az-vmware-cli) | 1.0.0 | Azure VMware Solution commands. |  |
-| [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.2.24 | Additional commands for Azure AppService. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.3.1 | Additional commands for Azure AppService. | Yes |
