@@ -19,19 +19,19 @@ The Azure CLI [az config param-persist](/cli/azure/param-persist) reference prov
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
-1. Values in the local working directory set by **az config param-persist**
+1. Values in the local working directory set by `az config param-persist`
 1. Environment variables
-1. Values in the configuration file or set with **az config**
+1. Values in the configuration file or set with `az config`
 
-[Install the Azure CLI](install-azure-cli.md) or open [Azure Cloud Shell](https://shell.azure.com) to run the scripts in this article.  If you are using a local install of the Azure CLI, version 2.12.0 or later is needed to run **az config param-persist** commands.  Run [az version](/cli/azure/reference-index#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index#az_upgrade).  Azure Cloud Shell always has the latest version of the Azure CLI.
+[Install the Azure CLI](install-azure-cli.md) or open [Azure Cloud Shell](https://shell.azure.com) to run the scripts in this article.  If you are using a local install of the Azure CLI, version 2.12.0 or later is needed to run `az config param-persist` commands.  Run [az version](/cli/azure/reference-index#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index#az_upgrade).  Azure Cloud Shell always has the latest version of the Azure CLI.
 
 ## Persisted parameter data file
 
-Persisted parameter values are kept in a file named **.param_persist** which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either location, the **.param_persist** file is hidden and should not be manually updated.
+Persisted parameter values are kept in a file named `.param_persist` which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either location, the `.param_persist` file is hidden and should not be manually updated.
 
 ## Persisted parameter storage and support
 
-The following Azure CLI parameters are supported by persisted parameter.  The **resource_group_name** and **location** parameters are stored differently in that you can add them to persisted parameter _without_ executing a create command.
+The following Azure CLI parameters are supported by persisted parameter.  The `resource_group_name` and `location` parameters are stored differently in that you can add them to persisted parameter _without_ executing a create command.
 
 | Persisted parameter | Storage action | Supported by
 |-|-|-|
@@ -44,7 +44,7 @@ The following Azure CLI parameters are supported by persisted parameter.  The **
 
 ## Sample script using persisted parameters
 
-Without persisted parameters, sequential CLI commands must repeat the same parameter values.  With persisted parameters enabled, your stored parameter values can be omitted from sequential commands.  In this example, the **location**, **resource group name** or **storage account name** are repeated in subsequent commands.
+Without persisted parameters, sequential CLI commands must repeat the same parameter values.  With persisted parameters enabled, your stored parameter values can be omitted from sequential commands.  In this example, the `location`, `resource group name` or `storage account name` are repeated in subsequent commands.
 
 ```azurecli
 # Reminder: function app and storage account names must be unique.
@@ -72,7 +72,7 @@ az config param-persist show
 
 ## Persisted parameter and global variable comparison
 
-There are two Azure CLI commands that can be used to default parameter values: **az configure** and **az config param-persist**.  Use the **az configure** command to specify _global variables_ such as group, location, or web.  Use **az param-persist** to specify _local default values_ unique to your workload.  Stored values are used by the CLI in place of required arguments.
+There are two Azure CLI commands that can be used to default parameter values: `az configure` and `az config param-persist`.  Use the `az configure` command to specify _global variables_ such as group, location, or web.  Use `az param-persist` to specify _local default values_ unique to your workload.  Stored values are used by the CLI in place of required arguments.
 
 > [!Important]
 > Persisted parameters override global context values.
@@ -80,12 +80,12 @@ There are two Azure CLI commands that can be used to default parameter values: *
 
 | Reference | Scope | Set | Use
 |-|-|-|-|
-[az configure](/cli/azure/reference-index#az_configure) | Scoped globally across the CLI | Set explicitly using **az configure --defaults** | Use for settings such as logging, data collection, and default argument values
+[az configure](/cli/azure/reference-index#az_configure) | Scoped globally across the CLI | Set explicitly using `az configure --defaults` | Use for settings such as logging, data collection, and default argument values
 [az config param-persist](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
 
 ### Command examples
 
-Use **az config param-persist** to set a global variable used in the creation of an Azure storage account.
+Use `az config param-persist` to set a global variable used in the creation of an Azure storage account.
 
 ```azurecli
 # set the global variable for resource group
@@ -118,7 +118,7 @@ CLI command output shows that a new storage account was created in the resource 
 ...
 ```
 
-Use **az config param-persist** to set persisted parameters used in the creation of an Azure storage account.  If a global variable is set for the same object, the persisted parameter will override the global variable.
+Use `az config param-persist` to set persisted parameters used in the creation of an Azure storage account.  If a global variable is set for the same object, the persisted parameter will override the global variable.
 
 ```azurecli
 # turn persisted parameter on
@@ -158,4 +158,3 @@ Even with a global variable set for resource group with a value of `myGlobalVari
 
 * [Tutorial: Use persisted parameter with sequential Azure CLI commands](param-persist-tutorial.md)
 * [Azure CLI Configuration using az configure](azure-cli-configuration.md)
-
