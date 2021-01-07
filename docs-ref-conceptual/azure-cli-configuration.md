@@ -42,9 +42,9 @@ The following table contains a list of available configuration keys.
 
 As an example, here's how you would set the default resource group and location for all commands.
 
-`azurecli-interactive
+```azurecli-interactive
 az configure --defaults location=westus2 group=MyResourceGroup
-`
+```
 
 ## CLI configuration file
 
@@ -65,14 +65,14 @@ Booleans are case-insensitive, and are represented by the following values.
 
 Here's an example of a CLI configuration file that disables any confirmation prompts and sets up logging to the `/var/log/azure` directory.
 
-`ini
+```ini
 [core]
 disable_confirm_prompt=Yes
 
 [logging]
 enable_log_file=yes
 log_dir=/var/log/azure
-`
+```
 
 See the next section for details on all of the available configuration values and what they mean. For the full details on the INI file format,
 see the [Python documentation on INI](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure).
