@@ -15,17 +15,18 @@ directCommands:
                  [--display-name]
                  [--location]
                  [--subscription]
+                 [--tags]
                  [--template-file]
                  [--version]
                  [--version-description]
                  [--yes]
   examples:
   - summary: Create a template spec.
-    syntax: az ts create -g testRG --name TemplateSpecName -l WestUS --display-name "MyDisplayName" --description "Simple template spec"
+    syntax: az ts create -g testRG --name TemplateSpecName -l WestUS --display-name "MyDisplayName" --description "Simple template spec" --tags key1=value1
   - summary: Create a template spec version.
-    syntax: az ts create -g testRG --name TemplateSpecName -v 2.0 -l WestUS --template-file templateSpec.json --version-description "Less simple template spec"
+    syntax: az ts create -g testRG --name TemplateSpecName -v 2.0 -l WestUS --template-file templateSpec.json --version-description "Less simple template spec" --tags key1=value1 key3=value3
   - summary: Create a template spec and a version of the template spec.
-    syntax: az ts create -g testRG --name TemplateSpecName -v 1.0 -l WestUS --template-file templateSpec.json --display-name "MyDisplayName" --description "Simple template spec" --version-description "Version of simple template spec"
+    syntax: az ts create -g testRG --name TemplateSpecName -v 1.0 -l WestUS --template-file templateSpec.json --display-name "MyDisplayName" --description "Simple template spec" --version-description "Version of simple template spec" --tags key1=value1 key2=value2
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -47,6 +48,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --template-file -f
     summary: A template file path in the file system.
@@ -214,6 +218,7 @@ directCommands:
                  [--name]
                  [--resource-group]
                  [--subscription]
+                 [--tags]
                  [--template-file]
                  [--template-spec]
                  [--version]
@@ -222,12 +227,14 @@ directCommands:
   examples:
   - summary: Update the template content of a template spec or template spec version based on the resource ID.
     syntax: az ts update --template-spec resourceID -f updatedFile.json
-  - summary: Update the display name of a template spec based on the resource ID.
-    syntax: az ts update --template-spec resourceID --display-name "NewParentDisplayName"
-  - summary: Update the description of a template spec version.
-    syntax: az ts update -g ExistingRG --name ExistingName -v 3.0 --version-description "New description"
+  - summary: Update the display name and tag(s) of a template spec based on the resource ID.
+    syntax: az ts update --template-spec resourceID --display-name "NewParentDisplayName" --tags key1=value1
+  - summary: Update the description of a template spec version with no prompt.
+    syntax: az ts update -g ExistingRG --name ExistingName -v 3.0 --version-description "New description" --yes
   - summary: Update all the properties of a template spec version.
     syntax: az ts update -g ExistingRG --name ExistingName -v 3.0 -f updatedTemplate.json --display-name "New parent display name" --description "New parent description" --version-description "New child description"
+  - summary: Remove tag(s) from template spec version with no prompt.
+    syntax: az ts update -g ExistingRG --name ExistingName -v 3.0 -f updatedTemplate.json --tags --yes
   optionalParameters:
   - name: --description
     summary: The description of the parent template spec.
@@ -243,6 +250,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --template-file -f
     summary: A template file path in the file system.

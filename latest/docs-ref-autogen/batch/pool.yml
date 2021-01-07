@@ -21,7 +21,6 @@ directCommands:
                          [--id]
                          [--image]
                          [--json-file]
-                         [--max-tasks-per-node]
                          [--metadata]
                          [--node-agent-sku-id]
                          [--os-family {2, 3, 4, 5, 6}]
@@ -34,6 +33,7 @@ directCommands:
                          [--target-dedicated-nodes]
                          [--target-low-priority-nodes]
                          [--targets]
+                         [--task-slots-per-node]
                          [--vm-size]
   optionalParameters:
   - name: --account-endpoint
@@ -72,9 +72,6 @@ directCommands:
   - name: --json-file
     summary: A file containing the pool specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Pool Arguments' are ignored.
     description: ''
-  - name: --max-tasks-per-node
-    summary: The maximum number of Tasks that can run concurrently on a single Compute Node in the Pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the Pool or 256.
-    description: ''
   - name: --metadata
     summary: A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
     description: ''
@@ -111,6 +108,9 @@ directCommands:
     description: ''
   - name: --targets
     summary: The list of disk targets Batch Service will encrypt on the compute node. If omitted, no disks on the compute nodes in the pool will be encrypted. On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. Space seperated target disks to be encrypted. Values can either be OsDisk or TemporaryDisk.
+    description: ''
+  - name: --task-slots-per-node
+    summary: The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256.
     description: ''
   - name: --vm-size
     summary: Required. The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines for Cloud Services Pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (<a href="https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/">https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/</a>). Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and A2V2. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/</a>) or Sizes for Virtual Machines (Windows) (<a href="https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/">https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/</a>). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
@@ -506,5 +506,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/19/2019
+  ms.date: 12/07/2020
   description: Manage Batch pools.

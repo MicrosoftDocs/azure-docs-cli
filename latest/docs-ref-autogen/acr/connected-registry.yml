@@ -1,0 +1,359 @@
+### YamlMime:AzureCLIGroup
+uid: az_acr_connected_registry
+name: az acr connected-registry
+summary: Manage connected registry resources with Azure Container Registries.
+description: ''
+directCommands:
+- uid: az_acr_connected_registry_create
+  name: az acr connected-registry create
+  summary: Create a connected registry for an Azure Container Registry.
+  description: ''
+  syntax: >-
+    az acr connected-registry create --name
+                                     --registry
+                                     [--audit-logs-enabled {false, true}]
+                                     [--client-tokens]
+                                     [--log-level]
+                                     [--mode]
+                                     [--parent]
+                                     [--repository]
+                                     [--resource-group]
+                                     [--subscription]
+                                     [--sync-message-ttl]
+                                     [--sync-schedule]
+                                     [--sync-token]
+                                     [--sync-window]
+  examples:
+  - summary: Create a connected registry in registry mode with access to repos app/hello-world and service/mycomponent. It'll create a sync token and scope-map with the right repo permissions.
+    syntax: >-
+      az acr connected-registry create --registry mycloudregistry --name myconnectedregistry \
+          --repository "app/hello-world service/mycomponent"
+  - summary: Create a mirror connected registry with only read permissions and pass the sync token
+    syntax: >-
+      az acr connected-registry create --registry mycloudregistry  --name mymirroracr \
+          --mode mirror --parent myconnectedregistry --sync-token mySyncTokenName
+  - summary: Create a mirror connected registry with client tokens, that syncs every day at midninght and sync window of 4 hours.
+    syntax: >-
+      az acr connected-registry create -r mycloudregistry -n mymirroracr -p myconnectedregistry \
+          -t app/mycomponent -m mirror -s "0 12 * * *" -w PT4H \
+          --client-tokens myTokenName1 myTokenName2
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --audit-logs-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether audit log synchronization is enabled. It is enabled by default.
+    description: ''
+  - name: --client-tokens
+    summary: Specifies the client access to the repositories in the connected registry. It can be in the format [TOKEN_NAME01] [TOKEN_NAME02]...
+    description: ''
+  - name: --log-level
+    defaultValue: Information
+    summary: Sets the log level for logging on the instance. Accepted log levels are Debug, Information, Warning, Error, and None.
+    description: ''
+  - name: --mode -m
+    defaultValue: registry
+    summary: 'Can be one of the two operating modes: registry or mirror(pull-only mode).'
+    description: ''
+  - name: --parent -p
+    summary: The name of the parent connected registry.
+    description: ''
+  - name: --repository -t
+    summary: Specifies the repositories that need to be sync to the connected registry. It can be in the format [REPO01] [REPO02]...
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --sync-message-ttl
+    defaultValue: P2D
+    summary: Determines how long the sync messages will be kept in the cloud. Uses ISO 8601 duration format.
+    description: ''
+  - name: --sync-schedule -s
+    defaultValue: ''
+    summary: Optional parameter to define the sync schedule. Uses cron expression to determine the schedule. If not specified, the instance is considered always online and attempts to sync every minute.
+    description: ''
+  - name: --sync-token
+    summary: Specifies the sync token used to synchronize the connected registry with its parent. It most have only repo permissions and at least the actions required for its mode. It can include access for multiple repositories.
+    description: ''
+  - name: --sync-window -w
+    summary: Required parameter if --sync-schedule is present. Used to determine the schedule duration. Uses ISO 8601 duration format.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_deactivate
+  name: az acr connected-registry deactivate
+  summary: Deactivate a connected registry from Azure Container Registry.
+  description: ''
+  syntax: >-
+    az acr connected-registry deactivate --name
+                                         --registry
+                                         [--resource-group]
+                                         [--subscription]
+                                         [--yes]
+  examples:
+  - summary: Deactivate a connected registry 'myconnectedregistry'.
+    syntax: az acr connected-registry deactivate -r mycloudregistry -n myconnectedregistry
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_delete
+  name: az acr connected-registry delete
+  summary: Delete a connected registry from Azure Container Registry.
+  description: ''
+  syntax: >-
+    az acr connected-registry delete --name
+                                     --registry
+                                     [--cleanup]
+                                     [--resource-group]
+                                     [--subscription]
+                                     [--yes]
+  examples:
+  - summary: Delete a mirror connected registry 'myconnectedregistry' from parent registry 'mycloudregistry'.
+    syntax: az acr connected-registry delete --registry mycloudregistry --name myconnectedregistry
+  - summary: Delete a mirror connected registry 'myconnectedregistry' and it's sync token and scope-map from parent registry 'mycloudregistry'.
+    syntax: az acr connected-registry delete -r mycloudregistry -n myconnectedregistry --cleanup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --cleanup
+    summary: It will aslo delete the sync token and the scope map resources.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_list
+  name: az acr connected-registry list
+  summary: Lists all the connected registries under the current parent registry.
+  description: ''
+  syntax: >-
+    az acr connected-registry list --registry
+                                   [--no-children]
+                                   [--parent]
+                                   [--query-examples]
+                                   [--resource-group]
+                                   [--subscription]
+  examples:
+  - summary: Lists all the connected registries of 'mycloudregistry' in table format.
+    syntax: az acr connected-registry list --registry mycloudregistry --output table
+  - summary: Lists only the inmediate children of 'mycloudregistry' in expanded form in a table.
+    syntax: az acr connected-registry list --registry mycloudregistry --no-children --output table
+  - summary: Lists all the offspring of 'myconnectedregistry' in expanded form inside a table.
+    syntax: az acr connected-registry list -r mycloudregistry -p myconnectedregistry --output table
+  requiredParameters:
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --no-children
+    summary: Used to remove all children from the list.
+    description: ''
+  - name: --parent -p
+    summary: The name of the parent connected registry.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_list_client_tokens
+  name: az acr connected-registry list-client-tokens
+  summary: Lists all the client tokens associated to a specific connected registries.
+  description: ''
+  syntax: >-
+    az acr connected-registry list-client-tokens --name
+                                                 --registry
+                                                 [--resource-group]
+                                                 [--subscription]
+  examples:
+  - summary: Lists all client tokens of 'mymirroracr'.
+    syntax: az acr connected-registry list-client-tokens -r mycloudregistry -n mymirroracr -o table
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_show
+  name: az acr connected-registry show
+  summary: Show connected registry details.
+  description: ''
+  syntax: >-
+    az acr connected-registry show --name
+                                   --registry
+                                   [--query-examples]
+                                   [--resource-group]
+                                   [--subscription]
+  examples:
+  - summary: Show all the details of the 'mymirroracr' registry in table form.
+    syntax: az acr connected-registry show --registry mycloudregistry --name mymirroracr --output table
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected_registry_update
+  name: az acr connected-registry update
+  summary: Update a connected registry for an Azure Container Registry.
+  description: ''
+  syntax: >-
+    az acr connected-registry update --name
+                                     --registry
+                                     [--add-client-tokens]
+                                     [--audit-logs-enabled {false, true}]
+                                     [--log-level]
+                                     [--remove-client-tokens]
+                                     [--resource-group]
+                                     [--subscription]
+                                     [--sync-message-ttl]
+                                     [--sync-schedule]
+                                     [--sync-window]
+  examples:
+  - summary: Update the connected registry client Tokens.
+    syntax: >-
+      az acr connected-registry update --registry mycloudregistry --name myconnectedregistry \
+          --remove-client-tokens myTokenName1 --add-client-tokens myTokenName2 myTokenName3
+  - summary: Update the sync and window time of a connected registry.
+    syntax: >-
+      az acr connected-registry update --registry mycloudregistry --name mymirroracr \
+          --sync-schedule "0 12 * * *" --sync-window PT4H
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --add-client-tokens
+    summary: Client tokens to be added. Use the format "--add-client-tokens [TOKEN_ID1 TOKEN_ID2 ...]" per token id.
+    description: ''
+  - name: --audit-logs-enabled
+    parameterValueGroup: false, true
+    summary: Indicates whether audit log synchronization is enabled. It is enabled by default.
+    description: ''
+  - name: --log-level
+    summary: Sets the log level for logging on the instance. Accepted log levels are Debug, Information, Warning, Error, and None.
+    description: ''
+  - name: --remove-client-tokens
+    summary: Client tokens to be removed. Use the format "--remove-client-tokens [TOKEN_ID1 TOKEN_ID2 ...]" per token id.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --sync-message-ttl
+    summary: Determines how long the sync messages will be kept in the cloud. Uses ISO 8601 duration format.
+    description: ''
+  - name: --sync-schedule -s
+    summary: Optional parameter to define the sync schedule. Uses cron expression to determine the schedule. If not specified, the instance is considered always online and attempts to sync every minute.
+    description: ''
+  - name: --sync-window -w
+    summary: Used to determine the schedule duration. Uses ISO 8601 duration format.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+commands:
+- az_acr_connected_registry_create
+- az_acr_connected_registry_deactivate
+- az_acr_connected_registry_delete
+- az_acr_connected_registry_install
+- az_acr_connected_registry_install_info
+- az_acr_connected_registry_install_renew_credentials
+- az_acr_connected_registry_list
+- az_acr_connected_registry_list_client_tokens
+- az_acr_connected_registry_show
+- az_acr_connected_registry_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  ms.date: 12/24/2020
+  description: Manage connected registry resources with Azure Container Registries.

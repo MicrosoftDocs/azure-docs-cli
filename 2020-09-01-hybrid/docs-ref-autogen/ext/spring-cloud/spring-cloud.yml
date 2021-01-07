@@ -19,7 +19,9 @@ directCommands:
                            [--app-insights-key]
                            [--app-network-resource-group]
                            [--app-subnet]
+                           [--disable-app-insights {false, true}]
                            [--disable-distributed-tracing {false, true}]
+                           [--enable-java-agent {false, true}]
                            [--location]
                            [--no-wait]
                            [--reserved-cidr-range]
@@ -33,8 +35,10 @@ directCommands:
     syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus
   - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights by using the instrumentation key.
     syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights-key MyInstrumentationKey
+  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights and enable Java In-Process Agent.
+    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --enable-java-agent true --app-insights MyInstrumentationName
   - summary: Create a new Azure Spring Cloud with distributed tracing disabled.
-    syntax: az spring-cloud create -n MyService -g MyResourceGroup --disable-distributed-tracing
+    syntax: az spring-cloud create -n MyService -g MyResourceGroup --disable-app-insights
   - summary: Create a new Azure Spring Cloud with VNet-injected via giving VNet name in current resource group
     syntax: az spring-cloud create -n MyService -g MyResourceGroup --vnet MyVNet --app-subnet MyAppSubnet --service-runtime-subnet MyServiceRuntimeSubnet
   - summary: Create a new Azure Spring Cloud with VNet-injected via giving subnets resource ID
@@ -53,7 +57,7 @@ directCommands:
     summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
     description: ''
   - name: --app-insights-key
-    summary: Instrumentation key of the existing Application Insights to be added for the distributed tracing.
+    summary: Instrumentation key of the existing Application Insights.
     description: ''
   - name: --app-network-resource-group --app-nrg
     summary: The resource group where all network resources for apps will be created in.
@@ -61,9 +65,17 @@ directCommands:
   - name: --app-subnet
     summary: 'The name or ID of an existing subnet in "vnet" into which to deploy the Spring Cloud app. Required when deploying into a Virtual Network. Smaller subnet sizes are supported, please refer: <a href="https://aka.ms/azure-spring-cloud-smaller-subnet-vnet-docs">https://aka.ms/azure-spring-cloud-smaller-subnet-vnet-docs</a>.'
     description: ''
+  - name: --disable-app-insights
+    parameterValueGroup: false, true
+    summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    description: ''
   - name: --disable-distributed-tracing
     parameterValueGroup: false, true
     summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    description: ''
+  - name: --enable-java-agent
+    parameterValueGroup: false, true
+    summary: Enable java in-process agent.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -145,7 +157,9 @@ directCommands:
                            --resource-group
                            [--app-insights]
                            [--app-insights-key]
+                           [--disable-app-insights {false, true}]
                            [--disable-distributed-tracing {false, true}]
+                           [--enable-java-agent {false, true}]
                            [--no-wait]
                            [--sku]
                            [--tags]
@@ -153,7 +167,7 @@ directCommands:
   - summary: Update pricing tier.
     syntax: az spring-cloud update -n MyService --sku Standard -g MyResourceGroup
   - summary: Enable the distributed tracing of the existing Azure Spring Cloud.
-    syntax: az spring-cloud update -n MyService -g MyResourceGroup --disable-distributed-tracing false
+    syntax: az spring-cloud update -n MyService -g MyResourceGroup --disable-app-insights false
   - summary: Update the tags of the existing Azure Spring Cloud.
     syntax: az spring-cloud update -n MyService -g MyResourceGroup --tags key1=value1 key2=value2
   requiredParameters:
@@ -170,11 +184,19 @@ directCommands:
     summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
     description: ''
   - name: --app-insights-key
-    summary: Instrumentation key of the existing Application Insights to be added for the distributed tracing.
+    summary: Instrumentation key of the existing Application Insights.
+    description: ''
+  - name: --disable-app-insights
+    parameterValueGroup: false, true
+    summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
     description: ''
   - name: --disable-distributed-tracing
     parameterValueGroup: false, true
     summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
+    description: ''
+  - name: --enable-java-agent
+    parameterValueGroup: false, true
+    summary: Enable java in-process agent.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -230,6 +252,9 @@ commands:
 - ext_spring-cloud_az_spring_cloud_app_start
 - ext_spring-cloud_az_spring_cloud_app_stop
 - ext_spring-cloud_az_spring_cloud_app_update
+- ext_spring-cloud_az_spring_cloud_app_insights
+- ext_spring-cloud_az_spring_cloud_app_insights_show
+- ext_spring-cloud_az_spring_cloud_app_insights_update
 - ext_spring-cloud_az_spring_cloud_certificate
 - ext_spring-cloud_az_spring_cloud_certificate_add
 - ext_spring-cloud_az_spring_cloud_certificate_list

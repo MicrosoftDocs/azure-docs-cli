@@ -4,7 +4,7 @@ name: az storage blob metadata
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **storage-blob-preview** extension for Azure CLI and requires version 2.12.0 or higher.  The extension will automatically install the first time you run an **az storage blob metadata** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **storage-blob-preview** extension for Azure CLI and requires version 2.14.0 or higher.  The extension will automatically install the first time you run an **az storage blob metadata** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage blob metadata.
 description: ''
 directCommands:
@@ -13,17 +13,18 @@ directCommands:
   summary: Return all user-defined metadata for the specified blob or snapshot.
   description: ''
   syntax: >-
-    az storage blob metadata show --container-name
-                                  --name
-                                  [--account-key]
+    az storage blob metadata show [--account-key]
                                   [--account-name]
                                   [--auth-mode {key, login}]
+                                  [--blob-url]
                                   [--connection-string]
+                                  [--container-name]
                                   [--if-match]
                                   [--if-modified-since]
                                   [--if-none-match]
                                   [--if-unmodified-since]
                                   [--lease-id]
+                                  [--name]
                                   [--sas-token]
                                   [--snapshot]
                                   [--tags-condition]
@@ -31,15 +32,6 @@ directCommands:
   examples:
   - summary: Get all user-defined metadata for the specified blob.
     syntax: az storage blob metadata show -n myblob -c mycontainer --account-name mystorageaccount --account-key 0000-0000
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -51,8 +43,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -68,6 +66,9 @@ directCommands:
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -86,18 +87,19 @@ directCommands:
   summary: Set user-defined metadata for the specified blob as one or more name-value pairs.
   description: ''
   syntax: >-
-    az storage blob metadata update --container-name
-                                    --name
-                                    [--account-key]
+    az storage blob metadata update [--account-key]
                                     [--account-name]
                                     [--auth-mode {key, login}]
+                                    [--blob-url]
                                     [--connection-string]
+                                    [--container-name]
                                     [--if-match]
                                     [--if-modified-since]
                                     [--if-none-match]
                                     [--if-unmodified-since]
                                     [--lease-id]
                                     [--metadata]
+                                    [--name]
                                     [--sas-token]
                                     [--snapshot]
                                     [--tags-condition]
@@ -105,15 +107,6 @@ directCommands:
   examples:
   - summary: Set user-defined metadata for the specified blob as one or more name-value pairs.
     syntax: az storage blob metadata update -n myblob -c mycontainer --metadata a=b c=d
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -125,8 +118,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --if-match
     summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
@@ -145,6 +144,9 @@ directCommands:
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'

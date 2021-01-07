@@ -1,0 +1,378 @@
+### YamlMime:AzureCLIGroup
+uid: ext_cosmosdb-preview_az_cosmosdb
+name: az cosmosdb
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **cosmosdb-preview** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az cosmosdb** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Azure Cosmos DB database accounts.
+description: ''
+directCommands:
+- uid: ext_cosmosdb-preview_az_cosmosdb_create
+  name: az cosmosdb create
+  summary: Create a new Azure Cosmos DB database account.
+  description: ''
+  syntax: >-
+    az cosmosdb create --name
+                       --resource-group
+                       [--backup-interval]
+                       [--backup-policy-type {Continuous, Periodic}]
+                       [--backup-retention]
+                       [--capabilities]
+                       [--databases-to-restore]
+                       [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
+                       [--disable-key-based-metadata-write-access {false, true}]
+                       [--enable-analytical-storage {false, true}]
+                       [--enable-automatic-failover {false, true}]
+                       [--enable-free-tier {false, true}]
+                       [--enable-multiple-write-locations {false, true}]
+                       [--enable-public-network {false, true}]
+                       [--enable-virtual-network {false, true}]
+                       [--ip-range-filter]
+                       [--is-restore-request {false, true}]
+                       [--key-uri]
+                       [--kind {GlobalDocumentDB, MongoDB, Parse}]
+                       [--locations]
+                       [--max-interval]
+                       [--max-staleness-prefix]
+                       [--restore-source]
+                       [--restore-timestamp]
+                       [--server-version {3.2, 3.6}]
+                       [--tags]
+                       [--virtual-network-rules]
+  examples:
+  - summary: Create a new Azure Cosmos DB database account.
+    syntax: az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --subscription MySubscription
+  - summary: Create a new Azure Cosmos DB database account with two regions. UK South is zone redundant.
+    syntax: az cosmosdb create -n myaccount -g mygroup --locations regionName=eastus failoverPriority=0 isZoneRedundant=False --locations regionName=uksouth failoverPriority=1 isZoneRedundant=True --enable-multiple-write-locations
+  - summary: Create a new Azure Cosmos DB database account by restoring from an existing account in the given location
+    syntax: az cosmosdb create -n restoredaccount -g mygroup --is-restore-request true --restore-source /subscriptions/2296c272-5d55-40d9-bc05-4d56dc2d7588/providers/Microsoft.DocumentDB/locations/westus/restorableDatabaseAccounts/d056a4f8-044a-436f-80c8-cd3edbc94c68 --restore-timestamp 2020-07-13T16:03:41+0000 --locations regionName=westus failoverPriority=0 isZoneRedundant=False
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Cosmos DB database account.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --backup-interval
+    summary: The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    description: ''
+  - name: --backup-policy-type
+    parameterValueGroup: Continuous, Periodic
+    summary: The type of backup policy of the account to create.
+    description: ''
+  - name: --backup-retention
+    summary: The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
+    description: ''
+  - name: --capabilities
+    summary: Set custom capabilities on the Cosmos DB database account.
+    description: ''
+  - name: --databases-to-restore
+    summary: Add a database and its collection names to restore.
+    description: 'Usage:          --databases-to-restore name=DatabaseName collections=collection1 [collection2 ...].'
+  - name: --default-consistency-level
+    parameterValueGroup: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
+    summary: Default consistency level of the Cosmos DB database account.
+    description: ''
+  - name: --disable-key-based-metadata-write-access
+    parameterValueGroup: false, true
+    summary: Disable write operations on metadata resources (databases, containers, throughput) via account keys.
+    description: ''
+  - name: --enable-analytical-storage
+    parameterValueGroup: false, true
+    summary: Flag to enable log storage on the account.
+    description: ''
+  - name: --enable-automatic-failover
+    parameterValueGroup: false, true
+    summary: Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
+    description: ''
+  - name: --enable-free-tier
+    parameterValueGroup: false, true
+    summary: If enabled the account is free-tier.
+    description: ''
+  - name: --enable-multiple-write-locations
+    parameterValueGroup: false, true
+    summary: Enable Multiple Write Locations.
+    description: ''
+  - name: --enable-public-network -e
+    parameterValueGroup: false, true
+    summary: Enable or disable public network access to server.
+    description: ''
+  - name: --enable-virtual-network
+    parameterValueGroup: false, true
+    summary: Enables virtual network on the Cosmos DB database account.
+    description: ''
+  - name: --ip-range-filter
+    summary: Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma-separated and must not contain any spaces.
+    description: ''
+  - name: --is-restore-request -r
+    parameterValueGroup: false, true
+    summary: Restore from an existing/deleted account.
+    description: ''
+  - name: --key-uri
+    summary: The URI of the key vault.
+    description: ''
+  - name: --kind
+    defaultValue: GlobalDocumentDB
+    parameterValueGroup: GlobalDocumentDB, MongoDB, Parse
+    summary: The type of Cosmos DB database account to create.
+    description: ''
+  - name: --locations
+    summary: Add a location to the Cosmos DB database account.
+    description: >-
+      Usage:          --locations KEY=VALUE [KEY=VALUE ...]
+
+      Required Keys:  regionName, failoverPriority
+
+      Optional Key:   isZoneRedundant
+
+      Default:        single region account in the location of the specified resource group.
+
+      Failover priority values are 0 for write regions and greater than 0 for read regions. A failover priority value must be unique and less than the total number of regions.
+
+      Multiple locations can be specified by using more than one `--locations` argument.
+  - name: --max-interval
+    defaultValue: "5"
+    summary: When used with Bounded Staleness consistency, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 1 - 100.
+    description: ''
+  - name: --max-staleness-prefix
+    defaultValue: "100"
+    summary: When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 1 - 2,147,483,647.
+    description: ''
+  - name: --restore-source
+    summary: The restorable-database-account Id of the source account from which the account has to be restored. Required if --is-restore-request is set to true.
+    description: ''
+  - name: --restore-timestamp
+    summary: 'The timestamp to which the account has to be restored to. Required if --is-restore-request is set to true. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - name: --server-version
+    parameterValueGroup: 3.2, 3.6
+    summary: Valid only for MongoDB accounts.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --virtual-network-rules
+    summary: ACL's for virtual network.
+    description: ''
+- uid: ext_cosmosdb-preview_az_cosmosdb_list
+  name: az cosmosdb list
+  summary: List Azure Cosmos DB database accounts.
+  description: ''
+  syntax: az cosmosdb list [--resource-group]
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_cosmosdb-preview_az_cosmosdb_restore
+  name: az cosmosdb restore
+  summary: Create a new Azure Cosmos DB database account by restoring from an existing database account.
+  description: ''
+  syntax: >-
+    az cosmosdb restore --account-name
+                        --location
+                        --resource-group
+                        --restore-timestamp
+                        --target-database-account-name
+                        [--databases-to-restore]
+  examples:
+  - summary: Create a new Azure Cosmos DB database account by restoring from an existing database account.
+    syntax: az cosmosdb restore --target-database-account-name MyRestoredCosmosDBDatabaseAccount --account-name MySourceAccount --restore-timestamp 2020-07-13T16:03:41+0000 -g MyResourceGroup --location westus
+  - summary: Create a new Azure Cosmos DB database account by restoring only the selected databases and collections from an existing database account.
+    syntax: az cosmosdb restore -g MyResourceGroup --target-database-account-name MyRestoredCosmosDBDatabaseAccount --account-name MySourceAccount --restore-timestamp 2020-07-13T16:03:41+0000 --location westus --databases-to-restore name=MyDB1 collections=collection1 collection2 --databases-to-restore name=MyDB2 collections=collection3 collection4
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Name of the source Cosmos DB database account for the restore.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: The location of the source account from which restore is triggered. This will also be the write region of the restored account.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --restore-timestamp -t
+    summary: 'The timestamp to which the account has to be restored to. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - isRequired: true
+    name: --target-database-account-name -n
+    summary: Name of the new target Cosmos DB database account after the restore.
+    description: ''
+  optionalParameters:
+  - name: --databases-to-restore
+    summary: Add a database and its collection names to restore.
+    description: >-
+      Usage:          --databases-to-restore name=DatabaseName collections=collection1 [collection2 ...]
+
+      Multiple databases can be specified by using more than one `--databases-to-restore` argument.
+- uid: ext_cosmosdb-preview_az_cosmosdb_show
+  name: az cosmosdb show
+  summary: Get the details of an Azure Cosmos DB database account.
+  description: ''
+  syntax: >-
+    az cosmosdb show --name
+                     --resource-group
+  examples:
+  - summary: Get the details of an Azure Cosmos DB database account. (autogenerated)
+    syntax: az cosmosdb show --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Cosmos DB database account.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: ext_cosmosdb-preview_az_cosmosdb_update
+  name: az cosmosdb update
+  summary: Update an Azure Cosmos DB database account.
+  description: ''
+  syntax: >-
+    az cosmosdb update --name
+                       --resource-group
+                       [--backup-interval]
+                       [--backup-retention]
+                       [--capabilities]
+                       [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
+                       [--disable-key-based-metadata-write-access {false, true}]
+                       [--enable-analytical-storage {false, true}]
+                       [--enable-automatic-failover {false, true}]
+                       [--enable-multiple-write-locations {false, true}]
+                       [--enable-public-network {false, true}]
+                       [--enable-virtual-network {false, true}]
+                       [--ip-range-filter]
+                       [--locations]
+                       [--max-interval]
+                       [--max-staleness-prefix]
+                       [--tags]
+                       [--virtual-network-rules]
+  examples:
+  - summary: Update an Azure Cosmos DB database account.
+    syntax: az cosmosdb update --capabilities EnableGremlin --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup
+  - summary: Update an new Azure Cosmos DB database account with two regions. UK South is zone redundant.
+    syntax: az cosmosdb update -n myaccount -g mygroup --locations regionName=eastus failoverPriority=0 isZoneRedundant=False --locations regionName=uksouth failoverPriority=1 isZoneRedundant=True --enable-multiple-write-locations
+  - summary: Update the backup policy parameters of a database account with Periodic backup type.
+    syntax: az cosmosdb update -n myaccount -g mygroup --backup-interval 240 --backup-retention 24
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Cosmos DB database account.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --backup-interval
+    summary: The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    description: ''
+  - name: --backup-retention
+    summary: The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
+    description: ''
+  - name: --capabilities
+    summary: Set custom capabilities on the Cosmos DB database account.
+    description: ''
+  - name: --default-consistency-level
+    parameterValueGroup: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
+    summary: Default consistency level of the Cosmos DB database account.
+    description: ''
+  - name: --disable-key-based-metadata-write-access
+    parameterValueGroup: false, true
+    summary: Disable write operations on metadata resources (databases, containers, throughput) via account keys.
+    description: ''
+  - name: --enable-analytical-storage
+    parameterValueGroup: false, true
+    summary: Flag to enable log storage on the account.
+    description: ''
+  - name: --enable-automatic-failover
+    parameterValueGroup: false, true
+    summary: Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
+    description: ''
+  - name: --enable-multiple-write-locations
+    parameterValueGroup: false, true
+    summary: Enable Multiple Write Locations.
+    description: ''
+  - name: --enable-public-network -e
+    parameterValueGroup: false, true
+    summary: Enable or disable public network access to server.
+    description: ''
+  - name: --enable-virtual-network
+    parameterValueGroup: false, true
+    summary: Enables virtual network on the Cosmos DB database account.
+    description: ''
+  - name: --ip-range-filter
+    summary: Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma-separated and must not contain any spaces.
+    description: ''
+  - name: --locations
+    summary: Add a location to the Cosmos DB database account.
+    description: >-
+      Usage:          --locations KEY=VALUE [KEY=VALUE ...]
+
+      Required Keys:  regionName, failoverPriority
+
+      Optional Key:   isZoneRedundant
+
+      Default:        single region account in the location of the specified resource group.
+
+      Failover priority values are 0 for write regions and greater than 0 for read regions. A failover priority value must be unique and less than the total number of regions.
+
+      Multiple locations can be specified by using more than one `--locations` argument.
+  - name: --max-interval
+    summary: When used with Bounded Staleness consistency, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 1 - 100.
+    description: ''
+  - name: --max-staleness-prefix
+    summary: When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 1 - 2,147,483,647.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --virtual-network-rules
+    summary: ACL's for virtual network.
+    description: ''
+commands:
+- ext_cosmosdb-preview_az_cosmosdb_create
+- ext_cosmosdb-preview_az_cosmosdb_list
+- ext_cosmosdb-preview_az_cosmosdb_mongodb
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_collection
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_collection_list
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_database
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_database_list
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_resource
+- ext_cosmosdb-preview_az_cosmosdb_mongodb_restorable_resource_list
+- ext_cosmosdb-preview_az_cosmosdb_restorable_database_account
+- ext_cosmosdb-preview_az_cosmosdb_restorable_database_account_list
+- ext_cosmosdb-preview_az_cosmosdb_restorable_database_account_show
+- ext_cosmosdb-preview_az_cosmosdb_restore
+- ext_cosmosdb-preview_az_cosmosdb_show
+- ext_cosmosdb-preview_az_cosmosdb_sql
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_container
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_container_list
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_database
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_database_list
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_resource
+- ext_cosmosdb-preview_az_cosmosdb_sql_restorable_resource_list
+- ext_cosmosdb-preview_az_cosmosdb_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage Azure Cosmos DB database accounts.
