@@ -19,8 +19,7 @@ For detailed information on subscriptions, billing, and cost management, see the
 
 ## Tenants, users, and subscriptions
 
-A _tenant_ is the Azure Active Directory
-entity that encompasses a whole organization. A tenant has one or more _subscription_ and _user_. A user is an individual and is associated with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
+A _tenant_ is the Azure Active Directory entity that encompasses a whole organization. A tenant has one or more _subscription_ and _user_. A user is an individual and is associated with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
 
 * To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
 * To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
@@ -60,48 +59,80 @@ To switch your active subscription:
 To run only a single command with a different subscription, use the **--subscription** argument:
 
 ```azurecli
-az vm create --subscription "My Second Demos" --resource-group MySecondGroup --name NewVM --image Ubuntu
+az vm create --resource-group MySecondGroup --name NewVM --image Ubuntu --subscription "My Second Demos"
 ```
 
-## Azure CLI config file
+## Create management groups
 
-There's a configuration file, named *config,* in this location on the computer where you run Azure CLI:
+Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
 
-- *$HOME/.azure* on Linux and macOS
-- *%USERPROFILE%\.azure* on Windows
+Use the [az account management-group](/cli/azure/account/management-group) commands to create and manage Azure Management Groups.
 
-In general, don't edit this file directly. Instead, use the [az config](/cli/azure/config) commands.
-
-## Set Azure CLI configuration values
-
-To see your current configuration, run the [az config get](/cli/azure/config#az_config_get) command:
+You can create a management group for several of your subscriptions by using the [az account management-group create](/cli/azure/account/management-group#az_account_management_group_create) command:
 
 ```azurecli
-az config get
+az account management-group create --name Contoso01
 ```
 
-## Access tokens
+To see all your management groups, use the [az account management-group list](/cli/azure/account/management-group#az_account_management_group_list) command:
 
-Azure CLI creates an access token when you sign in by using [az login](/cli/azure/reference-index#az_login). This access token is stored in the *accessTokens.json* file in the *.azure* directory.
+```azurecli
+az account management-group list
+```
 
-> [!CAUTION]
-> The *accessTokens.json* file and other files in this directory contain unencrypted values. Do not share the contents of this directory.
+Add subscriptions to your new group by using the [az account management-group subscription add](/cli/azure/account/management-group/subscription#az_account_management_group_subscription_add) command:
 
-The access token expires after, at most, an hour. Azure CLI uses a second token, called a refresh token, to get a new token when needed. The refresh token is also stored in the *accessTokens.json* file. The server manages this token.
+```azurecli
+az account management-group subscription add --name Contoso01 --subscription "My Demos"
+az account management-group subscription add --name Contoso01 --subscription "My Second Demos"
+```
 
-Unless you sign out by using [az logout](/cli/azure/reference-index#az_logout), you can continue to run commands without signing in again.
+To remove a subscription, use the [az account management-group subscription remove](/cli/azure/account/management-group/subscription#az_account_management_group_subscription_remove) command:
 
-## Azure Cloud Shell working directory
+```azurecli
+az account management-group subscription remove --name Contoso01 --subscription "My Demos"
+```
 
-Azure Cloud Shell runs Azure CLI in the Azure portal instead of locally.
+To remove a management group, run the [az account management-group delete](/cli/azure/account/management-group#az_account_management_group_delete) command:
+
+```azurecli
+az account management-group delete --name Contoso01
+```
+
+Removing a subscription or deleting a management group doesn't delete or deactivate a subscription.
+
+## Set a subscription lock
+
+As an administrator, you may need to lock a subscription to prevent users from deleting or modifying critical it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
+
+In Azure CLI, use the [az account lock](/cli/azure/account/lock) commands. For instance, the [az account lock create](/cli/azure/account/lock#az_account_lock_create) command can prevent users from deleting a subscription:
+
+```azurecli
+az account lock create --name "Cannot delete subscription" --lock-type CanNotDelete
+```
 
 > [!NOTE]
-> Azure Cloud Shell can also run Azure PowerShell. Control which to use by selecting either **Bash** for Azure CLI or **PowerShell** in the upper left corner of the Cloud Shell console. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+> You need to have appropriate permissions to create or change locks.
 
-When you first use Azure Cloud Shell, the portal creates a storage account. The account hosts a file share to support Azure CLI.
-Azure Cloud Shell mounts the file share as *clouddrive* in your working directory. For commands and more details, see [How Cloud Shell storage works](/azure/cloud-shell/persisting-shell-storage#how-cloud-shell-storage-works).
+To see the current locks on your subscription, use the [az account lock list](/cli/azure/account/lock#az_account_lock_list) command:
 
-Just like your local Azure CLI, there's an *.azure* directory. It contains the same files and works the same way as your local version.
+```azurecli
+az account lock list --output table
+```
+
+If you make an account read-only, the result resembles assigning permissions of the Reader role to all users. To learn about setting permissions for individual users and roles, see [Add or remove Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-cli).
+
+To see details for a lock, use the [az account lock show](/cli/azure/account/lock#az_account_lock_show) command:
+
+```azurecli
+az account lock show --name "Cannot delete subscription"
+```
+
+You can remove a lock by using the [az account lock delete](/cli/azure/account/lock#az_account_lock_delete) command:
+
+```azurecli
+az account lock delete --name "Cannot delete subscription"
+```
 
 ## See also
 
