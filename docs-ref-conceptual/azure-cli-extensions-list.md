@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/01/2021
+ms.date: 01/08/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -47,6 +47,7 @@ az extension list-available --output table
 | [connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/master/src/connectedk8s) | 0.2.8 | Microsoft Azure Command-Line Tools Connectedk8s Extension | Yes |
 | [connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/master/src/connectedmachine) | 0.3.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension |  |
 | [connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 0.1.0 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Yes |
+| [cosmosdb-preview](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Yes |
 | [costmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension |  |
 | [csvmware](https://github.com/Azure/az-vmware-cli) | 0.3.0 | Manage Azure VMware Solution by CloudSimple. | Yes |
 | [custom-providers](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Custom Providers Extension |  |
@@ -69,7 +70,7 @@ az extension list-available --output table
 | [guestconfig](https://github.com/Azure/azure-cli-extensions/tree/master/src/guestconfig) | 0.1.0 | Microsoft Azure Command-Line Tools GuestConfigurationClient Extension |  |
 | [hack](https://github.com/Azure/azure-cli-extensions/tree/master/src/hack) | 0.4.3 | Microsoft Azure Command-Line Tools Hack Extension | Yes |
 | [hardware-security-modules](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension |  |
-| [healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthcareapis) | 0.3.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension |  |
+| [healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthcareapis) | 0.3.1 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension |  |
 | [hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 0.1.2 | Microsoft Azure Command-Line Tools StorageCache Extension | Yes |
 | [image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/master/src/image-copy) | 0.2.8 | Support for copying managed vm images between regions |  |
 | [import-export](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension |  |
@@ -112,4 +113,4 @@ az extension list-available --output table
 | [virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 0.2.3 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Yes |
 | [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 0.3.4 | Auto repair commands to fix VMs. |  |
 | [vmware](https://github.com/Azure/az-vmware-cli) | 1.0.0 | Azure VMware Solution commands. |  |
-| [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.2.24 | Additional commands for Azure AppService. | Yes |
+| [webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 0.3.1 | Additional commands for Azure AppService. | Yes |
