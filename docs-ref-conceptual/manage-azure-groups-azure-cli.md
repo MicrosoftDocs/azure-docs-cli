@@ -15,6 +15,8 @@ ms.custom: devx-track-azurecli
 
 An Azure resource group is a container that holds related resources for an Azure solution. A resource group might contain storage, virtual machines, apps, dashboards, services, or almost anything you deal with in Azure.
 
+## Create a resource group
+
 To create a resource group, use the [az group create](/cli/azure/group#az_group_create) command:
 
 ```azurecli
@@ -27,7 +29,7 @@ A resource group belongs to a single location. To see all the locations supporte
 az account list-locations
 ```
 
-To see all the resource groups for your current subscription, use the [az group list --output table](/cli/azure/group#az_group_list) command:
+To see all the resource groups for your current subscription, use the [az group list](/cli/azure/group#az_group_list) command:
 
 ```azurecli
 az group list --output table
@@ -66,19 +68,19 @@ After turning on persistence, create another resource group:
 az group create --name OtherResourceGroup --location eastus
 ```
 
-As long as persistence is on, your can leave the **--resource-group** parameter out of commands. The following command creates a storage account in the *OtherResourceGroup* group:
+As long as persistence is on, your can leave the **--resource-group** parameter out of future commands. The following command creates a storage account in the *OtherResourceGroup* group:
 
 ```azurecli
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-If you specify a resource group in the command, that takes precedence. The following command creates a storage group in a resource group called *StorageGroup*:
+If you specify a resource group in the command, that takes precedence. The following command creates a storage group in a resource group called *StorageGroups*:
 
 ```azurecli
-az storage account create --resource-group StorageGroup --name storage136 --location eastus --sku Standard_LRS
+az storage account create --resource-group StorageGroups --name storage136 --location eastus --sku Standard_LRS
 ```
 
-Once you specify another resource group as a value, however, Azure CLI resets the persisted value. New commands use *StorageGroup* as the resource group. You can see the persisted values by using the [az config param-persist show](/cli/azure/config/param-persist#az_config_param_persist_show) command:
+Once you specify another resource group as a value, however, Azure CLI resets the persisted value. New commands use *StorageGroups* as the resource group. You can see the persisted values by using the [az config param-persist show](/cli/azure/config/param-persist#az_config_param_persist_show) command:
 
 ```azurecli
 az config param-persist show
@@ -124,8 +126,8 @@ az storage account create --name storage01 --location eastus --sku Standard_LRS
 You don't have to reset the default to use other resource groups. Instead, specify the resource group:
 
 ```azurecli
-az group create --name OtherGroup --location eastus
-az storage account create --resource-group OtherGroup --name storage03  --location westus --sku Standard_LRS
+az group create --name OtherResourceGroup --location eastus
+az storage account create --resource-group OtherResourceGroup --name storage03  --location westus --sku Standard_LRS
 ```
 
 The default value is for you only. It won't affect other users or changes you make through the Azure portal.
@@ -139,7 +141,7 @@ If you tried any of the commands in this article, you can remove any resources y
 ```azurecli
 az group delete --name MyResourceGroup
 az group delete --name OtherResourceGroup
-az group delete --name StorageGroup
+az group delete --name StorageGroups
 ```
 
 This command removes the group and all the resources that it contains at once.
