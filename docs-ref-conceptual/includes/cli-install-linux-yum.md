@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-For Linux distributions with `yum` such as RHEL, Fedora, or CentOS, there's a package
+For Linux distributions with `dnf` such as RHEL, Fedora, or CentOS, there's a package
 for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24 and higher, CentOS 7 and CentOS 8.
 
 [!INCLUDE [current-version](current-version.md)]
@@ -35,10 +35,10 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
    gpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/azure-cli.repo
    ```
 
-3. Install with the `yum install` command.
+3. Install with the `dnf install` command.
 
    ```bash
-   sudo yum install azure-cli
+   sudo dnf install azure-cli
    ```
 
 Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
@@ -49,7 +49,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `yum`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `dnf`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
@@ -66,7 +66,7 @@ You can also do it step by step:
 First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
-$ sudo yum install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
+$ sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
 # build openssl from source
 $ cd ~
 $ wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
@@ -111,10 +111,10 @@ $ scl enable rh-python36 bash
 
 [!INCLUDE[configure-proxy](configure-proxy.md)]
 
-You may also want to explicitly configure `yum` to use this proxy at all times. Make sure that the following
-lines appear under the `[main]` section of `/etc/yum.conf`:
+You may also want to explicitly configure `dnf` to use this proxy at all times. Make sure that the following
+lines appear under the `[main]` section of `/etc/dnf/dnf.conf`:
 
-```yum.conf
+```dnf.conf
 [main]
 # ...
 proxy=http://[proxy]:[port] # If your proxy requires https, change http->https
@@ -133,10 +133,10 @@ allow HTTPS connections to the following address:
 
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
-You can also update the Azure CLI with the `yum update` command.
+You can also update the Azure CLI with the `dnf update` command.
 
 ```bash
-sudo yum update azure-cli
+sudo dnf update azure-cli
 ```
 
 ## Uninstall
@@ -146,7 +146,7 @@ sudo yum update azure-cli
 1. Remove the package from your system.
 
    ```bash
-   sudo yum remove azure-cli
+   sudo dnf remove azure-cli
    ```
 
 2. If you don't plan to reinstall the CLI, remove the repository information.
