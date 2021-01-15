@@ -40,8 +40,12 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
    ```bash
    sudo dnf install azure-cli
    ```
-
+ 
 Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
+ 
+> [!NOTE]
+>
+> Use `yum` package manager if you are using Linux systems that don't support `dnf` package manager.
 
 [!INCLUDE [interactive-login](interactive-login.md)]
 
@@ -96,8 +100,7 @@ $ sudo make install
 Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure CLI repository. You can now download the package and install it without dependency.
 
 ```bash
-$ sudo yum install yum-utils -y
-$ sudo yumdownloader azure-cli
+$ sudo dnf download azure-cli
 $ sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
