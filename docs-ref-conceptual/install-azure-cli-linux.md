@@ -25,9 +25,9 @@ It is recommended to install the Azure CLI using your Linux distribution's packa
 
 ::: zone-end
 
-::: zone pivot="yum"
+::: zone pivot="dnf"
 
-[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-yum.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-dnf.md)]
 
 ::: zone-end
 
