@@ -76,7 +76,9 @@ directCommands:
                           --publisher
                           --resource-group
                           --vmss-name
+                          [--enable-auto-upgrade {false, true}]
                           [--no-auto-upgrade {false, true}]
+                          [--no-auto-upgrade-minor-version {false, true}]
                           [--no-wait]
                           [--protected-settings]
                           [--settings]
@@ -89,6 +91,8 @@ directCommands:
           --version 2.0 --publisher Microsoft.Azure.Extensions \
           --provision-after-extensions NetworkWatcherAgentLinux VMAccessForLinux  \
           --settings '{"commandToExecute": "echo testing"}'
+  - summary: Add an extension and enable automatic upgrade by the platform if there is a newer version of the extension available.
+    syntax: az vmss extension set -n extName --publisher publisher --vmss-name my-vmss -g my-group \ --enable-auto-upgrade true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -108,7 +112,15 @@ directCommands:
     summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
     description: ''
   optionalParameters:
+  - name: --enable-auto-upgrade
+    parameterValueGroup: false, true
+    summary: Indicate the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+    description: ''
   - name: --no-auto-upgrade
+    parameterValueGroup: false, true
+    summary: If set, the extension service will not automatically pick or upgrade to the latest minor version, even if the extension is redeployed.
+    description: ''
+  - name: --no-auto-upgrade-minor-version
     parameterValueGroup: false, true
     summary: If set, the extension service will not automatically pick or upgrade to the latest minor version, even if the extension is redeployed.
     description: ''
@@ -125,7 +137,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --version
-    summary: The version of the extension. To pin extension version to this value, please specify --no-auto-upgrade.
+    summary: The version of the extension. To pin extension version to this value, please specify --no-auto-upgrade-minor-version.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_extension_show
@@ -189,5 +201,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/14/2020
+  ms.date: 01/12/2021
   description: Manage extensions on a VM scale set.
