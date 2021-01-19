@@ -99,7 +99,7 @@ or for situations where your machine may be configuration-managed or require adv
 In order to get the MSI, your proxy needs to allow HTTPS connections to the following addresses:
 
 * `https://aka.ms/`
-* `https://azurecliprod.blob.core.windows.net/`
+* `https://azcliprod.blob.core.windows.net/`
 
 ## Uninstall
 
