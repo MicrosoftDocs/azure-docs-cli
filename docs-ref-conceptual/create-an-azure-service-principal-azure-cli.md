@@ -29,12 +29,19 @@ This article shows you the steps for creating, getting information about, and re
 
 Create a service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses.
 
+There are two types of authentication available for service principals: Password-based authentication, and certificate-based authentication.
+
 > [!NOTE]
 >
 > If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing
 > "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
-There are two types of authentication available for service principals: Password-based authentication, and certificate-based authentication.
+> [!WARNING]
+> When you create a service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
+>
+> By default, `az ad sp create-for-rbac` assigns the [Contributor](/azure/role-based-access-control/built-in-roles#contributor) role to the service principal at the subscription scope. To reduce your risk of a compromised service principal, assign a more specific role and narrow the scope to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
+>
+> In a future release, `az ad sp create-for-rbac` will NOT create a 'Contributor' role assignment by default. If needed, use the `--role` argument to explicitly create a role assignment.
 
 ### Password-based authentication
 
