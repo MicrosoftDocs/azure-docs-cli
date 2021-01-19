@@ -121,7 +121,7 @@ Most update commands in the CLI feature the three generic arguments: `--add`, `-
 ## Generic resource commands - `az resource`
 
 There may be cases where a service you are interested in does not have CLI command coverage. You can use the `az resource create/show/list/delete/update/invoke-action` commands to work with these resources. Here are a few suggestions:
-1. If only `create/update` are involved, consider using `az group deployment create`. Leverage [Azure Quickstart Templates](https://github.com/Azure/azure-quickstart-templates) for working examples.
+1. If only `create/update` are involved, consider using `az deployment group create`. Leverage [Azure Quickstart Templates](https://github.com/Azure/azure-quickstart-templates) for working examples.
 2. Check out the Rest API reference for the request payload, URL and API version. As an example, check out the community's comments on [how to create AppInsights](https://github.com/Azure/azure-cli/issues/5543).
 
 ## REST API command - `az rest`
@@ -183,7 +183,7 @@ To avoid unanticipated results, here are a few suggestions:
     - `--arg foo bar`: OK. Unquoted, space-separated list
     - `--arg "foo" "bar"`: OK: Quoted, space-separated list
     - `--arg "foo bar"`: BAD. This is a string with a space in it, not a space-separated list.
-9. When running Azure CLI commands in PowerShell, parsing errors will occur when the arguments contain special characters of PowerShell, such as at `@`. You can solve this problem by adding `` ` `` before the special character to escape it, or by enclosing the argument with single or double quotes `'`/`"`. For example, `az group deployment create --parameters @parameters.json` doesn't work in PowerShell because `@` is parsed as a [splatting symbol](/powershell/module/microsoft.powershell.core/about/about_splatting). To fix this, you may change the argument to `` `@parameters.json`` or `'@parameters.json'`.
+9. When running Azure CLI commands in PowerShell, parsing errors will occur when the arguments contain special characters of PowerShell, such as at `@`. You can solve this problem by adding `` ` `` before the special character to escape it, or by enclosing the argument with single or double quotes `'`/`"`. For example, `az deployment group create --parameters @parameters.json` doesn't work in PowerShell because `@` is parsed as a [splatting symbol](/powershell/module/microsoft.powershell.core/about/about_splatting). To fix this, you may change the argument to `` `@parameters.json`` or `'@parameters.json'`.
 10. When using `--query` with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell. For example, in Bash:
     
     ```bash
