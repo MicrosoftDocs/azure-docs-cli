@@ -4,121 +4,44 @@ description: How to install the Azure CLI on Linux manually
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/09/2018
+ms.date: 12/15/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
 ms.custom: devx-track-azurecli
+zone_pivot_group_filename: azure/zone-pivot-groups.json
+zone_pivot_groups: cli-linux-installation-method
 ---
 
-# Install Azure CLI on Linux manually
+# Install the Azure CLI on Linux
 
-If there's no package for the Azure CLI for you your distribution, install the CLI manually by running a script.
+It is recommended to install the Azure CLI using your Linux distribution's package manager. Select the appropriate package manager for your distribution from the options above.  If you do not have one of the listed package managers, you may manually install the Azure CLI by selecting the *Install script* option.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
-> [!NOTE]
-> It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
-> and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
-> installing manually.
+::: zone pivot="apt"
 
-## Prerequisites
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-apt.md)]
 
-The CLI requires the following software:
+::: zone-end
 
-* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/). 
-* [libffi](https://sourceware.org/libffi/)
-* [OpenSSL 1.0.2](https://www.openssl.org/source/)
+::: zone pivot="yum"
 
-> [!IMPORTANT]
->
-> The CLI has dropped support for Python 2.7 since version `2.1.0`. New versions no longer
-> guarantee to run with Python 2.7 correctly.
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-yum.md)]
 
-## Install or update
+::: zone-end
 
-Both installing and updating the CLI requires re-running the install script. Install the CLI by running `curl`.
+::: zone pivot="zypper"
 
-```bash
-curl -L https://aka.ms/InstallAzureCli | bash
-```
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-zypper.md)]
 
-The script can also be downloaded and run locally. You may have to restart your shell in order for changes to take effect.
+::: zone-end
 
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az-login) command.
+::: zone pivot="script"
 
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
+[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-script.md)]
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
-
-## Troubleshooting
-
-Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
-
-### curl "Object Moved" error
-
-If you get an error from `curl` related to the `-L` parameter, or an error message including the text "Object Moved", try using
-the full URL instead of the `aka.ms` redirect:
-
-```bash
-curl https://azurecliprod.blob.core.windows.net/install | bash
-```
-
-### `az` command not found
-
-If you can't run the command after installation and using `bash` or `zsh`, clear your shell's command hash cache. Run
-
-```bash
-hash -r
-```
-
-and check if the problem is resolved.
-
-The issue can also occur if you didn't restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
-of the `az` command is
-
-```bash
-<install path>/bin
-```
-
-### Proxy blocks connection
-
-[!INCLUDE[configure-proxy](includes/configure-proxy.md)]
-
-In order to get the installation scripts, your proxy needs to allow HTTPS connections to the
-following addresses:
-
-* `https://aka.ms/`
-* `https://azurecliprod.blob.core.windows.net/`
-* `https://pypi.python.org`
-* Endpoints used by your distribution's package manager (if any) for core packages
-
-[!INCLUDE[troubleshoot-wsl.md](includes/troubleshoot-wsl.md)]
-
-## Uninstall
-
-[!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
-
-Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is `$HOME`.
-
-1. Remove the installed CLI files.
-
-   ```bash
-   rm -r <install location>/lib/azure-cli
-   rm <install location>/bin/az
-   ```
-
-2. Modify your `$HOME/.bash_profile` file to remove the following line:
-
-   ```text
-   <install location>/lib/azure-cli/az.completion
-   ```
-
-3. If using `bash` or `zsh`, reload your shell's command cache.
-
-   ```bash
-   hash -r
-   ```
+::: zone-end
 
 ## Next Steps
 

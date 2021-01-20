@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 12/08/2020
+ms.date: 01/19/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,190 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## January 19, 2021
+
+Version 2.18.0
+
+### ACR
+
+* `az acr create / update`: Add `--allow-trusted-services`. This parameter determines whether trusted azure services are allowed to access network restricted registries. The default is to allow.
+
+### AKS
+
+* `az aks check-acr`: Add new check-acr command
+
+### App Service
+
+* Fix #13907: `az webapp config ssl import`: Change command to also import App Service Certificate
+* Fix #16125: `az webapp ssh`: If using a windows client, open browser to scm link
+* Fix #13291: `az webapp deployment slot swap`: The command should support preserve vnet.
+* [BREAKING CHANGE] Fix regression where you can't use a runtime version with a space in the name
+
+### ARM
+
+* `az deployment` : Add support for `--query-string`
+* `az ts`: Error handling improvement for `--template-file` without `--version` prohibited
+
+### Backup
+
+* `az backup protection backup-now`: Set default retention period to 30 days
+
+### Compute
+
+* Fix issue of none storage_profile
+* Better error handling of external tokens
+* Fix a vmss reimage issue
+* `az vm/vmss extension set`: New parameter `--enable-auto-upgrade`
+
+### Container
+
+* `az container exec`: Remove eol check to avoid closing terminal before it even started on linux
+
+### DMS
+
+* `az dms project task create`: Added task type parameter to help distinguish if a scenario is an online migration or an offline migration.
+* `az dms project task cutover`: Add new command which allows tasks with an online migration task type to cutover and end the migration.
+* `az dms project create/az dms project task create`: Enable MySQL and PostgreSQL projects/tasks to be created.
+
+### IoT
+
+* Add --tags to IoT Hub create and update
+
+### Monitor
+
+* [BREAKING CHANGE] `az monitor log-analytics workspace data-export`: Remove deprecated `--export-all-tables` parameter and require `--tables` parameter
+
+### RDBMS
+
+* Remove the preview tag for server key and ad admin commands for Postgres and MySql
+
+### Role
+
+* Fix #11594: `az role assignment create`: Only show supported values for `--assignee-principal-type`
+
+### Storage
+
+* Fix #16072: Upload file with big size
+* Fix #12291: `az storage blob generate-sas` does not properly encode `--full-uri`
+* GA PITR and blob service properties in SRP
+
+## January 04, 2021
+
+Version 2.17.1
+
+### RDBMS
+
+* Hotfix: `az mysql create`: Revert incorrect parameter name 'serv_name' to 'service_name'
+
+## December 29, 2020
+
+Version 2.17.0
+
+### ACR
+
+* Support zone redundancy
+* `az acr connected-registry`: New feature for on-prem Azure Container Registry
+* `az acr scope-map update`: --add and --remove are deprecated, they are renamed to --add-repo --remove-repo
+* `az acr scope-map create/update`: Add support to handle Gateway actions.
+* `az acr token create`: support added for gateway actions
+
+### AKS
+
+* Fix: add arguments removed by a previous PR
+* `az aks get-credentials`: Clarify documentation for get-credentials
+
+### App Service
+
+* Allow customer to create Python 3.9 function app
+* Fix #14583: az webapp up should generate default name if name isn't provided
+* Fix: Better error handling when trying to create duplicate ASP in diff location
+
+### ARM
+
+* `az ts`:  Add support for --tags
+* `az ts`: Support deleting a single version
+* `az provider register`: Add --accept-terms for registering RPaaS
+* Fix parsing JSON files with multi-line strings
+
+### ARO
+
+* `az aro delete`: Add RBAC validation on cluster deletion
+* `az aro update`: Add RBAC validation on cluster update
+* Ensure worker_profile is not None before getting the subnets from
+
+### Backup
+
+* `az backup job list`: Solve -o table bug and added backup_management_type as command input
+
+### Batch
+
+* Upgrade data plane to [azure batch 10.0.0](https://pypi.org/project/azure-batch/10.0.0/)
+* [BREAKING CHANGE] az batch job task-counts: Change the output from a JSON object returning task counts to a complex JSON object that includes task counts (`taskCounts`) as well as task slot counts (`taskSlotCounts`).
+
+### Compute
+
+* New license type RHEL_ELS_6
+* Adopt track2 SDK, azure-mgmt-compute==18.0.0
+
+### Container
+
+* Fix misspelling in `az container create` CLI example text.
+
+### DataBoxEdge
+
+* New command module: support for data-box-edge devices and management
+
+### IoT
+
+* Update device key generation
+* Update identity-enabled hub tests to fix endpoint RBAC issues
+
+### Key Vault
+
+* `az keyvault key import`: Support `--kty` for importing BYOK keys
+
+### Monitor
+
+* `az monitor metrics alert create`: Improve error message to give more actionable insight
+
+### Network
+
+* `az network private-endpoint create`: Add more declaration of '--subnet' and '--private-connection-resource-id'
+* Change validator of application-gateway ssl-cert create
+* Migrate network to track2 SDK
+* Fix bug for "az network traffic-manager profile create" when using "--routing-method MultiValue"
+
+### Profile
+
+* Fix "missing secret or certificate in order to authenticate through a service principal"
+
+### Role
+
+* `az ad sp create-for-rbac`: Deprecate creating Contributor role assignment by default
+
+### Security
+
+* Add secure score commands
+* Fix update alert command and support new value
+
+### SQL
+
+* `az sql dw update`: do not accept backup-storage-redundancy argument
+* `az sql db update`: update backup storage redundancy as requested from command
+
+### Storage
+
+* Fix issue #15965: Clarify how to remove multiple legal hold tags with `az storage container legal-hold [clear|set]`
+* `az storage account encryption-scope`: GA support
+* Fix issue #9959: Trying to download a snapshot version of a file share fails with ResourceNotFound
+
+### Synapse
+
+* Add new cmdlets az synapse sql ad-admin show, create, update, delete
+* Add new cmdlet az synapse workspace firewall-rule update
+* Add new cmdlets az synapse sql audit-policy show, update
+* Add integration runtime related cmdlets
 
 ## December 08, 2020
 

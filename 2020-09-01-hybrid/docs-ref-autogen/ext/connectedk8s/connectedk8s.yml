@@ -1,6 +1,10 @@
 ### YamlMime:AzureCLIGroup
 uid: ext_connectedk8s_az_connectedk8s
 name: az connectedk8s
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **connectedk8s** extension for Azure CLI and requires version 2.0.67 or higher.  The extension will automatically install the first time you run an **az connectedk8s** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage connected kubernetes clusters.
 description: ''
 directCommands:
@@ -11,6 +15,8 @@ directCommands:
   syntax: >-
     az connectedk8s connect --name
                             --resource-group
+                            [--distribution {aks, aks_engine, aks_hci, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg}]
+                            [--infrastructure {auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere}]
                             [--kube-config]
                             [--kube-context]
                             [--location]
@@ -39,6 +45,16 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --distribution
+    defaultValue: auto
+    parameterValueGroup: aks, aks_engine, aks_hci, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg
+    summary: The Kubernetes distribution which will be running on this connected cluster.
+    description: ''
+  - name: --infrastructure
+    defaultValue: auto
+    parameterValueGroup: auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere
+    summary: The infrastructure on which the Kubernetes cluster represented by this connected cluster will be running on.
+    description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
@@ -144,6 +160,7 @@ directCommands:
   syntax: >-
     az connectedk8s update --name
                            --resource-group
+                           [--disable-proxy]
                            [--kube-config]
                            [--kube-context]
                            [--proxy-cert]
@@ -153,6 +170,8 @@ directCommands:
   examples:
   - summary: Update proxy values for the agents
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName  --proxy-cert /path/to/crt --proxy-https https://proxy-url --proxy-http http://proxy-url --proxy-skip-range excludedIP,excludedCIDR,exampleCIDRfollowed,10.0.0.0/24
+  - summary: Disable proxy settings for agents
+    syntax: az connectedk8s update --disable-proxy
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -163,6 +182,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --disable-proxy
+    summary: Disables proxy settings for agents.
+    description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''

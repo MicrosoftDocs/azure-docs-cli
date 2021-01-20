@@ -158,6 +158,7 @@ directCommands:
                   --resource-group
                   --sku {Basic, Classic, Premium, Standard}
                   [--admin-enabled {false, true}]
+                  [--allow-trusted-services {false, true}]
                   [--default-action {Allow, Deny}]
                   [--identity]
                   [--key-encryption-key]
@@ -166,6 +167,7 @@ directCommands:
                   [--subscription]
                   [--tags]
                   [--workspace]
+                  [--zone-redundancy {Disabled, Enabled}]
   examples:
   - summary: Create a managed container registry with the Standard SKU.
     syntax: az acr create -n MyRegistry -g MyResourceGroup --sku Standard
@@ -188,6 +190,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Indicates whether the admin user is enabled.
     description: ''
+  - name: --allow-trusted-services
+    parameterValueGroup: false, true
+    summary: Allow trusted Azure Services to access network restricted registries. For more information, please visit <a href="https://aka.ms/acr/trusted-services">https://aka.ms/acr/trusted-services</a>. The Default is to allow.
+    description: ''
   - name: --default-action
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches. Only applicable to Premium SKU.
@@ -203,7 +209,7 @@ directCommands:
     description: ''
   - name: --public-network-enabled
     parameterValueGroup: false, true
-    summary: Allow public network access for the container registry. The Default is allowed.
+    summary: Allow public network access for the container registry. The Default is to allow.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -213,6 +219,10 @@ directCommands:
     description: ''
   - name: --workspace
     summary: Name or ID of the Log Analytics workspace to send registry diagnostic logs to. All events will be enabled. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
+    description: ''
+  - name: --zone-redundancy
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicates whether or not zone redundancy should be enabled for this registry or replication. For more information, such as supported locations, please visit <a href="https://aka.ms/acr/az">https://aka.ms/acr/az</a>. Zone-redundancy cannot be updated. Defaults to 'Disabled'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_delete
@@ -546,6 +556,7 @@ directCommands:
     az acr update --name
                   [--add]
                   [--admin-enabled {false, true}]
+                  [--allow-trusted-services {false, true}]
                   [--data-endpoint-enabled {false, true}]
                   [--default-action {Allow, Deny}]
                   [--force-string]
@@ -574,6 +585,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Indicates whether the admin user is enabled.
     description: ''
+  - name: --allow-trusted-services
+    parameterValueGroup: false, true
+    summary: Allow trusted Azure Services to access network restricted registries. For more information, please visit <a href="https://aka.ms/acr/trusted-services">https://aka.ms/acr/trusted-services</a>.
+    description: ''
   - name: --data-endpoint-enabled
     parameterValueGroup: false, true
     summary: Enable dedicated data endpoint for client firewall configuration.
@@ -587,7 +602,7 @@ directCommands:
     description: ''
   - name: --public-network-enabled
     parameterValueGroup: false, true
-    summary: Allow public network access for the container registry. The Default is allowed.
+    summary: Allow public network access for the container registry.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -626,6 +641,17 @@ commands:
 - az_acr_config_retention
 - az_acr_config_retention_show
 - az_acr_config_retention_update
+- az_acr_connected_registry
+- az_acr_connected_registry_create
+- az_acr_connected_registry_deactivate
+- az_acr_connected_registry_delete
+- az_acr_connected_registry_install
+- az_acr_connected_registry_install_info
+- az_acr_connected_registry_install_renew_credentials
+- az_acr_connected_registry_list
+- az_acr_connected_registry_list_client_tokens
+- az_acr_connected_registry_show
+- az_acr_connected_registry_update
 - az_acr_create
 - az_acr_credential
 - az_acr_credential_renew
@@ -754,5 +780,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/28/2020
+  ms.date: 01/14/2021
   description: Manage private registries with Azure Container Registries.
