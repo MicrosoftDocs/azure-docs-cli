@@ -27,7 +27,7 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 
 ## Change the active subscription
 
-To access the resources for a subscription, switch your active subscription or use the **--subscription** argument. Switching your subscription for all commands is done with [az account set](/cli/azure/account#az-account-set).
+To access the resources for a subscription, switch your active subscription or use the `--subscription` parameter. Switching your subscription for all commands is done with [az account set](/cli/azure/account#az-account-set).
 
 To switch your active subscription:
 
@@ -37,10 +37,10 @@ To switch your active subscription:
     az account list --output table
     ```
 
-   This command lists all the subscriptions you can access. If you don't see a subscription you expect, add the **--refresh** parameter to get the most current list of subscriptions.
+   This command lists all the subscriptions you can access. If you don't see a subscription you expect, add the `--refresh` parameter to get the most current list of subscriptions.
 
    > [!TIP]
-   > The **--output** parameter is a global parameter, available for all commands. The `table` value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+   > The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
 1. To see the subscription you're currently using, run the [az account show](/cli/azure/account#az_account_show) command:
 
@@ -56,7 +56,7 @@ To switch your active subscription:
 
    Your subscriptions have both a name and an ID, which is a GUID. You can use either for these commands. If you use a name that includes spaces, use quotation marks.
 
-To run only a single command with a different subscription, use the **--subscription** argument:
+To run only a single command with a different subscription, use the `--subscription` parameter:
 
 ```azurecli
 az vm create --resource-group MySecondGroup --name NewVM --image Ubuntu --subscription "My Second Demos"
@@ -103,7 +103,7 @@ Removing a subscription or deleting a management group doesn't delete or deactiv
 
 ## Set a subscription lock
 
-As an administrator, you may need to lock a subscription to prevent users from deleting or modifying critical it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
+As an administrator, you may need to lock a subscription to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
 
 In Azure CLI, use the [az account lock](/cli/azure/account/lock) commands. For instance, the [az account lock create](/cli/azure/account/lock#az_account_lock_create) command can prevent users from deleting a subscription:
 
