@@ -2736,9 +2736,9 @@ Version 2.0.74
 ### Batch
 
 * Added new JSON configuration settings to `--json-file` for `batch pool create`:
-  * Added `MountConfigurations` for file system mounts (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
+  * Added `MountConfigurations` for file system mounts (see [Request Body](/rest/api/batchservice/pool/add#request-body) for details)
   * Added optional property `publicIPs` on `NetworkConfiguration` for public IPs on pools
-    (see https://docs.microsoft.com/rest/api/batchservice/pool/add#request-body for details)
+    (see [Request Body](/rest/api/batchservice/pool/add#request-body) for details)
 * Added support for shared image galleries to `--image`
 * [BREAKING CHANGE] Changed default value of `--start-task-wait-for-success` on `batch pool create` to be `true`
 * [BREAKING CHANGE] Changed default value for `Scope` on `AutoUserSpecification` to always be Pool (was `Task` on Windows nodes, `Pool` on Linux nodes)
@@ -4075,7 +4075,7 @@ Version 2.0.50
 
 ### Storage
 * Added support to connect to storage services only with SAS and endpoints (without an account name or a key) as described in
-  `Configure Azure Storage connection strings <https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string>`
+  [Configure Azure Storage connection strings](/azure/storage/common/storage-configure-connection-string).
 
 ### VM
 * Added `storage-sku` argument to `image create` for setting the image's default storage account type

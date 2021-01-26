@@ -19,7 +19,12 @@ directCommands:
                                    [--workspaces]
   examples:
   - summary: Execute a simple query over past 3.5 days.
-    syntax: az monitor log-analytics query -w b8317023-66e4-4edc-8a5b-7c002b22f92f --analytics-query "AzureActivity | summarize count() by bin(timestamp, 1h)" -t P3DT12H
+    syntax: az monitor log-analytics query -w workspace-customId --analytics-query "AzureActivity | summarize count() by bin(timestamp, 1h)" -t P3DT12H
+  - summary: Execute a saved query in workspace
+    syntax: >-
+      QUERY=$(az monitor log-analytics workspace saved-search show -g resource-group --workspace-name workspace-name -n query-name --query query --output tsv)
+
+      az monitor log-analytics query -w workspace-customId --analytics-query "$QUERY"
   requiredParameters:
   - isRequired: true
     name: --analytics-query

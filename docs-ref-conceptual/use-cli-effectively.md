@@ -269,7 +269,7 @@ Proxy is common behind corporate network or introduced by tracing tools like Fid
 
    A frequent ask is whether or not `HTTP_PROXY` or `HTTPS_PROXY` environment variables should be set, the answer is it depends. For Fiddler on Windows, by default it acts as system proxy on start, you don't need to set anything. If the option is off or using other tools which don't work as system proxy, you should set them. Since almost all traffic from CLI is SSL-based, only `HTTPS_PROXY` should be set. If you are not sure, just set them, but do remember to unset it after the proxy is shut down. For fiddler, the default value is `http://localhost:8888`.
 
-   Some proxies require authentication and therefore the format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, e.g., `HTTPS_PROXY="https://username:password@proxy-server:port"`. This is needed by the underlying python libraries. For details, see [How to configure proxies for the Azure libraries](https://docs.microsoft.com/azure/developer/python/azure-sdk-configure-proxy?tabs=bash) 
+   Some proxies require authentication and therefore the format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, e.g., `HTTPS_PROXY="https://username:password@proxy-server:port"`. This is needed by the underlying python libraries. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/azure-sdk-configure-proxy?tabs=bash) 
 
    For other details, check out [Stefan's blog](https://blog.jhnr.ch/2018/05/16/working-with-azure-cli-behind-ssl-intercepting-proxy-server/).
 
