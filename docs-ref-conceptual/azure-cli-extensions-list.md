@@ -34,7 +34,7 @@ az extension list-available --output table
 | [automation](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation) | 0.1.0 | Microsoft Azure Command-Line Tools AutomationClient Extension |  |
 | [azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 6.0.0 | Additional commands for working with Azure Batch service |  |
 | [azure-cli-iot-ext](https://github.com/azure/azure-iot-cli-extension) | 0.8.10 | Deprecated: please remove 'azure-cli-iot-ext' and install the 'azure-iot' extension instead. The legacy extension 'azure-cli-iot-ext' is scheduled for removal after 9/15/2020. |  |
-| [azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 1.19.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
+| [azure-cli-ml](/python/api/overview/azure/ml/?view=azure-ml-py) | 1.19.0 | Microsoft Azure Command-Line Tools AzureML Command Module |  |
 | [azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 0.18.0 | Tools for managing Azure DevOps. |  |
 | [azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 0.8.0 | Manage Azure Firewall resources. | Yes |
 | [azure-iot](https://github.com/azure/azure-iot-cli-extension) | 0.10.8 | The Azure IoT extension for Azure CLI. |  |
