@@ -15,8 +15,9 @@ directCommands:
   syntax: >-
     az connectedk8s connect --name
                             --resource-group
-                            [--distribution {aks, aks_engine, aks_hci, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg}]
-                            [--infrastructure {auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere}]
+                            [--disable-auto-upgrade]
+                            [--distribution {aks, aks_engine, aks_management, aks_workload, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg}]
+                            [--infrastructure {auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server}]
                             [--kube-config]
                             [--kube-context]
                             [--location]
@@ -29,6 +30,8 @@ directCommands:
   examples:
   - summary: Onboard a connected kubernetes cluster with default kube config and kube context.
     syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName
+  - summary: Onboard a connected kubernetes cluster with default kube config and kube context and disabling auto upgrade of arc agents.
+    syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --disable-auto-upgrade
   - summary: Onboard a connected kubernetes cluster by specifying the kubeconfig and kubecontext.
     syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --kube-config /path/to/kubeconfig --kube-context kubeContextName
   - summary: Onboard a connected kubernetes cluster by specifying the https proxy, http proxy, no proxy settings.
@@ -45,14 +48,17 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --disable-auto-upgrade
+    summary: Flag to disable auto upgrade of arc agents.
+    description: ''
   - name: --distribution
     defaultValue: auto
-    parameterValueGroup: aks, aks_engine, aks_hci, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg
+    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg
     summary: The Kubernetes distribution which will be running on this connected cluster.
     description: ''
   - name: --infrastructure
     defaultValue: auto
-    parameterValueGroup: auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere
+    parameterValueGroup: auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server
     summary: The infrastructure on which the Kubernetes cluster represented by this connected cluster will be running on.
     description: ''
   - name: --kube-config
@@ -160,6 +166,7 @@ directCommands:
   syntax: >-
     az connectedk8s update --name
                            --resource-group
+                           [--auto-upgrade {false, true}]
                            [--disable-proxy]
                            [--kube-config]
                            [--kube-context]
@@ -172,6 +179,8 @@ directCommands:
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName  --proxy-cert /path/to/crt --proxy-https https://proxy-url --proxy-http http://proxy-url --proxy-skip-range excludedIP,excludedCIDR,exampleCIDRfollowed,10.0.0.0/24
   - summary: Disable proxy settings for agents
     syntax: az connectedk8s update --disable-proxy
+  - summary: Disable auto-upgrade of agents
+    syntax: az connectedk8s update --auto-upgrade false
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -182,6 +191,10 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --auto-upgrade
+    parameterValueGroup: false, true
+    summary: Flag to enable/disable auto upgrade of arc agents. By default, auto upgrade of agents is enabled.
+    description: ''
   - name: --disable-proxy
     summary: Disables proxy settings for agents.
     description: ''
@@ -203,12 +216,47 @@ directCommands:
   - name: --proxy-skip-range
     summary: List of URLs/CIDRs for which proxy should not to be used.
     description: ''
+- uid: ext_connectedk8s_az_connectedk8s_upgrade
+  name: az connectedk8s upgrade
+  summary: Upgrade onboarded agents to the specific version or default to the latest version.
+  description: ''
+  syntax: >-
+    az connectedk8s upgrade --name
+                            --resource-group
+                            [--agent-version]
+                            [--kube-config]
+                            [--kube-context]
+  examples:
+  - summary: Upgrade the agents to the latest version
+    syntax: az connectedk8s upgrade -g resourceGroupName -n connectedClusterName
+  - summary: Upgrade the agents to a specific version
+    syntax: az connectedk8s upgrade -g resourceGroupName -n connectedClusterName --agent-version 0.2.28
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --agent-version
+    summary: Version of agent to update the helm charts to.
+    description: ''
+  - name: --kube-config
+    summary: Path to the kube config file.
+    description: ''
+  - name: --kube-context
+    summary: Kubconfig context from current machine.
+    description: ''
 commands:
 - ext_connectedk8s_az_connectedk8s_connect
 - ext_connectedk8s_az_connectedk8s_delete
 - ext_connectedk8s_az_connectedk8s_list
 - ext_connectedk8s_az_connectedk8s_show
 - ext_connectedk8s_az_connectedk8s_update
+- ext_connectedk8s_az_connectedk8s_upgrade
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
