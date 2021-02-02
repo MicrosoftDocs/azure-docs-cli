@@ -19,14 +19,14 @@ directCommands:
     az network firewall policy rule-collection-group collection add-filter-collection --collection-priority
                                                                                       --name
                                                                                       --policy-name
+                                                                                      --rcg-name
                                                                                       --resource-group
-                                                                                      --rule-collection-group-name
                                                                                       [--action {Allow, Deny}]
                                                                                       [--description]
-                                                                                      [--destination-addresses]
-                                                                                      [--destination-ip-groups]
+                                                                                      [--dest-addr]
+                                                                                      [--dest-ipg]
                                                                                       [--destination-ports]
-                                                                                      [--enable-terminate-tls {false, true}]
+                                                                                      [--enable-tls-insp {false, true}]
                                                                                       [--fqdn-tags]
                                                                                       [--ip-protocols {Any, ICMP, TCP, UDP}]
                                                                                       [--protocols]
@@ -36,6 +36,7 @@ directCommands:
                                                                                       [--source-ip-groups]
                                                                                       [--target-fqdns]
                                                                                       [--target-urls]
+                                                                                      [--web-categories]
   examples:
   - summary: Add a filter collection with Network rule into the rule collection group
     syntax: az network firewall policy rule-collection-group collection add-filter-collection -g {rg} --policy-name {policy} --rule-collection-group-name {collectiongroup} --name filter_collection --action Allow --rule-name network_rule --rule-type NetworkRule --description "test" --destination-addresses "202.120.36.15" --source-addresses "202.120.36.13" "202.120.36.14" --destination-ports 12003 12004 --ip-protocols TCP UDP --collection-priority 11002
@@ -55,12 +56,12 @@ directCommands:
     summary: The name of the Firewall Policy.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --rcg-name --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
     description: ''
   - isRequired: true
-    name: --rule-collection-group-name
-    summary: The name of the Firewall Policy Rule Collection Group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --action
@@ -70,16 +71,16 @@ directCommands:
   - name: --description
     summary: The description of rule.
     description: ''
-  - name: --destination-addresses
+  - name: --dest-addr --destination-addresses
     summary: Space-separated list of destination IP addresses.
     description: ''
-  - name: --destination-ip-groups
+  - name: --dest-ipg --destination-ip-groups
     summary: Space-separated list of name or resource id of destination IpGroups.
     description: ''
   - name: --destination-ports
     summary: Space-separated list of destination ports. This argument is supported for Nat and Network Rule.
     description: ''
-  - name: --enable-terminate-tls
+  - name: --enable-tls-insp --enable-tls-inspection
     parameterValueGroup: false, true
     summary: Enable flag to terminate TLS connection for this rule.
     description: ''
@@ -112,6 +113,9 @@ directCommands:
   - name: --target-urls
     summary: Space-separated list of target urls for this rule.
     description: ''
+  - name: --web-categories
+    summary: Space-separated list of web categories for this rule.
+    description: ''
 - uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_nat_collection
   name: az network firewall policy rule-collection-group collection add-nat-collection
   summary: Add a NAT collection into an Azure firewall policy rule collection group.
@@ -120,11 +124,11 @@ directCommands:
     az network firewall policy rule-collection-group collection add-nat-collection --collection-priority
                                                                                    --name
                                                                                    --policy-name
+                                                                                   --rcg-name
                                                                                    --resource-group
-                                                                                   --rule-collection-group-name
                                                                                    [--action {DNAT, SNAT}]
                                                                                    [--description]
-                                                                                   [--destination-addresses]
+                                                                                   [--dest-addr]
                                                                                    [--destination-ports]
                                                                                    [--ip-protocols {Any, ICMP, TCP, UDP}]
                                                                                    [--rule-name]
@@ -150,12 +154,12 @@ directCommands:
     summary: The name of the Firewall Policy.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --rcg-name --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
     description: ''
   - isRequired: true
-    name: --rule-collection-group-name
-    summary: The name of the Firewall Policy Rule Collection Group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --action
@@ -165,7 +169,7 @@ directCommands:
   - name: --description
     summary: The description of rule.
     description: ''
-  - name: --destination-addresses
+  - name: --dest-addr --destination-addresses
     summary: Space-separated list of destination IP addresses.
     description: ''
   - name: --destination-ports
@@ -199,20 +203,20 @@ directCommands:
   description: ''
   syntax: >-
     az network firewall policy rule-collection-group collection list --policy-name
+                                                                     --rcg-name
                                                                      --resource-group
-                                                                     --rule-collection-group-name
   requiredParameters:
   - isRequired: true
     name: --policy-name
     summary: The name of the Firewall Policy.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --rcg-name --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
     description: ''
   - isRequired: true
-    name: --rule-collection-group-name
-    summary: The name of the Firewall Policy Rule Collection Group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_remove
   name: az network firewall policy rule-collection-group collection remove
@@ -221,8 +225,8 @@ directCommands:
   syntax: >-
     az network firewall policy rule-collection-group collection remove --name
                                                                        --policy-name
+                                                                       --rcg-name
                                                                        --resource-group
-                                                                       --rule-collection-group-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -233,12 +237,12 @@ directCommands:
     summary: The name of the Firewall Policy.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --rcg-name --rule-collection-group-name
+    summary: The name of the Firewall Policy Rule Collection Group.
     description: ''
   - isRequired: true
-    name: --rule-collection-group-name
-    summary: The name of the Firewall Policy Rule Collection Group.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 commands:
 - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_add_filter_collection
@@ -248,6 +252,7 @@ commands:
 - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule
 - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule_add
 - ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule_remove
+- ext_azure-firewall_az_network_firewall_policy_rule_collection_group_collection_rule_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
