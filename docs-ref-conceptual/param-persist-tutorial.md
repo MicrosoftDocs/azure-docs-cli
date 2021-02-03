@@ -19,7 +19,7 @@ Azure CLI offers persisted parameters that enable you to store parameter values 
 In this tutorial, you will learn to:
 
 > [!div class="checklist"]
-> * Use **az config param-persist** reference commands
+> * Use `az config param-persist` reference commands
 > * Execute sequential commands using persisted parameters
 
 This tutorial uses the following Azure CLI commands
@@ -72,7 +72,7 @@ cd azCLI
 
 ## 2. Turn on Persisted parameters
 
-[Persisted parameters](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until **az config param-persist** moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
+[Persisted parameters](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
@@ -80,7 +80,7 @@ az config param-persist on
 
 ## 3. Create persisted parameters
 
-To store values for persisted parameters, execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the **--location** and **--name** parameters are stored for future use.
+To store values for persisted parameters, execute an Azure CLI command of your choice that contains the parameters you want to store.  For example, create a resource group and the `--location` and `--name` parameters are stored for future use.
 
 1. Store the location and resource group name.
    ```azurecli
@@ -122,13 +122,13 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, **resource_group_name** and **location** parameters can be stored by using non-create commands like **show** or **list**.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
+   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az-param-persist-delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
    az config param-persist delete --all
 
-   # List all storage accounts which will create the **resource_group_name** stored parameter value.
+   # List all storage accounts which will create the `resource_group_name` stored parameter value.
    az storage account show --resource-group RG1forTutorial --name sa1fortutorial
 
    # See the new stored value created for resource group.  The storage account name is only stored with a 'create' command.
