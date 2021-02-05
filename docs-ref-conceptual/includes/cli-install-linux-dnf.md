@@ -101,7 +101,7 @@ Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure
 
 > [!NOTE]
 >
->In case you don't have the dnf download plugin installed, you will encounter command not found error on executing the below code. Use `dnf install 'dnf-command(download)'` to install the dnf download plugin.
+> In case you don't have the dnf download plugin installed, you will encounter command not found error on executing the below code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
 
 ```bash
 $ sudo dnf download azure-cli
