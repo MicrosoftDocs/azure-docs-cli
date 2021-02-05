@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/05/2021
+ms.date: 02/09/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,7 +15,7 @@ ms.custom: devx-track-azurecli
 
 # [Current release notes](#tab/azure-cli)
 
-## February 05, 2021
+## February 09, 2021
 
 Version 2.19.0
 
