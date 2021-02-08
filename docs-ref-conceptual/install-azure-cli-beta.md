@@ -94,13 +94,13 @@ We recommend creating a [virtual environment](https://docs.python.org/3/tutorial
 
 To uninstall Azure CLI beta, simple delete the virtual environment folder:
 
-# [Windows PowerShell](#tab/powershell)
+### [Windows PowerShell](#tab/powershell)
 
 ```powershell
 Remove-Item -Force -Recurse <env_name>
 ```
 
-# [Linux/macOS Bash](#tab/bash)
+### [Linux/macOS Bash](#tab/bash)
 
 ```sh
 rm -rf <env_name>
