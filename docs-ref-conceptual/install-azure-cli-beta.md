@@ -13,7 +13,13 @@ ms.custom: devx-track-azurecli
 
 # Install Azure CLI beta version
 
-Intro paragraph here...
+A new beta version of the Azure CLI has been released that offers increased security for token cache, access tokens and SSL certificates.  This beta vesion can be installed in Windows, macOS and Linux environments.
+
+> [!NOTE]
+>
+>  BREAKING CHANGES are introduced in this release.  Thoroghly read all [release notes](release-notes-azure-cli#tabs=azure-cli#install-or-update) prior to installation.
+>
+> The beta version does not guarantee product level quality so it should not be used in your production environment.
 
 ## Migrate to beta version
 
@@ -102,12 +108,3 @@ rm -rf <env_name>
 ```
 
 ---
-
-
-
-# [DO NOT USE]
-
-  * [BREAKING CHANGE] `--allow-no-subscription` is scheduled to be deprecated. Please do not use it anymore.
-  * A new argument `--tenant-access` is introduced to make CLI access the tenant directly, without making network requests to Azure Resource Manager.
-
-  * `EnvironmentCredential` is now supported.

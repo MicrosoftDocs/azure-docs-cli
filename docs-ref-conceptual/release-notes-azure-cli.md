@@ -7022,14 +7022,11 @@ You can report issues with nightly preview builds in the following ways:
 
 ## February 8, 2021
 
-
 > [!NOTE]
 >
-> Please do read the below release notes before using Azure CLI beta, because several BREAKING CHANGES are introduced.
+>  BREAKING CHANGES are introduced in this release.  Thoroghly read all release notes prior to installation.
 >
-> All new features introduced in Azure CLI beta are still under development. They may be changed in a future release without a deprecation plan.
-
-* The beta version of the Azure CLI supports all commands from the current released version.
+> The beta version does not guarantee product level quality so it should not be used in your production environment.
 
 * Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
@@ -7041,13 +7038,17 @@ You can report issues with nightly preview builds in the following ways:
 
 * [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/en-us/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
 
+For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md).  
+
+The beta version of the Azure CLI supports all commands from the current released version. 
+
 If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
 ## June 23, 2020
 
 The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
 
-### Things to know about the new Azure CLI beta release
+### Things to know about the June Azure CLI beta release
 
 -	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
 -	Relogin is required after install the beta version.
