@@ -73,7 +73,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    . $env/bin/activate
    ```
    ---
-  These commands can be used to reactivate your virtual environment.
+   These commands can also be used to reactivate your virtual environment.
 
 1. Install Azure CLI beta
 

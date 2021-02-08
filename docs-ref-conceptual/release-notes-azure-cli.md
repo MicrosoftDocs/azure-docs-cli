@@ -7024,7 +7024,7 @@ You can report issues with nightly preview builds in the following ways:
 
 > [!NOTE]
 >
->  BREAKING CHANGES are introduced in this release.  Thoroghly read all release notes prior to installation.
+>  BREAKING CHANGES are introduced in this release.  Carefully read all release notes prior to installation.
 >
 > The beta version does not guarantee product level quality so it should not be used in your production environment.
 
