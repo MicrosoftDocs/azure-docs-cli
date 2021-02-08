@@ -74,7 +74,7 @@ We recommend creating a [virtual environment](https://docs.python.org/3/tutorial
    ```sh
    . $env/bin/activate
    ```
----
+   ---
 
 1. Install Azure CLI beta
 
