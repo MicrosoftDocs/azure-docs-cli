@@ -7030,17 +7030,17 @@ You can report issues with nightly preview builds in the following ways:
 
 * Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
-* For `az login` (run `az login --help` for more details):
+* There are several changes to `az login`.  (Run `az login --help` for more details.)
   * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az_account_get_access_token) instead.
-  * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported yet.
+  * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
   * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
-  * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned
+  * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
 
 * [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/en-us/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
 
-For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md).  
-
 The beta version of the Azure CLI supports all commands from the current released version. 
+
+For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md). 
 
 If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
