@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # Install Azure CLI beta version
 
-A new beta version of the Azure CLI has been released that offers increased security for token cache, access tokens and SSL certificates.  This beta vesion can be installed in Windows, macOS and Linux environments.
+A new beta version of the Azure CLI has been released that offers increased security for token cache, access tokens and SSL certificates.  This beta vesion can be installed in Windows, macOS and Linux environments and will stay in sync with the most recent release.
 
 > [!NOTE]
 >

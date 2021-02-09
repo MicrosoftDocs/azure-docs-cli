@@ -7044,19 +7044,4 @@ For installation instructions, see [Install Azure CLI beta version](install-azur
 
 If you find issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
-## June 23, 2020
-
-The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
-
-### Things to know about the June Azure CLI beta release
-
--	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
--	Relogin is required after install the beta version.
--	The beta release only supports the Windows platform.
--	The Azure Stack is not supported.
--	`--use-cert-sn-issuer` parameter is not supported when using service principal key to authenticate.
--	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
-
-If you find issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
-
 ---
