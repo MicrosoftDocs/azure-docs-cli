@@ -7031,7 +7031,7 @@ You can report issues with nightly preview builds in the following ways:
 * Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
 * There are several changes to `az login`.  (Run `az login --help` for more details.)
-  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az_account_get_access_token) instead.
+  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account?view=azure-cli-latest#az_account_get_access_token) instead.
   * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
   * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
   * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
