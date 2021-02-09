@@ -23,8 +23,6 @@ A new beta version of the Azure CLI has been released that offers increased secu
 
 ## Understand beta changes
 
-The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.
-
 ### `accessTokens.json` deprecation
 
 The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json`.  Tokens will be saved to MSAL's shared token cache called `msal.cache`. 
