@@ -7038,7 +7038,7 @@ You can report issues with nightly preview builds in the following ways:
 
 * [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/en-us/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
 
-The beta version of the Azure CLI supports all commands from the current released version. 
+The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  
 
 For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md). 
 

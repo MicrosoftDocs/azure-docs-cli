@@ -23,6 +23,8 @@ A new beta version of the Azure CLI has been released that offers increased secu
 
 ## Understand beta changes
 
+The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.
+
 ### `accessTokens.json` deprecation
 
 The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json`.  Tokens will be saved to MSAL's shared token cache called `msal.cache`. 
@@ -55,7 +57,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
    Navigate to the folder where you want to create the virtual environment, then run:
 
-   ```sh
+   ```console
    python -m venv <env_name>
    ```
 
@@ -69,7 +71,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
    ### [Linux/macOS Bash](#tab/bash)
 
-   ```sh
+   ```console
    . $env/bin/activate
    ```
    ---
@@ -77,7 +79,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
 1. Install Azure CLI beta
 
-   ```sh
+   ```console
    pip install --pre --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
    ```
 
@@ -85,7 +87,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
    After you finish using Azure CLI beta, you can close the terminal window, or use the `deactivate` command.
 
-   ```sh
+   ```console
    deactivate
    ```
 
@@ -101,7 +103,7 @@ Remove-Item -Force -Recurse <env_name>
 
 ### [Linux/macOS Bash](#tab/bash)
 
-```sh
+```console
 rm -rf <env_name>
 ```
 
