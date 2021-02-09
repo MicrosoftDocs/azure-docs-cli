@@ -35,7 +35,7 @@ Version 2.19.0
 
 ### App Config
 
-* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values
+* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values. Please see more details in this [PR](https://github.com/Azure/azure-cli/pull/16536)
 
 ### App Service
 
