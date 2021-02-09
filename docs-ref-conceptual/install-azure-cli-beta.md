@@ -47,7 +47,7 @@ First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to
 
 Azure CLI is built on [Python](https://www.python.org/). The supported Python versions are 3.6, 3.7, 3.8. On Windows, you will first need to [install Python](https://www.python.org/downloads/windows/).
 
-Azure CLI beta can only be installed with `pip` from a Microsoft repository.  Use [Azure Cloud Shell](https://shell.azure.com) to execute the following commands, or `python3`, depending on the Linux distribution or the installed Python you are using.
+Azure CLI beta can only be installed with `pip` from a Microsoft repository.  Use [Azure Cloud Shell](https://shell.azure.com) to execute the following commands, or `python3`, depending on the Linux distribution or your installed Python version.
 
 To avoid overwriting your installed Azure CLI, we recommend installing the beta version in a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
 
