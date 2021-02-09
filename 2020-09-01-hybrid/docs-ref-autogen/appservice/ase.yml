@@ -19,13 +19,15 @@ directCommands:
                              [--ignore-network-security-group {false, true}]
                              [--ignore-route-table {false, true}]
                              [--ignore-subnet-size-validation {false, true}]
+                             [--kind {ASEv2, ASEv3}]
                              [--location]
                              [--no-wait]
+                             [--os-preference {Linux, Windows}]
                              [--subscription]
                              [--virtual-ip-type {External, Internal}]
                              [--vnet-name]
   examples:
-  - summary: Create Resource Group, vNet and app service environment with default values.
+  - summary: Create Resource Group, vNet and app service environment v2 with default values.
     syntax: >-
       az group create -g MyResourceGroup --location westeurope
 
@@ -35,25 +37,38 @@ directCommands:
 
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
         --subnet MyAseSubnet
-  - summary: Create External app service environments with large front-ends and scale factor of 10 in existing resource group and vNet.
+  - summary: Create External app service environments v2 with large front-ends and scale factor of 10 in existing resource group and vNet.
     syntax: >-
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
         --subnet MyAseSubnet --front-end-sku I3 --front-end-scale-factor 10 \
         --virtual-ip-type External
-  - summary: Create vNet and app service environment, but do not create network security group and route table in existing resource group.
+  - summary: Create vNet and app service environment v2, but do not create network security group and route table in existing resource group.
     syntax: >-
       az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
         --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
 
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
         --subnet MyAseSubnet --ignore-network-security-group --ignore-route-table
-  - summary: Create vNet and app service environment in a smaller than recommended subnet in existing resource group.
+  - summary: Create vNet and app service environment v2 in a smaller than recommended subnet in existing resource group.
     syntax: >-
       az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
         --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/26
 
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
         --subnet MyAseSubnet --ignore-subnet-size-validation
+  - summary: Create Resource Group, vNet and app service environment v3 with default values.
+    syntax: >-
+      az group create -g ASEv3ResourceGroup --location westeurope
+
+
+      az network vnet create -g ASEv3ResourceGroup -n MyASEv3VirtualNetwork \
+        --address-prefixes 10.0.0.0/16 --subnet-name Inbound --subnet-prefixes 10.0.0.0/24
+
+      az network vnet subnet create -g ASEv3ResourceGroup --vnet-name MyASEv3VirtualNetwork \
+        --name Outbound --address-prefixes 10.0.1.0/24
+
+      az appservice ase create -n MyASEv3Name -g ASEv3ResourceGroup \
+        --vnet-name MyASEv3VirtualNetwork --subnet Outbound --kind asev3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -97,11 +112,20 @@ directCommands:
     parameterValueGroup: false, true
     summary: Do not check if subnet is sized according to recommendations.
     description: ''
+  - name: --kind -k
+    defaultValue: ASEv2
+    parameterValueGroup: ASEv2, ASEv3
+    summary: Specify App Service Environment version.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --os-preference
+    parameterValueGroup: Linux, Windows
+    summary: Determine if app service environment should start with Linux workers. Applies to ASEv2 only.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -110,6 +134,51 @@ directCommands:
     defaultValue: Internal
     parameterValueGroup: External, Internal
     summary: Specify if app service environment should be accessible from internet.
+    description: ''
+  - name: --vnet-name
+    summary: Name of the vNet. Mandatory if only subnet name is specified.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+- uid: az_appservice_ase_create_inbound_services
+  name: az appservice ase create-inbound-services
+  summary: Create the inbound services needed in preview for ASEv3 (private endpoint and DNS) or Private DNS Zone for Internal ASEv2.
+  description: ''
+  syntax: >-
+    az appservice ase create-inbound-services --name
+                                              --resource-group
+                                              --subnet
+                                              [--skip-dns {false, true}]
+                                              [--subscription]
+                                              [--vnet-name]
+  examples:
+  - summary: Create private endpoint, Private DNS Zone, A records and ensure subnet network policy.
+    syntax: >-
+      az appservice ase create-inbound-services -n MyASEName -g ASEResourceGroup \
+        --vnet-name MyASEVirtualNetwork --subnet MyAseSubnet
+  - summary: Create private endpoint and ensure subnet network policy (ASEv3), but do not create DNS Zone and records.
+    syntax: >-
+      az appservice ase create-inbound-services -n MyASEv3Name -g ASEv3ResourceGroup \
+        --vnet-name MyASEv3VirtualNetwork --subnet Inbound --skip-dns
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --subnet
+    summary: Name or ID of existing subnet for inbound traffic to ASEv3.                    To create vnet and/or subnet use `az network vnet [subnet] create`.
+    description: ''
+  optionalParameters:
+  - name: --skip-dns
+    parameterValueGroup: false, true
+    summary: Do not create Private DNS Zone and DNS records.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vnet-name
     summary: Name of the vNet. Mandatory if only subnet name is specified.
@@ -288,6 +357,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 commands:
 - az_appservice_ase_create
+- az_appservice_ase_create_inbound_services
 - az_appservice_ase_delete
 - az_appservice_ase_list
 - az_appservice_ase_list_addresses
@@ -311,5 +381,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/15/2021
+  ms.date: 01/19/2021
   description: Manage App Service Environments v2.

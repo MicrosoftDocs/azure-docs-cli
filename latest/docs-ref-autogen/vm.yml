@@ -223,6 +223,7 @@ directCommands:
                  [--size]
                  [--specialized {false, true}]
                  [--ssh-dest-key-path]
+                 [--ssh-key-name]
                  [--ssh-key-values]
                  [--storage-account]
                  [--storage-container-name]
@@ -278,12 +279,12 @@ directCommands:
       az vm create -g group-name -n vm-name --admin-username deploy  \
         --image debian --secrets "$vm_secrets"
   - summary: Create a CentOS VM with a system assigned identity. The VM will have a 'Contributor' role with access to a storage account.
-    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity [system] --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
   - summary: Create a debian VM with a user assigned identity.
-    syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+    syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM with both system and user assigned identity.
-    syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
-  - summary: Create a VM in an availability zone in the current resource group's region
+    syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a VM in an availability zone in the current resource group's region.
     syntax: az vm create -n MyVm -g MyResourceGroup --image Centos --zone 1
   requiredParameters:
   - isRequired: true
@@ -477,6 +478,9 @@ directCommands:
   - name: --ssh-dest-key-path
     summary: Destination file path on the VM for the SSH key. If the file already exists, the specified key(s) are appended to the file. Destination path for SSH public keys is currently limited to its default value "/home/username/.ssh/authorized_keys" due to a known issue in Linux provisioning agent.
     description: ''
+  - name: --ssh-key-name
+    summary: Use it as public key in virtual machine. It should be an existing SSH key resource in Azure.
+    description: ''
   - name: --ssh-key-values
     summary: Space-separated list of SSH public keys or public key file paths.
     description: ''
@@ -595,7 +599,7 @@ directCommands:
     syntax: az vm delete --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
   - name: --force-deletion
-    summary: Optional parameter to force delete virtual machines.
+    summary: Optional parameter to force delete virtual machines.(Feature in Preview).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1489,5 +1493,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/12/2021
+  ms.date: 02/05/2021
   description: Manage Linux or Windows virtual machines.

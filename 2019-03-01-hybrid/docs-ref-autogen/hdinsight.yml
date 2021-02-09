@@ -23,6 +23,7 @@ directCommands:
                         [--cluster-tier {Premium, Standard}]
                         [--cluster-users-group-dns]
                         [--component-version]
+                        [--compute-isolation {false, true}]
                         [--days {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
                         [--domain]
                         [--edgenode-size]
@@ -35,6 +36,7 @@ directCommands:
                         [--encryption-vault-uri]
                         [--esp]
                         [--headnode-size]
+                        [--host-sku]
                         [--http-password]
                         [--http-user]
                         [--idbroker]
@@ -214,6 +216,13 @@ directCommands:
       --subnet "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/fakevnet/subnets/default" \
 
       --resource-provider-connection Outbound --enable-private-link
+  - summary: Create a cluster with Compute Isolation feature.
+    syntax: >-
+      az hdinsight create -t spark --version 3.6 -g MyResourceGroup -n MyCluster \
+
+      -p "HttpPassword1234!" --storage-account MyStorageAccount \
+
+      --enable-compute-isolation --workernode-size "Standard_E8S_V3" --headnode-size "Standard_E8S_V3"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -263,6 +272,10 @@ directCommands:
   - name: --component-version
     summary: "The versions of various Hadoop components, in space-separated versions in 'component=version' format. Example: Spark=2.0 Hadoop=2.7.3 See also: <a href=\"https://docs.microsoft.com/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions\">https://docs.microsoft.com/azure/hdinsight/hdinsight-component-versioning#hadoop-components-available-with-different-hdinsight-versions</a>."
     description: ''
+  - name: --compute-isolation --enable-compute-isolation
+    parameterValueGroup: false, true
+    summary: Indicate whether enable compute isolation or not.
+    description: ''
   - name: --days
     parameterValueGroup: Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
     summary: A space-delimited list of schedule day.
@@ -305,6 +318,9 @@ directCommands:
   - name: --headnode-size
     defaultValue: large
     summary: 'The size of the node. See also: <a href="https://docs.microsoft.com/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size">https://docs.microsoft.com/azure/hdinsight/hdinsight-hadoop-provision-linux-clusters#configure-cluster-size</a>.'
+    description: ''
+  - name: --host-sku
+    summary: The dedicated host sku of compute isolation.
     description: ''
   - name: --http-password -p
     summary: HTTP password for the cluster. Will prompt if not given.
@@ -723,5 +739,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/12/2020
+  ms.date: 02/02/2021
   description: Manage HDInsight resources.

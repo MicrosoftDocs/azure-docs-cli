@@ -22,13 +22,15 @@ directCommands:
                                     [--yes]
   examples:
   - summary: Add a filter for feature 'color' with label MyLabel with name 'MyFilter' and 2 parameters.
-    syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters Name=Value Name2=Value2
+    syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters Name=\"Value\" Name2=\"Value2\"
   - summary: Insert a filter at index 2 (zero-based index) for feature 'color' with label MyLabel and filter name 'MyFilter' with no parameters
     syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --index 2
   - summary: Add a filter with name 'MyFilter' using connection string.
     syntax: az appconfig feature filter add --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --filter-name MyFilter
   - summary: Add a filter with name 'MyFilter' using App Configuration endpoint and your 'az login' credentials.
     syntax: az appconfig feature filter add --endpoint=https://contoso.azconfig.io --feature color --filter-name MyFilter --auth-mode login
+  - summary: Add a filter for feature 'color' with label MyLabel with name 'MyFilter' and array parameters.
+    syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters ArrayParam=[1,2,3]
   requiredParameters:
   - isRequired: true
     name: --feature
@@ -51,7 +53,7 @@ directCommands:
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --filter-parameters
-    summary: Space-separated filter parameters in 'name[=value]' format.
+    summary: Space-separated filter parameters in 'name[=value]' format. The value must be an escaped JSON string.
     description: ''
   - name: --index
     summary: Zero-based index in the list of filters where you want to insert the new filter. If no index is specified or index is invalid, filter will be added to the end of the list.
@@ -268,5 +270,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/09/2020
+  ms.date: 01/18/2021
   description: Manage filters associated with feature flags stored in an App Configuration.

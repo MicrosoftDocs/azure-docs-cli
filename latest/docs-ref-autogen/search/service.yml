@@ -12,8 +12,11 @@ directCommands:
     az search service create --name
                              --resource-group
                              --sku {Basic, Free, Standard, Standard2, Standard3}
+                             [--identity-type]
+                             [--ip-rules]
                              [--location]
                              [--partition-count]
+                             [--public-access]
                              [--replica-count]
                              [--subscription]
   requiredParameters:
@@ -31,11 +34,21 @@ directCommands:
     summary: 'The SKU of the search service, which determines price tier and capacity limits. Accepted Values: Free, Basic, Standard, Standard2, Standard3.'
     description: ''
   optionalParameters:
+  - name: --identity-type
+    summary: The identity type.
+    description: ''
+  - name: --ip-rules
+    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma or semicolon; These IP rules are applicable only when public_network_access is "enabled".
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --partition-count
     summary: Number of partitions in the search service.
+    description: ''
+  - name: --public-access --public-network-access
+    defaultValue: enabled
+    summary: Public accessibility to the search service; allowed values are "enabled" or "disabled".
     description: ''
   - name: --replica-count
     summary: Number of replicas in the search service.
@@ -46,7 +59,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
 - uid: az_search_service_delete
   name: az search service delete
-  summary: Deletes a Search service in the given resource group, along with its associated resources.
+  summary: Deletes a search service in the given resource group, along with its associated resources.
   description: ''
   syntax: >-
     az search service delete --name
@@ -72,7 +85,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
 - uid: az_search_service_list
   name: az search service list
-  summary: Gets a list of all Search services in the given resource group.
+  summary: Gets a list of all search services in the given resource group.
   description: ''
   syntax: >-
     az search service list --resource-group
@@ -93,7 +106,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
 - uid: az_search_service_show
   name: az search service show
-  summary: Gets the Search service with the given name in the given resource group.
+  summary: Gets the search service with the given name in the given resource group.
   description: ''
   syntax: >-
     az search service show --name
@@ -126,7 +139,10 @@ directCommands:
                              --resource-group
                              [--add]
                              [--force-string]
+                             [--identity-type]
+                             [--ip-rules]
                              [--partition-count]
+                             [--public-access]
                              [--remove]
                              [--replica-count]
                              [--set]
@@ -147,8 +163,17 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --identity-type
+    summary: The identity type.
+    description: ''
+  - name: --ip-rules
+    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma(',') or semicolon(';'); If spaces (ex - ' '), ',' or ';' is provided, any existing IP rule will be nullified and no public IP rule is applied. These IP rules are applicable only when public_network_access is "enabled".
+    description: ''
   - name: --partition-count
     summary: Number of partitions in the search service.
+    description: ''
+  - name: --public-access --public-network-access
+    summary: Public accessibility to the search service; allowed values are "enabled" or "disabled".
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -186,5 +211,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/19/2020
+  ms.date: 02/02/2021
   description: Manage Azure Search services.

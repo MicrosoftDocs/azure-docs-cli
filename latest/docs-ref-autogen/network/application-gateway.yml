@@ -38,10 +38,13 @@ directCommands:
                                           [--routing-rule-type {Basic, PathBasedRouting}]
                                           [--servers]
                                           [--sku {Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2}]
+                                          [--ssl-profile]
+                                          [--ssl-profile-id]
                                           [--subnet]
                                           [--subnet-address-prefix]
                                           [--subscription]
                                           [--tags]
+                                          [--trusted-client-cert]
                                           [--validate]
                                           [--vnet-address-prefix]
                                           [--vnet-name]
@@ -161,6 +164,33 @@ directCommands:
     parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2
     summary: The name of the SKU.
     description: ''
+  - name: --ssl-profile
+    summary: The application gateway ssl profiles.
+    description: >-
+      Usage: --ssl-profile name=MySslProfile client-auth-configuration=True cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 policy-type=Custom min-protocol-version=TLSv1_0
+
+
+      name: Required. Name of the SSL profile that is unique within an Application Gateway.
+
+      polic-name: Name of Ssl Policy.
+
+      policy-type: Type of Ssl Policy.
+
+      min-protocol-version: Minimum version of Ssl protocol to be supported on application gateway.
+
+      cipher-suites: Ssl cipher suites to be enabled in the specified order to application gateway.
+
+      disabled-ssl-protocols: Space-separated list of protocols to disable.
+
+      trusted-client-certificates: Array of references to application gateway trusted client certificates.
+
+      client-auth-configuration: Client authentication configuration of the application gateway resource.
+
+
+      Multiple ssl profiles can be specified by using more than one `--ssl-profile` argument.
+  - name: --ssl-profile-id
+    summary: SSL profile resource of the application gateway.
+    description: ''
   - name: --subnet
     defaultValue: default
     summary: Name or ID of the subnet. Will create resource if it does not exist. If name specified, also specify --vnet-name. If you want to use an existing subnet in other resource group or subscription, please provide the ID instead of the name of the subnet.
@@ -175,6 +205,18 @@ directCommands:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
+  - name: --trusted-client-cert
+    summary: The application gateway trusted client certificate.
+    description: >-
+      Usage: --trusted-client-certificates name=client1 data=client.cer
+
+
+      name: Required. Name of the trusted client certificate that is unique within an Application Gateway
+
+      data: Required. Certificate public data.
+
+
+      Multiple trusted client certificates can be specified by using more than one `--trusted-client-certificates` argument.
   - name: --validate
     summary: Generate and validate the ARM template without creating any resources.
     description: ''
@@ -502,6 +544,10 @@ commands:
 - az_network_application_gateway_auth_cert_list
 - az_network_application_gateway_auth_cert_show
 - az_network_application_gateway_auth_cert_update
+- az_network_application_gateway_client_cert
+- az_network_application_gateway_client_cert_add
+- az_network_application_gateway_client_cert_list
+- az_network_application_gateway_client_cert_remove
 - az_network_application_gateway_create
 - az_network_application_gateway_delete
 - az_network_application_gateway_frontend_ip
@@ -605,6 +651,10 @@ commands:
 - az_network_application_gateway_ssl_policy_predefined_show
 - az_network_application_gateway_ssl_policy_set
 - az_network_application_gateway_ssl_policy_show
+- az_network_application_gateway_ssl_profile
+- az_network_application_gateway_ssl_profile_add
+- az_network_application_gateway_ssl_profile_list
+- az_network_application_gateway_ssl_profile_remove
 - az_network_application_gateway_start
 - az_network_application_gateway_stop
 - az_network_application_gateway_update
@@ -669,5 +719,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/20/2020
+  ms.date: 02/03/2021
   description: To learn more about Application Gateway, visit <a href="https://docs.microsoft.com/azure/application-gateway/application-gateway-create-gateway-cli">https://docs.microsoft.com/azure/application-gateway/application-gateway-create-gateway-cli</a>.
