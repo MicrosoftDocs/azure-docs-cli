@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/19/2021
+ms.date: 02/09/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,132 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## February 09, 2021
+
+Version 2.19.0
+
+### ACR
+
+* `az acr connected-registry install info`: Add new key `ACR_SYNC_TOKEN_NAME` with the same value as `ACR_SYNC_TOKEN_USERNAME`. A warning that the latter will be deprecated is displayed.
+* `az acr connected-registry install renew-credentials`: Add new key `ACR_SYNC_TOKEN_NAME` with the same value as `ACR_SYNC_TOKEN_USERNAME`. A warning that the latter will be deprecated is displayed.
+
+### AKS
+
+* Add managed cluster stop/start bindings
+* `az aks check-acr`: Fix Kubernetes version check
+
+### APIM
+
+* GA the command group
+
+### App Config
+
+* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values. Please see more details in this [PR](https://github.com/Azure/azure-cli/pull/16536)
+
+### App Service
+
+* `az appservice ase/plan`: Support ASEv3
+* Fix #16026 and #16118 for az appservice plan
+* Fix #16509: Add support for os-preference
+* Improve behavior of appservice ase create-inbound-services to allow skipping DNS services and support DNS for ASEv2
+* `az webapp up/az webapp create`: Fix nonetype errors
+* `az webapp up/create`: better error handling of app name with period
+* Fix #16681: `az webapp config ssl import`: Fix bug that causes failures on national clouds
+
+### ARM
+
+* `az provider register`: Support registering management group
+
+### Backup
+
+* Add CRR functionality for IaaSVM and other CRR commands
+* `az backup protectable-item list`: Add protectable-item-type as an optional argument
+
+### BotService
+
+* `az bot create/update`: Add Encryption features `--cmk-key-url` and `--encryption-off`
+* `az bot update`: Rename Encryption-OFF arg to CMK-OFF and updating api version
+
+### Compute
+
+* [BREAKING CHANGE] vmss create: Rename orchestration mode values
+* New command group sshkey. Allow referencing a SSH key resource when creating a VM
+* `az disk create/update`: Add parameter `--enable-bursting` to support disk bursting
+
+### Extension
+
+* Support extension command prefix match for dynamic install
+
+### HDInsight
+
+* `az hdinsight create`: Add a new parameter `--enable-compute-isolation` to support create cluster with compute isolation feature.
+
+### Key Vault
+
+* `az keyvault key import`: Support `--curve` parameter for importing BYOK keys
+* `az keyvault certificate download`: Fix deprecated/removed method call
+* `az keyvault create/update`: Remove preview tag for `--enable-rbac-authorization`
+
+### Monitor
+
+* `az monitor metrics alert create`: Fix 'resource is not found' error
+
+### NetAppFiles
+
+* `az netappfiles account ad add`: Add parameter `--security-operators`.
+* `az netappfiles volume create`: Add parameter `--smb-continuously-available`.
+* `az netappfiles volume create`: Add parameter `--smb-encryption`.
+* `az netappfiles`: No longer in preview mode.
+
+### Network
+
+* [BREAKING CHANGE] `az network vrouter`: Depracate this command group, please use `az network routeserver`.
+* `az network routeserver`: Add new command group.
+* `az network application-gateway create`: Add parameter `--ssl-profile-id`
+* `az network application-gateway client-cert`: Manage trusted client certificate of application gateway
+* `az network application-gateway ssl-profile`: Manage ssl profiles of application gateway
+* Add support for private endpoint connections to DigitalTwins
+
+### Profile
+
+* `az login`: Launch browser in WSL 2
+
+### RDBMS
+
+* `az mysql flexible-server create --iops`: Allow user to choose IOPS for their SKU.
+* Update Postgres restore command to support available zone
+
+### Search
+
+* Upgrade to use the latest (8.0.0) azure-mgmt-search python sdk
+
+### Security
+
+* Add new commands for `az security`
+
+### SQL
+
+* Add managed hsm regex match to SQL
+* Upgrade azure-mgmt-sql to 0.26.0
+* `az sql mi create/update`: Add support for maintenance configuration in managed instance operations
+* Support SQL server DevOps audit policy commands
+
+### Storage
+
+* Fix #16079: public blob gives error
+* GA Storage routing reference
+* Fix #9158: Cannot generate a working SAS key from a policy
+* Fix #16489: Upgrade azcopy to 10.8.0
+* `az storage account blob-service-properties`: Support default service version
+* Fix #16519: azcopy is given more powerful SAS than needed (has write, only needs read)
+
+### Synapse
+
+* `az synapse workspace create `: Add parameter `--key-identifier` to support to create workspace using customer-managed key.
+* `az synapse workspace key`: Add CRUD cmdlets to support to manage keys under specified synapse workspace.
+* `az synapse workspace managed-identity`: Add cmdlets to support CRUD managed identity to sql access setting.
+* `az synapse workspace`: Add data exfiltration protection support, add parameter `--allowed-tenant-ids`.
 
 ## January 19, 2021
 

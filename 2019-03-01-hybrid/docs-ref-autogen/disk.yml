@@ -24,6 +24,7 @@ directCommands:
                    --resource-group
                    [--disk-iops-read-only]
                    [--disk-mbps-read-only]
+                   [--enable-bursting {false, true}]
                    [--gallery-image-reference]
                    [--gallery-image-reference-lun]
                    [--image-reference]
@@ -46,6 +47,8 @@ directCommands:
     syntax: az disk create -g MyResourceGroup -n MyDisk --source https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd
   - summary: Create an empty managed disk.
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10
+  - summary: Create an empty managed disk with bursting enabled.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 1024 --location centraluseuap --enable-bursting
   - summary: Create a managed disk by copying an existing disk or snapshot.
     syntax: az disk create -g MyResourceGroup -n MyDisk2 --source MyDisk
   - summary: Create a disk in an availability zone in the region of "East US 2"
@@ -75,6 +78,10 @@ directCommands:
     description: ''
   - name: --disk-mbps-read-only
     summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
+    description: ''
+  - name: --enable-bursting
+    parameterValueGroup: false, true
+    summary: Enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default, and it does not apply to Ultra disks.
     description: ''
   - name: --gallery-image-reference
     summary: ID of the shared galley image version from which to create a disk.
@@ -274,6 +281,7 @@ directCommands:
     az disk update [--add]
                    [--disk-iops-read-only]
                    [--disk-mbps-read-only]
+                   [--enable-bursting {false, true}]
                    [--force-string]
                    [--ids]
                    [--max-shares]
@@ -299,6 +307,10 @@ directCommands:
     description: ''
   - name: --disk-mbps-read-only
     summary: The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10.
+    description: ''
+  - name: --enable-bursting
+    parameterValueGroup: false, true
+    summary: Enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default, and it does not apply to Ultra disks.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.

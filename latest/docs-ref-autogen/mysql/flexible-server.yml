@@ -15,6 +15,7 @@ directCommands:
                                     [--assign-identity]
                                     [--backup-retention]
                                     [--high-availability]
+                                    [--iops]
                                     [--location]
                                     [--name]
                                     [--public-access]
@@ -51,7 +52,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user, -u
-    defaultValue: stingyBagels9
+    defaultValue: muddledCoot3
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --assign-identity
@@ -64,6 +65,9 @@ directCommands:
   - name: --high-availability
     defaultValue: Disabled
     summary: Enable or disable high availability feature.  Default value is Disabled.
+    description: ''
+  - name: --iops
+    summary: Number of IOPS to be allocated for this server. You will get certain amount of free IOPS based on compute and storage provisioned. The default value for IOPS is free IOPS. To learn more about IOPS based on compute and storage, refer to IOPS in Azure Database for MySQL Flexible Server.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -233,7 +237,8 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --restore-time
-    summary: The point in time to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+08:00.
+    defaultValue: 2021-02-09T06:50:10+00:00
+    summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+08:00.
     description: ''
   - isRequired: true
     name: --source-server
@@ -385,6 +390,7 @@ directCommands:
                                     [--force-string]
                                     [--high-availability {Disabled, Enabled}]
                                     [--ids]
+                                    [--iops]
                                     [--maintenance-window]
                                     [--name]
                                     [--remove]
@@ -401,7 +407,7 @@ directCommands:
                                     [--tier]
   examples:
   - summary: Update a flexible server's sku, using local context for server and resource group.
-    syntax: az mysql flexible-server update --sku-name Standard_D4s_v3
+    syntax: az mysql flexible-server update --sku-name Standard_D4ds_v4 --tier GeneralPurpose
   - summary: Update a flexible server's tags.
     syntax: az mysql flexible-server update --resource-group testGroup --name testServer --tags "k1=v1" "k2=v2"
   optionalParameters:
@@ -423,6 +429,9 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --iops
+    summary: Number of IOPS to be allocated for this server. You will get certain amount of free IOPS based on compute and storage provisioned. The default value for IOPS is free IOPS. To learn more about IOPS based on compute and storage, refer to IOPS in Azure Database for MySQL Flexible Server.
     description: ''
   - name: --maintenance-window
     summary: 'Period of time (UTC) designated for maintenance. Examples: "Sun:23:30" to schedule on Sunday, 11:30pm UTC. To set back to default pass in "Disabled".'
