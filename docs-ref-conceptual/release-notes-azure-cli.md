@@ -7036,7 +7036,7 @@ You can report issues with nightly preview builds in the following ways:
   * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
   * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
 
-* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/en-us/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
+* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
 
 The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  
 
