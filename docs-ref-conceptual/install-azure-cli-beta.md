@@ -58,6 +58,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    ```console
    python -m venv <env_name>
    ```
+The executable can be `python3`, depending on the Linux distribution or the installed Python you are using.
 
 1. Activate the virtual environment
 
