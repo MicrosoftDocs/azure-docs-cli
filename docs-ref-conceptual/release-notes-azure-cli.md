@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/09/2021
+ms.date: 02/16/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## February 16, 2021
+
+Version 2.19.1
+
+### Key Vault
+
+* Hotfix: Dependency package `azure-keyvault-administration` is pinned to 4.0.0b1
 
 ## February 09, 2021
 
