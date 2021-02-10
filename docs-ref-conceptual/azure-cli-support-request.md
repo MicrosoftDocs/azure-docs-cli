@@ -18,7 +18,7 @@ The Azure CLI enables you to create and manage Azure support tickets.
 - Update severity, ticket status, and contact information for a support ticket.
 - Add a new communication to a support ticket or get a list of all communications for a support ticket. Narrow your search of communication lists by created date or communication type.
 
-To create a support request, you must be an [Owner](/azure/role-based-access-control/built-in-roles#owner), [Contributor](/azure/role-based-access-control/built-in-roles#contributor) or be assigned to the [Support Request Contributor](/azure/role-based-access-control/built-in-roles#support-request-contributor) role at the subscription level. To create a support request without a subscription, for example an Azure Active Directory scenario, you must be an [Admin](/azure/active-directory/roles/permissions-reference).
+To create a support request, you must be an [Owner](/azure/role-based-access-control/built-in-roles#owner) or [Contributor](/azure/role-based-access-control/built-in-roles#contributor), or be assigned to the [Support Request Contributor](/azure/role-based-access-control/built-in-roles#support-request-contributor) role at the subscription level. To create a support request without a subscription, such as an Azure Active Directory scenario, you must be an [Admin](/azure/active-directory/roles/permissions-reference).
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
@@ -44,7 +44,7 @@ To create a support request, you must be an [Owner](/azure/role-based-access-con
 
    ```azurecli
    az support tickets create --ticket-name "VM012" --title "Issue with public IP" \
-      --description "This ticket covers problems encountered with the public IP address of a VM." \
+      --description "This ticket involves a public IP address of a VM." \
       --problem-classification e5c307e3-50ff-5dc9-c8ae-7d35051f88c9 \
       --severity minimal --contact-first-name Kenneth --contact-last-name Liew \
       --contact-method email --contact-email Kenneth.Liew@Contoso.com \
