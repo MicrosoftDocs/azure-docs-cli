@@ -55,7 +55,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
    Navigate to the folder where you want to create the virtual environment, then run:
 
-   ```console
+   ```bash
    python -m venv <env_name>
    ```
 
@@ -69,7 +69,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
    ### [Linux/macOS Bash](#tab/bash)
 
-   ```console
+   ```bash
    . $env/bin/activate
    ```
    ---
@@ -77,15 +77,15 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
 1. Install Azure CLI beta
 
-   ```console
-   pip install --pre --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
+   ```bash
+   pip install --pre --extra-index-url https://azcliprod.blob.core.windows.net/beta/simple/ azure-cli
    ```
 
 1. Deactivate the virtual environment
 
    After you finish using Azure CLI beta, you can close the terminal window, or use the `deactivate` command.
 
-   ```console
+   ```bash
    deactivate
    ```
 
@@ -101,7 +101,7 @@ Remove-Item -Force -Recurse <env_name>
 
 ### [Linux/macOS Bash](#tab/bash)
 
-```console
+```bash
 rm -rf <env_name>
 ```
 
