@@ -113,6 +113,11 @@ Version 2.19.0
 ### Search
 
 * Upgrade to use the latest (8.0.0) azure-mgmt-search python sdk
+* `az search create`: Add support for search service creation with IP rules, public endpoint access and/or msi
+* `az search update`: Add support for search service update with IP rules, public endpoint access and/or msi
+* `az search private-endpoint-connection`: Manage private endpoint connection to a search service
+* `az search shared-private-link-resource`: Manage shared private link resources in a search service
+* `az search private-link-resource`: List available private link resources in a search service
 
 ### Security
 
