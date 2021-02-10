@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/09/2021
+ms.date: 02/10/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,14 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## February 10, 2021
+
+Version 2.19.1
+
+### Key Vault
+
+* Hotfix: Dependency package `azure-keyvault-administration` is pinned to 4.0.0b1
 
 ## February 09, 2021
 
@@ -113,6 +121,11 @@ Version 2.19.0
 ### Search
 
 * Upgrade to use the latest (8.0.0) azure-mgmt-search python sdk
+* `az search create`: Add support for search service creation with IP rules, public endpoint access and/or msi
+* `az search update`: Add support for search service update with IP rules, public endpoint access and/or msi
+* `az search private-endpoint-connection`: Manage private endpoint connection to a search service
+* `az search shared-private-link-resource`: Manage shared private link resources in a search service
+* `az search private-link-resource`: List available private link resources in a search service
 
 ### Security
 
