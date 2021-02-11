@@ -14,6 +14,8 @@ ms.custom: devex-track-azurecli
 
 # Tutorial: Use persisted parameters to simplify sequential Azure CLI commands
 
+test
+
 Azure CLI offers persisted parameters that enable you to store parameter values for continued use.  In this tutorial, you learn how to work with persisted values, and use these local values to efficiently execute sequential commands.
 
 In this tutorial, you will learn to:
