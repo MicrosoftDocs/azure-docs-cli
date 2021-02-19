@@ -43,7 +43,7 @@ Version 2.19.0
 
 ### App Config
 
-* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values. Please see more details in this [PR](https://github.com/Azure/azure-cli/pull/16536)
+* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values
 
 ### App Service
 
@@ -7033,19 +7033,28 @@ You can report issues with nightly preview builds in the following ways:
 
 # [Beta release notes](#tab/azure-cli-beta)
 
-The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
+## February 8, 2021
 
-## June 23, 2020
+> [!NOTE]
+>
+>  BREAKING CHANGES are introduced in this release.  Carefully read all release notes prior to installation.
+>
+> The beta version does not guarantee product level quality so it should not be used in your production environment.
 
-### Things to know about the new Azure CLI beta release
+* Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
--	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
--	Relogin is required after install the beta version.
--	The beta release only supports the Windows platform.
--	The Azure Stack is not supported.
--	`--use-cert-sn-issuer` parameter is not supported when using service principal key to authenticate.
--	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
+* There are several changes to `az login`.  (Run `az login --help` for more details.)
+  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account#az_account_get_access_token) instead.
+  * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
+  * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
+  * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
 
-If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
+* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
+
+The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  
+
+For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md). 
+
+If you find issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
 ---
