@@ -13,7 +13,7 @@ ms.custom: template-how-to
 
 In addition to specifying values directly in a command, you can provide values in several ways:
 
-* Shell variables
+* Use shell variables
 * Set a subscription for use in multiple commands
 * Create default values for some parameters
 * Use persistent values for some parameters
@@ -24,7 +24,7 @@ This article discusses various ways that you provide values to commands.
 
 ## Use shell variables
 
-Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can leverage variables in Bash to pass values for parameters to commands. Using variables also allows reuse of commands, either piecemeal or in scripts.
+Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can use variables in Bash to pass values for parameters to commands. Using variables also allows reuse of commands, either piecemeal or in scripts.
 
 This example assigns values to several variables, using standard Bash syntax:
 
@@ -42,9 +42,9 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
    --query 'storageProfile.osDisk.osType' --output tsv)
 ```
 
-This command uses the `tsv` output format, which returns values without additional formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+This command uses the `tsv` output format, which returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
-You can use the variable in a subsequent command:
+You can use the variable in a later command:
 
 ```azurecli
 az disk create --resource-group $MyResourceGroup --name DestinationDisk \
@@ -83,7 +83,7 @@ After running this command, you can run the following command to create a storag
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-Notice that there is no resource group specified in the command. For more information, see [Set a default resource group](https://docs.microsoft.com/en-us/cli/azure/manage-azure-groups-azure-cli#set-a-default-resource-group).
+Notice that there's no resource group specified in the command. For more information, see [Set a default resource group](https://docs.microsoft.com/en-us/cli/azure/manage-azure-groups-azure-cli#set-a-default-resource-group).
 
 > [!TIP]
 > Commands getting values for parameters in different ways can be confusing. If a command gives an unexpected result, such as not being able to find a resource group, there may be a default value.
