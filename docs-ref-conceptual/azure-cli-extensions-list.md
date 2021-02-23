@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/18/2021
+ms.date: 02/23/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -24,6 +24,7 @@ az extension list-available --output table
 | Name | Version | Summary | Preview |
 |------|---------|---------|---------|
 | [account](https://github.com/Azure/azure-cli-extensions/tree/master/src/account) | 0.2.1 | Microsoft Azure Command-Line Tools SubscriptionClient Extension |  |
+| [acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer) | 1.0.0 | Microsoft Azure Command-Line Tools Acrtransfer Extension | Yes |
 | [ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 0.1.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension |  |
 | [aem](https://github.com/Azure/azure-cli-extensions) | 0.2.0 | Manage Azure Enhanced Monitoring Extensions for SAP |  |
 | [ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 0.2.5 | Add AI powered examples to help content. | Yes |
@@ -99,6 +100,7 @@ az extension list-available --output table
 | [privatedns](https://github.com/Azure/azure-cli-extensions) | 0.1.1 | Commands to manage Private DNS Zones | Yes |
 | [providerhub](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub) | 0.1.0 | Microsoft Azure Command-Line Tools Providerhub Extension |  |
 | [quantum](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Quantum Extension | Yes |
+| [rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/master/src/rdbms-connect) | 0.1.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | Yes |
 | [resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 1.1.0 | Support for querying Azure resources with Resource Graph. | Yes |
 | [sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 0.6.4 | Additional commands for working with SAP HanaOnAzure instances. |  |
 | [scheduled-query](https://github.com/Azure/azure-cli-extensions) | 0.2.1 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Yes |
