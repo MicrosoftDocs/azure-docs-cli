@@ -39,6 +39,7 @@ directCommands:
   syntax: >-
     az storage account blob-service-properties update --account-name
                                                       [--add]
+                                                      [--change-feed-days]
                                                       [--container-days]
                                                       [--container-retention {false, true}]
                                                       [--default-service-version]
@@ -54,14 +55,18 @@ directCommands:
                                                       [--set]
                                                       [--subscription]
   examples:
-  - summary: Enable the change feed for the storage account 'mystorageaccount' in resource group 'MyResourceGroup'.
-    syntax: az storage account blob-service-properties update --enable-change-feed true -n mystorageaccount -g MyResourceGroup
-  - summary: Enable delete retention policy and set delete retention days to 100 for the storage account 'mystorageaccount' in resource group 'MyResourceGroup'.
-    syntax: az storage account blob-service-properties update --enable-delete-retention true --delete-retention-days 100 -n mystorageaccount -g MyResourceGroup
-  - summary: Enable versioning for the storage account 'mystorageaccount' in resource group 'MyResourceGroup'.
-    syntax: az storage account blob-service-properties update --enable-versioning -n mystorageaccount -g MyResourceGroup
+  - summary: Enable change feed and set change feed retention days to infinite for the storage account 'mystorageaccount' in resource group 'myresourcegroup'.
+    syntax: az storage account blob-service-properties update --enable-change-feed true -n mystorageaccount -g myresourcegroup
+  - summary: Enable change feed and set change feed retention days to 100 for the storage account 'mystorageaccount' in resource group 'myresourcegroup'.
+    syntax: az storage account blob-service-properties update --enable-change-feed --change-feed-days 100 -n mystorageaccount -g myresourcegroup
+  - summary: Disable change feed for the storage account 'mystorageaccount' in resource group 'myresourcegroup'.
+    syntax: az storage account blob-service-properties update --enable-change-feed false -n mystorageaccount -g myresourcegroup
+  - summary: Enable delete retention policy and set delete retention days to 100 for the storage account 'mystorageaccount' in resource group 'myresourcegroup'.
+    syntax: az storage account blob-service-properties update --enable-delete-retention true --delete-retention-days 100 -n mystorageaccount -g myresourcegroup
+  - summary: Enable versioning for the storage account 'mystorageaccount' in resource group 'myresourcegroup'.
+    syntax: az storage account blob-service-properties update --enable-versioning -n mystorageaccount -g myresourcegroup
   - summary: Set default version for incoming request for storage account 'mystorageaccount'.
-    syntax: az storage account blob-service-properties update --default-service-version 2020-04-08 -n mystorageaccount -g MyResourceGroup
+    syntax: az storage account blob-service-properties update --default-service-version 2020-04-08 -n mystorageaccount -g myresourcegroup
   requiredParameters:
   - isRequired: true
     name: --account-name -n
@@ -70,6 +75,9 @@ directCommands:
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --change-feed-days --change-feed-retention-days
+    summary: Indicate the duration of changeFeed retention in days. Minimum value is 1 day and maximum value is 146000 days (400 years). A null value indicates an infinite retention of the change feed.(Use `--enable-change-feed` without `--change-feed-days` to indicate null).
     description: ''
   - name: --container-days --container-delete-retention-days
     summary: Indicate the number of days that the deleted container should be retained. The minimum specified value can be 1 and the maximum value can be 365.
@@ -139,5 +147,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2021
+  ms.date: 02/26/2021
   description: Manage the properties of a storage account's blob service.

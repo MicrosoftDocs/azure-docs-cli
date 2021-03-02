@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/10/2021
+ms.date: 03/02/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,116 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## March 02, 2021
+
+Version 2.20.0
+
+### AKS
+
+* Add support for SGX addon 'confcom'
+
+### AMS
+
+* Update module to use 2020 Azure Media Services api.
+* `az ams account encryption`: New subgroup to show or set the encryption for the media service account
+* `az ams account storage set-authentication`: New command to set the authentication for the storage account associated with the media service account
+* `az ams account create (mi-system-assigned)`: New --mi-system-assigned parameter for account create to set the managed identity of the media account
+* `az ams account mru set`: This command will no longer work for Media Services accounts that are created with the 2020-05-01 version of the API or later.
+* `az ams live-event create (stretch-mode, key-frame-interval, transcrip-lang, use-static-hostname, custom hostname)`: Add new parameter options to live-event create command
+* `az ams live-event standby`: New command to put the live event in standby mode
+* `az ams transform create (videoanalysismode, audioanalysis mode)`: New parameter options for transform create
+
+### App Service
+
+* `az webapp config ssl bind`: handle if webapp and appservice plan in different rg. Also reference text updates
+* Fix #8743: az webapp deploy
+* Bugfix: Add generateRandomAppNames.json to setup
+* `az functionapp create`: Add preview support for creating dotnet-isolated apps.
+* Fix #12150: Support for subnet ID in vnet-integration add
+* `az functionapp create`: Remove preview flag from Node.js 14.
+
+### ARM
+
+* `az deployment group/sub/mg/tenant validate/create/what-if`: Add support for Bicep files
+* `az bicep install`: New command for installing Bicep CLI
+* `az bicep upgrade`: New command for upgrading Bicep CLI
+* `az bicep build`: New command for building Bicep files
+* `az bicep version`: New command for showing the current installed version of Bicep CLI
+* `az bicep list-versions`: New command for showing the available Bicep CLI versions
+* `az managedapp definition update`: Add new command for updating managedapp definition
+
+### Backup
+
+* `az backup recoverypoint show-log-chain`: Add start/end time in show-log-chain table output
+* BugFix: Enable Alternate Location Restore for SQL/SAPHANA protected items
+
+### CDN
+
+* Add cli support for AFD SKU
+
+### Compute
+
+* `az vm (extension) image list`: Make it more robust
+* `az vmss create`: Fix a license type issue
+* Upgrade API version to 2020-12-01
+* `az vm create`: add `--enable-hotpatching`
+
+### Cosmos DB
+
+* Upgrade to version 3.0.0 and add support for NetworkAclBypass + Update Mongo ServerVersion + backup policy
+
+### Extension
+
+* Support config of extension index url
+
+### IoT Central
+
+* `az iot central app`: Address several S360 fixes
+* `az iot central app update`: Remove the need of checking etag when updating the existing iotc app.
+* Change the resourceType (IotApps) to be in camel case.
+
+### Key Vault
+
+* [BREAKING CHANGE] `az keyvault role assignment/definition list`: `roleDefinitionName` should be `roleName` in command output
+* [BREAKING CHANGE] `id` changes to be `jobId`, `azureStorageBlobContainerUri` changes to be `folderUrl` in command output of `az keyvault backup/restore`, `az keyvault key restore`
+
+### Network
+
+* Bump version from '2020-07-01' to '2020-08-01'
+* `az network public-ip create`: Support '--zone 1 2 3' after '2020-08-01'
+* `az network routeserver peering`: Rename `--vrouter-name` by `--routeserver`
+* `az network express-route peering create`: Support ipv6 address
+* `az network public-ip create`: Expose a new argument `--tier`
+
+### OpenShift
+
+* Update of az openshift deprecation warning
+
+### Search
+
+* `az search`: Fix the `--identity-type` helper's guide.
+
+### SQL
+
+* Update az sql mi examples
+* `az sql db/elastic-pool create/update`: Add maintenance-configuration argument
+* `az sql db replica create`: Add --secondary-type argument
+
+### Storage
+
+* [BREAKING CHANGE] `az storage account file-service-properties`: Default to enable delete retention policy with retention days 7 in server side
+* Fix #16872: az storage blob now (2.19) requires login even if connection-string is provided
+* Fix #16959: az storage copy crashes: ValidationError: local variable 'service' referenced before assignment
+* Fix #14054: 'NoneType' object has no attribute '__name__'
+* Fix #16679: `az storage blob download` fails with "Permission denied" if the destination file is a directory
+* Upgrade storage api version to 2021-01-01
+* Support version in Lifecyle management policy
+* Support storage account shared key access management
+* `az storage account network-rule`: GA resource access rules
+* Support double encryption for encryption scope
+* `az storage account blob-service-properties update`: Support --change-feed-retention-days
+* Support rewrite existing blob
 
 ## February 10, 2021
 
@@ -43,7 +153,7 @@ Version 2.19.0
 
 ### App Config
 
-* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values. Please see more details in this [PR](https://github.com/Azure/azure-cli/pull/16536)
+* [BREAKING CHANGE] `az appconfig feature filter add`: Support adding JSON objects as feature filter parameter values
 
 ### App Service
 
@@ -7033,19 +7143,28 @@ You can report issues with nightly preview builds in the following ways:
 
 # [Beta release notes](#tab/azure-cli-beta)
 
-The Azure CLI beta release is a migration from the authentican method of AAD platform (v1.0) to [Microsoft Identity platform (v2.0)](/azure/active-directory/develop/v2-overview).
+## February 8, 2021
 
-## June 23, 2020
+> [!NOTE]
+>
+>  BREAKING CHANGES are introduced in this release.  Carefully read all release notes prior to installation.
+>
+> The beta version does not guarantee product level quality so it should not be used in your production environment.
 
-### Things to know about the new Azure CLI beta release
+* Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
--	The beta version of the Azure CLI supports all CLI commands that you will find in the current released version.
--	Relogin is required after install the beta version.
--	The beta release only supports the Windows platform.
--	The Azure Stack is not supported.
--	`--use-cert-sn-issuer` parameter is not supported when using service principal key to authenticate.
--	Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` is not supported.
+* There are several changes to `az login`.  (Run `az login --help` for more details.)
+  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account#az_account_get_access_token) instead.
+  * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
+  * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
+  * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
 
-If you find any issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
+* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
+
+The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  
+
+For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md). 
+
+If you find issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
 ---

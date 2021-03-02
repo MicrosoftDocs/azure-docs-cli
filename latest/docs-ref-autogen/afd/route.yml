@@ -1,0 +1,323 @@
+### YamlMime:AzureCLIGroup
+uid: az_afd_route
+name: az afd route
+summary: Manage routes under an AFD endpoint.
+description: A route maps your domains and matching URL path patterns to a specific origin group.
+directCommands:
+- uid: az_afd_route_create
+  name: az afd route create
+  summary: Creates a new route within the specified endpoint.
+  description: ''
+  syntax: >-
+    az afd route create --endpoint-name
+                        --forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}
+                        --https-redirect {Disabled, Enabled}
+                        --origin-group
+                        --profile-name
+                        --resource-group
+                        --route-name
+                        --supported-protocols {Http, Https}
+                        [--content-types-to-compress]
+                        [--custom-domains]
+                        [--enable-compression {false, true}]
+                        [--link-to-default-domain {Disabled, Enabled}]
+                        [--origin-path]
+                        [--patterns-to-match]
+                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--rule-sets]
+                        [--subscription]
+  examples:
+  - summary: Creates a route to assoicate the endpoint's default domain with an origin group for all HTTPS requests.
+    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --https-redirect False --origin-group og001 --supported-protocols Https --link-to-default-domain Enabled --forwarding-protocol MatchRequest
+  - summary: Creates a route to assoicate the endpoint's default domain with an origin group for all requests and use the specified rule sets to customize the route behavior.
+    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --rule-sets ruleset1 rulseset2 --origin-group og001 --supported-protocols Http Https --link-to-default-domain Enabled --forwarding-protocol MatchRequest --https-redirect False
+  - summary: Creates a route to assoicate the endpoint's default domain and a custom domain with an origin group for all requests with the specified path patterns and redirect all trafic to use Https.
+    syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --patterns-to-match /test1/* /tes2/* --origin-group og001 --supported-protocols Http Https --custom-domains cd001 --forwarding-protocol MatchRequest --https-redirect True --link-to-default-domain Enabled
+  requiredParameters:
+  - isRequired: true
+    name: --endpoint-name
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol this rule will use when forwarding traffic to backends.
+    description: ''
+  - isRequired: true
+    name: --https-redirect
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to automatically redirect HTTP traffic to HTTPS traffic.
+    description: ''
+  - isRequired: true
+    name: --origin-group
+    summary: Name or ID of the origin group to be associated with.
+    description: ''
+  - isRequired: true
+    name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --route-name
+    summary: Name of the route.
+    description: ''
+  - isRequired: true
+    name: --supported-protocols
+    parameterValueGroup: Http, Https
+    summary: List of supported protocols for this route.
+    description: ''
+  optionalParameters:
+  - name: --content-types-to-compress
+    summary: List of content types on which compression applies. The value should be a valid MIME type.
+    description: ''
+  - name: --custom-domains
+    summary: Custom domains referenced by this endpoint.
+    description: ''
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --link-to-default-domain
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether this route will be linked to the default endpoint domain.
+    description: ''
+  - name: --origin-path
+    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    description: ''
+  - name: --patterns-to-match
+    summary: The route patterns of the rule.
+    description: ''
+  - name: --query-string-caching-behavior
+    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+    description: ''
+  - name: --rule-sets
+    summary: Collection of ID or name of rule set referenced by the route.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_afd_route_delete
+  name: az afd route delete
+  summary: Delete an existing route within the specified endpoint.
+  description: ''
+  syntax: >-
+    az afd route delete [--endpoint-name]
+                        [--ids]
+                        [--profile-name]
+                        [--resource-group]
+                        [--route-name]
+                        [--subscription]
+                        [--yes]
+  examples:
+  - summary: Delete a route named route1.
+    syntax: az afd route delete -g group --profile-name profile --endpoint-name endpoint1 --route-name route1
+  optionalParameters:
+  - name: --endpoint-name
+    summary: Name of the endpoint.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --route-name
+    summary: Name of the route.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_afd_route_list
+  name: az afd route list
+  summary: List all the routes within the specified endpoint.
+  description: ''
+  syntax: >-
+    az afd route list --endpoint-name
+                      --profile-name
+                      --resource-group
+                      [--query-examples]
+                      [--subscription]
+  examples:
+  - summary: List all the routes within the specified endpoint.
+    syntax: az afd route list -g group --profile-name profile --endpoint-name endpoint1
+  requiredParameters:
+  - isRequired: true
+    name: --endpoint-name
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_afd_route_show
+  name: az afd route show
+  summary: Show route details.
+  description: ''
+  syntax: >-
+    az afd route show [--endpoint-name]
+                      [--ids]
+                      [--profile-name]
+                      [--query-examples]
+                      [--resource-group]
+                      [--route-name]
+                      [--subscription]
+  examples:
+  - summary: show details of the route named route1.
+    syntax: az afd route show -g group --profile-name profile  --endpoint-name endpoint1 --route-name route1
+  optionalParameters:
+  - name: --endpoint-name
+    summary: Name of the endpoint.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --route-name
+    summary: Name of the route.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_afd_route_update
+  name: az afd route update
+  summary: Update an existing route within the specified endpoint.
+  description: ''
+  syntax: >-
+    az afd route update [--content-types-to-compress]
+                        [--custom-domains]
+                        [--enable-compression {false, true}]
+                        [--endpoint-name]
+                        [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                        [--https-redirect {Disabled, Enabled}]
+                        [--ids]
+                        [--link-to-default-domain {Disabled, Enabled}]
+                        [--origin-group]
+                        [--origin-path]
+                        [--patterns-to-match]
+                        [--profile-name]
+                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--resource-group]
+                        [--route-name]
+                        [--rule-sets]
+                        [--subscription]
+                        [--supported-protocols {Http, Https}]
+  examples:
+  - summary: Update a route to accept both Http and Https requests and redirect all trafic to use Https.
+    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --supported-protocols Http Https --https-redirect True
+  - summary: Update a route's rule sets settings to customize the route behavior.
+    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --rule-sets ruleset1 rulseset2
+  - summary: Update a route's compression settings to enable compression for the specified content types.
+    syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --query-string-caching-behavior IgnoreQueryString --enable-compression true --content-types-to-compress text/javascript text/plain
+  optionalParameters:
+  - name: --content-types-to-compress
+    summary: List of content types on which compression applies. The value should be a valid MIME type.
+    description: ''
+  - name: --custom-domains
+    summary: Custom domains referenced by this endpoint.
+    description: ''
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --endpoint-name
+    summary: Name of the endpoint.
+    description: ''
+  - name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol this rule will use when forwarding traffic to backends.
+    description: ''
+  - name: --https-redirect
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to automatically redirect HTTP traffic to HTTPS traffic.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --link-to-default-domain
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether this route will be linked to the default endpoint domain.
+    description: ''
+  - name: --origin-group
+    summary: Name or ID of the origin group to be associated with.
+    description: ''
+  - name: --origin-path
+    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    description: ''
+  - name: --patterns-to-match
+    summary: The route patterns of the rule.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --query-string-caching-behavior
+    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --route-name
+    summary: Name of the route.
+    description: ''
+  - name: --rule-sets
+    summary: Collection of ID or name of rule set referenced by the route.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --supported-protocols
+    parameterValueGroup: Http, Https
+    summary: List of supported protocols for this route.
+    description: ''
+commands:
+- az_afd_route_create
+- az_afd_route_delete
+- az_afd_route_list
+- az_afd_route_show
+- az_afd_route_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: A route maps your domains and matching URL path patterns to a specific origin group.

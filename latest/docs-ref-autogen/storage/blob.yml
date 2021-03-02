@@ -632,6 +632,94 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_blob_rewrite
+  name: az storage blob rewrite
+  summary: Create a new Block Blob where the content of the blob is read from a given URL.
+  description: The content of an existing blob is overwritten with the new blob.
+  syntax: >-
+    az storage blob rewrite --container-name
+                            --name
+                            --source-uri
+                            [--account-key]
+                            [--account-name]
+                            [--auth-mode {key, login}]
+                            [--connection-string]
+                            [--encryption-scope]
+                            [--if-match]
+                            [--if-modified-since]
+                            [--if-none-match]
+                            [--if-unmodified-since]
+                            [--lease-id]
+                            [--sas-token]
+                            [--subscription]
+                            [--tags-condition]
+                            [--tier {Archive, Cool, Hot, P10, P15, P20, P30, P4, P40, P50, P6, P60, P70, P80}]
+                            [--timeout]
+  examples:
+  - summary: Update encryption scope for existing blob.
+    syntax: az storage blob rewrite --source-uri https://srcaccount.blob.core.windows.net/mycontainer/myblob?<sastoken> --encryption-scope newscope -c mycontainer -n myblob --account-name mystorageaccount --account-key 0000-0000
+  requiredParameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
+    description: ''
+  - isRequired: true
+    name: --source-uri -u
+    summary: A URL of up to 2 KB in length that specifies a file or blob. The value should be URL-encoded as it would appear in a request URI. If the source is in another account, the source must either be public or must be authenticated via a shared access signature. If the source is public, no authentication is required.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --encryption-scope
+    summary: A predefined encryption scope used to encrypt the data on the service. An encryption scope can be created using the Management API and referenced here by name. If a default encryption scope has been defined at the container, this value will override it if the container-level scope is configured to allow overrides. Otherwise an error will be raised.
+    description: ''
+  - name: --if-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag matches the value specified.
+    description: ''
+  - name: --if-modified-since
+    summary: Commence only if modified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --if-none-match
+    summary: An ETag value, or the wildcard character (\*). Specify this header to perform the operation only if the resource's ETag does not match the value specified. Specify the wildcard character (\*) to perform the operation only if the resource does not exist, and fail the operation if it does exist.
+    description: ''
+  - name: --if-unmodified-since
+    summary: Commence only if unmodified since supplied UTC datetime (Y-m-d'T'H:M'Z').
+    description: ''
+  - name: --lease-id
+    summary: Required if the blob has an active lease. Value can be a BlobLeaseClient object or the lease ID as a string.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags-condition
+    summary: Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
+    description: ''
+  - name: --tier
+    parameterValueGroup: Archive, Cool, Hot, P10, P15, P20, P30, P4, P40, P50, P6, P60, P70, P80
+    summary: A standard blob tier value to set the blob to. For this version of the library, this is only applicable to block blobs on standard storage accounts.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_set_tier
   name: az storage blob set-tier
   summary: Set the block or page tiers on the blob.
@@ -718,6 +806,7 @@ directCommands:
                          [--sas-token]
                          [--snapshot]
                          [--subscription]
+                         [--tags-condition]
                          [--timeout]
   examples:
   - summary: Show all properties of a blob.
@@ -773,6 +862,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags-condition
+    summary: Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -972,7 +1064,7 @@ directCommands:
                            [--auth-mode {key, login}]
                            [--clear-content-settings {false, true}]
                            [--connection-string]
-                           [--content-cache-control]
+                           [--content-cache]
                            [--content-disposition]
                            [--content-encoding]
                            [--content-language]
@@ -1013,7 +1105,7 @@ directCommands:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
-  - name: --content-cache-control
+  - name: --content-cache --content-cache-control
     summary: The cache control string.
     description: ''
   - name: --content-disposition
@@ -1068,7 +1160,7 @@ directCommands:
                            [--account-name]
                            [--auth-mode {key, login}]
                            [--connection-string]
-                           [--content-cache-control]
+                           [--content-cache]
                            [--content-disposition]
                            [--content-encoding]
                            [--content-language]
@@ -1123,7 +1215,7 @@ directCommands:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
-  - name: --content-cache-control
+  - name: --content-cache --content-cache-control
     summary: The cache control string.
     description: ''
   - name: --content-disposition
@@ -1207,7 +1299,7 @@ directCommands:
                                  [--account-name]
                                  [--auth-mode {key, login}]
                                  [--connection-string]
-                                 [--content-cache-control]
+                                 [--content-cache]
                                  [--content-disposition]
                                  [--content-encoding]
                                  [--content-language]
@@ -1263,7 +1355,7 @@ directCommands:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
-  - name: --content-cache-control
+  - name: --content-cache --content-cache-control
     summary: The cache control string.
     description: ''
   - name: --content-disposition
@@ -1421,6 +1513,7 @@ commands:
 - az_storage_blob_metadata_show
 - az_storage_blob_metadata_update
 - az_storage_blob_restore
+- az_storage_blob_rewrite
 - az_storage_blob_service_properties
 - az_storage_blob_service_properties_delete_policy
 - az_storage_blob_service_properties_delete_policy_show
@@ -1453,5 +1546,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2021
+  ms.date: 02/26/2021
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

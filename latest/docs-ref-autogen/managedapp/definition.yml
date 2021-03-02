@@ -59,14 +59,14 @@ directCommands:
     summary: The resource group of the managed application definition.
     description: ''
   optionalParameters:
-  - name: --create-ui-definition
-    summary: The managed application definition create ui definition.
+  - name: --create-ui-definition -c
+    summary: JSON formatted string or a path to a file with such content.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - name: --main-template
-    summary: The managed application definition main template.
+  - name: --main-template -t
+    summary: JSON formatted string or a path to a file with such content.
     description: ''
   - name: --package-file-uri
     summary: The managed application definition package file uri.
@@ -155,11 +155,88 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
+- uid: az_managedapp_definition_update
+  name: az managedapp definition update
+  summary: Update a managed application definition.
+  description: ''
+  syntax: >-
+    az managedapp definition update --authorizations
+                                    --description
+                                    --display-name
+                                    --lock-level {CanNotDelete, None, ReadOnly}
+                                    [--create-ui-definition]
+                                    [--ids]
+                                    [--location]
+                                    [--main-template]
+                                    [--name]
+                                    [--package-file-uri]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--tags]
+  examples:
+  - summary: Update a managed application defintion.
+    syntax: >-
+      az managedapp definition update -g MyResourceGroup -n MyManagedAppDef -l eastus --display-name "MyManagedAppDef" \
+          --description "My Managed App Def description" -a "myPrincipalId:myRoleId" --lock-level None \
+          --package-file-uri "https://path/to/myPackage.zip"
+  - summary: Update a managed application defintion with inline values for createUiDefinition and mainTemplate.
+    syntax: >-
+      az managedapp definition update -g MyResourceGroup -n MyManagedAppDef -l eastus --display-name "MyManagedAppDef" \
+          --description "My Managed App Def description" -a "myPrincipalId:myRoleId" --lock-level None \
+          --create-ui-definition @myCreateUiDef.json --main-template @myMainTemplate.json
+  requiredParameters:
+  - isRequired: true
+    name: --authorizations -a
+    summary: Space-separated authorization pairs in a format of `<principalId>:<roleDefinitionId>`.
+    description: ''
+  - isRequired: true
+    name: --description
+    summary: The managed application definition description.
+    description: ''
+  - isRequired: true
+    name: --display-name
+    summary: The managed application definition display name.
+    description: ''
+  - isRequired: true
+    name: --lock-level
+    parameterValueGroup: CanNotDelete, None, ReadOnly
+    summary: The type of lock restriction.
+    description: ''
+  optionalParameters:
+  - name: --create-ui-definition -c
+    summary: JSON formatted string or a path to a file with such content.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --main-template -t
+    summary: JSON formatted string or a path to a file with such content.
+    description: ''
+  - name: --name -n
+    summary: The managed application definition name.
+    description: ''
+  - name: --package-file-uri
+    summary: The managed application definition package file uri.
+    description: ''
+  - name: --resource-group -g
+    summary: The resource group of the managed application definition.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 commands:
 - az_managedapp_definition_create
 - az_managedapp_definition_delete
 - az_managedapp_definition_list
 - az_managedapp_definition_show
+- az_managedapp_definition_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -177,5 +254,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2021
+  ms.date: 02/25/2021
   description: Manage Azure Managed Applications.

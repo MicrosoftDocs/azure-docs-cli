@@ -16,11 +16,19 @@ directCommands:
     az cosmosdb sql role assignment create --account-name
                                            --principal-id
                                            --resource-group
-                                           --role-definition-id
                                            --scope
                                            [--role-assignment-id]
+                                           [--role-definition-id]
+                                           [--role-definition-name]
   examples:
-  - summary: Create a SQL role assignment under an Azure Cosmos DB account.
+  - summary: Create a SQL role assignment under an Azure Cosmos DB account using Role Definition Name.
+    syntax: >-
+      az cosmosdb sql role assignment create --account-name MyAccount --resource-group MyResourceGroup \
+        --role-assignment-id cb8ed2d7-2371-4e3c-bd31-6cc1560e84f8 \
+        --role-definition-name "My Read Only Role" \
+        --scope "/dbs/mydb/colls/mycontainer" \
+        --principal-id 6328f5f7-dbf7-4244-bba8-fbb9d8066506
+  - summary: Create a SQL role assignment under an Azure Cosmos DB account using Role Definition ID.
     syntax: >-
       az cosmosdb sql role assignment create --account-name MyAccount --resource-group MyResourceGroup \
         --role-assignment-id cb8ed2d7-2371-4e3c-bd31-6cc1560e84f8 \
@@ -41,16 +49,18 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --role-definition-id -d
-    summary: Unique ID of the Role Definition that this Role Assignment refers to.
-    description: ''
-  - isRequired: true
     name: --scope -s
     summary: Data plane resource path at which this Role Assignment is being granted.
     description: ''
   optionalParameters:
   - name: --role-assignment-id -i
     summary: Optional for Create. Unique ID for the Role Assignment. If not provided, a new GUID will be used.
+    description: ''
+  - name: --role-definition-id -d
+    summary: Unique ID of the Role Definition that this Role Assignment refers to.
+    description: ''
+  - name: --role-definition-name -n
+    summary: Unique Name of the Role Definition that this Role Assignment refers to. Eg. 'Contoso Reader Role'.
     description: ''
 - uid: ext_cosmosdb-preview_az_cosmosdb_sql_role_assignment_delete
   name: az cosmosdb sql role assignment delete
@@ -156,7 +166,8 @@ directCommands:
     az cosmosdb sql role assignment update --account-name
                                            --resource-group
                                            --role-assignment-id
-                                           --role-definition-id
+                                           [--role-definition-id]
+                                           [--role-definition-name]
   examples:
   - summary: Update a SQL role assignment under an Azure Cosmos DB account.
     syntax: >-
@@ -176,9 +187,12 @@ directCommands:
     name: --role-assignment-id -i
     summary: Optional for Create. Unique ID for the Role Assignment. If not provided, a new GUID will be used.
     description: ''
-  - isRequired: true
-    name: --role-definition-id -d
+  optionalParameters:
+  - name: --role-definition-id -d
     summary: Unique ID of the Role Definition that this Role Assignment refers to.
+    description: ''
+  - name: --role-definition-name -n
+    summary: Unique Name of the Role Definition that this Role Assignment refers to. Eg. 'Contoso Reader Role'.
     description: ''
 commands:
 - ext_cosmosdb-preview_az_cosmosdb_sql_role_assignment_create
