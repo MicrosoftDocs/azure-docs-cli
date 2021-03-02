@@ -1,0 +1,304 @@
+### YamlMime:AzureCLIGroup
+uid: az_afd_origin
+name: az afd origin
+summary: Manage origins within the specified origin group.
+description: Origins are the application servers where Front Door will route your client requests. Utilize any publicly accessible application server, including App Service, Traffic Manager, Private Link, and many others.
+directCommands:
+- uid: az_afd_origin_create
+  name: az afd origin create
+  summary: Create an AFD origin.
+  description: ''
+  syntax: >-
+    az afd origin create --enabled-state {Disabled, Enabled}
+                         --host-name
+                         --origin-group-name
+                         --origin-name
+                         --profile-name
+                         --resource-group
+                         [--enable-private-link {false, true}]
+                         [--http-port]
+                         [--https-port]
+                         [--origin-host-header]
+                         [--priority]
+                         [--private-link-location]
+                         [--private-link-request-message]
+                         [--private-link-resource]
+                         [--private-link-sub-resource-type]
+                         [--subscription]
+                         [--weight]
+  examples:
+  - summary: Create an regular origin
+    syntax: az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443
+  - summary: Create a private link origin
+    syntax: az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443 --private-link-resource /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group/providers/Microsoft.Storage/storageAccounts/plstest --private-link-location EastUS --private-link-request-message 'Please approve this request' --private-link-sub-resource table
+  requiredParameters:
+  - isRequired: true
+    name: --enabled-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this origin.
+    description: ''
+  - isRequired: true
+    name: --host-name
+    summary: The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in a origin group.
+    description: ''
+  - isRequired: true
+    name: --origin-group-name
+    summary: Name of the origin group which is unique within the endpoint.
+    description: ''
+  - isRequired: true
+    name: --origin-name
+    summary: Name of the origin.
+    description: ''
+  - isRequired: true
+    name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --enable-private-link
+    parameterValueGroup: false, true
+    summary: Indicates whether private link is enanbled on that origin.
+    description: ''
+  - name: --http-port
+    defaultValue: "80"
+    summary: The port used for http requests to the origin.
+    description: ''
+  - name: --https-port
+    defaultValue: "443"
+    summary: The port used for https requests to the origin.
+    description: ''
+  - name: --origin-host-header
+    summary: The Host header to send for requests to this origin. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+    description: ''
+  - name: --priority
+    defaultValue: "1"
+    summary: Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+    description: ''
+  - name: --private-link-location
+    summary: The location of origin that will be connected to using the private link.
+    description: ''
+  - name: --private-link-request-message
+    summary: The message that is shown to the approver of the private link request.
+    description: ''
+  - name: --private-link-resource
+    summary: The resource ID of the origin that will be connected to using the private link.
+    description: ''
+  - name: --private-link-sub-resource-type
+    summary: The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --weight
+    defaultValue: "1000"
+    summary: Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+    description: ''
+- uid: az_afd_origin_delete
+  name: az afd origin delete
+  summary: Deletes an existing origin within an origin group.
+  description: ''
+  syntax: >-
+    az afd origin delete [--ids]
+                         [--origin-group-name]
+                         [--origin-name]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+                         [--yes]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --origin-group-name
+    summary: Name of the origin group which is unique within the endpoint.
+    description: ''
+  - name: --origin-name
+    summary: Name of the origin.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_afd_origin_list
+  name: az afd origin list
+  summary: Lists all of the existing origins within an origin group.
+  description: ''
+  syntax: >-
+    az afd origin list --origin-group-name
+                       --profile-name
+                       --resource-group
+                       [--query-examples]
+                       [--subscription]
+  requiredParameters:
+  - isRequired: true
+    name: --origin-group-name
+    summary: Name of the origin group which is unique within the endpoint.
+    description: ''
+  - isRequired: true
+    name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_afd_origin_show
+  name: az afd origin show
+  summary: Gets an existing origin within an origin group.
+  description: ''
+  syntax: >-
+    az afd origin show [--ids]
+                       [--origin-group-name]
+                       [--origin-name]
+                       [--profile-name]
+                       [--query-examples]
+                       [--resource-group]
+                       [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --origin-group-name
+    summary: Name of the origin group which is unique within the endpoint.
+    description: ''
+  - name: --origin-name
+    summary: Name of the origin.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_afd_origin_update
+  name: az afd origin update
+  summary: Update the settings of the specified AFD origin.
+  description: ''
+  syntax: >-
+    az afd origin update [--enable-private-link {false, true}]
+                         [--enabled-state {Disabled, Enabled}]
+                         [--host-name]
+                         [--http-port]
+                         [--https-port]
+                         [--ids]
+                         [--origin-group-name]
+                         [--origin-host-header]
+                         [--origin-name]
+                         [--priority]
+                         [--private-link-location]
+                         [--private-link-request-message]
+                         [--private-link-resource]
+                         [--private-link-sub-resource-type]
+                         [--profile-name]
+                         [--resource-group]
+                         [--subscription]
+                         [--weight]
+  examples:
+  - summary: Update the host header and priority of the specified origin.
+    syntax: az afd origin update -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 3
+  - summary: Disable private link of the origin.
+    syntax: az afd origin update -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --enable-private-link False
+  optionalParameters:
+  - name: --enable-private-link
+    parameterValueGroup: false, true
+    summary: Indicates whether private link is enanbled on that origin.
+    description: ''
+  - name: --enabled-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this origin.
+    description: ''
+  - name: --host-name
+    summary: The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in a origin group.
+    description: ''
+  - name: --http-port
+    summary: The port used for http requests to the origin.
+    description: ''
+  - name: --https-port
+    summary: The port used for https requests to the origin.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --origin-group-name
+    summary: Name of the origin group which is unique within the endpoint.
+    description: ''
+  - name: --origin-host-header
+    summary: The Host header to send for requests to this origin. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+    description: ''
+  - name: --origin-name
+    summary: Name of the origin.
+    description: ''
+  - name: --priority
+    summary: Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+    description: ''
+  - name: --private-link-location
+    summary: The location of origin that will be connected to using the private link.
+    description: ''
+  - name: --private-link-request-message
+    summary: The message that is shown to the approver of the private link request.
+    description: ''
+  - name: --private-link-resource
+    summary: The resource ID of the origin that will be connected to using the private link.
+    description: ''
+  - name: --private-link-sub-resource-type
+    summary: The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --weight
+    summary: Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+    description: ''
+commands:
+- az_afd_origin_create
+- az_afd_origin_delete
+- az_afd_origin_list
+- az_afd_origin_show
+- az_afd_origin_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Origins are the application servers where Front Door will route your client requests. Utilize any publicly accessible application server, including App Service, Traffic Manager, Private Link, and many others.

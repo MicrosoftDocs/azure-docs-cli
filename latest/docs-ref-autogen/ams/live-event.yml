@@ -21,6 +21,8 @@ directCommands:
                              [--cross-domain-policy]
                              [--description]
                              [--encoding-type]
+                             [--hostname-prefix]
+                             [--key-frame-interval]
                              [--key-frame-interval-duration]
                              [--no-wait]
                              [--preset-name]
@@ -28,9 +30,11 @@ directCommands:
                              [--preview-locator]
                              [--stream-options {Default, LowLatency}]
                              [--streaming-policy-name]
+                             [--stretch-mode]
                              [--subscription]
                              [--tags]
-                             [--vanity-url {false, true}]
+                             [--transcription-lang]
+                             [--use-static-hostname]
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -73,7 +77,13 @@ directCommands:
     summary: The live event description.
     description: ''
   - name: --encoding-type
-    summary: 'The encoding type for live event. This value is specified at creation time and cannot be updated. Allowed values: Basic, None, Standard.'
+    summary: 'The encoding type for live event. This value is specified at creation time and cannot be updated. Allowed values: Premium1080p, None, Standard.'
+    description: ''
+  - name: --hostname-prefix
+    summary: When useStaticHostname is set to true, hostname_prefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center.
+    description: ''
+  - name: --key-frame-interval
+    summary: Use an ISO 8601 time value between 0.5 to 20 seconds to specify the output fragment length for the video and audiotracks of an encoding live event. For example, use PT2S to indicate 2 seconds. For the video track it also defines the key frame interval, or the length of a GoP (group of pictures). If this value is not set for anencoding live event, the fragment duration defaults to 2 seconds. The value cannot be set for pass-through live events.
     description: ''
   - name: --key-frame-interval-duration
     summary: ISO 8601 timespan duration of the key frame interval duration in seconds. The value should be an interger in the range of 1 (PT1S or 00:00:01) to 30 (PT30S or 00:00:30) seconds.
@@ -97,15 +107,20 @@ directCommands:
   - name: --streaming-policy-name
     summary: The name of streaming policy used for the live event preview. This can be specified at creation time but cannot be updated.
     description: ''
+  - name: --stretch-mode
+    summary: 'Specifies how the input video will be resized to fit the desired output resolution(s). Default is None.  Allowed values: None, AutoSize, AutoFit.'
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
-  - name: --vanity-url
-    parameterValueGroup: false, true
-    summary: Specifies whether to use a vanity url with the Live Event. This value is specified at creation time and cannot be updated.
+  - name: --transcription-lang
+    summary: 'Live transcription language for the live event. Allowed values: ca-ES, da-DK, de-DE, en-AU, en-CA, en-GB, en-IN, en-NZ, en-US, es-ES, es-MX, fi-FI, fr-CA, fr-FR, it-IT, nl-NL, pt-BR, pt-PT, sv-SE See <a href="https://go.microsoft.com/fwlink/?linkid=2133742">https://go.microsoft.com/fwlink/?linkid=2133742</a> for more information about the live transcription feature.'
+    description: ''
+  - name: --use-static-hostname
+    summary: Specifies whether a static hostname would be assigned to the live event preview and ingest endpoints. This value can only be updated if the live event is in Standby state. If hostname_prefix is not specified, the live event name will be used as the hostname prefix.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
 - uid: az_ams_live_event_delete
@@ -218,6 +233,37 @@ directCommands:
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
+- uid: az_ams_live_event_standby
+  name: az ams live-event standby
+  summary: Allocate a live event to be started later.
+  description: ''
+  syntax: >-
+    az ams live-event standby [--account-name]
+                              [--ids]
+                              [--name]
+                              [--no-wait]
+                              [--resource-group]
+                              [--subscription]
+  optionalParameters:
+  - name: --account-name -a
+    summary: The name of the Azure Media Services account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the live event.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -434,6 +480,7 @@ commands:
 - az_ams_live_event_list
 - az_ams_live_event_reset
 - az_ams_live_event_show
+- az_ams_live_event_standby
 - az_ams_live_event_start
 - az_ams_live_event_stop
 - az_ams_live_event_update
@@ -455,5 +502,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/28/2020
+  ms.date: 02/24/2021
   description: Manage live events for an Azure Media Service account.
