@@ -30,6 +30,7 @@ directCommands:
                               --resource-group
                               [--access-tier {Cool, Hot}]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-shared-key-access {false, true}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--bypass {AzureServices, Logging, Metrics, None}]
@@ -80,6 +81,10 @@ directCommands:
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
     summary: Allow or disallow public access to all blobs or containers in the storage account. The default value for this property is null, which is equivalent to true. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
+    description: ''
+  - name: --allow-shared-key-access -k
+    parameterValueGroup: false, true
+    summary: Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
     description: ''
   - name: --assign-identity
     summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
@@ -509,6 +514,7 @@ directCommands:
     az storage account update [--access-tier {Cool, Hot}]
                               [--add]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-shared-key-access {false, true}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--bypass {AzureServices, Logging, Metrics, None}]
@@ -556,6 +562,10 @@ directCommands:
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
     summary: Allow or disallow public access to all blobs or containers in the storage account. The default value for this property is null, which is equivalent to true. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
+    description: ''
+  - name: --allow-shared-key-access -k
+    parameterValueGroup: false, true
+    summary: Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
     description: ''
   - name: --assign-identity
     summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
@@ -657,7 +667,7 @@ directCommands:
     description: ''
   - name: --sku
     parameterValueGroup: Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS
-    summary: The storage account SKU.
+    summary: Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -741,5 +751,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2021
+  ms.date: 02/26/2021
   description: Manage storage accounts.

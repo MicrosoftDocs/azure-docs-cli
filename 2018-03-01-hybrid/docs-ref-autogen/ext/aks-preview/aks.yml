@@ -66,7 +66,7 @@ directCommands:
                   [--appgw-watch-namespace]
                   [--assign-identity]
                   [--attach-acr]
-                  [--auto-upgrade-channel {none, patch, rapid, stable}]
+                  [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--client-secret]
                   [--cluster-autoscaler-profile]
                   [--disable-rbac]
@@ -82,11 +82,13 @@ directCommands:
                   [--enable-managed-identity]
                   [--enable-node-public-ip]
                   [--enable-pod-identity]
+                  [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
                   [--enable-rbac]
                   [--enable-sgxquotehelper]
                   [--enable-vmss]
+                  [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--kubelet-config]
                   [--kubernetes-version]
@@ -109,6 +111,7 @@ directCommands:
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type]
+                  [--node-public-ip-prefix-id]
                   [--node-resource-group]
                   [--node-vm-size]
                   [--node-zones {1, 2, 3}]
@@ -234,8 +237,8 @@ directCommands:
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
   - name: --auto-upgrade-channel
-    parameterValueGroup: none, patch, rapid, stable
-    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch or none, none means disable autoupgrade.
+    parameterValueGroup: node-image, none, patch, rapid, stable
+    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch, node-image or none, none means disable autoupgrade.
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
@@ -296,6 +299,9 @@ directCommands:
   - name: --enable-pod-identity
     summary: (PREVIEW) Enable pod identity addon.
     description: ''
+  - name: --enable-pod-identity-with-kubenet
+    summary: (PREVIEW) Enable pod identity addon for cluster using Kubnet network plugin.
+    description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
     description: ''
@@ -310,6 +316,9 @@ directCommands:
     description: ''
   - name: --enable-vmss
     summary: To be deprecated. Use vm_set_type instead.
+    description: ''
+  - name: --fqdn-subdomain
+    summary: (Preview) Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
@@ -384,6 +393,9 @@ directCommands:
     description: ''
   - name: --node-osdisk-type
     summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+    description: ''
+  - name: --node-public-ip-prefix-id
+    summary: Public IP prefix ID used to assign public IPs to VMSS nodes.
     description: ''
   - name: --node-resource-group
     summary: The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
@@ -868,7 +880,7 @@ directCommands:
                   [--api-server-authorized-ip-ranges]
                   [--assign-identity]
                   [--attach-acr]
-                  [--auto-upgrade-channel {none, patch, rapid, stable}]
+                  [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--cluster-autoscaler-profile]
                   [--detach-acr]
                   [--disable-ahub]
@@ -880,6 +892,7 @@ directCommands:
                   [--enable-cluster-autoscaler]
                   [--enable-managed-identity]
                   [--enable-pod-identity]
+                  [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
@@ -966,8 +979,8 @@ directCommands:
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
   - name: --auto-upgrade-channel
-    parameterValueGroup: none, patch, rapid, stable
-    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch or none, none means disable autoupgrade.
+    parameterValueGroup: node-image, none, patch, rapid, stable
+    summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch, node-image or none, none means disable autoupgrade.
     description: ''
   - name: --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
@@ -1001,6 +1014,9 @@ directCommands:
     description: ''
   - name: --enable-pod-identity
     summary: (PREVIEW) Enable Pod Identity addon for cluster.
+    description: ''
+  - name: --enable-pod-identity-with-kubenet
+    summary: (PREVIEW) Enable pod identity addon for cluster using Kubnet network plugin.
     description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
@@ -1144,6 +1160,12 @@ commands:
 - ext_aks-preview_az_aks_get_versions
 - ext_aks-preview_az_aks_kanalyze
 - ext_aks-preview_az_aks_kollect
+- ext_aks-preview_az_aks_maintenanceconfiguration
+- ext_aks-preview_az_aks_maintenanceconfiguration_add
+- ext_aks-preview_az_aks_maintenanceconfiguration_delete
+- ext_aks-preview_az_aks_maintenanceconfiguration_list
+- ext_aks-preview_az_aks_maintenanceconfiguration_show
+- ext_aks-preview_az_aks_maintenanceconfiguration_update
 - ext_aks-preview_az_aks_nodepool
 - ext_aks-preview_az_aks_nodepool_add
 - ext_aks-preview_az_aks_nodepool_delete

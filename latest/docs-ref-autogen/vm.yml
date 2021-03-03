@@ -186,6 +186,7 @@ directCommands:
                  [--data-disk-sizes-gb]
                  [--enable-agent {false, true}]
                  [--enable-auto-update {false, true}]
+                 [--enable-hotpatching {false, true}]
                  [--encryption-at-host {false, true}]
                  [--ephemeral-os-disk {false, true}]
                  [--eviction-policy {Deallocate, Delete}]
@@ -205,7 +206,7 @@ directCommands:
                  [--os-disk-name]
                  [--os-disk-size-gb]
                  [--os-type {linux, windows}]
-                 [--patch-mode {AutomaticByOS, AutomaticByPlatform, Manual}]
+                 [--patch-mode]
                  [--plan-name]
                  [--plan-product]
                  [--plan-promotion-code]
@@ -351,6 +352,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Indicate whether Automatic Updates is enabled for the Windows virtual machine.
     description: ''
+  - name: --enable-hotpatching
+    parameterValueGroup: false, true
+    summary: Patch VMs without requiring a reboot. --enable-agent must be set and --patch-mode must be set to AutomaticByPlatform.
+    description: ''
   - name: --encryption-at-host
     parameterValueGroup: false, true
     summary: Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
@@ -417,7 +422,6 @@ directCommands:
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
     description: ''
   - name: --patch-mode
-    parameterValueGroup: AutomaticByOS, AutomaticByPlatform, Manual
     summary: 'Mode of in-guest patching to IaaS virtual machine. Possible values are: Manual - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the paramater --enable-auto-update must be false. AutomaticByOS - The virtual machine will automatically be updated by the OS. The parameter --enable-auto-update must be true. AutomaticByPlatform - the virtual machine will automatically updated by the OS. The parameter --enable-agent and --enable-auto-update must be true.'
     description: ''
   - name: --plan-name
@@ -1493,5 +1497,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/05/2021
+  ms.date: 02/24/2021
   description: Manage Linux or Windows virtual machines.
