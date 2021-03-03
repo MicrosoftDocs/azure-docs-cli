@@ -20,7 +20,7 @@ In addition to specifying values directly in a command, you can provide values i
 
 This article discusses various ways that you provide values to commands.
 
-[!INCLUDE [azure-cli-prepare-your-environment.md](/includes/azure-cli-prepare-your-environment.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
 ## Use shell variables
 
@@ -67,7 +67,7 @@ You can use the [az account set](/cli/azure/account#az-account-set) command to s
 az account set --subscription "My Demos"
 ```
 
-After you set your subscription, you can omit the **Subscription** parameter. For more information, see [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli).
+After you set your subscription, you can omit the **Subscription** parameter. For more information, see [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md).
 
 ## Create default values
 
@@ -83,7 +83,7 @@ After running this command, you can run the following command to create a storag
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-Notice that there's no resource group specified in the command. For more information, see [Set a default resource group](https://docs.microsoft.com/en-us/cli/azure/manage-azure-groups-azure-cli#set-a-default-resource-group).
+Notice that there's no resource group specified in the command. For more information, see [Set a default resource group](manage-azure-groups-azure-cli.md#set-a-default-resource-group).
 
 > [!TIP]
 > Commands getting values for parameters in different ways can be confusing. If a command gives an unexpected result, such as not being able to find a resource group, there may be a default value.
