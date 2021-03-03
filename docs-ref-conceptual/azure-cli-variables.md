@@ -18,7 +18,7 @@ In addition to specifying values directly in a command, you can provide values i
 * Create default values for some parameters
 * Use persistent values for some parameters
 
-This article discusses various ways that you provide values to commands.
+This article discusses various ways to specify values in Azure CLI commands.
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
@@ -34,7 +34,7 @@ MySubscription="Contoso subscription"
 vmName=VM01
 ```
 
-This command uses those variables in a command to get another value to assign to a variable:
+This example uses those variables in a command to get another value and assign it to the **osType** variable:
 
 ```azurecli
 osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
@@ -54,7 +54,7 @@ az disk create --resource-group $MyResourceGroup --name DestinationDisk \
 
 ## Set a subscription
 
-Many commands require the **Subscription** parameter. Azure resources exist in resource groups, which exist in subscriptions. Azure CLI uses a default subscription when you are in a session. To see your current subscription value, run the [az account show](/cli/azure/account#az_account_show) command:
+Many commands require a specific subscription. Azure resources exist in resource groups, which exist in subscriptions. Azure CLI uses a default subscription when you are in a session. To see your current subscription value, run the [az account show](/cli/azure/account#az_account_show) command:
 
 ```azurecli
 az account show --output table
@@ -67,11 +67,11 @@ You can use the [az account set](/cli/azure/account#az-account-set) command to s
 az account set --subscription "My Demos"
 ```
 
-After you set your subscription, you can omit the **Subscription** parameter. For more information, see [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md).
+After you set your subscription, you can omit `--Subscription` parameter. For more information, see [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md).
 
 ## Create default values
 
-You can set values for some parameters by using the [az config set](/cli/azure/config#az_config_set) command:
+You can set values for some parameters by using the [az config set](/cli/azure/config#az_config_set) command. This example sets a default resource group:
 
 ```azurecli
 az config set defaults.group=ContosoRGforVM
@@ -90,7 +90,7 @@ Notice that there's no resource group specified in the command. For more informa
 >
 > If you encounter an error, run the command again with the parameter and value specified. An explicit value for a parameter always takes precedence over other options.
 
-You can specify values for several parameters this way. For more information, seed [Azure CLI configuration](azure-cli-configuration.md).
+You can specify values for several parameters this way. For more information, see [Azure CLI configuration](azure-cli-configuration.md).
 
 ## Use persistent values
 
@@ -108,7 +108,7 @@ After turning on persistence, create a resource group:
 az group create --name ContosoStorageRG --location eastus
 ```
 
-As long as persistence is on, your can leave the `--resource-group` parameter out of future commands. The following command creates a storage account in the **ContosoStorageRG** group:
+As long as persistence is on, your can leave the `--resource-group` parameter out of future commands. The following command creates a storage account in the ContosoStorageRG resource group:
 
 ```azurecli
 az storage account create --name storage135 --location eastus --sku Standard_LRS
