@@ -86,6 +86,7 @@ directCommands:
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
                   [--enable-rbac]
+                  [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
                   [--enable-vmss]
                   [--fqdn-subdomain]
@@ -265,17 +266,18 @@ directCommands:
     summary: Enable the Kubernetes addons in a comma-separated list.
     description: >-
       These addons are available:
-          http_application_routing  - configure ingress with automatic public DNS name creation.
-          monitoring                - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
-                                      If monitoring addon is enabled --no-wait argument will have no effect
-          virtual-node              - enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-                                      aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-          azure-policy              - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                                      Learn more at aka.ms/aks/policy.
-          ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
-          confcom                   - enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
-          open-service-mesh         - enable Open Service Mesh addon (PREVIEW).
-          gitops                    - enable GitOps (PREVIEW).
+          http_application_routing        - configure ingress with automatic public DNS name creation.
+          monitoring                      - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+                                            If monitoring addon is enabled --no-wait argument will have no effect
+          virtual-node                    - enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+                                            aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
+          azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                            Learn more at aka.ms/aks/policy.
+          ingress-appgw                   - enable Application Gateway Ingress Controller addon (PREVIEW).
+          confcom                         - enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
+          open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
+          gitops                          - enable GitOps (PREVIEW).
+          azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
     description: ''
@@ -310,6 +312,9 @@ directCommands:
     description: ''
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
+    description: ''
+  - name: --enable-secret-rotation
+    summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
   - name: --enable-sgxquotehelper
     summary: Enable SGX quote helper for confcom addon.
@@ -521,15 +526,16 @@ directCommands:
   summary: Enable Kubernetes addons.
   description: >-
     These addons are available:
-        http_application_routing  - configure ingress with automatic public DNS name creation.
-        monitoring                - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
-                                    If monitoring addon is enabled --no-wait argument will have no effect
-        virtual-node              - enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-        azure-policy              - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                                    Learn more at aka.ms/aks/policy.
-        ingress-appgw             - enable Application Gateway Ingress Controller addon (PREVIEW).
-        open-service-mesh         - enable Open Service Mesh addon (PREVIEW).
-        gitops                    - Enable GitOps (PREVIEW).
+        http_application_routing        - configure ingress with automatic public DNS name creation.
+        monitoring                      - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace.
+                                          If monitoring addon is enabled --no-wait argument will have no effect
+        virtual-node                    - enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+        azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                          Learn more at aka.ms/aks/policy.
+        ingress-appgw                   - enable Application Gateway Ingress Controller addon (PREVIEW).
+        open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
+        gitops                          - enable GitOps (PREVIEW).
+        azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -540,6 +546,7 @@ directCommands:
                          [--appgw-subnet-id]
                          [--appgw-subnet-prefix]
                          [--appgw-watch-namespace]
+                         [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
                          [--no-wait]
                          [--subnet-name]
@@ -582,6 +589,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces. Use with ingress-azure addon.
+    description: ''
+  - name: --enable-secret-rotation
+    summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
   - name: --enable-sgxquotehelper
     summary: Enable SGX quote helper for confcom addon.
@@ -887,6 +897,7 @@ directCommands:
                   [--disable-cluster-autoscaler]
                   [--disable-pod-identity]
                   [--disable-pod-security-policy]
+                  [--disable-secret-rotation]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-cluster-autoscaler]
@@ -894,6 +905,7 @@ directCommands:
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
+                  [--enable-secret-rotation]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -1000,6 +1012,9 @@ directCommands:
   - name: --disable-pod-security-policy
     summary: (PREVIEW) Disable pod security policy.
     description: ''
+  - name: --disable-secret-rotation
+    summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
+    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
@@ -1020,6 +1035,9 @@ directCommands:
     description: ''
   - name: --enable-pod-security-policy
     summary: (PREVIEW) Enable pod security policy.
+    description: ''
+  - name: --enable-secret-rotation
+    summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
