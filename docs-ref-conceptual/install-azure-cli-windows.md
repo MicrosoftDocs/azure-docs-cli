@@ -30,7 +30,7 @@ When the installer asks if it can make changes to your computer, click the "Yes"
 
 ### Azure CLI current version
 
-Download and install the current release of the Azure CLI.  
+Download and install the current release of the Azure CLI.  After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
 
 > [!div class="nextstepaction"]
 > [Current release of the Azure CLI](https://aka.ms/installazurecliwindows)
