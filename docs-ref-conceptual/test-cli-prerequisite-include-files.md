@@ -27,11 +27,3 @@ ms.service: azure-cli
 ## Test azure-cli-prepare-your-environment-no-header.md
 
 [!INCLUDE [azure-cli-prepare-your-environment-no-header.md](includes/azure-cli-prepare-your-environment.md)]
-
-## Test media link
-
-[![Embed launch](./media/cloud-shell-try-it/launch-cloud-shell.png "Launch Azure Cloud Shell")](https://shell.azure.com)   
-
-[![Embed launch](/media/cloud-shell-try-it/launch-cloud-shell.png "Launch Azure Cloud Shell")](https://shell.azure.com)   
-
-[![Embed launch](media/cloud-shell-try-it/launch-cloud-shell.png "Launch Azure Cloud Shell")](https://shell.azure.com)   
