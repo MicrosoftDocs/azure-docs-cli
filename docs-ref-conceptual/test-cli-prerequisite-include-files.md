@@ -7,7 +7,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.custom: devx-track-azurecli
-ms.prod: azure-cli
+ms.service: azure-cli
 ---
 
 # Test include files
