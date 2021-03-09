@@ -10,10 +10,16 @@ ms.custom: devx-track-azurecli
 ms.prod: azurecli
 ---
 
-#Test include files
+# Test include files
+
+## Test azure-cli-prepare-your-environment.md
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment-no-header.md)]
 
+## Testa zure-cli-prepare-your-environment-h3.md
+
 [!INCLUDE [azure-cli-prepare-your-environment-h3.md](includes/azure-cli-prepare-your-environment-h3.md)]
+
+## Test azure-cli-prepare-your-environment-no-header.md
 
 [!INCLUDE [azure-cli-prepare-your-environment-no-header.md](includes/azure-cli-prepare-your-environment.md)]
