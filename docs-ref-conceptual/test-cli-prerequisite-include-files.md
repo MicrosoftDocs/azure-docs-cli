@@ -12,6 +12,10 @@ ms.prod: azurecli
 
 # Test include files
 
+## Test current version
+
+[!INCLUDE [current-version](includes/current-version.md)]
+
 ## Test azure-cli-prepare-your-environment.md
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment-no-header.md)]
