@@ -9,4 +9,4 @@ ms.custom: devx-track-azurecli
 
 ## Prerequisites
 
-[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](./includes/azure-cli-prepare-your-environment-no-header.md)]
+[!INCLUDE [azure-cli-prepare-your-environment-no-header.md](includes/azure-cli-prepare-your-environment-no-header.md)]
