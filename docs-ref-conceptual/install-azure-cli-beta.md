@@ -13,19 +13,23 @@ ms.custom: devx-track-azurecli
 
 # Install Azure CLI beta version
 
-A new beta version of the Azure CLI has been released that offers increased security for token cache, access tokens and SSL certificates.  This beta vesion can be installed in Windows, macOS and Linux environments and will stay in sync with the most recent release.
+A new beta version of the Azure CLI has been released that offers increased security for token cache, access tokens and SSL certificates by migrating the underlying ADAL library to MSAL.
+
+This beta version can be installed on Windows, macOS and Linux and will stay in sync with the most recent release.
 
 > [!NOTE]
 >
 >  BREAKING CHANGES are introduced in this release.  Carefully read all [release notes](/cli/azure/release-notes-azure-cli?tabs=azure-cli-beta) prior to installation.
 >
 > The beta version does not guarantee product level quality so it should not be used in your production environment.
+>
+> For more information about ADAL's deprecation, please see [Migrate applications to the Microsoft Authentication Library (MSAL)](https://docs.microsoft.com/azure/active-directory/develop/msal-migration).
 
 ## Understand beta changes
 
 ### `accessTokens.json` deprecation
 
-The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json`.  Tokens will be saved to MSAL's shared token cache called `msal.cache`. 
+The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Due to the deprecation of ADAL, Azure CLI beta uses MSAL and will no longer generate `accessTokens.json`.  Tokens will be saved to MSAL's shared token cache called `msal.cache`. 
 
 The MSAL token cache will be encrypted on Windows, macOS and Linux with a desktop environment; therefore, directly accessing the MSAL token cache will not work. Any existing workflow depending on `accessTokens.json` will stop working.
 
