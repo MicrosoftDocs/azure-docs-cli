@@ -22,7 +22,7 @@ For clarity, Bash scripts are used inline. Windows batch or PowerShell examples 
 2. `table` is useful for getting a summary of focused information, particularly for list commands. If you do not like the fields in the default table format (or there isn't a default format), you can use `--output json` to see all information, or leverage `--query` to specify a format you like.
 
     ```azurelcli
-    az vm show -g my_rg -n my_vm --query "{name: name, os:storageProfile.imageReference.offer}" -otable
+    az vm show -g my_rg -n my_vm --query "{name: name, os:storageProfile.imageReference.offer}" -o table
     Name    Os
     ------  ------------
     my_vm   UbuntuServer
