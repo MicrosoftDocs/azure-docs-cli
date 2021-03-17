@@ -5,78 +5,117 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **ssh** extension for Azure CLI and requires version 2.4.0 or higher.  The extension will automatically install the first time you run an **az ssh** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: SSH into Azure VMs.
+summary: SSH into resources (Azure VMs, etc) using AAD issued openssh certificates.
 description: ''
 directCommands:
+- uid: ext_ssh_az_ssh_cert
+  name: az ssh cert
+  summary: Create an SSH RSA certificate signed by AAD.
+  description: ''
+  syntax: >-
+    az ssh cert [--file]
+                [--public-key-file]
+  examples:
+  - summary: Create a short lived ssh certificate signed by AAD
+    syntax: az ssh cert --public-key-file ./id_rsa.pub --file ./id_rsa-aadcert.pub
+  optionalParameters:
+  - name: --file -f
+    summary: The file path to write the SSH cert to, defaults to public key path with -aadcert.pub appened.
+    description: ''
+  - name: --public-key-file -p
+    summary: The RSA public key file path.
+    description: ''
 - uid: ext_ssh_az_ssh_config
   name: az ssh config
-  summary: Create an SSH config for Azure VMs which can then be imported to 3rd party SSH clients.
+  summary: Create an SSH config for resources (Azure VMs, etc) which can then be imported to 3rd party SSH clients.
   description: ''
   syntax: >-
     az ssh config --file
                   [--ip]
+                  [--name]
+                  [--overwrite]
+                  [--prefer-private-ip]
                   [--private-key-file]
                   [--public-key-file]
                   [--resource-group]
-                  [--vm-name]
   examples:
   - summary: Give a resource group and VM for which to create a config, and save in a local file
     syntax: az ssh config --resource-group myResourceGroup --vm-name myVm --file ./sshconfig
-  - summary: Give the public IP of a VM for which to create a config
+  - summary: Give the public IP (or hostname) of a VM for which to create a config
     syntax: az ssh config --ip 1.2.3.4 --file ./sshconfig
+  - summary: Create a generic config for use with any host
+    syntax: >-
+      #Bash
+
+      az ssh config --ip \* --file ./sshconfig
+
+      #PowerShell
+
+      az ssh config --ip * --file ./sshconfig
   requiredParameters:
   - isRequired: true
-    name: --file
+    name: --file -f
     summary: The file path to write the SSH config to.
     description: ''
   optionalParameters:
   - name: --ip
-    summary: The public IP address of the VM.
+    summary: The public IP address (or hostname) of the VM.
     description: ''
-  - name: --private-key-file
+  - name: --name --vm-name -n
+    summary: The name of the VM.
+    description: ''
+  - name: --overwrite
+    summary: Overwrites the config file if this flag is set.
+    description: ''
+  - name: --prefer-private-ip
+    summary: Will use a private IP if available. By default only public IPs are used.
+    description: ''
+  - name: --private-key-file -i
     summary: The RSA private key file path.
     description: ''
-  - name: --public-key-file
+  - name: --public-key-file -p
     summary: The RSA public key file path.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --vm-name
-    summary: The name of the VM.
     description: ''
 - uid: ext_ssh_az_ssh_vm
   name: az ssh vm
-  summary: SSH into Azure VMs.
+  summary: SSH into Azure VMs using an ssh certificate.
   description: ''
   syntax: >-
     az ssh vm [--ip]
+              [--name]
+              [--prefer-private-ip]
               [--private-key-file]
               [--public-key-file]
               [--resource-group]
-              [--vm-name]
   examples:
   - summary: Give a resource group and VM to SSH to
     syntax: az ssh vm --resource-group myResourceGroup --vm-name myVm
-  - summary: Give the public IP of a VM to SSH to
+  - summary: Give the public IP (or hostname) of a VM to SSH to
     syntax: az ssh vm --ip 1.2.3.4
   optionalParameters:
   - name: --ip
-    summary: The public IP address of the VM.
+    summary: The public IP address (or hostname) of the VM.
     description: ''
-  - name: --private-key-file
+  - name: --name --vm-name -n
+    summary: The name of the VM.
+    description: ''
+  - name: --prefer-private-ip
+    summary: Will use a private IP if available. By default only public IPs are used.
+    description: ''
+  - name: --private-key-file -i
     summary: The RSA private key file path.
     description: ''
-  - name: --public-key-file
+  - name: --public-key-file -p
     summary: The RSA public key file path.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --vm-name
-    summary: The name of the VM.
-    description: ''
 commands:
+- ext_ssh_az_ssh_cert
 - ext_ssh_az_ssh_config
 - ext_ssh_az_ssh_vm
 globalParameters:
@@ -95,4 +134,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: SSH into Azure VMs.
+  description: SSH into resources (Azure VMs, etc) using AAD issued openssh certificates.
