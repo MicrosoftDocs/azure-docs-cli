@@ -45,7 +45,7 @@ az account list --output table
 
 Here are three common formats:
 
-* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default.
+* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az configure](/cli/azure/reference-index#az_configure) command.
 * The `table` format presents output as a human readable table. You can specify which values appear in the table and use queries to customize the output.
 * The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
 
@@ -53,12 +53,13 @@ For more information about these and other formats, see [Output formats for Azur
 
 ## Pass values to another command
 
-Azure CLI commands run in a shell. In this article, we use Bash, but there are other options. You can use standard shell syntax to simplify Azure CLI usage.
+Azure CLI commands run in a shell. This article uses Bash, but there are other options. You can use standard shell syntax to simplify Azure CLI usage.
 
 You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example assigns an ID found by the [az vm list](/cli/azure/vm#az_vm_list) command to a variable.
 
 ```azurecli
-running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id" --output tsv)
+running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details \
+   --query "[?powerState=='VM running'].id" --output tsv)
 ```
 
 > [!TIP]
@@ -76,11 +77,7 @@ You could also pipe a value from one command to another. This example uses stand
 az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm
 ```
 
-Be aware of the output type and what later commands expect.
-
-## Pass arguments
-
-When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ. Here are some resources:
+When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ.
 
 * Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
 * PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
@@ -99,59 +96,44 @@ If you provide a parameter a value that contains whitespace, wrap it in quotatio
 
 * In Bash or PowerShell, both single and double quotes are interpreted. In Windows Command Prompt, only double quotes are interpreted. Single quotes are interpreted as a part of the value.
 
-* Commands that you intend only for Bash that use single quotes simplify inline JSON. For example, this JSON is correct in Bash: `'{"key": "value"}'`. In Windows Command Prompt, the equivalent is: `"{\"key\": \"value\"}"`
+* For Bash-only commands, use single quotes to simplify inline JSON. For example, this JSON is correct in Bash: `'{"key": "value"}'`. In Windows Command Prompt, the equivalent is: `"{\"key\": \"value\"}"`
 
 * Some Azure CLI commands take a list of space separated values. If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.
 
 * Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
-* There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. Instead, you can enclose the value single or double quotes `"`/`"`.
+* There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. Instead, you can enclose the value in single or double quotes `"`/`"`.
 
   ```azurecli
   `@parameters.json
   '@parameters.json'
   ```
 
-* When using the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell. For example, in Bash:
+* When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+
+  These three commands are equivalent in Bash:
 
   ```azurecli
-  $ az version --query '"azure-cli"'
-  "2.5.1"
-
-  $ az version --query \"azure-cli\"
-  "2.5.1"
-
-  $ az version --query "\"azure-cli\""
-  "2.5.1"
-   ```
-
-  In Windows Command Prompt:
-
-  ```azurecli
-  > az version --query "\"azure-cli\""
-  "2.5.1"
-
-  > az version --query \"azure-cli\"
-  "2.5.1"
+  az version --query '"azure-cli"'
+  az version --query \"azure-cli\"
+  az version --query "\"azure-cli\""
   ```
 
-  In PowerShell:
+  These two commands are equivalent in Windows Command Prompt:
 
   ```azurecli
-  > az version --query '\"azure-cli\"'
-  "2.5.1"
+  az version --query "\"azure-cli\""
+  az version --query \"azure-cli\"
+  ```
 
-  > az version --query "\`"azure-cli\`""
-  "2.5.1"
+  These five commands are equivalent in PowerShell:
 
-  > az version --query "\""azure-cli\"""
-  "2.5.1"
-
-  > az --% version --query "\"azure-cli\""
-  "2.5.1"
-
-  > az --% version --query \"azure-cli\"
-  "2.5.1"
+  ```azurecli
+  az version --query '\"azure-cli\"'
+  az version --query "\`"azure-cli\`""
+  az version --query "\""azure-cli\"""
+  az --% version --query "\"azure-cli\""
+  az --% version --query \"azure-cli\"
   ```
 
 ## Asynchronous operations
@@ -164,7 +146,7 @@ Many commands offer a `--no-wait` parameter, which allows other commands to run.
 az group delete --name MyResourceGroup --no-wait
 ```
 
-When you remove a resource group, you also remove all the resources that belong to it. Reclaiming these resources can take a long time. When this command runs, the console can accept commands immediately, even though it's still working on the command.
+When you remove a resource group, you also remove all the resources that belong to it. Reclaiming these resources can take a long time. The `--no-wait` parameter When this command runs, the console can accept commands immediately, even though it's still working on the command.
 
 Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az_vm_wait) command to support creating independent resources in parallel:
 
@@ -182,9 +164,13 @@ After both IDs are created, you can use the console again.
 
 ## Work behind a proxy
 
-If you're using Azure CLI over a proxy server, it may cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format.
+If you're using Azure CLI over a proxy server, it may cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of certificate authority bundle certificate file in PEM format.
 
-The default CA bundle which CLI uses is located at `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` on Windows and ` /opt/az/lib/python3.6/site-packages/certifi/cacert.pem` on Ubuntu/Debian or `/usr/lib64/az/lib/python3.6/site-packages/certifi/cacert.pem` on CentOS/RHEL/SUSE on Linux.
+| OS                     | Default certificate authority bundle                                                  |
+|----------------------- |-------------------------------------------------------------------------------------- |
+| Windows                | C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem |
+| Ubuntu/Debian Linux    | /opt/az/lib/python3.6/site-packages/certifi/cacert.pem                                |
+| CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python3.6/site-packages/certifi/cacert.pem                          |
 
 Append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. For example:
 
@@ -202,13 +188,13 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 
 ## Concurrent builds
 
-If you run Azure CLI on a build machine where multiple jobs can be run in parallel, there's a risk that the login tokens are shared between two build jobs run as the same OS user.  To avoid mix ups, set AZURE_CONFIG_DIR to a directory where the login tokens should be stored.
+If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set AZURE_CONFIG_DIR to a directory where the access tokens are stored.
 
 ## Generic update arguments
 
 Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az_vm_update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
 
-The `--set` and `--add` parameters take a list of space separated key-value pairs: `<key1>=<value1> <key2>=<value2>`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
+The `--set` and `--add` parameters take a list of space-separated key-value pairs: `<key1>=<value1> <key2>=<value2>`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
 
 ```azurecli
 az vm show --resource-group VMResources --name virtual-machine-01
@@ -217,18 +203,22 @@ az vm show --resource-group VMResources --name virtual-machine-01
 To simplify the command, consider using a JSON string. For example, to attach a new data disk to a virtual machine, use the following value:
 
 ```azurecli
-az vm update --resource-group VMResources --name virtual-machine-01 --add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\": {\"id\": \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"}, \"lun\": 1}"
+az vm update --resource-group VMResources --name virtual-machine-01 \
+--add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\": 
+   {\"id\": 
+   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"}, 
+   \"lun\": 1}"
 ```
 
 ## Generic resource commands
 
 A service you want to work with might not have Azure CLI support yet. You can use the [az resource](/cli/azure/resource) commands to work with these resources.
 
-If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az_deployment_group_create). For working examples, see [Azure Quickstart Templates](https://github.com/Azure/azure-quickstart-templates).
+If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az_deployment_group_create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
 
-## REST API command
+## REST API commands
 
-If generic update arguments and `az resource` don't meet your needs, you can use `az rest` command to call the REST API. It automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
+If generic update arguments and [az resource](/cli/azure/resource) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az_rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 
@@ -247,10 +237,12 @@ az rest --method PATCH \
 
 Use this Windows batch script for saving IDs to variables:
 
-```batch
+```console
 ECHO OFF
 SETLOCAL
-FOR /F "tokens=* USEBACKQ" %%F IN (`az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv`) DO (
+FOR /F "tokens=* USEBACKQ" %%F IN (
+   `az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv`
+) DO (
     SET "vm_ids=%%F %vm_ids%"  :: construct the id list
 )
 az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
@@ -265,10 +257,12 @@ az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 
 Use this Windows batch script to loop through a list:
 
-```batch
+```console
 ECHO OFF
 SETLOCAL
-FOR /F "tokens=* USEBACKQ" %%F IN (`az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv`) DO (
+FOR /F "tokens=* USEBACKQ" %%F IN (
+    `az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv`
+) DO (
     ECHO Stopping %%F
     az vm stop --ids %%F
 )
@@ -288,5 +282,12 @@ The following are Azure CLI environment variables:
 
 |  Environment variable          | Description            |
 |--------------------------------|------------------------|
-| **AZURE_CONFIG_DIR**           | Global config directory for config files, logs, and telemetry. If unspecified, defaults to `~/.azure`. |
-| **AZURE_EXTENSION_DIR**        | Extensions' installation directory. If unspecified, defaults to `cliextensions` directory within the global config directory. |
+| **AZURE_CONFIG_DIR**           | The global directory for configuration files, logs, and telemetry. If unspecified, this value defaults to `~/.azure.` |
+| **AZURE_EXTENSION_DIR**        | The directory containing extension installations. If unspecified, this value defaults to the `cliextensions` subdirectory within the global configuration directory. |
+
+## Next steps
+
+* [Specifying values in Azure CLI commands](azure-cli-variables.md)
+* [Query Azure CLI command output](query-azure-cli.md)
+* [Output formats for Azure CLI commands](format-output-azure-cli.md)
+* [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
