@@ -72,7 +72,7 @@ cd azCLI
 
 ## 2. Turn on Persisted parameters
 
-[Persisted parameters](/cli/azure/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
+[Persisted parameters](/cli/azure/config/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
