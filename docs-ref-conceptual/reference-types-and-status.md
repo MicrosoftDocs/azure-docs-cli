@@ -56,7 +56,7 @@ Extensions aren't shipped as part of the CLI but run as CLI commands.  Some exte
 > [!IMPORTANT]
 > You must install an extension prior to use by running the [az extension add](/cli/azure/extension#az-extension-add) command.
 
-You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  Review the extension [wiki tips](https://github.com/Azure/azure-network-cli-extension/wiki/Tips) to maximize usage.  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
+You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
 
 ## Reference status
 

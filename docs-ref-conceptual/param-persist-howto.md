@@ -14,7 +14,7 @@ ms.custom: devex-track-azurecli
 
 # Azure CLI persisted parameter
 
-The Azure CLI [az config param-persist](/cli/azure/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don't contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az config param-persist](/cli/azure/config/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don't contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
@@ -27,7 +27,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 ## Persisted parameter data file
 
-Persisted parameter values are kept in a file named `.param_persist` which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](/install-azure-cli) of the Azure CLI, your working directory is on your local machine.  In either location, the `.param_persist` file is hidden and should not be manually updated.
+Persisted parameter values are kept in a file named `.param_persist` which is stored in your working directory.  If you are using [Azure Cloud Shell](https://shell.azure.com) to execute Azure CLI commands, your working directory is in the storage account being used by the Azure CLI.  If you are using a [local install](install-azure-cli.md) of the Azure CLI, your working directory is on your local machine.  In either location, the `.param_persist` file is hidden and should not be manually updated.
 
 ## Persisted parameter storage and support
 
