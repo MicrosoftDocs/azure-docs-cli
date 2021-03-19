@@ -8,7 +8,6 @@ ms.topic: reference
 ms.date: 06/05/2020
 ms.author: dbradish
 ms.service: azure-cli
-ms.devlang: azurecli
 ms.reviewer: paymaun.heidari
 ms.custom: devx-track-azurecli
 ---
