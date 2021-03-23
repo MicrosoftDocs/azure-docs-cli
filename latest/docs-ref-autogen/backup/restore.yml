@@ -9,13 +9,13 @@ directCommands:
   summary: Restore backed up Azure files within a file-share to the same file-share or another file-share in registered storage accounts.
   description: ''
   syntax: >-
-    az backup restore restore-azurefiles --container-name
-                                         --item-name
-                                         --resolve-conflict {Overwrite, Skip}
+    az backup restore restore-azurefiles --resolve-conflict {Overwrite, Skip}
                                          --restore-mode {AlternateLocation, OriginalLocation}
-                                         --rp-name
+                                         [--container-name]
                                          [--ids]
+                                         [--item-name]
                                          [--resource-group]
+                                         [--rp-name]
                                          [--source-file-path]
                                          [--source-file-type {Directory, File}]
                                          [--subscription]
@@ -28,14 +28,6 @@ directCommands:
     syntax: az backup restore restore-azurefiles --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation --source-file-type File --source-file-path Filepath1 Filepath2
   requiredParameters:
   - isRequired: true
-    name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
-  - isRequired: true
-    name: --item-name -i
-    summary: Name of the backed up item.
-    description: ''
-  - isRequired: true
     name: --resolve-conflict
     parameterValueGroup: Overwrite, Skip
     summary: Instruction if there's a conflict with the restored data.
@@ -45,16 +37,21 @@ directCommands:
     parameterValueGroup: AlternateLocation, OriginalLocation
     summary: Specify the restore mode.
     description: ''
-  - isRequired: true
-    name: --rp-name -r
-    summary: Name of the recovery point.
-    description: ''
   optionalParameters:
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --item-name -i
+    summary: Name of the backed up item.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --rp-name -r
+    summary: Name of the recovery point.
     description: ''
   - name: --source-file-path
     summary: The absolute path of the file, to be restored within the file share, as a string. This path is the same path used in the 'az storage file download' or 'az storage file show' CLI commands.
@@ -84,13 +81,13 @@ directCommands:
   summary: Restore backed up Azure file shares to the same file-share or another file-share in registered storage accounts.
   description: ''
   syntax: >-
-    az backup restore restore-azurefileshare --container-name
-                                             --item-name
-                                             --resolve-conflict {Overwrite, Skip}
+    az backup restore restore-azurefileshare --resolve-conflict {Overwrite, Skip}
                                              --restore-mode {AlternateLocation, OriginalLocation}
-                                             --rp-name
+                                             [--container-name]
                                              [--ids]
+                                             [--item-name]
                                              [--resource-group]
+                                             [--rp-name]
                                              [--subscription]
                                              [--target-file-share]
                                              [--target-folder]
@@ -101,14 +98,6 @@ directCommands:
     syntax: az backup restore restore-azurefileshare --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --item-name MyItem --rp-name recoverypoint --resolve-conflict Overwrite --restore-mode OriginalLocation
   requiredParameters:
   - isRequired: true
-    name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
-  - isRequired: true
-    name: --item-name -i
-    summary: Name of the backed up item.
-    description: ''
-  - isRequired: true
     name: --resolve-conflict
     parameterValueGroup: Overwrite, Skip
     summary: Instruction if there's a conflict with the restored data.
@@ -118,16 +107,21 @@ directCommands:
     parameterValueGroup: AlternateLocation, OriginalLocation
     summary: Specify the restore mode.
     description: ''
-  - isRequired: true
-    name: --rp-name -r
-    summary: Name of the recovery point.
-    description: ''
   optionalParameters:
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --item-name -i
+    summary: Name of the backed up item.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --rp-name -r
+    summary: Name of the recovery point.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -151,10 +145,9 @@ directCommands:
   description: ''
   syntax: >-
     az backup restore restore-azurewl --recovery-config
-                                      [--ids]
-                                      [--resource-group]
+                                      --resource-group
+                                      --vault-name
                                       [--subscription]
-                                      [--vault-name]
   examples:
   - summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
     syntax: az backup restore restore-azurewl --resource-group MyResourceGroup --vault-name MyVault --recovery-config MyRecoveryConfig
@@ -163,18 +156,17 @@ directCommands:
     name: --recovery-config
     summary: Specify the recovery configuration of a backed up item. The configuration object can be obtained from 'backup recoveryconfig show' command.
     description: ''
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - isRequired: true
+    name: --vault-name -v
+    summary: Name of the Recovery services vault.
+    description: ''
+  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --vault-name -v
-    summary: Name of the Recovery services vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 - uid: az_backup_restore_restore_disks
@@ -182,16 +174,16 @@ directCommands:
   summary: Restore disks of the backed VM from the specified recovery point.
   description: ''
   syntax: >-
-    az backup restore restore-disks --container-name
-                                    --item-name
-                                    --rp-name
-                                    --storage-account
+    az backup restore restore-disks --storage-account
+                                    [--container-name]
                                     [--diskslist]
                                     [--ids]
+                                    [--item-name]
                                     [--resource-group]
                                     [--restore-as-unmanaged-disks {false, true}]
                                     [--restore-only-osdisk {false, true}]
                                     [--restore-to-staging-storage-account {false, true}]
+                                    [--rp-name]
                                     [--subscription]
                                     [--target-resource-group]
                                     [--use-secondary-region]
@@ -201,27 +193,21 @@ directCommands:
     syntax: az backup restore restore-disks --container-name MyContainer --item-name MyItem --resource-group MyResourceGroup --rp-name MyRp --storage-account mystorageaccount --vault-name MyVault
   requiredParameters:
   - isRequired: true
-    name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
-  - isRequired: true
-    name: --item-name -i
-    summary: Name of the backed up item.
-    description: ''
-  - isRequired: true
-    name: --rp-name -r
-    summary: Name of the recovery point.
-    description: ''
-  - isRequired: true
     name: --storage-account
     summary: Name or ID of the staging storage account. The VM configuration will be restored to this storage account. See the help for --restore-to-staging-storage-account parameter for more info.
     description: ''
   optionalParameters:
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
   - name: --diskslist
     summary: List of disks to be excluded or included.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --item-name -i
+    summary: Name of the backed up item.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -237,6 +223,9 @@ directCommands:
   - name: --restore-to-staging-storage-account
     parameterValueGroup: false, true
     summary: 'Use this flag when you want disks to be restored to the staging storage account using the --storage-account parameter. When not specified, disks will be restored to their original storage accounts. Default: false.'
+    description: ''
+  - name: --rp-name -r
+    summary: Name of the recovery point.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -276,5 +265,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/12/2020
+  ms.date: 03/03/2021
   description: Restore backed up items from recovery points in a Recovery Services vault.

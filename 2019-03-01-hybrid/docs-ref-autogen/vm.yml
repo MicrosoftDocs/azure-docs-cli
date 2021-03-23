@@ -154,6 +154,7 @@ directCommands:
                  [--availability-set]
                  [--boot-diagnostics-storage]
                  [--computer-name]
+                 [--count]
                  [--custom-data]
                  [--data-disk-caching]
                  [--data-disk-sizes-gb]
@@ -246,6 +247,8 @@ directCommands:
     syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM with both system and user assigned identity.
     syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create multiple VMs. In this example, 3 VMs are created. They are MyVm0, MyVm1, MyVm2.
+    syntax: az vm create -n MyVm -g MyResourceGroup --image centos --count 3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -290,6 +293,9 @@ directCommands:
     description: ''
   - name: --computer-name
     summary: The host OS name of the virtual machine. Defaults to the name of the VM.
+    description: ''
+  - name: --count
+    summary: Number of virtual machines to create. Value range is [2, 250], inclusive. Don't specify this parameter if you want to create a normal single VM. The VMs are created in parallel. The output of this command is an array of VMs instead of one single VM. Each VM has its own public IP, NIC. VNET and NSG are shared. It is recommended that no existing public IP, NIC, VNET and NSG are in resource group. When --count is specified, --attach-data-disks, --attach-os-disk, --boot-diagnostics-storage, --computer-name, --host, --host-group, --nics, --os-disk-name, --private-ip-address, --public-ip-address, --public-ip-address-dns-name, --storage-account, --storage-container-name, --subnet, --use-unmanaged-disk, --vnet-name are not allowed.
     description: ''
   - name: --custom-data
     summary: Custom init script file or text (cloud-init, cloud-config, etc..).
@@ -555,11 +561,11 @@ directCommands:
     syntax: >-
       vms_ids=$(az vm list -g MyResourceGroup --query "[].id" -o tsv)
 
-      az vm deallocate --ids {vms_ids}
+      az vm deallocate --ids ${vms_ids}
 
-      az vm generalize --ids {vms_ids}
+      az vm generalize --ids ${vms_ids}
 
-      az vm capture --ids {vms_ids} --vhd-name-prefix MyPrefix
+      az vm capture --ids ${vms_ids} --vhd-name-prefix MyPrefix
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -791,12 +797,14 @@ directCommands:
     syntax: az vm open-port -g MyResourceGroup -n MyVm --port '*'
   - summary: Open a range of ports on a VM to inbound traffic with the highest priority.
     syntax: az vm open-port -g MyResourceGroup -n MyVm --port 80-100 --priority 100
+  - summary: Open ports 555, 557, 558, and 559 to inbound traffic with the highest priority.
+    syntax: az vm open-port -g MyResourceGroup -n MyVm --port 555,557-559 --priority 100
   - summary: Open all ports for all VMs in a resource group.
     syntax: az vm open-port --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv) --port '*'
   requiredParameters:
   - isRequired: true
     name: --port
-    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '\\*' to allow traffic to all ports."
+    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '\\*' to allow traffic to all ports. Use comma separated values to specify more than one port or port range."
     description: ''
   optionalParameters:
   - name: --apply-to-subnet
@@ -1305,5 +1313,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2021
+  ms.date: 03/18/2021
   description: Manage Linux or Windows virtual machines.

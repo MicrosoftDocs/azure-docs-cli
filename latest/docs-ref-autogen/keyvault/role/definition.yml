@@ -4,16 +4,83 @@ name: az keyvault role definition
 summary: Manage role definitions.
 description: ''
 directCommands:
+- uid: az_keyvault_role_definition_create
+  name: az keyvault role definition create
+  summary: Create a custom role definition.
+  description: ''
+  syntax: >-
+    az keyvault role definition create --hsm-name
+                                       --role-definition
+                                       [--subscription]
+  examples:
+  - summary: Create a role by a JSON string.
+    syntax: >-
+      az keyvault role definition create --hsm-name MyHSM --role-definition '{
+          "roleName": "My Custom Role",
+          "description": "The description of the custom rule.",
+          "actions": [],
+          "notActions": [],
+          "dataActions": [
+              "Microsoft.KeyVault/managedHsm/keys/read/action"
+          ],
+          "notDataActions": []
+      }'
+  - summary: Create a role from a file containing a JSON description.
+    syntax: az keyvault role definition create --hsm-name MyHSM --role-definition @keyvault-role.json
+  requiredParameters:
+  - isRequired: true
+    name: --hsm-name
+    summary: Name of the HSM.
+    description: ''
+  - isRequired: true
+    name: --role-definition
+    summary: Description of a role as JSON, or a path to a file containing a JSON description.
+    description: ''
+  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+- uid: az_keyvault_role_definition_delete
+  name: az keyvault role definition delete
+  summary: Delete a role definition.
+  description: ''
+  syntax: >-
+    az keyvault role definition delete --hsm-name
+                                       [--name]
+                                       [--role-id]
+                                       [--subscription]
+  requiredParameters:
+  - isRequired: true
+    name: --hsm-name
+    summary: Name of the HSM.
+    description: ''
+  optionalParameters:
+  - name: --name -n
+    summary: The role definition name. This is a GUID in the "name" property of a role definition.
+    description: ''
+  - name: --role-id
+    summary: The role definition ID.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_role_definition_list
   name: az keyvault role definition list
   summary: List role definitions.
   description: ''
   syntax: >-
-    az keyvault role definition list [--hsm-name]
+    az keyvault role definition list [--custom-role-only {false, true}]
+                                     [--hsm-name]
                                      [--query-examples]
                                      [--scope]
                                      [--subscription]
   optionalParameters:
+  - name: --custom-role-only
+    parameterValueGroup: false, true
+    summary: Only show custom role definitions.
+    description: ''
   - name: --hsm-name
     summary: Name of the HSM.
     description: ''
@@ -27,8 +94,83 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+- uid: az_keyvault_role_definition_show
+  name: az keyvault role definition show
+  summary: Show the details of a role definition.
+  description: ''
+  syntax: >-
+    az keyvault role definition show --hsm-name
+                                     [--name]
+                                     [--query-examples]
+                                     [--role-id]
+                                     [--subscription]
+  requiredParameters:
+  - isRequired: true
+    name: --hsm-name
+    summary: Name of the HSM.
+    description: ''
+  optionalParameters:
+  - name: --name -n
+    summary: The role definition name. This is a GUID in the "name" property of a role definition.
+    description: ''
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --role-id
+    summary: The role definition ID.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+- uid: az_keyvault_role_definition_update
+  name: az keyvault role definition update
+  summary: Update a role definition.
+  description: ''
+  syntax: >-
+    az keyvault role definition update --hsm-name
+                                       --role-definition
+                                       [--subscription]
+  examples:
+  - summary: Update a role by a JSON string.
+    syntax: >-
+      az keyvault role definition update --hsm-name MyHSM --role-definition '{
+          "roleName": "My Custom Role",
+          "name": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "description": "The description of the custom rule.",
+          "actions": [],
+          "notActions": [],
+          "dataActions": [
+              "Microsoft.KeyVault/managedHsm/keys/read/action",
+              "Microsoft.KeyVault/managedHsm/keys/write/action",
+              "Microsoft.KeyVault/managedHsm/keys/backup/action",
+              "Microsoft.KeyVault/managedHsm/keys/create"
+          ],
+          "notDataActions": []
+      }'
+  - summary: Update a role from a file containing a JSON description.
+    syntax: az keyvault role definition update --hsm-name MyHSM --role-definition @keyvault-role.json
+  requiredParameters:
+  - isRequired: true
+    name: --hsm-name
+    summary: Name of the HSM.
+    description: ''
+  - isRequired: true
+    name: --role-definition
+    summary: Description of a role as JSON, or a path to a file containing a JSON description.
+    description: ''
+  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 commands:
+- az_keyvault_role_definition_create
+- az_keyvault_role_definition_delete
 - az_keyvault_role_definition_list
+- az_keyvault_role_definition_show
+- az_keyvault_role_definition_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -46,5 +188,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/14/2020
+  ms.date: 03/04/2021
   description: Manage role definitions.

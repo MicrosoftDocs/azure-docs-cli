@@ -48,9 +48,9 @@ directCommands:
   summary: Reset the registration details for a given container.
   description: ''
   syntax: >-
-    az backup container re-register --container-name
-                                    --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
+    az backup container re-register --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
                                     [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
+                                    [--container-name]
                                     [--ids]
                                     [--resource-group]
                                     [--subscription]
@@ -61,10 +61,6 @@ directCommands:
     syntax: az backup container re-register --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --workload-type MSSQL --backup-management-type AzureWorkload --yes
   requiredParameters:
   - isRequired: true
-    name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
-  - isRequired: true
     name: --workload-type
     parameterValueGroup: MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase
     summary: Specifiy the type of applications within the Resource which should be discovered and protected by Azure Backup.
@@ -74,6 +70,9 @@ directCommands:
     defaultValue: AzureWorkload
     parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
     summary: 'Specifiy the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
+    description: ''
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -96,20 +95,27 @@ directCommands:
   summary: Register a Resource to the given Recovery Services Vault.
   description: ''
   syntax: >-
-    az backup container register --resource-id
+    az backup container register --resource-group
+                                 --resource-id
+                                 --vault-name
                                  --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
                                  [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
-                                 [--ids]
-                                 [--resource-group]
                                  [--subscription]
-                                 [--vault-name]
   examples:
   - summary: This command allows Azure Backup to convert the 'Resource' to a 'Backup Container' which is then registered to the given Recovery services vault. The Azure Backup service can then discover workloads of the given workload type within this container to be protected later.
     syntax: az backup container register --resource-group MyResourceGroup --vault-name MyVault --resource-id MyResourceId --workload-type MSSQL --backup-management-type AzureWorkload --resource-id MyResourceID
   requiredParameters:
   - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
     name: --resource-id
     summary: ID of the Azure Resource containing items to be protected by Azure Backup service. Currently, only Azure VM resource IDs are supported.
+    description: ''
+  - isRequired: true
+    name: --vault-name -v
+    summary: Name of the Recovery services vault.
     description: ''
   - isRequired: true
     name: --workload-type
@@ -122,17 +128,8 @@ directCommands:
     parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
     summary: 'Specifiy the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --vault-name -v
-    summary: Name of the Recovery services vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 - uid: az_backup_container_show
@@ -140,9 +137,9 @@ directCommands:
   summary: Show details of a container registered to a Recovery services vault.
   description: ''
   syntax: >-
-    az backup container show --name
-                             [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
+    az backup container show [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
                              [--ids]
+                             [--name]
                              [--query-examples]
                              [--resource-group]
                              [--subscription]
@@ -151,11 +148,6 @@ directCommands:
   examples:
   - summary: Show details of a container registered to a Recovery services vault. (autogenerated)
     syntax: az backup container show --name MyContainer --resource-group MyResourceGroup --vault-name MyVault
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the container. You can use the backup container list command to get the name of a container.
-    description: ''
   optionalParameters:
   - name: --backup-management-type
     parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
@@ -163,6 +155,9 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the container. You can use the backup container list command to get the name of a container.
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
@@ -185,8 +180,8 @@ directCommands:
   summary: Unregister a Backup Container to make the underlying 'resource' be protected by another vault.
   description: ''
   syntax: >-
-    az backup container unregister --container-name
-                                   [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
+    az backup container unregister [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
+                                   [--container-name]
                                    [--ids]
                                    [--resource-group]
                                    [--subscription]
@@ -195,15 +190,13 @@ directCommands:
   examples:
   - summary: If you are backing up Azure File shares, and want to clean-up, you need to delete backups for those shares and unregister the parent Azure Storage account.
     syntax: az backup container unregister --container-name MyContainer --resource-group MyResourceGroup --vault-name MyVault --backup-management-type AzureStorage
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
   optionalParameters:
   - name: --backup-management-type
     parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
     summary: 'Specifiy the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
+    description: ''
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -244,5 +237,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/12/2020
+  ms.date: 03/03/2021
   description: Resource which houses items or applications to be protected.
