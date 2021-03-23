@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/02/2021
+ms.date: 03/23/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,126 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## March 23, 2021
+
+Version 2.21.0
+
+### ACR
+
+* Output a trace in `az acr login` for self-diagnosing potential docker command latency
+* Fix #17172: When run check-health behind corporate proxy
+* `acr update`: Support anonymous pull
+* Fix #16700: Use "exists" api to check storage blob existence
+
+### AKS
+
+* `aks update`: Add `--no-uptime-sla`
+* Fix cross-sub assigning identity error and attach acr error
+* Add support for node public IP prefix ID
+
+### APIM
+
+* [BREAKING CHANGE] `apim backup`: `--storage-account-container` not support multi-value.
+* [BREAKING CHANGE] `apim restore`: `--storage-account-container` not support multi-value.
+
+### App Service
+
+* [BREAKING CHANGE] Fix #16087: `az webapp config ssl create`: set `--name` parameter as required.
+* Fix #17053: `az webapp show` return null values for SiteConfig properties
+* Fix #17207: `az webapp log config`: 'level' always defaults to verbose
+
+### ARM
+
+* `az bicep build`: fix an issue where build warnings are not shown
+
+### Backup
+
+* Add `id_part` for sub-resource names to fix `--ids`
+* Fix #17094: Created separate test suite for CRR tests
+* `az backup protection check-vm`: Add `--vm` and `--resource-group` as optional params
+
+### Cache
+
+* GA `az cache`
+
+### CDN
+
+* `az afd rule create`: Fix `--help` message
+
+### Compute
+
+* Fix a Windows vm user update bug
+* Fix #16585: `az vmss deallocate`: `--instance-ids` failed
+* `az vm create`: New parameter `--platform-fault-domain` in FLEX VMSS mode
+* `az vm create`: `--patch-mode` for Linux VM
+* `az ssh vm`: Automatically launch browser when getting certificate fails
+* `az vm create`: New parameter `--count`
+* `az vm create`: Trusted Launch
+* Fix #16037: az vm open-port accepts list of ports
+
+### Extension
+
+* Add actionable message when an extension is not compatible with the CLI core
+
+### Key Vault
+
+* `az keyvault role definition list`: Support `--custom-role-only` to list only custom role definitions
+* Support keyvault custom role definition
+* Add `--no-wait` for command `az keyvault security-domain download` and `--target-operation` for command `az keyvault security-domain wait`
+
+### NetAppFiles
+
+* `az netappfiles account backup show`: Operation added.
+* `az netappfiles account backup delete`: Operation added.
+* `az netappfiles account ad add`: Parameter `--ldap-over-tls` added.
+* `az netappfiles account create`: Parameter `--encryption` added.
+* `az netappfiles account update`: Parameter `--encryption` added.
+* `az netappfiles volume create`: Parameter `--encryption-key-source` added.
+* `az netappfiles volume create`: Default export policy removed for nfsv4.1 and optional parameters added for setting up an export policy for nfsv4.1: rule_index, unix_read_only, unix_read_write, cifs, allowed_clients
+
+### Network
+
+* `az network public-ip prefix create`: Support `--zone 1 2 3`
+* `az network lb frontend-ip create`: Support `--zone 1 2 3`
+* Bump version from '2020-08-01' to '2020-11-01'
+* `az network lb address-pool`: Support subnet when creating or updating an IP-based backend pool of a load balancer.
+
+### RDBMS
+
+* Added tests for flexible server team pipeline
+* Python SDK migration
+* Added PostgreSQL database create, show, and delete feature
+* Updating Python SDK to 8.1.0b2
+
+### Role
+
+* `az ad app permission list/grant`: Refine error message when no associated Service Principal exists for the App
+
+### Search
+
+* `az search`: GA
+
+### Service Fabric
+
+* `az sf certificate`: deprecate cluster cert commands.
+
+### SQL
+
+* Add Server Trust Group commands
+
+### Storage
+
+* Fix #16917: `az storage account generate-sas` fails if a connection string is provided
+* Fix #16979: `az storage container create` fails when providing storage container metadata
+
+### Upgrade
+
+* Fix #16952: Fix ImportError after upgrade
+
+### Misc.
+
+* Allow configuring theme
 
 ## March 02, 2021
 

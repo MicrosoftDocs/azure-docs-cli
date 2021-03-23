@@ -14,11 +14,14 @@ directCommands:
                                            --name
                                            --pool-name
                                            --resource-group
-                                           --vnet
+                                           [--subnet]
                                            [--subscription]
+                                           [--vnet]
   examples:
   - summary: Add one backend address into the load balance backend address pool.
     syntax: az network lb address-pool address add -g MyResourceGroup --lb-name MyLb --pool-name MyAddressPool -n MyAddress --vnet MyVnet --ip-address 10.0.0.1
+  - summary: Add one backend address into the load balance backend address pool with subnet.
+    syntax: az network lb address-pool address add -g MyResourceGroup --lb-name MyLb --pool-name MyAddressPool -n MyAddress --subnet /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet2 --ip-address 10.0.0.1
   requiredParameters:
   - isRequired: true
     name: --ip-address
@@ -40,13 +43,15 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vnet
-    summary: Name or Id of the virtual network.
-    description: ''
   optionalParameters:
+  - name: --subnet
+    summary: Name or Id of the existing subnet.(If name is provided, vnet is also required;If id, vnet is not required).
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vnet
+    summary: Name or Id of the virtual network.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address_pool_address_list
@@ -139,5 +144,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/25/2021
+  ms.date: 03/18/2021
   description: Manage backend addresses of the load balance backend address pool.

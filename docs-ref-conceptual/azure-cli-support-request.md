@@ -97,6 +97,6 @@ az support tickets communications list --ticket-name VM012 \
 
 ## Next steps
 
-- [Azure Support FAQs](/support/faq/)
-- [Azure severity and levels](/support/plans/response/)
+- [Azure Support FAQs](https://azure.microsoft.com/support/faq/)
+- [Azure severity and levels](https://azure.microsoft.com/support/plans/response/)
 - [How to create a support ticket via Azure portal](/azure/azure-portal/supportability/how-to-create-azure-support-request)

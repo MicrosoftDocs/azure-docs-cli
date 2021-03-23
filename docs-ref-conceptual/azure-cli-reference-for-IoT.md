@@ -8,7 +8,6 @@ ms.topic: reference
 ms.date: 06/05/2020
 ms.author: dbradish
 ms.service: azure-cli
-ms.devlang: azurecli
 ms.reviewer: paymaun.heidari
 ms.custom: devx-track-azurecli
 ---
@@ -45,14 +44,13 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | yes | Manage entities in an Azure IoT Hub Device Provisioning Service.
 | [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
 | [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
-| [az iot pnp](/cli/azure/ext/azure-iot/iot/pnp) | | Manage entities of an IoT Plug and Play model repository.
 
 ### Additional CLI commands for Azure services used by IoT
 
 | Reference | Type | Description
 |-|-|-|
 | [az maps](/cli/azure/maps) | core | Manage Azure Maps.
-| [az timeseriesinsights](/cli/azure/ext/timeseriesinsights/timeseriesinsights) | extension | Manage Azure Time Series Insights.
+| [az tsi](/cli/azure/ext/timeseriesinsights) | extension | Manage Azure Time Series Insights.
 
 ### Extension reference installation
 
@@ -72,7 +70,6 @@ az extension add --name azure-iot
 - [Deploy and monitor IoT Edge modules at scale with the Azure CLI extension for IoT](/azure/iot-edge/how-to-deploy-cli-at-scale)
 - [Send Telemetry to a device and monitor it with the Azure CLI extension for IoT](/azure/iot-hub/quickstart-send-telemetry-cli)
 - [Use the Azure CLI to configure IoT Hub message routing](/azure/iot-hub/tutorial-routing-config-message-routing-cli)
-- [Manage interfaces in a Plug and Play model repository](/azure/iot-pnp/howto-install-pnp-cli#manage-interfaces-in-a-model-repository)
 
 ## Azure CLI reference examples
 
