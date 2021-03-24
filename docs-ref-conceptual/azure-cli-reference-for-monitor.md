@@ -18,7 +18,7 @@ The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set 
 
 ## References for Azure Monitor
 
-The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.  Azure CLI extension references must be installed prior to use. The [az extension add](/cli/azure/extension#az-extension-add) command installs an extension reference by name.
+The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI **extension**.  Azure CLI extension references must be installed prior to use. The [az extension add](/cli/azure/extension#az_extension_add) command installs an extension reference by name.
 
 > [!IMPORTANT]
 >

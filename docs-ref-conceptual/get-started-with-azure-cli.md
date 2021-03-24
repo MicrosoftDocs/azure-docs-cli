@@ -33,11 +33,11 @@ After installing the CLI for the first time, check that it's installed and you'v
 
 ## Sign in
 
-Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
+Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az_login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
+After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](/cli/azure/account#az_account_set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
@@ -59,7 +59,7 @@ This table lists some common commands used in the CLI and links to their referen
 
 Commands in the CLI are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
 
-To search for commands, use [az find](/cli/azure/reference-index#az-find). For example, to search for command names containing `secret`,
+To search for commands, use [az find](/cli/azure/reference-index#az_find). For example, to search for command names containing `secret`,
 use the following command:
 
 ```azurecli-interactive
@@ -91,7 +91,7 @@ There are some arguments that are available for every command.
 ## Interactive mode
 
 The CLI offers an interactive mode that automatically displays help information and makes it easier to
-select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az-interactive) command.
+select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az_interactive) command.
 
 ```azurecli-interactive
 az interactive
@@ -123,7 +123,7 @@ There are also quickstarts for other popular services.
 ## Give feedback
 
 We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on GitHub](https://github.com/azure/azure-cli/issues) or use the built-in
-features of the CLI to leave general feedback with the [az feedback](/cli/azure/reference-index#az-feedback) command.
+features of the CLI to leave general feedback with the [az feedback](/cli/azure/reference-index#az_feedback) command.
 
 ```azurecli-interactive
 az feedback

@@ -58,9 +58,9 @@ az storage account create --resource-group StorageGroups --subscription "My Demo
 
 ## Change the active subscription
 
-You can change your active subscription by using the [az account set](/cli/azure/account#az-account-set) command.
+You can change your active subscription by using the [az account set](/cli/azure/account#az_account_set) command.
 
-Get a list of your subscriptions with the [az account list](/cli/azure/account#az-account-list) command:
+Get a list of your subscriptions with the [az account list](/cli/azure/account#az_account_list) command:
 
 ```azurecli
 az account list --output table
@@ -68,7 +68,7 @@ az account list --output table
 
 This command lists all the subscriptions you can access. Your active subscription is marked as `True` in the `IsDefault` column. If you don't see a subscription you expect, add the `--refresh` parameter to get the most current list of subscriptions.
 
-To switch to a different subscription, use [az account set](/cli/azure/account#az-account-set) with the subscription ID or name you want to switch to.
+To switch to a different subscription, use [az account set](/cli/azure/account#az_account_set) with the subscription ID or name you want to switch to.
 
 ```azurecli
 az account set --subscription "My Demos"
@@ -76,7 +76,7 @@ az account set --subscription "My Demos"
 
 Your subscriptions have both a name and an ID, which is a GUID. You can use either for these commands. If you use a name that includes spaces, use quotation marks.
 
-If you run the [az account list](/cli/azure/account#az-account-list) command again, the `IsDefault` column shows your current active subscription.
+If you run the [az account list](/cli/azure/account#az_account_list) command again, the `IsDefault` column shows your current active subscription.
 
 ## Create management groups
 
