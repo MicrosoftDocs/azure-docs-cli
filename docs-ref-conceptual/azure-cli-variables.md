@@ -58,7 +58,7 @@ az account show --output table
 ```
 
 You might have access to only one subscription. For more information, see [Use Azure subscriptions with Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-You can use the [az account set](/cli/azure/account#az-account-set) command to set your current subscription:
+You can use the [az account set](/cli/azure/account#az_account_set) command to set your current subscription:
 
 ```azurecli
 az account set --subscription "My Demos"
