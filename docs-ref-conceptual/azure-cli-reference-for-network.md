@@ -3,7 +3,6 @@ title: Azure CLI references for Azure Network
 description: Azure CLI reference landing page for Azure Network
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azurecli
 ms.topic: reference
 ms.date: 06/30/2020
 ms.author: dbradish
@@ -91,9 +90,9 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
-| Service | [az network list-service-aliases](/cli/azure/network#az-network-list-service-aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
-| Service | [az network list-service-tags](/cli/azure/network#az-network-list-service-tags) | List all service tags that belong to different resources. |
-| Usage | [az network list-usages](/cli/azure/network#az-network-list-usages) | List the number of network resources in a region that are used against a subscription quota. |
+| Service | [az network list-service-aliases](/cli/azure/network#az_network_list_service_aliases) | List available service aliases in the region that can be used for Service Endpoint Policies. |
+| Service | [az network list-service-tags](/cli/azure/network#az_network_list_service_tags) | List all service tags that belong to different resources. |
+| Usage | [az network list-usages](/cli/azure/network#az_network_list_usages) | List the number of network resources in a region that are used against a subscription quota. |
 
 ## Installing extension references
 
