@@ -172,17 +172,7 @@ If you're using Azure CLI over a proxy server, it may cause the following error:
 | Ubuntu/Debian Linux    | /opt/az/lib/python3.6/site-packages/certifi/cacert.pem                                |
 | CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python3.6/site-packages/certifi/cacert.pem                          |
 
-Append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. For example:
-
-```console
-<Original cacert.pem>
-
------BEGIN CERTIFICATE-----
-<Your proxy's certificate here>
------END CERTIFICATE-----
-```
-
-You might also need to set the `HTTP_PROXY` or `HTTPS_PROXY` environment variables.
+Append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. You might also need to set the `HTTP_PROXY` or `HTTPS_PROXY` environment variables.
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/azure-sdk-configure-proxy?tabs=bash).
 
@@ -194,7 +184,7 @@ If you run Azure CLI on a build machine where multiple jobs can be run in parall
 
 Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az_vm_update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
 
-The `--set` and `--add` parameters take a list of space-separated key-value pairs: `<key1>=<value1> <key2>=<value2>`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
+The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
 
 ```azurecli
 az vm show --resource-group VMResources --name virtual-machine-01
