@@ -88,7 +88,7 @@ The Azure CLI is used in many Azure services resulting in articles being spread 
 | Azure DevOps | Conceptual | [Create a project in Azure DevOps](/azure/devops/organizations/projects/create-project) | Use Azure DevOps to create a project and establish a repository for source code. |
 | Azure DevOps | Conceptual | [Get started with Git from the command line](/azure/devops/repos/git/share-your-code-in-git-cmdline) | Share your code in a Git repo in Azure Repos using Azure CLI. |
 
-## Hybrid + Multicloud
+## Hybrid
 
 | Area | Type | Link | Description |
 |-|-|-|-|
