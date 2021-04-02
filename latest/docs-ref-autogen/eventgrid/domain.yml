@@ -9,14 +9,14 @@ directCommands:
   summary: Create a domain.
   description: ''
   syntax: >-
-    az eventgrid domain create --location
-                               --name
+    az eventgrid domain create --name
                                --resource-group
                                [--identity {noidentity, systemassigned}]
                                [--inbound-ip-rules]
                                [--input-mapping-default-values]
                                [--input-mapping-fields]
                                [--input-schema {cloudeventschemav1_0, customeventschema, eventgridschema}]
+                               [--location]
                                [--public-network-access {disabled, enabled}]
                                [--sku {basic, premium}]
                                [--subscription]
@@ -32,10 +32,6 @@ directCommands:
     syntax: az eventgrid domain create -g rg1 --name domain1 -l westus2 --public-network-access enabled --inbound-ip-rules 10.0.0.0/8 Allow --inbound-ip-rules 10.2.0.0/8 Allow --sku basic
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: Name of the domain.
     description: ''
@@ -46,7 +42,7 @@ directCommands:
   optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
-    summary: The identity type of the resource (e.g., topic or domain).
+    summary: The managed identity type for the resource.
     description: ''
   - name: --inbound-ip-rules
     summary: List of inbound IP rules.
@@ -61,6 +57,9 @@ directCommands:
     defaultValue: eventgridschema
     parameterValueGroup: cloudeventschemav1_0, customeventschema, eventgridschema
     summary: Schema in which incoming events will be published to this topic/domain. If you specify customeventschema as the value for this parameter, you must also provide values for at least one of --input_mapping_default_values / --input_mapping_fields.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --public-network-access
     parameterValueGroup: disabled, enabled
@@ -190,7 +189,7 @@ directCommands:
   optionalParameters:
   - name: --identity
     parameterValueGroup: noidentity, systemassigned
-    summary: The identity type of the resource (e.g., topic or domain).
+    summary: The managed identity type for the resource.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -233,6 +232,15 @@ commands:
 - az_eventgrid_domain_topic_list
 - az_eventgrid_domain_topic_show
 - az_eventgrid_domain_update
+- az_eventgrid_domain_private-endpoint-connection
+- az_eventgrid_domain_private-endpoint-connection_approve
+- az_eventgrid_domain_private-endpoint-connection_delete
+- az_eventgrid_domain_private-endpoint-connection_list
+- az_eventgrid_domain_private-endpoint-connection_reject
+- az_eventgrid_domain_private-endpoint-connection_show
+- az_eventgrid_domain_private-link-resource
+- az_eventgrid_domain_private-link-resource_list
+- az_eventgrid_domain_private-link-resource_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -250,5 +258,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/06/2020
+  ms.date: 04/01/2021
   description: Manage event domains.

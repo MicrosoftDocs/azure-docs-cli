@@ -1,0 +1,178 @@
+### YamlMime:AzureCLIGroup
+uid: az_dt_model
+name: az dt model
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.0.70 or higher.  The extension will automatically install the first time you run an **az dt model** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage DTDL models and definitions on a Digital Twins instance.
+description: ''
+directCommands:
+- uid: az_dt_model_create
+  name: az dt model create
+  summary: Uploads one or more models. When any error occurs, no models are uploaded.
+  description: --models can be inline json or file path.
+  syntax: >-
+    az dt model create --dt-name
+                       [--fd]
+                       [--models]
+                       [--resource-group]
+  examples:
+  - summary: Bulk upload all .json or .dtdl model files from a target directory. Model processing is recursive.
+    syntax: az dt model create -n {instance_or_hostname} --from-directory {directory_path}
+  - summary: Upload model json inline or from file path.
+    syntax: az dt model create -n {instance_or_hostname} --models {file_path_or_inline_json}
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
+    description: ''
+  optionalParameters:
+  - name: --fd --from-directory
+    summary: The directory JSON model files will be parsed from.
+    description: ''
+  - name: --models
+    summary: Inline model JSON or file path to model JSON.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_dt_model_delete
+  name: az dt model delete
+  summary: Delete a model. A model can only be deleted if no other models reference it.
+  description: ''
+  syntax: >-
+    az dt model delete --dt-name
+                       --dtmi
+                       [--resource-group]
+  examples:
+  - summary: Delete a target model.
+    syntax: az dt model delete -n {instance_or_hostname} --dtmi "dtmi:com:example:Floor;1"
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
+    description: ''
+  - isRequired: true
+    name: --dtmi --model-id -m
+    summary: 'Digital Twins model Id. Example: dtmi:com:example:Room;2.'
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_dt_model_list
+  name: az dt model list
+  summary: List model metadata, definitions and dependencies.
+  description: ''
+  syntax: >-
+    az dt model list --dt-name
+                     [--def {false, true}]
+                     [--dependencies-for]
+                     [--resource-group]
+  examples:
+  - summary: List model metadata
+    syntax: az dt model list -n {instance_or_hostname}
+  - summary: List model definitions
+    syntax: az dt model list -n {instance_or_hostname} --definition
+  - summary: List dependencies of particular pre-existing model(s). Space seperate dtmi values.
+    syntax: az dt model list -n {instance_or_hostname} --dependencies-for {model_id0} {model_id1}
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
+    description: ''
+  optionalParameters:
+  - name: --def --definition
+    parameterValueGroup: false, true
+    summary: The operation will retrieve the model definition.
+    description: ''
+  - name: --dependencies-for
+    summary: The set of models which will have their dependencies retrieved. If omitted, all models are retrieved. Format is a whitespace separated list.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_dt_model_show
+  name: az dt model show
+  summary: Retrieve a target model or model definition.
+  description: ''
+  syntax: >-
+    az dt model show --dt-name
+                     --dtmi
+                     [--def {false, true}]
+                     [--resource-group]
+  examples:
+  - summary: Show model meta data
+    syntax: az dt model show -n {instance_or_hostname} --dtmi "dtmi:com:example:Floor;1"
+  - summary: Show model meta data and definition
+    syntax: az dt model show -n {instance_or_hostname} --dtmi "dtmi:com:example:Floor;1" --definition
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
+    description: ''
+  - isRequired: true
+    name: --dtmi --model-id -m
+    summary: 'Digital Twins model Id. Example: dtmi:com:example:Room;2.'
+    description: ''
+  optionalParameters:
+  - name: --def --definition
+    parameterValueGroup: false, true
+    summary: The operation will retrieve the model definition.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_dt_model_update
+  name: az dt model update
+  summary: Updates the metadata for a model. Currently a model can only be decommisioned.
+  description: ''
+  syntax: >-
+    az dt model update --dt-name
+                       --dtmi
+                       [--decommission {false, true}]
+                       [--resource-group]
+  examples:
+  - summary: Decommision a target model
+    syntax: az dt model update -n {instance_or_hostname} --dtmi "dtmi:com:example:Floor;1" --decommission
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name or hostname. If an instance name is provided, the user subscription is first queried for the target instance to retrieve the hostname. If a hostname is provided, the subscription query is skipped and the provided value is used for subsequent interaction.
+    description: ''
+  - isRequired: true
+    name: --dtmi --model-id -m
+    summary: 'Digital Twins model Id. Example: dtmi:com:example:Room;2.'
+    description: ''
+  optionalParameters:
+  - name: --decommission
+    parameterValueGroup: false, true
+    summary: Indicates intent to decommission a target model.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+commands:
+- az_dt_model_create
+- az_dt_model_delete
+- az_dt_model_list
+- az_dt_model_show
+- az_dt_model_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage DTDL models and definitions on a Digital Twins instance.

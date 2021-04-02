@@ -1,0 +1,243 @@
+### YamlMime:AzureCLIGroup
+uid: az_aks_maintenanceconfiguration
+name: az aks maintenanceconfiguration
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **aks-preview** extension for Azure CLI and requires version 2.0.49 or higher.  The extension will automatically install the first time you run an **az aks maintenanceconfiguration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Commands to manage maintenance configurations in managed Kubernetes cluster.
+description: ''
+directCommands:
+- uid: az_aks_maintenanceconfiguration_add
+  name: az aks maintenanceconfiguration add
+  summary: Add a maintenance configuration in managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks maintenanceconfiguration add --cluster-name
+                                        --name
+                                        --resource-group
+                                        [--config-file]
+                                        [--start-hour]
+                                        [--weekday]
+  examples:
+  - summary: Add a maintenance configuration with --weekday and --start-hour.
+    syntax: >-
+      az aks maintenanceconfiguration add -g xiazhan-mtc-stg --cluster-name test1 -n default --weekday Monday  --start-hour 1
+        The maintenance is allowed on Monday 1:00am to 2:00am
+  - summary: Add a maintenance configuration with --weekday.The maintenance is allowd on any time of that day.
+    syntax: >-
+      az aks maintenanceconfiguration add -g xiazhan-mtc-stg --cluster-name test1 -n default --weekday Monday
+        The maintenance is allowed on Monday.
+  - summary: Add a maintenance configuration with maintenance configuration json file
+    syntax: >-
+      az aks maintenanceconfiguration add -g xiazhan-mtc-stg --cluster-name test1 -n default --config-file ./test.json
+          The content of json file looks below. It means the maintenance is allowed on UTC time Tuesday 1:00am - 3:00 am and Wednesday 1:00am - 2:00am, 6:00am-7:00am
+          No maintenance is allowed from 2020-11-26T03:00:00Z to 2020-11-30T12:00:00Z and from 2020-12-26T03:00:00Z to 2020-12-26T12:00:00Z even if they are allowed in the above weekly setting
+          {
+                "timeInWeek": [
+                  {
+                    "day": "Tuesday",
+                    "hour_slots": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "day": "Wednesday",
+                    "hour_slots": [
+                      1,
+                      6
+                    ]
+                  }
+                ],
+                "notAllowedTime": [
+                  {
+                    "start": "2021-11-26T03:00:00Z",
+                    "end": "2021-11-30T12:00:00Z"
+                  },
+                  {
+                    "start": "2021-12-26T03:00:00Z",
+                    "end": "2021-12-26T12:00:00Z"
+                  }
+                ]
+        }
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The config name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --config-file
+    summary: The maintenance configuration json file.
+    description: ''
+  - name: --start-hour
+    summary: The start time of 1 hour window which maintenance is allowd. E.g. 1 means it's allowd between 1:00 am and 2:00 am.
+    description: ''
+  - name: --weekday
+    summary: A day in week on which maintenance is allowed. E.g. Monday.
+    description: ''
+- uid: az_aks_maintenanceconfiguration_delete
+  name: az aks maintenanceconfiguration delete
+  summary: Delete a maintenance configuration in managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks maintenanceconfiguration delete --cluster-name
+                                           --name
+                                           --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The config name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_aks_maintenanceconfiguration_list
+  name: az aks maintenanceconfiguration list
+  summary: List maintenance configurations in managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks maintenanceconfiguration list --cluster-name
+                                         --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_aks_maintenanceconfiguration_show
+  name: az aks maintenanceconfiguration show
+  summary: Show the details of a maintenance configuration in managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks maintenanceconfiguration show --cluster-name
+                                         --name
+                                         --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The config name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_aks_maintenanceconfiguration_update
+  name: az aks maintenanceconfiguration update
+  summary: Update a maintenance configuration of a managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks maintenanceconfiguration update --cluster-name
+                                           --name
+                                           --resource-group
+                                           [--config-file]
+                                           [--start-hour]
+                                           [--weekday]
+  examples:
+  - summary: Update a maintenance configuration with --weekday and --start-hour.
+    syntax: >-
+      az aks maintenanceconfiguration update -g xiazhan-mtc-stg --cluster-name test1 -n default --weekday Monday  --start-hour 1
+        The maintenance is allowed on Monday 1:00am to 2:00am
+  - summary: Update a maintenance configuration with --weekday.The maintenance is allowd on any time of that day.
+    syntax: >-
+      az aks maintenanceconfiguration update -g xiazhan-mtc-stg --cluster-name test1 -n default --weekday Monday
+        The maintenance is allowed on Monday.
+  - summary: Update a maintenance configuration with maintenance configuration json file
+    syntax: >-
+      az aks maintenanceconfiguration update -g xiazhan-mtc-stg --cluster-name test1 -n default --config-file ./test.json
+          The content of json file looks below. It means the maintenance is allowed on UTC time Tuesday 1:00am - 3:00 am and Wednesday 1:00am - 2:00am, 6:00am-7:00am
+          No maintenance is allowed from 2020-11-26T03:00:00Z to 2020-11-30T12:00:00Z and from 2020-12-26T03:00:00Z to 2020-12-26T12:00:00Z even if they are allowed in the above weekly setting
+          {
+                "timeInWeek": [
+                  {
+                    "day": "Tuesday",
+                    "hour_slots": [
+                      1,
+                      2
+                    ]
+                  },
+                  {
+                    "day": "Wednesday",
+                    "hour_slots": [
+                      1,
+                      6
+                    ]
+                  }
+                ],
+                "notAllowedTime": [
+                  {
+                    "start": "2021-11-26T03:00:00Z",
+                    "end": "2021-11-30T12:00:00Z"
+                  },
+                  {
+                    "start": "2021-12-26T03:00:00Z",
+                    "end": "2021-12-26T12:00:00Z"
+                  }
+                ]
+        }
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The config name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --config-file
+    summary: The maintenance configuration json file.
+    description: ''
+  - name: --start-hour
+    summary: The start time of 1 hour window which maintenance is allowd. E.g. 1 means it's allowd between 1:00 am and 2:00 am.
+    description: ''
+  - name: --weekday
+    summary: A day in week on which maintenance is allowed. E.g. Monday.
+    description: ''
+commands:
+- az_aks_maintenanceconfiguration_add
+- az_aks_maintenanceconfiguration_delete
+- az_aks_maintenanceconfiguration_list
+- az_aks_maintenanceconfiguration_show
+- az_aks_maintenanceconfiguration_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to manage maintenance configurations in managed Kubernetes cluster.
