@@ -1,0 +1,144 @@
+### YamlMime:AzureCLIGroup
+uid: az_tsi_environment_gen1
+name: az tsi environment gen1
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **timeseriesinsights** extension for Azure CLI and requires version 2.11.0 or higher.  The extension will automatically install the first time you run an **az tsi environment gen1** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage a gen1 environment in the specified subscription and resource group.
+description: ''
+directCommands:
+- uid: az_tsi_environment_gen1_create
+  name: az tsi environment gen1 create
+  summary: Create a gen1 environment in the specified subscription and resource group.
+  description: ''
+  syntax: >-
+    az tsi environment gen1 create --data-retention-time
+                                   --environment-name
+                                   --location
+                                   --resource-group
+                                   --sku
+                                   [--exceeded-behavior {PauseIngress, PurgeOldData}]
+                                   [--key-properties]
+                                   [--no-wait]
+                                   [--tags]
+  examples:
+  - summary: EnvironmentsGen1Create
+    syntax: az tsi environment gen1 create --name "env1" --location westus --data-retention-time "P31D" --partition-key-properties name="DeviceId1" type="String" --sku name="S1" capacity=1 --resource-group "rg1"
+  requiredParameters:
+  - isRequired: true
+    name: --data-retention-time
+    summary: ISO8601 timespan specifying the minimum number of days the environment's events will be available for query.
+    description: ''
+  - isRequired: true
+    name: --environment-name --name -n
+    summary: Name of the environment.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --sku
+    summary: The sku determines the type of environment, either S1 or S2. For Gen1 environments the sku determines the capacity of the environment, the ingress rate, and the billing rate.
+    description: >-
+      Usage: --sku name=XX capacity=XX
+
+
+      name: Required. The name of this SKU.
+
+      capacity: Required. The capacity of the sku. This value can be changed to support scale out of             environments after they have been created.
+  optionalParameters:
+  - name: --exceeded-behavior --storage-limit-exceeded-behavior
+    parameterValueGroup: PauseIngress, PurgeOldData
+    summary: The behavior the Time Series Insights service should take when the environment's capacity has been exceeded. If "PauseIngress" is specified, new events will not be read from the event source. If "PurgeOldData" is specified, new events will continue to be read and old events will be deleted from the environment. The default behavior is PurgeOldData.
+    description: ''
+  - name: --key-properties --partition-key-properties
+    summary: The list of event properties which will be used to partition data in the environment. Currently, only a single partition key property is supported.
+    description: >-
+      Usage: --partition-key-properties name=XX type=XX
+
+
+      name: The name of the property.
+
+      type: The type of the property.
+
+
+      Multiple actions can be specified by using more than one --partition-key-properties argument.
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_tsi_environment_gen1_update
+  name: az tsi environment gen1 update
+  summary: Update a gen1 environment in the specified subscription and resource group.
+  description: ''
+  syntax: >-
+    az tsi environment gen1 update --environment-name
+                                   --resource-group
+                                   [--data-retention-time]
+                                   [--exceeded-behavior {PauseIngress, PurgeOldData}]
+                                   [--no-wait]
+                                   [--sku]
+                                   [--tags]
+  examples:
+  - summary: EnvironmentsGen1Update
+    syntax: az tsi environment gen1 update --name "env1" --sku name="S1" capacity=2                --resource-group "rg1" --data-retention-time "P30D" --storage-limit-exceeded-behavior PurgeOldData
+  requiredParameters:
+  - isRequired: true
+    name: --environment-name --name -n
+    summary: Name of the environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --data-retention-time
+    summary: ISO8601 timespan specifying the minimum number of days the environment's events will be available for query.
+    description: ''
+  - name: --exceeded-behavior --storage-limit-exceeded-behavior
+    parameterValueGroup: PauseIngress, PurgeOldData
+    summary: The behavior the Time Series Insights service should take when the environment's capacity has been exceeded. If "PauseIngress" is specified, new events will not be read from the event source. If "PurgeOldData" is specified, new events will continue to be read and old events will be deleted from the environment. The default behavior is PurgeOldData.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --sku
+    summary: The sku determines the type of environment, either S1 or S2. For Gen1 environments the sku determines the capacity of the environment, the ingress rate, and the billing rate.
+    description: >-
+      Usage: --sku name=XX capacity=XX
+
+
+      name: Required. The name of this SKU.
+
+      capacity: Required. The capacity of the sku. This value can be changed to support scale out of             environments after they have been created.
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+commands:
+- az_tsi_environment_gen1_create
+- az_tsi_environment_gen1_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage a gen1 environment in the specified subscription and resource group.

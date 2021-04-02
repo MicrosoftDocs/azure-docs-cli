@@ -1,10 +1,10 @@
 ### YamlMime:AzureCLIGroup
-uid: az_backup_protectable_item
+uid: az_backup_protectable-item
 name: az backup protectable-item
 summary: Manage the item which is yet to be protected or backed up to an Azure Recovery services vault with an associated policy.
 description: ''
 directCommands:
-- uid: az_backup_protectable_item_initialize
+- uid: az_backup_protectable-item_initialize
   name: az backup protectable-item initialize
   summary: Trigger the discovery of any unprotected items of the given workload type in the given container.
   description: ''
@@ -40,7 +40,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
-- uid: az_backup_protectable_item_list
+- uid: az_backup_protectable-item_list
   name: az backup protectable-item list
   summary: Retrieve all protectable items within a certain container or across all registered containers.
   description: ''
@@ -48,13 +48,14 @@ directCommands:
     az backup protectable-item list --resource-group
                                     --vault-name
                                     --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
+                                    [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload, MAB}]
                                     [--container-name]
                                     [--protectable-item-type {HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance}]
                                     [--query-examples]
                                     [--subscription]
   examples:
   - summary: Retrieve all protectable items within a certain container or across all registered containers. It consists of all the elements in the hierarchy of the application. Returns DBs and their upper tier entities like Instance, AvailabilityGroup etc.
-    syntax: az backup protectable-item list --resource-group MyResourceGroup --vault-name MyVault --workload-type MSSQL --container-name MyContainer
+    syntax: az backup protectable-item list --resource-group MyResourceGroup --vault-name MyVault --backup-management-type AzureWorkload --workload-type MSSQL --container-name MyContainer
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -70,6 +71,11 @@ directCommands:
     summary: Specifiy the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   optionalParameters:
+  - name: --backup-management-type
+    defaultValue: AzureWorkload
+    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload, MAB
+    summary: 'Specifiy the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
+    description: ''
   - name: --container-name -c
     summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
@@ -84,7 +90,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
-- uid: az_backup_protectable_item_show
+- uid: az_backup_protectable-item_show
   name: az backup protectable-item show
   summary: Retrieve the specified protectable item within the given container.
   description: ''
@@ -137,9 +143,9 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 commands:
-- az_backup_protectable_item_initialize
-- az_backup_protectable_item_list
-- az_backup_protectable_item_show
+- az_backup_protectable-item_initialize
+- az_backup_protectable-item_list
+- az_backup_protectable-item_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -157,5 +163,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/03/2021
+  ms.date: 03/26/2021
   description: Manage the item which is yet to be protected or backed up to an Azure Recovery services vault with an associated policy.

@@ -1,10 +1,10 @@
 ### YamlMime:AzureCLIGroup
-uid: az_eventgrid_system_topic_event_subscription
+uid: az_eventgrid_system-topic_event-subscription
 name: az eventgrid system-topic event-subscription
 summary: Manage event subscriptions of system topic.
 description: ''
 directCommands:
-- uid: az_eventgrid_system_topic_event_subscription_create
+- uid: az_eventgrid_system-topic_event-subscription_create
   name: az eventgrid system-topic event-subscription create
   summary: Create a new event subscription for a system topic.
   description: ''
@@ -16,6 +16,8 @@ directCommands:
                                                         [--azure-active-directory-application-id-or-uri]
                                                         [--azure-active-directory-tenant-id]
                                                         [--deadletter-endpoint]
+                                                        [--delivery-attribute-mapping]
+                                                        [--enable-advanced-filtering-on-arrays {false, true}]
                                                         [--endpoint]
                                                         [--endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
                                                         [--event-delivery-schema {cloudeventschemav1_0, custominputschema, eventgridschema}]
@@ -26,6 +28,7 @@ directCommands:
                                                         [--max-delivery-attempts]
                                                         [--max-events-per-batch]
                                                         [--preferred-batch-size-in-kilobytes]
+                                                        [--qttl]
                                                         [--subject-begins-with]
                                                         [--subject-case-sensitive {false, true}]
                                                         [--subject-ends-with]
@@ -67,6 +70,19 @@ directCommands:
       az eventgrid system-topic event-subscription create -n es1 \
           -g rg1 --system-topic-name systemtopic1 \
           --endpoint /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Web/sites/{functionappname}/functions/{functionname} --endpoint-type azurefunction
+  - summary: Create a new event subscription for an Event Grid system topic using Storage Queue as destination with a ttl of 5 mins
+    syntax: >-
+      az eventgrid system-topic event-subscription create -n es1 \
+          -g rg1 --system-topic-name systemtopic1 \
+          --endpoint-type storagequeue \
+          --endpoint /subscriptions/{SubID}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/sa1/queueservices/default/queues/q1 \
+          --storage-queue-msg-ttl 300
+  - summary: Create a new event subscription for an Event Grid system topic and enable advanced filtering on arrays
+    syntax: >-
+      az eventgrid system-topic event-subscription create -n es1 \
+          -g rg1 --system-topic-name systemtopic1 \
+          --endpoint /subscriptions/{SubID}/resourceGroups/{RG}/providers/Microsoft.Web/sites/{functionappname}/functions/{functionname} --endpoint-type azurefunction \
+          --enable-advanced-filtering-on-arrays true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -92,13 +108,23 @@ directCommands:
 
       StringContains:            --advanced-filter subject StringContains Blue Red
 
+      StringNotContains:         --advanced-filter subject StringNotContains Blue Red
+
       StringBeginsWith:          --advanced-filter subject StringBeginsWith Blue Red
+
+      StringNotBeginsWith:       --advanced-filter subject StringNotBeginsWith Blue Red
 
       StringEndsWith:            --advanced-filter subject StringEndsWith img png jpg
 
+      StringNotEndsWith:         --advanced-filter subject StringNotEndsWith img png jpg
+
       NumberIn:                  --advanced-filter data.property1 NumberIn 5 10 20
 
+      NumberInRange              --advanced-filter data.property1 NumberInRange 5,10 20,30 40,50
+
       NumberNotIn:               --advanced-filter data.property2 NumberNotIn 100 200 300
+
+      NumberNotInRange:          --advanced-filter data.property2 NumberNotInRange 100,110 200,210 300,310
 
       NumberLessThan:            --advanced-filter data.property3 NumberLessThan 100
 
@@ -110,6 +136,10 @@ directCommands:
 
       BoolEquals:                --advanced-filter data.property3 BoolEquals true
 
+      IsNullOrUndefined:         --advanced-filter data.property3 IsNullOrUndefined
+
+      IsNotNull:                 --advanced-filter data.property3 IsNotNull
+
       Multiple advanced filters can be specified by using more than one `--advanced-filter` argument.
   - name: --azure-active-directory-application-id-or-uri
     summary: The Azure Active Directory Application Id or Uri to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
@@ -120,6 +150,24 @@ directCommands:
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
+  - name: --delivery-attribute-mapping
+    summary: Add delivery attribute mapping to send additional information via HTTP headers when delivering events. This attribute is valid for all destination types except StorageQueue. Multiple attributes can be specified by using more than one `--delivery-attribute-mapping` argument.
+    description: >-
+      Usage:                        --delivery-attribute-mapping attribute-name attribute-type attribute-value [attribute-is-secret]
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue false
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue true
+
+      Dynamic Attribute Mapping:    --delivery-attribute-mapping somename dynamic somevalue
+
+      Both Static and Dynamic:      --delivery-attribute-mapping somename dynamic somevalue --delivery-attribute-mapping somename2 static somevalue.
+  - name: --enable-advanced-filtering-on-arrays --enable-af-arr
+    parameterValueGroup: false, true
+    summary: Allows advanced filters to be evaluated against an array of values instead of expecting a singular value.
+    description: ''
   - name: --endpoint
     summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint. It is expected that the destination endpoint to be already created and available for use before executing any Event Grid command.
     description: ''
@@ -155,6 +203,9 @@ directCommands:
   - name: --preferred-batch-size-in-kilobytes
     summary: Preferred batch size in kilobytes. Must be a number between 1 and 1024.
     description: ''
+  - name: --qttl --storage-queue-msg-ttl
+    summary: Storage queue message time to live in seconds.
+    description: ''
   - name: --subject-begins-with
     summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
     description: ''
@@ -169,7 +220,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-- uid: az_eventgrid_system_topic_event_subscription_delete
+- uid: az_eventgrid_system-topic_event-subscription_delete
   name: az eventgrid system-topic event-subscription delete
   summary: Delete an event subscription of a system topic.
   description: ''
@@ -205,7 +256,7 @@ directCommands:
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-- uid: az_eventgrid_system_topic_event_subscription_list
+- uid: az_eventgrid_system-topic_event-subscription_list
   name: az eventgrid system-topic event-subscription list
   summary: List event subscriptions of a specific system topic.
   description: ''
@@ -238,7 +289,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-- uid: az_eventgrid_system_topic_event_subscription_show
+- uid: az_eventgrid_system-topic_event-subscription_show
   name: az eventgrid system-topic event-subscription show
   summary: Get the details of an event subscription of a system topic.
   description: ''
@@ -246,6 +297,7 @@ directCommands:
     az eventgrid system-topic event-subscription show --name
                                                       --resource-group
                                                       --system-topic-name
+                                                      [--include-attrib-secret {false, true}]
                                                       [--include-full-endpoint-url {false, true}]
                                                       [--query-examples]
                                                       [--subscription]
@@ -254,6 +306,10 @@ directCommands:
     syntax: >-
       az eventgrid system-topic event-subscription show --name es1 \
            -g rg1 --system-topic-name systemtopic1
+  - summary: Show the details of an event subscription for an Event Grid system topic include any static delivery attribute secrets.
+    syntax: >-
+      az eventgrid system-topic event-subscription show --name es1 \
+           -g rg1 --system-topic-name systemtopic1 --include-attrib-secret
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -268,6 +324,10 @@ directCommands:
     summary: Name of the system topic.
     description: ''
   optionalParameters:
+  - name: --include-attrib-secret --include-static-delivery-attribute-secret
+    parameterValueGroup: false, true
+    summary: Indicate whether any static delivery attribute secrets should be returned. True if flag present.
+    description: ''
   - name: --include-full-endpoint-url
     parameterValueGroup: false, true
     summary: Specify to indicate whether the full endpoint URL should be returned. True if flag present.
@@ -279,7 +339,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
-- uid: az_eventgrid_system_topic_event_subscription_update
+- uid: az_eventgrid_system-topic_event-subscription_update
   name: az eventgrid system-topic event-subscription update
   summary: Update an event subscription of a system topic.
   description: ''
@@ -289,10 +349,13 @@ directCommands:
                                                         --system-topic-name
                                                         [--advanced-filter]
                                                         [--deadletter-endpoint]
+                                                        [--delivery-attribute-mapping]
+                                                        [--enable-advanced-filtering-on-arrays {false, true}]
                                                         [--endpoint]
                                                         [--endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
                                                         [--included-event-types]
                                                         [--labels]
+                                                        [--qttl]
                                                         [--subject-begins-with]
                                                         [--subject-ends-with]
                                                         [--subscription]
@@ -325,6 +388,16 @@ directCommands:
           --endpoint https://contoso.azurewebsites.net/api/f1?code=code
           --advanced-filter data.blobType StringIn BlockBlob
           --advanced-filter data.url StringBeginsWith https://myaccount.blob.core.windows.net
+  - summary: Update an event subscription for an Event Grid system topic with Storage Queue as destination with ttl of 5 mins
+    syntax: >-
+      az eventgrid system-topic event-subscription update -n es1 \
+          -g rg1 --system-topic-name systemtopic1 \
+          --storage-queue-msg-ttl 300
+  - summary: Update an event subscription for an Event Grid system topic with advanced filtering on arrays enabled
+    syntax: >-
+      az eventgrid system-topic event-subscription update -n es1 \
+          -g rg1 --system-topic-name systemtopic1 \
+          --enable-advanced-filtering-on-arrays true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -350,13 +423,23 @@ directCommands:
 
       StringContains:            --advanced-filter subject StringContains Blue Red
 
+      StringNotContains:         --advanced-filter subject StringNotContains Blue Red
+
       StringBeginsWith:          --advanced-filter subject StringBeginsWith Blue Red
+
+      StringNotBeginsWith:       --advanced-filter subject StringNotBeginsWith Blue Red
 
       StringEndsWith:            --advanced-filter subject StringEndsWith img png jpg
 
+      StringNotEndsWith:         --advanced-filter subject StringNotEndsWith img png jpg
+
       NumberIn:                  --advanced-filter data.property1 NumberIn 5 10 20
 
+      NumberInRange              --advanced-filter data.property1 NumberInRange 5,10 20,30 40,50
+
       NumberNotIn:               --advanced-filter data.property2 NumberNotIn 100 200 300
+
+      NumberNotInRange:          --advanced-filter data.property2 NumberNotInRange 100,110 200,210 300,310
 
       NumberLessThan:            --advanced-filter data.property3 NumberLessThan 100
 
@@ -368,9 +451,31 @@ directCommands:
 
       BoolEquals:                --advanced-filter data.property3 BoolEquals true
 
+      IsNullOrUndefined:         --advanced-filter data.property3 IsNullOrUndefined
+
+      IsNotNull:                 --advanced-filter data.property3 IsNotNull
+
       Multiple advanced filters can be specified by using more than one `--advanced-filter` argument.
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
+    description: ''
+  - name: --delivery-attribute-mapping
+    summary: Add delivery attribute mapping to send additional information via HTTP headers when delivering events. This attribute is valid for all destination types except StorageQueue. Multiple attributes can be specified by using more than one `--delivery-attribute-mapping` argument.
+    description: >-
+      Usage:                        --delivery-attribute-mapping attribute-name attribute-type attribute-value [attribute-is-secret]
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue false
+
+      Static Attribute Mapping:     --delivery-attribute-mapping somename static somevalue true
+
+      Dynamic Attribute Mapping:    --delivery-attribute-mapping somename dynamic somevalue
+
+      Both Static and Dynamic:      --delivery-attribute-mapping somename dynamic somevalue --delivery-attribute-mapping somename2 static somevalue.
+  - name: --enable-advanced-filtering-on-arrays --enable-af-arr
+    parameterValueGroup: false, true
+    summary: Allows advanced filters to be evaluated against an array of values instead of expecting a singular value.
     description: ''
   - name: --endpoint
     summary: Endpoint where EventGrid should deliver events matching this event subscription. For webhook endpoint type, this should be the corresponding webhook URL. For other endpoint types, this should be the Azure resource identifier of the endpoint. It is expected that the destination endpoint to be already created and available for use before executing any Event Grid command.
@@ -386,6 +491,9 @@ directCommands:
   - name: --labels
     summary: A space-separated list of labels to associate with this event subscription.
     description: ''
+  - name: --qttl --storage-queue-msg-ttl
+    summary: Storage queue message time to live in seconds.
+    description: ''
   - name: --subject-begins-with
     summary: An optional string to filter events for an event subscription based on a prefix. Wildcard characters are not supported.
     description: ''
@@ -397,11 +505,11 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventgrid/_help.py
 commands:
-- az_eventgrid_system_topic_event_subscription_create
-- az_eventgrid_system_topic_event_subscription_delete
-- az_eventgrid_system_topic_event_subscription_list
-- az_eventgrid_system_topic_event_subscription_show
-- az_eventgrid_system_topic_event_subscription_update
+- az_eventgrid_system-topic_event-subscription_create
+- az_eventgrid_system-topic_event-subscription_delete
+- az_eventgrid_system-topic_event-subscription_list
+- az_eventgrid_system-topic_event-subscription_show
+- az_eventgrid_system-topic_event-subscription_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -419,5 +527,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/06/2020
+  ms.date: 04/01/2021
   description: Manage event subscriptions of system topic.

@@ -1,0 +1,310 @@
+### YamlMime:AzureCLIGroup
+uid: az_redisenterprise
+name: az redisenterprise
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **redisenterprise** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az redisenterprise** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage dedicated Redis Enterprise caches for your Azure applications.
+description: ''
+directCommands:
+- uid: az_redisenterprise_create
+  name: az redisenterprise create
+  summary: Create new Redis Enterprise cache instance.
+  description: Create or update an existing (overwrite/recreate, with potential downtime) cache cluster with an associated database.
+  syntax: >-
+    az redisenterprise create --cluster-name
+                              --resource-group
+                              --sku {EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50}
+                              [--capacity]
+                              [--client-protocol {Encrypted, Plaintext}]
+                              [--clustering-policy {EnterpriseCluster, OSSCluster}]
+                              [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
+                              [--location]
+                              [--minimum-tls-version {1.0, 1.1, 1.2}]
+                              [--modules]
+                              [--no-database]
+                              [--no-wait]
+                              [--persistence]
+                              [--port]
+                              [--tags]
+                              [--zones]
+  examples:
+  - summary: Create new Redis Enterprise cache cluster with database.
+    syntax: az redisenterprise create --cluster-name "cache1" --location "East US" --minimum-tls-version "1.2" --sku "Enterprise_E20" --capacity 4 --tags tag1="value1" --zones "1" "2" "3" --client-protocol "Encrypted" --clustering-policy "EnterpriseCluster" --eviction-policy "NoEviction" --modules name="RedisBloom" args="ERROR_RATE 0.00 INITIAL_SIZE 400" --modules name="RedisTimeSeries" args="RETENTION_POLICY 20" --modules name="RediSearch" --persistence aof-enabled=true aof-frequency="1s" --port 10000 --resource-group "rg1"
+  - summary: Create new Redis Enterprise cache cluster without database (warning - the cache will not be usable until you create a database).
+    syntax: az redisenterprise create --cluster-name "cache1" --location "West US" --minimum-tls-version "1.2" --sku "EnterpriseFlash_F300" --capacity 3 --tags tag1="value1" --zones "1" "2" "3" --resource-group "rg1" --no-database
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --sku
+    parameterValueGroup: EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50
+    summary: The type of RedisEnterprise cluster to deploy.
+    description: ''
+  optionalParameters:
+  - name: --capacity
+    summary: The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs.
+    description: ''
+  - name: --client-protocol
+    parameterValueGroup: Encrypted, Plaintext
+    summary: Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted.
+    description: ''
+  - name: --clustering-policy
+    parameterValueGroup: EnterpriseCluster, OSSCluster
+    summary: Clustering policy - default is OSSCluster. Specified at create time.
+    description: ''
+  - name: --eviction-policy
+    parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
+    summary: Redis eviction policy - default is VolatileLRU.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --minimum-tls-version
+    parameterValueGroup: 1.0, 1.1, 1.2
+    summary: The minimum TLS version for the cluster to support.
+    description: ''
+  - name: --modules
+    summary: Optional set of redis modules to enable in this database - modules can only be added at creation time.
+    description: >-
+      Usage: --modules name=XX args=XX
+
+
+      name: Required. The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'
+
+      args: Configuration options for the module, e.g. 'ERROR_RATE 0.00 INITIAL_SIZE 400'.
+
+
+      Multiple actions can be specified by using more than one --modules argument.
+  - name: --no-database
+    summary: 'Advanced. Do not automatically create a default database. Warning: the cache will not be usable until you create a database.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --persistence
+    summary: Persistence settings.
+    description: >-
+      Usage: --persistence aof-enabled=XX aof-frequency=XX rdb-enabled=XX rdb-frequency=XX
+
+
+      aof-enabled: Sets whether AOF is enabled.  Allowed values: true, false.
+
+      aof-frequency: Sets the frequency at which data is written to disk.  Allowed values: 1s, always.
+
+      rdb-enabled: Sets whether RDB is enabled.  Allowed values: true, false.
+
+      rdb-frequency: Sets the frequency at which a snapshot of the database is created.  Allowed values: 1h, 6h, 12h.
+
+
+      After enabling persistence, you will be unable to disable it. Support for disabling persistence after enabling will be added at a later date.
+  - name: --port
+    summary: TCP port of the database endpoint. Specified at create time. Defaults to an available port.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --zones -z
+    summary: The Availability Zones where this cluster will be deployed.
+    description: ''
+- uid: az_redisenterprise_delete
+  name: az redisenterprise delete
+  summary: Delete a Redis Enterprise cache.
+  description: ''
+  syntax: >-
+    az redisenterprise delete --cluster-name
+                              --resource-group
+                              [--no-wait]
+                              [--yes]
+  examples:
+  - summary: Delete a Redis Enterprise cache.
+    syntax: az redisenterprise delete --cluster-name "cache1" --resource-group "rg1"
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_redisenterprise_list
+  name: az redisenterprise list
+  summary: List Redis Enterprise caches.
+  description: List details about all caches within current Subscription or provided Resource Group.
+  syntax: az redisenterprise list [--resource-group]
+  examples:
+  - summary: List all Redis Enterprise caches in a resource group.
+    syntax: az redisenterprise list --resource-group "rg1"
+  - summary: List all Redis Enterprise caches within the current subscription.
+    syntax: az redisenterprise list
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_redisenterprise_show
+  name: az redisenterprise show
+  summary: Get information about a Redis Enterprise cache.
+  description: ''
+  syntax: >-
+    az redisenterprise show --cluster-name
+                            --resource-group
+  examples:
+  - summary: Get information about a Redis Enterprise cache.
+    syntax: az redisenterprise show --cluster-name "cache1" --resource-group "rg1"
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_redisenterprise_update
+  name: az redisenterprise update
+  summary: Update an existing Redis Enterprise cache cluster.
+  description: ''
+  syntax: >-
+    az redisenterprise update --cluster-name
+                              --resource-group
+                              [--capacity]
+                              [--minimum-tls-version {1.0, 1.1, 1.2}]
+                              [--no-wait]
+                              [--sku {EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50}]
+                              [--tags]
+  examples:
+  - summary: Update an existing Redis Enterprise cache cluster.
+    syntax: az redisenterprise update --cluster-name "cache1" --minimum-tls-version "1.2" --sku "EnterpriseFlash_F300" --capacity 9 --tags tag1="value1" --resource-group "rg1"
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --capacity
+    summary: The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs.
+    description: ''
+  - name: --minimum-tls-version
+    parameterValueGroup: 1.0, 1.1, 1.2
+    summary: The minimum TLS version for the cluster to support.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --sku
+    parameterValueGroup: EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50
+    summary: The type of RedisEnterprise cluster to deploy.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_redisenterprise_wait
+  name: az redisenterprise wait
+  summary: Place the CLI in a waiting state until a condition of the Redis Enterprise cache cluster is met.
+  description: ''
+  syntax: >-
+    az redisenterprise wait --cluster-name
+                            --resource-group
+                            [--created]
+                            [--custom]
+                            [--deleted]
+                            [--exists]
+                            [--interval]
+                            [--timeout]
+                            [--updated]
+  examples:
+  - summary: Pause executing next line of CLI script until the Redis Enterprise cache cluster is successfully created.
+    syntax: az redisenterprise wait --cluster-name "cache1" --resource-group "rg1" --created
+  - summary: Pause executing next line of CLI script until the Redis Enterprise cache cluster is successfully updated.
+    syntax: az redisenterprise wait --cluster-name "cache1" --resource-group "rg1" --updated
+  - summary: Pause executing next line of CLI script until the Redis Enterprise cache is successfully deleted.
+    syntax: az redisenterprise wait --cluster-name "cache1" --resource-group "rg1" --deleted
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+commands:
+- az_redisenterprise_create
+- az_redisenterprise_database
+- az_redisenterprise_database_create
+- az_redisenterprise_database_delete
+- az_redisenterprise_database_export
+- az_redisenterprise_database_import
+- az_redisenterprise_database_list
+- az_redisenterprise_database_list-keys
+- az_redisenterprise_database_regenerate-key
+- az_redisenterprise_database_show
+- az_redisenterprise_database_update
+- az_redisenterprise_database_wait
+- az_redisenterprise_delete
+- az_redisenterprise_list
+- az_redisenterprise_operation-status
+- az_redisenterprise_operation-status_show
+- az_redisenterprise_show
+- az_redisenterprise_update
+- az_redisenterprise_wait
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage dedicated Redis Enterprise caches for your Azure applications.
