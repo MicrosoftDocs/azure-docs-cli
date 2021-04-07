@@ -15,6 +15,7 @@ directCommands:
                              [--identity-type]
                              [--ip-rules]
                              [--location]
+                             [--no-wait]
                              [--partition-count]
                              [--public-access]
                              [--replica-count]
@@ -38,10 +39,13 @@ directCommands:
     summary: 'The identity type; possible values include: "None", "SystemAssigned".'
     description: ''
   - name: --ip-rules
-    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma or semicolon; These IP rules are applicable only when public_network_access is "enabled".
+    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma or semicolon; these IP rules are applicable only when --public-network-access is "enabled".
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --partition-count
     summary: Number of partitions in the search service.
@@ -141,6 +145,7 @@ directCommands:
                              [--force-string]
                              [--identity-type]
                              [--ip-rules]
+                             [--no-wait]
                              [--partition-count]
                              [--public-access]
                              [--remove]
@@ -167,7 +172,10 @@ directCommands:
     summary: 'The identity type; possible values include: "None", "SystemAssigned".'
     description: ''
   - name: --ip-rules
-    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma(',') or semicolon(';'); If spaces (ex - ' '), ',' or ';' is provided, any existing IP rule will be nullified and no public IP rule is applied. These IP rules are applicable only when public_network_access is "enabled".
+    summary: Public IP(v4) addresses or CIDR ranges to the search service, seperated by comma(',') or semicolon(';'); If spaces (' '), ',' or ';' is provided, any existing IP rule will be nullified and no public IP rule is applied. These IP rules are applicable only when public_network_access is "enabled".
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --partition-count
     summary: Number of partitions in the search service.
@@ -188,12 +196,65 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
+- uid: az_search_service_wait
+  name: az search service wait
+  summary: Wait for async service operations.
+  description: ''
+  syntax: >-
+    az search service wait --name
+                           --resource-group
+                           [--created]
+                           [--custom]
+                           [--deleted]
+                           [--exists]
+                           [--interval]
+                           [--subscription]
+                           [--timeout]
+                           [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the search service.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
 commands:
 - az_search_service_create
 - az_search_service_delete
 - az_search_service_list
 - az_search_service_show
 - az_search_service_update
+- az_search_service_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -211,5 +272,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2021
+  ms.date: 04/01/2021
   description: Manage Azure Search services.

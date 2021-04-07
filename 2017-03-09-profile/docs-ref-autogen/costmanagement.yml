@@ -1,0 +1,92 @@
+### YamlMime:AzureCLIGroup
+uid: az_costmanagement
+name: az costmanagement
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **costmanagement** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az costmanagement** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage cost and billing in Azure.
+description: ''
+directCommands:
+- uid: az_costmanagement_query
+  name: az costmanagement query
+  summary: Query the usage data for scope defined.
+  description: ''
+  syntax: >-
+    az costmanagement query --scope
+                            --timeframe {BillingMonthToDate, Custom, MonthToDate, TheLastBillingMonth, TheLastMonth, WeekToDate}
+                            --type {ActualCost, AmortizedCost, Usage}
+                            [--dataset-aggregation]
+                            [--dataset-configuration]
+                            [--dataset-filter]
+                            [--dataset-grouping]
+                            [--time-period]
+  examples:
+  - summary: Query in ManagementGroup scope
+    syntax: az costmanagement query --type "Usage" --dataset-filter "{\"and\":[{\"or\":[{\"dimension\":{\"name\":\"ResourceLocation\",\"operator\":\"In\",\"values\":[\"East US\",\"West Europe\"]}},{\"tag\":{\"name\":\"Environment\",\"operator\":\"In\",\"values\":[\"UAT\",\"Prod\"]}}]},{\"dimension\":{\"name\":\"ResourceGroup\",\"operator\":\"In\",\"values\":[\"API\"]}}]}" --timeframe "MonthToDate" --scope "providers/Microsoft.Management/managementGroups/MyMgId"
+  - summary: Query in ManagementGroupQuery scope via grouping
+    syntax: az costmanagement query --type "Usage" --dataset-aggregation "{\"totalCost\":{\"name\":\"PreTaxCost\",\"function\":\"Sum\"}}" --dataset-grouping name="ResourceGroup" type="Dimension" --timeframe "TheLastMonth" --scope "providers/Microsoft.Management/managementGroups/MyMgId"
+  - summary: Query in a ResourceGroup scope
+    syntax: az costmanagement query --type "Usage" --dataset-filter "{\"and\":[{\"or\":[{\"dimension\":{\"name\":\"ResourceLocation\",\"operator\":\"In\",\"values\":[\"East US\",\"West Europe\"]}},{\"tag\":{\"name\":\"Environment\",\"operator\":\"In\",\"values\":[\"UAT\",\"Prod\"]}}]},{\"dimension\":{\"name\":\"ResourceGroup\",\"operator\":\"In\",\"values\":[\"API\"]}}]}" --timeframe "MonthToDate" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer"
+  - summary: Query in a ResourceGroupQuery scope via grouping
+    syntax: az costmanagement query --type "Usage" --dataset-aggregation "{\"totalCost\":{\"name\":\"PreTaxCost\",\"function\":\"Sum\"}}" --dataset-grouping name="ResourceType" type="Dimension" --timeframe "TheLastMonth" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer"
+  - summary: Query in a Subscription scope
+    syntax: az costmanagement query --type "Usage" --dataset-filter "{\"and\":[{\"or\":[{\"dimension\":{\"name\":\"ResourceLocation\",\"operator\":\"In\",\"values\":[\"East US\",\"West Europe\"]}},{\"tag\":{\"name\":\"Environment\",\"operator\":\"In\",\"values\":[\"UAT\",\"Prod\"]}}]},{\"dimension\":{\"name\":\"ResourceGroup\",\"operator\":\"In\",\"values\":[\"API\"]}}]}" --timeframe "MonthToDate" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
+  - summary: Query in a Subscription scope via grouping
+    syntax: az costmanagement query --type "Usage" --dataset-aggregation "{\"totalCost\":{\"name\":\"PreTaxCost\",\"function\":\"Sum\"}}" --dataset-grouping name="ResourceGroup" type="Dimension" --timeframe "TheLastMonth" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --scope
+    summary: The scope associated with query and export operations. This includes "/subscriptions/{subscriptionId}/" for subscription scope, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}" for resourceGroup scope, "/providers/Microsoft.Management/managementGroups/{managementGroupId}" for Management Group scope.
+    description: ''
+  - isRequired: true
+    name: --timeframe
+    parameterValueGroup: BillingMonthToDate, Custom, MonthToDate, TheLastBillingMonth, TheLastMonth, WeekToDate
+    summary: The time frame for pulling data for the query.If custom, then a specific time period must be provided.
+    description: ''
+  - isRequired: true
+    name: --type
+    parameterValueGroup: ActualCost, AmortizedCost, Usage
+    summary: The type of the query.
+    description: ''
+  optionalParameters:
+  - name: --dataset-aggregation
+    summary: 'Dictionary of aggregation expression to use in the query. The key of each item in the dictionary is the aliasfor the aggregated column. Query can have up to 2 aggregation clauses. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --dataset-configuration
+    summary: 'Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. Expect value: columns=xx.'
+    description: ''
+  - name: --dataset-filter
+    summary: 'Has filter expression to use in the query. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --dataset-grouping
+    summary: 'Array of group by expression to use in the query. Query can have up to 2 group by clauses.Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: type, name.'
+    description: ''
+  - name: --time-period
+    summary: 'Has time period for pulling data for the query. Expect value: from=TIMESTAMP1 to=TIMESTAMP2. The timestamp format is like 2020-05-01T00:00:00.'
+    description: ''
+commands:
+- az_costmanagement_export
+- az_costmanagement_export_create
+- az_costmanagement_export_delete
+- az_costmanagement_export_list
+- az_costmanagement_export_show
+- az_costmanagement_export_update
+- az_costmanagement_query
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage cost and billing in Azure.
