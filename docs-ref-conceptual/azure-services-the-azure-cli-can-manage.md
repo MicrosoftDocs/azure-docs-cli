@@ -51,6 +51,7 @@ Azure CLI references are available for the following:
 ||[Container Instances](/azure/container-instances/)
 ||[Service Fabric](/azure/service-fabric/)
 ||[Static Web Apps](/azure/static-web-apps/overview)
+||[Azure Virtual Machines](/azure/virtual-desktop/overview)
 ||[Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/)
 |[Containers](popular-articles-using-the-azure-cli.md#containers)|[Azure Functions](/azure/azure-functions/)
 ||[Azure Kubernetes Service (AKS)](/azure/aks/)
