@@ -50,7 +50,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | Reference | Type | Description
 |-|-|-|
 | [az maps](/cli/azure/maps) | core | Manage Azure Maps.
-| [az tsi](/cli/azure/ext/timeseriesinsights) | extension | Manage Azure Time Series Insights.
+| [az tsi](/cli/azure/timeseriesinsights) | extension | Manage Azure Time Series Insights.
 
 ### Extension reference installation
 
