@@ -33,10 +33,12 @@ directCommands:
   syntax: >-
     az cosmosdb create --name
                        --resource-group
+                       [--assign-identity]
                        [--backup-interval]
                        [--backup-retention]
                        [--capabilities]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
+                       [--default-identity]
                        [--disable-key-based-metadata-write-access {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
@@ -71,6 +73,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity. Currently only system assigned identity is supported.
+    description: ''
   - name: --backup-interval
     summary: The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
     description: ''
@@ -83,6 +88,9 @@ directCommands:
   - name: --default-consistency-level
     parameterValueGroup: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
     summary: Default consistency level of the Cosmos DB database account.
+    description: ''
+  - name: --default-identity
+    summary: The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
     description: ''
   - name: --disable-key-based-metadata-write-access
     parameterValueGroup: false, true
@@ -397,6 +405,7 @@ directCommands:
                        [--backup-retention]
                        [--capabilities]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
+                       [--default-identity]
                        [--disable-key-based-metadata-write-access {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
@@ -434,6 +443,9 @@ directCommands:
   - name: --default-consistency-level
     parameterValueGroup: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
     summary: Default consistency level of the Cosmos DB database account.
+    description: ''
+  - name: --default-identity
+    summary: The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
     description: ''
   - name: --disable-key-based-metadata-write-access
     parameterValueGroup: false, true
@@ -618,6 +630,10 @@ commands:
 - az_cosmosdb_gremlin_graph_throughput_show
 - az_cosmosdb_gremlin_graph_throughput_update
 - az_cosmosdb_gremlin_graph_update
+- az_cosmosdb_identity
+- az_cosmosdb_identity_assign
+- az_cosmosdb_identity_remove
+- az_cosmosdb_identity_show
 - az_cosmosdb_keys
 - az_cosmosdb_keys_list
 - az_cosmosdb_keys_regenerate
@@ -759,5 +775,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2021
+  ms.date: 04/08/2021
   description: Manage Azure Cosmos DB database accounts.
