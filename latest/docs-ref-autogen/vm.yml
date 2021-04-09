@@ -521,7 +521,7 @@ directCommands:
     summary: 'Only applicable when used with `--use-unmanaged-disk`. Name of the storage container for the VM OS disk. Default: vhds.'
     description: ''
   - name: --storage-sku
-    summary: 'The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS.'
+    summary: 'The SKU of the storage account with which to persist VM. Use a singular sku that would be applied across all disks, or specify individual disks. Usage: [--storage-sku SKU | --storage-sku ID=SKU ID=SKU ID=SKU...], where each ID is "os" or a 0-indexed lun. Allowed values: Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS.'
     description: ''
   - name: --subnet
     summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If both vnet-name and subnet are omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
@@ -714,6 +714,81 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+- uid: az_vm_install-patches
+  name: az vm install-patches
+  summary: Install patches on a VM.
+  description: ''
+  syntax: >-
+    az vm install-patches --maximum-duration
+                          --reboot-setting {Always, IfRequired, Never}
+                          [--classifications-to-include-linux {Critical, Other, Security}]
+                          [--classifications-to-include-win {Critical, Definition, FeaturePack, Security, ServicePack, Tools, UpdateRollUp, Updates}]
+                          [--exclude-kbs-requiring-reboot {false, true}]
+                          [--ids]
+                          [--kb-numbers-to-exclude]
+                          [--kb-numbers-to-include]
+                          [--name]
+                          [--no-wait]
+                          [--package-name-masks-to-exclude]
+                          [--package-name-masks-to-include]
+                          [--resource-group]
+                          [--subscription]
+  examples:
+  - summary: Install patches on a windows VM, allowing the maximum amount of time to be 4 hours, and the VM will reboot if required during the software update operation.
+    syntax: az vm install-patches -g MyResourceGroup -n MyVm --maximum-duration PT4H --reboot-setting IfRequired --classifications-to-include-win Critical Security --exclude-kbs-requiring-reboot true
+  - summary: Install patches on a linux VM, allowing the maximum amount of time to be 4 hours, and the VM will reboot if required during the software update operation.
+    syntax: az vm install-patches -g MyResourceGroup -n MyVm --maximum-duration PT4H --reboot-setting IfRequired --classifications-to-include-linux Critical
+  requiredParameters:
+  - isRequired: true
+    name: --maximum-duration
+    summary: Specify the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours).
+    description: ''
+  - isRequired: true
+    name: --reboot-setting
+    parameterValueGroup: Always, IfRequired, Never
+    summary: Define when it is acceptable to reboot a VM during a software update operation.
+    description: ''
+  optionalParameters:
+  - name: --classifications-to-include-linux
+    parameterValueGroup: Critical, Other, Security
+    summary: Space-separated list of classifications to include for Linux VM.
+    description: ''
+  - name: --classifications-to-include-win
+    parameterValueGroup: Critical, Definition, FeaturePack, Security, ServicePack, Tools, UpdateRollUp, Updates
+    summary: Space-separated list of classifications to include for Windows VM.
+    description: ''
+  - name: --exclude-kbs-requiring-reboot
+    parameterValueGroup: false, true
+    summary: Filter out KBs that don't have a reboot behavior of 'NeverReboots' when this is set. Applicable to Windows VM only.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --kb-numbers-to-exclude
+    summary: Space-separated list of KBs to exclude in the patch operation. Applicable to Windows VM only.
+    description: ''
+  - name: --kb-numbers-to-include
+    summary: Space-separated list of KBs to include in the patch operation. Applicable to Windows VM only.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --package-name-masks-to-exclude
+    summary: 'Space-separated list of packages to exclude in the patch operation. Format: packageName_packageVersion. Applicable to Linux VM only.'
+    description: ''
+  - name: --package-name-masks-to-include
+    summary: 'Space-separated list of packages to include in the patch operation. Format: packageName_packageVersion. Applicable to Linux VM only.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -1471,6 +1546,7 @@ commands:
 - az_vm_image_terms_accept
 - az_vm_image_terms_cancel
 - az_vm_image_terms_show
+- az_vm_install-patches
 - az_vm_list
 - az_vm_list-ip-addresses
 - az_vm_list-sizes
@@ -1544,5 +1620,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/02/2021
+  ms.date: 04/09/2021
   description: Manage Linux or Windows virtual machines.

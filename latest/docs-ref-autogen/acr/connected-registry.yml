@@ -59,7 +59,7 @@ directCommands:
     summary: Sets the log level for logging on the instance. Accepted log levels are Debug, Information, Warning, Error, and None.
     description: ''
   - name: --mode -m
-    defaultValue: registry
+    defaultValue: Registry
     summary: 'Can be one of the two operating modes: registry or mirror(pull-only mode).'
     description: ''
   - name: --parent -p
@@ -230,6 +230,47 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_connected-registry_repo
+  name: az acr connected-registry repo
+  summary: Updates all the necessary connected registry sync scope maps repository permissions.
+  description: ''
+  syntax: >-
+    az acr connected-registry repo --name
+                                   --registry
+                                   [--add]
+                                   [--remove]
+                                   [--resource-group]
+                                   [--subscription]
+  examples:
+  - summary: Adds permissions to synchronize images from 'repo1' and 'repo2' to the connected registry 'myconnectedregistry' and its ancestors.
+    syntax: az acr connected-registry repo -r mycloudregistry -n myconnectedregistry --add repo1 repo2
+  - summary: Removes permissions to synchronize images from 'repo1' and 'repo2' to the connected registry 'myconnectedregistry' and its descendants.
+    syntax: az acr connected-registry repo -r mycloudregistry -n myconnectedregistry --remove repo1 repo2
+  - summary: Removes permissions to synchronize 'repo1' images and adds permissions for 'repo2' images.
+    syntax: az acr connected-registry repo -r mycloudregistry -n myconnectedregistry --remove repo1 --add repo2
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name for the connected registry. Name must be between 5 to 40 character long, start with a letter and contain only alphanumeric characters (including ‘_’ or ‘-’). Name must be unique under the Cloud ACR hierarchy.
+    description: ''
+  - isRequired: true
+    name: --registry -r
+    summary: The login server of the Cloud ACR registry. Must be the FQDN to support also Azure Stack.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: Repository permissions to be added to the targeted connected registry and it's ancestors sync scope maps. Use the format "--add [REPO1 REPO2 ...]" per flag. Valid actions are {'content/write', 'metadata/read', 'content/read', 'content/delete', 'metadata/write'}.
+    description: ''
+  - name: --remove
+    summary: Respsitory permissions to be removed from the targeted connected registry and it's succesors sync scope maps. Use the format "--remove [REPO1 REPO2 ...]" per flag. Valid actions are {'content/write', 'metadata/read', 'content/read', 'content/delete', 'metadata/write'}.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_connected-registry_show
   name: az acr connected-registry show
   summary: Show connected registry details.
@@ -336,6 +377,7 @@ commands:
 - az_acr_connected-registry_install_renew-credentials
 - az_acr_connected-registry_list
 - az_acr_connected-registry_list-client-tokens
+- az_acr_connected-registry_repo
 - az_acr_connected-registry_show
 - az_acr_connected-registry_update
 globalParameters:
@@ -355,5 +397,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/26/2021
+  ms.date: 04/09/2021
   description: Manage connected registry resources with Azure Container Registries.
