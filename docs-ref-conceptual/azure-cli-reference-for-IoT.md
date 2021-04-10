@@ -5,7 +5,7 @@ author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 06/05/2020
+ms.date: 04/09/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: paymaun.heidari
@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure IoT
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources.  It is available across many Azure services including Azure IoT.  There are over 100 references for Azure IoT giving you the ability to work effectively with IoT services from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure IoT. For Azure IoT, over 100 different commands are available, which give you the ability to work effectively with the service from a command line.
 
 ## References for IoT
 
@@ -22,7 +22,7 @@ The Azure IoT CLI experience is composed of two parts: Azure CLI (commonly refer
 
 IoT functionality in Azure CLI **core** is focused on infrastructure management and configuration. IoT Hub CRUD operations, or configuring IoT Hub message routes are typical use cases for core commands.
 
-The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a variety of scenarios and use cases.
+The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example, managing fleets of devices, monitoring device-to-cloud events and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology contributing to its versatility in a various scenarios and use cases. The extension is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 ### Core reference commands
 
@@ -37,13 +37,14 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 
 | Reference | Has core | Description
 |-|-|-|
-| [az iot](/cli/azure/ext/azure-iot/iot) | yes | All available Azure CLI extension commands for Azure IoT.
-| [az iot central](/cli/azure/ext/azure-iot/iot/central) | yes | Manage Azure Central (IoT Central) solutions & infrastructure.
-| [az iot device](/cli/azure/ext/azure-iot/iot/device) | | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| [az dt](/cli/azure/ext/azure-iot/dt) | | Manage Azure Digital Twins solutions & infrastructure.
-| [az iot dps](/cli/azure/ext/azure-iot/iot/dps) | yes | Manage entities in an Azure IoT Hub Device Provisioning Service.
-| [az iot edge](/cli/azure/ext/azure-iot/iot/edge) | | Manage IoT solutions on the Edge.
-| [az iot hub](/cli/azure/ext/azure-iot/iot/hub) | yes | Manage entities in an Azure IoT Hub.
+| [az iot](/cli/azure/iot) | yes | All available Azure CLI extension commands for Azure IoT.
+| [az iot central](/cli/azure/iot/central) | yes | Manage Azure Central (IoT Central) solutions & infrastructure.
+| [az iot device](/cli/azure/iot/device) | | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| [az dt](/cli/azure/dt) | | Manage Azure Digital Twins solutions & infrastructure.
+| [az iot dps](/cli/azure/iot/dps) | yes | Manage entities in an Azure IoT Hub Device Provisioning Service.
+| [az iot edge](/cli/azure/iot/edge) | | Manage IoT solutions on the Edge.
+| [az iot hub](/cli/azure/iot/hub) | yes | Manage entities in an Azure IoT Hub.
+| [az iot product](/cli/azure/iot/product) |  | Manage device testing for product certification.
 
 ### Additional CLI commands for Azure services used by IoT
 
@@ -51,15 +52,6 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 |-|-|-|
 | [az maps](/cli/azure/maps) | core | Manage Azure Maps.
 | [az tsi](/cli/azure/ext/timeseriesinsights) | extension | Manage Azure Time Series Insights.
-
-### Extension reference installation
-
-Azure CLI extension references must be installed prior to use.  Use the [az extension add](./azure-cli-extensions-overview.md) command to install an extension reference by name.  Find out more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
-
-```azurecli
-# install the Azure CLI extension reference for Azure IoT
-az extension add --name azure-iot
-```
 
 ## Popular IoT articles using the Azure CLI
 
@@ -73,13 +65,13 @@ az extension add --name azure-iot
 
 ## Azure CLI reference examples
 
-Examples are provided with every Azure CLI reference. Although you can also complete these tasks through the Azure portal, using the Azure CLI requires a single command line.  Here are a few code blocks to give you an idea of how easy it is to use the Azure CLI.
+Examples are provided with every Azure CLI reference. Although you can also complete these tasks through the Azure portal, using the Azure CLI requires a command line. Here are a few code blocks to give you an idea of how easy it is to use the Azure CLI.
 
-To work with Azure IoT, you'll first need a resource group.  Azure resource groups are simple to create and manage with the Azure CLI.  
+To work with Azure IoT, you first need a resource group. Azure resource groups are simple to create and manage with the Azure CLI.  
 
 ```azurecli
 #create a resource group
-az group create -location westus -name MyResourceGroup
+az group create --location westus --name MyResourceGroup
 ```
 
 ```azurecli
@@ -87,7 +79,7 @@ az group create -location westus -name MyResourceGroup
 az group list --subscription MySubscription --output table
 ```
 
-It is as straightforward to create an Azure IoT Hub in the '''westus''' region in the standard pricing tier.
+It's also easy to create an Azure IoT Hub.
 
 ```azurecli
 #create an Azure IoT hub
