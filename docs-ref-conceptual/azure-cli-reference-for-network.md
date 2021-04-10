@@ -95,29 +95,6 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Service | [az network list-service-tags](/cli/azure/network#az_network_list_service_tags) | List all service tags that belong to different resources. |
 | Usage | [az network list-usages](/cli/azure/network#az_network_list_usages) | List the number of network resources in a region that are used against a subscription quota. |
 
-```azurecli
-## get a list of available Azure CLI extensions
-az extension list-available --output table
-
-# install the extension for az network express-route-cross-connection
-az extension add --name express-route-cross-connection
-
-# install the extension for az network front-door
-az extension add --name front-door
-
-# install the extension for az network virtual-wan
-az extension add --name virtual-wan
-
-# install the extension for az network vm-repair
-az extension add --name virtual-network-tap
-
-# install the extension for az network vmware
-az extension add --name vmware
-
-# install the extension for az peering
-az extension add --name peering
-```
-
 ## Popular network articles using the Azure CLI
 
 - [Create virtual machines](/cli/azure/azure-cli-vm-tutorial)
