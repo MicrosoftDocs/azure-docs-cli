@@ -76,7 +76,7 @@ sudo zypper rm -y --clean-deps azure-cli
 
 On SLES 12, the default `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
 
-You can use the following one command to install or update Azure CLI based on above steps. The script will install `Python 3.8` under `/usr/local/azcli` and use Azure CLI with it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
+You can use the following one command to install or update Azure CLI based on above steps. The script will install `Python 3.8` under `/usr/local/azcli` and make Azure CLI use it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
 
 ```bash
 curl -sL https://azurecliprod.blob.core.windows.net/sles12_install_v2.sh | sudo bash
