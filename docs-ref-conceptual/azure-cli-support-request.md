@@ -6,7 +6,7 @@ ms.author: dbradish
 ms.service: azure-supportability
 ms.topic: how-to
 ms.date: 02/12/2021
-ms.custom: template-how-to
+ms.custom: template-how-to, devx-track-azurecli
 ---
 
 # Create an Azure support request in Azure CLI

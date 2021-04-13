@@ -9,7 +9,7 @@ ms.date: 10/30/2020
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
-ms.custom: devex-track-azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Azure CLI persisted parameter
