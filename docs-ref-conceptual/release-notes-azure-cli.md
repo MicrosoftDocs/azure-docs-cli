@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/23/2021
+ms.date: 04/13/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,124 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## April 13, 2021
+
+Version 2.22.0
+
+### ACR
+
+* [BREAKING CHANGE] `az acr connected-registry install info`: Replace keys ACR_REGISTRY_NAME, ACR_SYNC_TOKEN_NAME, ACR_SYNC_TOKEN_PASSWORD, ACR_PARENT_GATEWAY_ENDPOINT, and ACR_PARENT_PROTOCOL with a new connected string key, ACR_REGISTRY_CONNECTION_STRING.
+* [BREAKING CHANGE] `az acr connected-registry install renew-credentials`: Replace keys ACR_REGISTRY_NAME, ACR_SYNC_TOKEN_NAME, ACR_SYNC_TOKEN_PASSWORD, ACR_PARENT_GATEWAY_ENDPOINT, and ACR_PARENT_PROTOCOL with a new connected string key, ACR_REGISTRY_CONNECTION_STRING.
+* `az acr connected-registry create`: Verify before the creation of the token and sync scope map that all ancestors are active.
+* `az acr connected-registry create`: Add the repository and gateway permissions required for creation to all the ancestors of the new connected registry if needed prior to the connected registry creation.
+* `az acr connected-registry delete`: Remove the gateway permissions of the deleted resources from all its ancestors' sync scope maps.
+* `az acr connected-registry repo`: New command to add repository permissions to a connected registry and all its ancestors' sync scope maps, and remove repository permissions from the connected registry and all its descendants' sync scope maps
+
+### AKS
+
+* `az aks create`: Add support for `--private-dns-zone` and `--fqdn-subdomain` feature
+
+### App Config
+
+* Configure max line width for YAML parser to stop wrapping output
+* Fix bug in print preview of restore command
+
+### App Service
+
+* Fix #17219: Fix ssl bind bug
+* Remove preview flag for Python 3.9 in create function app command
+* Bugfix: Handle if only single publish profile is returned
+* Fix #16203: az webapp log tail supports webapps running on Linix.
+
+### ARM
+
+* [BREAKING CHANGE] `az bicep build`: Change the parameter `--files` to `--file`
+* [BREAKING CHANGE] `az bicep decompile`: Change the parameter `--files` to `--file`
+* Fix #17379: bicep auto install results in invalid json output from deployment
+* `az bicep build`: Add a parameter `--outdir` for specifying the output directory
+* `az bicep build`: Add a parameter `--outfile` for specifying the output file path
+* Fix an issue where checking version upgrade for Bicep CLI throws exception if GitHub API rate limit is hit
+* `az policy exemption`: Add new commands to support policy exemption
+
+### Backup
+
+* Fix #14776: Fix `--force` parameter functionality for `az backup vault delete` command
+* Fix on demand backup
+* `az backup protectable-item list`: Add optional parameter `--backup-management-type`
+* Fix policy create with rgNamePrefix and rgNameSuffix
+* `az backup protectable-item list`: Add `--server-name` as an optional argument
+
+### Compute
+
+* `az ssh vm`: Support VM SSH with Service Principal
+* Add VMSS Rolling Upgrade opt
+* New command: `vm install-patches`
+* Disk encryption set: Add `--enable-auto-key-rotation`
+
+### Container
+
+* Fix #16499: `az container create`: Fix handling of return value from network_profiles.create_or_update
+
+### Cosmos DB
+
+* Support for managed service identity & default identity
+
+### EventGrid
+
+* `az eventgrid system-topic create/update`: Add MSI Support
+* `az eventgrid [partner topic | system-topic] event-subscription`: Add support for StorageQueueMessageTTL, AdvancedFilters, EnableAdvancedFilteringOnArrays
+* `az eventgrid [partner topic | system-topic] event-subscription`: Add support for delivery attribute
+* `az eventgrid topic create`: Add support for creating topic for azure or azurearc
+
+### Interactive
+
+* Fix #16931: Fix `KeyError` in `az interactive --update`
+
+### NetAppFiles
+
+* `az netappfiles account ad add`: Optional parameter added named allow-local-ldap-users
+* `az netappfiles volume create`: Optional parameter added named ldap-enabled
+* `az netappfiles volume backup status show`: Operation added
+* Update backup tests
+
+### Network
+
+* `az network vnet-gateway`: `--vpn-auth-type` allow multi value
+
+### Packaging
+
+* [BREAKING CHANGE] RPM installed az now uses `python3` instead of hard-coded `/usr/bin/python3`.
+
+### RDBMS
+
+* Allow DB server private access from different subscription
+* Modify server create with private network, fix restore time bug
+
+### Search
+
+* `az search service create`: Add async (--no-wait) options.
+* `az search service update`: Add async (--no-wait) options.
+* `az search shared-private-link-resource create`: Add async (--no-wait) options.
+* `az search shared-private-link-resource update`: Add async (--no-wait) options.
+
+### Service Fabric
+
+* Add managed application cli commands
+
+### Storage
+
+* `az storage fs directory upload/download`: Support adls gen2 file system directory upload&download
+* `az storage fs file list`: Support --show-next-marker
+* `az storage share-rm`: Support create/show/delete snapshots
+
+### Synapse
+
+* [BREAKING CHANGE] `az synapse role assignment create`: Role names at old version are not allowed, Sql Admin, Apache Spark Admin, Workspace Admin
+* [BREAKING CHANGE] `az synapse role assignment create`: When --assignee argument can't  uniquely determine the principal object, the command will raise error instead of adding a role assignment for the uncertain principal object.
+* `az synapse role scope list`:  List all scopes synapse supports.
+* `az synapse role assignment create/list/delete`: Add --scope/--item-type/--item arguments to support manage role assignments based on scope.
+* `az synapse role assignment create/list/delete`: Add --assignee-object-id argument, it will bypass Graph API and uniquely determine principal object instead of deducing principal object using --assignee argument.
 
 ## March 23, 2021
 
