@@ -6,7 +6,7 @@ ms.author: dbradish
 ms.service: azure-cli
 ms.topic: how-to
 ms.date: 03/01/2021
-ms.custom: template-how-to
+ms.custom: template-how-to, devx-track-azurecli
 ---
 
 # Specifying values in Azure CLI commands
