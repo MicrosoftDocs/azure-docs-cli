@@ -34,14 +34,14 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor activity-log](/cli/azure/monitor/activity-log) | | Manage activity logs, including activity log alerts. | [Azure activity logs](/azure/azure-monitor/platform/activity-log)
 | [az monitor app-insights](/cli/azure/monitor/app-insights) | yes | Manage Application Insights for application monitoring. | [Application insights overview](/azure/azure-monitor/app/app-insights-overview)
 | [az monitor autoscale](/cli/azure/monitor/autoscale) | | Manage autoscale settings. | [Autoscale overview](/azure/azure-monitor/platform/autoscale-overview)
-| [az monitor data-collection](/cli/azure/data-collection) | yes | Manage data collection rules. | [Data collection rules](/azure/azure-monitor/agents/data-collection-rule-overview)
+| [az monitor data-collection](/cli/azure/monitor/data-collection) | yes | Manage data collection rules. | [Data collection rules](/azure/azure-monitor/agents/data-collection-rule-overview)
 | [az monitor diagnostic-settings](/cli/azure/monitor/diagnostic-settings) | | Manage service diagnostic settings, which set up collection and routing of many types of platform metrics and logs. | [Create diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings)
 | [az footprint](/cli/azure/footprint) | yes | Manage Azure Footprint settings. |
 | [az monitor log-analytics](/cli/azure/monitor/log-analytics) | | Manage log clusters and work spaces. | [Designing your Azure Monitor Logs deployment](/azure/azure-monitor/platform/design-logs-deployment)
-| [az monitor log-analytics solution](/cli/azure/log-analytics/solution) | yes | Commands to manage Log Analytics solutions. |
+| [az monitor log-analytics solution](/cli/azure/monitor/log-analytics/solution) | yes | Manage Log Analytics solutions. |
 | [az monitor log-profiles](/cli/azure/monitor/log-profiles) | | DO NOT USE for new development. This command was previously used to route activity logs to Azure Monitor Logs and Log Analytics.  Use [diagnostic settings](/azure/azure-monitor/platform/diagnostic-settings) instead.  | [Send the Activity log to a Log Analytics workspace](/azure/azure-monitor/platform/activity-log#send-to-log-analytics-workspace)
 | [az monitor metrics](/cli/azure/monitor/metrics) | | Manage platform metrics and near-realtime metric alert rules. | [Overview of metrics in Azure Monitor](/azure/azure-monitor/platform/data-platform-metrics) and [Understand how metric alerts work](/azure/azure-monitor/platform/alerts-metric-overview)
-| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resource. | [Use Azure Private Link to securely connect networks to Azure Monitor](/azure/azure-monitor/platform/private-link-security)
+| [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resources. | [Use Azure Private Link to securely connect networks to Azure Monitor](/azure/azure-monitor/platform/private-link-security)
 | [az monitor scheduled-query](/cli/azure/monitor/scheduled-query) | yes | Manage scheduled queries.
 
 ## Popular Monitor articles using the Azure CLI

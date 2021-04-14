@@ -57,10 +57,10 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 
 - [Create an IoT hub](/azure/iot-hub/iot-hub-create-using-cli)
 - [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli)
-- [CLI driven device tutorials using Azure RTOS](/azure/rtos/getting-started?branch=master)
+- [CLI-driven device tutorials using Azure RTOS](/azure/rtos/getting-started?branch=master)
 - [Use the IoT extension for Azure IoT Hub device management](/azure/iot-hub/iot-hub-device-management-iot-extension-azure-cli-2-0)
 - [Deploy and monitor IoT Edge modules at scale with the Azure CLI extension for IoT](/azure/iot-edge/how-to-deploy-cli-at-scale)
-- [Send Telemetry to a device and monitor it with the Azure CLI extension for IoT](/azure/iot-hub/quickstart-send-telemetry-cli)
+- [Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](/azure/iot-hub/quickstart-send-telemetry-cli)
 - [Use the Azure CLI to configure IoT Hub message routing](/azure/iot-hub/tutorial-routing-config-message-routing-cli)
 
 ## Azure CLI reference examples

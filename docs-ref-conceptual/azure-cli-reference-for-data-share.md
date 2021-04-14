@@ -29,7 +29,7 @@ All Azure CLI commands for [Azure Data Share](/azure/data-share/) are currently 
 | [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
 | [az datashare provider-share-subscription](/cli/azure/datashare/provider-share-subscription) | Commands for providers to manage Azure Data Share subscriptions.
 | [az datashare synchronization](/cli/azure/datashare/synchronization) | Commands to manage Azure Data Share synchronization.
-| [az datashare synchronization-setting](/cli/datashare/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
+| [az datashare synchronization-setting](/cli/azure/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
 
 ## Reference examples
 

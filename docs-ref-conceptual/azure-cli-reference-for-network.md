@@ -35,7 +35,7 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Peering | [az peering](/cli/azure/peering) | Manage peering. | yes
 | Profile | [az network profile](/cli/azure/network/profile) | Manage network profiles. |
 | Route | [az network route-filter](/cli/azure/network/route-filter) | Manage route filters. |
-| Route | [az network routeserver](/cli/azure/network/routeserver) | Manage the route server. |
+| Route | [az network routeserver](/cli/azure/network/routeserver) | Manage route servers. |
 | Route | [az network route-table](/cli/azure/network/route-table) | Manage route tables. |
 | VMware | [az network vmware](/cli/azure/vmware) | Commands to manage Azure VMware Solutions. | yes
 | vNet | [az network vnet](/cli/azure/network/vnet) | Manage Azure Virtual Networks. |
@@ -47,14 +47,14 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Cross connection | [az network cross-connection](/cli/azure/network/cross-connection) | Manage Azure Network resources. | yes
-| ExpressRoute | [az network express-route](/cli/azure/network/express-route) | Manage Azure IoT hubs. |
+| ExpressRoute | [az network express-route](/cli/azure/network/express-route) | Manage dedicated private network fiber connections to Azure. |
 | vHub | [az network vhub](/cli/azure/network/vhub) | Manage virtual hubs. | yes
-| VPN | [az network p2s-vpn-gateway](/cli/azure/network/p2s-vpn-gateway) | Manage point-to-site VPN gateway. | yes
+| VPN | [az network p2s-vpn-gateway](/cli/azure/network/p2s-vpn-gateway) | Manage point-to-site VPN gateways. | yes
 | VPN | [az network vpn-connection](/cli/azure/network/vpn-connection) | Manage VPN connections. |
 | VPN | [az network vpn-gateway](/cli/azure/network/vpn-gateway) | Manage VPN gateways. | yes
 | VPN | [az network vpn-server-config](/cli/azure/network/vpn-server-config) | Manage  VPN server configurations. | yes
 | VPN | [az network vpn-site](/cli/azure/network/vpn-site) | Manage VPN site configurations. | yes
-| vRouter | [az network vrouter](/cli/azure/network/vrouter) | Manage the virtual router. |
+| vRouter | [az network vrouter](/cli/azure/network/vrouter) | Manage virtual routers. |
 | vWAN | [az network vwan](/cli/azure/network/vwan) | Manage virtual WANs. | yes
 
 ### Load balancing and IP
@@ -75,10 +75,10 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | ASG | [az asg](/cli/azure/network/asg) | Manage application security groups. |
-| Bastion | [az network bastion](/cli/azure/network/bastion) | Manage Azure bastion host. |
+| Bastion | [az network bastion](/cli/azure/network/bastion) | Manage Azure bastion hosts. |
 | DDoS | [az network ddos-protection](/cli/azure/network/ddos-protection) | Manage DDoS Protection Plans. |
 | Firewall | [az network firewall](/cli/azure/network/firewall) | Manage and configure Azure Firewalls. | yes
-| Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner provider. |
+| Firewall | [az network security-partner-provider](/cli/azure/network/security-partner-provider) | Manage Azure security partner providers. |
 | NSG | [az network nsg](/cli/azure/network/nsg)| Manage Azure Network Security Groups. |
 | Private endpoint | [az network private-endpoint](/cli/azure/network/private-endpoint) | Manage private endpoints. |
 | Private endpoint | [az network private-endpoint-connection](/cli/azure/network/private-endpoint-connection) | Manage private endpoint connections. |
