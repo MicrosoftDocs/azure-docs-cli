@@ -22,6 +22,9 @@ The [Azure Network](/azure/networking/) CLI experience is composed of two parts:
 
 See [az network](/cli/azure/network) for a complete list of Azure CLI core references for Azure Network.  Follow the links below for extension references.
 
+> [!NOTE]
+> You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
+
 ### Virtual network
 
 | Subgroup | Reference | Use | Is extension

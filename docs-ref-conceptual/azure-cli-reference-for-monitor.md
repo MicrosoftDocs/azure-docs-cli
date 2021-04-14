@@ -26,6 +26,9 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 
 ### References
 
+> [!NOTE]
+> You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
+
 | Reference | Install extension | Description | For more information
 |-|-|-|-|
 | [az monitor](/cli/azure/monitor) | | The top-level command group for all Azure CLI commands for Azure Monitor. | [Azure Monitor overview](/azure/azure-monitor/overview)
