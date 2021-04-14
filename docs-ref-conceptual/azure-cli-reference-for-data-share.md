@@ -14,11 +14,11 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Data Share
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Data Share. For Azure Data Share, over 65 different commands are available, which give you the ability to work effectively with the service from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources for many Azure services. For Azure Data Share, over 65 different commands are available, which give you the ability to work effectively with the service from a command line.
 
 ## References for Data Share
 
-All Azure CLI commands for Azure Data Share are currently in an extension to the Azure CLI core. This datashare extension gives you access to experimental and pre-release commands and is automatically installed the first time you run an az datashare command. For more information about Azure CLI extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
+All Azure CLI commands for [Azure Data Share](/azure/data-share/) are currently in an extension to the Azure CLI core. This datashare extension gives you access to experimental and pre-release commands and is automatically installed the first time you run an az datashare command. For more information about Azure CLI extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 |Azure CLI Reference |Description
 |-|-|
@@ -29,7 +29,7 @@ All Azure CLI commands for Azure Data Share are currently in an extension to the
 | [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
 | [az datashare provider-share-subscription](/cli/azure/datashare/provider-share-subscription) | Commands for providers to manage Azure Data Share subscriptions.
 | [az datashare synchronization](/cli/azure/datashare/synchronization) | Commands to manage Azure Data Share synchronization.
-| [az datashare synchronization-setting](/cli/azure/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
+| [az datashare synchronization-setting](/cli/datashare/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
 
 ## Reference examples
 

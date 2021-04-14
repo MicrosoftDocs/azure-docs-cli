@@ -18,7 +18,7 @@ The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set 
 
 ## References for Azure Network
 
-The Azure Network CLI experience is composed of two parts: **core** and **extension**. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands, and is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
+The [Azure Network](/azure/networking/) CLI experience is composed of two parts: **core** and **extension**. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands, and is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 See [az network](/cli/azure/network) for a complete list of Azure CLI core references for Azure Network.  Follow the links below for extension references.
 
@@ -31,9 +31,11 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Endpoint | [az network service-endpoint](/cli/azure/network/service-endpoint) | Manage policies related to service endpoints. |
 | NAT | [az network nat](/cli/azure/network/nat) | Manage network address translation resources. |
 | NIC | [az network nic](/cli/azure/network/nic) | Manage network interfaces. |
+| NIC | [az network nic vtap-config](/cli/azure/network/nic/vtap-config) | Manage virtual network tap configurations. | yes
 | Peering | [az peering](/cli/azure/peering) | Manage peering. | yes
 | Profile | [az network profile](/cli/azure/network/profile) | Manage network profiles. |
 | Route | [az network route-filter](/cli/azure/network/route-filter) | Manage route filters. |
+| Route | [az network routeserver](/cli/azure/network/routeserver) | Manage the route server. |
 | Route | [az network route-table](/cli/azure/network/route-table) | Manage route tables. |
 | VMware | [az network vmware](/cli/azure/vmware) | Commands to manage Azure VMware Solutions. | yes
 | vNet | [az network vnet](/cli/azure/network/vnet) | Manage Azure Virtual Networks. |
@@ -47,8 +49,10 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Cross connection | [az network cross-connection](/cli/azure/network/cross-connection) | Manage Azure Network resources. | yes
 | ExpressRoute | [az network express-route](/cli/azure/network/express-route) | Manage Azure IoT hubs. |
 | vHub | [az network vhub](/cli/azure/network/vhub) | Manage virtual hubs. | yes
+| VPN | [az network p2s-vpn-gateway](/cli/azure/network/p2s-vpn-gateway) | Manage point-to-site VPN gateway. | yes
 | VPN | [az network vpn-connection](/cli/azure/network/vpn-connection) | Manage VPN connections. |
 | VPN | [az network vpn-gateway](/cli/azure/network/vpn-gateway) | Manage VPN gateways. | yes
+| VPN | [az network vpn-server-config](/cli/azure/network/vpn-server-config) | Manage  VPN server configurations. | yes
 | VPN | [az network vpn-site](/cli/azure/network/vpn-site) | Manage VPN site configurations. | yes
 | vRouter | [az network vrouter](/cli/azure/network/vrouter) | Manage the virtual router. |
 | vWAN | [az network vwan](/cli/azure/network/vwan) | Manage virtual WANs. | yes
@@ -58,11 +62,11 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Application gateway | [az network application-gateway](/cli/azure/network/application-gateway) | Manage application-level routing and load-balancing services. |
-| Load balance | [az network cross-region-lb](/cli/azure/network/cross-region-lb) | Manage and configure cross-region load balancers. |
-| Load balance | [az network lb](/cli/azure/network/lb) | Manage and configure load balancers. |
+| Front Door | [az network front-door](/cli/azure/network/front-door) | Manage networking Front Door resources. | yes
 | IP | [az network ip-group](/cli/azure/network/ip-group) | Manage IpGroups. | yes
 | IP | [az network public-ip](/cli/azure/network/public-ip) | Manage public IP addresses. |
-| Front Door | [az network front-door](/cli/azure/network/front-door) | Manage networking Front Door resources. | yes
+| Load balance | [az network cross-region-lb](/cli/azure/network/cross-region-lb) | Manage and configure cross-region load balancers. |
+| Load balance | [az network lb](/cli/azure/network/lb) | Manage and configure load balancers. |
 | Local gateway | [az network local-gateway](/cli/azure/network/local-gateway) | Manage local gateways. |
 | Traffic manager | [az network traffic-manager](/cli/azure/network/traffic-manager) | Manage the routing of incoming traffic. |
 
