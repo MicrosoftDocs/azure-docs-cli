@@ -390,6 +390,39 @@ directCommands:
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_blob_filter
+  name: az storage blob filter
+  summary: List blobs across all containers whose tags match a given search expression.
+  description: Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
+  syntax: >-
+    az storage blob filter --tag-filter
+                           [--account-key]
+                           [--account-name]
+                           [--auth-mode {key, login}]
+                           [--connection-string]
+                           [--sas-token]
+  requiredParameters:
+  - isRequired: true
+    name: --tag-filter
+    summary: The expression to find blobs whose tags matches the specified condition. eg. ""yourtagname"='firsttag' and "yourtagname2"='secondtag'" To specify a container, eg. "@container='containerName' and "Name"='C'".
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
 - uid: az_storage_blob_generate-sas
   name: az storage blob generate-sas
   summary: Generate a shared access signature for the blob.
@@ -554,6 +587,80 @@ directCommands:
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_blob_move
+  name: az storage blob move
+  summary: Move a blob in a storage container.
+  description: ''
+  syntax: >-
+    az storage blob move --container-name
+                         --destination-blob
+                         --source-blob
+                         [--account-key]
+                         [--account-name]
+                         [--auth-mode {key, login}]
+                         [--connection-string]
+                         [--lease-id]
+                         [--sas-token]
+                         [--source-if-match]
+                         [--source-if-modified-since]
+                         [--source-if-none-match]
+                         [--source-if-unmodified-since]
+                         [--source-lease-id]
+                         [--timeout]
+  examples:
+  - summary: Move a blob in a storage container.
+    syntax: az storage blob move -c MyContainer -d DestinationBlobPath -s SourceBlobPath --account-name MyStorageAccount
+  requiredParameters:
+  - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
+    name: --destination-blob -d
+    summary: The destination blob name. It should be an absolute path under the container. e.g.'topdir1/dirbar'.
+    description: ''
+  - isRequired: true
+    name: --source-blob -s
+    summary: The source blob name. It should be an absolute path under the container. e.g.'topdir1/dirsubfoo'.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --lease-id
+    summary: Optional. A lease ID for the new_path. The new_path must have an active lease and the lease ID must match.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --source-if-match
+    summary: Optional. An ETag value. Specify this header to perform the rename operation only if the source's ETag matches the value specified.
+    description: ''
+  - name: --source-if-modified-since
+    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has been modified since the specified date and time.
+    description: ''
+  - name: --source-if-none-match
+    summary: Optional. An ETag value or the special wildcard ("\*") value. Specify this header to perform the rename operation only if the source's ETag does not match the value specified.
+    description: ''
+  - name: --source-if-unmodified-since
+    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has not been modified since the specified date and time.
+    description: ''
+  - name: --source-lease-id
+    summary: Optional. A lease ID for the source_path. The source_path must have an active lease and the lease ID must match.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
 - uid: az_storage_blob_set-tier
   name: az storage blob set-tier
   summary: Set the block or page tiers on the blob.
@@ -810,6 +917,52 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_blob_undelete
+  name: az storage blob undelete
+  summary: Restore soft-deleted blobs or snapshots.
+  description: Operation will only be successful if used within the specified number of days set in the delete retention policy.
+  syntax: >-
+    az storage blob undelete [--account-key]
+                             [--account-name]
+                             [--auth-mode {key, login}]
+                             [--blob-url]
+                             [--connection-string]
+                             [--container-name]
+                             [--name]
+                             [--sas-token]
+                             [--timeout]
+  examples:
+  - summary: Restore soft-deleted blob.
+    syntax: az storage blob undelete -n myblob -c mycontainer --account-name mystorageaccount --account-key 0000-0000
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
 - uid: az_storage_blob_update
   name: az storage blob update
   summary: Sets system properties on the blob.
@@ -1213,203 +1366,17 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
-- uid: az_storage_blob_filter
-  name: az storage blob filter
-  summary: List blobs across all containers whose tags match a given search expression.
-  description: Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
-  syntax: >-
-    az storage blob filter --tag-filter
-                           [--account-key]
-                           [--account-name]
-                           [--auth-mode {key, login}]
-                           [--connection-string]
-                           [--sas-token]
-  requiredParameters:
-  - isRequired: true
-    name: --tag-filter
-    summary: The expression to find blobs whose tags matches the specified condition. eg. ""yourtagname"='firsttag' and "yourtagname2"='secondtag'" To specify a container, eg. "@container='containerName' and "Name"='C'".
-    description: ''
-  optionalParameters:
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: key, login
-    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
-- uid: az_storage_blob_undelete
-  name: az storage blob undelete
-  summary: Restore soft-deleted blobs or snapshots.
-  description: Operation will only be successful if used within the specified number of days set in the delete retention policy.
-  syntax: >-
-    az storage blob undelete [--account-key]
-                             [--account-name]
-                             [--auth-mode {key, login}]
-                             [--blob-url]
-                             [--connection-string]
-                             [--container-name]
-                             [--name]
-                             [--sas-token]
-                             [--timeout]
-  examples:
-  - summary: Restore soft-deleted blob.
-    syntax: az storage blob undelete -n myblob -c mycontainer --account-name mystorageaccount --account-key 0000-0000
-  optionalParameters:
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: key, login
-    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
-    description: ''
-  - name: --blob-url
-    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --container-name -c
-    summary: The container name.
-    description: ''
-  - name: --name -n
-    summary: The blob name.
-    description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
-    description: ''
-- uid: az_storage_blob_move
-  name: az storage blob move
-  summary: Move a blob in a storage container.
-  description: ''
-  syntax: >-
-    az storage blob move --container-name
-                         --destination-blob
-                         --source-blob
-                         [--account-key]
-                         [--account-name]
-                         [--auth-mode {key, login}]
-                         [--connection-string]
-                         [--lease-id]
-                         [--sas-token]
-                         [--source-if-match]
-                         [--source-if-modified-since]
-                         [--source-if-none-match]
-                         [--source-if-unmodified-since]
-                         [--source-lease-id]
-                         [--timeout]
-  examples:
-  - summary: Move a blob in a storage container.
-    syntax: az storage blob move -c MyContainer -d DestinationBlobPath -s SourceBlobPath --account-name MyStorageAccount
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --destination-blob -d
-    summary: The destination blob name. It should be an absolute path under the container. e.g.'topdir1/dirbar'.
-    description: ''
-  - isRequired: true
-    name: --source-blob -s
-    summary: The source blob name. It should be an absolute path under the container. e.g.'topdir1/dirsubfoo'.
-    description: ''
-  optionalParameters:
-  - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
-    description: ''
-  - name: --account-name
-    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: key, login
-    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
-    description: ''
-  - name: --connection-string
-    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --lease-id
-    summary: Optional. A lease ID for the new_path. The new_path must have an active lease and the lease ID must match.
-    description: ''
-  - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
-  - name: --source-if-match
-    summary: Optional. An ETag value. Specify this header to perform the rename operation only if the source's ETag matches the value specified.
-    description: ''
-  - name: --source-if-modified-since
-    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has been modified since the specified date and time.
-    description: ''
-  - name: --source-if-none-match
-    summary: Optional. An ETag value or the special wildcard ("\*") value. Specify this header to perform the rename operation only if the source's ETag does not match the value specified.
-    description: ''
-  - name: --source-if-unmodified-since
-    summary: Optional. A date and time value. Specify this header to perform the rename operation only if the source has not been modified since the specified date and time.
-    description: ''
-  - name: --source-lease-id
-    summary: Optional. A lease ID for the source_path. The source_path must have an active lease and the lease ID must match.
-    description: ''
-  - name: --timeout
-    summary: Request timeout in seconds. Applies to each call to the service.
-    description: ''
 commands:
+- az_storage_blob_access
+- az_storage_blob_access_set
+- az_storage_blob_access_show
+- az_storage_blob_access_update
 - az_storage_blob_copy
 - az_storage_blob_copy_cancel
 - az_storage_blob_copy_start
 - az_storage_blob_copy_start-batch
 - az_storage_blob_delete
 - az_storage_blob_delete-batch
-- az_storage_blob_download
-- az_storage_blob_download-batch
-- az_storage_blob_exists
-- az_storage_blob_generate-sas
-- az_storage_blob_lease
-- az_storage_blob_lease_acquire
-- az_storage_blob_lease_break
-- az_storage_blob_lease_change
-- az_storage_blob_lease_release
-- az_storage_blob_lease_renew
-- az_storage_blob_list
-- az_storage_blob_metadata
-- az_storage_blob_metadata_show
-- az_storage_blob_metadata_update
-- az_storage_blob_service-properties
-- az_storage_blob_service-properties_show
-- az_storage_blob_service-properties_update
-- az_storage_blob_set-tier
-- az_storage_blob_show
-- az_storage_blob_snapshot
-- az_storage_blob_sync
-- az_storage_blob_update
-- az_storage_blob_upload
-- az_storage_blob_upload-batch
-- az_storage_blob_url
-- az_storage_blob_filter
-- az_storage_blob_service-properties_delete-policy
-- az_storage_blob_service-properties_delete-policy_show
-- az_storage_blob_service-properties_delete-policy_update
-- az_storage_blob_tag
-- az_storage_blob_tag_list
-- az_storage_blob_tag_set
-- az_storage_blob_undelete
-- az_storage_blob_access
-- az_storage_blob_access_set
-- az_storage_blob_access_show
-- az_storage_blob_access_update
 - az_storage_blob_directory
 - az_storage_blob_directory_access
 - az_storage_blob_directory_access_set
@@ -1426,7 +1393,40 @@ commands:
 - az_storage_blob_directory_move
 - az_storage_blob_directory_show
 - az_storage_blob_directory_upload
+- az_storage_blob_download
+- az_storage_blob_download-batch
+- az_storage_blob_exists
+- az_storage_blob_filter
+- az_storage_blob_generate-sas
+- az_storage_blob_lease
+- az_storage_blob_lease_acquire
+- az_storage_blob_lease_break
+- az_storage_blob_lease_change
+- az_storage_blob_lease_release
+- az_storage_blob_lease_renew
+- az_storage_blob_list
+- az_storage_blob_metadata
+- az_storage_blob_metadata_show
+- az_storage_blob_metadata_update
 - az_storage_blob_move
+- az_storage_blob_service-properties
+- az_storage_blob_service-properties_delete-policy
+- az_storage_blob_service-properties_delete-policy_show
+- az_storage_blob_service-properties_delete-policy_update
+- az_storage_blob_service-properties_show
+- az_storage_blob_service-properties_update
+- az_storage_blob_set-tier
+- az_storage_blob_show
+- az_storage_blob_snapshot
+- az_storage_blob_sync
+- az_storage_blob_tag
+- az_storage_blob_tag_list
+- az_storage_blob_tag_set
+- az_storage_blob_undelete
+- az_storage_blob_update
+- az_storage_blob_upload
+- az_storage_blob_upload-batch
+- az_storage_blob_url
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

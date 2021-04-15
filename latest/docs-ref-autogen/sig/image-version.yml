@@ -21,6 +21,8 @@ directCommands:
                                 [--managed-image]
                                 [--no-wait]
                                 [--os-snapshot]
+                                [--os-vhd-storage-account]
+                                [--os-vhd-uri]
                                 [--replica-count]
                                 [--storage-account-type {Premium_LRS, Standard_LRS, Standard_ZRS}]
                                 [--subscription]
@@ -71,6 +73,8 @@ directCommands:
     syntax: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard eastus --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
   - summary: Add a new image version using disks with target regions and customer managed keys for encryption. You specify which disks in the image version to encrypt. Disks encrypted in one region must be encrypted in another region with a different disk encryption set.
     syntax: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard eastus --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk --data-snapshot-luns 0
+  - summary: Add a new image version from a VHD of an OS disk.
+    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-vhd-uri <vhd-uri> --os-vhd-storage-account account
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -114,6 +118,12 @@ directCommands:
   - name: --os-snapshot
     summary: Name or ID of OS disk snapshot.
     description: ''
+  - name: --os-vhd-storage-account
+    summary: Name or ID of storage account of source VHD URI of OS disk.
+    description: ''
+  - name: --os-vhd-uri
+    summary: Source VHD URI of OS disk.
+    description: ''
   - name: --replica-count
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
@@ -135,7 +145,7 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_delete
   name: az sig image-version delete
-  summary: Delete a gallery Image Version.
+  summary: Delete a gallery image version.
   description: ''
   syntax: >-
     az sig image-version delete --gallery-image-definition
@@ -166,7 +176,7 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_list
   name: az sig image-version list
-  summary: List gallery Image Versions in a gallery Image Definition.
+  summary: List gallery image versions in a gallery image definition.
   description: ''
   syntax: >-
     az sig image-version list --gallery-image-definition
@@ -196,7 +206,7 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_show
   name: az sig image-version show
-  summary: Retrieves information about a gallery Image Version.
+  summary: Retrieves information about a gallery image version.
   description: ''
   syntax: >-
     az sig image-version show --gallery-image-definition

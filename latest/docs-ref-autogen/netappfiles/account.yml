@@ -92,6 +92,41 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_account_set
+  name: az netappfiles account set
+  summary: Sets the tags or the active directory details for a specified ANF account. Sets the active directory property to exactly what is provided. If none is provided then the active directory is removed, i.e. provide empty [].
+  description: ''
+  syntax: >-
+    az netappfiles account set --account-name
+                               --location
+                               --resource-group
+                               [--active-directories]
+                               [--tags]
+  examples:
+  - summary: Update the tags and active directory of an ANF account
+    syntax: "az netappfiles account set -g group --account-name name --tags 'key[=value] key[=value]' --active-directories '[{\"username\": \"aduser\", \"password\": \"aduser\", \"smbservername\": \"SMBSERVER\", \"dns\": \"1.2.3.4\", \"domain\": \"westcentralus\"}]' -l westus2"
+  - summary: Remove the active directory from the ANF account
+    syntax: az netappfiles account set -g group --account-name name --active-directories '[]' -l westus2
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --active-directories
+    summary: An array of active directory (AD) settings in json format. Limitation one AD/subscription. Consists of the fields username (Username of Active Directory domain administrator), password (Plain text password of Active Directory domain administrator), domain (Name of the Active Directory domain), dns (Comma separated list of DNS server IP addresses for the Active Directory domain), smb_server_name (NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less), organizational_unit (The Organizational Unit (OU) within the Windows Active Directory).
+    description: ''
+  - name: --tags
+    summary: A list of space separated tags to apply to the account.
+    description: ''
 - uid: az_netappfiles_account_show
   name: az netappfiles account show
   summary: Get the specified ANF account.
@@ -172,41 +207,6 @@ directCommands:
     summary: Space-separated tags in `key[=value]` format.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
-- uid: az_netappfiles_account_set
-  name: az netappfiles account set
-  summary: Sets the tags or the active directory details for a specified ANF account. Sets the active directory property to exactly what is provided. If none is provided then the active directory is removed, i.e. provide empty [].
-  description: ''
-  syntax: >-
-    az netappfiles account set --account-name
-                               --location
-                               --resource-group
-                               [--active-directories]
-                               [--tags]
-  examples:
-  - summary: Update the tags and active directory of an ANF account
-    syntax: "az netappfiles account set -g group --account-name name --tags 'key[=value] key[=value]' --active-directories '[{\"username\": \"aduser\", \"password\": \"aduser\", \"smbservername\": \"SMBSERVER\", \"dns\": \"1.2.3.4\", \"domain\": \"westcentralus\"}]' -l westus2"
-  - summary: Remove the active directory from the ANF account
-    syntax: az netappfiles account set -g group --account-name name --active-directories '[]' -l westus2
-  requiredParameters:
-  - isRequired: true
-    name: --account-name -a -n
-    summary: The name of the ANF account.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --active-directories
-    summary: An array of active directory (AD) settings in json format. Limitation one AD/subscription. Consists of the fields username (Username of Active Directory domain administrator), password (Plain text password of Active Directory domain administrator), domain (Name of the Active Directory domain), dns (Comma separated list of DNS server IP addresses for the Active Directory domain), smb_server_name (NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less), organizational_unit (The Organizational Unit (OU) within the Windows Active Directory).
-    description: ''
-  - name: --tags
-    summary: A list of space separated tags to apply to the account.
-    description: ''
 commands:
 - az_netappfiles_account_ad
 - az_netappfiles_account_ad_add
@@ -225,9 +225,9 @@ commands:
 - az_netappfiles_account_create
 - az_netappfiles_account_delete
 - az_netappfiles_account_list
+- az_netappfiles_account_set
 - az_netappfiles_account_show
 - az_netappfiles_account_update
-- az_netappfiles_account_set
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
