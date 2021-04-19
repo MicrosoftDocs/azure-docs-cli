@@ -434,11 +434,27 @@ directCommands:
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
     description: ''
   - name: --windows-admin-password
-    summary: Password to create on Windows node VMs.
-    description: ''
+    summary: User account password to use on windows node VMs.
+    description: >-
+      Rules for windows-admin-password:
+          - Minimum-length: 14 characters
+          - Max-length: 123 characters
+          - Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+            * Has lower characters
+            * Has upper characters
+            * Has a digit
+            * Has a special character (Regex match [W_])
+          - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+      Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
   - name: --windows-admin-username
-    summary: Username to create on Windows node VMs.
-    description: ''
+    summary: User account to create on windows node VMs.
+    description: >-
+      Rules for windows-admin-username:
+          - restriction: Cannot end in "."
+          - Disallowed values: "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5".
+          - Minimum-length: 1 character
+          - Max-length: 20 characters
+      Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
   - name: --workspace-resource-id
     summary: The resource ID of an existing Log Analytics Workspace to use for storing monitoring data. If not specified, uses the default Log Analytics Workspace if it exists, otherwise creates one.
     description: ''
@@ -1030,6 +1046,7 @@ directCommands:
                   [--subscription]
                   [--update-cluster-autoscaler]
                   [--uptime-sla]
+                  [--windows-admin-password]
   examples:
   - summary: Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
@@ -1055,6 +1072,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-ahub
   - summary: Disable Azure Hybrid User Benefits featture for a kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-ahub
+  - summary: Update Windows password of a kubernetes cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --windows-admin-password "Repl@cePassw0rd12345678"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1134,6 +1153,19 @@ directCommands:
   - name: --uptime-sla
     summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
+  - name: --windows-admin-password
+    summary: User account password to use on windows node VMs.
+    description: >-
+      Rules for windows-admin-password:
+          - Minimum-length: 14 characters
+          - Max-length: 123 characters
+          - Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+            * Has lower characters
+            * Has upper characters
+            * Has a digit
+            * Has a special character (Regex match [W_])
+          - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+      Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_update-credentials
   name: az aks update-credentials
@@ -1421,5 +1453,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/07/2021
+  ms.date: 04/19/2021
   description: Manage Azure Kubernetes Services.
