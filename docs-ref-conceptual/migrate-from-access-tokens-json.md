@@ -48,9 +48,11 @@ az account get-access-token --subscription "mySubscriptionName"
 First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
 
 ## See also
-* [AzureCliCredential Class in .NET](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true)
-* [AzureCliCredential Class in Java](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true)
-* [AzureCliCredential Class in Python](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true)
-* [SharedToeknCacheCredential Class in .NET](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true)
-* [SharedTokenCacheCredential Class in Java](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true)
-* [SharedToeknCacheCredential Class in Python](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true)
+* [Azure CLI beta](/cli/azure/release-notes-azure-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azure-cli-beta) release notes
+* [Install Azure CLI beta version](/cli/azure/install-azure-cli-beta)
+* [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true) in .NET
+* [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Java
+* [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Python
+* [SharedTokenCacheCredential Class](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true) in .NET
+* [SharedTokenCacheCredential Class](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true) in Java
+* [SharedToeknCacheCredential Class](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true) in Python
