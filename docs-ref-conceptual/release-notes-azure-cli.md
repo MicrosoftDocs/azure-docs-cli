@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/13/2021
+ms.date: 04/19/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,18 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## April 19, 2021
+
+Version 2.22.1
+
+### ARM
+
+* Hotfix: Fix the issue that bicep build broken in Python 3.6
+
+### Key Vault
+
+* Hotfix: GA for managed-HSM ralated commands and parameters
 
 ## April 13, 2021
 
