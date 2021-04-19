@@ -1,0 +1,38 @@
+---
+title: Azure CLI configuration options
+description: How to configure the Azure CLI
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
+ms.date: 04/19/2021 
+ms.topic: conceptual
+ms.service: azure-cli
+ms.devlang: azurecli
+ms.custom: devx-track-azurecli
+---
+# Migrate from accessTokens.json
+
+Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
+
+This article provides detail about this breaking change and gives examples on how to get an access-token in Azure CLI beta.
+
+## Breaking change
+
+The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json` after a successful login.  Tokens will be saved to MSAL's shared token cache called `msal.cache`.  To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account#az_account_get_access_token) instead. 
+
+The MSAL token cache will be encrypted on Windows, macOS and Linux with a desktop environment; therefore, directly accessing the MSAL token cache will not work. Any existing workflow depending on `accessTokens.json` will stop working.
+
+## Alternatives to consider
+
+##### Call `az account get-access-token`
+
+You can manually call `az account get-access-token` in a terminal or use subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in `az account show`.
+
+##### Use `AzureCliCredential`
+
+`AzureCliCredential` is a credential type in all existing language SDKs. It internally uses subprocess to call `az account get-access-token` to gets an access token from current logged in CLI accounts. 
+
+##### Access shared MSAL cache
+
+First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
+
