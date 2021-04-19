@@ -12,6 +12,7 @@ directCommands:
     az webapp config access-restriction add --priority
                                             [--action {Allow, Deny}]
                                             [--description]
+                                            [--http-headers]
                                             [--ids]
                                             [--ignore-missing-endpoint {false, true}]
                                             [--ip-address]
@@ -19,6 +20,7 @@ directCommands:
                                             [--resource-group]
                                             [--rule-name]
                                             [--scm-site {false, true}]
+                                            [--service-tag]
                                             [--slot]
                                             [--subnet]
                                             [--subscription]
@@ -37,6 +39,10 @@ directCommands:
     syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name remote_agents --action Allow --vnet-name corp01 --subnet agents --priority 500 --vnet-resource-group vnets
   - summary: Add Access Restriction opening (Allow) named agents in vNet 'corp01' in rg 'vnets' with subnet 'agents' (using subnet resource id)
     syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --rule-name remote_agents --action Allow --priority 800 --subnet '/subscriptions/<subscription-id>/resourceGroups/vnets/providers/Microsoft.Network/virtualNetworks/corp01/subnets/agents'
+  - summary: Add Access Restriction opening (Allow) with no rule name for service tag AzureCloud
+    syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --priority 400 --service-tag AzureCloud
+  - summary: Add Access Restriction opening (Allow) with no rule name for service tag AzureFrontDoor.Backend and http-header X-Azure-FDID with value '12345678-abcd-1234-abcd-12345678910a'
+    syntax: az webapp config access-restriction add -g ResourceGroup -n AppName --priority 400 --service-tag AzureFrontDoor.Backend --http-header x-azure-fdid=12345678-abcd-1234-abcd-12345678910a
   requiredParameters:
   - isRequired: true
     name: --priority -p
@@ -51,6 +57,9 @@ directCommands:
   - name: --description
     summary: Description of the access restriction rule.
     description: ''
+  - name: --http-headers
+    summary: Space-separated http headers in a format of `<name>=<value>`.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -59,7 +68,7 @@ directCommands:
     summary: Create access restriction rule with checking if the subnet has Microsoft.Web service endpoint enabled.
     description: ''
   - name: --ip-address
-    summary: IP address or CIDR range.
+    summary: IP address or CIDR range (optional comma separated list of up to 8 ranges).
     description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
@@ -73,6 +82,9 @@ directCommands:
   - name: --scm-site
     parameterValueGroup: false, true
     summary: True if access restrictions is added for scm site.
+    description: ''
+  - name: --service-tag
+    summary: Service Tag (optional comma separated list of up to 8 tags).
     description: ''
   - name: --slot -s
     summary: The name of the slot. Default to the productions slot if not specified.
@@ -101,6 +113,7 @@ directCommands:
                                                [--resource-group]
                                                [--rule-name]
                                                [--scm-site {false, true}]
+                                               [--service-tag]
                                                [--slot]
                                                [--subnet]
                                                [--subscription]
@@ -110,6 +123,8 @@ directCommands:
     syntax: az webapp config access-restriction remove -g ResourceGroup -n AppName --rule-name developers
   - summary: Remove Access Restriction named internal_agents from the scm site.
     syntax: az webapp config access-restriction remove -g ResourceGroup -n AppName --rule-name internal_agents --scm-site true
+  - summary: Remove Access Restriction with service tag AzureFrontDoor.Backend from the main site.
+    syntax: az webapp config access-restriction remove -g ResourceGroup -n AppName --service-tag AzureFrontDoor.Backend
   optionalParameters:
   - name: --action
     defaultValue: Allow
@@ -120,7 +135,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --ip-address
-    summary: IP address or CIDR range.
+    summary: IP address or CIDR range (optional comma separated list of up to 8 ranges).
     description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
@@ -134,6 +149,9 @@ directCommands:
   - name: --scm-site
     parameterValueGroup: false, true
     summary: True if access restriction should be removed from scm site.
+    description: ''
+  - name: --service-tag
+    summary: Service Tag (optional comma separated list of up to 8 tags).
     description: ''
   - name: --slot -s
     summary: The name of the slot. Default to the productions slot if not specified.
