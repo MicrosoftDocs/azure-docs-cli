@@ -1,6 +1,6 @@
 ---
-title: Azure CLI configuration options
-description: How to configure the Azure CLI
+title: Azure CLI beta breaking change
+description: How to migrate from accessTokens.json
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -26,13 +26,31 @@ The MSAL token cache will be encrypted on Windows, macOS and Linux with a deskto
 
 ##### Call `az account get-access-token`
 
-You can manually call `az account get-access-token` in a terminal or use subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in `az account show`.
+You can manually call `az account get-access-token` in a terminal or use a subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in `az account show`.
+
+```azurecli
+# get the active subscription
+az account show --output table
+
+# get access token for the default subscription
+az account get-access-token
+
+# get access toekn for a specific subscription
+az account get-access-token --subscription "mySubscriptionName"
+```
 
 ##### Use `AzureCliCredential`
 
-`AzureCliCredential` is a credential type in all existing language SDKs. It internally uses subprocess to call `az account get-access-token` to gets an access token from current logged in CLI accounts. 
+`AzureCliCredential` is a credential type in all existing language SDKs. It internally uses a subprocess to call `az account get-access-token` to gets an access token from current logged in CLI accounts. 
 
 ##### Access shared MSAL cache
 
 First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
 
+## See also
+* [AzureCliCredential Class in .NET](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet)
+* [AzureCliCredential Class in Java](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python)
+* [AzureCliCredential Class in Python](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python)
+* [SharedToeknCacheCredential Class in .NET](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet)
+* [SharedTokenCacheCredential Class in Java](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable)
+* [SharedToeknCacheCredential Class in Python](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python)
