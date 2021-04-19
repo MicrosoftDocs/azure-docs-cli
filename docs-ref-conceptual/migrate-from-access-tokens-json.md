@@ -18,7 +18,7 @@ This article provides detail about this breaking change and gives examples on ho
 
 ## Breaking change
 
-The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json` after a successful login.  Tokens will be saved to MSAL's shared token cache called `msal.cache`.  To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account#az_account_get_access_token) instead. 
+The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json` after a successful login.  Tokens will be saved to MSAL's shared token cache called `msal.cache`.  To get an access token, use `az account get-access-token` instead. 
 
 The MSAL token cache will be encrypted on Windows, macOS and Linux with a desktop environment; therefore, directly accessing the MSAL token cache will not work. Any existing workflow depending on `accessTokens.json` will stop working.
 
@@ -26,7 +26,7 @@ The MSAL token cache will be encrypted on Windows, macOS and Linux with a deskto
 
 ##### Call `az account get-access-token`
 
-You can manually call `az account get-access-token` in a terminal or use a subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in `az account show`.
+You can manually call [az account get-access-token](/cli/azure/account#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in [az account show](/cli/azure/account#az_account_show).
 
 ```azurecli
 # get the active subscription
@@ -48,9 +48,9 @@ az account get-access-token --subscription "mySubscriptionName"
 First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
 
 ## See also
-* [AzureCliCredential Class in .NET](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet)
-* [AzureCliCredential Class in Java](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python)
-* [AzureCliCredential Class in Python](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python)
-* [SharedToeknCacheCredential Class in .NET](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet)
-* [SharedTokenCacheCredential Class in Java](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable)
-* [SharedToeknCacheCredential Class in Python](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python)
+* [AzureCliCredential Class in .NET](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true)
+* [AzureCliCredential Class in Java](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true)
+* [AzureCliCredential Class in Python](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true)
+* [SharedToeknCacheCredential Class in .NET](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true)
+* [SharedTokenCacheCredential Class in Java](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true)
+* [SharedToeknCacheCredential Class in Python](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true)
