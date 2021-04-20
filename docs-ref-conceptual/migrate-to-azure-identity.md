@@ -55,4 +55,4 @@ First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to
 * [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Python
 * [SharedTokenCacheCredential Class](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true) in .NET
 * [SharedTokenCacheCredential Class](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true) in Java
-* [SharedToeknCacheCredential Class](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true) in Python
+* [SharedTokenCacheCredential Class](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true) in Python
