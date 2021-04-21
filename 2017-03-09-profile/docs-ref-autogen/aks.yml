@@ -65,6 +65,7 @@ directCommands:
                   [--appgw-subnet-prefix]
                   [--appgw-watch-namespace]
                   [--assign-identity]
+                  [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--client-secret]
@@ -79,6 +80,7 @@ directCommands:
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-encryption-at-host {false, true}]
+                  [--enable-fips-image]
                   [--enable-managed-identity]
                   [--enable-node-public-ip]
                   [--enable-pod-identity]
@@ -175,6 +177,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --tags "foo=bar" "baz=qux"
   - summary: Create a kubernetes cluster with EncryptionAtHost enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-encryption-at-host
+  - summary: Create a kubernetes cluster with custom control plane identity and kubelet identity.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --assign-identity <control-plane-identity-resource-id> --assign-kubelet-identity <kubelet-identity-resource-id>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -232,7 +236,10 @@ directCommands:
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
     description: ''
   - name: --assign-identity
-    summary: (PREVIEW) Specify an existing user assigned identity to manage cluster resource group.
+    summary: Specify an existing user assigned identity to manage cluster resource group.
+    description: ''
+  - name: --assign-kubelet-identity
+    summary: Specify an existing user assigned identity for kubelet's usage, which is typically used to pull image from ACR.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -290,6 +297,9 @@ directCommands:
   - name: --enable-encryption-at-host
     parameterValueGroup: false, true
     summary: Enable EncryptionAtHost on agent node pool.
+    description: ''
+  - name: --enable-fips-image
+    summary: Use FIPS-enabled OS on agent nodes.
     description: ''
   - name: --enable-managed-identity
     defaultValue: "1"
@@ -468,7 +478,7 @@ directCommands:
     summary: User account password to use on windows node VMs.
     description: >-
       Rules for windows-admin-password:
-          - Minimum-length: 8 characters
+          - Minimum-length: 14 characters
           - Max-length: 123 characters
           - Complexity requirements: 3 out of 4 conditions below need to be fulfilled
             * Has lower characters
@@ -918,6 +928,7 @@ directCommands:
                   [--tags]
                   [--update-cluster-autoscaler]
                   [--uptime-sla]
+                  [--windows-admin-password]
                   [--yes]
   examples:
   - summary: Enable cluster-autoscaler within node count range [1,5]
@@ -962,6 +973,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-pod-identity
   - summary: Update the tags of a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --tags "foo=bar" "baz=qux"
+  - summary: Update Windows password of a kubernetes cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --windows-admin-password "Repl@cePassw0rd12345678"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1075,6 +1088,19 @@ directCommands:
   - name: --uptime-sla
     summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
+  - name: --windows-admin-password
+    summary: User account password to use on windows node VMs.
+    description: >-
+      Rules for windows-admin-password:
+          - Minimum-length: 14 characters
+          - Max-length: 123 characters
+          - Complexity requirements: 3 out of 4 conditions below need to be fulfilled
+            * Has lower characters
+            * Has upper characters
+            * Has a digit
+            * Has a special character (Regex match [W_])
+          - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
+      Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
