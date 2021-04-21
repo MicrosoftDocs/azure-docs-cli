@@ -322,29 +322,69 @@ directCommands:
   summary: Get information on the backend health of an application gateway.
   description: ''
   syntax: >-
-    az network application-gateway show-backend-health [--expand]
+    az network application-gateway show-backend-health [--address-pool]
+                                                       [--expand]
+                                                       [--host]
+                                                       [--host-name-from-http-settings {false, true}]
+                                                       [--http-settings]
                                                        [--ids]
+                                                       [--match-body]
+                                                       [--match-status-codes]
                                                        [--name]
+                                                       [--path]
+                                                       [--protocol {Http, Https}]
                                                        [--resource-group]
                                                        [--subscription]
+                                                       [--timeout]
   examples:
   - summary: Show backend health of an application gateway.
     syntax: az network application-gateway show-backend-health -g MyResourceGroup -n MyAppGateway
+  - summary: Show backend health of an application gateway for given combination of backend pool and http setting.
+    syntax: az network application-gateway show-backend-health -g MyResourceGroup -n MyAppGateway --host-name-from-http-settings --path /test --timeout 100 --http-settings appGatewayBackendHttpSettings --address-pool appGatewayBackendPool
   optionalParameters:
+  - name: --address-pool
+    summary: The name or ID of the backend address pool.
+    description: ''
   - name: --expand
     summary: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
+    description: ''
+  - name: --host
+    summary: The name of the host to send the probe.
+    description: ''
+  - name: --host-name-from-http-settings
+    parameterValueGroup: false, true
+    summary: Use host header from HTTP settings.
+    description: ''
+  - name: --http-settings
+    summary: The name or ID of the HTTP settings.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --match-body
+    summary: Body that must be contained in the health response.
+    description: ''
+  - name: --match-status-codes
+    summary: Space-separated list of allowed ranges of healthy status codes for the health response.
+    description: ''
   - name: --name -n
     summary: Name of the application gateway.
+    description: ''
+  - name: --path
+    summary: The relative path of the probe. Valid paths start from "/".
+    description: ''
+  - name: --protocol
+    parameterValueGroup: Http, Https
+    summary: The HTTP settings protocol.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    summary: The probe timeout in seconds.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_start
@@ -719,5 +759,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/12/2021
+  ms.date: 04/21/2021
   description: To learn more about Application Gateway, visit https://docs.microsoft.com/azure/application-gateway/application-gateway-create-gateway-cli.
