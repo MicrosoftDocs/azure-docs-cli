@@ -36,12 +36,6 @@ See [Reference types and status](/cli/azure/reference-types-and-status#reference
 | [az mysql](/cli/azure/ext/rdbms-connect/mysq) | rdbms-connect | 2.19.0 | Manage Azure Database for MySQL servers |Experimental | [history](https://github.com/Azure/azure-cli-extensions/blob/master/src/rdbms-connect/HISTORY.rst)
 | [az netappfiles](/cli/azure/ext/netappfiles-preview/netappfiles) | netappfiles-preview | 2.0.56 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [history](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview/HISTORY.rst)
 | [az postgres](/cli/azure/ext/rdbms-connect/postgres) | rdbms-connect | 2.19.0 | Manage Azure Database for PostgreSQL servers | GA | [history](https://github.com/Azure/azure-cli-extensions/blob/master/src/rdbms-connect/HISTORY.rst)
-
-.
-.
-.
-.
-# abc
 | [az alertsmanagement](https://github.com/Azure/azure-cli-extensions) | 0.1.0 | Microsoft Azure Command-Line Tools Alerts Extension |  |
 | [az alias](https://github.com/Azure/azure-cli-extensions) | 0.5.2 | Support for command aliases | Yes |
 | [az application-insights](https://github.com/Azure/azure-cli-extensions/tree/master/src/application-insights) | 0.1.13 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Yes |
