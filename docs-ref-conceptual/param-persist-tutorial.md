@@ -9,7 +9,7 @@ ms.date: 11/25/2020
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
-ms.custom: devex-track-azurecli
+ms.custom: devx-track-azurecli
 ---
 
 # Tutorial: Use persisted parameters to simplify sequential Azure CLI commands

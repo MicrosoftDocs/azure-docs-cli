@@ -28,8 +28,9 @@ directCommands:
                    [--disk-iops-read-write]
                    [--disk-mbps-read-only]
                    [--disk-mbps-read-write]
+                   [--edge-zone]
                    [--enable-bursting {false, true}]
-                   [--encryption-type]
+                   [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
                    [--for-upload {false, true}]
                    [--gallery-image-reference]
                    [--gallery-image-reference-lun]
@@ -42,11 +43,13 @@ directCommands:
                    [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
                    [--no-wait]
                    [--os-type {Linux, Windows}]
+                   [--security-type {TrustedLaunch}]
                    [--size-gb]
-                   [--sku {Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS}]
+                   [--sku {Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                    [--source]
                    [--source-storage-account-id]
                    [--subscription]
+                   [--support-hibernation {false, true}]
                    [--tags]
                    [--tier]
                    [--upload-size-bytes]
@@ -100,11 +103,15 @@ directCommands:
   - name: --disk-mbps-read-write
     summary: The bandwidth allowed for this disk. Only settable for UltraSSD disks. MBps means millions of bytes per second with ISO notation of powers of 10.
     description: ''
+  - name: --edge-zone
+    summary: Name of edge zone extended location.
+    description: ''
   - name: --enable-bursting
     parameterValueGroup: false, true
     summary: Enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default, and it does not apply to Ultra disks.
     description: ''
   - name: --encryption-type
+    parameterValueGroup: EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey
     summary: 'Encryption type. EncryptionAtRestWithPlatformKey: Disk is encrypted with XStore managed key at rest. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted with Customer managed key at rest.'
     description: ''
   - name: --for-upload
@@ -148,12 +155,16 @@ directCommands:
     parameterValueGroup: Linux, Windows
     summary: The Operating System type of the Disk.
     description: ''
+  - name: --security-type
+    parameterValueGroup: TrustedLaunch
+    summary: The security type of the VM. Applicable for OS disks only.
+    description: ''
   - name: --size-gb -z
     summary: 'Size in GB. Max size: 4095 GB (certain preview disks can be larger).'
     description: ''
   - name: --sku
     defaultValue: Premium_LRS
-    parameterValueGroup: Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS
+    parameterValueGroup: Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: Underlying storage SKU.
     description: ''
   - name: --source
@@ -164,6 +175,10 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --support-hibernation
+    parameterValueGroup: false, true
+    summary: Indicate the OS on a disk supports hibernation.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -332,7 +347,7 @@ directCommands:
                    [--disk-mbps-read-only]
                    [--disk-mbps-read-write]
                    [--enable-bursting {false, true}]
-                   [--encryption-type]
+                   [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
                    [--force-string]
                    [--ids]
                    [--max-shares]
@@ -343,7 +358,7 @@ directCommands:
                    [--resource-group]
                    [--set]
                    [--size-gb]
-                   [--sku {Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS}]
+                   [--sku {Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                    [--subscription]
   examples:
   - summary: Update a managed disk and associate it with a disk access resource.
@@ -377,6 +392,7 @@ directCommands:
     summary: Enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default, and it does not apply to Ultra disks.
     description: ''
   - name: --encryption-type
+    parameterValueGroup: EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey
     summary: 'Encryption type. EncryptionAtRestWithPlatformKey: Disk is encrypted with XStore managed key at rest. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted with Customer managed key at rest.'
     description: ''
   - name: --force-string
@@ -411,7 +427,7 @@ directCommands:
     summary: 'Size in GB. Max size: 4095 GB (certain preview disks can be larger).'
     description: ''
   - name: --sku
-    parameterValueGroup: Premium_LRS, StandardSSD_LRS, Standard_LRS, UltraSSD_LRS
+    parameterValueGroup: Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS
     summary: Underlying storage SKU.
     description: ''
   - name: --subscription

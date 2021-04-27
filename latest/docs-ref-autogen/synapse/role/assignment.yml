@@ -9,31 +9,45 @@ directCommands:
   summary: Create a role assignment.
   description: ''
   syntax: >-
-    az synapse role assignment create --assignee
-                                      --role
+    az synapse role assignment create --role
                                       --workspace-name
+                                      [--assignee]
+                                      [--assignee-object-id]
+                                      [--assignee-principal-type {Group, ServicePrincipal, User}]
+                                      [--assignment-id]
+                                      [--item]
+                                      [--item-type {bigDataPools, credentials, integrationRuntimes, linkedServices}]
+                                      [--scope]
                                       [--subscription]
   examples:
   - summary: Create a role assignment using service principal name.
     syntax: >-
       az synapse role assignment create --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin" --assignee sp_name
+      --role "Synapse Administrator" --assignee sp_name
   - summary: Create a role assignment using user principal name.
     syntax: >-
       az synapse role assignment create --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin" --assignee username@contoso.com
+      --role "Synapse Administrator" --assignee username@contoso.com
   - summary: Create a role assignment using objectId of the User, Group or Service Principal.
     syntax: >-
       az synapse role assignment create --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin" --assignee 00000000-0000-0000-0000-000000000000
+      --role "Synapse Administrator" --assignee 00000000-0000-0000-0000-000000000000
+  - summary: Create a role assignment at scope.
+    syntax: >-
+      az synapse role assignment create --workspace-name testsynapseworkspace \
+
+      --scope "workspaces/{workspaceName}" --role "Synapse Administrator" --assignee username@contoso.com
+  - summary: Create a role assignment at scope that combination of item type and item name.
+    syntax: >-
+      az synapse role assignment create --workspace-name testsynapseworkspace \
+
+      --item-type "bigDataPools" --item "bigDataPoolName" --role "Synapse Administrator" \
+
+      --assignee username@contoso.com
   requiredParameters:
-  - isRequired: true
-    name: --assignee
-    summary: 'Represent a user, group, or service principal. Supported format: object id, user sign-in name, or service principal name.'
-    description: ''
   - isRequired: true
     name: --role
     summary: The role name/id that is assigned to the principal.
@@ -43,6 +57,29 @@ directCommands:
     summary: The workspace name.
     description: ''
   optionalParameters:
+  - name: --assignee
+    summary: 'Represent a user or service principal. Supported format: object id, user sign-in name, or service principal name.'
+    description: ''
+  - name: --assignee-object-id
+    summary: Use this parameter instead of '--assignee' to bypass Graph API invocation in case of insufficient privileges. This parameter only works with object ids for users, groups, service principals, and managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id.
+    description: ''
+  - name: --assignee-principal-type --assignee-type
+    parameterValueGroup: Group, ServicePrincipal, User
+    summary: Use with --assignee-object-id to avoid errors caused by propagation latency in AAD Graph.
+    description: ''
+  - name: --assignment-id
+    summary: Custom role assignment id in guid format, if not specified, assignment id will be randomly generated.
+    description: ''
+  - name: --item
+    summary: Item granted access in the workspace. Using with --item-type to combine the scope of assignment.
+    description: ''
+  - name: --item-type
+    parameterValueGroup: bigDataPools, credentials, integrationRuntimes, linkedServices
+    summary: Item type granted access in the workspace. Using with --item to combine the scope of assignment.
+    description: ''
+  - name: --scope
+    summary: A scope defines the resources or artifacts that the access applies to. Synapse supports hierarchical scopes. Permissions granted at a higher-level scope are inherited by objects at a lower level. In Synapse RBAC, the top-level scope is a workspace. Assigning a role with workspace scope grants permissions to all applicable objects in the workspace.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -54,8 +91,12 @@ directCommands:
   syntax: >-
     az synapse role assignment delete --workspace-name
                                       [--assignee]
+                                      [--assignee-object-id]
                                       [--ids]
+                                      [--item]
+                                      [--item-type {bigDataPools, credentials, integrationRuntimes, linkedServices}]
                                       [--role]
+                                      [--scope]
                                       [--subscription]
                                       [--yes]
   examples:
@@ -63,12 +104,12 @@ directCommands:
     syntax: >-
       az synapse role assignment delete --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin" --assignee sp_name
+      --role "Synapse Administrator" --assignee sp_name
   - summary: Delete role assignments by role id/name.
     syntax: >-
       az synapse role assignment delete --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin"
+      --role "Synapse Administrator"
   - summary: Delete role assignments by service principal name.
     syntax: >-
       az synapse role assignment delete --workspace-name testsynapseworkspace \
@@ -89,6 +130,11 @@ directCommands:
       az synapse role assignment delete --workspace-name testsynapseworkspace \
 
       --ids 10000000-0000-0000-0000-10000000-10000000-0000-0000-0000-10000000
+  - summary: Delete role assignments by scope.
+    syntax: >-
+      az synapse role assignment delete --workspace-name testsynapseworkspace \
+
+      --scope "workspaces/testsynapseworkspace/linkedServices/testlinkedServices"
   requiredParameters:
   - isRequired: true
     name: --workspace-name
@@ -96,13 +142,26 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --assignee
-    summary: 'Represent a user, group, or service principal. Supported format: object id, user sign-in name, or service principal name.'
+    summary: 'Represent a user or service principal. Supported format: object id, user sign-in name, or service principal name.'
+    description: ''
+  - name: --assignee-object-id
+    summary: Use this parameter instead of '--assignee' to bypass Graph API invocation in case of insufficient privileges. This parameter only works with object ids for users, groups, service principals, and managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id.
     description: ''
   - name: --ids
     summary: Space-separated role assignment ids. You should not provide --role or --assignee when --ids is provided.
     description: ''
+  - name: --item
+    summary: Item granted access in the workspace. Using with --item-type to combine the scope of assignment.Using az role assignment with filter condition before executing delete operation to be clearly aware of which assignments will be deleted.
+    description: ''
+  - name: --item-type
+    parameterValueGroup: bigDataPools, credentials, integrationRuntimes, linkedServices
+    summary: Item type granted access in the workspace. Using with --item to combine the scope of assignment.Using az role assignment with filter condition before executing delete operation to be clearly aware of which assignments will be deleted.
+    description: ''
   - name: --role
     summary: The role name/id that is assigned to the principal.
+    description: ''
+  - name: --scope
+    summary: A scope defines the resources or artifacts that the access applies to. Synapse supports hierarchical scopes. Permissions granted at a higher-level scope are inherited by objects at a lower level. In Synapse RBAC, the top-level scope is a workspace. Using az role assignment with filter condition before executing delete operation to be clearly aware of which assignments will be deleted.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -118,8 +177,12 @@ directCommands:
   syntax: >-
     az synapse role assignment list --workspace-name
                                     [--assignee]
+                                    [--assignee-object-id]
+                                    [--item]
+                                    [--item-type {bigDataPools, credentials, integrationRuntimes, linkedServices}]
                                     [--query-examples]
                                     [--role]
+                                    [--scope]
                                     [--subscription]
   examples:
   - summary: List role assignments.
@@ -128,7 +191,7 @@ directCommands:
     syntax: >-
       az synapse role assignment list --workspace-name testsynapseworkspace \
 
-      --role "Sql Admin"
+      --role "Synapse Apache Spark Administrator"
   - summary: List role assignments by assignee.
     syntax: >-
       az synapse role assignment list --workspace-name testsynapseworkspace \
@@ -138,7 +201,17 @@ directCommands:
     syntax: >-
       az synapse role assignment list --workspace-name testsynapseworkspace \
 
-      --assignee 00000000-0000-0000-0000-000000000000
+      --assignee-object-id 00000000-0000-0000-0000-000000000000
+  - summary: List role assignments by scope.
+    syntax: >-
+      az synapse role assignment list --workspace-name testsynapseworkspace \
+
+      --scope "workspaces/{workspaceName}"
+  - summary: List role assignments by item type and item name.
+    syntax: >-
+      az synapse role assignment list --workspace-name testsynapseworkspace \
+
+      --item-type "bigDataPools" --item "bigDataPoolName"
   requiredParameters:
   - isRequired: true
     name: --workspace-name
@@ -146,13 +219,26 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --assignee
-    summary: 'Represent a user, group, or service principal. Supported format: object id, user sign-in name, or service principal name.'
+    summary: 'Represent a user or service principal. Supported format: object id, user sign-in name, or service principal name.'
+    description: ''
+  - name: --assignee-object-id
+    summary: Use this parameter instead of '--assignee' to bypass Graph API invocation in case of insufficient privileges. This parameter only works with object ids for users, groups, service principals, and managed identities. For managed identities use the principal id. For service principals, use the object id and not the app id.
+    description: ''
+  - name: --item
+    summary: Item granted access in the workspace. Using with --item-type to combine the scope of assignment.
+    description: ''
+  - name: --item-type
+    parameterValueGroup: bigDataPools, credentials, integrationRuntimes, linkedServices
+    summary: Item type granted access in the workspace. Using with --item to combine the scope of assignment.
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --role
     summary: The role name/id that is assigned to the principal.
+    description: ''
+  - name: --scope
+    summary: A scope defines the resources or artifacts that the access applies to. Synapse supports hierarchical scopes. Permissions granted at a higher-level scope are inherited by objects at a lower level. In Synapse RBAC, the top-level scope is a workspace. Assigning a role with workspace scope grants permissions to all applicable objects in the workspace.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -212,5 +298,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/26/2021
+  ms.date: 04/08/2021
   description: Manage Synapse's role assignments.
