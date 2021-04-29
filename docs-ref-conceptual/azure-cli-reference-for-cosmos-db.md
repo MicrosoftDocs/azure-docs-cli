@@ -36,9 +36,9 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb sql restorable-database](/cli/azure/cosmosdb/sql/restorable-database) | Manage different versions of SQL databases that can be restored in a database of an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
 | [az cosmosdb sql restorable-resource](/cli/azure/cosmosdb/sql/restorable-resource) | Manage the databases and its containers that can be restored in an Azure Cosmos DB account for the given timestamp and region. | | Extension: cosmosdb-preview |
 | [az cosmosdb sql role](/cli/azure/cosmosdb/sql/role) | Manage Azure Cosmos DB role resources. | [Configure role-based access control for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-rbac) | Extension: cosmosdb-preview |
-| [az cosmosdb sql stored-procedure](/cli/azure/cosmosdb/sql/stored-procedure) | Manage Azure Cosmos DB SQL stored procedures. | [Stored procedures, triggers, and user-defined functions](/azure/cosmos-db/stored-procedures-triggers) | Core |
-| [az cosmosdb sql trigger](/cli/azure/cosmosdb/sql/trigger) | Manage Azure Cosmos DB SQL triggers. | [Triggers](/azure/cosmos-db/stored-procedures-triggers#triggers) | Core |
-| [az cosmosdb sql user-defined-function](/cli/azure/cosmosdb/sql/user-defined-function) | Manage Azure Cosmos DB SQL user-defined functions. | [User-defined functions](/azure/cosmos-db/stored-procedures-triggers#udfs) | Core |
+| [az cosmosdb sql stored-procedure](/cli/azure/cosmosdb/sql/stored-procedure) | Manage Azure Cosmos DB SQL stored procedures. | [How to write stored procedures](/azure/cosmos-db/how-to-write-stored-procedures-triggers-udfs#stored-procedures) | Core |
+| [az cosmosdb sql trigger](/cli/azure/cosmosdb/sql/trigger) | Manage Azure Cosmos DB SQL triggers. | [How to write triggers](/azure/cosmos-db/how-to-write-stored-procedures-triggers-udfs#triggers) | Core |
+| [az cosmosdb sql user-defined-function](/cli/azure/cosmosdb/sql/user-defined-function) | Manage Azure Cosmos DB SQL user-defined functions. | [How to write user-defined functions](/azure/cosmos-db/how-to-write-stored-procedures-triggers-udfs#udfs) | Core |
 
 ### MongoDB
 
@@ -47,17 +47,17 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb mongodb](/cli/azure/cosmosdb/mongodb) | Manage the MongoDB resources of an Azure Cosmos DB account. | [Introduction to MongoDB API in Azure Cosmos DB](/azure/cosmos-db/mongodb-introduction) | Core |
 | [az cosmosdb mongodb collection](/cli/azure/cosmosdb/mongodb/collection) | Manage Azure Cosmos DB MongoDB collections.| [Create a database and collection for MongoDB API for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
 | [az cosmosdb mongodb database](/cli/azure/cosmosdb/mongodb/database) | Manage Azure Cosmos DB MongoDB databases. | [Create a database and collection for MongoDB API for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
-| [az cosmosdb mongodb restorable-collection](/cli/azure/mongodb/sql/restorable-collection) | Manage different versions of MongoDB collections that are restorable in a database of an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
-| [az cosmosdb mongodb restorable-database](/cli/azure/mongodb/sql/restorable-database) | Manage different versions of MongoDB databases that are restorable in an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
-| [az cosmosdb mongodb restorable-resource](/cli/azure/mongodb/sql/restorable-resource) | Manage the databases and its collections that can be restored in an Azure Cosmos DB account for the given timestamp and region. | | Extension: cosmosdb-preview |
+| [az cosmosdb mongodb restorable-collection](/cli/azure/cosmosdb/mongodb/restorable-collection) | Manage different versions of MongoDB collections that are restorable in a database of an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
+| [az cosmosdb mongodb restorable-database](/cli/azure/cosmosdb/mongodb/restorable-database) | Manage different versions of MongoDB databases that are restorable in an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
+| [az cosmosdb mongodb restorable-resource](/cli/azure/cosmosdb/mongodb/restorable-resource) | Manage the databases and its collections that are restorable in an Azure Cosmos DB account for the given timestamp and region. | | Extension: cosmosdb-preview |
 
 ### Cassandra
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
 | [az cosmosdb cassandra](/cli/azure/cosmosdb/cassandra) | Manage the Cassandra resources of an Azure Cosmos DB account. | [Introduction to Cassandra API in Azure Cosmos DB](/azure/cosmos-db/cassandra-introduction) | Core |
-| [az cosmosdb cassandra keyspace](/cli/azure/cosmosdb/cassandra/keyspace) | Manage Azure Cosmos DB Cassandra keyspaces. | [Create keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
-| [az cosmosdb cassandra table](/cli/azure/cosmosdb/cassandra/table) | Manage Azure Cosmos DB Cassandra tables. | [Create keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
+| [az cosmosdb cassandra keyspace](/cli/azure/cosmosdb/cassandra/keyspace) | Manage Azure Cosmos DB Cassandra keyspaces. | [Create a keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
+| [az cosmosdb cassandra table](/cli/azure/cosmosdb/cassandra/table) | Manage Azure Cosmos DB Cassandra tables. | [Create a keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
 
 ### Gremlin
 
@@ -114,7 +114,7 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
-| [az cosmosdb private-link-resource](/cli/azure/cosmosdb/private-link-resource) | Manage Azure Cosmos DB private link resources. | [Configure Azure Private Link for an Azure Cosmos account](/cosmos-db/how-to-configure-private-endpoints) | Core |
+| [az cosmosdb private-link-resource](/cli/azure/cosmosdb/private-link-resource) | Manage Azure Cosmos DB private link resources. | [Configure Azure Private Link for an Azure Cosmos account](/azure/cosmos-db/how-to-configure-private-endpoints) | Core |
 
 ### Restorable database account
 
