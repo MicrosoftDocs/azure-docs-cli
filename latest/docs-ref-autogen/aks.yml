@@ -105,6 +105,7 @@ directCommands:
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-cluster-autoscaler]
+                  [--enable-encryption-at-host]
                   [--enable-managed-identity]
                   [--enable-node-public-ip]
                   [--enable-private-cluster]
@@ -191,6 +192,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-diskencryptionset-id <disk-encryption-set-resource-id>
   - summary: Create a kubernetes cluster with ephemeral OS enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
+  - summary: Create a kubernetes cluster with EncryptionAtHost enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-encryption-at-host
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -288,6 +291,9 @@ directCommands:
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
+  - name: --enable-encryption-at-host
+    summary: Enable EncryptionAtHost, default value is false.
+    description: ''
   - name: --enable-managed-identity
     defaultValue: "1"
     summary: Using a system assigned managed identity to manage cluster resource group.
@@ -1026,6 +1032,7 @@ directCommands:
                   [--aad-admin-group-object-ids]
                   [--aad-tenant-id]
                   [--api-server-authorized-ip-ranges]
+                  [--assign-identity]
                   [--attach-acr]
                   [--ca-profile]
                   [--detach-acr]
@@ -1034,6 +1041,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-cluster-autoscaler]
+                  [--enable-managed-identity]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -1047,6 +1055,7 @@ directCommands:
                   [--update-cluster-autoscaler]
                   [--uptime-sla]
                   [--windows-admin-password]
+                  [--yes]
   examples:
   - summary: Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
@@ -1074,6 +1083,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-ahub
   - summary: Update Windows password of a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --windows-admin-password "Repl@cePassw0rd12345678"
+  - summary: Update the cluster to use system assigned managed identity in control plane.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity
+  - summary: Update the cluster to use user assigned managed identity in control plane.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1092,6 +1105,9 @@ directCommands:
     description: ''
   - name: --api-server-authorized-ip-ranges
     summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    description: ''
+  - name: --assign-identity
+    summary: Specify an existing user assigned identity to manage cluster resource group.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1116,6 +1132,9 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-managed-identity
+    summary: Update current cluster to use managed identity to manage cluster resource group.
     description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
@@ -1166,6 +1185,9 @@ directCommands:
             * Has a special character (Regex match [W_])
           - Disallowed values:  "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!"
       Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminpassword?view=azure-dotnet.
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_update-credentials
   name: az aks update-credentials
@@ -1453,5 +1475,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/19/2021
+  ms.date: 04/29/2021
   description: Manage Azure Kubernetes Services.
