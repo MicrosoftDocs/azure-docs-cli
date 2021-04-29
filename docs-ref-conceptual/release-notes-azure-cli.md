@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/19/2021
+ms.date: 05/06/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,148 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## May 06, 2021
+
+Version 2.23.0
+
+### ACR
+
+* `az acr check-health`: Add support to verify dns routings to private endpoints
+* Fix #17618: Update credential add/update handling for tasks created using --auth-mode
+
+### AKS
+
+* `az aks update`: Add `--windows-admin-password` to support updating Windows password
+* `az aks update`: Support updating from SPN cluster to MSI cluster.
+* `az aks create`: Add `--enable-encryption-at-host` parameter
+
+### App Service
+
+* [BREAKING CHANGE] Update websites SDK to the latest version (azure-mgmt-web==2.0.0) & Adopt track2 SDK
+* [BREAKING CHANGE] Rename `az staticwebapp browse` to `az staticwebapp show`
+* Add option of sku for `az staticwebapp create --sku`
+* Add command `az staticwebapp update`
+* `az webapp/functionapp config access-restriction add/remove`: Support for Service Tag, Http headers and multi-source rules.
+
+### ARM
+
+* `az bicep`: Replace datetime APIs that are not available in Python 3.6
+* `az deployment group create`: Fix the compatibility issue of api-version for parameter `--template-specs`
+
+### Backup
+
+* `az backup vault create`: Add tags as an optional argument
+* Make AFS configure backup flow idempotent
+
+### CDN
+
+* `az cdn endpoint rule add`: Fix delivery rule creation for non-Microsoft SKU
+
+### Compute
+
+* Extended location for Compute RP
+* `az sig image-version create`: Support creating from a VHD
+* `az vm create --count`: Support vnet and subnet configuration
+* `az vmss extension upgrade`: Fix a bug
+* Add error message for `vm identity assign`
+* Zone-redundant storage (ZRS) managed disks
+* `az disk create`: Trusted launch
+* `az disk create`: Hibernation
+* Fix a compatibility issue of old API version
+* `az sig image version create`: Support data disk VHDs
+
+### Feedback
+
+* Do not minify feedback issue body
+
+### FunctionApp
+
+* Fix issue with zip deploy where local time was provided but UTC was expected
+* Update stacks api json to add PowerShell on Linux in Functions
+
+### HDInsight
+
+* Add Incoming BREAKING CHANGE for removing default value of `--workernode-size` and  `--headnode-size`
+
+### Key Vault
+
+* [BREAKING CHANGE] Support soft-delete feature for managed-HSM. `keyvault delete --hsm-name` will perform soft delete on a MHSM.
+
+### Marketplace Ordering
+
+* New command group `az term` to accept/show terms
+
+### Misc.
+
+* Define theme for Cloud Shell
+
+### Monitor
+
+* New command `az monitor metrics list-namespaces`
+
+### Network
+
+* [BREAKING CHANGE] az network dns record-set a show: Property `arecords` in output will be changed to `aRecords`.
+* New command `az network express-route list-route-tables-summary`.
+* New command `az network express-route peering get-stats`.
+* New command `az network express-route peering connection list`.
+* `az network lb create`: Add new parameter `--edge-zone`
+* `az network nic create`: Add new parameter `--edge-zone`
+* `az network private-endpoint create`: Add new parameter `--edge-zone`
+* `az network private-link-service create`: Add new parameter `--edge-zone`
+* `az network public-ip create`: Add new parameter `--edge-zone`
+* `az network public-ip prefix create`: Add new parameter `--edge-zone`
+* `az network vnet create`: Add new parameter `--edge-zone`
+* New Command `az network lb list-nic`
+* `az network application-gateway show-backend-health`: support probe operation arguments.
+* `az network vpn-connection list`: support parameter `--vnet-gateway`.
+* New command `az network vnet-gateway disconnect-vpn-connections`.
+* New command `az network vnet-gateway vpn-client show-health`.
+* New command `az network vnet-gateway vpn-client ipsec-policy show`.
+* New command `az network vnet-gateway vpn-client ipsec-policy set`.
+* New command `az network vnet-gateway packet-capture start`.
+* New command `az network vnet-gateway packet-capture stop`.
+* New command `az network vnet-gateway show-supported-devices`.
+* New command `az network vpn-connection list-ike-sas`.
+* New command `az network vpn-connection packet-capture start`.
+* New command `az network vpn-connection packet-capture stop`.
+* New command `az network vpn-connection show-device-config-script`.
+* `az network private-link-resource list`: support more providers for `--type`
+
+### Packaging
+
+* Bump python to `3.8.9` in docker image
+* Bump bundled python to `3.8.9` in MSI.
+
+### RDBMS
+* [BREAKING CHANGE] `az mysql flexible-server create`: `--storage-size` default value is changed from 10 to 32.
+* `az postgres flexible-server create`: Add `--private-dns-zone` parameter for creating server with private access.
+
+### Role
+
+* `az role assignment create/update`: Auto complete `assignee_principal_type`
+
+### SQL
+
+* `az sql db create`: Add --ha-replicas argument
+* `az sql db replica create`: Add --ha-replicas argument
+* Allow short mw policy names for mi
+
+### SQL VM
+
+* Make SqlServerLicenseType as optional
+
+### Storage
+
+* Fix #16272 & #16853: Refine error message
+* `az storage account create`: Add edge zone support
+* Support user assigned identity for storage account
+* `az storage account create/update`: Support sas&key policy
+
+### Synapse
+
+* `az synapse notebook create`: Create a notebook
 
 ## April 19, 2021
 

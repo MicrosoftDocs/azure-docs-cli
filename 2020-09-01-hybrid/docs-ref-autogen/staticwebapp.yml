@@ -4,29 +4,6 @@ name: az staticwebapp
 summary: Manage static apps.
 description: ''
 directCommands:
-- uid: az_staticwebapp_browse
-  name: az staticwebapp browse
-  summary: Show details of a static app.
-  description: ''
-  syntax: >-
-    az staticwebapp browse --name
-                           [--resource-group]
-                           [--subscription]
-  examples:
-  - summary: Show static app in a subscription.
-    syntax: az staticwebapp browse -n MyStaticAppName
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the static site.
-    description: ''
-  optionalParameters:
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_staticwebapp_create
   name: az staticwebapp create
   summary: Create a static app with content from GitHubRepository URL provided in source on provided branch. Return the app created.
@@ -38,9 +15,10 @@ directCommands:
                            --resource-group
                            --source
                            [--api-location]
-                           [--app-artifact-location]
                            [--app-location]
                            [--no-wait]
+                           [--output-location]
+                           [--sku {Free, Standard}]
                            [--subscription]
                            [--tags]
                            [--token]
@@ -73,16 +51,21 @@ directCommands:
     defaultValue: .
     summary: Location of your Azure Functions code. For example, '/api' represents a folder called 'api'.
     description: ''
-  - name: --app-artifact-location
-    defaultValue: .github/workflows
-    summary: The path of your build output relative to your apps location. For example, setting a value of 'build' when your app location is set to '/app' will cause the content at '/app/build' to be served.
-    description: ''
   - name: --app-location
     defaultValue: .
     summary: Location of your application code. For example, '/' represents the root of your app, while '/app' represents a directory called 'app'.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --output-location
+    defaultValue: .github/workflows
+    summary: The path of your build output relative to your apps location. For example, setting a value of 'build' when your app location is set to '/app' will cause the content at '/app/build' to be served.
+    description: ''
+  - name: --sku
+    defaultValue: Free
+    parameterValueGroup: Free, Standard
+    summary: The pricing tiers for Static Web App.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -219,12 +202,85 @@ directCommands:
 
       https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line.
     description: ''
+- uid: az_staticwebapp_show
+  name: az staticwebapp show
+  summary: Show details of a static app.
+  description: ''
+  syntax: >-
+    az staticwebapp show --name
+                         [--query-examples]
+                         [--resource-group]
+                         [--subscription]
+  examples:
+  - summary: Show static app in a subscription.
+    syntax: az staticwebapp show -n MyStaticAppName
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the static site.
+    description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_staticwebapp_update
+  name: az staticwebapp update
+  summary: Update a static app. Return the app updated.
+  description: ''
+  syntax: >-
+    az staticwebapp update --name
+                           [--branch]
+                           [--no-wait]
+                           [--sku {Free, Standard}]
+                           [--source]
+                           [--subscription]
+                           [--tags]
+                           [--token]
+  examples:
+  - summary: Update static app to standard sku.
+    syntax: az staticwebapp update -n MyStaticAppName --sku Standard
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the static site.
+    description: ''
+  optionalParameters:
+  - name: --branch -b
+    summary: The target branch in the repository.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --sku
+    parameterValueGroup: Free, Standard
+    summary: The pricing tiers for Static Web App.
+    description: ''
+  - name: --source -s
+    summary: URL for the repository of the static site.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --token -t
+    summary: >-
+      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please follow the steps found at the following link:
+
+      https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line.
+    description: ''
 commands:
 - az_staticwebapp_appsettings
 - az_staticwebapp_appsettings_delete
 - az_staticwebapp_appsettings_list
 - az_staticwebapp_appsettings_set
-- az_staticwebapp_browse
 - az_staticwebapp_create
 - az_staticwebapp_delete
 - az_staticwebapp_disconnect
@@ -238,6 +294,8 @@ commands:
 - az_staticwebapp_hostname_set
 - az_staticwebapp_list
 - az_staticwebapp_reconnect
+- az_staticwebapp_show
+- az_staticwebapp_update
 - az_staticwebapp_users
 - az_staticwebapp_users_invite
 - az_staticwebapp_users_list

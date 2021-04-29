@@ -27,8 +27,8 @@ directCommands:
     description: ''
 - uid: az_ssh_config
   name: az ssh config
-  summary: Create an SSH config for resources (Azure VMs, etc) which can then be imported to 3rd party SSH clients.
-  description: ''
+  summary: Create an SSH config for resources (Azure VMs, etc) which can then be used by clients that support OpenSSH configs and certificates.
+  description: Other software (git/rsync/etc) that support setting an SSH command can be set to use the config file by setting the command to 'ssh -F /path/to/config' e.g. rsync -e 'ssh -F /path/to/config'.
   syntax: >-
     az ssh config --file
                   [--ip]
@@ -41,8 +41,11 @@ directCommands:
   examples:
   - summary: Give a resource group and VM for which to create a config, and save in a local file
     syntax: az ssh config --resource-group myResourceGroup --vm-name myVm --file ./sshconfig
-  - summary: Give the public IP (or hostname) of a VM for which to create a config
-    syntax: az ssh config --ip 1.2.3.4 --file ./sshconfig
+  - summary: Give the public IP (or hostname) of a VM for which to create a config and then ssh
+    syntax: >-
+      az ssh config --ip 1.2.3.4 --file ./sshconfig
+
+      ssh -F ./sshconfig 1.2.3.4
   - summary: Create a generic config for use with any host
     syntax: >-
       #Bash
@@ -52,6 +55,15 @@ directCommands:
       #PowerShell
 
       az ssh config --ip * --file ./sshconfig
+  - summary: Examples with other software
+    syntax: >-
+      #Bash
+
+      az ssh config --ip \* --file ./sshconfig
+
+      rsync -e 'ssh -F ./sshconfig' -avP directory/ myvm:~/directory
+
+      GIT_SSH_COMMAND="ssh -F ./sshconfig" git clone myvm:~/gitrepo
   requiredParameters:
   - isRequired: true
     name: --file -f
@@ -95,6 +107,8 @@ directCommands:
     syntax: az ssh vm --resource-group myResourceGroup --vm-name myVm
   - summary: Give the public IP (or hostname) of a VM to SSH to
     syntax: az ssh vm --ip 1.2.3.4
+  - summary: Using a custom private key file
+    syntax: az ssh vm --ip 1.2.3.4 --private-key-file key --public-key-file key.pub
   optionalParameters:
   - name: --ip
     summary: The public IP address (or hostname) of the VM.
