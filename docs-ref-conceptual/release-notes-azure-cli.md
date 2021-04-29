@@ -128,6 +128,10 @@ Version 2.23.0
 * Bump python to `3.8.9` in docker image
 * Bump bundled python to `3.8.9` in MSI.
 
+### RDBMS
+* [BREAKING CHANGE] `az mysql flexible-server create`: `--storage-size` default value is changed from 10 to 32.
+* `az postgres flexible-server create`: Add `--private-dns-zone` parameter for creating server with private access.
+
 ### Role
 
 * `az role assignment create/update`: Auto complete `assignee_principal_type`
