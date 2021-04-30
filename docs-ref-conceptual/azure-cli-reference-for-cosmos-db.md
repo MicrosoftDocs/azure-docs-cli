@@ -5,7 +5,7 @@ author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 04/27/2021
+ms.date: 04/30/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
@@ -25,11 +25,11 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-### SQL
+## SQL API references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
-| [az cosmosdb sql](/cli/azure/cosmosdb/sql) | Manage the SQL resources of an Azure Cosmos DB account. | [Manage Azure Cosmos Core (SQL) API resources using Azure CLI](/azure/cosmos-db/manage-with-cli) | Core |
+| [az cosmosdb sql](/cli/azure/cosmosdb/sql) | Manage the SQL resources of an Azure Cosmos DB account. | [Manage Azure Cosmos Core SQL API resources using Azure CLI](/azure/cosmos-db/manage-with-cli) | Core |
 | [az cosmosdb sql container](/cli/azure/cosmosdb/sql/container) | Manage Azure Cosmos DB SQL containers. | [Azure Cosmos DB container](/azure/cosmos-db/manage-with-cli#azure-cosmos-db-container) | Core |
 | [az cosmosdb sql database](/cli/azure/cosmosdb/sql/database) | Manage Azure Cosmos DB SQL databases. | [Azure Cosmos DB database](/azure/cosmos-db/manage-with-cli#azure-cosmos-db-database) | Core |
 | [az cosmosdb sql restorable-container](/cli/azure/cosmosdb/sql/restorable-container) | Manage different versions of SQL containers that can be restored in a database of an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
@@ -40,18 +40,18 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb sql trigger](/cli/azure/cosmosdb/sql/trigger) | Manage Azure Cosmos DB SQL triggers. | [How to write triggers](/azure/cosmos-db/how-to-write-stored-procedures-triggers-udfs#triggers) | Core |
 | [az cosmosdb sql user-defined-function](/cli/azure/cosmosdb/sql/user-defined-function) | Manage Azure Cosmos DB SQL user-defined functions. | [How to write user-defined functions](/azure/cosmos-db/how-to-write-stored-procedures-triggers-udfs#udfs) | Core |
 
-### MongoDB
+## API for MongoDB references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
-| [az cosmosdb mongodb](/cli/azure/cosmosdb/mongodb) | Manage the MongoDB resources of an Azure Cosmos DB account. | [Introduction to MongoDB API in Azure Cosmos DB](/azure/cosmos-db/mongodb-introduction) | Core |
-| [az cosmosdb mongodb collection](/cli/azure/cosmosdb/mongodb/collection) | Manage Azure Cosmos DB MongoDB collections.| [Create a database and collection for MongoDB API for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
-| [az cosmosdb mongodb database](/cli/azure/cosmosdb/mongodb/database) | Manage Azure Cosmos DB MongoDB databases. | [Create a database and collection for MongoDB API for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
+| [az cosmosdb mongodb](/cli/azure/cosmosdb/mongodb) | Manage the MongoDB resources of an Azure Cosmos DB account. | [Introduction to API for MongoDB](/azure/cosmos-db/mongodb-introduction) | Core |
+| [az cosmosdb mongodb collection](/cli/azure/cosmosdb/mongodb/collection) | Manage Azure Cosmos DB MongoDB collections.| [Create a database and collection for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
+| [az cosmosdb mongodb database](/cli/azure/cosmosdb/mongodb/database) | Manage Azure Cosmos DB MongoDB databases. | [Create a database and collection for MongoDB DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | Core |
 | [az cosmosdb mongodb restorable-collection](/cli/azure/cosmosdb/mongodb/restorable-collection) | Manage different versions of MongoDB collections that are restorable in a database of an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
 | [az cosmosdb mongodb restorable-database](/cli/azure/cosmosdb/mongodb/restorable-database) | Manage different versions of MongoDB databases that are restorable in an Azure Cosmos DB account. | | Extension: cosmosdb-preview |
 | [az cosmosdb mongodb restorable-resource](/cli/azure/cosmosdb/mongodb/restorable-resource) | Manage the databases and its collections that are restorable in an Azure Cosmos DB account for the given timestamp and region. | | Extension: cosmosdb-preview |
 
-### Cassandra
+## Cassandra API references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
@@ -59,7 +59,15 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb cassandra keyspace](/cli/azure/cosmosdb/cassandra/keyspace) | Manage Azure Cosmos DB Cassandra keyspaces. | [Create a keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
 | [az cosmosdb cassandra table](/cli/azure/cosmosdb/cassandra/table) | Manage Azure Cosmos DB Cassandra tables. | [Create a keyspace and table](/azure/cosmos-db/cassandra-spark-ddl-ops) | Core |
 
-### Gremlin
+## Managed Instance for Apache Cassandra references
+
+| Reference | Description | More information | Core or extension
+|-|-|-|-|
+| [az managed-cassandra](/cli/azure/managed-cassandra) | References for Managed Instance for Apache Cassandra. | [What is Azure-managed instance for Apache Cassandra?](/azure/managed-instance-apache-cassandra/introduction) | Extension: cosmosdb-preview |
+| [az managed-cassandra cluster](/cli/azure/managed-cassandra/cluster) | Reference to handle Managed Instance for Apache Cassandra clusters. | [Manage Apache Cassandra resources using Azure CLI](/azure/managed-instance-apache-cassandra/manage-resources-cli) | Extension: cosmosdb-preview |
+| [az managed-cassandra datacenter](/cli/azure/managed-cassandra/datacenter) | Reference to handle Managed Instance for Apache Cassandra datacenters. | [Manage Apache Cassandra resources using Azure CLI](/azure/managed-instance-apache-cassandra/manage-resources-cli) | Extension: cosmosdb-preview |
+
+## Gremlin API references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
@@ -67,74 +75,23 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb gremlin database](/cli/azure/cosmosdb/gremlin/database) | Manage Azure Cosmos DB Gremlin databases. | [Create an Azure Cosmos Gremlin API account, database, and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) | Core |
 | [az cosmosdb gremlin graph](/cli/azure/cosmosdb/gremlin/graph) | Manage Azure Cosmos DB Gremlin graphs. | [Create an Azure Cosmos Gremlin API account, database, and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) | Core |
 
-### Table
+## Table API references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
 | [az cosmosdb table](/cli/azure/cosmosdb/table) | Manage the Table resources of an Azure Cosmos DB account. | [Introduction to Table API in Azure Cosmos DB](/azure/cosmos-db/table-introduction) | core |
 | [az cosmosdb table throughput](/cli/azure/cosmosdb/table/throughput) | Manage the throughput Table resources of an Azure Cosmos DB account. | [Request units in Azure Cosmos DB](/azure/cosmos-db/request-units) | Core |
 
-### Collection
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
-| [az cosmosdb collection](/cli/azure/cosmosdb/collection) | Manage Azure Cosmos DB collections. | [Azure Cosmos DB resource model](/azure/cosmos-db/account-databases-containers-items) | Core |
-
-### Database
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
-| [az cosmosdb database](/cli/azure/cosmosdb/database) | Manage Azure Cosmos DB databases. | [Azure Cosmos DB resource model](/azure/cosmos-db/account-databases-containers-items) | Core |
-
-### Identity
+## Additional references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|
 | [az cosmosdb identity](/cli/azure/cosmosdb/identity) | Manage Azure Cosmos DB-managed service identities. | [Use system-assigned managed identities to access Azure Cosmos DB data](/azure/cosmos-db/managed-identity-based-authentication) | Core |
-
-### Keys
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
 | [az cosmosdb keys](/cli/azure/cosmosdb/keys) | Manage Azure Cosmos DB keys. | [Secure access to data in Azure Cosmos DB](/azure/cosmos-db/secure-access-to-data) | Core |
-
-### Network rule
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
 | [az cosmosdb network-rule](/cli/azure/cosmosdb/network-rule) | Manage Azure Cosmos DB network rules. | [Configure access to Azure Cosmos DB from virtual networks](/azure/cosmos-db/how-to-configure-vnet-service-endpoint) | Core |
-
-### Private endpoint connection
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
 | [az cosmosdb private-endpoint-connection](/cli/azure/cosmosdb/private-endpoint-connection) | Manage Azure Cosmos DB private endpoint connections. | [Configure Azure Private Link for an Azure Cosmos account](/azure/cosmos-db/how-to-configure-private-endpoints) | Core |
-
-### Private link resource
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
 | [az cosmosdb private-link-resource](/cli/azure/cosmosdb/private-link-resource) | Manage Azure Cosmos DB private link resources. | [Configure Azure Private Link for an Azure Cosmos account](/azure/cosmos-db/how-to-configure-private-endpoints) | Core |
-
-### Restorable database account
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
 | [az cosmosdb restorable-database-account](/cli/azure/cosmosdb/restorable-database-account) | Manage restorable Azure Cosmos DB accounts. | | Extension: cosmosdb-preview |
-
-### Managed Cassandra
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
-| [az managed-cassandra](/cli/azure/managed-cassandra) | Manage Apache Cassandra resources. | [What is Azure-managed instance for Apache Cassandra?](/azure/managed-instance-apache-cassandra/introduction) | Extension: cosmosdb-preview |
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
-| [az managed-cassandra cluster](/cli/azure/managed-cassandra/cluster) | Manage Apache Cassandra clusters. | [Manage Apache Cassandra resources using Azure CLI](/azure/managed-instance-apache-cassandra/manage-resources-cli) | Extension: cosmosdb-preview |
-
-| Reference | Description | More information | Core or extension
-|-|-|-|-|
-| [az managed-cassandra datacenter](/cli/azure/managed-cassandra/datacenter) | Manage Apache Cassandra datacenters. | [Manage Apache Cassandra resources using Azure CLI](/azure/managed-instance-apache-cassandra/manage-resources-cli) | Extension: cosmosdb-preview |
 
 ## See also
 
