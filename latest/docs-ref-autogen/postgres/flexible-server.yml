@@ -47,9 +47,11 @@ directCommands:
                                        [--admin-user]
                                        [--assign-identity]
                                        [--backup-retention]
+                                       [--database-name]
                                        [--high-availability]
                                        [--location]
                                        [--name]
+                                       [--private-dns-zone]
                                        [--public-access]
                                        [--resource-group]
                                        [--sku-name]
@@ -82,7 +84,11 @@ directCommands:
   - summary: Create a PostgreSQL flexible server using already existing virtual network, subnet, and using the subnet ID. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforMySQL/flexibleServers, if not already delegated.
     syntax: az postgres flexible-server create --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName}
   - summary: Create a PostgreSQL flexible server using new virtual network, subnet with non-default address prefix.
-    syntax: az postgres flexible-server create --vnet myVnet --address-prefixes 10.0.0.0/24 --subnet mySubnet --subnet-prefixes 10.0.0.0/24
+    syntax: az postgres flexible-server create --vnet myVnet --address-prefixes 15.0.0.0/24 --subnet mySubnet --subnet-prefixes 15.0.0.0/24
+  - summary: Create a PostgreSQL flexible server using new virtual network, subnet, and new private dns zone address
+    syntax: az postgres flexible-server create --vnet myVnet --subnet mySubnet --private-dns-zone myDnsZone.private.postgres.database.azure.com
+  - summary: Create a PostgreSQL flexible server using existing subnet and private dns zone address in different resource group
+    syntax: az postgres flexible-server create --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName} --private-dns-zone /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/privateDnsZones/myDnsZone.private.postgres.database.azure.com
   - summary: Create a PostgreSQL flexible server with  parameters set.
     syntax: >-
       az postgres flexible-server create --location northeurope --resource-group testGroup \
@@ -97,7 +103,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: angryDunnock0
+    defaultValue: pickyferret2
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --assign-identity
@@ -106,6 +112,9 @@ directCommands:
   - name: --backup-retention
     defaultValue: "7"
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+    description: ''
+  - name: --database-name -d
+    summary: The name of the database to be created when provisioning the database server.
     description: ''
   - name: --high-availability
     defaultValue: Disabled
@@ -116,6 +125,9 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --private-dns-zone
+    summary: The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group if not provided by users.
     description: ''
   - name: --public-access
     summary: Determines the public access. Enter single or range of IP addresses to be included in the allowed list of IPs. IP address ranges must be dash-separated and not contain any spaces. Specifying 0.0.0.0 allows public access from any resources deployed within Azure to access your server. Setting it to "None" sets the server in public access mode but does not create a firewall rule.
@@ -132,7 +144,7 @@ directCommands:
     summary: The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
     description: ''
   - name: --subnet
-    summary: Resource ID of an existing subnet. Please note that the subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers/Microsoft.DBforMySQL/flexibleServers.After delegation, this subnet cannot be used for any other type of Azure resources.
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers/Microsoft.DBforMySQL/flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
     description: ''
   - name: --subnet-prefixes
     summary: The subnet IP address prefix to use when creating a new VNet in CIDR format. Default value is 10.0.0.0/24.
@@ -152,7 +164,7 @@ directCommands:
     summary: Server major version.
     description: ''
   - name: --vnet
-    summary: Name of an existing virtual network or name of a new one to create. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
     description: ''
   - name: --zone -z
     summary: Availability zone into which to provision the resource.
@@ -296,7 +308,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2021-04-29T07:18:22+00:00
+    defaultValue: 2021-04-30T07:55:38+00:00
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00.
     description: ''
   - name: --subscription
