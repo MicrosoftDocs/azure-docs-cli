@@ -4,7 +4,7 @@ name: az graph
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **resource-graph** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az graph** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **resource-graph** extension for Azure CLI and requires version 2.21.0 or higher.  The extension will automatically install the first time you run an **az graph** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Query the resources managed by Azure Resource Manager.
 description: Run 'az graph query --help' for detailed help.
 directCommands:
@@ -14,9 +14,11 @@ directCommands:
   description: See https://aka.ms/AzureResourceGraph-QueryLanguage to learn more about query language and browse examples.
   syntax: >-
     az graph query --graph-query
+                   [--allow-partial-scopes {false, true}]
                    [--first]
-                   [--include]
+                   [--management-groups]
                    [--skip]
+                   [--skip-token]
                    [--subscriptions]
   examples:
   - summary: Query resources requesting a subset of resource fields.
@@ -26,33 +28,38 @@ directCommands:
   - summary: Request a subset of results, skipping 20 items and getting the next 10.
     syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --first 10 --skip 20
   - summary: Choose subscriptions to query.
-    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --subscriptions 11111111-1111-1111-1111-111111111111, 22222222-2222-2222-2222-222222222222
+    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --subscriptions 11111111-1111-1111-1111-111111111111 22222222-2222-2222-2222-222222222222
+  - summary: Choose management groups to query.
+    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --management-groups aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb --allow-partial-scopes
+  - summary: Query with the skip token.
+    syntax: az graph query -q "where type =~ "Microsoft.Compute" | project name, tags" --skip-token skip_token_value_from_previous_query_response
   requiredParameters:
   - isRequired: true
     name: --graph-query --q -q
     summary: Resource Graph query to execute.
     description: ''
   optionalParameters:
-  - name: --first
-    defaultValue: "100"
-    summary: 'The maximum number of objects to return. Accepted range: 1-5000.'
+  - name: --allow-partial-scopes -a
+    parameterValueGroup: false, true
+    summary: Indicates if query should succeed when only partial number of subscription underneath can be processed by server.
     description: ''
-  - name: --include
-    summary: 'Indicates if result should be extended with subscription and tenants names. Possible values: none, displayNames.'
+  - name: --first
+    summary: 'The maximum number of objects to return. Accepted range: 1-1000.'
+    description: ''
+  - name: --management-groups -m
+    summary: List of management groups to run query against.
     description: ''
   - name: --skip
     summary: Ignores the first N objects and then gets the remaining objects.
+    description: ''
+  - name: --skip-token
+    summary: Skip token to get the next page of the query if applicable.
     description: ''
   - name: --subscriptions -s
     summary: List of subscriptions to run query against. By default all accessible subscriptions are queried.
     description: ''
 commands:
 - az_graph_query
-- az_graph_shared-query
-- az_graph_shared-query_create
-- az_graph_shared-query_delete
-- az_graph_shared-query_list
-- az_graph_shared-query_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
