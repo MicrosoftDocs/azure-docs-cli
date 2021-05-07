@@ -42,12 +42,19 @@ If the extension is from an external resource or you have a direct link to it, p
 az extension add --source <URL-or-path>
 ```
 
+You can also build a private extension index following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/master/src/index.json), then set the extension index URL used by Azure CLI to it starting from version `2.20.0`. After that, you can install the extension by name from the private extension index.
+
+```azurecli-interactive
+az config set extension.index_url=<URL>
+az extension add --name <extension-name>
+```
+
 Once an extension is installed, it's found under the value of the `$AZURE_EXTENSION_DIR` shell variable. If this variable is unset, by default the value is `$HOME/.azure/cliextensions` on
 Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ### Install extensions automatically
 
-When you run an extension command that is not installed, the Azure CLI can recognize the command you run, and automatically install the extension for you starting from version `2.10.0`. This feature, referred to as **dynamic install**, is enabled through configuration.
+When you run an extension command that is not installed, the Azure CLI can recognize the command you run, and automatically install the extension for you starting from version `2.10.0`. This feature, referred to as **dynamic install**, is enabled by default since `2.12.0`. You can also enable it through configuration for previous supported versions.
 ```azurecli-interactive
 az config set extension.use_dynamic_install=yes_prompt
 ```
@@ -62,9 +69,9 @@ Use the following configuration command to turn off the dynamic install feature 
 az config set extension.use_dynamic_install=no
 ```
 
-By default, an extension command that prompts dynamic install will not continue to run. You can change the default behavior and make the command continue by setting the `run_after_dynamic_install` property to `yes`.
+By default, an extension command that prompts dynamic install will continue to run after the extension is installed. You can change the default behavior and make the command exit without a rerun by setting the `run_after_dynamic_install` property to `no`.
 ```azurecli-interactive
-az config set extension.run_after_dynamic_install=yes
+az config set extension.run_after_dynamic_install=no
 ```
 
 ## Update extensions
