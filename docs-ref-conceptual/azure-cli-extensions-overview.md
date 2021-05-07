@@ -42,7 +42,7 @@ If the extension is from an external resource or you have a direct link to it, p
 az extension add --source <URL-or-path>
 ```
 
-You can also build a private extension index following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/master/src/index.json), then set the extension index url used by Azure CLI to it starting from version `2.20.0`. After that, you can install the extension by name from the private extension index.
+You can also build a private extension index following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/master/src/index.json), then set the extension index URL used by Azure CLI to it starting from version `2.20.0`. After that, you can install the extension by name from the private extension index.
 
 ```azurecli-interactive
 az config set extension.index_url=<URL>
