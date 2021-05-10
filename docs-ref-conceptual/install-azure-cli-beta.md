@@ -64,7 +64,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
       ### [Windows PowerShell](#tab/powershell)
 
    ```powershell
-   . .\$env\Scripts\Activate.ps1
+   . .\<env_name>\Scripts\Activate.ps1
    ```
 
    ### [Linux/macOS Bash](#tab/bash)
