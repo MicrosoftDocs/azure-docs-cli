@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 ---
 # Migrate to Azure Identity
 
-Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
+Azure CLI beta internally replaces Azure Active Directory Authentication Library [(ADAL)](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and Microsoft Authentication Library [(MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
 This article provides detail about this breaking change and gives examples on how to get an access-token in Azure CLI beta.
 
@@ -48,11 +48,18 @@ az account get-access-token --subscription "mySubscriptionName"
 First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
 
 ## See also
-* [Azure CLI beta](/cli/azure/release-notes-azure-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azure-cli-beta) release notes
-* [Install Azure CLI beta version](/cli/azure/install-azure-cli-beta)
-* [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true) in .NET
-* [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Java
-* [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Python
-* [SharedTokenCacheCredential Class](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true) in .NET
-* [SharedTokenCacheCredential Class](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true) in Java
-* [SharedTokenCacheCredential Class](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true) in Python
+* Azure CLI
+  * [Azure CLI beta](/cli/azure/release-notes-azure-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azure-cli-beta) release notes
+  * [Install Azure CLI beta version](/cli/azure/install-azure-cli-beta)
+* .NET
+  * [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true) in .NET
+  * [SharedTokenCacheCredential Class](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true) in .NET
+* Java
+  * [SharedTokenCacheCredential Class](/java/api/com.azure.identity.sharedtokencachecredential?view=azure-java-stable&preserve-view=true) in Java
+  * [AzureCliCredential Class](/java/api/com.azure.identity.azureclicredential?view=azure-java-stable&preserve-view=true) in Java
+* Python
+  * [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential?view=azure-python&preserve-view=true) in Python
+  * [SharedTokenCacheCredential Class](/python/api/azure-identity/azure.identity.sharedtokencachecredential?view=azure-python&preserve-view=true) in Python
+* Azure security
+  * [Introduction to Azure security](/azure/security/fundamentals/overview)
+  * [Overview of the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-overview)
