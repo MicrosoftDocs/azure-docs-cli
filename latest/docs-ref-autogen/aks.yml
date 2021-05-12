@@ -104,6 +104,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-encryption-at-host]
                   [--enable-managed-identity]
@@ -194,6 +195,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
   - summary: Create a kubernetes cluster with EncryptionAtHost enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-encryption-at-host
+  - summary: Create a kubernetes cluster with Azure RBAC enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --enable-azure-rbac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -287,6 +290,9 @@ directCommands:
           confcom      - enable confcom addon, this will enable SGX device plugin by default.
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+    description: ''
+  - name: --enable-azure-rbac
+    summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
@@ -1050,9 +1056,11 @@ directCommands:
                   [--ca-profile]
                   [--detach-acr]
                   [--disable-ahub]
+                  [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
                   [--enable-aad]
                   [--enable-ahub]
+                  [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-managed-identity]
                   [--load-balancer-idle-timeout]
@@ -1100,6 +1108,12 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity
   - summary: Update the cluster to use user assigned managed identity in control plane.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
+  - summary: Update a non managed AAD AKS cluster to use Azure RBAC
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-aad --enable-azure-rbac
+  - summary: Update a managed AAD AKS cluster to use Azure RBAC
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-rbac
+  - summary: Disable Azure RBAC in a managed AAD AKS cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-rbac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1134,6 +1148,9 @@ directCommands:
   - name: --disable-ahub
     summary: Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
     description: ''
+  - name: --disable-azure-rbac
+    summary: Disable Azure RBAC to control authorization checks on cluster.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
@@ -1142,6 +1159,9 @@ directCommands:
     description: ''
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+    description: ''
+  - name: --enable-azure-rbac
+    summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
@@ -1489,5 +1509,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/29/2021
+  ms.date: 05/12/2021
   description: Manage Azure Kubernetes Services.
