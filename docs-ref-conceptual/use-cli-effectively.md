@@ -77,6 +77,10 @@ You could also pipe a value from one command to another. This example uses stand
 az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm
 ```
 
+## Pass arguments
+
+### Use quotation marks in arguments
+
 When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ.
 
 * Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
@@ -86,13 +90,7 @@ When you work with Azure CLI commands, be aware of how your shell uses quotation
 > [!NOTE]
 > Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
-### Using hyphen characters in values
-
-If a value begins with a hyphen, Azure CLI tries to parse it as a parameter name. To parse it as value, use quotation marks: `--password="-VerySecret"`.
-
-### Using quotation marks in values
-
-If you provide a parameter a value that contains whitespace, wrap it in quotation marks. Keep the following tips in mind:
+If you provide an argument that contains whitespace, wrap it in quotation marks. Keep the following tips in mind:
 
 * In Bash or PowerShell, both single and double quotes are interpreted. In Windows Command Prompt, only double quotes are interpreted. Single quotes are interpreted as a part of the value.
 
@@ -135,6 +133,10 @@ If you provide a parameter a value that contains whitespace, wrap it in quotatio
   az --% version --query "\"azure-cli\""
   az --% version --query \"azure-cli\"
   ```
+
+### Use hyphen characters in arguments
+
+If an argument's value begins with a hyphen, Azure CLI tries to parse it as an argument name. To parse it as value, use `=` to concatenate the argument name and value: `--password="-VerySecret"`.
 
 ## Asynchronous operations
 
