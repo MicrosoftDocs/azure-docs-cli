@@ -11,4 +11,4 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-[!INCLUDE [choose-the-right-azure-command-line-tool.md](https://github.com/MicrosoftDocs/azure-dev-docs-pr/blob/master/articles/includes/choose-the-right-azure-command-line-tool.md]
+[!INCLUDE [choose-the-right-azure-command-line-tool](https://github.com/MicrosoftDocs/azure-dev-docs-pr/blob/master/articles/includes/choose-the-right-azure-command-line-tool.md)]
