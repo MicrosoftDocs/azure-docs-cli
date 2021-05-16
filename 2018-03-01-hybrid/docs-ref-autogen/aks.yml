@@ -70,6 +70,7 @@ directCommands:
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--client-secret]
                   [--cluster-autoscaler-profile]
+                  [--disable-local-accounts]
                   [--disable-rbac]
                   [--dns-name-prefix]
                   [--dns-service-ip]
@@ -179,6 +180,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-encryption-at-host
   - summary: Create a kubernetes cluster with custom control plane identity and kubelet identity.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --assign-identity <control-plane-identity-resource-id> --assign-kubelet-identity <kubelet-identity-resource-id>
+  - summary: Create a kubernetes cluster with Azure RBAC enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --enable-azure-rbac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -254,6 +257,9 @@ directCommands:
   - name: --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
+  - name: --disable-local-accounts
+    summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
+    description: ''
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
     description: ''
@@ -285,11 +291,12 @@ directCommands:
           open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
           gitops                          - enable GitOps (PREVIEW).
           azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+          azure-defender                  - enable Azure Defender addon (PREVIEW).
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
     description: ''
   - name: --enable-azure-rbac
-    summary: Whether to enable Azure RBAC for Kubernetes authorization.
+    summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
@@ -546,6 +553,7 @@ directCommands:
         open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
         gitops                          - enable GitOps (PREVIEW).
         azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+        azure-defender                  - enable Azure Defender addon (PREVIEW).
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -568,6 +576,8 @@ directCommands:
     syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons ingress-appgw --appgw-subnet-cidr 10.2.0.0/16 --appgw-name gateway
   - summary: Enable open-service-mesh addon.
     syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons open-service-mesh
+  - summary: Enable azure-defender addon with workspace resourceId.
+    syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons azure-defender --workspace-resource-id WorkspaceResourceId
   requiredParameters:
   - isRequired: true
     name: --addons -a
@@ -917,13 +927,17 @@ directCommands:
                   [--cluster-autoscaler-profile]
                   [--detach-acr]
                   [--disable-ahub]
+                  [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-local-accounts]
                   [--disable-pod-identity]
                   [--disable-pod-security-policy]
                   [--disable-secret-rotation]
                   [--enable-aad]
                   [--enable-ahub]
+                  [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-pod-identity]
                   [--enable-pod-identity-with-kubenet]
@@ -988,6 +1002,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --tags "foo=bar" "baz=qux"
   - summary: Update Windows password of a kubernetes cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --windows-admin-password "Repl@cePassw0rd12345678"
+  - summary: Update a managed AAD AKS cluster to use Azure RBAC
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-rbac
+  - summary: Disable Azure RBAC in a managed AAD AKS cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-rbac
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1029,8 +1047,14 @@ directCommands:
   - name: --disable-ahub
     summary: Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
     description: ''
+  - name: --disable-azure-rbac
+    summary: Disable Azure RBAC to control authorization checks on cluster.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --disable-local-accounts
+    summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
     description: ''
   - name: --disable-pod-identity
     summary: (PREVIEW) Disable Pod Identity addon for cluster.
@@ -1047,8 +1071,14 @@ directCommands:
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
     description: ''
+  - name: --enable-azure-rbac
+    summary: Enable Azure RBAC to control authorization checks on cluster.
+    description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-local-accounts
+    summary: (Preview) If set to true, will enable getting static credential for this cluster.
     description: ''
   - name: --enable-managed-identity
     summary: (PREVIEW) Update current cluster to managed identity to manage cluster resource group.
