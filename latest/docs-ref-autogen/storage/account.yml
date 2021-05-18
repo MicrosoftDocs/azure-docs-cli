@@ -30,12 +30,14 @@ directCommands:
                               --resource-group
                               [--access-tier {Cool, Hot}]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--bypass {AzureServices, Logging, Metrics, None}]
                               [--custom-domain]
                               [--default-action {Allow, Deny}]
+                              [--default-share-permission {None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareOwner, StorageFileDataSmbShareReader}]
                               [--domain-guid]
                               [--domain-name]
                               [--domain-sid]
@@ -92,6 +94,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Allow or disallow public access to all blobs or containers in the storage account. The default value for this property is null, which is equivalent to true. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
     description: ''
+  - name: --allow-cross-tenant-replication -r
+    parameterValueGroup: false, true
+    summary: Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property.
+    description: ''
   - name: --allow-shared-key-access -k
     parameterValueGroup: false, true
     summary: Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
@@ -112,6 +118,10 @@ directCommands:
   - name: --default-action
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches.
+    description: ''
+  - name: --default-share-permission -d
+    parameterValueGroup: None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareOwner, StorageFileDataSmbShareReader
+    summary: Default share permission for users using Kerberos authentication if RBAC role is not assigned.
     description: ''
   - name: --domain-guid
     summary: Specify the domain GUID. Required when --enable-files-adds is set to True.
@@ -556,12 +566,14 @@ directCommands:
     az storage account update [--access-tier {Cool, Hot}]
                               [--add]
                               [--allow-blob-public-access {false, true}]
+                              [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
                               [--assign-identity]
                               [--azure-storage-sid]
                               [--bypass {AzureServices, Logging, Metrics, None}]
                               [--custom-domain]
                               [--default-action {Allow, Deny}]
+                              [--default-share-permission {None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareOwner, StorageFileDataSmbShareReader}]
                               [--domain-guid]
                               [--domain-name]
                               [--domain-sid]
@@ -610,6 +622,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Allow or disallow public access to all blobs or containers in the storage account. The default value for this property is null, which is equivalent to true. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
     description: ''
+  - name: --allow-cross-tenant-replication -r
+    parameterValueGroup: false, true
+    summary: Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property.
+    description: ''
   - name: --allow-shared-key-access -k
     parameterValueGroup: false, true
     summary: Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
@@ -630,6 +646,10 @@ directCommands:
   - name: --default-action
     parameterValueGroup: Allow, Deny
     summary: Default action to apply when no rule matches.
+    description: ''
+  - name: --default-share-permission -d
+    parameterValueGroup: None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareOwner, StorageFileDataSmbShareReader
+    summary: Default share permission for users using Kerberos authentication if RBAC role is not assigned.
     description: ''
   - name: --domain-guid
     summary: Specify the domain GUID. Required when --enable-files-adds is set to True.
@@ -819,5 +839,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/26/2021
+  ms.date: 05/18/2021
   description: Manage storage accounts.
