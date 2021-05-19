@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/18/2021
+ms.date: 05/19/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -59,7 +59,7 @@ az extension list-available --output table
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools Customlocation Extension | Preview | [0.1.2](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox) | 2.3.1 | Microsoft Azure Command-Line Tools DataBox Extension | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks) | 2.3.1 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.7.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks/HISTORY.rst) |
-|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory) | 2.11.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory/HISTORY.rst) |
+|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
