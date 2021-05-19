@@ -66,7 +66,7 @@ directCommands:
 - uid: az_storage_share-rm_delete
   name: az storage share-rm delete
   summary: Delete the specified Azure file share or share snapshot.
-  description: 'Incoming BREAKING CHANGE: Snapshot will not be deleted by default and we will add a new parameter to use if you want to include sanpshots for delete operation.'
+  description: 'BREAKING CHANGE: Snapshot can not be deleted by default and we have added a new parameter to use if you want to include sanpshots for delete operation.'
   syntax: >-
     az storage share-rm delete [--ids]
                                [--include]
@@ -85,11 +85,16 @@ directCommands:
     syntax: az storage share-rm delete --ids file-share-id
   - summary: Delete an Azure file share snapshot.
     syntax: az storage share-rm delete --ids file-share-id --snapshot "2021-03-25T05:29:56.0000000Z"
+  - summary: Delete an Azure file share and all its snapshots.
+    syntax: az storage share-rm delete --include snapshots -g MyResourceGroup --storage-account mystorageaccount --name myfileshare
+  - summary: Delete an Azure file share and all its snapshots (leased/unleased).
+    syntax: az storage share-rm delete --include leased-snapshots -g MyResourceGroup --storage-account mystorageaccount --name myfileshare
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --include
+    defaultValue: none
     summary: "Optional. Valid values are: snapshots, leased-snapshots, none. The default value is snapshots. For 'snapshots', the file share is deleted including all of its file share snapshots. If the file share contains leased-snapshots, the deletion fails. For 'leased-snapshots', the file share is deleted included all of its file share snapshots (leased/unleased). For 'none', the file share is deleted if it has no share snapshots. If the file share contains any snapshots (leased or unleased), the deletion fails."
     description: ''
   - name: --name -n
@@ -152,6 +157,7 @@ directCommands:
   syntax: >-
     az storage share-rm list --storage-account
                              [--include-deleted]
+                             [--include-snapshot]
                              [--query-examples]
                              [--resource-group]
                              [--subscription]
@@ -162,6 +168,10 @@ directCommands:
     syntax: az storage share-rm list --storage-account mystorageaccount
   - summary: List all file shares include deleted under the storage account 'mystorageaccount' .
     syntax: az storage share-rm list --storage-account mystorageaccount --include-deleted
+  - summary: List all file shares include its all snapshots under the storage account 'mystorageaccount' .
+    syntax: az storage share-rm list --storage-account mystorageaccount --include-snapshot
+  - summary: List all file shares include its all snapshots and deleted file shares under the storage account 'mystorageaccount' .
+    syntax: az storage share-rm list --storage-account mystorageaccount --include-deleted --include-snapshot
   requiredParameters:
   - isRequired: true
     name: --storage-account
@@ -170,6 +180,9 @@ directCommands:
   optionalParameters:
   - name: --include-deleted
     summary: Include soft deleted file shares when specified.
+    description: ''
+  - name: --include-snapshot
+    summary: Include file share snapshots when specified.
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
@@ -449,5 +462,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/18/2021
+  ms.date: 05/19/2021
   description: Manage Azure file shares using the Microsoft.Storage resource provider.
