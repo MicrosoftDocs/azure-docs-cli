@@ -4,7 +4,7 @@ description: A complete list of the officially supported extensions for the Azur
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/18/2021
+ms.date: 05/20/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -59,13 +59,12 @@ az extension list-available --output table
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools Customlocation Extension | Preview | [0.1.2](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox) | 2.3.1 | Microsoft Azure Command-Line Tools DataBox Extension | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks) | 2.3.1 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.7.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks/HISTORY.rst) |
-|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory) | 2.11.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory/HISTORY.rst) |
+|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datafactory/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization) | 2.3.1 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
-|[dev-spaces-preview](https://github.com/Azure/azure-cli-extensions) | 2.0.32 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | Preview | [0.1.6](https://github.com/Azure/azure-cli-extensions) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.0.43 | Support for new Database Migration Service scenarios. | Preview | [0.12.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions) | 2.0.49 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [0.4.9](https://github.com/Azure/azure-cli-extensions) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 2.0.41 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) |
