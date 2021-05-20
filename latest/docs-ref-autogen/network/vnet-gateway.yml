@@ -24,6 +24,7 @@ directCommands:
                                    [--gateway-default-site]
                                    [--gateway-type {ExpressRoute, LocalGateway, Vpn}]
                                    [--location]
+                                   [--nat-rule]
                                    [--no-wait]
                                    [--peer-weight]
                                    [--radius-secret]
@@ -104,6 +105,26 @@ directCommands:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  - name: --nat-rule
+    summary: VirtualNetworkGatewayNatRule Resource.
+    description: >-
+      Usage: --nat-rule name=rule type=Static mode=EgressSnat internal-mappings=10.4.0.0/24 external-mappings=192.168.21.0/24 ip-config-id=/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/gateway1/ipConfigurations/default
+
+
+      name: Required.The name of the resource that is unique within a resource group. This name can be used to access the resource.
+
+      internal-mappings: Required.The private IP address internal mapping for NAT.
+
+      external-mappings: Required.The private IP address external mapping for NAT.
+
+      type: The type of NAT rule for VPN NAT.
+
+      mode: The Source NAT direction of a VPN NAT.
+
+      ip-config-id: The IP Configuration ID this NAT rule applies to.
+
+
+      Multiple nat rules can be specified by using more than one `--nat-rule` argument.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -633,6 +654,10 @@ commands:
 - az_network_vnet-gateway_list-advertised-routes
 - az_network_vnet-gateway_list-bgp-peer-status
 - az_network_vnet-gateway_list-learned-routes
+- az_network_vnet-gateway_nat-rule
+- az_network_vnet-gateway_nat-rule_add
+- az_network_vnet-gateway_nat-rule_list
+- az_network_vnet-gateway_nat-rule_remove
 - az_network_vnet-gateway_packet-capture
 - az_network_vnet-gateway_packet-capture_start
 - az_network_vnet-gateway_packet-capture_stop
@@ -671,5 +696,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/25/2021
+  ms.date: 05/20/2021
   description: To learn more about Azure Virtual Network Gateways, visit https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli.
