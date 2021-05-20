@@ -7,7 +7,493 @@ extensionInformation: >-
   > This reference is part of the **azure-cli-ml** extension for Azure CLI and requires version 2.0.28 or higher.  The extension will automatically install the first time you run an **az ml endpoint** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage machine learning endpoints.
 description: ''
+directCommands:
+- uid: az_ml_endpoint_create
+  name: az ml endpoint create
+  summary: Create an endpoint.
+  description: To create an endpoint, provide a YAML file with either an online or batch endpoint configuration. The endpoint can have one or more deployments defined. A deployment configuration will typically include the model to deploy, the scoring code, the environment encapsulating the scoring dependencies, the compute configuration, and any additional settings.
+  syntax: >-
+    az ml endpoint create --file
+                          --resource-group
+                          --workspace-name
+                          [--local {false, true}]
+                          [--name]
+                          [--no-wait]
+                          [--set]
+                          [--type]
+  examples:
+  - summary: Create an endpoint from a YAML specification file
+    syntax: az ml endpoint create --file endpoint.yml --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: Local path to the YAML file containing the Azure ML endpoint specification.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to create the endpoint locally. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --type -t
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+- uid: az_ml_endpoint_delete
+  name: az ml endpoint delete
+  summary: Delete an endpoint or a specific deployment.
+  description: ''
+  syntax: >-
+    az ml endpoint delete --name
+                          --resource-group
+                          --workspace-name
+                          [--deployment]
+                          [--local {false, true}]
+                          [--no-wait]
+                          [--type]
+                          [--yes]
+  examples:
+  - summary: Delete an online endpoint, including all its deployments
+    syntax: az ml endpoint delete --name my-online-endpoint --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Delete a specific deployment for a batch endpoint. This does not delete the endpoint itself.
+    syntax: az ml endpoint delete --name my-batch-endpoint --deployment my-deployment --type batch --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --deployment -d
+    summary: Name of the deployment to delete.
+    description: ''
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to delete the local endpoint. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_ml_endpoint_get-credentials
+  name: az ml endpoint get-credentials
+  summary: List the token/keys for an online endpoint.
+  description: ''
+  syntax: >-
+    az ml endpoint get-credentials --name
+                                   --resource-group
+                                   --workspace-name
+                                   [--type]
+  examples:
+  - summary: List the keys for an online endpoint
+    syntax: az ml endpoint get-credentials --name my-online-endpoint --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --type -t
+    defaultValue: online
+    summary: The type of endpoint. Only online endpoints are currently supported.
+    description: ''
+- uid: az_ml_endpoint_get-logs
+  name: az ml endpoint get-logs
+  summary: Get the container logs for an online deployment.
+  description: ''
+  syntax: >-
+    az ml endpoint get-logs --deployment
+                            --name
+                            --resource-group
+                            --workspace-name
+                            [--container]
+                            [--lines]
+                            [--local {false, true}]
+                            [--type]
+  examples:
+  - summary: Get the container logs for an online deployment
+    syntax: az ml endpoint get-logs --name my-online-endpoint --deployment my-deployment --lines 100 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --deployment -d
+    summary: Name of the deployment.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --container -c
+    summary: 'The type of container from which to retrieve logs. Allowed values: inference-server, storage-initializer.'
+    description: ''
+  - name: --lines -l
+    defaultValue: "5000"
+    summary: The maximum number of lines to tail.
+    description: ''
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to get logs from the local endpoint. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+- uid: az_ml_endpoint_invoke
+  name: az ml endpoint invoke
+  summary: Invoke an endpoint.
+  description: You can test an endpoint by invoking it with some request data. For online endpoints, this will be real-time inference and the scoring results will be returned immediately. For batch endpoints, invocation will trigger an asynchronous batch scoring job.
+  syntax: >-
+    az ml endpoint invoke --name
+                          --resource-group
+                          --workspace-name
+                          [--deployment]
+                          [--input-data]
+                          [--input-datastore]
+                          [--input-local-path]
+                          [--input-path]
+                          [--instance-count]
+                          [--local {false, true}]
+                          [--mini-batch-size]
+                          [--output-datastore]
+                          [--output-path]
+                          [--request-file]
+                          [--set]
+                          [--type]
+  examples:
+  - summary: Invoke an online endpoint with some request data
+    syntax: az ml endpoint invoke --name my-online-endpoint --request-file sample_request.json --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke an online endpoint, targeting a specific deployment
+    syntax: az ml endpoint invoke --name my-online-endpoint --deployment my-deployment --request-file sample_request.json --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input data from a registered Azure ML data asset (and override default deployment setting for mini_batch_size)
+    syntax: az ml endpoint invoke --name my-batch-endpoint --type batch --input-data azureml:mnist-data:1 --mini-batch-size 64 --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input data from a storage URL
+    syntax: az ml endpoint invoke --name my-batch-endpoint --type batch --input-path https://pipelinedata.blob.core.windows.net/sampledata/mnist --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input data from a path on a datastore
+    syntax: az ml endpoint invoke --name my-batch-endpoint --type batch --input-datastore my-datastore --input-path mnist --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input data from local files
+    syntax: az ml endpoint invoke --name my-batch-endpoint --type batch --input-local-path ./mnist --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --deployment -d
+    summary: Name of the deployment to target.
+    description: ''
+  - name: --input-data -i
+    summary: Input data asset. Format should be azureml:<data-name>:<data-version>.
+    description: ''
+  - name: --input-datastore -u
+    summary: Datastore to which --input-path/-p is relative or files in --input-local-path/-l will be uploaded. Defaults to the workspace's default datastore.
+    description: ''
+  - name: --input-local-path -l
+    summary: Local path to the input data. The file(s) will be uploaded and registered as an Azure ML data asset.
+    description: ''
+  - name: --input-path -p
+    summary: URL or path on the datastore where the input data is located.
+    description: ''
+  - name: --instance-count -c
+    summary: Number of instances the prediction will run on.
+    description: ''
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Invoke the local endpoint. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --mini-batch-size -m
+    summary: Size of each mini batch that the input data will be split into for prediction.
+    description: ''
+  - name: --output-datastore -s
+    summary: Datastore to which --output-path/-x is relative. Defaults to the workspace's default datastore.
+    description: ''
+  - name: --output-path -x
+    summary: Path on the datastore where output files will be uploaded to.
+    description: ''
+  - name: --request-file -r
+    summary: Local path to the JSON file containing the request data.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+- uid: az_ml_endpoint_list
+  name: az ml endpoint list
+  summary: List endpoints in a workspace.
+  description: ''
+  syntax: >-
+    az ml endpoint list --resource-group
+                        --workspace-name
+                        [--local {false, true}]
+                        [--type]
+  examples:
+  - summary: List all the online endpoints in a workspace
+    syntax: az ml endpoint list --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the batch endpoints in a workspace
+    syntax: az ml endpoint list --type batch --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to show all local endpoints. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+- uid: az_ml_endpoint_list-jobs
+  name: az ml endpoint list-jobs
+  summary: List the batch scoring jobs for a batch endpoint.
+  description: ''
+  syntax: >-
+    az ml endpoint list-jobs --name
+                             --resource-group
+                             --workspace-name
+                             [--deployment]
+                             [--type]
+  examples:
+  - summary: List all the batch scoring jobs for an endpoint
+    syntax: az ml endpoint list-jobs --name my-batch-endpoint --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List the batch scoring jobs for a specific deployment
+    syntax: az ml endpoint list-jobs --name my-batch-endpoint --deployment my-deployment --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --deployment -d
+    summary: Name of the deployment to target.
+    description: ''
+  - name: --type -t
+    defaultValue: batch
+    summary: The type of endpoint. Only batch endpoints are supported.
+    description: ''
+- uid: az_ml_endpoint_regenerate-keys
+  name: az ml endpoint regenerate-keys
+  summary: Regenerate the keys for an online endpoint.
+  description: ''
+  syntax: >-
+    az ml endpoint regenerate-keys --name
+                                   --resource-group
+                                   --workspace-name
+                                   [--key-type]
+                                   [--type]
+  examples:
+  - summary: Regenerate the keys for an online endpoint
+    syntax: az ml endpoint regenerate-keys --name my-online-endpoint --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --key-type
+    defaultValue: primary
+    summary: 'The type of key to regenerate. Allowed values: primary, secondary.'
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: The type of the endpoint. Only online endpoints are supported.
+    description: ''
+- uid: az_ml_endpoint_show
+  name: az ml endpoint show
+  summary: Show details for an endpoint.
+  description: ''
+  syntax: >-
+    az ml endpoint show --name
+                        --resource-group
+                        --workspace-name
+                        [--local {false, true}]
+                        [--type]
+  examples:
+  - summary: Show the details for a batch endpoint
+    syntax: az ml endpoint show --name my-batch-endpoint --type batch --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to show only the local endpoints. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --type -t
+    defaultValue: online
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
+- uid: az_ml_endpoint_update
+  name: az ml endpoint update
+  summary: Update an endpoint.
+  description: The 'description', 'tags', and 'traffic' properties of an endpoint can be updated. In addition, new deployments can be added to an endpoint, and existing deployments can be updated.
+  syntax: >-
+    az ml endpoint update --resource-group
+                          --workspace-name
+                          [--add]
+                          [--deployment]
+                          [--deployment-file]
+                          [--file]
+                          [--force-string]
+                          [--instance-count]
+                          [--local {false, true}]
+                          [--name]
+                          [--no-wait]
+                          [--remove]
+                          [--set]
+                          [--traffic]
+                          [--type]
+  examples:
+  - summary: Update an endpoint from a YAML specification file
+    syntax: az ml endpoint update --file updated_endpoint.yml --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Add a new deployment to an existing endpoint
+    syntax: az ml endpoint update --name my-batch-endpoint --type batch --deployment my-new-deployment --deployment-file new_deployment.yml  --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Update the traffic settings for an endpoint
+    syntax: az ml endpoint update --name my-batch-endpoint --type batch --traffic my-new-deployment:100 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --deployment -d
+    summary: Name of the deployment to update.
+    description: ''
+  - name: --deployment-file -e
+    summary: Local path to the YAML file containing the Azure ML deployment specification to update. If specified, --deployment/-d must also be provided.
+    description: ''
+  - name: --file -f
+    summary: Local path to the YAML file containing the Azure ML endpoint specification.
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --instance-count -i
+    summary: Instance count for the deployment. If specified, --deployment/-d must also be provided.
+    description: ''
+  - name: --local
+    parameterValueGroup: false, true
+    summary: Indicates whether to update the local endpoint. If specified, --type/-t must be 'online'.
+    description: ''
+  - name: --name -n
+    summary: Name of the endpoint.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --traffic -r
+    summary: Traffic settings for the endpoint.
+    description: ''
+  - name: --type -t
+    summary: 'The type of endpoint. Allowed values: online, batch.'
+    description: ''
 commands:
+- az_ml_endpoint_create
+- az_ml_endpoint_delete
+- az_ml_endpoint_get-credentials
+- az_ml_endpoint_get-logs
+- az_ml_endpoint_invoke
+- az_ml_endpoint_list
+- az_ml_endpoint_list-jobs
 - az_ml_endpoint_realtime
 - az_ml_endpoint_realtime_create-version
 - az_ml_endpoint_realtime_delete
@@ -21,6 +507,9 @@ commands:
 - az_ml_endpoint_realtime_show
 - az_ml_endpoint_realtime_update
 - az_ml_endpoint_realtime_update-version
+- az_ml_endpoint_regenerate-keys
+- az_ml_endpoint_show
+- az_ml_endpoint_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

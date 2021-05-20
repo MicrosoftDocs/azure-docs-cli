@@ -16,10 +16,7 @@ directCommands:
                                  --service-type
                                  --state {Stateful, Stateless}
                                  [--activation-mode]
-                                 [--close-duration]
                                  [--default-move-cost {High, Low, Medium, Zero}]
-                                 [--dns-name]
-                                 [--drop-source]
                                  [--has-persisted-state {false, true}]
                                  [--high-key]
                                  [--instance-count]
@@ -77,18 +74,9 @@ directCommands:
   - name: --activation-mode --package-activation-mode --service-package-activation-mode
     summary: Specify the activation mode of the service package.
     description: ''
-  - name: --close-duration --instance-close-delay-duration --instance-close-duration
-    summary: Specify the duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade and disabling node. The endpoint exposed on this instance is removed prior to starting the delay, which prevents new connections to this instance.
-    description: ''
   - name: --default-move-cost
     parameterValueGroup: High, Low, Medium, Zero
     summary: Specify the default cost for a move. Higher costs make it less likely that the Cluster Resource Manager will move the replica when trying to balance the cluster.
-    description: ''
-  - name: --dns-name --service-dns-name
-    summary: Specify the DNS name of the service. It requires the DNS system service to be enabled in Service Fabric cluster.
-    description: ''
-  - name: --drop-source --drop-source-replica-on-move
-    summary: Determines whether to drop source Secondary replica even if the target replica has not finished build. If desired behavior is to drop it as soon as possible the value of this property is true, if not it is false.
     description: ''
   - name: --has-persisted-state
     parameterValueGroup: false, true
@@ -261,9 +249,7 @@ directCommands:
                                  --cluster-name
                                  --name
                                  --resource-group
-                                 [--close-duration]
                                  [--default-move-cost {High, Low, Medium, Zero}]
-                                 [--drop-source]
                                  [--instance-count]
                                  [--keep-duration]
                                  [--min-inst-pct]
@@ -280,7 +266,7 @@ directCommands:
   - summary: Update managed stateless service.
     syntax: >-
       az sf managed-service update -g testRG -c testCluster --application-name testApp --service-name testService --min-instance-count 2 \
-        --min-instance-percentage 20 --instance-close-delay-duration '00:11:00'
+        --min-instance-percentage 20
   - summary: Update managed stateful service.
     syntax: >-
       az sf managed-service update -g testRG -c testCluster --application-name testApp --service-name testService2 --service-placement-time-limit '00:11:00' \
@@ -303,15 +289,9 @@ directCommands:
     summary: Specify the resource group name. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --close-duration --instance-close-delay-duration --instance-close-duration
-    summary: Specify the duration in seconds, to wait before a stateless instance is closed, to allow the active requests to drain gracefully. This would be effective when the instance is closing during the application/cluster upgrade and disabling node. The endpoint exposed on this instance is removed prior to starting the delay, which prevents new connections to this instance.
-    description: ''
   - name: --default-move-cost
     parameterValueGroup: High, Low, Medium, Zero
     summary: Specify the default cost for a move. Higher costs make it less likely that the Cluster Resource Manager will move the replica when trying to balance the cluster.
-    description: ''
-  - name: --drop-source --drop-source-replica-on-move
-    summary: Determines whether to drop source Secondary replica even if the target replica has not finished build. If desired behavior is to drop it as soon as possible the value of this property is true, if not it is false.
     description: ''
   - name: --instance-count
     summary: Specify the instance count for the stateless service. If -1 is used, it means it will run on all the nodes.

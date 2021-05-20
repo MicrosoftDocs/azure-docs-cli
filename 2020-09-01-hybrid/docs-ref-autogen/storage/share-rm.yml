@@ -48,7 +48,7 @@ directCommands:
 - uid: az_storage_share-rm_delete
   name: az storage share-rm delete
   summary: Delete the specified Azure file share or share snapshot.
-  description: 'Incoming BREAKING CHANGE: Snapshot will not be deleted by default and we will add a new parameter to use if you want to include sanpshots for delete operation.'
+  description: 'BREAKING CHANGE: Snapshot can not be deleted by default and we have added a new parameter to use if you want to include sanpshots for delete operation.'
   syntax: >-
     az storage share-rm delete [--ids]
                                [--name]
@@ -65,6 +65,10 @@ directCommands:
     syntax: az storage share-rm delete --ids file-share-id
   - summary: Delete an Azure file share snapshot.
     syntax: az storage share-rm delete --ids file-share-id --snapshot "2021-03-25T05:29:56.0000000Z"
+  - summary: Delete an Azure file share and all its snapshots.
+    syntax: az storage share-rm delete --include snapshots -g MyResourceGroup --storage-account mystorageaccount --name myfileshare
+  - summary: Delete an Azure file share and all its snapshots (leased/unleased).
+    syntax: az storage share-rm delete --include leased-snapshots -g MyResourceGroup --storage-account mystorageaccount --name myfileshare
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -136,6 +140,10 @@ directCommands:
     syntax: az storage share-rm list --storage-account mystorageaccount
   - summary: List all file shares include deleted under the storage account 'mystorageaccount' .
     syntax: az storage share-rm list --storage-account mystorageaccount --include-deleted
+  - summary: List all file shares include its all snapshots under the storage account 'mystorageaccount' .
+    syntax: az storage share-rm list --storage-account mystorageaccount --include-snapshot
+  - summary: List all file shares include its all snapshots and deleted file shares under the storage account 'mystorageaccount' .
+    syntax: az storage share-rm list --storage-account mystorageaccount --include-deleted --include-snapshot
   requiredParameters:
   - isRequired: true
     name: --storage-account
@@ -263,5 +271,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/18/2021
+  ms.date: 05/19/2021
   description: Manage Azure file shares using the Microsoft.Storage resource provider.
