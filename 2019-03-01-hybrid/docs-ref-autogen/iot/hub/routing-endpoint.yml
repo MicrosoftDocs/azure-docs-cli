@@ -23,6 +23,7 @@ directCommands:
                                        [--endpoint-uri]
                                        [--entity-path]
                                        [--ff]
+                                       [--identity]
                                        [--resource-group]
                                        [--subscription]
   examples:
@@ -39,8 +40,8 @@ directCommands:
       --container-name {ContainerName} --batch-frequency 100 --chunk-size 100 \
 
       --ff {iothub}-{partition}-{YYYY}-{MM}-{DD}-{HH}-{mm}
-  - summary: Add a new identity-based EventHub endpoint named "EventHubIdentity"
-    syntax: az iot hub routing-endpoint create --resource-group MyResourceGroup --hub-name MyIotHub --endpoint-name EventHubIdentity --endpoint-type eventhub --endpoint-resource-group {ResourceGroup} --endpoint-subscription-id {SubscriptionId} --auth-type identityBased --endpoint-uri {EventHubEndpointUri} --entity-path {EntityPath}
+  - summary: Add a new identity-based EventHub endpoint named "EventHubIdentity" and authenticate using a user-assigned managed identity
+    syntax: az iot hub routing-endpoint create --resource-group MyResourceGroup --hub-name MyIotHub --endpoint-name EventHubIdentity --endpoint-type eventhub --endpoint-resource-group {ResourceGroup} --endpoint-subscription-id {SubscriptionId} --auth-type identityBased --identity {userIdentityResourceId} --endpoint-uri {EventHubEndpointUri} --entity-path {EntityPath}
   requiredParameters:
   - isRequired: true
     name: --endpoint-name --name -n
@@ -95,6 +96,9 @@ directCommands:
   - name: --ff --file-name-format
     defaultValue: '{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}'
     summary: File name format for the blob. The file name format must contain {iothub}, {partition}, {YYYY}, {MM}, {DD}, {HH} and {mm} fields. All parameters are mandatory but can be reordered with or without delimiters.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity. If you use --auth-type without this parameter, system-assigned managed identity is assumed.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -240,5 +244,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/14/2021
+  ms.date: 05/21/2021
   description: Manage custom endpoints of an IoT hub.
