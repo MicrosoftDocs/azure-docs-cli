@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 05/06/2021
+ms.date: 05/25/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,123 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## May 25, 2021
+
+Version 2.24.0
+
+### AKS
+
+* `az aks check-acr`: Add the nodeslector linux to avoid the "canipull" pod to be scheduled on the windows node
+* Sdk update
+* az aks create and update azure-rbac
+* Add run-command cli
+
+### App Config
+
+* Allow importing key-values with unicode characters from file
+
+### App Service
+
+* [BREAKING CHANGE] `az webapp list-runtimes`: Add Dotnet6 support and update runtimes
+* `webapp log tail`: Fix #17987: logging.warning call with invalid 'end' argument
+* Fix #16838- az cli update app setting command always making slotsetting to true
+* `az appservice`: Add function to retrieve users github personal access token
+* az staticwebapp appsettings set issue #17792
+* Fix #18033: az staticwebapp appsettings set of missing positional param app_settings
+* Fix issues with APIs signature that changed with Track2 update
+* Fix get resource management client properly
+* Add interactive way to get token for staticwebapp
+* Fix an issue where assign and remove identities would fail with a call to NoneType
+
+### ARM
+
+* Migrate resource to track2 SDK
+* `az ts`: Add UiFormDefinition file support to TemplateSpecs for GA (05/04)
+
+### ARO
+
+* Add cluster credential rotation
+
+### Compute
+
+* `az sshkey create`: Save private key to local file system
+
+### Cosmos DB
+
+* Create and manage Role Definitions and Role Assignments for enforcing data plane RBAC on Cosmos DB SQL accounts
+
+### DevTestLabs
+
+* `az labs create environment`: Fix error creating an environment from an ARM template
+
+### HDInsight
+
+* [BREAKING CHANGE] `az hdinsight create`: Use getting default sku api to set workernode and headnode size if customer does not provide.
+
+### IoT
+
+* `az iot hub create`: Support assigning identities and assigning roles to system-managed identity.
+* `az iot hub update`: New parameter `--file-upload-storage-identity` to allow for managed-identity authenticated file upload.
+* `az iot hub identity assign`: New command to assign user/system-assigned managed identities to an IoT Hub.
+* `az iot hub identity show`: New command to show identity property of an IoT Hub.
+* `az iot hub identity show`: New command to update identity type of an IoT Hub.
+* `az iot hub identity remove`: New command to remove user/system-assigned managed identities from an IoT Hub.
+* `az iot hub routing-endpoint create`: New `--identity` parameter allows choosing a user/system-assigned identity for routing endpoints.
+* `az iot hub route create`: New routing source-type `DeviceConnectionStateEvents`
+
+### Kusto
+
+* Update command group long summary
+
+### Network
+
+* Bump api version from '2020-11-01' to '2021-02-01'
+* New command group `az network lb address-pool tunnel-interface`
+* `az network lb frontend-ip update`: New parameter `--gateway-lb`
+* `az network nic ip-config update`: New parameter `--gateway-lb`
+* `az network rule create/update`: New parameter `--backend-pools-name`
+* `az network vnet-gateway create`: Add new paramter `--nat-rule`
+* Add new cmd group `az network vnet-gateway nat-rule`
+* `az network vpn-conncetion create`: Add new paramter `--ingress-nat-rule` and `--egress-nat-rule`
+* `az network vnet create`: Add new parameter `--flowtimeout`
+
+### Packaging
+
+* Support Python 3.9
+
+### RDBMS
+
+* Change IOPS logic for MySQL
+* Prevent private DNS zone track2 migration breaking rdbms module
+
+### Service Fabric
+
+* [BREAKING CHANGE] `az sf cluster certificate`: Remove all commands under this group. Please follow the instructions here to add/remove cluster certificates: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-security-update-certs-azure#add-a-secondary-certificate-using-azure-resource-manager.
+* [BREAKING CHANGE] `az sf managed-service update`: Remove deprecated parameter --drop-source-replica-on-move.
+* [BREAKING CHANGE] `az sf managed-service create`: Remove deprecated parameters --service-dns-name, --drop-source-replica-on-move and -instance-close-delay-duration.
+* [BREAKING CHANGE] `az sf cluster`: Rename parameter --vault-resource-group to --vault-rg.
+* `az sf managed-cluster and sf managed-node-type`: Set groups as not preview
+* Update azure-mgmt-servicefabricmanagedclusters package to the latest version 1.0.0 that uses 2021-05-01 GA api version.
+* `az sf managed-cluster create`: Add parameters --upgrade-mode, --upgrade-cadence and --code-version.
+* `az sf managed-node-type`: Add parameters --data-disk-type, --is-stateless and --multiple-placement-groups.
+
+### SQL
+
+* `az sql server create`: Add a space to split the concatenated words in the help message of the argument --assign-identity.
+* `az sql server update`: Add a space to split the concatenated words in the help message of the argument --assign_identity.
+
+### Storage
+
+* [BREAKING CHANGE] `az storage share-rm delete`: Raise error when there are snapshots for target file share and add `--include` to specify deleting target file share and its snapshots
+* `az storage blob generate-sas`: Add spaces to split the concatenated words in the help message of the arguments --cache-control, --content-disposition, --content-encoding, --content-language and --content-type.
+* `az storage blob url`: Add a space to split the concatenated words in the help message of the argument --snapshot.
+* `az storage container generate-sas`: Add spaces to split the concatenated words in the help message of the arguments --cache-control, --content-disposition, --content-encoding, --content-language and --content-type.
+* Upgrade storage API version to 2021-04-01
+* Support default share permission
+* Support cross tenant object replication
+* GA blob inventory
+* `az storage share-rm list`: Support list with snapshots.
 
 ## May 06, 2021
 
