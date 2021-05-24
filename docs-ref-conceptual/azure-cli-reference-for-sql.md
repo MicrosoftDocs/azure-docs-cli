@@ -26,8 +26,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 
 | Reference | Description | More information |
 |-|-|-|
-| [az sql](/cli/azure/sql) | Manage Azure SQL Databases and Data Warehouses. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
-| [az sql db](/cli/azure/sql/db) | Manage a SQL database. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
+| [az sql db](/cli/azure/sql/db) | Manage Azure SQL Database. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
 | [az sql db audit-policy](/cli/azure/sql/db/audit-policy) | Manage a SQL database's auditing policy. | [Auditing for Azure SQL Database](/azure/azure-sql/database/auditing-overview) |
 | [az sql db classification](/cli/azure/sql/db/classification) | Manage a SQL database's sensitivity classifications. | [Data discovery and classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
 | [az sql db classification recommendation](/cli/azure/sql/db/classification/recommendation) | Manage a database's sensitivity classification recommendations. | [Data discovery and classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
@@ -42,7 +41,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 
 | Reference | Description | More information |
 |-|-|-|
-| [az sql mi](/cli/azure/sql/mi) | Manage a SQL Managed Instance. | [What is Azure SQL Managed Instance?](/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview) |
+| [az sql mi](/cli/azure/sql/mi) | Manage Azure SQL Managed Instance. | [What is Azure SQL Managed Instance?](/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview) |
 | [az sql mi ad-admin](/cli/azure/sql/mi/ad-admin) | Manage a SQL Managed Instance's Active Directory administrator. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
 | [az sql mi ad-only-auth](/cli/azure/sql/mi/ad-only-auth) | Manage a SQL Managed Instance Azure Active Directory-only settings. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
 | [az sql mi key](/cli/azure/sql/mi/key) | Manage a SQL Managed Instance's keys. | [Configure Always Encrypted by using Azure Key Vault](/azure/azure-sql/database/always-encrypted-azure-key-vault-configure) |
@@ -85,6 +84,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 
 | Reference | Description | More information |
 |-|-|-|
+| [az sql](/cli/azure/sql) | Manage Azure SQL. | [What is Azure SQL?](/azure/azure-sql/azure-sql-iaas-vs-paas-what-is-overview) |
 | [az sql dw](/cli/azure/sql/dw) | Manage data warehouses. | [What is dedicated SQL pool (formerly SQL DW) in Azure Synapse Analytics?](/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-overview-what-is) |
 | [az sql elastic-pool](/cli/azure/sql/elastic-pool) | Manage elastic pools. | [Elastic pools](/azure/azure-sql/database/elastic-pool-overview) |
 | [az sql elastic-pool op](/cli/azure/sql/elastic-pool/op) | Manage operations on an elastic pool. | [Elastic pools](/azure/azure-sql/database/elastic-pool-overview) |
