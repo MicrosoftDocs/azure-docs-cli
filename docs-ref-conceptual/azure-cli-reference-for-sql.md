@@ -1,6 +1,6 @@
 ---
-title: Azure CLI references for Azure SQL Server
-description: Azure CLI reference landing page for Azure SQL Server
+title: Azure CLI references for Azure SQL
+description: Azure CLI reference landing page for Azure SQL
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
@@ -12,33 +12,31 @@ ms.reviewer: robb
 ms.custom: devx-track-azurecli
 ---
 
-# Azure CLI for Azure SQL Server
+# Azure CLI for Azure SQL
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure SQL Server, and gives you the ability to manage Azure SQL Server services from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure SQL, and gives you the ability to manage Azure SQL services from a command line.
 
-## References for Azure SQL Server
+## References for Azure SQL
 
-The [Azure SQL Server](/azure/azure-sql/) CLI experience is composed of core references only and ships as part of the CLI.  
+The [Azure SQL](/azure/azure-sql/) CLI experience is composed of core references only and ships as part of the CLI.  
 
-See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references available for the Azure SQL Server service. For references for each subgroup, see the tables in the following sections.
-
-> [!NOTE]
-> You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
+See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections.
 
 ## SQL database references
 
 | Reference | Description | More information |
 |-|-|-|
-| [az sql db](/cli/azure/sql/db) | Manage a SQL Server database. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
+| [az sql](/cli/azure/sql) | Manage Azure SQL Databases and Data Warehouses. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
+| [az sql db](/cli/azure/sql/db) | Manage a SQL database. | [What is Azure SQL Database?](/azure/azure-sql/database/sql-database-paas-overview) |
 | [az sql db audit-policy](/cli/azure/sql/db/audit-policy) | Manage a SQL database's auditing policy. | [Auditing for Azure SQL Database](/azure/azure-sql/database/auditing-overview) |
-| [az sql db classification](/cli/azure/sql/db/classification) | Manage a SQL database's sensitivity classifications. | [Data Discovery & Classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
-| [az sql db classification recommendation](/cli/azure/sql/db/classification/recommendation) | Manage a database's sensitivity classification recommendations. | [Data Discovery & Classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
-| [az sql db ltr-backup](/cli/azure/sql/db/ltr-backup) | Manage a SQL database's long-term retention backup. | [Long-term retention - Azure SQL Database and Azure SQL Managed Instance](/azure/azure-sql/database/long-term-retention-overview) |
+| [az sql db classification](/cli/azure/sql/db/classification) | Manage a SQL database's sensitivity classifications. | [Data discovery and classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
+| [az sql db classification recommendation](/cli/azure/sql/db/classification/recommendation) | Manage a database's sensitivity classification recommendations. | [Data discovery and classification](/azure/azure-sql/database/data-discovery-and-classification-overview) |
+| [az sql db ltr-backup](/cli/azure/sql/db/ltr-backup) | Manage a SQL database's long-term retention backup. | [Long-term retention](/azure/azure-sql/database/long-term-retention-overview) |
 | [az sql db ltr-policy](/cli/azure/sql/db/ltr-policy) | Manage a SQL database's long-term retention policy. | [Manage Azure SQL Database long-term backup retention](/azure/azure-sql/database/long-term-backup-retention-configure) |
-| [az sql db op](/cli/azure/sql/db/op) | Manage the operations on a SQL database. | [Overview of Azure SQL Managed Instance management operations](/azure/azure-sql/managed-instance/management-operations-overview) |
+| [az sql db op](/cli/azure/sql/db/op) | Manage the operations on a SQL database. | [Configure and manage content reference](/azure/azure-sql/database/how-to-content-reference-guide) |
 | [az sql db replica](/cli/azure/sql/db/replica) | Manage replication between SQL databases. | [Replication to Azure SQL Database](/azure/azure-sql/database/replication-to-sql-database) |
 | [az sql db tde](/cli/azure/sql/db/tde) | Manage a SQL database's transparent data encryption. | [Transparent data encryption](/azure/azure-sql/database/transparent-data-encryption-tde-overview) |
-| [az sql db threat-policy](/cli/azure/sql/db/threat-policy) | Manage a SQL database's threat detection policies. | [Configure Advanced Threat Protection for Azure SQL Database](/azure/azure-sql/database/threat-detection-configure) |
+| [az sql db threat-policy](/cli/azure/sql/db/threat-policy) | Manage a SQL database's threat detection policies. | [Configure Advanced Threat Protection](/azure/azure-sql/database/threat-detection-configure) |
 
 ## SQL Managed Instance references
 
@@ -67,13 +65,13 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql server](/cli/azure/sql/server) | Manage SQL Database servers. | [Create and manage servers](/azure/azure-sql/database/single-database-manage) |
 | [az sql server ad-admin](/cli/azure/sql/server/ad-admin) | Manage a server's Active Directory administrator. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
 | [az sql server ad-only-auth](/cli/azure/sql/server/ad-only-auth) | Manage Azure Active Directory-only Authentication settings for a server. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
-| [az sql server conn-policy](/cli/azure/sql/server/conn-policy) | Manage a server's connection policy. |  |
+| [az sql server conn-policy](/cli/azure/sql/server/conn-policy) | Manage a server's connection policy. | [Azure SQL connectivity settings](/azure/azure-sql/database/connectivity-settings) |
 | [az sql server dns-alias](/cli/azure/sql/server/dns-alias) | Manage a server's DNS aliases. | [DNS alias for Azure SQL Database](/azure/azure-sql/database/dns-alias-overview) |
 | [az sql server firewall-rule](/cli/azure/sql/server/firewall-rule) | Manage a server's firewall rules. | [Azure SQL Database and Azure Synapse IP firewall rules](/azure/azure-sql/database/firewall-configure) |
 | [az sql server key](/cli/azure/sql/server/key) | Manage a server's keys. | [Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure) |
 | [az sql server ms-support audit-policy](/cli/azure/sql/server/ms-support/audit-policy) | Manage the audit policy of a server's Microsoft support operations. | [Auditing for Azure SQL Database and Azure Synapse Analytics](/azure/azure-sql/database/auditing-overview) |
 | [az sql server tde-key](/cli/azure/sql/server/tde-key) | Manage a server's encryption protector. | [Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure) |
-| [az sql server vnet-rule](/cli/azure/sql/server/vnet-rule) | Manage a server's virtual network rules. | [Use virtual network service endpoints and rules for servers in Azure SQL Database](/azure/azure-sql/database/vnet-service-endpoint-rule-overview) |
+| [az sql server vnet-rule](/cli/azure/sql/server/vnet-rule) | Manage a server's virtual network rules. | [Use virtual network service endpoints and rules for servers](/azure/azure-sql/database/vnet-service-endpoint-rule-overview) |
 
 ## SQL virtual machines references
 
@@ -92,7 +90,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql elastic-pool op](/cli/azure/sql/elastic-pool/op) | Manage operations on an elastic pool. | [Elastic pools](/azure/azure-sql/database/elastic-pool-overview) |
 | [az sql failover-group](/cli/azure/sql/failover-group) | Manage SQL Database failover groups. | [Configure a failover group](/azure/azure-sql/database/auto-failover-group-configure) |
 | [az sql instance-failover-group](/cli/azure/sql/instance-failover-group) | Use SQL Managed Instance failover groups. | [Configure a failover group](/azure/azure-sql/database/auto-failover-group-configure) |
-| [az sql instance-pool](/cli/azure/sql/instance-pool) | Use Manage Instance pools. | [/azure/azure-sql/managed-instance/instance-pools-overview](What is an Azure SQL Managed Instance pool?) |
+| [az sql instance-pool](/cli/azure/sql/instance-pool) | Use Manage Instance pools. | [What is an Azure SQL Managed Instance pool?](/azure/azure-sql/managed-instance/instance-pools-overview) |
 | [az sql stg](/cli/azure/sql/stg) | Manage Server Trust Groups. | [Use Server Trust Groups](/azure/azure-sql/managed-instance/server-trust-group-overview) |
 | [az sql virtual-cluster](/cli/azure/sql/virtual-cluster) | Manage the virtual cluster of a SQL Managed Instance. | [Virtual cluster connectivity architecture](/azure/azure-sql/managed-instance/connectivity-architecture-overview#virtual-cluster-connectivity-architecture) |
 
