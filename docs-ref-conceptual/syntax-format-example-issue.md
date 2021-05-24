@@ -13,12 +13,12 @@ ms.custom: devx-track-azurecli
 
 # H1
 
-## Code block 1
+## Code block
 
 ```azurecli
-az network list-service-aliases --eastus2
+az network list-service-aliases --location eastus2
 
-az network firewall create -resource-group myResourceGroup
+az network firewall create --resource-group myResourceGroup
 
 az network firewall policy create --name myName --resource-group myResourceGroup
 
@@ -29,12 +29,12 @@ az network firewall policy rule-collection-group collection add-filter-collectio
 az network firewall policy rule-collection-group collection rule update --collection-name myCollectionName
 ```
 
-## Code blcok interactive
+## Code block interactive
 
 ```azurecli
-az network list-service-aliases --eastus2
+az network list-service-aliases --location eastus2
 
-az network firewall create -resource-group myResourceGroup
+az network firewall create --resource-group myResourceGroup
 
 az network firewall policy create --name myName --resource-group myResourceGroup
 
