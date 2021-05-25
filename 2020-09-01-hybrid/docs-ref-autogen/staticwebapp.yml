@@ -16,6 +16,7 @@ directCommands:
                            --source
                            [--api-location]
                            [--app-location]
+                           [--login-with-github]
                            [--no-wait]
                            [--output-location]
                            [--sku {Free, Standard}]
@@ -24,7 +25,9 @@ directCommands:
                            [--token]
   examples:
   - summary: Create static app in a subscription.
-    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg -s https://github.com/JohnDoe/my-first-static-web-app -l WestUs2 -b master
+    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg -s https://github.com/JohnDoe/my-first-static-web-app -l WestUs2 -b master -t MyAccessToken
+  - summary: Create static app in a subscription, retrieving token interactively
+    syntax: az staticwebapp create -n MyStaticAppName -g MyExistingRg -s https://github.com/JohnDoe/my-first-static-web-app -l WestUs2 -b master --login-with-github
   requiredParameters:
   - isRequired: true
     name: --branch -b
@@ -55,6 +58,9 @@ directCommands:
     defaultValue: .
     summary: Location of your application code. For example, '/' represents the root of your app, while '/app' represents a directory called 'app'.
     description: ''
+  - name: --login-with-github
+    summary: Interactively log in with Github to retrieve the Personal Access Token.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -75,7 +81,7 @@ directCommands:
     description: ''
   - name: --token -t
     summary: >-
-      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please follow the steps found at the following link:
+      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please run with the '--login-with-github' flag or follow the steps found at the following link:
 
       https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line.
     description: ''
@@ -166,6 +172,7 @@ directCommands:
     az staticwebapp reconnect --branch
                               --name
                               --source
+                              [--login-with-github]
                               [--no-wait]
                               [--resource-group]
                               [--subscription]
@@ -173,6 +180,8 @@ directCommands:
   examples:
   - summary: Connect a repo and branch to static app.
     syntax: az staticwebapp reconnect -n MyStaticAppName --source MyGitHubRepo -b master --token MyAccessToken
+  - summary: Connect a repo and branch to static app, retrieving token interactively
+    syntax: az staticwebapp reconnect -n MyStaticAppName --source MyGitHubRepo -b master --login-with-github
   requiredParameters:
   - isRequired: true
     name: --branch -b
@@ -187,6 +196,9 @@ directCommands:
     summary: URL for the repository of the static site.
     description: ''
   optionalParameters:
+  - name: --login-with-github
+    summary: Interactively log in with Github to retrieve the Personal Access Token.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -198,7 +210,7 @@ directCommands:
     description: ''
   - name: --token -t
     summary: >-
-      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please follow the steps found at the following link:
+      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please run with the '--login-with-github' flag or follow the steps found at the following link:
 
       https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line.
     description: ''
@@ -272,7 +284,7 @@ directCommands:
     description: ''
   - name: --token -t
     summary: >-
-      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please follow the steps found at the following link:
+      A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. If you need to create a Github Personal Access Token, please run with the '--login-with-github' flag or follow the steps found at the following link:
 
       https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line.
     description: ''
