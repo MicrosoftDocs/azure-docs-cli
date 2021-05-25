@@ -236,7 +236,7 @@ directCommands:
                      [--subscription]
                      [--target-path]
                      [--timeout]
-                     [--type]
+                     [--type {ear, jar, lib, startup, static, war, zip}]
   examples:
   - summary: Deploy a war file asynchronously.
     syntax: az webapp deploy --resource-group ResouceGroup --name AppName --src-path SourcePath --type war --async IsAsync
@@ -245,49 +245,50 @@ directCommands:
   optionalParameters:
   - name: --async
     parameterValueGroup: false, true
-    summary: Asynchronous deployment.
+    summary: If true, the artifact is deployed asynchronously. (The command will exit once the artifact is pushed to the web app.).
     description: ''
   - name: --clean
     parameterValueGroup: false, true
-    summary: Clean or not. default is target-type specific.
+    summary: If true, cleans the target directory prior to deploying the file(s). Default value is determined based on artifact type.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --ignore-stack
     parameterValueGroup: false, true
-    summary: Should override the default stack check.
+    summary: If true, any stack-specific defaults are ignored.
     description: ''
   - name: --name -n
-    summary: Name of the webapp to connect to.
+    summary: Name of the webapp to deploy to.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restart
     parameterValueGroup: false, true
-    summary: Restart or not. default behavior is to restart.
+    summary: If true, the web app will be restarted following the deployment. Set this to false if you are deploying multiple artifacts and do not want to restart the site on the earlier deployments.
     description: ''
   - name: --slot -s
-    summary: Name of the deployment slot to use.
+    summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
   - name: --src-path
-    summary: 'Path of the file to be deployed. Example: /mnt/apps/myapp.war.'
+    summary: 'Path of the artifact to be deployed. Ex: "myapp.zip" or "/myworkspace/apps/myapp.war".'
     description: ''
   - name: --src-url
-    summary: 'Url to download the package from. Example: http://mysite.com/files/myapp.war?key=123.'
+    summary: 'URL of the artifact. The webapp will pull the artifact from this URL. Ex: "http://mysite.com/files/myapp.war?key=123".'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --target-path
-    summary: Target path relative to wwwroot to which the file will be deployed to.
+    summary: 'Absolute path that the artifact should be deployed to. Defaults to "home/site/wwwroot/" Ex: "/home/site/deployments/tools/", "/home/site/scripts/startup-script.sh".'
     description: ''
   - name: --timeout
-    summary: Timeout for operation in milliseconds.
+    summary: Timeout for the deployment operation in milliseconds.
     description: ''
   - name: --type
-    summary: Type of deployment requested.
+    parameterValueGroup: ear, jar, lib, startup, static, war, zip
+    summary: Used to override the type of artifact being deployed.
     description: ''
 - uid: az_webapp_list
   name: az webapp list
