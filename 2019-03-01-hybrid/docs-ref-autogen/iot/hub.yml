@@ -179,7 +179,8 @@ directCommands:
   summary: Generate a SAS token for a target IoT Hub, device or module.
   description: For device SAS tokens, the policy parameter is used to access the the device registry only. Therefore the policy should have read access to the registry. For IoT Hub tokens the policy is part of the SAS.
   syntax: >-
-    az iot hub generate-sas-token [--device-id]
+    az iot hub generate-sas-token [--auth-type {key, login}]
+                                  [--device-id]
                                   [--du]
                                   [--hub-name]
                                   [--key-type {primary, secondary}]
@@ -197,6 +198,11 @@ directCommands:
   - summary: Generate a device SAS token using an IoT Hub connection string (with registry access)
     syntax: az iot hub generate-sas-token -d {device_id} --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --device-id -d
     summary: Target Device.
     description: ''
@@ -232,6 +238,7 @@ directCommands:
   syntax: >-
     az iot hub invoke-device-method --device-id
                                     --method-name
+                                    [--auth-type {key, login}]
                                     [--hub-name]
                                     [--login]
                                     [--method-payload]
@@ -250,6 +257,11 @@ directCommands:
     summary: Target method for invocation.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -275,6 +287,7 @@ directCommands:
     az iot hub invoke-module-method --device-id
                                     --method-name
                                     --module-id
+                                    [--auth-type {key, login}]
                                     [--hub-name]
                                     [--login]
                                     [--method-payload]
@@ -297,6 +310,11 @@ directCommands:
     summary: Target Module.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -497,7 +515,8 @@ directCommands:
 
     https://github.com/Azure/azure-uamqp-python.
   syntax: >-
-    az iot hub monitor-feedback [--device-id]
+    az iot hub monitor-feedback [--auth-type {key, login}]
+                                [--device-id]
                                 [--hub-name]
                                 [--login]
                                 [--repair {false, true}]
@@ -514,6 +533,11 @@ directCommands:
   - summary: Exit feedback monitor upon receiving a message with specific id (uuid)
     syntax: az iot hub monitor-feedback -n {iothub_name} -d {device_id} -w {message_id}
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --device-id -d
     summary: Target Device.
     description: ''
@@ -543,6 +567,7 @@ directCommands:
   description: Query an IoT Hub using a powerful SQL-like language to retrieve information regarding device and module twins, jobs and message routing. See https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language for more information.
   syntax: >-
     az iot hub query --query-command
+                     [--auth-type {key, login}]
                      [--hub-name]
                      [--login]
                      [--resource-group]
@@ -558,6 +583,11 @@ directCommands:
     summary: User query to be executed.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
     description: ''
@@ -863,7 +893,6 @@ commands:
 - az_iot_hub_create
 - az_iot_hub_delete
 - az_iot_hub_device-identity
-- az_iot_hub_device-identity_add-children
 - az_iot_hub_device-identity_children
 - az_iot_hub_device-identity_children_add
 - az_iot_hub_device-identity_children_list
@@ -873,18 +902,13 @@ commands:
 - az_iot_hub_device-identity_create
 - az_iot_hub_device-identity_delete
 - az_iot_hub_device-identity_export
-- az_iot_hub_device-identity_get-parent
 - az_iot_hub_device-identity_import
 - az_iot_hub_device-identity_list
-- az_iot_hub_device-identity_list-children
 - az_iot_hub_device-identity_parent
 - az_iot_hub_device-identity_parent_set
 - az_iot_hub_device-identity_parent_show
-- az_iot_hub_device-identity_remove-children
 - az_iot_hub_device-identity_renew-key
-- az_iot_hub_device-identity_set-parent
 - az_iot_hub_device-identity_show
-- az_iot_hub_device-identity_show-connection-string
 - az_iot_hub_device-identity_update
 - az_iot_hub_device-twin
 - az_iot_hub_device-twin_replace
@@ -919,7 +943,6 @@ commands:
 - az_iot_hub_module-identity_delete
 - az_iot_hub_module-identity_list
 - az_iot_hub_module-identity_show
-- az_iot_hub_module-identity_show-connection-string
 - az_iot_hub_module-identity_update
 - az_iot_hub_module-twin
 - az_iot_hub_module-twin_replace
