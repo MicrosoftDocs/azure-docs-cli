@@ -4,62 +4,22 @@ name: az iot hub device-identity
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.0.70 or higher.  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage IoT devices.
 description: ''
 directCommands:
-- uid: az_iot_hub_device-identity_add-children
-  name: az iot hub device-identity add-children
-  summary: Add specified comma-separated list of device ids as children of specified edge device.
-  description: ''
-  syntax: >-
-    az iot hub device-identity add-children --child-list
-                                            --device-id
-                                            [--force]
-                                            [--hub-name]
-                                            [--login]
-                                            [--resource-group]
-  examples:
-  - summary: Add devices as a children to the edge device.
-    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
-  - summary: Add devices as a children to the edge device irrespectively the device is already a child of other edge device.
-    syntax: az iot hub device-identity add-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name} -f
-  requiredParameters:
-  - isRequired: true
-    name: --child-list --cl
-    summary: Child device list (comma separated).
-    description: ''
-  - isRequired: true
-    name: --device-id -d
-    summary: Id of edge device.
-    description: ''
-  optionalParameters:
-  - name: --force -f
-    summary: Overwrites the child device's parent device.
-    description: ''
-  - name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
 - uid: az_iot_hub_device-identity_create
   name: az iot hub device-identity create
   summary: Create a device in an IoT Hub.
   description: ''
   syntax: >-
     az iot hub device-identity create --device-id
-                                      [--add-children]
                                       [--am {shared_private_key, x509_ca, x509_thumbprint}]
+                                      [--auth-type {key, login}]
                                       [--edge-enabled {false, true}]
-                                      [--force {false, true}]
                                       [--hub-name]
                                       [--login]
                                       [--od]
-                                      [--pd]
                                       [--primary-thumbprint]
                                       [--resource-group]
                                       [--secondary-thumbprint]
@@ -69,10 +29,6 @@ directCommands:
   examples:
   - summary: Create an edge enabled IoT device with default authorization (shared private key).
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --ee
-  - summary: Create an edge enabled IoT device with default authorization (shared private key) and add child devices as well.
-    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --ee --cl {child_device_id}
-  - summary: Create an IoT device with default authorization (shared private key) and set parent device as well.
-    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --pd {edge_device_id}
   - summary: Create an IoT device with self-signed certificate authorization, generate a cert valid for 10 days then use its thumbprint.
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --valid-days 10
   - summary: Create an IoT device with self-signed certificate authorization, generate a cert of default expiration (365 days) and output to target directory.
@@ -87,21 +43,19 @@ directCommands:
     summary: Target Device.
     description: ''
   optionalParameters:
-  - name: --add-children --cl
-    summary: Child device list (comma separated). This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity children add' instead.
-    description: ''
   - name: --am --auth-method
     defaultValue: shared_private_key
     parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
     summary: The authorization type an entity is to be created with.
     description: ''
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --edge-enabled --ee
     parameterValueGroup: false, true
     summary: Flag indicating edge enablement.
-    description: ''
-  - name: --force -f
-    parameterValueGroup: false, true
-    summary: Overwrites the device's parent device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
@@ -111,9 +65,6 @@ directCommands:
     description: ''
   - name: --od --output-dir
     summary: Generate self-signed cert and use its thumbprint. Output to specified target directory.
-    description: ''
-  - name: --pd --set-parent
-    summary: Id of edge device. This command parameter has been deprecated and will be removed in a future release. Use 'az iot hub device-identity parent set' instead.
     description: ''
   - name: --primary-thumbprint --ptp
     summary: Explicit self-signed certificate thumbprint to use for primary key.
@@ -141,6 +92,7 @@ directCommands:
   description: ''
   syntax: >-
     az iot hub device-identity delete --device-id
+                                      [--auth-type {key, login}]
                                       [--etag]
                                       [--hub-name]
                                       [--login]
@@ -151,6 +103,11 @@ directCommands:
     summary: Target Device.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --etag -e
     summary: Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '\*' is used.
     description: ''
@@ -171,6 +128,7 @@ directCommands:
     az iot hub device-identity export --bcu
                                       --hub-name
                                       [--auth-type {identity, key}]
+                                      [--identity]
                                       [--ik {false, true}]
                                       [--resource-group]
   examples:
@@ -178,10 +136,14 @@ directCommands:
     syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices?sv=2019-02-02&st=2020-08-23T22%3A35%3A00Z&se=2020-08-24T22%3A35%3A00Z&sr=c&sp=rwd&sig=VrmJ5sQtW3kLzYg10VqmALGCp4vtYKSLNjZDDJBSh9s%3D'
   - summary: Export all device identities to a configured blob container using a file path which contains the SAS uri.
     syntax: az iot hub device-identity export -n {iothub_name} --bcu {sas_uri_filepath}
+  - summary: Export all device identities to a configured blob container and include device keys. Uses system assigned identity that has Storage Blob Data Contributor roles for the storage account. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --auth-type identity --identity [system]
+  - summary: Export all device identities to a configured blob container and include device keys. Uses user assigned managed identity that has Storage Blob Data Contributor roles for the storage account and contributor for the IoT hub. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --auth-type identity --identity {managed_identity_resource_id}
   requiredParameters:
   - isRequired: true
     name: --bcu --blob-container-uri
-    summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required - but no SAS token is necessary. Input for this argument can be inline or from a file path.'
     description: ''
   - isRequired: true
     name: --hub-name -n
@@ -192,36 +154,12 @@ directCommands:
     parameterValueGroup: identity, key
     summary: Authentication type for communicating with the storage container.
     description: ''
+  - name: --identity
+    summary: Managed identity type to determine if system assigned managed identity or user assigned managed identity is used. For system assigned managed identity, use [system]. For user assigned managed identity, provide the user assigned managed identity resource id. This identity requires a Storage Blob Data Contributor roles for the Storage Account.
+    description: ''
   - name: --ik --include-keys
     parameterValueGroup: false, true
     summary: If set, keys are exported normally. Otherwise, keys are set to null in export output.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_iot_hub_device-identity_get-parent
-  name: az iot hub device-identity get-parent
-  summary: Get the parent device of the specified device.
-  description: ''
-  syntax: >-
-    az iot hub device-identity get-parent --device-id
-                                          [--hub-name]
-                                          [--login]
-                                          [--resource-group]
-  examples:
-  - summary: Get the parent device of the specified device.
-    syntax: az iot hub device-identity get-parent -d {device_id} -n {iothub_name}
-  requiredParameters:
-  - isRequired: true
-    name: --device-id -d
-    summary: Id of device.
-    description: ''
-  optionalParameters:
-  - name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -235,12 +173,17 @@ directCommands:
                                       --ibcu
                                       --obcu
                                       [--auth-type {identity, key}]
+                                      [--identity]
                                       [--resource-group]
   examples:
   - summary: Import all device identities from a blob using an inline SAS uri.
     syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri}
   - summary: Import all device identities from a blob using a file path which contains SAS uri.
     syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri_filepath} --obcu {output_sas_uri_filepath}
+  - summary: Import all device identities from a blob using system assigned identity that has Storage Blob Data Contributor roles for both storage accounts. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --auth-type identity --identity [system]
+  - summary: Import all device identities from a blob using user assigned managed identity that has Storage Blob Data Contributor roles for both storage accounts and contributor for the IoT hub. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --auth-type identity --identity {managed_identity_resource_id}
   requiredParameters:
   - isRequired: true
     name: --hub-name -n
@@ -248,16 +191,19 @@ directCommands:
     description: ''
   - isRequired: true
     name: --ibcu --input-blob-container-uri
-    summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication an https:// URI is still required - but no SAS token is necessary. Input for this argument can be inline or from a file path.'
     description: ''
   - isRequired: true
     name: --obcu --output-blob-container-uri
-    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required. Input for this argument can be inline or from a file path.'
+    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI without the SAS token is still required. Input for this argument can be inline or from a file path.'
     description: ''
   optionalParameters:
   - name: --auth-type --storage-authentication-type
     parameterValueGroup: identity, key
     summary: Authentication type for communicating with the storage container.
+    description: ''
+  - name: --identity
+    summary: Managed identity type to determine if system assigned managed identity or user assigned managed identity is used. For system assigned managed identity, use [system]. For user assigned managed identity, provide the user assigned managed identity resource id. This identity requires a Storage Blob Data Contributor role for the target Storage Account and Contributor role for the IoT Hub.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -267,12 +213,18 @@ directCommands:
   summary: List devices in an IoT Hub.
   description: ''
   syntax: >-
-    az iot hub device-identity list [--edge-enabled {false, true}]
+    az iot hub device-identity list [--auth-type {key, login}]
+                                    [--edge-enabled {false, true}]
                                     [--hub-name]
                                     [--login]
                                     [--resource-group]
                                     [--top]
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --edge-enabled --ee
     parameterValueGroup: false, true
     summary: Flag indicating edge enablement.
@@ -290,70 +242,6 @@ directCommands:
     defaultValue: "1000"
     summary: Maximum number of elements to return. Use -1 for unlimited.
     description: ''
-- uid: az_iot_hub_device-identity_list-children
-  name: az iot hub device-identity list-children
-  summary: Outputs comma-separated list of assigned child devices.
-  description: ''
-  syntax: >-
-    az iot hub device-identity list-children --device-id
-                                             [--hub-name]
-                                             [--login]
-                                             [--resource-group]
-  examples:
-  - summary: Show all assigned devices as comma-separated list.
-    syntax: az iot hub device-identity list-children -d {edge_device_id} -n {iothub_name}
-  requiredParameters:
-  - isRequired: true
-    name: --device-id -d
-    summary: Id of edge device.
-    description: ''
-  optionalParameters:
-  - name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_iot_hub_device-identity_remove-children
-  name: az iot hub device-identity remove-children
-  summary: Remove devices as children from specified edge device.
-  description: ''
-  syntax: >-
-    az iot hub device-identity remove-children --device-id
-                                               [--child-list]
-                                               [--hub-name]
-                                               [--login]
-                                               [--remove-all]
-                                               [--resource-group]
-  examples:
-  - summary: Remove all mentioned devices as children of specified device.
-    syntax: az iot hub device-identity remove-children -d {edge_device_id} --child-list {comma_separated_device_id} -n {iothub_name}
-  - summary: Remove all devices as children specified edge device.
-    syntax: az iot hub device-identity remove-children -d {edge_device_id} --remove-all
-  requiredParameters:
-  - isRequired: true
-    name: --device-id -d
-    summary: Id of edge device.
-    description: ''
-  optionalParameters:
-  - name: --child-list --cl
-    summary: Child device list (comma separated).
-    description: ''
-  - name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
-    description: ''
-  - name: --remove-all -a
-    summary: To remove all children.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
 - uid: az_iot_hub_device-identity_renew-key
   name: az iot hub device-identity renew-key
   summary: Renew target keys of an IoT Hub device with sas authentication.
@@ -362,6 +250,7 @@ directCommands:
     az iot hub device-identity renew-key --device-id
                                          --hub-name
                                          --key-type {primary, secondary, swap}
+                                         [--auth-type {key, login}]
                                          [--etag]
                                          [--login]
                                          [--resource-group]
@@ -385,46 +274,13 @@ directCommands:
     summary: Target key type to regenerate.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --etag -e
     summary: Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '\*' is used.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_iot_hub_device-identity_set-parent
-  name: az iot hub device-identity set-parent
-  summary: Set the parent device of the specified device.
-  description: ''
-  syntax: >-
-    az iot hub device-identity set-parent --device-id
-                                          --parent-device-id
-                                          [--force]
-                                          [--hub-name]
-                                          [--login]
-                                          [--resource-group]
-  examples:
-  - summary: Set the parent device of the specified device.
-    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} -n {iothub_name}
-  - summary: Set the parent device of the specified device irrespectively the device is already a child of other edge device.
-    syntax: az iot hub device-identity set-parent -d {device_id} --pd {edge_device_id} --force -n {iothub_name}
-  requiredParameters:
-  - isRequired: true
-    name: --device-id -d
-    summary: Id of device.
-    description: ''
-  - isRequired: true
-    name: --parent-device-id --pd
-    summary: Id of edge device.
-    description: ''
-  optionalParameters:
-  - name: --force -f
-    summary: Overwrites the device's parent device.
-    description: ''
-  - name: --hub-name -n
-    summary: IoT Hub name.
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
@@ -438,6 +294,7 @@ directCommands:
   description: ''
   syntax: >-
     az iot hub device-identity show --device-id
+                                    [--auth-type {key, login}]
                                     [--hub-name]
                                     [--login]
                                     [--resource-group]
@@ -447,38 +304,13 @@ directCommands:
     summary: Target Device.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name.
-    description: ''
-  - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_iot_hub_device-identity_show-connection-string
-  name: az iot hub device-identity show-connection-string
-  summary: Show a given IoT Hub device connection string.
-  description: ''
-  syntax: >-
-    az iot hub device-identity show-connection-string --device-id
-                                                      [--hub-name]
-                                                      [--key-type {primary, secondary}]
-                                                      [--login]
-                                                      [--resource-group]
-  requiredParameters:
-  - isRequired: true
-    name: --device-id -d
-    summary: Target Device.
-    description: ''
-  optionalParameters:
-  - name: --hub-name -n
-    summary: IoT Hub name.
-    description: ''
-  - name: --key-type --kt
-    defaultValue: primary
-    parameterValueGroup: primary, secondary
-    summary: Shared access policy key type for authentication.
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority.
@@ -494,6 +326,7 @@ directCommands:
     az iot hub device-identity update --device-id
                                       [--add]
                                       [--am {shared_private_key, x509_ca, x509_thumbprint}]
+                                      [--auth-type {key, login}]
                                       [--edge-enabled {false, true}]
                                       [--etag]
                                       [--force-string]
@@ -531,6 +364,11 @@ directCommands:
   - name: --am --auth-method
     parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
     summary: The authorization type an entity is to be created with.
+    description: ''
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
     description: ''
   - name: --edge-enabled --ee
     parameterValueGroup: false, true
@@ -577,7 +415,6 @@ directCommands:
     summary: Description for device status.
     description: ''
 commands:
-- az_iot_hub_device-identity_add-children
 - az_iot_hub_device-identity_children
 - az_iot_hub_device-identity_children_add
 - az_iot_hub_device-identity_children_list
@@ -587,18 +424,13 @@ commands:
 - az_iot_hub_device-identity_create
 - az_iot_hub_device-identity_delete
 - az_iot_hub_device-identity_export
-- az_iot_hub_device-identity_get-parent
 - az_iot_hub_device-identity_import
 - az_iot_hub_device-identity_list
-- az_iot_hub_device-identity_list-children
 - az_iot_hub_device-identity_parent
 - az_iot_hub_device-identity_parent_set
 - az_iot_hub_device-identity_parent_show
-- az_iot_hub_device-identity_remove-children
 - az_iot_hub_device-identity_renew-key
-- az_iot_hub_device-identity_set-parent
 - az_iot_hub_device-identity_show
-- az_iot_hub_device-identity_show-connection-string
 - az_iot_hub_device-identity_update
 globalParameters:
 - name: --debug
