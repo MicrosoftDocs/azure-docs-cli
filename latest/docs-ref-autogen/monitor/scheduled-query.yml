@@ -4,7 +4,7 @@ name: az monitor scheduled-query
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **scheduled-query** extension for Azure CLI and requires version 2.0.67 or higher.  The extension will automatically install the first time you run an **az monitor scheduled-query** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **scheduled-query** extension for Azure CLI and requires version 2.20.0 or higher.  The extension will automatically install the first time you run an **az monitor scheduled-query** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage scheduled queries.
 description: ''
 directCommands:
@@ -18,31 +18,37 @@ directCommands:
                                       --resource-group
                                       --scopes
                                       [--action]
+                                      [--auto-mitigate {false, true}]
+                                      [--check-ws-alerts-storage {false, true}]
+                                      [--condition-query]
                                       [--description]
                                       [--disabled {false, true}]
+                                      [--display-name]
                                       [--evaluation-frequency]
                                       [--location]
                                       [--mad]
                                       [--severity]
+                                      [--skip-query-validation {false, true}]
                                       [--tags]
                                       [--target-resource-type]
                                       [--window-size]
   examples:
   - summary: Create a scheduled query for a VM.
-    syntax: az monitor scheduled-query create -g {rg} -n {name1} --scopes {vm_id} --condition "count 'union Event, Syslog | where TimeGenerated > ago(1h) | where EventLevelName==\'Error\' or SeverityLevel==\'err\'' > 360 resource id _ResourceID at least 1 violations out of 5 aggregated points" --description "Test rule"
+    syntax: az monitor scheduled-query create -g {rg} -n {name1} --scopes {vm_id} --condition "count 'Placeholder_1' > 360 resource id _ResourceID at least 1 violations out of 5 aggregated points" --condition-query Placeholder_1="union Event, Syslog | where TimeGenerated > ago(1h) | where EventLevelName=='Error' or SeverityLevel=='err'" --description "Test rule"
   - summary: Create a scheduled query for VMs in a resource group.
-    syntax: az monitor scheduled-query create -g {rg} -n {name1} --scopes {rg_id} --condition "count 'union Event, Syslog | where TimeGenerated > ago(1h) | where EventLevelName==\'Error\' or SeverityLevel==\'err\'' > 360 resource id _ResourceID at least 1 violations out of 5 aggregated points" --description "Test rule"
+    syntax: az monitor scheduled-query create -g {rg} -n {name1} --scopes {rg_id} --condition "count 'Placeholder_1' > 360 resource id _ResourceID at least 1 violations out of 5 aggregated points" --condition-query Placeholder_1="union Event, Syslog | where TimeGenerated > ago(1h) | where EventLevelName=='Error' or SeverityLevel=='err'" --description "Test rule"
   requiredParameters:
   - isRequired: true
     name: --condition
     summary: The condition which triggers the rule.
     description: >-
       Usage:  --condition {avg,min,max,total,count} ["METRIC COLUMN" from]
-                          "QUERY" {=,!=,>,>=,<,<=} THRESHOLD
+                          "QUERY_PLACEHOLDER" {=,!=,>,>=,<,<=} THRESHOLD
                           [resource id RESOURCEID]
                           [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
                           [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
                           [at least MinTimeToFail violations out of EvaluationPeriod aggregated points]'
+      Query placeholders can be defined in --condition-query argument
 
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
   - isRequired: true
@@ -65,12 +71,27 @@ directCommands:
 
 
       Multiple action groups can be specified by using more than one `--action` argument.
+  - name: --auto-mitigate
+    defaultValue: "1"
+    parameterValueGroup: false, true
+    summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
+    description: ''
+  - name: --check-ws-alerts-storage --cwas
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
+    description: ''
+  - name: --condition-query
+    summary: Query deteils to replace the placeholders in `--condition` argument.
+    description: ''
   - name: --description
     summary: Free-text description of the rule.
     description: ''
   - name: --disabled
     parameterValueGroup: false, true
     summary: Disable the scheduled query.
+    description: ''
+  - name: --display-name
+    summary: The display name of the alert rule.
     description: ''
   - name: --evaluation-frequency
     defaultValue: 5m
@@ -80,12 +101,15 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --mad --mute-actions-duration
-    defaultValue: PT30M
     summary: Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired.
     description: ''
   - name: --severity
     defaultValue: "2"
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
+    description: ''
+  - name: --skip-query-validation
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether the provided query should be validated or not.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -152,15 +176,20 @@ directCommands:
                                       --resource-group
                                       [--action]
                                       [--add]
+                                      [--auto-mitigate {false, true}]
+                                      [--check-ws-alerts-storage {false, true}]
                                       [--condition]
+                                      [--condition-query]
                                       [--description]
                                       [--disabled {false, true}]
+                                      [--display-name]
                                       [--evaluation-frequency]
                                       [--force-string]
                                       [--mad]
                                       [--remove]
                                       [--set]
                                       [--severity]
+                                      [--skip-query-validation {false, true}]
                                       [--tags]
                                       [--window-size]
   requiredParameters:
@@ -183,23 +212,39 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --auto-mitigate
+    parameterValueGroup: false, true
+    summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
+    description: ''
+  - name: --check-ws-alerts-storage --cwas
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
+    description: ''
   - name: --condition
     summary: The condition which triggers the rule.
     description: >-
       Usage:  --condition {avg,min,max,total,count} ["METRIC COLUMN" from]
-                          "QUERY" {=,!=,>,>=,<,<=} THRESHOLD
+                          "QUERY_PLACEHOLDER" {=,!=,>,>=,<,<=} THRESHOLD
                           [resource id RESOURCEID]
                           [where DIMENSION {includes,excludes} VALUE [or VALUE ...]
                           [and   DIMENSION {includes,excludes} VALUE [or VALUE ...] ...]]
                           [at least MinTimeToFail violations out of EvaluationPeriod aggregated points]'
 
+      Query placeholders can be defined in --condition-query argument
+
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
+  - name: --condition-query
+    summary: Query deteils to replace the placeholders in `--condition` argument.
+    description: ''
   - name: --description
     summary: Free-text description of the rule.
     description: ''
   - name: --disabled
     parameterValueGroup: false, true
     summary: Disable the scheduled query.
+    description: ''
+  - name: --display-name
+    summary: The display name of the alert rule.
     description: ''
   - name: --evaluation-frequency
     summary: Frequency with which to evaluate the rule in "##h##m##s" format.
@@ -218,6 +263,10 @@ directCommands:
     description: ''
   - name: --severity
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
+    description: ''
+  - name: --skip-query-validation
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether the provided query should be validated or not.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
