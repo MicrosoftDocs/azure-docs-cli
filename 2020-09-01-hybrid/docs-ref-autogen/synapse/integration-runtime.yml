@@ -292,6 +292,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --key-name
+    defaultValue: default
     parameterValueGroup: authKey1, authKey2
     summary: The name of the authentication key to regenerate.
     description: ''
@@ -385,23 +386,29 @@ directCommands:
   summary: Update an integration runtime.
   description: ''
   syntax: >-
-    az synapse integration-runtime update [--auto-update {Off, On}]
+    az synapse integration-runtime update --auto-update {Off, On}
+                                          --update-delay-offset
                                           [--ids]
                                           [--name]
                                           [--resource-group]
                                           [--subscription]
-                                          [--update-delay-offset]
                                           [--workspace-name]
   examples:
   - summary: Update an integration runtime.
     syntax: >-
       az synapse integration-runtime update --workspace-name testsynapseworkspace --resource-group rg \
         --name testintegrationruntime --auto-update On --update-delay-offset '"PT03H"'
-  optionalParameters:
-  - name: --auto-update
+  requiredParameters:
+  - isRequired: true
+    name: --auto-update
     parameterValueGroup: Off, On
     summary: Enable or disable the self-hosted integration runtime auto-update.
     description: ''
+  - isRequired: true
+    name: --update-delay-offset
+    summary: The time of the day for the self-hosted integration runtime auto-update.
+    description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -413,9 +420,6 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --update-delay-offset
-    summary: The time of the day for the self-hosted integration runtime auto-update.
     description: ''
   - name: --workspace-name
     summary: The workspace name.
@@ -545,5 +549,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/08/2021
+  ms.date: 06/02/2021
   description: Manage Synapse's integration runtimes.
