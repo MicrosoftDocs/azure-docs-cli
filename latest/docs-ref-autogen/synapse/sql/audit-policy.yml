@@ -9,14 +9,22 @@ directCommands:
   summary: Get a SQL's auditing policy.
   description: ''
   syntax: >-
-    az synapse sql audit-policy show --resource-group
+    az synapse sql audit-policy show --blob-auditing-policy-name
+                                     --resource-group
                                      --workspace-name
                                      [--query-examples]
                                      [--subscription]
   examples:
   - summary: Get a SQL's auditing policy.
-    syntax: az synapse sql audit-policy show --workspace-name testsynapseworkspace --resource-group rg
+    syntax: >-
+      az synapse sql audit-policy show --workspace-name testsynapseworkspace --resource-group rg \
+
+      --blob-auditing-policy-name bapolicyname
   requiredParameters:
+  - isRequired: true
+    name: --blob-auditing-policy-name -b
+    summary: Name of the blob auditing policy name.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -42,6 +50,7 @@ directCommands:
                                        --workspace-name
                                        [--actions]
                                        [--add]
+                                       [--blob-auditing-policy-name]
                                        [--enable-azure-monitor {false, true}]
                                        [--force-string]
                                        [--no-wait]
@@ -61,22 +70,26 @@ directCommands:
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Enabled --storage-account mystorageaccount
+      --state Enabled --storage-account mystorageaccount --blob-auditing-policy-name bapolicyname
   - summary: Enable by storage endpoint and key.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Enabled --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY==
+      --state Enabled --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY== \
+
+      --blob-auditing-policy-name bapolicyname
   - summary: Set the list of audit actions.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --actions FAILED_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public'
+      --actions FAILED_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public' \
+
+      --blob-auditing-policy-name bapolicyname
   - summary: Disable an auditing policy.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Disabled
+      --state Disabled --blob-auditing-policy-name bapolicyname
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -92,6 +105,9 @@ directCommands:
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --blob-auditing-policy-name -b
+    summary: Name of the blob auditing policy name.
     description: ''
   - name: --enable-azure-monitor
     parameterValueGroup: false, true
@@ -144,7 +160,8 @@ directCommands:
   summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
-    az synapse sql audit-policy wait --resource-group
+    az synapse sql audit-policy wait --blob-auditing-policy-name
+                                     --resource-group
                                      --workspace-name
                                      [--created]
                                      [--custom]
@@ -155,6 +172,10 @@ directCommands:
                                      [--timeout]
                                      [--updated]
   requiredParameters:
+  - isRequired: true
+    name: --blob-auditing-policy-name -b
+    summary: Name of the blob auditing policy name.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -212,5 +233,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/08/2021
+  ms.date: 06/02/2021
   description: Manage SQL auditing policy.
