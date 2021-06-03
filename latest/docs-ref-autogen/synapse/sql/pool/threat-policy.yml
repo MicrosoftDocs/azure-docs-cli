@@ -9,7 +9,8 @@ directCommands:
   summary: Get a SQL pool's threat detection policy.
   description: ''
   syntax: >-
-    az synapse sql pool threat-policy show [--ids]
+    az synapse sql pool threat-policy show --security-alert-policy-name
+                                           [--ids]
                                            [--name]
                                            [--query-examples]
                                            [--resource-group]
@@ -17,7 +18,15 @@ directCommands:
                                            [--workspace-name]
   examples:
   - summary: Get a SQL pool's threat detection policy.
-    syntax: az synapse sql pool threat-policy show --name sqlpool --workspace-name testsynapseworkspace --resource-group rg
+    syntax: >-
+      az synapse sql pool threat-policy show --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --security-alert-policy-name threatpolicy
+  requiredParameters:
+  - isRequired: true
+    name: --security-alert-policy-name -s
+    summary: Name of the security alert policy.
+    description: ''
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -53,6 +62,7 @@ directCommands:
                                              [--remove]
                                              [--resource-group]
                                              [--retention-days]
+                                             [--security-alert-policy-name]
                                              [--set]
                                              [--state {Disabled, Enabled, New}]
                                              [--storage-account]
@@ -65,27 +75,31 @@ directCommands:
     syntax: >-
       az synapse sql pool threat-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Enabled --storage-account mystorageaccount
+      --state Enabled --storage-account mystorageaccount --security-alert-policy-name threatpolicy
   - summary: Enable by storage endpoint and key.
     syntax: >-
       az synapse sql pool threat-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Enabled --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY==
+      --state Enabled --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY== \
+
+      --security-alert-policy-name threatpolicy
   - summary: Disable a subset of alert types.
     syntax: >-
       az synapse sql pool threat-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
 
-      --disabled-alerts Sql_Injection_Vulnerability Access_Anomaly
+      --disabled-alerts Sql_Injection_Vulnerability Access_Anomaly --security-alert-policy-name threatpolicy
   - summary: Configure email recipients for a policy.
     syntax: >-
       az synapse sql pool threat-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
 
-      --email-addresses me@examlee.comyou@example.com --email-account-admins true
+      --email-addresses me@examlee.comyou@example.com --email-account-admins true \
+
+      --security-alert-policy-name threatpolicy
   - summary: Disable a threat policy.
     syntax: >-
       az synapse sql pool threat-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Disabled
+      --state Disabled --security-alert-policy-name threatpolicy
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -117,6 +131,9 @@ directCommands:
     description: ''
   - name: --retention-days
     summary: The number of days to retain threat detection logs.
+    description: ''
+  - name: --security-alert-policy-name -s
+    summary: Name of the security alert policy.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
@@ -161,5 +178,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/08/2021
+  ms.date: 06/02/2021
   description: Manage a SQL pool's threat detection policies.

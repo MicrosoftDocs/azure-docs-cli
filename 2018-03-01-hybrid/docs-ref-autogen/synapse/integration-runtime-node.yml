@@ -131,8 +131,9 @@ directCommands:
   summary: Update self-hosted integration runtime node.
   description: ''
   syntax: >-
-    az synapse integration-runtime-node update --node-name
-                                               [--concurrent-jobs]
+    az synapse integration-runtime-node update --auto-update {Off, On}
+                                               --node-name
+                                               --update-delay-offset
                                                [--ids]
                                                [--name]
                                                [--resource-group]
@@ -142,16 +143,22 @@ directCommands:
   - summary: Update self-hosted integration runtime node.
     syntax: >-
       az synapse integration-runtime-node update --workspace-name testsynapseworkspace --resource-group rg \
-        --name selfhostedintegrationruntime --node-name testnode
+        --name selfhostedintegrationruntime --node-name testnode --auto-update On --update-delay-offset 'PT03H'
   requiredParameters:
+  - isRequired: true
+    name: --auto-update
+    parameterValueGroup: Off, On
+    summary: Enable or disable the self-hosted integration runtime auto-update.
+    description: ''
   - isRequired: true
     name: --node-name
     summary: The integration runtime node name.
     description: ''
-  optionalParameters:
-  - name: --concurrent-jobs
-    summary: The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs are allowed.
+  - isRequired: true
+    name: --update-delay-offset
+    summary: The time of the day for the self-hosted integration runtime auto-update.
     description: ''
+  optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -190,5 +197,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/08/2021
+  ms.date: 06/02/2021
   description: Manage Synapse's self-hosted integration runtime nodes.

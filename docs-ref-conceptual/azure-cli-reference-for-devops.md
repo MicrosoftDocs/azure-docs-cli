@@ -16,9 +16,9 @@ ms.custom: devx-track-azurecli
 
 The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure DevOps Services, and gives you the ability to manage Azure DevOps Services from a command line.
 
-## References for Azure DevOps Services
+## References for Azure DevOps
 
-The [Azure DevOps](/azure/devops) CLI service is associated with the following Azure CLI reference groups. Except for Azure Functions, access to each of these reference groups requires the [azure-devops](https://github.com/Azure/azure-devops-cli-extension) extension:
+The [Azure DevOps](/azure/devops) CLI experiencce is associated with the following Azure CLI reference groups. Except for Azure Functions, access to each of these reference groups requires the [azure-devops](https://github.com/Azure/azure-devops-cli-extension) extension:
 
 - [Azure Artifacts](#azure-artifacts-references)
 - [Azure Boards](#azure-boards-references)
@@ -38,7 +38,7 @@ For the references in each subgroup, see the tables in the following sections.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az artifacts universal](/cli/azure/artifacts/universal) | Manage Universal Packages of Azure Artifacts. |  |
+| [az artifacts universal](/cli/azure/artifacts/universal) | Manage Universal Packages of Azure Artifacts. | [Publish and download Universal Packages](/azure/devops/artifacts/quickstarts/universal-packages) |
 
 ### Azure Boards references
 
@@ -47,12 +47,12 @@ For the references in each subgroup, see the tables in the following sections.
 | Reference | Description | More information |
 |-|-|-|
 | [az boards](/cli/azure/boards) | Manage Azure Boards. |  |
-| [az boards area project](/cli/azure/boards/area/project) | Manage areas for a project. |  |
-| [az boards area team](/cli/azure/boards/area/team) | Manage areas for a team. |  |
-| [az boards iteration project](/cli/azure/boards/iteration/project) | Manage iterations for a project. |  |
-| [az boards iteration team](/cli/azure/boards/iteration/team) | Manage iterations for a team. |  |
-| [az boards work-item](/cli/azure/boards/work-item) | Manage work items. |  |
-| [az boards work-item relation](/cli/azure/boards/work-item/relation) | Manage work item relations. |  |
+| [az boards area project](/cli/azure/boards/area/project) | Manage areas for a project. | [Backlogs, portfolios, and Agile project management](/azure/devops/boards/backlogs/backlogs-overview) |
+| [az boards area team](/cli/azure/boards/area/team) | Manage areas for a team. | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths) |
+| [az boards iteration project](/cli/azure/boards/iteration/project) | Manage iterations for a project. | [Define iteration paths (sprints) and configure team iterations](/devops/organizations/settings/set-iteration-paths-sprints) |
+| [az boards iteration team](/cli/azure/boards/iteration/team) | Manage iterations for a team. | [Define iteration paths (sprints) and configure team iterations](/devops/organizations/settings/set-iteration-paths-sprints) |
+| [az boards work-item](/cli/azure/boards/work-item) | Manage work items. | [View and add work items](/azure/devops/boards/work-items/view-add-work-items) |
+| [az boards work-item relation](/cli/azure/boards/work-item/relation) | Manage work item relations. | [Linking, traceability, and managing dependencies](/azure/devops/boards/queries/link-work-items-support-traceability) |
 
 ### Azure DevOps references
 
@@ -62,31 +62,31 @@ For the references in each subgroup, see the tables in the following sections.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az devops security group](/cli/azure/devops/security) | Manage security groups. |  |
-| [az devops security group membership](/cli/azure/devops/security/group/membership) | Manage membership for security groups. |  |
-| [az devops security permission](/cli/azure/devops/security/permission) | Manage security permissions. |  |
-| [az devops security permission namespace](/cli/azure/devops/security/permission/namespace) | Manage security namespaces. |  |
+| [az devops security group](/cli/azure/devops/security) | Manage security groups. | [Get started with permissions, access, and security groups](/azure/devops/organizations/security/about-permissions) |
+| [az devops security group membership](/cli/azure/devops/security/group/membership) | Manage membership for security groups. | [Get started with permissions, access, and security groups](/azure/devops/organizations/security/about-permissions) |
+| [az devops security permission](/cli/azure/devops/security/permission) | Manage security permissions. | [Get started with permissions, access, and security groups](/azure/devops/organizations/security/about-permissions) |
+| [az devops security permission namespace](/cli/azure/devops/security/permission/namespace) | Manage security namespaces. | [Security namespace and permission reference](/azure/devops/organizations/security/namespace-reference) |
 
 #### Service endpoint references
 
 | Reference | Description | More information |
 |-|-|-|
-| [az devops service-endpoint](/cli/azure/devops/service-endpoint) | Manage service endpoints and connections. |  |
-| [az devops service-endpoint azurerm](/cli/azure/devops/service-endpoint/azurerm) | Manage Azure RM service endpoints/connections. |  |
-[az devops service-endpoint github](/cli/azure/devops/service-endpoint/github) | Manage GitHub service endpoints/connections. |  |
+| [az devops service-endpoint](/cli/azure/devops/service-endpoint) | Manage service endpoints and connections. | [Create a service endpoint](/azure/devops/extend/develop/service-endpoints) |
+| [az devops service-endpoint azurerm](/cli/azure/devops/service-endpoint/azurerm) | Manage Azure Resource Manager service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
+[az devops service-endpoint github](/cli/azure/devops/service-endpoint/github) | Manage GitHub service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
 
 #### Additional references
 
 | Reference | Description | More information |
 |-|-|-|
 | [az devops](/cli/azure/devops) | Manage Azure DevOps. |  |
-| [az devops admin banner](/cli/azure/devops/admin/banner) | Manage administration banner operations. |  |
+| [az devops admin banner](/cli/azure/devops/admin/banner) | Manage administration banner operations. | [Add and manage information banners](/azure/devops/organizations/settings/manage-banners) |
 | [az devops extension](/cli/azure/devops/extension) | Manage extensions. |  |
-| [az devops project](/cli/azure/devops/project) | Manage team projects. |  |
-[az devops team](/cli/azure/devops/team) | Manage teams. |  |
-[az devops user](/cli/azure/devops/user) | Manage users. |  |
-[az devops wiki](/cli/azure/devops/wiki) | Manage wikis. |  |
-[az devops wiki page](/cli/azure/devops/wiki/page) | Manage wiki pages. |  |
+| [az devops project](/cli/azure/devops/project) | Manage team projects. | [About projects and scaling your organization](/azure/devops/organizations/projects/about-projects) |
+[az devops team](/cli/azure/devops/team) | Manage teams. | [About teams and Agile tools](/azure/devops/organizations/settings/about-teams-and-settings) |
+[az devops user](/cli/azure/devops/user) | Manage users. | [Add users and manage access in Azure DevOps](/devops/organizations/accounts/add-organization-users) |
+[az devops wiki](/cli/azure/devops/wiki) | Manage wikis. | [Create a Wiki for your project](/devops/project/wiki/wiki-create-repo) |
+[az devops wiki page](/cli/azure/devops/wiki/page) | Manage wiki pages. | [Add and edit wiki pages](/devops/project/wiki/add-edit-wiki) |
 
 ### Azure Functions (DevOps integration) references
 
@@ -102,14 +102,14 @@ For the references in each subgroup, see the tables in the following sections.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az pipelines](/cli/azure/pipelines) | Manage Azure Pipelines. |  |
-| [az pipelines agent](/cli/azure/pipelines/agent) | Manage agents. |  |
-| [az pipelines build](/cli/azure/pipelines/build) | Manage builds. |  |
-| [az pipelines build definition](/cli/azure/pipelines/build/definition) | Manage build definitions. |  |
-| [az pipelines build tag](/cli/azure/pipelines/build/tag) | Manage build tags. |  |
+| [az pipelines](/cli/azure/pipelines) | Manage Azure Pipelines. | [What is Azure Pipelines?](/azure/devops/pipelines/get-started/what-is-azure-pipelines) |
+| [az pipelines agent](/cli/azure/pipelines/agent) | Manage agents. | [Azure Pipelines agents](/devops/pipelines/agents/agents) |
+| [az pipelines build](/cli/azure/pipelines/build) | Manage builds. | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline) |
+| [az pipelines build definition](/cli/azure/pipelines/build/definition) | Manage build definitions. | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline) |
+| [az pipelines build tag](/cli/azure/pipelines/build/tag) | Manage build tags. | [Use predefined variables](/azure/devops/pipelines/build/variables) |
 | [az pipelines folder](/cli/azure/pipelines/folder) | Manage folders for organizing pipelines. |  |
-| [az pipelines pool](/cli/azure/pipelines/pool) | Manage agent pools. |  |
-| [az pipelines queue](/cli/azure/pipelines/queue) | Manage agent queues. |  |
+| [az pipelines pool](/cli/azure/pipelines/pool) | Manage agent pools. | [Agent pools](/azure/devops/pipelines/agents/pools-queues) |
+| [az pipelines queue](/cli/azure/pipelines/queue) | Manage agent queues. | [Agent pools](/azure/devops/pipelines/agents/pools-queues) |
 | [az pipelines release](/cli/azure/pipelines/release) | Manage releases. |  |
 | [az pipelines release definition](/cli/azure/pipelines/release/definition) | Manage release definitions. |  |
 | [az pipelines runs](/cli/azure/pipelines/runs) | Manage pipeline runs. |  |
