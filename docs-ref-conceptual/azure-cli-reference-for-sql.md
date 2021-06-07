@@ -54,6 +54,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 |-|-|-|
 | [az sql midb](/cli/azure/sql/midb) | Manage Azure SQL Managed Instance databases. | [What is Azure SQL Managed Instance?](/azure/azure-sql/managed-instance/sql-managed-instance-paas-overview) |
 | [az sql midb log-replay](/cli/azure/sql/midb/log-replay) | Manage Log Replay service commands for an Azure SQL Managed Instance database. | [Migrate databases from SQL Server to SQL Managed Instance by using Log Replay Service](/azure/azure-sql/managed-instance/log-replay-service-migrate) |
+ [az sql midb ltr-backup](/cli/azure/sql/midb/ltr-backup) | Manage SQL Managed Instance database long-term retention backups. | [Manage Azure SQL Managed Instance long-term backup retention](/azure/azure-sql/managed-instance/long-term-backup-retention-configure) |
 | [az sql midb ltr-policy](/cli/azure/sql/midb/ltr-policy) | Manage SQL Managed Instance database long-term retention policy. | [Long-term retention](/azure/azure-sql/database/long-term-retention-overview) |
 | [az sql midb short-term-retention-policy](/cli/azure/sql/midb/short-term-retention-policy) | Manage SQL Managed Instance database backup short-term retention policy. | [Automated backups](/azure/azure-sql/database/automated-backups-overview) |
 
@@ -64,6 +65,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql server](/cli/azure/sql/server) | Manage SQL Database servers. | [Create and manage servers](/azure/azure-sql/database/single-database-manage) |
 | [az sql server ad-admin](/cli/azure/sql/server/ad-admin) | Manage a server's Active Directory administrator. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
 | [az sql server ad-only-auth](/cli/azure/sql/server/ad-only-auth) | Manage Azure Active Directory-only Authentication settings for a server. | [Configure and manage Azure AD authentication with Azure SQL](/azure/azure-sql/database/authentication-aad-configure) |
+| [az sql server audit-policy](/cli/azure/sql/server/audit-policy) | Manage a server's audit policy. | [Auditing for Azure SQL Database](/azure/azure-sql/database/auditing-overview) |
 | [az sql server conn-policy](/cli/azure/sql/server/conn-policy) | Manage a server's connection policy. | [Azure SQL connectivity settings](/azure/azure-sql/database/connectivity-settings) |
 | [az sql server dns-alias](/cli/azure/sql/server/dns-alias) | Manage a server's DNS aliases. | [DNS alias for Azure SQL Database](/azure/azure-sql/database/dns-alias-overview) |
 | [az sql server firewall-rule](/cli/azure/sql/server/firewall-rule) | Manage a server's firewall rules. | [Azure SQL Database and Azure Synapse IP firewall rules](/azure/azure-sql/database/firewall-configure) |
