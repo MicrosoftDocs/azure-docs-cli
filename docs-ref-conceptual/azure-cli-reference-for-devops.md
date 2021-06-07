@@ -46,11 +46,11 @@ For the references in each subgroup, see the tables in the following sections.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az boards](/cli/azure/boards) | Manage Azure Boards. | [What is Azure Boards?](/devops/boards/get-started/what-is-azure-boards) |
+| [az boards](/cli/azure/boards) | Manage Azure Boards. | [What is Azure Boards?](/azure/devops/boards/get-started/what-is-azure-boards) |
 | [az boards area project](/cli/azure/boards/area/project) | Manage areas for a project. | [Backlogs, portfolios, and Agile project management](/azure/devops/boards/backlogs/backlogs-overview) |
 | [az boards area team](/cli/azure/boards/area/team) | Manage areas for a team. | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths) |
-| [az boards iteration project](/cli/azure/boards/iteration/project) | Manage iterations for a project. | [Define iteration paths (sprints) and configure team iterations](/devops/organizations/settings/set-iteration-paths-sprints) |
-| [az boards iteration team](/cli/azure/boards/iteration/team) | Manage iterations for a team. | [Define iteration paths (sprints) and configure team iterations](/devops/organizations/settings/set-iteration-paths-sprints) |
+| [az boards iteration project](/cli/azure/boards/iteration/project) | Manage iterations for a project. | [Define iteration paths (sprints) and configure team iterations](/azure/devops/organizations/settings/set-iteration-paths-sprints) |
+| [az boards iteration team](/cli/azure/boards/iteration/team) | Manage iterations for a team. | [Define iteration paths (sprints) and configure team iterations](/azure/devops/organizations/settings/set-iteration-paths-sprints) |
 | [az boards work-item](/cli/azure/boards/work-item) | Manage work items. | [View and add work items](/azure/devops/boards/work-items/view-add-work-items) |
 | [az boards work-item relation](/cli/azure/boards/work-item/relation) | Manage work item relations. | [Linking, traceability, and managing dependencies](/azure/devops/boards/queries/link-work-items-support-traceability) |
 
@@ -79,14 +79,14 @@ For the references in each subgroup, see the tables in the following sections.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az devops](/cli/azure/devops) | Manage Azure DevOps. | [What is Azure DevOps?](/devops/user-guide/what-is-azure-devops) |
+| [az devops](/cli/azure/devops) | Manage Azure DevOps. | [What is Azure DevOps?](/azure/devops/user-guide/what-is-azure-devops) |
 | [az devops admin banner](/cli/azure/devops/admin/banner) | Manage administration banner operations. | [Add and manage information banners](/azure/devops/organizations/settings/manage-banners) |
 | [az devops extension](/cli/azure/devops/extension) | Manage extensions. | [Install extensions](/azure/devops/marketplace/install-extension) |
 | [az devops project](/cli/azure/devops/project) | Manage team projects. | [About projects and scaling your organization](/azure/devops/organizations/projects/about-projects) |
 [az devops team](/cli/azure/devops/team) | Manage teams. | [About teams and Agile tools](/azure/devops/organizations/settings/about-teams-and-settings) |
-[az devops user](/cli/azure/devops/user) | Manage users. | [Add users and manage access in Azure DevOps](/devops/organizations/accounts/add-organization-users) |
-[az devops wiki](/cli/azure/devops/wiki) | Manage wikis. | [Create a Wiki for your project](/devops/project/wiki/wiki-create-repo) |
-[az devops wiki page](/cli/azure/devops/wiki/page) | Manage wiki pages. | [Add and edit wiki pages](/devops/project/wiki/add-edit-wiki) |
+[az devops user](/cli/azure/devops/user) | Manage users. | [Add users and manage access in Azure DevOps](/azure/devops/organizations/accounts/add-organization-users) |
+[az devops wiki](/cli/azure/devops/wiki) | Manage wikis. | [Create a Wiki for your project](/azure/devops/project/wiki/wiki-create-repo) |
+[az devops wiki page](/cli/azure/devops/wiki/page) | Manage wiki pages. | [Add and edit wiki pages](/azure/devops/project/wiki/add-edit-wiki) |
 
 ### Azure Functions (DevOps integration) references
 
@@ -103,7 +103,7 @@ For the references in each subgroup, see the tables in the following sections.
 | Reference | Description | More information |
 |-|-|-|
 | [az pipelines](/cli/azure/pipelines) | Manage Azure Pipelines. | [What is Azure Pipelines?](/azure/devops/pipelines/get-started/what-is-azure-pipelines) |
-| [az pipelines agent](/cli/azure/pipelines/agent) | Manage agents. | [Azure Pipelines agents](/devops/pipelines/agents/agents) |
+| [az pipelines agent](/cli/azure/pipelines/agent) | Manage agents. | [Azure Pipelines agents](/azure/devops/pipelines/agents/agents) |
 | [az pipelines build](/cli/azure/pipelines/build) | Manage builds. | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline) |
 | [az pipelines build definition](/cli/azure/pipelines/build/definition) | Manage build definitions. | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline) |
 | [az pipelines build tag](/cli/azure/pipelines/build/tag) | Manage build tags. | [Use predefined variables](/azure/devops/pipelines/build/variables) |
@@ -112,7 +112,7 @@ For the references in each subgroup, see the tables in the following sections.
 | [az pipelines queue](/cli/azure/pipelines/queue) | Manage agent queues. | [Agent pools](/azure/devops/pipelines/agents/pools-queues) |
 | [az pipelines release](/cli/azure/pipelines/release) | Manage releases. | [Releases in Azure Pipelines](/azure/devops/pipelines/release/releases) |
 | [az pipelines release definition](/cli/azure/pipelines/release/definition) | Manage release definitions. | [Releases in Azure Pipelines](/azure/devops/pipelines/release/releases) |
-| [az pipelines runs](/cli/azure/pipelines/runs) | Manage pipeline runs. | [Pipeline run sequence](/devops/pipelines/process/runs) |
+| [az pipelines runs](/cli/azure/pipelines/runs) | Manage pipeline runs. | [Pipeline run sequence](/azure/devops/pipelines/process/runs) |
 | [az pipelines runs artifact](/cli/azure/pipelines/runs/artifact) | Manage pipeline run artifacts. | [Artifacts in Azure Pipelines overview](/azure/devops/pipelines/artifacts/artifacts-overview) |
 | [az pipelines runs tag](/cli/azure/pipelines/runs/tag) | Manage pipeline run tags. | [Add tag to pipeline run](/azure/devops/pipelines/process/runs#add-tag-to-pipeline-run) |
 | [az pipelines variable](/cli/azure/pipelines/variable) | Manage variables. | [Define variables](/azure/devops/pipelines/process/variables) |
@@ -129,12 +129,12 @@ For the references in each subgroup, see the tables in the following sections.
 | [az repos import](/cli/azure/repos/import) | Manage Git repositories import. | [Import a Git repo](/azure/devops/repos/git/import-git-repository) |
 | [az repos policy](/cli/azure/repos/policy) | Manage branch policies. | [Branch policies](/azure/devops/repos/git/branch-policies) |
 | [az repos policy approver-count](/cli/azure/repos/policy/approver-count) | Manage approver count policy. | [Branch policies](/azure/devops/repos/git/branch-policies) |
-| [az repos policy build](/cli/azure/repos/policy/build) | Manage build policy. | [Build validation](/azure/devops/repos/git/branch-policies#build-validation) |
+| [az repos policy build](/cli/azure/repos/policy/build) | Manage build policies. | [Build validation](/azure/devops/repos/git/branch-policies#build-validation) |
 | [az repos policy case-enforcement](/cli/azure/repos/policy/case-enforcement) | Manage case-enforcement policy. | [Case enforcement](/azure/devops/repos/git/repository-settings#case-enforcement) |
 | [az repos policy comment-required](/cli/azure/repos/policy/comment-required) | Manage comment-required policy. | [Create, view, and manage pull requests](/azure/devops/repos/git/pull-requests) |
-| [az repos policy file-size](/cli/azure/repos/policy/file-size) | Manage file size policy. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
+| [az repos policy file-size](/cli/azure/repos/policy/file-size) | Manage file size policies. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
 | [az repos policy merge-strategy](/cli/azure/repos/policy/merge-strategy) | Manage merge strategy policy. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
-| [az repos policy required-reviewer](/cli/azure/repos/policy/required-reviewer) | Manage required reviewer policy. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
+| [az repos policy required-reviewer](/cli/azure/repos/policy/required-reviewer) | Manage required reviewer policies. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
 | [az repos policy work-item-linking](/cli/azure/repos/policy/work-item-linking) | Manage work item linking policy. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
 | [az repos pr](/cli/azure/repos/pr) | Manage pull requests. | [Create, view, and manage pull requests](/azure/devops/repos/git/pull-requests) |
 | [az repos pr policy](/cli/azure/repos/pr/policy) | Manage pull request policies. | [Improve code quality with branch policies](/azure/devops/repos/git/branch-policies) |
