@@ -1,33 +1,41 @@
 ---
-title: What is Azure CLI?
-description: Overview of Azure CLI, a command-line interface tool designed to create and manage Azure resources now available in Windows, macOS, and Linux environments.
+title: What is the Azure CLI?
+description: Overview of the Azure CLI, a command-line tool designed to create and manage Azure resources available in Windows, macOS, Linux, and Docker containers.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/30/2020
+ms.date: 06/04/2021
 ms.topic: overview
 ms.service: azure-cli
 ms.devlang: azurecli 
 ms.custom: devx-track-azurecli
 ---
-# What is Azure CLI
+# What is the Azure CLI
 
-The Azure command-line interface (Azure CLI) is a set of commands used to create and manage Azure resources.  The Azure CLI is available across Azure services and is designed to get you working quickly with Azure, with an emphasis on automation.
+The Azure CLI is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources. It allows the execution of commands through a terminal using interactive command-line prompts or a script.
 
-## Key Characteristics
+For interactive use, you first launch a shell such as cmd.exe on Windows, or Bash on Linux or macOS, and then issue a command at the shell prompt. To automate repetitive tasks, you assemble the CLI commands into a shell script using the script syntax of your chosen shell, and then you execute the script.
 
-Azure CLI capabilities make it easy to work with different programing languages and software environments.  For example, Azure CLI:
+You can install the Azure CLI locally on Linux, Mac, or Windows computers. It can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
-- Is available to install in Windows, macOS, and Linux environments.
+## Syntax samples
 
-- Can also be run in Docker and Azure Cloud Shell.
-- Offers command-line flexibility when managing an Azure solution.
-- Supports long-running operations.
-- Has the ability to use one subscription for all commands, or vary subscriptions per command.
-- Allows for querying of command-line results with query output returned in your format of choice.
-- Has the flexibility to work with multiple clouds.
-- Provides configurable settings for logging, data collection, and default argument values.
-- Is deployed with Resource Manager deployment templates.
+The Azure CLI syntax follows a simple `reference name` - `command` - `parameter` pattern.  For example, switching between subscriptions is often a common task.  Here is the syntax.
+
+```azurecli
+az account set --subscription "my subscription name"
+```
+
+See [Manage subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md) to learn about listing, changing, and locking subscriptions.
+
+Another common use of the Azure CLI is managing role assignments.
+
+```azurecli
+az role assignment create --assignee servicePrincipalName --role Reader
+az role assignment delete --assignee userSign-inName --role Contributor
+```
+
+Now, how easy was that?!
 
 ## Current Version
 
@@ -36,5 +44,7 @@ Azure CLI capabilities make it easy to work with different programing languages 
 ## See Also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
+- [Choose the right command-line tool](choose-the-right-azure-command-line-tool.md)
 - [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
 - [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
