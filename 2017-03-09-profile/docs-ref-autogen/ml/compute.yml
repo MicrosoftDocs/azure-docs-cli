@@ -51,7 +51,7 @@ directCommands:
     summary: SSH public key of the administrator user account.
     description: ''
   - name: --type -t
-    summary: 'The type of compute target. Allowed values: AKS, RemoteVM.'
+    summary: 'The type of compute target. Allowed values: AKS, virtualmachine.'
     description: ''
 - uid: az_ml_compute_create
   name: az ml compute create
@@ -112,10 +112,10 @@ directCommands:
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --idle-time-before-scale-down -s
-    summary: Idle time in seconds before scaling down the cluster.
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
     description: ''
   - name: --max-instances
-    summary: The maximum number of nodes to use on the cluster.
+    summary: 'The maximum number of nodes to use on the cluster. Default: 4.'
     description: ''
   - name: --min-instances
     summary: 'The minimum number of nodes to use on the cluster. Default: 0.'
@@ -148,7 +148,7 @@ directCommands:
     summary: 'The type of compute target. Required if --file/-f is not provided. Allowed values: AmlCompute, ComputeInstance.'
     description: ''
   - name: --user-assigned-identities -i
-    summary: Comma-separated resource IDs (e.g. 'ResourceID1,ResourceID2') to set user-assigned managed identities. Only supported if --identity-type is 'UserAssigned'.
+    summary: Use '[system]' to set a system assigned identity else input resource IDs separated by commas (ie <ResourceID1>,<ResourceID2>) to set user assigned identities.
     description: ''
   - name: --user-object-id
     summary: AAD object ID of the assigned user.
@@ -228,6 +228,9 @@ directCommands:
                        --workspace-name
                        [--max-results]
                        [--type]
+  examples:
+  - summary: List all the compute targets in a workspace using --query argument to execute a JMESPath query on the results of commands.
+    syntax: az ml compute list --query "[].{Name:name}"  --output table --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -432,13 +435,13 @@ directCommands:
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --idle-time-before-scale-down -s
-    summary: Idle time in seconds before scaling down the cluster.
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
     description: ''
   - name: --max-instances
-    summary: Maximum number of nodes to use.
+    summary: 'Maximum number of nodes to use. Default: 4.'
     description: ''
   - name: --min-instances
-    summary: Minimum number of nodes to use.
+    summary: 'Minimum number of nodes to use. Default: 0.'
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -447,7 +450,7 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --user-assigned-identities -i
-    summary: Comma-separated resource IDs (e.g. 'ResourceID1,ResourceID2') to set user-assigned managed identities. Only supported if --identity-type is 'UserAssigned'.
+    summary: Use '[system]' to set a system assigned identity else input resource IDs separated by commas (ie <ResourceID1>,<ResourceID2>) to set user assigned identities.
     description: ''
 commands:
 - az_ml_compute_attach
