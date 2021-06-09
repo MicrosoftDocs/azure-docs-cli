@@ -28,7 +28,7 @@ The Azure CLI syntax follows a simple `reference name` - `command` - `parameter`
 az account set --subscription "my subscription name"
 ```
 
-See [Manage subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md) to learn about listing, changing, and locking subscriptions.
+Now, how easy was that?!  See [Manage subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md) to learn more about using the Azure CLI to work with subscriptions and create management groups.
 
 ### Role assignments
 
@@ -39,7 +39,7 @@ az role assignment create --assignee servicePrincipalName --role Reader
 az role assignment delete --assignee userSign-inName --role Contributor
 ```
 
-Now, how easy was that?!  For more information on creating service principals and role assignments, see [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md).
+See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth turorial on managing service principals and role assignments.
 
 ## Current Version
 
