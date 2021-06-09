@@ -41,6 +41,8 @@ Now, how easy was that?!
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
+[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment.md)]
+
 ## See Also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
