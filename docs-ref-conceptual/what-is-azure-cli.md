@@ -10,7 +10,7 @@ ms.service: azure-cli
 ms.devlang: azurecli 
 ms.custom: devx-track-azurecli
 ---
-# What is the Azure CLI
+# What is the Azure CLI?
 
 The Azure CLI is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources. It allows the execution of commands through a terminal using interactive command-line prompts or a script.
 
@@ -28,9 +28,7 @@ You need to prepare your environment before using the Azure CLI.
 
 [!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
 
-## Syntax samples
-
-### Subscriptions
+## Syntax example - subscriptions
 
 The Azure CLI syntax follows a simple `reference name` - `command` - `parameter` - `parameter value` pattern.  For example, switching between subscriptions is often a common task.  Here is the syntax.
 
@@ -40,7 +38,7 @@ az account set --subscription "my subscription name"
 
 Now, how easy was that?!  See [Manage subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md) to learn more about using the Azure CLI to work with subscriptions and create management groups.
 
-### Role assignments
+## Syntax example - role assignments
 
 Another common use of the Azure CLI is managing role assignments.
 
