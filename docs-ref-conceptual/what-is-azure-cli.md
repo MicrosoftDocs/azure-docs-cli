@@ -18,6 +18,16 @@ For interactive use, you first launch a shell such as cmd.exe on Windows, or Bas
 
 You can install the Azure CLI locally on Linux, Mac, or Windows computers. It can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
+## Current Version
+
+[!INCLUDE [current-version](includes/current-version.md)]
+
+## Prerequisites
+
+You need to prepare your environment before using the Azure CLI.  
+
+[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
+
 ## Syntax samples
 
 ### Subscriptions
@@ -40,16 +50,6 @@ az role assignment delete --assignee userSign-inName --role Contributor
 ```
 
 See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth turorial on managing service principals and role assignments.
-
-## Current Version
-
-[!INCLUDE [current-version](includes/current-version.md)]
-
-## Prerequisites
-
-You need to prepare your environment before using the Azure CLI.  
-
-[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
 
 ## See Also
 
