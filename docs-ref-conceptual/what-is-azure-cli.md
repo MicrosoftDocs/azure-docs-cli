@@ -41,7 +41,11 @@ Now, how easy was that?!
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
-[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment.md)]
+## Prerequisites
+
+You need to prepare your environment before using the Azure CLI.  
+
+[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
 
 ## See Also
 
