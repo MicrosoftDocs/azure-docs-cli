@@ -20,6 +20,8 @@ You can install the Azure CLI locally on Linux, Mac, or Windows computers. It ca
 
 ## Syntax samples
 
+### Subscriptions
+
 The Azure CLI syntax follows a simple `reference name` - `command` - `parameter` pattern.  For example, switching between subscriptions is often a common task.  Here is the syntax.
 
 ```azurecli
@@ -27,6 +29,8 @@ az account set --subscription "my subscription name"
 ```
 
 See [Manage subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md) to learn about listing, changing, and locking subscriptions.
+
+### Role assignments
 
 Another common use of the Azure CLI is managing role assignments.
 
@@ -53,4 +57,4 @@ You need to prepare your environment before using the Azure CLI.
 - [Choose the right command-line tool](choose-the-right-azure-command-line-tool.md)
 - [Full command reference list for the Azure CLI](/cli/azure/reference-index)
 - [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
-- [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
+- [Azure resources that the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
