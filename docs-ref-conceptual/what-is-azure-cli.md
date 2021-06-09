@@ -40,7 +40,7 @@ Now, how easy was that?!  See [Manage subscriptions with Azure CLI](manage-azure
 
 ## Role assignment syntax example
 
-Another common use of the Azure CLI is managing role assignments.
+Another common use of the Azure CLI is managing role assignments. 
 
 ```azurecli
 az role assignment create --assignee servicePrincipalName --role Reader
@@ -49,10 +49,18 @@ az role assignment delete --assignee userSign-inName --role Contributor
 
 See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth turorial on managing service principals and role assignments.
 
+## PowerShell syntax comparison
+
+[Choose the right command-line tool](choose-the-right-azure-command-line-tool.md) compares `tools` and `environments` with an emphasis on the Azure CLI and Azure PowerShell.  This article also gives a [side-by-side command comparison](choose-the-right-azure-command-line-tool.md#azure-cli-and-azure-powershell-side-by-side-command-comparison).  Here are two examples:
+
+|Command|Azure CLI|Azure PowerShell|
+| --- | --- | --- |
+| Create Resource Group | az group create --name \<ResourceGroupName> --location eastus |New-AzResourceGroup -Name \<ResourceGroupName> -Location eastus
+| Create Azure Storage Account | az storage account create --name \<StorageAccountName> --resource-group \<ResourceGroupName> --location eastus --sku Standard_LRS --kind StorageV2 | New-AzStorageAccount -Name \<StorageAccountName> -ResourceGroupName \<ResourceGroupName> -Location eastus -SkuName Standard_LRS -Kind StorageV2
+
 ## See Also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Choose the right command-line tool](choose-the-right-azure-command-line-tool.md)
-- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
 - [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
+- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
 - [Azure resources that the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
