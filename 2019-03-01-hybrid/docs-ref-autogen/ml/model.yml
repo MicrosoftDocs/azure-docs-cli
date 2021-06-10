@@ -15,6 +15,7 @@ directCommands:
   syntax: >-
     az ml model create --resource-group
                        --workspace-name
+                       [--datastore-name]
                        [--file]
                        [--local-path]
                        [--name]
@@ -35,6 +36,9 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --datastore-name -z
+    summary: Name of the datastore to upload the model to.
+    description: ''
   - name: --file -f
     summary: Local path to the YAML file containing the Azure ML model specification. --name/-n and --version/-v must be provided if YAML file is not having name and version.
     description: ''
@@ -90,6 +94,8 @@ directCommands:
     syntax: az ml model list --resource-group my-resource-group --workspace-name my-workspace
   - summary: List all the model versions for the specified name in a workspace
     syntax: az ml model list --name my-model --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the models in a workspace using --query argument to execute a JMESPath query on the results of commands.
+    syntax: az ml model list --query "[].{Name:name}"  --output table --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -141,7 +147,7 @@ directCommands:
 - uid: az_ml_model_update
   name: az ml model update
   summary: Update a model.
-  description: The 'description', 'tags', 'properties', and 'flavors' properties can be updated.
+  description: The 'description', and 'tags' properties can be updated.
   syntax: >-
     az ml model update --name
                        --resource-group
