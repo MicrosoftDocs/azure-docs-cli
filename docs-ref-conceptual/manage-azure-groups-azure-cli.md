@@ -1,6 +1,6 @@
 ---
 title: Manage Azure resource groups with Azure CLI
-description: Learn about Azure resource groups and using Azure CLI to manage your resrouce groups. Learn about persisted and default resource groups.
+description: Learn about Azure resource groups and using Azure CLI to manage your resource groups. Learn about persisted and default resource groups.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
