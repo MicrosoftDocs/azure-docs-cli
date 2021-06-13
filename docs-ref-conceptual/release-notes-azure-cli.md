@@ -406,7 +406,7 @@ Version 2.22.1
 
 ### Key Vault
 
-* Hotfix: GA for managed-HSM ralated commands and parameters
+* Hotfix: GA for managed-HSM related commands and parameters
 
 ## April 13, 2021
 
@@ -843,7 +843,7 @@ Version 2.19.0
 
 ### Network
 
-* [BREAKING CHANGE] `az network vrouter`: Depracate this command group, please use `az network routeserver`.
+* [BREAKING CHANGE] `az network vrouter`: Deprecate this command group, please use `az network routeserver`.
 * `az network routeserver`: Add new command group.
 * `az network application-gateway create`: Add parameter `--ssl-profile-id`
 * `az network application-gateway client-cert`: Manage trusted client certificate of application gateway
