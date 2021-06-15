@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/02/2021
+ms.date: 06/15/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,103 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## June 15, 2021
+
+Version 2.25.0
+
+### ACR
+
+* `az acr connected-registry`: Minor bug fixes
+
+### App Service
+
+* `az webapp deployment source config-local-git`:  Fix to set SiteConfig
+
+### ARM
+
+* `az resource tag`: Fix the problem of tagging resources with resource type `Microsoft.Network/publicIPAddresses`
+* `az policy assignment non-compliance-message`: New command group for policy assignment non-compliance messages
+* `az policy assignment update`: New command for partially updating existing policy assignments
+
+### Backup
+
+* Migrate backup to track2 SDK
+
+### Compute
+
+* Upgrade api-version for VM and VMSS from '2020-12-01' to '2021-03-01'
+* `az vm create`: Support delete option for NICs and Disks for VMs in Azure CLI
+* Support user_data for VM and VM Scale Sets
+
+### Container
+
+* `az container exec`: Decode received bytes as utf-8 string
+
+### EventGrid
+
+* Migrate track2 SDK
+
+### HDInsight
+
+* Migrate to track2 Python SDK 7.0.0
+
+### Iot Hub
+
+* Fix for user-assigned identity ARM issue on remove
+
+### Key Vault
+
+* Fix #11871: AKV10032: Invalid issuer error for operations in nondefault tenant/subscription
+* `az keyvault set-policy/delete-policy`: Support --application-id
+* `az keyvault recover`: Support MHSM
+* `az keyvault private-link-resource list`: Support MHSM
+* `az keyvault private-endpoint-connection`: Support MHSM
+
+### NetAppFiles
+
+* `az netappfiles volume backup status`: Command added to get the status of the backup for a volume.
+* `az netappfiles volume update`: Optional parameter added named `--snapshot-policy-id` o assign a snapshot policy to the volume.
+* `az netappfiles volume backup create`: Optional parameter added named `--use-existing-snapshot` to manually backup an already existing snapshot.
+* `az netappfiles volume backup update`: Optional parameters added named `--use-existing-snapshot` to manually backup an already existing snapshot. Optional parameter label also added to add a label to backup.
+
+### Network
+
+* Support `Microsoft.Sql/servers` provider in Private link
+* `az network private-link-resource list`: Support `--type microsoft.keyvault/managedHSMs`
+* `az network private-endpoint-connection`: Support `--type microsoft.keyvault/managedHSMs`
+
+### RDBMS
+
+* Add commands for Github actions
+* `az postgres flexible-server migration`: Add customer facing feature to migrate postgres db servers from Sterling to Meru platform
+* Private DNS zone parameter added for restore command, high availability validator
+* Change server default location (issue reported)
+
+### Role
+
+* [BREAKING CHANGE] `az ad sp create-for-rbac`: `--name` is now only used as the `displayName` of the app. It is not used to generate `identifierUris` anymore. `name` in the output is now the same as `appID` (`servicePrincipalNames`) and deprecated.
+
+### SignalR
+
+* `az signalr identity`: Add managed identity related command
+* `az signalr cors update`: Add update command for cors
+
+### Storage
+
+* `az storage blob copy start`: Support --tier and --rehydrate-priority
+* GA release storage file share NFS and SMB multichannel
+* [BREAKING CHANGE] `az storage account create`: Remove `StorageFileDataSmbShareOwner` option for --default-share-permission
+* `az storage blob list`: --delimiter parameter value will now be honored
+
+### Synapse
+
+* Update to AZ Synapse mgmt 2.0.0
+* Spark configuration conversion, which cause the failure
+
+### Webapp
+
+* Add to `az webapp deploy` param help text
 
 ## June 02, 2021
 
