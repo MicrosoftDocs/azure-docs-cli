@@ -122,7 +122,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](../latest/docs-ref-autogen/config/param-persist.yml#az_param_persist_delete) command.
+   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md#persisted-parameter-storage-and-support) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist?branch=pr-en-us-2638&view=azure-cli-latest#az_config_param_persist_delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
