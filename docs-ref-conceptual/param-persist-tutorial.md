@@ -307,4 +307,4 @@ az group delete --name RG1forTutorial
 ## See also
 
 - [(How to work with Azure CLI persisted parameters](param-persist-howto.md)
-- [Azure CLI Configuration using az configure](/cli/azure/azure-cli-configuration)
+- [Azure CLI configuration options](/cli/azure/azure-cli-configuration)

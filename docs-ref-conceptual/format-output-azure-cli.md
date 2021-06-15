@@ -189,10 +189,10 @@ KBDemo020
 
 ## Set the default output format
 
-Use the interactive `az configure` command to set up your environment and establish default settings for output formats. The default output format is `json`.
+Use the interactive `az config` command to set up your environment and establish default settings for output formats. The default output format is `json`.
 
 ```azurecli-interactive
-az configure
+az config get
 ```
 
 ```output

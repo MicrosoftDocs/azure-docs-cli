@@ -5459,7 +5459,7 @@ Version 2.0.42
 ### SQL
 
 * Fixed 'The provided resource group name ... did not match the name in the Url' error when specifying elastic pool name for `sql db copy` and `sql db replica create` commands
-* Allow configuring default sql server by executing `az configure --defaults sql-server=<name>`
+* Allow configuring default sql server by executing `az config set defaults.sql-server=<name>`
 * Implemented table formatters for `sql server`, `sql server firewall-rule`, `sql list-usages`, and `sql show-usage` commands
 
 ### Storage
@@ -6343,7 +6343,7 @@ Version 2.0.27
 ### Appservice
 
 * Fixed issue where `webapp [backup|restore]` failed because of a null reference
-* Added support for default app service plans through `az configure --defaults appserviceplan=my-asp`
+* Added support for default app service plans through `az config set defaults.appserviceplan=my-asp`
 
 ### CDN
 
