@@ -17,7 +17,7 @@ If you work across different regions or use [Azure Stack](/azure/azure-stack/use
 
 ## List available clouds
 
-You can list available clouds with the [az cloud list](/cli/azure/cloud#az_cloud_list) command. This command shows which cloud is currently active, what its current profile is, and information on regional suffixes and host names.
+You can list available clouds with the [az cloud list](../latest/docs-ref-autogen/cloud.yml#az_cloud_list) command. This command shows which cloud is currently active, what its current profile is, and information on regional suffixes and host names.
 
 To get the active cloud and a list of all the available clouds:
 
@@ -69,7 +69,7 @@ az cloud show --name AzureChinaCloud --output json
 
 ## Switch the active cloud
 
-To set the default cloud using a configuration file, see [CLI configuration values and environment variables](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).  To switch the active cloud, run the [az cloud set](/cli/azure/cloud#az_cloud_set) command. This command takes one required argument, the name of the cloud.
+To set the default cloud using a configuration file, see [CLI configuration values and environment variables](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).  To switch the active cloud, run the [az cloud set](../latest/docs-ref-autogen/cloud.yml#az_cloud_set) command. This command takes one required argument, the name of the cloud.
 
 ```azurecli-interactive
 az cloud set --name AzureChinaCloud
@@ -81,20 +81,20 @@ az cloud set --name AzureChinaCloud
 
 ## Register a new cloud
 
-Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [az cloud register](/cli/azure/cloud#az_cloud_register) command. This command requires a name and a set of service endpoints. To learn how to register a cloud for use with Azure Stack, see [Use API version profiles with Azure CLI in Azure Stack](/azure/azure-stack/user/azure-stack-version-profiles-azurecli2#connect-to-azure-stack).
+Register a new cloud if you have your own endpoints for Azure Stack. Creating a cloud is done with the [az cloud register](../latest/docs-ref-autogen/cloud.yml#az_cloud_register) command. This command requires a name and a set of service endpoints. To learn how to register a cloud for use with Azure Stack, see [Use API version profiles with Azure CLI in Azure Stack](/azure/azure-stack/user/azure-stack-version-profiles-azurecli2#connect-to-azure-stack).
 
-You don't need to register information for the China, US Government, or German regions. These clouds are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](/cli/azure/cloud#az_cloud_register).
+You don't need to register information for the China, US Government, or German regions. These clouds are managed by Microsoft and available by default.  For more information on all of the available endpoint settings, see the [documentation for `az cloud register`](../latest/docs-ref-autogen/cloud.yml#az_cloud_register).
 
 Registering a cloud doesn't automatically switch to it. Use the `az cloud set` command to select the newly created cloud.
 
 ## Update an existing cloud
 
 If you have permissions, you can also update an existing cloud. Updating a cloud switches to a different Azure services profile or modifies the connection endpoints.
-Update a cloud with the [az cloud update](/cli/azure/cloud#az_cloud_update) command, which takes the same arguments as `az cloud register`.
+Update a cloud with the [az cloud update](../latest/docs-ref-autogen/cloud.yml#az_cloud_update) command, which takes the same arguments as `az cloud register`.
 
 ## Unregister a cloud
 
-If you no longer need a created cloud, it can be unregistered with the [az cloud unregister](/cli/azure/cloud#az_cloud_unregister) command:
+If you no longer need a created cloud, it can be unregistered with the [az cloud unregister](../latest/docs-ref-autogen/cloud.yml#az_cloud_unregister) command:
 
 ```azurecli-interactive
 az cloud unregister --name MyCloud

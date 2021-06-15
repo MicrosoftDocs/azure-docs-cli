@@ -166,5 +166,5 @@ Azure CLI references are available for the following:
 ## See also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
 - [Popular articles on using the Azure CLI](popular-articles-using-the-azure-cli.md)

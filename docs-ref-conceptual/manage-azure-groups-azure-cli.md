@@ -17,34 +17,34 @@ An Azure resource group is a container that holds related resources for an Azure
 
 ## Create a resource group
 
-To create a resource group, use the [az group create](/cli/azure/group#az_group_create) command:
+To create a resource group, use the [az group create](../latest/docs-ref-autogen/group.yml#az_group_create) command:
 
 ```azurecli
 az group create --name MyResourceGroup --location eastus
 ```
 
-A resource group belongs to a single location. To see all the locations supported in your current subscription, run the [az account list-locations](/cli/azure/account#az_account_list_locations) command:
+A resource group belongs to a single location. To see all the locations supported in your current subscription, run the [az account list-locations](../latest/docs-ref-autogen/account.yml#az_account_list_locations) command:
 
 ```azurecli
 az account list-locations
 ```
 
-To see all the resource groups for your current subscription, use the [az group list](/cli/azure/group#az_group_list) command:
+To see all the resource groups for your current subscription, use the [az group list](../latest/docs-ref-autogen/group.yml#az_group_list) command:
 
 ```azurecli
 az group list --output table
 ```
 
 > [!TIP]
-> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
-When you create a resource, you create it in a resource group. The following example shows a storage account created by using the [az storage account create](/cli/azure/storage/account#az_storage_account_create) command:
+When you create a resource, you create it in a resource group. The following example shows a storage account created by using the [az storage account create](../latest/docs-ref-autogen/storage/account.yml#az_storage_account_create) command:
 
 ```azurecli
 az storage account create --resource-group MyResourceGroup --name storage134 --location eastus --sku Standard_LRS
 ```
 
-To remove a resource group, run the [az group delete](/cli/azure/group#az_group_delete) command:
+To remove a resource group, run the [az group delete](../latest/docs-ref-autogen/group.yml#az_group_delete) command:
 
 ```azurecli
 az group delete --name MyResourceGroup
@@ -56,7 +56,7 @@ When you remove a resource group, you delete all the resources that belong to it
 
 Parameter persistence allows you to reuse values for certain parameters, including resource groups.
 
-First, turn on the persistence feature by using the [az config param-persist on](/cli/azure/config/param-persist#az_config_param_persist_on) command:
+First, turn on the persistence feature by using the [az config param-persist on](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_on) command:
 
 ```azurecli
 az config param-persist on
@@ -80,7 +80,7 @@ If you specify a resource group in the command, that takes precedence. The follo
 az storage account create --resource-group StorageGroups --name storage136 --location eastus --sku Standard_LRS
 ```
 
-Once you specify another resource group as a value, however, Azure CLI resets the persisted value. New commands use **StorageGroups** as the resource group. You can see the persisted values by using the [az config param-persist show](/cli/azure/config/param-persist#az_config_param_persist_show) command:
+Once you specify another resource group as a value, however, Azure CLI resets the persisted value. New commands use **StorageGroups** as the resource group. You can see the persisted values by using the [az config param-persist show](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_show) command:
 
 ```azurecli
 az config param-persist show
@@ -88,7 +88,7 @@ az config param-persist show
 
 This command shows you the current persisted values. These values are stored in a file called *local_context_\<username>* in a hidden directory called *.azure*. Azure CLI creates the directory in your current location when you first create a persistent value.
 
-When you're done using persisted parameters, run the [az config param-persist off](/cli/azure/config/param-persist#az_config_param_persist_off) command:
+When you're done using persisted parameters, run the [az config param-persist off](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_off) command:
 
 ```azurecli
 az config param-persist off
@@ -96,11 +96,11 @@ az config param-persist off
 
 Azure CLI saves your persisted values. You can see them in the local context file. If you turn on parameter persistence again, those values are already set.
 
-For more information about using the [az config param-persist](/cli/azure/config/param-persist) commands, see [Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial).
+For more information about using the [az config param-persist](../latest/docs-ref-autogen/config/param-persist.yml) commands, see [Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md).
 
 ## Set a default resource group
 
-You can set a default resource group for all the commands that you run from your local Azure CLI or from Azure Cloud Shell. Azure CLI stores this configuration locally in a *config* file. To see your current configuration, run the [az config get](/cli/azure/config#az_config_get) command:
+You can set a default resource group for all the commands that you run from your local Azure CLI or from Azure Cloud Shell. Azure CLI stores this configuration locally in a *config* file. To see your current configuration, run the [az config get](../latest/docs-ref-autogen/config.yml#az_config_get) command:
 
 ```azurecli
 az config get
@@ -108,16 +108,16 @@ az config get
 
 The result shows default resource groups and other default values. If you're using Azure CLI for the first time, the results might be empty.
 
-To set a default resource group for your Azure CLI installation, run the [az config set](/cli/azure/config#az_config_set) command:
+To set a default resource group for your Azure CLI installation, run the [az config set](../latest/docs-ref-autogen/config.yml#az_config_set) command:
 
 ```azurecli
 az config set defaults.group=MyResourceGroup
 ```
 
-The command sets a value for a specified key, in this case `defaults.group`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
+The command sets a value for a specified key, in this case `defaults.group`. For available configuration options, see [Azure CLI configuration](./azure-cli-configuration.md).
 
 > [!NOTE]
-> The [az config set](/cli/azure/config#az_config_set) command does not validate the existence of the resource group you enter. The command simply stores the key-value pair.
+> The [az config set](../latest/docs-ref-autogen/config.yml#az_config_set) command does not validate the existence of the resource group you enter. The command simply stores the key-value pair.
 
 After you run the command, the following two commands would give you the same result:
 
@@ -141,7 +141,7 @@ If you are using persisted parameter values, as described in this article, those
 
 ## Clean up resources
 
-If you tried any of the commands in this article, you can remove any resources you created by using the [az group delete](/cli/azure/group#az_group_delete) command:
+If you tried any of the commands in this article, you can remove any resources you created by using the [az group delete](../latest/docs-ref-autogen/group.yml#az_group_delete) command:
 
 ```azurecli
 az group delete --name MyResourceGroup
@@ -151,7 +151,7 @@ az group delete --name StorageGroups
 
 This command removes the group and all the resources that it contains at once.
 
-You can remove the persistent parameters by running the [az config param-persist delete](/cli/azure/config/param-persist#az_config_param_persist_delete) command:
+You can remove the persistent parameters by running the [az config param-persist delete](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_delete) command:
 
 ```azurecli
 az config param-persist delete --all
@@ -159,8 +159,8 @@ az config param-persist delete --all
 
 ## See also
 
-[Azure CLI configuration](/cli/azure/azure-cli-configuration)
+[Azure CLI configuration](./azure-cli-configuration.md)
 
-[Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial)
+[Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md)
 
 [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md)

@@ -45,7 +45,7 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
    sudo dnf install azure-cli
    ```
  
-Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
+Run the Azure CLI with the `az` command. To sign in, use [az login](../../latest/docs-ref-autogen/reference-index.yml#az_login) command.
 
 
 [!INCLUDE [interactive-login](interactive-login.md)]

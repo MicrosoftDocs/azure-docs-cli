@@ -62,5 +62,5 @@ See [Create an Azure service principal with the Azure CLI](create-an-azure-servi
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
 - [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
-- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+- [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
 - [Azure resources that the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)

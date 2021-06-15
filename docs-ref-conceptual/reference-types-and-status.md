@@ -21,9 +21,9 @@ The Azure CLI syntax is a combination of references, commands, and parameters.  
 
 | Azure Service | Reference | Reference subservice | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
-| Azure CLI | [az configure](/cli/azure/reference-index#az_configure) | | | az configure | --defaults, --list-default, --scope
-| Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az_network_application_gateway_create) | --name, --resource-group, --capacity
-| Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
+| Azure CLI | [az configure](../latest/docs-ref-autogen/reference-index.yml#az_configure) | | | az configure | --defaults, --list-default, --scope
+| Azure Network | [az network](../latest/docs-ref-autogen/network.yml) | application-gateway | create | [az network application-gateway create](../latest/docs-ref-autogen/network/application-gateway.yml#az_network_application_gateway_create) | --name, --resource-group, --capacity
+| Azure DevOps Server | [az pipelines](../latest/docs-ref-autogen/pipelines.yml) | agent | list | [az pipelines agent list](../latest/docs-ref-autogen/pipelines/agent.yml) | --pool-id, --agent-name, --demands
 
 ## Reference types
 
@@ -40,7 +40,7 @@ All Azure CLI references can be run in Windows, macOS, Linux, Docker, and Azure 
 
 ### Core
 
-Azure CLI references that have been published as a permanent part of the CLI are called **core references**.  All core references install with the Azure CLI and you cannot choose a subset of references.  If you run the CLI through Azure Cloud Shell, core references are always up to date.  See [Core reference list for the Azure CLI](/cli/azure/reference-index) for a complete list of core reference commands.
+Azure CLI references that have been published as a permanent part of the CLI are called **core references**.  All core references install with the Azure CLI and you cannot choose a subset of references.  If you run the CLI through Azure Cloud Shell, core references are always up to date.  See [Core reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml) for a complete list of core reference commands.
 
 ### Extension
 
@@ -54,7 +54,7 @@ Extensions aren't shipped as part of the CLI but run as CLI commands.  Some exte
 | az iot hub device identify create | | yes
 
 > [!IMPORTANT]
-> You must install an extension prior to use by running the [az extension add](/cli/azure/extension#az_extension_add) command.
+> You must install an extension prior to use by running the [az extension add](../latest/docs-ref-autogen/extension.yml#az_extension_add) command.
 
 You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
 
@@ -86,5 +86,5 @@ Although most commands and parameters for a single reference have a single statu
 
 ## See also
 
-- [Core reference list for the Azure CLI](/cli/azure/reference-index)
+- [Core reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
 - [Available extensions for the Azure CLI](azure-cli-extensions-list.md)

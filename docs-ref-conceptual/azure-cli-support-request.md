@@ -61,7 +61,7 @@ To see your support tickets for your current subscription, run the [az support t
 az support tickets list
 ```
 
-To see support tickets in another subscription, run the [az account set](/cli/azure/account#az_account_set) command to change your current subscription, and then run the command.
+To see support tickets in another subscription, run the [az account set](../latest/docs-ref-autogen/account.yml#az_account_set) command to change your current subscription, and then run the command.
 
 You can also update a ticket by using the [az support tickets update](/cli/azure/ext/support/support/tickets#ext_support_az_support_tickets_update) command:
 

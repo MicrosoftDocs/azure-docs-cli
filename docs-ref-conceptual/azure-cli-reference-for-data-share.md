@@ -22,14 +22,14 @@ All Azure CLI commands for [Azure Data Share](/azure/data-share/) are currently 
 
 |Azure CLI Reference |Description
 |-|-|
-| [az datashare](/cli/azure/datashare) | All commands to manage Azure Data Share.
-| [az datashare account](/cli/azure/datashare/account) | Commands to manage Azure Data Share accounts.
-| [az datashare consumer](/cli/azure/datashare/consumer) | Commands for consumers to manage Azure Data Share.
-| [az datashare dataset](/cli/azure/datashare/dataset) | Commands for providers to manage Azure Data Share datasets.
-| [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
-| [az datashare provider-share-subscription](/cli/azure/datashare/provider-share-subscription) | Commands for providers to manage Azure Data Share subscriptions.
-| [az datashare synchronization](/cli/azure/datashare/synchronization) | Commands to manage Azure Data Share synchronization.
-| [az datashare synchronization-setting](/cli/azure/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
+| [az datashare](../latest/docs-ref-autogen/datashare.yml) | All commands to manage Azure Data Share.
+| [az datashare account](../latest/docs-ref-autogen/datashare/account.yml) | Commands to manage Azure Data Share accounts.
+| [az datashare consumer](../latest/docs-ref-autogen/datashare/consumer.yml) | Commands for consumers to manage Azure Data Share.
+| [az datashare dataset](../latest/docs-ref-autogen/datashare/dataset.yml) | Commands for providers to manage Azure Data Share datasets.
+| [az datashare invitation](../latest/docs-ref-autogen/datashare/invitation.yml) | Commands for consumers to manage Azure Data Share invitations.
+| [az datashare provider-share-subscription](../latest/docs-ref-autogen/datashare/provider-share-subscription.yml) | Commands for providers to manage Azure Data Share subscriptions.
+| [az datashare synchronization](../latest/docs-ref-autogen/datashare/synchronization.yml) | Commands to manage Azure Data Share synchronization.
+| [az datashare synchronization-setting](../latest/docs-ref-autogen/datashare/synchronization-setting.yml) | Commands for providers to manage Azure Data Share synchronization settings.
 
 ## Reference examples
 
@@ -58,4 +58,4 @@ az datashare account create --location westus --tags tag1=Red tag2=White --name 
 
 * [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-* Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+* Discover additional [core](../latest/docs-ref-autogen/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.

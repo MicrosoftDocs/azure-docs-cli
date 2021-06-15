@@ -25,7 +25,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 ## CLI configuration with az configure
 
-You set defaults for the CLI with the [az configure](/cli/azure/reference-index#az_configure) command.
+You set defaults for the CLI with the [az configure](../latest/docs-ref-autogen/reference-index.yml#az_configure) command.
 This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provided values are used by the CLI in place of
 required arguments.
 

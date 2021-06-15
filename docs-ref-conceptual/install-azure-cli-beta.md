@@ -17,7 +17,7 @@ A new beta version of the Azure CLI has been released that offers increased secu
 
 > [!NOTE]
 >
->  BREAKING CHANGES are introduced in this release.  Carefully read all [release notes](/cli/azure/release-notes-azure-cli?tabs=azure-cli-beta) prior to installation.
+>  BREAKING CHANGES are introduced in this release.  Carefully read all [release notes](./release-notes-azure-cli.md?tabs=azure-cli-beta) prior to installation.
 >
 > The beta version does not guarantee product level quality so it should not be used in your production environment.
 

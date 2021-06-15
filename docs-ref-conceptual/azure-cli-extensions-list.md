@@ -16,7 +16,7 @@ ms.custom: devx-track-azurecli
 
 This article is a complete list of the available extensions for the Azure CLI which are supported by Microsoft.
 
-The list of extensions is also available from the CLI. To get it, run [az extension list-available](/cli/azure/extension#az_extension_list_available):
+The list of extensions is also available from the CLI. To get it, run [az extension list-available](../latest/docs-ref-autogen/extension.yml#az_extension_list_available):
 
 ```azurecli-interactive
 az extension list-available --output table
@@ -37,7 +37,7 @@ az extension list-available --output table
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/master/src/attestation) | 2.11.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/attestation/HISTORY.rst) |
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation) | 2.13.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation/HISTORY.rst) |
 |[azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.0.74 | Additional commands for working with Azure Batch service | GA | [6.0.0](https://github.com/Azure/azure-batch-cli-extensions) |
-|[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.28.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
+|[azure-cli-ml](/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.28.0](/python/api/overview/azure/ml/?view=azure-ml-py%2fHISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.2.0 | Tools for managing Azure DevOps. | GA | [0.18.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.9.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.3.1 | The Azure IoT extension for Azure CLI. | GA | [0.10.11](https://github.com/azure/azure-iot-cli-extension) |

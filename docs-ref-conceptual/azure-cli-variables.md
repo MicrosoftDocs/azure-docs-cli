@@ -24,7 +24,7 @@ This article discusses various ways to specify values in Azure CLI commands.
 
 ## Use shell variables
 
-Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can use variables in Bash to pass values for parameters to commands. Using variables also allows reuse of commands, either piecemeal or in scripts.
+Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](./use-cli-effectively.md). You can use variables in Bash to pass values for parameters to commands. Using variables also allows reuse of commands, either piecemeal or in scripts.
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
@@ -45,20 +45,20 @@ az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-g
 
 This example assigns values to variables that are reused, like **MyResourceGroup**. A command gets a value to assign to **osType**.
 
-When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](../latest/docs-ref-autogen/vm.yml#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
 In this example, the **MySubscription** variable must be in quotation marks. Its value contains spaces, which the command can't parse. If you work only with subscription IDs, you don't need to use quotation marks.
 
 ## Set a subscription
 
-Many commands require a specific subscription. Azure resources exist in resource groups, which exist in subscriptions. Azure CLI uses a default subscription when you are in a session. To see your current subscription value, run the [az account show](/cli/azure/account#az_account_show) command:
+Many commands require a specific subscription. Azure resources exist in resource groups, which exist in subscriptions. Azure CLI uses a default subscription when you are in a session. To see your current subscription value, run the [az account show](../latest/docs-ref-autogen/account.yml#az_account_show) command:
 
 ```azurecli
 az account show --output table
 ```
 
-You might have access to only one subscription. For more information, see [Use Azure subscriptions with Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-You can use the [az account set](/cli/azure/account#az_account_set) command to set your current subscription:
+You might have access to only one subscription. For more information, see [Use Azure subscriptions with Azure CLI](./manage-azure-subscriptions-azure-cli.md)
+You can use the [az account set](../latest/docs-ref-autogen/account.yml#az_account_set) command to set your current subscription:
 
 ```azurecli
 az account set --subscription "My Demos"
@@ -68,7 +68,7 @@ After you set your subscription, you can omit `--Subscription` parameter. For mo
 
 ## Create default values
 
-You can set values for some parameters by using the [az config set](/cli/azure/config#az_config_set) command. This example sets a default resource group:
+You can set values for some parameters by using the [az config set](../latest/docs-ref-autogen/config.yml#az_config_set) command. This example sets a default resource group:
 
 ```azurecli
 az config set defaults.group=ContosoRGforVM
@@ -111,11 +111,11 @@ As long as persistence is on, your can leave the `--resource-group` parameter ou
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-For more information, see [Azure CLI persisted parameter](/cli/azure/param-persist-howto).
+For more information, see [Azure CLI persisted parameter](./param-persist-howto.md).
 
 ## Clean up resources
 
-If you created resources to try any of the commands in this article, you can remove them by using the [az group delete](/cli/azure/group#az_group_delete) command:
+If you created resources to try any of the commands in this article, you can remove them by using the [az group delete](../latest/docs-ref-autogen/group.yml#az_group_delete) command:
 
 ```azurecli
 az group delete --name ContosoRGforVM
@@ -124,7 +124,7 @@ az group delete --name ContosoStorageRG
 
 This command removes the group and all the resources that it contains at once.
 
-You can remove the persistent parameters by running the [az config param-persist delete](/cli/azure/config/param-persist#az_config_param_persist_delete) command:
+You can remove the persistent parameters by running the [az config param-persist delete](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_delete) command:
 
 ```azurecli
 az config param-persist delete --all

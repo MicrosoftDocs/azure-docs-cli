@@ -33,11 +33,11 @@ After installing the CLI for the first time, check that it's installed and you'v
 
 ## Sign in
 
-Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az_login).
+Before using any CLI commands with a local install, you need to sign in with [az login](../latest/docs-ref-autogen/reference-index.yml#az_login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](/cli/azure/account#az_account_set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
+After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](../latest/docs-ref-autogen/account.yml#az_account_set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
@@ -47,19 +47,19 @@ This table lists some common commands used in the CLI and links to their referen
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
-| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
-| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
-| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
-| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
-| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
+| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](../latest/docs-ref-autogen/group.yml) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](../latest/docs-ref-autogen/vm.yml) |
+| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](../latest/docs-ref-autogen/storage/account.yml) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](../latest/docs-ref-autogen/keyvault.yml) |
+| [Web applications](/azure/app-service) | [az webapp](../latest/docs-ref-autogen/webapp.yml) |
+| [SQL databases](/azure/sql-database) | [az sql server](../latest/docs-ref-autogen/sql/server.yml) |
+| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](../latest/docs-ref-autogen/cosmosdb.yml) |
 
 ## Finding commands
 
 Commands in the CLI are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
 
-To search for commands, use [az find](/cli/azure/reference-index#az_find). For example, to search for command names containing `secret`,
+To search for commands, use [az find](../latest/docs-ref-autogen/reference-index.yml#az_find). For example, to search for command names containing `secret`,
 use the following command:
 
 ```azurecli-interactive
@@ -91,7 +91,7 @@ There are some arguments that are available for every command.
 ## Interactive mode
 
 The CLI offers an interactive mode that automatically displays help information and makes it easier to
-select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az_interactive) command.
+select subcommands. You enter interactive mode with the [az interactive](../latest/docs-ref-autogen/reference-index.yml#az_interactive) command.
 
 ```azurecli-interactive
 az interactive
@@ -123,7 +123,7 @@ There are also quickstarts for other popular services.
 ## Give feedback
 
 We welcome your feedback for the CLI to help us make improvements and resolve bugs. You can [file an issue on GitHub](https://github.com/azure/azure-cli/issues) or use the built-in
-features of the CLI to leave general feedback with the [az feedback](/cli/azure/reference-index#az_feedback) command.
+features of the CLI to leave general feedback with the [az feedback](../latest/docs-ref-autogen/reference-index.yml#az_feedback) command.
 
 ```azurecli-interactive
 az feedback
@@ -132,5 +132,5 @@ az feedback
 ## See also
 
 * [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
-* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
 * [Popular articles on using the Azure CLI](popular-articles-using-the-azure-cli.md)

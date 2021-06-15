@@ -13,6 +13,6 @@ az upgrade
 
 > [!NOTE]
 >
-> The `az upgrade` command was added in version 2.11.0 and will not work with versions prior to 2.11.0. Older versions can be updated by reinstalling as described in [Install the Azure CLI](/cli/azure/install-azure-cli).
+> The `az upgrade` command was added in version 2.11.0 and will not work with versions prior to 2.11.0. Older versions can be updated by reinstalling as described in [Install the Azure CLI](../install-azure-cli.md).
 >
-> This command will also update all installed extensions by default. For more `az upgrade` options, please refer to the [command reference page](/cli/azure/reference-index#az_upgrade).
+> This command will also update all installed extensions by default. For more `az upgrade` options, please refer to the [command reference page](../../latest/docs-ref-autogen/reference-index.yml#az_upgrade).

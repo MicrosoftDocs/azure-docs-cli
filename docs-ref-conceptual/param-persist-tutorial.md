@@ -24,13 +24,13 @@ In this tutorial, you will learn to:
 
 This tutorial uses the following Azure CLI commands
 
-- [az config param-persist delete](/cli/azure/config/param-persist#az_config_param_persist_delete)
-- [az config param-persist off](/cli/azure/config/param-persist#az_config_param_persist_off)
-- [az config param-persist on](/cli/azure/config/param-persist#az_config_param_persist_on)
-- [az config param-persist show](/cli/azure/config/param-persist#az_config_param_persist_show)
-- [az function app create](/cli/azure/functionapp#az_functionapp_create)
-- [az group create](/cli/azure/group#az_group_create)
-- [az storage account create](/cli/azure/storage/account#az_storage_account_create)
+- [az config param-persist delete](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_delete)
+- [az config param-persist off](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_off)
+- [az config param-persist on](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_on)
+- [az config param-persist show](../latest/docs-ref-autogen/config/param-persist.yml#az_config_param_persist_show)
+- [az function app create](../latest/docs-ref-autogen/functionapp.yml#az_functionapp_create)
+- [az group create](../latest/docs-ref-autogen/group.yml#az_group_create)
+- [az storage account create](../latest/docs-ref-autogen/storage/account.yml#az_storage_account_create)
 
 
 If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/?WT.mc_id=A261C142F) before you begin.
@@ -46,12 +46,12 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
    - Select the **Cloud Shell** button on the menu bar at the upper right corner in the [Azure portal](https://portal.azure.com)
 
 1. If you are using a local install of the Azure CLI, complete the following:
-   - Sign in using the [az login](/cli/azure/reference-index#az_login) command, then follow the steps displayed in your terminal to complete the authentication process.
+   - Sign in using the [az login](../latest/docs-ref-autogen/reference-index.yml#az_login) command, then follow the steps displayed in your terminal to complete the authentication process.
 
      ```azurecli
      az login
      ```
-    - This tutorial requires version 2.12.0 or later of the Azure CLI.  Run [az version](/cli/azure/reference-index#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](/cli/azure/reference-index#az_upgrade).
+    - This tutorial requires version 2.12.0 or later of the Azure CLI.  Run [az version](../latest/docs-ref-autogen/reference-index.yml#az_version) to find the version and dependent libraries that are installed. To upgrade to the latest version, run [az upgrade](../latest/docs-ref-autogen/reference-index.yml#az_upgrade).
 
 ## 1. Determine your local directory
 
@@ -72,7 +72,7 @@ cd azCLI
 
 ## 2. Turn on Persisted parameters
 
-[Persisted parameters](/cli/azure/config/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
+[Persisted parameters](../latest/docs-ref-autogen/config/param-persist.yml) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](./reference-types-and-status.md) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
@@ -122,7 +122,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
+   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](../latest/docs-ref-autogen/config/param-persist.yml#az_param_persist_delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
@@ -298,7 +298,7 @@ az storage account create --name SA4inAzCLI --sku Standard_LRS
 
 ## 8. Clean up resources
 
-When no longer needed, use the [az group delete](/cli/azure/group) command to remove the resource group, and all related resources.
+When no longer needed, use the [az group delete](../latest/docs-ref-autogen/group.yml) command to remove the resource group, and all related resources.
 
 ```azurecli
 az group delete --name RG1forTutorial
@@ -307,4 +307,4 @@ az group delete --name RG1forTutorial
 ## See also
 
 - [(How to work with Azure CLI persisted parameters](param-persist-howto.md)
-- [Azure CLI Configuration using az configure](/cli/azure/azure-cli-configuration)
+- [Azure CLI Configuration using az configure](./azure-cli-configuration.md)

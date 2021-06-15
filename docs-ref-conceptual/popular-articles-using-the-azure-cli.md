@@ -161,5 +161,5 @@ Azure Stack Hub| How-to guide: ASDK resources |[Manage and deploy resources to A
 ## See also
 
 * [Get started with the Azure CLI](get-started-with-azure-cli.md)
-* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
 * [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)

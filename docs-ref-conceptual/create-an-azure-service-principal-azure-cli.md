@@ -27,7 +27,7 @@ This article shows you the steps for creating, getting information about, and re
 
 ## Create a service principal
 
-Create a service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses.
+Create a service principal with the [az ad sp create-for-rbac](../latest/docs-ref-autogen/ad/sp.yml#az_ad_sp_create_for_rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses.
 
 There are two types of authentication available for service principals: Password-based authentication, and certificate-based authentication.
 
@@ -58,7 +58,7 @@ Without any authentication parameters, password-based authentication is used wit
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
+Record their values, but they can be retrieved at any point with [az ad sp list](../latest/docs-ref-autogen/ad/sp.yml#az_ad_sp_list).
 
 ### Certificate-based authentication
 
@@ -127,15 +127,15 @@ az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertNa
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-For certificates stored in Key Vault, retrieve the certificate's private key with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show). In Key Vault, the name of the certificate's secret
+For certificates stored in Key Vault, retrieve the certificate's private key with [az keyvault secret show](../latest/docs-ref-autogen/keyvault/secret.yml#az_keyvault_secret_show). In Key Vault, the name of the certificate's secret
 is the same as the certificate name. If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
+Record their values, but they can be retrieved at any point with [az ad sp list](../latest/docs-ref-autogen/ad/sp.yml#az_ad_sp_list).
 
 ## Get an existing service principal
 
-A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list). By default this
+A list of the service principals in a tenant can be retrieved with [az ad sp list](../latest/docs-ref-autogen/ad/sp.yml#az_ad_sp_list). By default this
 command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` argument. Getting this list can take a long time, so it's
 recommended that you filter the list with one of the following arguments:
 
@@ -155,17 +155,17 @@ az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 
 > [!IMPORTANT]
 >
-> `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az_ad_sp_show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
-> Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show), but no other secrets are stored by default.
+> `az ad sp list` or [az ad sp show](../latest/docs-ref-autogen/ad/sp.yml#az_ad_sp_show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
+> Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](../latest/docs-ref-autogen/keyvault/secret.yml#az_keyvault_secret_show), but no other secrets are stored by default.
 > If you forget an authentication method or secret, [reset the service principal credentials](#reset-credentials).
 
 ## Manage service principal roles
 
 The Azure CLI has the following commands to manage role assignments:
 
-* [az role assignment list](/cli/azure/role/assignment#az_role_assignment_list)
-* [az role assignment create](/cli/azure/role/assignment#az_role_assignment_create)
-* [az role assignment delete](/cli/azure/role/assignment#az_role_assignment_delete)
+* [az role assignment list](../latest/docs-ref-autogen/role/assignment.yml#az_role_assignment_list)
+* [az role assignment create](../latest/docs-ref-autogen/role/assignment.yml#az_role_assignment_create)
+* [az role assignment delete](../latest/docs-ref-autogen/role/assignment.yml#az_role_assignment_delete)
 
 The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
@@ -210,10 +210,10 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
-* [az login](/cli/azure/reference-index#az_login)
-* [az group create](/cli/azure/group#az_group_create)
-* [az storage account create](/cli/azure/storage/account#az_storage_account_create)
-* [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
+* [az login](../latest/docs-ref-autogen/reference-index.yml#az_login)
+* [az group create](../latest/docs-ref-autogen/group.yml#az_group_create)
+* [az storage account create](../latest/docs-ref-autogen/storage/account.yml#az_storage_account_create)
+* [az storage account keys list](../latest/docs-ref-autogen/storage/account/keys.yml#az_storage_account_keys_list)
 
 To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
 
@@ -251,7 +251,7 @@ To sign in with a service principal, you need the `appId`, `tenant`, and `passwo
 
 ## Reset credentials
 
-If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az_ad_sp_credential_reset). The reset command takes the same arguments
+If you forget the credentials for a service principal, use [az ad sp credential reset](../latest/docs-ref-autogen/ad/sp/credential.yml#az_ad_sp_credential_reset). The reset command takes the same arguments
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive

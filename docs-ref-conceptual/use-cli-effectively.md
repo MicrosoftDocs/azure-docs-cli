@@ -19,17 +19,17 @@ This article discusses tips useful for Azure CLI and how to avoid pitfalls.
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
-If you have questions about any Azure CLI command, search in [Azure CLI Reference](/cli/azure/reference-index).
+If you have questions about any Azure CLI command, search in [Azure CLI Reference](../latest/docs-ref-autogen/reference-index.yml).
 
 ## Output formatting
 
-Many Azure CLI commands show you data in the console. This information can be the goal of a command, as in this example, where The [az account show](/cli/azure/account#az_account_show) command shows your current subscription:
+Many Azure CLI commands show you data in the console. This information can be the goal of a command, as in this example, where The [az account show](../latest/docs-ref-autogen/account.yml#az_account_show) command shows your current subscription:
 
 ```azurecli
 az account show
 ```
 
-Sometimes, the information that a command displays reflects the changes you've made. This example creates a resource group by using the [az group create](/cli/azure/group#az_group_create) command:
+Sometimes, the information that a command displays reflects the changes you've made. This example creates a resource group by using the [az group create](../latest/docs-ref-autogen/group.yml#az_group_create) command:
 
 ```azurecli
 az group create --name MyResourceGroup --location eastus
@@ -37,7 +37,7 @@ az group create --name MyResourceGroup --location eastus
 
 If you run this command, the Azure CLI console shows you the resource group you just created.
 
-You can select the format for output by specifying the `--output` parameter. In this example, the [az account list](/cli/azure/account#az_account_list) command lists all subscriptions that you can access as a table:
+You can select the format for output by specifying the `--output` parameter. In this example, the [az account list](../latest/docs-ref-autogen/account.yml#az_account_list) command lists all subscriptions that you can access as a table:
 
 ```azurecli
 az account list --output table
@@ -45,7 +45,7 @@ az account list --output table
 
 Here are three common formats:
 
-* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az configure](/cli/azure/reference-index#az_configure) command.
+* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az configure](../latest/docs-ref-autogen/reference-index.yml#az_configure) command.
 * The `table` format presents output as a human readable table. You can specify which values appear in the table and use queries to customize the output.
 * The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
 
@@ -55,7 +55,7 @@ For more information about these and other formats, see [Output formats for Azur
 
 Azure CLI commands run in a shell. This article uses Bash, but there are other options. You can use standard shell syntax to simplify Azure CLI usage.
 
-You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example assigns an ID found by the [az vm list](/cli/azure/vm#az_vm_list) command to a variable.
+You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example assigns an ID found by the [az vm list](../latest/docs-ref-autogen/vm.yml#az_vm_list) command to a variable.
 
 ```azurecli
 running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details \
@@ -148,7 +148,7 @@ az group delete --name MyResourceGroup --no-wait
 
 When you remove a resource group, you also remove all the resources that belong to it. Reclaiming these resources can take a long time. The `--no-wait` parameter When this command runs, the console can accept commands immediately, even though it's still working on the command.
 
-Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az_vm_wait) command to support creating independent resources in parallel:
+Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](../latest/docs-ref-autogen/vm.yml#az_vm_wait) command to support creating independent resources in parallel:
 
 ```azurecli
 az vm create --resource-group VMResources --name virtual-machine-01 --image centos --no-wait
@@ -182,9 +182,9 @@ If you run Azure CLI on a build machine where multiple jobs can be run in parall
 
 ## Generic update arguments
 
-Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az_vm_update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
+Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](../latest/docs-ref-autogen/vm.yml) includes the [az vm update](../latest/docs-ref-autogen/vm.yml#az_vm_update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
 
-The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
+The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](../latest/docs-ref-autogen/vm.yml#az_vm_show).
 
 ```azurecli
 az vm show --resource-group VMResources --name virtual-machine-01
@@ -202,13 +202,13 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 ## Generic resource commands
 
-A service you want to work with might not have Azure CLI support yet. You can use the [az resource](/cli/azure/resource) commands to work with these resources.
+A service you want to work with might not have Azure CLI support yet. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) commands to work with these resources.
 
-If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az_deployment_group_create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
+If you only need create or update commands, use the [az deployment group create](../latest/docs-ref-autogen/deployment/group.yml#az_deployment_group_create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
 
 ## REST API commands
 
-If generic update arguments and [az resource](/cli/azure/resource) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az_rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
+If generic update arguments and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use [az rest](../latest/docs-ref-autogen/reference-index.yml#az_rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 

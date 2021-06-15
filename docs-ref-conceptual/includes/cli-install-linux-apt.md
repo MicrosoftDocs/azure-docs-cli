@@ -71,7 +71,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 ## Sign in to Azure with the Azure CLI
 
-Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az_login) command.
+Run the Azure CLI with the `az` command. To sign in, use the [az login](../../latest/docs-ref-autogen/reference-index.yml#az_login) command.
 
 [!INCLUDE [interactive-login](interactive-login.md)]
 

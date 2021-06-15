@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 # Sign in with Azure CLI 
 
 There are several authentication types for the Azure CLI. The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
-Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az_login) command. When writing scripts, the recommended approach is
+Locally, you can sign in interactively through your browser with the [az login](../latest/docs-ref-autogen/reference-index.yml#az_login) command. When writing scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
 None of your sign-in information is stored by the CLI. Instead, an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens)
@@ -76,7 +76,7 @@ To sign in with a service principal, you need:
 >
 > If your service principal uses a certificate that is stored in Key Vault, that certificate's private key
 > must be available without signing in to Azure. To retrieve a private key for use offline,
-> use [az keyvault secret show](/cli/azure/keyvault/secret).
+> use [az keyvault secret show](../latest/docs-ref-autogen/keyvault/secret.yml).
 
 ```azurecli-interactive
 az login --service-principal -u <app-url> -p <password-or-cert> --tenant <tenant>

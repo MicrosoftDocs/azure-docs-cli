@@ -22,13 +22,13 @@ The alias extension allows users to define custom commands for the Azure CLI by 
 
 The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI](./install-azure-cli.md).
 
-Install the extension with the [az extension add](/cli/azure/extension#az_extension_add) command.
+Install the extension with the [az extension add](../latest/docs-ref-autogen/extension.yml#az_extension_add) command.
 
 ```azurecli-interactive
 az extension add --name alias
 ```
 
-Verify the installation of the extension with [az extension list](/cli/azure/extension#az_extension_list). If the alias extension was installed properly, it's listed in the command output.
+Verify the installation of the extension with [az extension list](../latest/docs-ref-autogen/extension.yml#az_extension_list). If the alias extension was installed properly, it's listed in the command output.
 
 ```azurecli-interactive
 az extension list --output table --query '[].{Name:name}'
@@ -42,7 +42,7 @@ alias
 
 ## Keep the extension up-to-date
 
-The alias extension is under active development and new versions are released regularly. New versions aren't installed when you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az_extension_update).
+The alias extension is under active development and new versions are released regularly. New versions aren't installed when you update the CLI. Install the updates for the extension with [az extension update](../latest/docs-ref-autogen/extension.yml#az_extension_update).
 
 ```azurecli-interactive
 az extension update --name alias
@@ -164,7 +164,7 @@ command = vm list-ip-addresses --resource-group {{ resourceGroup }} --name {{ vm
 
 ## Uninstall the alias extension
 
-To uninstall the extension, use the [az extension remove](/cli/azure/extension#az_extension_remove) command.
+To uninstall the extension, use the [az extension remove](../latest/docs-ref-autogen/extension.yml#az_extension_remove) command.
 
 ```azurecli-interactive
 az extension remove --name alias

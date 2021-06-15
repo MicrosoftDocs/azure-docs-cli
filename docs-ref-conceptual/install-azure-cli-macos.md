@@ -35,7 +35,7 @@ brew update && brew install azure-cli
 > The Azure CLI is guaranteed to be compatible with the latest version of `python3`
 > published on Homebrew.
 
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
+You can then run the Azure CLI with the `az` command. To sign in, use [az login](../latest/docs-ref-autogen/reference-index.yml#az_login) command.
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 

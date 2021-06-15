@@ -26,7 +26,7 @@ The MSAL token cache will be encrypted on Windows, macOS and Linux with a deskto
 
 ##### Call `az account get-access-token`
 
-You can manually call [az account get-access-token](/cli/azure/account#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in [az account show](/cli/azure/account#az_account_show).
+You can manually call [az account get-access-token](../latest/docs-ref-autogen/account.yml#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned token is for the default subscription/tenant shown in [az account show](../latest/docs-ref-autogen/account.yml#az_account_show).
 
 ```azurecli
 # get the active subscription
@@ -49,8 +49,8 @@ First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to
 
 ## See also
 * Azure CLI
-  * [Azure CLI beta](/cli/azure/release-notes-azure-cli?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azure-cli-beta) release notes
-  * [Install Azure CLI beta version](/cli/azure/install-azure-cli-beta)
+  * [Azure CLI beta](./release-notes-azure-cli.md?bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json&tabs=azure-cli-beta&toc=%2fcli%2fazure%2ftoc.json) release notes
+  * [Install Azure CLI beta version](./install-azure-cli-beta.md)
 * .NET
   * [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet&preserve-view=true) in .NET
   * [SharedTokenCacheCredential Class](/dotnet/api/azure.identity.sharedtokencachecredential?view=azure-dotnet&preserve-view=true) in .NET
