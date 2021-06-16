@@ -1,0 +1,157 @@
+### YamlMime:AzureCLIGroup
+uid: az_dataprotection_backup-instance_restore
+name: az dataprotection backup-instance restore
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **dataprotection** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az dataprotection backup-instance restore** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Restore backed up instances from recovery points in a backup vault.
+description: ''
+directCommands:
+- uid: az_dataprotection_backup-instance_restore_initialize-for-data-recovery
+  name: az dataprotection backup-instance restore initialize-for-data-recovery
+  summary: Initialize restore request object to recover all backed up data in a backup vault.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureDisk}
+                                                                           --restore-location
+                                                                           --source-datastore {ArchiveStore, OperationalStore, VaultStore}
+                                                                           --target-resource-id
+                                                                           [--point-in-time]
+                                                                           [--recovery-point-id]
+  examples:
+  - summary: initialize restore request for azure disk backup instance
+    syntax: az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type AzureDisk --restore-location centraluseuap --source-datastore OperationalStore --target-resource-id {restore_disk_id} --recovery-point-id b7e6f082-b310-11eb-8f55-9cfce85d4fae
+  requiredParameters:
+  - isRequired: true
+    name: --datasource-type
+    parameterValueGroup: AzureBlob, AzureDisk
+    summary: Specify the datasource type.
+    description: ''
+  - isRequired: true
+    name: --restore-location
+    summary: Specify the restore location.
+    description: ''
+  - isRequired: true
+    name: --source-datastore
+    parameterValueGroup: ArchiveStore, OperationalStore, VaultStore
+    summary: Specify the datastore type of the given recovery point or point in time.
+    description: ''
+  - isRequired: true
+    name: --target-resource-id
+    summary: Specify the resource ID to which the data will be restored.
+    description: ''
+  optionalParameters:
+  - name: --point-in-time
+    summary: Specify the point in time which will be used for restoring the data in UTC (yyyy-mm-ddTHH:MM:SS).
+    description: ''
+  - name: --recovery-point-id
+    summary: Specify the recovery point ID which will be used for restoring the data.
+    description: ''
+- uid: az_dataprotection_backup-instance_restore_initialize-for-item-recovery
+  name: az dataprotection backup-instance restore initialize-for-item-recovery
+  summary: Initialize restore request object to recover specified items of backed up data in a backup vault.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance restore initialize-for-item-recovery --backup-instance-id
+                                                                           --datasource-type {AzureBlob, AzureDisk}
+                                                                           --restore-location
+                                                                           --source-datastore {ArchiveStore, OperationalStore, VaultStore}
+                                                                           [--container-list]
+                                                                           [--from-prefix-pattern]
+                                                                           [--point-in-time]
+                                                                           [--recovery-point-id]
+                                                                           [--to-prefix-pattern]
+  examples:
+  - summary: initialize restore request for azure blob backup instance
+    syntax: az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type AzureBlob --restore-location centraluseuap --source-datastore OperationalStore --backup-instance-id {backup_instance_id}  --point-in-time 2021-05-26T15:00:00 --container-list container1 container2
+  requiredParameters:
+  - isRequired: true
+    name: --backup-instance-id
+    summary: Specify the backup instance ID.
+    description: ''
+  - isRequired: true
+    name: --datasource-type
+    parameterValueGroup: AzureBlob, AzureDisk
+    summary: Specify the datasource type.
+    description: ''
+  - isRequired: true
+    name: --restore-location
+    summary: Specify the restore location.
+    description: ''
+  - isRequired: true
+    name: --source-datastore
+    parameterValueGroup: ArchiveStore, OperationalStore, VaultStore
+    summary: Specify the datastore type of the given recovery point or point in time.
+    description: ''
+  optionalParameters:
+  - name: --container-list
+    summary: Specify the list of containers to restore.
+    description: ''
+  - name: --from-prefix-pattern
+    summary: Specify the prefix pattern for start range.
+    description: ''
+  - name: --point-in-time
+    summary: Specify the point in time which will be used for restoring the data in UTC (yyyy-mm-ddTHH:MM:SS).
+    description: ''
+  - name: --recovery-point-id
+    summary: Specify the recovery point ID which will be used for restoring the data.
+    description: ''
+  - name: --to-prefix-pattern
+    summary: Specify the prefix pattern for end range.
+    description: ''
+- uid: az_dataprotection_backup-instance_restore_trigger
+  name: az dataprotection backup-instance restore trigger
+  summary: Triggers restore for a BackupInstance.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance restore trigger --backup-instance-name
+                                                      --resource-group
+                                                      --restore-request-object
+                                                      --vault-name
+                                                      [--no-wait]
+  examples:
+  - summary: Trigger restore
+    syntax: az dataprotection backup-instance restore trigger -g sarath-rg --vault-name sarath-vault --backup-instance-name {backup_instance_name} --restore-request-object restore_request.json
+  requiredParameters:
+  - isRequired: true
+    name: --backup-instance-name --name -n
+    summary: The name of the backup instance.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --restore-request-object
+    summary: 'Request body for operation Expected value: json-string/@json-file.'
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: The name of the backup vault.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+commands:
+- az_dataprotection_backup-instance_restore_initialize-for-data-recovery
+- az_dataprotection_backup-instance_restore_initialize-for-item-recovery
+- az_dataprotection_backup-instance_restore_trigger
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Restore backed up instances from recovery points in a backup vault.
