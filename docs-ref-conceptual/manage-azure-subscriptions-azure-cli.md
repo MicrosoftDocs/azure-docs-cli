@@ -41,9 +41,6 @@ az account list --query "[?isDefault]"
 # get a list of subscriptions except for the default subscription
 az account list --query "[?isDefault == \`false\`]"
 
-# get a list of all subscriptions
-az account list
-
 # get the details of a specific subscription
 az account show --subscription MySubscriptionName
 ```
