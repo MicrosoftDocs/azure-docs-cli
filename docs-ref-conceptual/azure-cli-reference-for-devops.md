@@ -16,23 +16,21 @@ ms.custom: devx-track-azurecli
 
 The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure DevOps, and gives you the ability to manage Azure DevOps from a command line.
 
-## References for Azure DevOps
-
 The [Azure DevOps](/azure/devops) CLI experience is associated with the following Azure CLI reference groups. Except for Azure Functions, access to each of these reference groups requires the [azure-devops](https://github.com/Azure/azure-devops-cli-extension) extension:
 
-- [Azure Artifacts](#azure-artifacts-references)
-- [Azure Boards](#azure-boards-references)
-- [Azure DevOps](#azure-devops-references)
-- [Azure Functions (DevOps integration)](#azure-functions-devops-integration-references)
-- [Azure Pipelines](#azure-pipelines-references)
-- [Azure Repos](#azure-repos-references)
+- [Azure Artifacts](#azure-artifacts)
+- [Azure Boards](#azure-boards)
+- [Azure DevOps Organizations](#azure-devops-organizations)
+- [Azure Functions (DevOps integration)](#azure-functions-devops-integration)
+- [Azure Pipelines](#azure-pipelines)
+- [Azure Repos](#azure-repos)
 
 For the references in each subgroup, see the tables in the following sections.
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-### Azure Artifacts references
+## Azure Artifacts
 
 [Azure Artifacts](/cli/azure/artifacts) has the following references:
 
@@ -40,7 +38,7 @@ For the references in each subgroup, see the tables in the following sections.
 |-|-|-|
 | [az artifacts universal](/cli/azure/artifacts/universal) | Manage Universal Packages of Azure Artifacts. | [Publish and download Universal Packages](/azure/devops/artifacts/quickstarts/universal-packages) |
 
-### Azure Boards references
+## Azure Boards
 
 [Azure Boards](/cli/azure/boards) has the following references:
 
@@ -54,11 +52,11 @@ For the references in each subgroup, see the tables in the following sections.
 | [az boards work-item](/cli/azure/boards/work-item) | Manage work items. | [View and add work items](/azure/devops/boards/work-items/view-add-work-items?tabs=azure-devops-cli) |
 | [az boards work-item relation](/cli/azure/boards/work-item/relation) | Manage work item relations. | [Linking, traceability, and managing dependencies](/azure/devops/boards/queries/link-work-items-support-traceability) |
 
-### Azure DevOps references
+## Azure DevOps Organizations
 
 [Azure DevOps](/cli/azure/devops) has the following references:
 
-#### Security references
+### Security
 
 | Reference | Description | More information |
 |-|-|-|
@@ -67,7 +65,7 @@ For the references in each subgroup, see the tables in the following sections.
 | [az devops security permission](/cli/azure/devops/security/permission) | Manage security permissions. | [Get started with permissions, access, and security groups](/azure/devops/organizations/security/about-permissions) |
 | [az devops security permission namespace](/cli/azure/devops/security/permission/namespace) | Manage security namespaces. | [Security namespace and permission reference](/azure/devops/organizations/security/namespace-reference) |
 
-#### Service endpoint references
+### Service endpoint
 
 | Reference | Description | More information |
 |-|-|-|
@@ -75,7 +73,7 @@ For the references in each subgroup, see the tables in the following sections.
 | [az devops service-endpoint azurerm](/cli/azure/devops/service-endpoint/azurerm) | Manage Azure Resource Manager service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
 [az devops service-endpoint github](/cli/azure/devops/service-endpoint/github) | Manage GitHub service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
 
-#### Additional references
+### Additional DevOps references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -88,15 +86,15 @@ For the references in each subgroup, see the tables in the following sections.
 [az devops wiki](/cli/azure/devops/wiki) | Manage wikis. | [Manage wikis with the CLI](/azure/devops/project/wiki/manage-wikis) |
 [az devops wiki page](/cli/azure/devops/wiki/page) | Manage wiki pages. | [Add and edit wiki pages](/azure/devops/project/wiki/add-edit-wiki?tabs=azure-devops-cli) |
 
-### Azure Functions (DevOps integration) references
+## Azure Functions (DevOps integration)
 
-[Azure Functions ((DevOps integration))](/cli/azure/functionapp/devops-pipeline) has the following references:
+[Azure Functions (DevOps integration)](/cli/azure/functionapp/devops-pipeline) has the following references:
 
 | Reference | Description | More information |
 |-|-|-|
 | [az functionapp devops-pipeline](/cli/azure/functionapp/devops-pipeline) | Manage Azure Function integration with Azure DevOps. | [Continuous delivery by using Azure DevOps](/azure/azure-functions/functions-how-to-azure-devops) |
 
-### Azure Pipelines references
+## Azure Pipelines
 
 [Azure Pipelines](/cli/azure/pipelines) has the following references:
 
@@ -119,7 +117,7 @@ For the references in each subgroup, see the tables in the following sections.
 | [az pipelines variable-group](/cli/azure/pipelines/variable-group) | Manage variable groups. | [Add and use variable groups](/azure/devops/pipelines/library/variable-groups?tabs=azure-devops-cli) |
 | [az pipelines variable-group variable](/cli/azure/pipelines/variable-group/variable) | Manage variables in a variable group. | [Manage variables in a variable group](/azure/devops/pipelines/library/variable-groups?tabs=azure-devops-cli#manage-variables-in-a-variable-group) |
 
-### Azure Repos references
+## Azure Repos
 
 [Azure Repos](/cli/azure/repos) has the following references:
 
