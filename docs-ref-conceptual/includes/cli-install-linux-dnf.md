@@ -71,7 +71,7 @@ You can also do it step by step:
 First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
-$ sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
+$ sudo yum install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
 # build openssl from source
 $ cd ~
 $ wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
