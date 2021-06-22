@@ -130,6 +130,18 @@ azureuser
 
 For more information about the `tsv` output format, see [Output formats - TSV output format](format-output-azure-cli.md#tsv-output-format)
 
+## Query Boolean values
+
+Querying Boolean values is slightly different.  There are two options:
+
+```azurecli
+# Boolean values are assumed to be true, so this syntax returns the current default subscription.
+az account list --query "[?isDefault]"
+
+# If you want a false value, use an escape character.
+az account list --query "[?isDefault == \`false\`]"
+```
+
 ## Get multiple values
 
 To get more than one property, put expressions in square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
