@@ -29,10 +29,20 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 
 Many Azure CLI commands act within a subscription. You can always specify which subscription to work in by using the **subscription** parameter in your command. That parameter is optional. If you don't specify a subscription, the command uses your current, active subscription.
 
-To see the subscription you're currently using, run the [az account show](../latest/docs-ref-autogen/account.yml#az_account_show) command:
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az_account_show) or [az account list](/cli/azure/account#az_account_list) command:
 
 ```azurecli
+# get the current default subscription using show
 az account show --output table
+
+# get the current default subscription using list
+az account list --query "[?isDefault]"
+
+# get a list of subscriptions except for the default subscription
+az account list --query "[?isDefault == \`false\`]"
+
+# get the details of a specific subscription
+az account show --subscription MySubscriptionName
 ```
 
 > [!TIP]

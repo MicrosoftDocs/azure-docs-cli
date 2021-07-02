@@ -18,11 +18,18 @@ The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set 
 
 ## References for Azure SQL
 
-The [Azure SQL](/azure/azure-sql/) CLI experience is composed of core references only and ships as part of the CLI.  
+The [Azure SQL](/azure/azure-sql/) CLI experience is associated with the following Azure CLI reference groups. It's composed of core references only and ships as part of the CLI.  
 
-See [az sql](../latest/docs-ref-autogen/sql.yml) for a complete list of the Azure CLI references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections.
+See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections:
 
-## SQL database references
+- [SQL database](#sql-database)
+- [SQL Managed Instance](#sql-managed-instance)
+- [SQL Managed Instance database](#sql-managed-instance-database)
+- [SQL servers](#sql-servers)
+- [SQL virtual machines](#sql-virtual-machines)
+- [Additional references](#additional-references)
+
+## SQL database
 
 | Reference | Description | More information |
 |-|-|-|
@@ -37,7 +44,7 @@ See [az sql](../latest/docs-ref-autogen/sql.yml) for a complete list of the Azur
 | [az sql db tde](../latest/docs-ref-autogen/sql/db/tde.yml) | Manage a SQL database's transparent data encryption. | [Transparent data encryption](/azure/azure-sql/database/transparent-data-encryption-tde-overview) |
 | [az sql db threat-policy](../latest/docs-ref-autogen/sql/db/threat-policy.yml) | Manage a SQL database's threat detection policies. | [Configure Advanced Threat Protection](/azure/azure-sql/database/threat-detection-configure) |
 
-## SQL Managed Instance references
+## SQL Managed Instance
 
 | Reference | Description | More information |
 |-|-|-|
@@ -48,7 +55,7 @@ See [az sql](../latest/docs-ref-autogen/sql.yml) for a complete list of the Azur
 | [az sql mi op](../latest/docs-ref-autogen/sql/mi/op.yml) | Manage operations on a SQL Managed Instance. | [Overview of Azure SQL Managed Instance management operations](/azure/azure-sql/managed-instance/management-operations-overview) |
 | [az sql mi tde-key](../latest/docs-ref-autogen/sql/mi/tde-key.yml) | Manage a SQL Managed Instance's encryption protector. | [Transparent data encryption](/azure/azure-sql/database/transparent-data-encryption-tde-overview) |
 
-## SQL Managed Instance database references
+## SQL Managed Instance database
 
 | Reference | Description | More information |
 |-|-|-|
@@ -58,7 +65,7 @@ See [az sql](../latest/docs-ref-autogen/sql.yml) for a complete list of the Azur
 | [az sql midb ltr-policy](../latest/docs-ref-autogen/sql/midb/ltr-policy.yml) | Manage SQL Managed Instance database long-term retention policy. | [Long-term retention](/azure/azure-sql/database/long-term-retention-overview) |
 | [az sql midb short-term-retention-policy](../latest/docs-ref-autogen/sql/midb/short-term-retention-policy.yml) | Manage SQL Managed Instance database backup short-term retention policy. | [Automated backups](/azure/azure-sql/database/automated-backups-overview) |
 
-## Server references
+## SQL servers
 
 | Reference | Description | More information |
 |-|-|-|
@@ -74,7 +81,7 @@ See [az sql](../latest/docs-ref-autogen/sql.yml) for a complete list of the Azur
 | [az sql server tde-key](../latest/docs-ref-autogen/sql/server/tde-key.yml) | Manage a server's encryption protector. | [Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure) |
 | [az sql server vnet-rule](../latest/docs-ref-autogen/sql/server/vnet-rule.yml) | Manage a server's virtual network rules. | [Use virtual network service endpoints and rules for servers](/azure/azure-sql/database/vnet-service-endpoint-rule-overview) |
 
-## SQL virtual machines references
+## SQL virtual machines
 
 | Reference | Description | More information |
 |-|-|-|
