@@ -12,11 +12,11 @@ ms.reviewer: robb
 ms.custom: devx-track-azurecli
 ---
 
-# Azure CLI for Azure DevOps
+# Azure CLI for Azure Web Apps
 
 The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Web Apps, and gives you the ability to manage Azure Web Apps from a command line.
 
-The [Azure Web Apps](/azure/webapps) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](https://docs.microsoft.com/cli/azure/azure-cli-extensions-overview).  
+The [Azure Web Apps](/azure/webapps) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](/azure/azure-cli-extensions-overview).  
 
 See [az webapps](/cli/azure/webapps) for a complete list of the Azure CLI core and extension references available for the Azure Cosmos DB service. For references for each subgroup, see the tables in the following sections.
 
