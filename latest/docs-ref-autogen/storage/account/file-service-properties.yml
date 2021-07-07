@@ -39,19 +39,29 @@ directCommands:
   syntax: >-
     az storage account file-service-properties update --account-name
                                                       [--add]
+                                                      [--auth-methods]
+                                                      [--channel-encryption]
                                                       [--delete-retention-days]
                                                       [--enable-delete-retention {false, true}]
                                                       [--enable-smb-multichannel {false, true}]
                                                       [--force-string]
+                                                      [--kerb-ticket-encryption]
                                                       [--remove]
                                                       [--resource-group]
                                                       [--set]
                                                       [--subscription]
+                                                      [--versions]
   examples:
   - summary: Enable soft delete policy and set delete retention days to 100 for file service in storage account.
     syntax: az storage account file-service-properties update --enable-delete-retention true --delete-retention-days 100 -n mystorageaccount -g MyResourceGroup
   - summary: Disable soft delete policy for file service.
     syntax: az storage account file-service-properties update --enable-delete-retention false -n mystorageaccount -g MyResourceGroup
+  - summary: Enable SMB Multichannel setting for file service.
+    syntax: az storage account file-service-properties update --enable-smb-multichannel -n mystorageaccount -g MyResourceGroup
+  - summary: Disable SMB Multichannel setting for file service.
+    syntax: az storage account file-service-properties update --enable-smb-multichannel false -n mystorageaccount -g MyResourceGroup
+  - summary: Set secured SMB setting for file service.
+    syntax: az storage account file-service-properties update --versions SMB2.1;SMB3.0;SMB3.1.1 --auth-methods NTLMv2;Kerberos --kerb-ticket-encryption RC4-HMAC;AES-256 --channel-encryption AES-CCM-128;AES-GCM-128;AES-GCM-256 -n mystorageaccount -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --account-name -n
@@ -60,6 +70,12 @@ directCommands:
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --auth-methods
+    summary: SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'.
+    description: ''
+  - name: --channel-encryption
+    summary: SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'.
     description: ''
   - name: --delete-retention-days
     summary: Indicate the number of days that the deleted item should be retained. The minimum specified value can be 1 and the maximum value can be 365.
@@ -75,6 +91,9 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --kerb-ticket-encryption -k
+    summary: Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
@@ -86,6 +105,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --versions
+    summary: SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter ';'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
@@ -108,5 +130,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/28/2021
+  ms.date: 07/01/2021
   description: Manage the properties of file service in storage account.

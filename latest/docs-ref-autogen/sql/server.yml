@@ -9,30 +9,36 @@ directCommands:
   summary: Create a server.
   description: ''
   syntax: >-
-    az sql server create --admin-password
-                         --admin-user
-                         --name
+    az sql server create --name
                          --resource-group
+                         [--admin-password]
+                         [--admin-user]
                          [--assign-identity]
+                         [--enable-ad-only-auth]
                          [--enable-public-network {false, true}]
+                         [--external-admin-name]
+                         [--external-admin-principal-type]
+                         [--external-admin-sid]
+                         [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                         [--key-id]
                          [--location]
                          [--minimal-tls-version {1.0, 1.1, 1.2}]
                          [--no-wait]
+                         [--pid]
                          [--subscription]
+                         [--user-assigned-identity-id]
   examples:
   - summary: Create a server.
     syntax: az sql server create -l westus -g mygroup -n myserver -u myadminuser -p myadminpassword
   - summary: Create a server with disabled public network access to server.
     syntax: az sql server create -l westus -g mygroup -n myserver -u myadminuser -p myadminpassword -e false
+  - summary: Create a server without SQL Admin, with AD admin and AD Only enabled.
+    syntax: az sql server create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer
+  - summary: Create a server without SQL Admin, with AD admin, AD Only enabled, User ManagedIdenties and Identity Type is SystemAssigned,UserAssigned.
+    syntax: az sql server create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName \ --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
+  - summary: Create a server without SQL Admin, with AD admin, AD Only enabled, User ManagedIdenties and Identity Type is UserAssigned.
+    syntax: az sql server create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName \ --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
   requiredParameters:
-  - isRequired: true
-    name: --admin-password -p
-    summary: The administrator login password (required for server creation).
-    description: ''
-  - isRequired: true
-    name: --admin-user -u
-    summary: Administrator username for the server. Once created it cannot be changed.
-    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
@@ -42,12 +48,37 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --admin-password -p
+    summary: The administrator login password (required for server creation).
+    description: ''
+  - name: --admin-user -u
+    summary: Administrator username for the server. Once created it cannot be changed.
+    description: ''
   - name: --assign-identity -i
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
+    description: ''
+  - name: --enable-ad-only-auth
+    summary: Enable Azure Active Directory Only Authentication for this server.
     description: ''
   - name: --enable-public-network -e
     parameterValueGroup: false, true
     summary: Set whether public network access to server is allowed or not. When false,only connections made through Private Links can reach this server.
+    description: ''
+  - name: --external-admin-name
+    summary: Display name of the Azure AD administrator user, group or application.
+    description: ''
+  - name: --external-admin-principal-type
+    summary: User, Group or Application.
+    description: ''
+  - name: --external-admin-sid
+    summary: The unique ID of the Azure AD administrator. Object Id for User or Group, Client Id for Applications.
+    description: ''
+  - name: --identity-type -t
+    parameterValueGroup: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
+    summary: Type of Identity to be used. Possible values are SystemAsssigned,UserAssigned, SystemAssigned,UserAssigned and None.
+    description: ''
+  - name: --key-id -k
+    summary: The key vault URI for encryption.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -59,8 +90,14 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --pid --primary-user-assigned-identity-id
+    summary: The ID of the primary user managed identity.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --user-assigned-identity-id -a
+    summary: Generate and assign an User Managed Identity(UMI) for this server.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_server_delete
@@ -95,7 +132,8 @@ directCommands:
   summary: List available servers.
   description: ''
   syntax: >-
-    az sql server list [--query-examples]
+    az sql server list [--expand-ad-admin]
+                       [--query-examples]
                        [--resource-group]
                        [--subscription]
   examples:
@@ -104,6 +142,9 @@ directCommands:
   - summary: List all servers in a resource group.
     syntax: az sql server list -g mygroup
   optionalParameters:
+  - name: --expand-ad-admin
+    summary: Expand the Active Directory Administrator for the server.
+    description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
@@ -142,12 +183,16 @@ directCommands:
   summary: Gets a server.
   description: ''
   syntax: >-
-    az sql server show [--ids]
+    az sql server show [--expand-ad-admin]
+                       [--ids]
                        [--name]
                        [--query-examples]
                        [--resource-group]
                        [--subscription]
   optionalParameters:
+  - name: --expand-ad-admin
+    summary: Expand the Active Directory Administrator for the server.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -174,17 +219,25 @@ directCommands:
                          [--assign_identity]
                          [--enable-public-network {false, true}]
                          [--force-string]
+                         [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                          [--ids]
+                         [--key-id]
                          [--minimal-tls-version {1.0, 1.1, 1.2}]
                          [--name]
                          [--no-wait]
+                         [--pid]
                          [--remove]
                          [--resource-group]
                          [--set]
                          [--subscription]
+                         [--user-assigned-identity-id]
   examples:
   - summary: Update a server. (autogenerated)
     syntax: az sql server update --admin-password myadminpassword --name MyAzureSQLServer --resource-group MyResourceGroup
+  - summary: Update a server with User Managed Identies and Identity Type is SystemAssigned,UserAssigned.
+    syntax: az sql server update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
+  - summary: Update a server with User Managed Identies and Identity Type is UserAssigned.
+    syntax: az sql server update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -202,8 +255,15 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --identity-type -t
+    parameterValueGroup: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
+    summary: Type of Identity to be used. Possible values are SystemAsssigned,UserAssigned, SystemAssigned,UserAssigned and None.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --key-id -k
+    summary: The key vault URI for encryption.
     description: ''
   - name: --minimal-tls-version
     parameterValueGroup: 1.0, 1.1, 1.2
@@ -214,6 +274,9 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pid --primary-user-assigned-identity-id
+    summary: The ID of the primary user managed identity.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -227,6 +290,9 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --user-assigned-identity-id -a
+    summary: Generate and assign an User Managed Identity(UMI) for this server.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_server_wait
   name: az sql server wait
@@ -237,6 +303,7 @@ directCommands:
                        [--custom]
                        [--deleted]
                        [--exists]
+                       [--expand]
                        [--ids]
                        [--interval]
                        [--name]
@@ -256,6 +323,9 @@ directCommands:
     description: ''
   - name: --exists
     summary: Wait until the resource exists.
+    description: ''
+  - name: --expand
+    summary: The child resources to include in the response.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -353,5 +423,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/19/2021
+  ms.date: 07/01/2021
   description: Manage SQL servers.

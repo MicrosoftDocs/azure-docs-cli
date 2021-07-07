@@ -150,16 +150,18 @@ directCommands:
     az apim api import --path
                        --resource-group
                        --service-name
+                       --specification-format {OpenApi, OpenApiJson, Swagger, Wadl, Wsdl}
                        [--api-id]
                        [--api-revision]
                        [--api-type {http, soap}]
+                       [--api-version]
+                       [--api-version-set-id]
                        [--description]
                        [--display-name]
                        [--no-wait]
                        [--protocols {http, https}]
                        [--service-url]
                        [--soap-api-type]
-                       [--specification-format {OpenApi, OpenApiJson, Swagger, Wadl, Wsdl}]
                        [--specification-path]
                        [--specification-url]
                        [--subscription]
@@ -168,6 +170,9 @@ directCommands:
                        [--subscription-required {false, true}]
                        [--wsdl-endpoint-name]
                        [--wsdl-service-name]
+  examples:
+  - summary: Import an API Management API From a file or a url
+    syntax: az apim api import -g MyResourceGroup --service-name MyApim --path MyApi --specification-url https://MySpecificationURL --specification-format OpenApiJson
   requiredParameters:
   - isRequired: true
     name: --path
@@ -181,6 +186,11 @@ directCommands:
     name: --service-name -n
     summary: The name of the api management service instance.
     description: ''
+  - isRequired: true
+    name: --specification-format
+    parameterValueGroup: OpenApi, OpenApiJson, Swagger, Wadl, Wsdl
+    summary: Specify the format of the imported API.
+    description: ''
   optionalParameters:
   - name: --api-id
     summary: API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number.
@@ -191,6 +201,12 @@ directCommands:
   - name: --api-type
     parameterValueGroup: http, soap
     summary: The type of the API.
+    description: ''
+  - name: --api-version
+    summary: Describes the Version of the Api. If you add a version to a non-versioned API, an Original version will be automatically created and will respond on the default URL.
+    description: ''
+  - name: --api-version-set-id
+    summary: Describes the Version Set to be used with the API.
     description: ''
   - name: --description
     summary: Description of the API. May include HTML formatting tags.
@@ -203,17 +219,13 @@ directCommands:
     description: ''
   - name: --protocols
     parameterValueGroup: http, https
-    summary: Describes on which protocols the operations in this API can be invoked.
+    summary: Describes on which protocols(one or more) the operations in this API can be invoked.
     description: ''
   - name: --service-url
     summary: Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
     description: ''
   - name: --soap-api-type
     summary: The type of API when file format is WSDL.
-    description: ''
-  - name: --specification-format
-    parameterValueGroup: OpenApi, OpenApiJson, Swagger, Wadl, Wsdl
-    summary: Specify the format of the imported API.
     description: ''
   - name: --specification-path
     summary: File path specified to import the API.
@@ -513,5 +525,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/01/2020
+  ms.date: 06/24/2021
   description: Manage Azure API Management API's.

@@ -27,6 +27,7 @@ directCommands:
                              [--name]
                              [--negate-condition {false, true}]
                              [--operator]
+                             [--origin-group]
                              [--preserve-unmatched-path {false, true}]
                              [--profile-name]
                              [--query-parameters]
@@ -42,8 +43,10 @@ directCommands:
   examples:
   - summary: Create a global rule to disable caching.
     syntax: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 0 --rule-name global --action-name CacheExpiration --cache-behavior BypassCache
-  - summary: Create a rule for http to https redirect
+  - summary: Create a rule for http to https redirect.
     syntax: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 1 --rule-name "redirect" --match-variable RequestScheme --operator Equal --match-values HTTP --action-name "UrlRedirect" --redirect-protocol Https --redirect-type Moved
+  - summary: Create a rule to distribute requests with "/test1" in its URL path to origin group with name "origingroup1".
+    syntax: az cdn endpoint rule add -g group -n endpoint --profile-name profile --order 1 --rule-name "origin-groupo-verride" --match-variable UrlPath --operator Contains --match-values /test1 --action-name "OriginGroupOverride" --origin-group origingroup1
   requiredParameters:
   - isRequired: true
     name: --action-name
@@ -106,6 +109,9 @@ directCommands:
     description: ''
   - name: --operator
     summary: Operator of the match condition.
+    description: ''
+  - name: --origin-group
+    summary: Name or ID of the OriginGroup that would override the default OriginGroup.
     description: ''
   - name: --preserve-unmatched-path
     parameterValueGroup: false, true
@@ -252,5 +258,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/28/2021
+  ms.date: 07/05/2021
   description: Manage delivery rules for an endpoint.
