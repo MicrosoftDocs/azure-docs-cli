@@ -23,7 +23,7 @@ Access to the following subgroups requires the [webapp](https://github.com/Azure
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-See [Azure Web Apps](cli/azure/service-page/azure%20web%20apps) for a complete list of the Azure CLI core and extension references available for the Azure Web Apps service. For references for each subgroup, see the tables in the following sections:
+See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for a complete list of the Azure CLI core and extension references available for the Azure Web Apps service. For references for each subgroup, see the tables in the following sections:
 
 - [Azure Static Web Apps](#azure-static-web-apps)
 - [Azure Web App configuration](#azure-web-app-configuration)
