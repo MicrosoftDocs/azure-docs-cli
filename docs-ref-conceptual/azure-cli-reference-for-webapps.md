@@ -14,25 +14,22 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Web Apps
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Web Apps, and gives you the ability to manage Azure Web Apps from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Web Apps, and gives you the ability to manage Azure Web Apps from a command line.
 
-The [Azure Web Apps](/azure/webapps) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](/azure/azure-cli-extensions-overview).  
+The [Azure Web Apps](/azure/app-service) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
-See [az webapps](/cli/azure/webapps) for a complete list of the Azure CLI core and extension references available for the Azure Cosmos DB service. For references for each subgroup, see the tables in the following sections.
-
-Access to the following subgroups requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: webapp container, webapp remote-connection, webapp scan.
+Access to the following subgroups requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: webapp container, webapp remote-connection, and webapp scan.
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
+
+See [Azure Web Apps](cli/azure/service-page/azure%20web%20apps) for a complete list of the Azure CLI core and extension references available for the Azure Web Apps service. For references for each subgroup, see the tables in the following sections:
 
 - [Azure Static Web Apps](#azure-static-web-apps)
 - [Azure Web App configuration](#azure-web-app-configuration)
 - [Azure Web App deployment](#azure-web-app-deployment)
 - [Azure Web App WebJobs](#azure-web-app-webjobs)
 - [Additional Azure Web App references](#additional-azure-web-app-references)
-
-> [!NOTE]
-> You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
 ## Azure Static Web Apps
 
@@ -79,21 +76,21 @@ Access to the following subgroups requires the [webapp](https://github.com/Azure
 
 ## Additional Azure Web App references
 
-| Reference | Description | More information |
-|-|-|-|
-| [az webapp](/cli/azure/webapp) | Manage web apps. | [Provision and deploy a web app](/azure/developer/python/azure-sdk-example-web-app) |
-| [az webapp auth](/cli/azure/webapp/auth) | Manage authentication and authorization for a web app. | [Advanced usage of authentication and authorization in Azure App Service](/azure/app-service/app-service-authentication-how-to) |
-| [az webapp container](/cli/azure/webapp/container) | Manage container operations for a web app. | [Deploy to Azure Web App for Containers](/azure/devops/pipelines/apps/cd/deploy-docker-webapp) |
-| [az webapp cors](/cli/azure/webapp/cors) | Manage Cross-Origin Resource Sharing (CORS). | [Host a RESTful API with CORS in Azure App Service](/azure/app-service/app-service-web-tutorial-rest-api) |
-| [az webapp deleted](/cli/azure/webapp/deleted) | Manage deleted web apps. | [Restore deleted App Service app](/app-service/app-service-undelete) |
-| [az webapp hybrid-connection](/cli/azure/webapp/hybrid-connection) | Manage Hybrid Connections for a web app. | [Azure App Service Hybrid Connections](/azure/app-service/app-service-hybrid-connections) |
-| [az webapp log](/cli/azure/webapp/log) | Manage logs for a web app. | [Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app) |
-| [az webapp log deployment](/cli/azure/webapp/log/deployment) | Manage deployment logs for a web app. | [Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app) |
-| [az webapp identity](/cli/azure/webapp/identity) | Manage managed service identities for a web app. | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity) |
-| [az webapp remote-connection](/cli/azure/webapp/remote-connection) | Create a remote connection by using a TCP tunnel to a web app. | [Open an SSH session to a Linux container in Azure App Service](/azure/app-service/configure-linux-open-ssh-session) |
-| [az webapp scan](/cli/azure/webapp/scan) | Manage the scans for a web app. Currently available only for Linux-based web apps.| [Scan your machines](/azure/security-center/deploy-vulnerability-assessment-vm) |
-| [az webapp traffic-routing](/cli/azure/webapp/traffic-routing) | Manage traffic routing for web apps. | [Controlling Azure App Service traffic with Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager) |
-| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
+| Reference | Description | Extension? | More information |
+|-|-|-|-|
+| [az webapp](/cli/azure/webapp) | Manage web apps. | | [Provision and deploy a web app](/azure/developer/python/azure-sdk-example-web-app) |
+| [az webapp auth](/cli/azure/webapp/auth) | Manage authentication and authorization for a web app. | | [Authentication and authorization in Azure App Service](/azure/app-service/overview-authentication-authorization) |
+| [az webapp container](/cli/azure/webapp/container) | Manage container operations for a web app. | Yes | [Deploy to Azure Web App for Containers](/azure/devops/pipelines/apps/cd/deploy-docker-webapp) |
+| [az webapp cors](/cli/azure/webapp/cors) | Manage Cross-Origin Resource Sharing (CORS). | | [Host a RESTful API with CORS in Azure App Service](/azure/app-service/app-service-web-tutorial-rest-api) |
+| [az webapp deleted](/cli/azure/webapp/deleted) | Manage deleted web apps. | | [Restore deleted App Service app](/azure/app-service/app-service-undelete) |
+| [az webapp hybrid-connection](/cli/azure/webapp/hybrid-connection) | Manage Hybrid Connections for a web app. | | [Azure App Service Hybrid Connections](/azure/app-service/app-service-hybrid-connections) |
+| [az webapp log](/cli/azure/webapp/log) | Manage logs for a web app. | | [Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app) |
+| [az webapp log deployment](/cli/azure/webapp/log/deployment) | Manage deployment logs for a web app. | | [Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app) |
+| [az webapp identity](/cli/azure/webapp/identity) | Manage managed service identities for a web app. | | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity) |
+| [az webapp remote-connection](/cli/azure/webapp/remote-connection) | Create a remote connection by using a TCP tunnel to a web app. | Yes | [Open an SSH session to a Linux container in Azure App Service](/azure/app-service/configure-linux-open-ssh-session) |
+| [az webapp scan](/cli/azure/webapp/scan) | Manage the scans for a web app. Currently available only for Linux-based web apps. | Yes | [Scan your machines](/azure/security-center/deploy-vulnerability-assessment-vm) |
+| [az webapp traffic-routing](/cli/azure/webapp/traffic-routing) | Manage traffic routing for web apps. | | [Control Azure App Service traffic with Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager) |
+| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
 
 ## See also
 
