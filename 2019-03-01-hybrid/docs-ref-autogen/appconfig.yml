@@ -13,6 +13,7 @@ directCommands:
                         --name
                         --resource-group
                         [--assign-identity]
+                        [--disable-local-auth {false, true}]
                         [--enable-public-network {false, true}]
                         [--sku {Free, Standard}]
                         [--subscription]
@@ -23,8 +24,8 @@ directCommands:
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Standard --assign-identity
   - summary: Create an App Configuration with name, location, sku and resource group with user assigned identity.
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Standard --assign-identity /subscriptions/<SUBSCRIPTON ID>/resourcegroups/<RESOURCEGROUP>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity
-  - summary: Create an App Configuration with name, location and resource group and enable public network access.
-    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --enable-public-network
+  - summary: Create an App Configuration with name, location and resource group with public network access enabled and local auth disabled.
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --enable-public-network --disable-local-auth
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -41,6 +42,10 @@ directCommands:
   optionalParameters:
   - name: --assign-identity
     summary: Space-separated list of managed identities to be assigned. Use "[system]" to refer to system-assigned managed identity or a resource ID to refer to user-assigned managed identity. If this argument is provided without any value, system-assigned managed identity will be assigned by default. If this argument is not provided, no managed identities will be assigned to this App Configuration store.
+    description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: false, true
+    summary: Disable all authentication methods other than AAD authentication.
     description: ''
   - name: --enable-public-network -e
     parameterValueGroup: false, true
@@ -139,6 +144,7 @@ directCommands:
   description: ''
   syntax: >-
     az appconfig update --name
+                        [--disable-local-auth {false, true}]
                         [--enable-public-network {false, true}]
                         [--encryption-key-name]
                         [--encryption-key-vault]
@@ -157,14 +163,18 @@ directCommands:
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --encryption-key-name myKey --encryption-key-version keyVersion --encryption-key-vault https://keyVaultName.vault.azure.net
   - summary: Remove customer encryption key
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --encryption-key-name ""
-  - summary: Update an App Configuration to enable public network access.
-    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --enable-public-network true
+  - summary: Update an App Configuration to enable public network access and disable local auth.
+    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --enable-public-network true --disable-local-auth true
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
     description: ''
   optionalParameters:
+  - name: --disable-local-auth
+    parameterValueGroup: false, true
+    summary: Disable all authentication methods other than AAD authentication.
+    description: ''
   - name: --enable-public-network -e
     parameterValueGroup: false, true
     summary: When true, requests coming from public networks have permission to access this store while private endpoint is enabled. When false, only requests made through Private Links can reach this store.
@@ -252,5 +262,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/18/2021
+  ms.date: 07/02/2021
   description: Manage App Configurations.

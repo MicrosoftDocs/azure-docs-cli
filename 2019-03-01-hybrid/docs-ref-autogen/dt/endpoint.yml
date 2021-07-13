@@ -85,6 +85,60 @@ directCommands:
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_dt_endpoint_wait
+  name: az dt endpoint wait
+  summary: Wait until an endpoint operation is done.
+  description: ''
+  syntax: >-
+    az dt endpoint wait --dt-name
+                        --en
+                        [--created]
+                        [--custom]
+                        [--deleted]
+                        [--exists]
+                        [--interval]
+                        [--resource-group]
+                        [--timeout]
+  examples:
+  - summary: Wait until an endpoint for an instance is created.
+    syntax: az dt endpoint wait -n {instance_name} --endpoint-name {endpoint_name} --created
+  - summary: Wait until an existing endpoint is deleted from an instance.
+    syntax: az dt endpoint wait -n {instance_name} --endpoint-name {endpoint_name} --deleted
+  - summary: Wait until an existing endpoint's primaryConnectionString is null.
+    syntax: az dt endpoint wait -n {instance_name} --endpoint-name {endpoint_name} --custom "properties.primaryConnectionString==null"
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name.
+    description: ''
+  - isRequired: true
+    name: --en --endpoint-name
+    summary: Endpoint name.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
 commands:
 - az_dt_endpoint_create
 - az_dt_endpoint_create_eventgrid
@@ -93,6 +147,7 @@ commands:
 - az_dt_endpoint_delete
 - az_dt_endpoint_list
 - az_dt_endpoint_show
+- az_dt_endpoint_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
