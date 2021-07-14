@@ -178,7 +178,7 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 
 ## Concurrent builds
 
-If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set AZURE_CONFIG_DIR to a directory where the access tokens are stored.
+If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set `AZURE_CONFIG_DIR` to a directory where the access tokens are stored.
 
 ## Generic update arguments
 
