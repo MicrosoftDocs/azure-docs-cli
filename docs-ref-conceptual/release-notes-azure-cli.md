@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/06/2021
+ms.date: 07/14/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,24 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## July 14, 2021
+
+Version 2.26.1
+
+### ACR
+
+* Hotfix: `az acr build\connected-registry\pack\run\scope-map`: Fix the compatibility bug caused by SDK upgrade
+
+### AKS
+
+* Hotfix: `az aks create`: Fix the issue that `assign-kubelet-identity` option can't work
+
+### Storage
+
+* Hotfix: Fix issue caused by jwt upgrade.
+* Hotfix: `az storage fs directory download`: Fix the issue with `--sas-token` to generate valid sas url
+* Hotfix: `az storage blob copy start`: Fix the issue in copy from different account
 
 ## July 06, 2021
 
