@@ -257,13 +257,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_import
   name: az acr import
-  summary: Imports an image to an Azure Container Registry from another Container Registry. Import removes the need to docker pull, docker tag, docker push.
+  summary: Imports an image to an Azure Container Registry from another Container Registry. Import removes the need to docker pull, docker tag, docker push. For larger images consider using `--no-wait`.
   description: ''
   syntax: >-
     az acr import --name
                   --source
                   [--force]
                   [--image]
+                  [--no-wait]
                   [--password]
                   [--registry]
                   [--repository]
@@ -281,6 +282,8 @@ directCommands:
     syntax: >-
       az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag \
           -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
+  - summary: Import an image without waiting for successful completion. Failures during import will not be reflected. Run `az acr repository show-tags` to confirm that import succeeded.
+    syntax: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag --no-wait
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -296,6 +299,9 @@ directCommands:
     description: ''
   - name: --image -t
     summary: "The name and tag of the image using the format: '-t repo/image:tag'. Multiple tags are supported by passing -t multiple times."
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the import to complete and return immediately after queuing the import.
     description: ''
   - name: --password -p
     summary: The password of source container registry.
@@ -802,5 +808,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/26/2021
+  ms.date: 07/09/2021
   description: Manage private registries with Azure Container Registries.
