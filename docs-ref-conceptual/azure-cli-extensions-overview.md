@@ -83,7 +83,7 @@ If an extension was installed by name, update it using [az extension update](/cl
 az extension update --name <extension-name>
 ```
 
-Otherwise, an extension can be updated from source by following the [Install extensions](#install-extensions) instructions.
+Otherwise, an extension can be updated from source by following the [Install extensions](#how-to-install-extensions) instructions.
 
 If an extension name can't be resolved by the CLI, uninstall it and attempt to reinstall. The extension could also have become part of the base CLI.
 Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.md) and see if the extension's commands were added.
@@ -126,7 +126,7 @@ No. Since the CLI doesn't guarantee a load order, dependencies might not be sati
 
 ### Are extensions updated along with the CLI?
 
-No. Extensions must be updated separately, as described in [Update extensions](#update-extensions).
+No. Extensions must be updated separately, as described in [Update extensions](#how-to-update-extensions).
 
 ### How to develop our own extension?
 Please refer to the official repository for more help. [Azure/azure-cli-extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)
