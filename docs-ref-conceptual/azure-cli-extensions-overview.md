@@ -1,6 +1,6 @@
 ---
-title: Azure CLI Extensions
-description: Using extensions with the Azure CLI
+title: How to install and manage Azure CLI extensions | Microsoft Docs
+description: Learn how to find, install, uninstall, and manage extensions with Azure CLI. Use the Azure CLI to load extensions provided and maintained by Microsoft.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -9,16 +9,17 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
 ms.custom: devx-track-azurecli
+keywords: manage extensions, microsoft extensions, install extensions, uninstall extensions, azure extensions, azure cli extensions
 ---
 
-# Use extensions with Azure CLI 
+# Use and manage extensions with the Azure CLI 
 
-The Azure CLI offers the capability to load extensions. Extensions are Python wheels that aren't shipped as part of the CLI but run as CLI commands.
+The Azure CLI offers the capability to load extensions. Extensions for the Azure CLI are characterized as Python wheels that aren't shipped as part of the CLI but run as CLI commands.
 With extensions, you gain access to experimental and pre-release commands along with the ability to write your own CLI interfaces. This article covers how to manage extensions and answers common questions about their use.
 
-## Find extensions
+## How to find extensions
 
-To see the extensions provided and maintained by Microsoft, use the [az extension list-available](/cli/azure/extension#az_extension_list_available) command.
+To see the Azure CLI extensions provided and maintained by Microsoft, use the [az extension list-available](/cli/azure/extension#az_extension_list_available) command.
 
 ```azurecli-interactive
 az extension list-available --output table
@@ -26,7 +27,7 @@ az extension list-available --output table
 
 We also host a [list of extensions](azure-cli-extensions-list.md) on the documentation site.
 
-## Install extensions
+## How to install extensions
 
 ### Install extensions manually
 
@@ -74,7 +75,7 @@ By default, an extension command that prompts dynamic install will continue to r
 az config set extension.run_after_dynamic_install=no
 ```
 
-## Update extensions
+## How to update extensions
 
 If an extension was installed by name, update it using [az extension update](/cli/azure/extension#az_extension_update).
 
@@ -87,7 +88,7 @@ Otherwise, an extension can be updated from source by following the [Install ext
 If an extension name can't be resolved by the CLI, uninstall it and attempt to reinstall. The extension could also have become part of the base CLI.
 Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.md) and see if the extension's commands were added.
 
-## Uninstall extensions
+## How to uninstall extensions
 
 If you no longer need an extension, remove it with [az extension remove](/cli/azure/extension#az_extension_remove).
 
