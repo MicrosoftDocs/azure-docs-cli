@@ -1,11 +1,7 @@
 ### YamlMime:AzureCLIGroup
 uid: az_aks_nodepool
 name: az aks nodepool
-extensionInformation: >-
-  > [!Note]
-
-  > This reference is part of the **aks-preview** extension for Azure CLI and requires version 2.0.49 or higher.  The extension will automatically install the first time you run an **az aks nodepool** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage node pools in managed Kubernetes cluster.
+summary: Commands to manage node pools in Kubernetes kubernetes cluster.
 description: ''
 directCommands:
 - uid: az_aks_nodepool_add
@@ -16,17 +12,13 @@ directCommands:
     az aks nodepool add --cluster-name
                         --name
                         --resource-group
-                        [--aks-custom-headers]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
-                        [--enable-fips-image]
                         [--enable-node-public-ip]
                         [--enable-ultra-ssd]
                         [--eviction-policy {Deallocate, Delete}]
-                        [--kubelet-config]
                         [--kubernetes-version]
                         [--labels]
-                        [--linux-os-config]
                         [--max-count]
                         [--max-pods]
                         [--max-surge]
@@ -39,22 +31,21 @@ directCommands:
                         [--node-public-ip-prefix-id]
                         [--node-taints]
                         [--node-vm-size]
-                        [--node-zones {1, 2, 3}]
-                        [--os-sku]
                         [--os-type]
-                        [--pod-subnet-id]
                         [--ppg]
                         [--priority {Regular, Spot}]
                         [--spot-max-price]
+                        [--subscription]
                         [--tags]
                         [--vnet-subnet-id]
+                        [--zones {1, 2, 3}]
   examples:
   - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
   - summary: Create a nodepool with EncryptionAtHost enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-encryption-at-host
-  - summary: Create a nodepool cluster with a specific os-sku
-    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu
+  - summary: Create a nodepool with UltraSSD enabled.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-ultra-ssd
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -69,41 +60,29 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --aks-custom-headers
-    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
-    description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
   - name: --enable-encryption-at-host
-    summary: Enable EncryptionAtHost on agent node pool.
-    description: ''
-  - name: --enable-fips-image
-    summary: Use FIPS-enabled OS on agent nodes.
+    summary: Enable EncryptionAtHost, default value is false.
     description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
     description: ''
   - name: --enable-ultra-ssd
-    summary: Enable UltraSSD on agent node pool.
+    summary: Enable UltraSSD, default value is false.
     description: ''
   - name: --eviction-policy
     defaultValue: Delete
     parameterValueGroup: Deallocate, Delete
     summary: The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
     description: ''
-  - name: --kubelet-config
-    summary: Kubelet configurations for agent nodes.
-    description: ''
   - name: --kubernetes-version -k
-    summary: Version of Kubernetes to use for creating the cluster, such as "1.7.12" or "1.8.7".
+    summary: Version of Kubernetes to use for creating the cluster, such as "1.16.9".
     description: ''
     valueFrom: '`az aks get-versions`'
   - name: --labels
     summary: The node labels for the node pool. You can't change the node labels through CLI after the node pool is created. See https://aka.ms/node-labels for syntax of labels.
-    description: ''
-  - name: --linux-os-config
-    summary: OS configurations for Linux agent nodes.
     description: ''
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
@@ -115,7 +94,7 @@ directCommands:
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
   - name: --mode
     defaultValue: User
@@ -133,7 +112,7 @@ directCommands:
     summary: Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
-    summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+    summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation.
     description: ''
   - name: --node-public-ip-prefix-id
     summary: Public IP prefix ID used to assign public IPs to VMSS nodes.
@@ -144,19 +123,9 @@ directCommands:
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones --zones -z
-    parameterValueGroup: 1, 2, 3
-    summary: (will be deprecated, use --zones) Availability zones where agent nodes will be placed.
-    description: ''
-  - name: --os-sku
-    summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
-    description: ''
   - name: --os-type
     defaultValue: Linux
     summary: The OS Type. Linux or Windows.
-    description: ''
-  - name: --pod-subnet-id
-    summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
     description: ''
   - name: --ppg
     summary: The ID of a PPG.
@@ -170,12 +139,20 @@ directCommands:
     defaultValue: nan
     summary: It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
     description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Availability zones where agent nodes will be placed.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
   summary: Delete the agent pool in the managed Kubernetes cluster.
@@ -185,6 +162,7 @@ directCommands:
                            --name
                            --resource-group
                            [--no-wait]
+                           [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -202,6 +180,10 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_get-upgrades
   name: az aks nodepool get-upgrades
   summary: Get the available upgrade versions for an agent pool of the managed Kubernetes cluster.
@@ -210,6 +192,7 @@ directCommands:
     az aks nodepool get-upgrades --cluster-name
                                  --nodepool-name
                                  --resource-group
+                                 [--subscription]
   examples:
   - summary: Get the available upgrade versions for an agent pool of the managed Kubernetes cluster.
     syntax: az aks nodepool get-upgrades --resource-group MyResourceGroup --cluster-name MyManagedCluster --nodepool-name MyNodePool
@@ -226,6 +209,11 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_list
   name: az aks nodepool list
   summary: List node pools in the managed Kubernetes cluster.
@@ -233,6 +221,8 @@ directCommands:
   syntax: >-
     az aks nodepool list --cluster-name
                          --resource-group
+                         [--query-examples]
+                         [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -242,6 +232,14 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_scale
   name: az aks nodepool scale
   summary: Scale the node pool in a managed Kubernetes cluster.
@@ -252,6 +250,7 @@ directCommands:
                           --resource-group
                           [--no-wait]
                           [--node-count]
+                          [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -273,6 +272,10 @@ directCommands:
     defaultValue: "3"
     summary: Number of nodes in the Kubernetes node pool.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_show
   name: az aks nodepool show
   summary: Show the details for a node pool in the managed Kubernetes cluster.
@@ -281,6 +284,8 @@ directCommands:
     az aks nodepool show --cluster-name
                          --name
                          --resource-group
+                         [--query-examples]
+                         [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -294,6 +299,14 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_update
   name: az aks nodepool update
   summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
@@ -309,6 +322,7 @@ directCommands:
                            [--min-count]
                            [--mode {System, User}]
                            [--no-wait]
+                           [--subscription]
                            [--tags]
                            [--update-cluster-autoscaler]
   examples:
@@ -318,8 +332,6 @@ directCommands:
     syntax: az aks nodepool update --disable-cluster-autoscaler -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   - summary: Update min-count or max-count for cluster autoscaler.
     syntax: az aks nodepool update --update-cluster-autoscaler --min-count 1 --max-count 10 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
-  - summary: Change a node pool to system mode
-    syntax: az aks nodepool update --mode System -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -347,7 +359,7 @@ directCommands:
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
   - name: --mode
     parameterValueGroup: System, User
@@ -356,12 +368,16 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --update-cluster-autoscaler -u
     summary: Update min-count or max-count for cluster autoscaler.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: Upgrade the node pool in a managed Kubernetes cluster.
@@ -374,6 +390,7 @@ directCommands:
                             [--max-surge]
                             [--no-wait]
                             [--node-image-only]
+                            [--subscription]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -389,7 +406,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --kubernetes-version -k
-    summary: Version of Kubernetes to upgrade the node pool to, such as "1.11.12".
+    summary: Version of Kubernetes to upgrade the node pool to, such as "1.16.9".
     description: ''
   - name: --max-surge
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
@@ -400,6 +417,10 @@ directCommands:
   - name: --node-image-only
     summary: Only upgrade agent pool's node image.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 commands:
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
@@ -425,4 +446,6 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage node pools in managed Kubernetes cluster.
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  ms.date: 07/01/2021
+  description: Commands to manage node pools in Kubernetes kubernetes cluster.

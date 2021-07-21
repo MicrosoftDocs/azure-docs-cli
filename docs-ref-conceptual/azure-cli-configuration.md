@@ -1,6 +1,6 @@
 ---
-title: Azure CLI configuration options
-description: How to configure the Azure CLI
+title: Azure CLI configuration options | Microsoft Docs
+description: The Azure CLI allows user configuration for various settings. Manage values with the az configure command, environment variables, or in the configuration file.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -9,12 +9,11 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli
+keywords: environment variables, configuration file, configuration settings, user configuration, azure cli variables, azure cli configuration, cli configuration
 ---
 # Azure CLI configuration
 
-The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values.
-The CLI offers a convenience command for managing some defaults, `az config`. Other values can be set in a
-configuration file or with environment variables.
+The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values. The CLI offers a convenience command for managing some defaults, `az config`. Other values can be set in a configuration file or with environment variables. This article provides further information on these user configuration settings and how to configure the Azure CLI.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 

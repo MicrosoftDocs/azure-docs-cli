@@ -14,6 +14,7 @@ directCommands:
   description: For device SAS tokens, the policy parameter is used to access the the device registry only. Therefore the policy should have read access to the registry. For IoT Hub tokens the policy is part of the SAS.
   syntax: >-
     az iot hub generate-sas-token [--auth-type {key, login}]
+                                  [--connection-string]
                                   [--device-id]
                                   [--du]
                                   [--hub-name]
@@ -31,11 +32,20 @@ directCommands:
     syntax: az iot hub generate-sas-token -d {device_id} -n {iothub_name}
   - summary: Generate a device SAS token using an IoT Hub connection string (with registry access)
     syntax: az iot hub generate-sas-token -d {device_id} --login 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+  - summary: Generate an Iot Hub SAS token using an IoT Hub connection string
+    syntax: az iot hub generate-sas-token --connection-string 'HostName=myhub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+  - summary: Generate a Device SAS token using a Device connection string
+    syntax: az iot hub generate-sas-token --connection-string 'HostName=myhub.azure-devices.net;DeviceId=mydevice;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
+  - summary: Generate a Module SAS token using a Module connection string
+    syntax: az iot hub generate-sas-token --connection-string 'HostName=myhub.azure-devices.net;DeviceId=mydevice;ModuleId=mymodule;SharedAccessKeyName=iothubowner;SharedAccessKey=12345'
   optionalParameters:
   - name: --auth-type
     defaultValue: key
     parameterValueGroup: key, login
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
+  - name: --connection-string --cs
+    summary: 'Target connection string. This bypasses the IoT Hub registry and generates the SAS token directly from the supplied symmetric key without further validation. All other command parameters aside from duration will be ignored. Supported connection string types: Iot Hub, Device, Module.'
     description: ''
   - name: --device-id -d
     summary: Target Device.
@@ -407,6 +417,7 @@ commands:
 - az_iot_hub_module-identity_create
 - az_iot_hub_module-identity_delete
 - az_iot_hub_module-identity_list
+- az_iot_hub_module-identity_renew-key
 - az_iot_hub_module-identity_show
 - az_iot_hub_module-identity_update
 - az_iot_hub_module-twin

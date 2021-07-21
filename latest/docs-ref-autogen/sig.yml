@@ -13,6 +13,7 @@ directCommands:
                   --resource-group
                   [--description]
                   [--location]
+                  [--permissions {Groups, Private}]
                   [--subscription]
                   [--tags]
   examples:
@@ -33,6 +34,10 @@ directCommands:
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --permissions
+    parameterValueGroup: Groups, Private
+    summary: This property allows you to specify the permission of sharing gallery.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -79,6 +84,32 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_sig_list-shared
+  name: az sig list-shared
+  summary: List shared galleries by subscription id or tenant id.
+  description: ''
+  syntax: >-
+    az sig list-shared --location
+                       [--shared-to {tenant}]
+                       [--subscription]
+  examples:
+  - summary: List shared galleries by subscription id.
+    syntax: az sig list-shared --location "myLocation"
+  - summary: List shared galleries by tenant id.
+    syntax: az sig list-shared --location "myLocation" --shared-to tenant
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  optionalParameters:
+  - name: --shared-to
+    parameterValueGroup: tenant
+    summary: The query parameter to decide what shared galleries to fetch when doing listing operations. If not specified, list by subscription id.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_show
   name: az sig show
   summary: Retrieves information about a Shared Image Gallery.
@@ -88,6 +119,7 @@ directCommands:
                 [--ids]
                 [--query-examples]
                 [--resource-group]
+                [--select]
                 [--subscription]
   optionalParameters:
   - name: --gallery-name -r
@@ -102,6 +134,34 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --select
+    summary: The select expression to apply on the operation.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sig_show-shared
+  name: az sig show-shared
+  summary: Get a shared gallery.
+  description: ''
+  syntax: >-
+    az sig show-shared [--gallery-unique-name]
+                       [--ids]
+                       [--location]
+                       [--subscription]
+  examples:
+  - summary: Get a shared gallery.
+    syntax: az sig show-shared --gallery-unique-name "galleryUniqueName" --location "myLocation"
+  optionalParameters:
+  - name: --gallery-unique-name
+    summary: The unique name of the Shared Gallery.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -114,7 +174,9 @@ directCommands:
                   --resource-group
                   [--add]
                   [--force-string]
+                  [--permissions {Groups, Private}]
                   [--remove]
+                  [--select]
                   [--set]
                   [--subscription]
   examples:
@@ -136,8 +198,15 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --permissions
+    parameterValueGroup: Groups, Private
+    summary: This property allows you to specify the permission of sharing gallery.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --select
+    summary: The select expression to apply on the operation.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
@@ -152,17 +221,28 @@ commands:
 - az_sig_image-definition_create
 - az_sig_image-definition_delete
 - az_sig_image-definition_list
+- az_sig_image-definition_list-shared
 - az_sig_image-definition_show
+- az_sig_image-definition_show-shared
 - az_sig_image-definition_update
 - az_sig_image-version
 - az_sig_image-version_create
 - az_sig_image-version_delete
 - az_sig_image-version_list
+- az_sig_image-version_list-shared
 - az_sig_image-version_show
+- az_sig_image-version_show-shared
 - az_sig_image-version_update
 - az_sig_image-version_wait
 - az_sig_list
+- az_sig_list-shared
+- az_sig_share
+- az_sig_share_add
+- az_sig_share_remove
+- az_sig_share_reset
+- az_sig_share_wait
 - az_sig_show
+- az_sig_show-shared
 - az_sig_update
 globalParameters:
 - name: --debug

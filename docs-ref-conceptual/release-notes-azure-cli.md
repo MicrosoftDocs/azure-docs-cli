@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/15/2021
+ms.date: 07/14/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,156 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## July 14, 2021
+
+Version 2.26.1
+
+### ACR
+
+* Hotfix: `az acr build\connected-registry\pack\run\scope-map`: Fix the compatibility bug caused by SDK upgrade
+
+### AKS
+
+* Hotfix: `az aks create`: Fix the issue that `assign-kubelet-identity` option can't work
+
+### Storage
+
+* Hotfix: Fix issue caused by jwt upgrade.
+* Hotfix: `az storage fs directory download`: Fix the issue with `--sas-token` to generate valid sas url
+* Hotfix: `az storage blob copy start`: Fix the issue in copy from different account
+
+## July 06, 2021
+
+Version 2.26.0
+
+### AKS
+
+* Migrate ACS module to track 2 SDK
+* Upgrade api-version to 2021-05-01 for ACS module
+* Add UltraSSD support
+* Support use custom kubelet identity
+* `az aks get-credentials`: Add a check for KUBECONFIG environmental variable
+
+### APIM
+
+* Add version parameter for apim api import
+* Fix apim upgrade bug when specifying protocols
+* `az apim create`: Fix `--enable-managed-identity` true failure
+
+### App Config
+
+* Stop overwriting KeyVault reference content type during import
+
+### App Service
+
+* [BREAKING CHANGE] `az functionapp create`: Remove support for EOL Node 8 and 10
+* [BREAKING CHANGE] `az webapp deployment source config`: Remove vsts-cd-manager
+* [BREAKING CHANGE] `az functionapp deployment source config`: Remove vsts-cd-manager
+* `az webapp/functionapp config access-restriction add`: Prevent duplicate rules using service endpoints.
+* `az webapp/functionapp config access-restriction remove`: Remove service endpoints are case-insensitive
+* `az webapp config access-restrictions add`: Skip validation if user does not have access to get service tag list.
+* Add support for Linux Consumption and improve how content share name is generated.
+* : Fix an issue where adding VNET integration & Hybrid connections on a slot is not working
+* `az appservice domain create`: Fix get correct domain agreements
+* `az webapp deployment github-actions add/remove`: new commands
+
+### AppConfiguration
+
+* Add support for `disable_local_auth`
+
+### ARM
+
+* `az provider register`: Make parameter `--accept-term` become not required
+
+### ARO
+
+* `az aro create`: Add cidr values for pod/service
+* Fail if resource doesn't exist on delete
+
+### Azurestack
+
+* [ACR][AKS] Add azurestack hybrid profile for AKS
+
+### Backup
+
+* `az backup container`: Fix container registration
+Workload container registration fix, SDK upgraded to 0.12.0, Fixed and Re-ran tests
+* Add Archive Support for Azure CLI
+
+### Billing
+
+* Migrate billing to track2 SDK
+
+### Cognitive Services
+
+* `az cognitiveservices account`: Add list-deleted, show-deleted, recover, purge commands
+
+### Compute 
+
+* `az sig create/update`: Add --permissions to specify the permission of sharing gallery.
+* `az sig share`: Manage gallery sharing profile.
+* `az sig list-shared`:  List shared galleries by subscription id or tenant id.
+* `az sig show-shared`:  Get a shared gallery.
+* `az sig image-definition list-shared`:  List shared galleries by subscription id or tenant id.
+* `az sig image-definition show-shared`:  Get a shared gallery image.
+* `az sig image-version list-shared`:  List shared galleries by subscription id or tenant id.
+* `az sig image-version show-shared`:   Get a shared gallery image version.
+* `az vmss create`: Support NetworkApiVersion for Vmss with OrchestraionMode == Flexible
+* Make dependent resources of VM/VMSS support edge zone
+* Update from CoreOS to Flatcar
+* Add the hint to suggest users use the standard public IP when creating VM
+
+### Container Registry
+
+* Migrate to track2 SDK
+
+### Cosmos DB
+
+* Add point-in-time restore commands to the stable branch.
+* Add support for selecting Cosmos DB analytical storage schema type
+
+### HDInsight
+
+* `az hdinsight create`: Remove the incoming breaking change notice for the parameter `--workernode-size` and `--headnode-size`.
+* Add three new cmdlets to support new azure monitor feature:
+
+### NetAppFiles
+
+* `az netappfiles account ad add`: Optional parameter added named --administrators
+* `az netappfiles pool create`: Optional parameter added --cool-access
+* `az netappfiles volume create`: Optional parameters added named --chown-mode, --cool-access, --coolness-period, --coolness-period
+* `az netappfiles volume backup restore-status`: Command added to see backup restore status
+
+### Network
+
+* `az network routeserver create`: Add `--public-ip-address` argument.
+
+### RDBMS
+
+* Add autogrow parameter for MySQL and add database name to output json when created
+
+### Resource
+
+* Third-party S2S Consent/Permission Enumeration
+
+### Security
+
+* Remove preview from security module
+
+### SQL
+
+* Bump sdk version
+* Fix for server create in SQL 0.28
+* `az sql db ledger-digest-uploads`:  Support SQL Ledger
+* Fix for IdentityType for UMI
+* `az sql db str-policy set/show`: Add Set and Show ShortTermRetentionPolicy
+
+### Storage
+
+* GA support secured SMB
+* `az storage account create`: Support `--enable-nfs-v3` to set NFS 3.0 protocol
+* Support container soft delete
 
 ## June 15, 2021
 

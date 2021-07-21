@@ -33,10 +33,13 @@ directCommands:
   syntax: >-
     az cosmosdb create --name
                        --resource-group
+                       [--analytical-storage-schema-type {FullFidelity, WellDefined}]
                        [--assign-identity]
                        [--backup-interval]
+                       [--backup-policy-type {Continuous, Periodic}]
                        [--backup-retention]
                        [--capabilities]
+                       [--databases-to-restore]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
                        [--default-identity]
                        [--disable-key-based-metadata-write-access {false, true}]
@@ -47,6 +50,7 @@ directCommands:
                        [--enable-public-network {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--ip-range-filter]
+                       [--is-restore-request {false, true}]
                        [--key-uri]
                        [--kind {GlobalDocumentDB, MongoDB, Parse}]
                        [--locations]
@@ -54,6 +58,8 @@ directCommands:
                        [--max-staleness-prefix]
                        [--network-acl-bypass {AzureServices, None}]
                        [--network-acl-bypass-resource-ids]
+                       [--restore-source]
+                       [--restore-timestamp]
                        [--server-version {3.2, 3.6, 4.0}]
                        [--subscription]
                        [--tags]
@@ -63,6 +69,8 @@ directCommands:
     syntax: az cosmosdb create --name MyCosmosDBDatabaseAccount --resource-group MyResourceGroup --subscription MySubscription
   - summary: Creates a new Azure Cosmos DB database account with two regions. UK South is zone redundant.
     syntax: az cosmosdb create -n myaccount -g mygroup --locations regionName=eastus failoverPriority=0 isZoneRedundant=False --locations regionName=uksouth failoverPriority=1 isZoneRedundant=True --enable-multiple-write-locations --network-acl-bypass AzureServices --network-acl-bypass-resource-ids /subscriptions/subId/resourceGroups/rgName/providers/Microsoft.Synapse/workspaces/wsName
+  - summary: Create a new Azure Cosmos DB database account by restoring from an existing account in the given location
+    syntax: az cosmosdb create -n restoredaccount -g mygroup --is-restore-request true --restore-source /subscriptions/2296c272-5d55-40d9-bc05-4d56dc2d7588/providers/Microsoft.DocumentDB/locations/westus/restorableDatabaseAccounts/d056a4f8-044a-436f-80c8-cd3edbc94c68 --restore-timestamp 2020-07-13T16:03:41+0000 --locations regionName=westus failoverPriority=0 isZoneRedundant=False
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -73,11 +81,19 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --analytical-storage-schema-type --as-schema
+    parameterValueGroup: FullFidelity, WellDefined
+    summary: Schema type for analytical storage.
+    description: ''
   - name: --assign-identity
     summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity. Currently only system assigned identity is supported.
     description: ''
   - name: --backup-interval
     summary: The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    description: ''
+  - name: --backup-policy-type
+    parameterValueGroup: Continuous, Periodic
+    summary: The type of backup policy of the account to create.
     description: ''
   - name: --backup-retention
     summary: The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
@@ -85,6 +101,9 @@ directCommands:
   - name: --capabilities
     summary: Set custom capabilities on the Cosmos DB database account.
     description: ''
+  - name: --databases-to-restore
+    summary: Add a database and its collection names to restore.
+    description: 'Usage:          --databases-to-restore name=DatabaseName collections=collection1 [collection2 ...].'
   - name: --default-consistency-level
     parameterValueGroup: BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong
     summary: Default consistency level of the Cosmos DB database account.
@@ -123,6 +142,10 @@ directCommands:
   - name: --ip-range-filter
     summary: Firewall support. Specifies the set of IP addresses or IP address ranges in CIDR form to be included as the allowed list of client IPs for a given database account. IP addresses/ranges must be comma-separated and must not contain any spaces.
     description: ''
+  - name: --is-restore-request -r
+    parameterValueGroup: false, true
+    summary: Restore from an existing/deleted account.
+    description: ''
   - name: --key-uri
     summary: The URI of the key vault.
     description: ''
@@ -159,6 +182,12 @@ directCommands:
     description: ''
   - name: --network-acl-bypass-resource-ids -i
     summary: List of Resource Ids to allow Network Acl Bypass.
+    description: ''
+  - name: --restore-source
+    summary: The restorable-database-account Id of the source account from which the account has to be restored. Required if --is-restore-request is set to true.
+    description: ''
+  - name: --restore-timestamp
+    summary: The timestamp to which the account has to be restored to. Required if --is-restore-request is set to true.
     description: ''
   - name: --server-version
     parameterValueGroup: 3.2, 3.6, 4.0
@@ -377,6 +406,7 @@ directCommands:
                         --restore-timestamp
                         --target-database-account-name
                         [--databases-to-restore]
+                        [--subscription]
   examples:
   - summary: Create a new Azure Cosmos DB database account by restoring from an existing database account.
     syntax: az cosmosdb restore --target-database-account-name MyRestoredCosmosDBDatabaseAccount --account-name MySourceAccount --restore-timestamp 2020-07-13T16:03:41+0000 -g MyResourceGroup --location westus
@@ -410,6 +440,10 @@ directCommands:
       Usage:          --databases-to-restore name=DatabaseName collections=collection1 [collection2 ...]
 
       Multiple databases can be specified by using more than one `--databases-to-restore` argument.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
 - uid: az_cosmosdb_show
   name: az cosmosdb show
   summary: Get the details of an Azure Cosmos DB database account.
@@ -445,7 +479,9 @@ directCommands:
   summary: Update an Azure Cosmos DB database account.
   description: ''
   syntax: >-
-    az cosmosdb update [--backup-interval]
+    az cosmosdb update [--analytical-storage-schema-type {FullFidelity, WellDefined}]
+                       [--backup-interval]
+                       [--backup-policy-type {Continuous, Periodic}]
                        [--backup-retention]
                        [--capabilities]
                        [--default-consistency-level {BoundedStaleness, ConsistentPrefix, Eventual, Session, Strong}]
@@ -475,8 +511,16 @@ directCommands:
   - summary: Creates a new Azure Cosmos DB database account with two regions. UK South is zone redundant.
     syntax: az cosmosdb update -n myaccount -g mygroup --locations regionName=eastus failoverPriority=0 isZoneRedundant=False --locations regionName=uksouth failoverPriority=1 isZoneRedundant=True --enable-multiple-write-locations --network-acl-bypass AzureServices --network-acl-bypass-resource-ids /subscriptions/subId/resourceGroups/rgName/providers/Microsoft.Synapse/workspaces/wsName
   optionalParameters:
+  - name: --analytical-storage-schema-type --as-schema
+    parameterValueGroup: FullFidelity, WellDefined
+    summary: Schema type for analytical storage.
+    description: ''
   - name: --backup-interval
     summary: The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
+    description: ''
+  - name: --backup-policy-type
+    parameterValueGroup: Continuous, Periodic
+    summary: The type of backup policy of the account to create.
     description: ''
   - name: --backup-retention
     summary: The time(in hours) for which each backup is retained (only for accounts with periodic mode backups).
@@ -714,6 +758,7 @@ commands:
 - az_cosmosdb_sql_restorable-database_list
 - az_cosmosdb_sql_restorable-resource
 - az_cosmosdb_sql_restorable-resource_list
+- az_cosmosdb_sql_retrieve-latest-backup-time
 - az_cosmosdb_sql_role
 - az_cosmosdb_sql_role_assignment
 - az_cosmosdb_sql_role_assignment_create
@@ -777,5 +822,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/20/2021
+  ms.date: 06/29/2021
   description: Manage Azure Cosmos DB database accounts.
