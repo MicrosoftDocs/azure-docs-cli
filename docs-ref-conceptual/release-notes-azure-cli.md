@@ -378,7 +378,7 @@ Version 2.24.0
 
 ### Service Fabric
 
-* [BREAKING CHANGE] `az sf cluster certificate`: Remove all commands under this group. Please follow the instructions here to add/remove cluster certificates: https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-security-update-certs-azure#add-a-secondary-certificate-using-azure-resource-manager.
+* [BREAKING CHANGE] `az sf cluster certificate`: Remove all commands under this group. Please follow the instructions here to add/remove cluster certificates: https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-security-update-certs-azure#add-a-secondary-certificate-using-azure-resource-manager.
 * [BREAKING CHANGE] `az sf managed-service update`: Remove deprecated parameter --drop-source-replica-on-move.
 * [BREAKING CHANGE] `az sf managed-service create`: Remove deprecated parameters --service-dns-name, --drop-source-replica-on-move and -instance-close-delay-duration.
 * [BREAKING CHANGE] `az sf cluster`: Rename parameter --vault-resource-group to --vault-rg.
@@ -4199,7 +4199,7 @@ Version 2.0.66
 
 ### ACS
 * Allow enabling/disabling AKS kube-dashboard addon
-* Print a friendly message when the subscription is not whitelisted to use Azure Red Hat OpenShift
+* Print a friendly message when the subscription is not approved to use Azure Red Hat OpenShift
 
 ### Batch
 * Improved error handling when not logged in to an account \[[#9165](https://github.com/Azure/azure-cli/issues/9165)\]\[[#8978](https://github.com/Azure/azure-cli/issues/8978)\]
@@ -5624,15 +5624,13 @@ Version 2.0.42
 
 ## July 3, 2018
 
-Version 2.0.41
+**Version 2.0.41**
 
 ### AKS
 
 * Changed monitoring to use subscription ID
 
-## July 3, 2018
-
-Version 2.0.40
+**Version 2.0.40**
 
 ### Core
 
@@ -5798,15 +5796,13 @@ Version 2.0.38
 
 ## June 13, 2018
 
-Version 2.0.37
+**Version 2.0.37**
 
 ### Core
 
 * Improved interactive telemetry
 
-## June 13, 2018
-
-Version 2.0.36
+**Version 2.0.36**
 
 ### AKS
 
@@ -5822,15 +5818,13 @@ Version 2.0.36
 
 ## June 5, 2018
 
-Version 2.0.35
+**Version 2.0.35**
 
 ### Interactive
 
 * Added limits to the dependencies of interactive mode
 
-## June 5, 2018
-
-Version 2.0.34
+**Version 2.0.34**
 
 ### Core
 
@@ -7217,7 +7211,7 @@ Version 2.0.15
 
 * Fixed issue where extra, erroneous information was displayed for `vmss get-instance-view` when using `--instance-id *`
 * Added support for `--lb-sku` to `vmss create`:
-* Removed human names from the admin name blacklist for `[vm|vmss] create`
+* Removed human names from the admin names disallowed for `[vm|vmss] create`
 * Fixed issue where `[vm|vmss] create` would throw an error if unable to extract plan information from an image
 * Fixed a crash when creating a vmms scaleset with an internal LB
 * Fixed issue where `--no-wait` argument did not work wth `vm availability-set create`
@@ -7935,12 +7929,12 @@ You can report issues with nightly preview builds in the following ways:
 * Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
 
 * There are several changes to `az login`.  (Run `az login --help` for more details.)
-  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](https://docs.microsoft.com/cli/azure/account#az_account_get_access_token) instead.
+  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) instead.
   * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
   * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
   * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
 
-* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](https://docs.microsoft.com/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
+* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
 
 The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  
 
