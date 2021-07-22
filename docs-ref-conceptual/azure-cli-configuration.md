@@ -13,36 +13,35 @@ keywords: environment variables, configuration file, configuration settings, use
 ---
 # Azure CLI configuration
 
-The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values.  The CLI offers a convenience command for managing some defaults, `az configure`. Other values can be set in a configuration file or with environment variables.  This article will provide further information on these user configuration settings and how to configure the Azure CLI .
+The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values. The CLI offers a convenience command for managing some defaults, `az config`. Other values can be set in a configuration file or with environment variables. This article provides further information on these user configuration settings and how to configure the Azure CLI.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
 1. Parameter persisted values set with `az config param-persist`
 1. Environment variables
-1. Values in the configuration file set with `az configure`
+1. Values in the configuration file set with `az config`
 
-## CLI configuration with az configure
+## CLI configuration with az config
 
-You set defaults for the CLI with the [az configure](/cli/azure/reference-index#az_configure) command.
-This command takes one argument, `--defaults`, which is a space-separated list of `key=value` pairs. The provided values are used by the CLI in place of
-required arguments.
+You set defaults for the CLI with the [az config set](/cli/azure/config#az_config_set) command.
+This command takes a space-separated list of `key=value` pairs as an argument. The provided values are used by the CLI in place of required arguments.
 
 The following table contains a list of available configuration keys.
 
 | Name | Description |
 |------|-------------|
-| group | The default resource group to use for all commands. |
-| location | The default location to use for all commands. |
-| web | The default app name to use for `az webapp` commands. |
-| vm | The default VM name to use for `az vm` commands. |
-| vmss | The default virtual machine scale set (VMSS) name to use for  `az vmss` commands. |
-| acr | The default container registry name to use for `az acr` commands. |
+| defaults.group | The default resource group to use for all commands. |
+| defaults.location | The default location to use for all commands. |
+| defaults.web | The default app name to use for `az webapp` commands. |
+| defaults.vm | The default VM name to use for `az vm` commands. |
+| defaults.vmss | The default virtual machine scale set (VMSS) name to use for  `az vmss` commands. |
+| defaults.acr | The default container registry name to use for `az acr` commands. |
 
 As an example, here's how you would set the default resource group and location for all commands.
 
 ```azurecli-interactive
-az configure --defaults location=westus2 group=MyResourceGroup
+az config set defaults.location=westus2 defaults.group=MyResourceGroup
 ```
 
 ## CLI configuration file
@@ -114,7 +113,7 @@ When you provide a default value, that argument is no longer required by any com
 
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
-> including `az configure`. The ones listed in the table above are the only values you should change yourself.
+> including `az config`. The ones listed in the table above are the only values you should change yourself.
 
 ## See also
 
