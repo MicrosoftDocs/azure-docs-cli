@@ -378,7 +378,7 @@ Version 2.24.0
 
 ### Service Fabric
 
-* [BREAKING CHANGE] `az sf cluster certificate`: Remove all commands under this group. Please follow the instructions here to add/remove cluster certificates: https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-security-update-certs-azure#add-a-secondary-certificate-using-azure-resource-manager.
+* [BREAKING CHANGE] `az sf cluster certificate`: Remove all commands under this group. Please follow the instructions in [Add a secondary certificate using Azure Resource Manager](/azure/service-fabric/service-fabric-cluster-security-update-certs-azure#add-a-secondary-certificate-using-azure-resource-manager) to add/remove cluster certificates.
 * [BREAKING CHANGE] `az sf managed-service update`: Remove deprecated parameter --drop-source-replica-on-move.
 * [BREAKING CHANGE] `az sf managed-service create`: Remove deprecated parameters --service-dns-name, --drop-source-replica-on-move and -instance-close-delay-duration.
 * [BREAKING CHANGE] `az sf cluster`: Rename parameter --vault-resource-group to --vault-rg.
@@ -454,7 +454,7 @@ Version 2.23.0
 * Fix a compatibility issue of old API version
 * `az sig image version create`: Support data disk VHDs
 
-### Feedback
+### Feedback reference
 
 * Do not minify feedback issue body
 
@@ -4043,7 +4043,7 @@ Version 2.0.68
 
 * Updated ADLS version (0.0.45)
 
-### Feedback
+### Feedback reference
 
 * When reporting a failed extension command, `az feedback` now attempts to open the browser to the project/repo url of the
   extension from the index
@@ -4429,7 +4429,7 @@ Version 2.0.63
 ### CDN
 * Added support for `Microsoft_Standard` and `Standard_ChinaCdn`
 
-### Feedback
+### Feedback reference
 * Changed `feedback` to show metadata on recently run commands
 * Changed `feedback` to prompt user to assist in issue creation process by opening a brower and using an issue template
 * Changed `feedback` to print out issue body when run with '--verbose'
@@ -6507,7 +6507,7 @@ Version 2.0.27
 * Added support for `--pip-proxy` parameter to `az extension [add|update]` commands
 * Added support for `--pip-extra-index-urls` argument to `az extension [add|update]` commands
 
-### Feedback
+### Feedback reference
 
 * Added extension information to telemetry data
 
