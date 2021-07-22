@@ -72,7 +72,7 @@ az config param-persist show
 
 ## Persisted parameter and global variable comparison
 
-There are two Azure CLI commands that can be used to default parameter values: `az configure` and `az config param-persist`.  Use the `az configure` command to specify _global variables_ such as group, location, or web.  Use `az param-persist` to specify _local default values_ unique to your workload.  Stored values are used by the CLI in place of required arguments.
+There are two Azure CLI commands that can be used to default parameter values: `az config set defaults` and `az config param-persist`.  Use the `az config set defaults.<option>=<value>` command to specify _global variables_ such as group, location, or web. Use `az param-persist` to specify _local default values_ unique to your workload.  Stored values are used by the CLI in place of required arguments.
 
 > [!Important]
 > Persisted parameters override global context values.
@@ -80,8 +80,8 @@ There are two Azure CLI commands that can be used to default parameter values: `
 
 | Reference | Scope | Set | Use
 |-|-|-|-|
-[az configure](/cli/azure/reference-index#az_configure) | Scoped globally across the CLI | Set explicitly using `az configure --defaults` | Use for settings such as logging, data collection, and default argument values
-[az config param-persist](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
+[`az config set defaults.<option>=<value>`](/cli/azure/config) | Scoped globally across the CLI | Set explicitly using `az config set defaults.<option>=<value>` | Use for settings such as logging, data collection, and default argument values
+[`az config param-persist`](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
 
 ### Command examples
 
@@ -89,7 +89,7 @@ Use `az config param-persist` to set a global variable used in the creation of a
 
 ```azurecli
 # set the global variable for resource group
-az configure --defaults group=myGlobalVariableRG
+az config set defaults.group=myGlobalVariableRG
 
 # Create an Azure storage account omitting the resource group relying on the global variable value
 # Substitute the storage account name parameter with a unique value
@@ -157,4 +157,4 @@ Even with a global variable set for resource group with a value of `myGlobalVari
 ## See also
 
 * [Tutorial: Use persisted parameter with sequential Azure CLI commands](param-persist-tutorial.md)
-* [Azure CLI Configuration using az configure](azure-cli-configuration.md)
+* [Azure CLI Configuration using `az config`](azure-cli-configuration.md)
