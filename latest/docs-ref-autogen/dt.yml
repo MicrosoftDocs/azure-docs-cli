@@ -117,6 +117,29 @@ directCommands:
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_dt_reset
+  name: az dt reset
+  summary: Reset an existing Digital Twins instance by deleting associated assets. Currently only supports deleting models and twins.
+  description: ''
+  syntax: >-
+    az dt reset --dt-name
+                [--resource-group]
+                [--yes]
+  examples:
+  - summary: Reset all assets for a Digital Twins instance.
+    syntax: az dt reset -n {instance_name}
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
 - uid: az_dt_show
   name: az dt show
   summary: Show an existing Digital Twins instance.
@@ -138,6 +161,55 @@ directCommands:
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_dt_wait
+  name: az dt wait
+  summary: Wait until an operation on an Digital Twins instance is complete.
+  description: ''
+  syntax: >-
+    az dt wait --dt-name
+               [--created]
+               [--custom]
+               [--deleted]
+               [--exists]
+               [--interval]
+               [--resource-group]
+               [--timeout]
+  examples:
+  - summary: Wait until an arbitrary instance is created.
+    syntax: az dt wait -n {instance_name} --created
+  - summary: Wait until an existing instance is deleted.
+    syntax: az dt wait -n {instance_name} --deleted
+  - summary: Wait until an existing instance's publicNetworkAccess property is set to Enabled
+    syntax: az dt wait -n {instance_name} --custom "publicNetworkAccess=='Enabled'"
+  requiredParameters:
+  - isRequired: true
+    name: --dt-name --dtn -n
+    summary: Digital Twins instance name.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
 commands:
 - az_dt_create
 - az_dt_delete
@@ -149,6 +221,7 @@ commands:
 - az_dt_endpoint_delete
 - az_dt_endpoint_list
 - az_dt_endpoint_show
+- az_dt_endpoint_wait
 - az_dt_list
 - az_dt_model
 - az_dt_model_create
@@ -164,9 +237,11 @@ commands:
 - az_dt_network_private-endpoint_connection_list
 - az_dt_network_private-endpoint_connection_set
 - az_dt_network_private-endpoint_connection_show
+- az_dt_network_private-endpoint_connection_wait
 - az_dt_network_private-link
 - az_dt_network_private-link_list
 - az_dt_network_private-link_show
+- az_dt_reset
 - az_dt_role-assignment
 - az_dt_role-assignment_create
 - az_dt_role-assignment_delete
@@ -196,6 +271,7 @@ commands:
 - az_dt_twin_telemetry
 - az_dt_twin_telemetry_send
 - az_dt_twin_update
+- az_dt_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

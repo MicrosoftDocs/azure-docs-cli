@@ -9,11 +9,11 @@ directCommands:
   summary: Create a firewall rule.
   description: ''
   syntax: >-
-    az sql server firewall-rule create --end-ip-address
-                                       --name
+    az sql server firewall-rule create --name
                                        --resource-group
                                        --server
-                                       --start-ip-address
+                                       [--end-ip-address]
+                                       [--start-ip-address]
                                        [--subscription]
   examples:
   - summary: Create a firewall rule
@@ -21,10 +21,6 @@ directCommands:
   - summary: Create a firewall rule that allows access from Azure services
     syntax: az sql server firewall-rule create -g mygroup -s myserver -n myrule --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
   requiredParameters:
-  - isRequired: true
-    name: --end-ip-address
-    summary: The end IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP addresses.
-    description: ''
   - isRequired: true
     name: --name -n
     summary: The name of the firewall rule.
@@ -37,11 +33,13 @@ directCommands:
     name: --server -s
     summary: Name of the Azure SQL server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
-  - isRequired: true
-    name: --start-ip-address
+  optionalParameters:
+  - name: --end-ip-address
+    summary: The end IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP addresses.
+    description: ''
+  - name: --start-ip-address
     summary: The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' to represent all Azure-internal IP addresses.
     description: ''
-  optionalParameters:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -198,5 +196,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/19/2021
+  ms.date: 07/13/2021
   description: Manage a server's firewall rules.

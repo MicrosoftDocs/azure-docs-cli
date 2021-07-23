@@ -21,9 +21,9 @@ The Azure CLI syntax is a combination of references, commands, and parameters.  
 
 | Azure Service | Reference | Reference subservice | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
-| Azure CLI | [az configure](../latest/docs-ref-autogen/reference-index.yml#az_configure) | | | az configure | --defaults, --list-default, --scope
-| Azure Network | [az network](../latest/docs-ref-autogen/network.yml) | application-gateway | create | [az network application-gateway create](../latest/docs-ref-autogen/network/application-gateway.yml#az_network_application_gateway_create) | --name, --resource-group, --capacity
-| Azure DevOps Server | [az pipelines](../latest/docs-ref-autogen/pipelines.yml) | agent | list | [az pipelines agent list](../latest/docs-ref-autogen/pipelines/agent.yml) | --pool-id, --agent-name, --demands
+| Azure CLI | [az config](/cli/azure/config) | | | az config | --local, --output -o
+| Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az_network_application_gateway_create) | --name, --resource-group, --capacity
+| Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
 
 ## Reference types
 

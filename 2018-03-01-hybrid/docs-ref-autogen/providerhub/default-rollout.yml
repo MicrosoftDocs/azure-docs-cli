@@ -15,12 +15,12 @@ directCommands:
   syntax: >-
     az providerhub default-rollout create --provider-namespace
                                           --rollout-name
-                                          --row2-wait-duration
+                                          [--canary]
                                           [--no-wait]
-                                          [--skip-regions]
+                                          [--rest-of-the-world-group-two]
   examples:
   - summary: DefaultRollouts_CreateOrUpdate
-    syntax: az providerhub default-rollout create --provider-namespace "Microsoft.Contoso" --rollout-name "2021week10" --skip-regions "brazilus, centraluseuap" --row2-wait-duration "PT24H"
+    syntax: az providerhub default-rollout create                 --provider-namespace "Microsoft.Contoso" --rollout-name "2021week20"                 --canary skip-regions="eastus2euap"                 --rest-of-the-world-group-two wait-duration="PT2H"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
@@ -30,17 +30,24 @@ directCommands:
     name: --rollout-name
     summary: The rollout name.
     description: ''
-  - isRequired: true
-    name: --row2-wait-duration
-    summary: Optional. The wait duration before rolling out to the Rest of the World Two regions.
-    description: 'Usage: --row2-wait-duration "PT24H".'
   optionalParameters:
+  - name: --canary
+    summary: The canary regions to skip.
+    description: >-
+      Usage: --canary skip-regions=XX
+
+
+      skip-regions: Required. The canary skip regions.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --skip-regions
-    summary: Optional. The canary regions to skip applying the manifest in.
-    description: 'Usage: --skip-regions "brazilus, centraluseuap".'
+  - name: --rest-of-the-world-group-two --row2
+    summary: DefaultRollout rest of the world group two.
+    description: >-
+      Usage: --rest-of-the-world-group-two wait-duration=XX
+
+
+      wait-duration: Required. The rest of the world group two wait duration.
 - uid: az_providerhub_default-rollout_delete
   name: az providerhub default-rollout delete
   summary: Deletes the rollout resource. Rollout must be in terminal state.
@@ -51,7 +58,7 @@ directCommands:
                                           [--yes]
   examples:
   - summary: DefaultRollouts_Delete
-    syntax: az providerhub default-rollout delete --provider-namespace "Microsoft.Contoso" --rollout-name "2021week10"
+    syntax: az providerhub default-rollout delete --provider-namespace "Microsoft.Contoso" --rollout-name "2021week20"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
@@ -87,7 +94,7 @@ directCommands:
                                         --rollout-name
   examples:
   - summary: DefaultRollouts_Get
-    syntax: az providerhub default-rollout show --provider-namespace "Microsoft.Contoso" --rollout-name "2021week10"
+    syntax: az providerhub default-rollout show --provider-namespace "Microsoft.Contoso" --rollout-name "2021week20"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
@@ -106,7 +113,7 @@ directCommands:
                                         --rollout-name
   examples:
   - summary: DefaultRollouts_Stop
-    syntax: az providerhub default-rollout stop --provider-namespace "Microsoft.Contoso" --rollout-name "2021week10"
+    syntax: az providerhub default-rollout stop --provider-namespace "Microsoft.Contoso" --rollout-name "2021week20"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
@@ -115,56 +122,6 @@ directCommands:
   - isRequired: true
     name: --rollout-name
     summary: The rollout name.
-    description: ''
-- uid: az_providerhub_default-rollout_wait
-  name: az providerhub default-rollout wait
-  summary: Place the CLI in a waiting state until a condition of the providerhub default-rollout is met.
-  description: ''
-  syntax: >-
-    az providerhub default-rollout wait --provider-namespace
-                                        --rollout-name
-                                        [--created]
-                                        [--custom]
-                                        [--deleted]
-                                        [--exists]
-                                        [--interval]
-                                        [--timeout]
-                                        [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the providerhub default-rollout is successfully created.
-    syntax: az providerhub default-rollout wait --provider-namespace "Microsoft.Contoso" --rollout-name "2020week10" --created
-  requiredParameters:
-  - isRequired: true
-    name: --provider-namespace
-    summary: The name of the resource provider hosted within ProviderHub.
-    description: ''
-  - isRequired: true
-    name: --rollout-name
-    summary: The rollout name.
-    description: ''
-  optionalParameters:
-  - name: --created
-    summary: Wait until created with 'provisioningState' at 'Succeeded'.
-    description: ''
-  - name: --custom
-    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-    description: ''
-  - name: --deleted
-    summary: Wait until deleted.
-    description: ''
-  - name: --exists
-    summary: Wait until the resource exists.
-    description: ''
-  - name: --interval
-    defaultValue: "30"
-    summary: Polling interval in seconds.
-    description: ''
-  - name: --timeout
-    defaultValue: "3600"
-    summary: Maximum wait in seconds.
-    description: ''
-  - name: --updated
-    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
 - az_providerhub_default-rollout_create
@@ -172,7 +129,6 @@ commands:
 - az_providerhub_default-rollout_list
 - az_providerhub_default-rollout_show
 - az_providerhub_default-rollout_stop
-- az_providerhub_default-rollout_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

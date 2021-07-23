@@ -292,14 +292,21 @@ directCommands:
                               [--account-name]
                               [--auth-mode {key, login}]
                               [--connection-string]
-                              [--include-metadata]
+                              [--include-deleted {false, true}]
+                              [--include-metadata {false, true}]
                               [--marker]
                               [--num-results]
                               [--prefix]
                               [--query-examples]
                               [--sas-token]
+                              [--show-next-marker]
                               [--subscription]
                               [--timeout]
+  examples:
+  - summary: List containers in a storage account.
+    syntax: az storage container list
+  - summary: List soft deleted containers in a storage account.
+    syntax: az storage container list --include-deleted
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -314,24 +321,32 @@ directCommands:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
+  - name: --include-deleted
+    parameterValueGroup: false, true
+    summary: Specify that deleted containers to be returned in the response. This is for container restore enabled account. The default value is `False`.
+    description: ''
   - name: --include-metadata
-    summary: Specifies that container metadata be returned in the response.
+    parameterValueGroup: false, true
+    summary: Specify that container metadata to be returned in the response.
     description: ''
   - name: --marker
-    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if num_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
     description: ''
   - name: --num-results
     defaultValue: "5000"
     summary: Specify the maximum number to return. If the request does not specify num_results, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remaining of the results. Provide "\*" to return all.
     description: ''
   - name: --prefix
-    summary: Filters the results to return only containers whose names begin with the specified prefix.
+    summary: Filter the results to return only blobs whose name begins with the specified prefix.
     description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --show-next-marker
+    summary: Show nextMarker in result when specified.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -342,8 +357,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_container_restore
   name: az storage container restore
-  summary: Restores soft-deleted container.
-  description: "Operation will only be successful if used within the specified number of days set in the delete retention policy.  .. versionadded:: 12.4.0     This operation was introduced in API version '2019-12-12'."
+  summary: Restore soft-deleted container.
+  description: Operation will only be successful if used within the specified number of days set in the delete retention policy.
   syntax: >-
     az storage container restore --deleted-version
                                  --name
@@ -352,7 +367,11 @@ directCommands:
                                  [--auth-mode {key, login}]
                                  [--connection-string]
                                  [--sas-token]
+                                 [--subscription]
                                  [--timeout]
+  examples:
+  - summary: Restore soft-deleted container.
+    syntax: az storage container restore -n deletedcontainer --deleted-version deletedversion
   requiredParameters:
   - isRequired: true
     name: --deleted-version
@@ -379,9 +398,13 @@ directCommands:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_container_set-permission
   name: az storage container set-permission
   summary: Sets the permissions for the specified container or stored access  policies that may be used with Shared Access Signatures.
@@ -589,5 +612,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/28/2021
+  ms.date: 07/01/2021
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

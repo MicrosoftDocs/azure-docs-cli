@@ -45,7 +45,7 @@ az account list --output table
 
 Here are three common formats:
 
-* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az configure](../latest/docs-ref-autogen/reference-index.yml#az_configure) command.
+* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az config](/cli/azure/config) command.
 * The `table` format presents output as a human readable table. You can specify which values appear in the table and use queries to customize the output.
 * The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
 
@@ -178,7 +178,7 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 
 ## Concurrent builds
 
-If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set AZURE_CONFIG_DIR to a directory where the access tokens are stored.
+If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set `AZURE_CONFIG_DIR` to a directory where the access tokens are stored.
 
 ## Generic update arguments
 
