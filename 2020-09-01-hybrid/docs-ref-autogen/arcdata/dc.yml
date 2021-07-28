@@ -1,0 +1,180 @@
+### YamlMime:AzureCLIGroup
+uid: az_arcdata_dc
+name: az arcdata dc
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **arcdata** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az arcdata dc** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Create, delete, and manage data controllers.
+description: ''
+directCommands:
+- uid: az_arcdata_dc_create
+  name: az arcdata dc create
+  summary: Create data controller.
+  description: Create data controller - kube config is required on your system along with the following environment variables ['AZDATA_USERNAME', 'AZDATA_PASSWORD'].
+  syntax: >-
+    az arcdata dc create --azure-subscription
+                         --connectivity-mode
+                         --location
+                         --name
+                         --namespace
+                         --resource-group
+                         [--infrastructure]
+                         [--path]
+                         [--profile-name]
+                         [--service-annotations]
+                         [--service-labels]
+                         [--storage-class]
+                         [--use-k8s]
+  examples:
+  - summary: Data controller deployment.
+    syntax: az arcdata dc create --name dc-name --namespace ns --connectivity-mode indirect --resource-group dc-group --location east --azure-subscription dc-subscription
+  requiredParameters:
+  - isRequired: true
+    name: --azure-subscription
+    summary: The Azure subscription ID in which the data controller resource should be added.
+    description: ''
+  - isRequired: true
+    name: --connectivity-mode
+    summary: The connectivity to Azure - indirect or direct - which the data controller should operate in.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: The Azure location in which the data controller metadata will be stored (e.g. eastus).
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name for the data controller.
+    description: ''
+  - isRequired: true
+    name: --namespace -s
+    summary: The Kubernetes namespace to deploy the data controller into. If it exists already it will be used. If it does not exist, an attempt will be made to create it first.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: The Azure resource group in which the data controller resource should be added.
+    description: ''
+  optionalParameters:
+  - name: --infrastructure
+    defaultValue: other
+    summary: "The infrastructure on which the data controller will be running on. Allowed values: {'other', 'alibaba', 'onpremises', 'gcp', 'aws', 'azure'}."
+    description: ''
+  - name: --path -p
+    summary: The path to a directory containing a custom configuration profile to use. Run `azdata arc dc config init` to create a custom configuration profile.
+    description: ''
+  - name: --profile-name
+    summary: "The name of an existing configuration profile. Run `azdata arcdata dc config list` to see available options. One of the following: ['azure-arc-ake', 'azure-arc-aks-default-storage', 'azure-arc-aks-hci', 'azure-arc-aks-premium-storage', 'azure-arc-azure-openshift', 'azure-arc-eks', 'azure-arc-gke', 'azure-arc-kubeadm', 'azure-arc-openshift']."
+    description: ''
+  - name: --service-annotations
+    summary: Comma-separated list of annotations to apply to all external data controller services.
+    description: ''
+  - name: --service-labels
+    summary: Comma-separated list of labels to apply to all external data controller services.
+    description: ''
+  - name: --storage-class
+    summary: The storage class to be use for all data and logs persistent volumes for all data controller pods that require them.
+    description: ''
+  - name: --use-k8s
+    summary: Create data controller using local Kubernetes APIs.
+    description: ''
+- uid: az_arcdata_dc_delete
+  name: az arcdata dc delete
+  summary: Delete data controller.
+  description: Delete data controller - kube config is required on your system.
+  syntax: >-
+    az arcdata dc delete --name
+                         --namespace
+                         [--force]
+                         [--yes]
+  examples:
+  - summary: Data controller deployment.
+    syntax: az arcdata dc delete --name dc-name --namespace ns
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Data controller name.
+    description: ''
+  - isRequired: true
+    name: --namespace -s
+    summary: The Kubernetes namespace in which the data controller exists.
+    description: ''
+  optionalParameters:
+  - name: --force -f
+    summary: Force delete data controller and all of its data services.
+    description: ''
+  - name: --yes -y
+    summary: Delete data controller without confirmation prompt.
+    description: ''
+- uid: az_arcdata_dc_export
+  name: az arcdata dc export
+  summary: Export metrics, logs or usage.
+  description: Export metrics, logs or usage to a file.
+  syntax: >-
+    az arcdata dc export --namespace
+                         --path
+                         --type
+                         [--force]
+  requiredParameters:
+  - isRequired: true
+    name: --namespace -s
+    summary: The Kubernetes namespace in which the data controller exists.
+    description: ''
+  - isRequired: true
+    name: --path -p
+    summary: The full or relative path including the file name of the file to be exported.
+    description: ''
+  - isRequired: true
+    name: --type -t
+    summary: 'The type of data to be exported. Options: logs, metrics, and usage.'
+    description: ''
+  optionalParameters:
+  - name: --force -f
+    summary: Force create output file. Overwrites any existing file at the same path.
+    description: ''
+- uid: az_arcdata_dc_upload
+  name: az arcdata dc upload
+  summary: Upload exported data file.
+  description: Upload data file exported from a data controller to Azure.
+  syntax: az arcdata dc upload --path
+  requiredParameters:
+  - isRequired: true
+    name: --path -p
+    summary: The full or relative path including the file name of the file to be uploaded.
+    description: ''
+commands:
+- az_arcdata_dc_config
+- az_arcdata_dc_config_add
+- az_arcdata_dc_config_init
+- az_arcdata_dc_config_list
+- az_arcdata_dc_config_patch
+- az_arcdata_dc_config_remove
+- az_arcdata_dc_config_replace
+- az_arcdata_dc_config_show
+- az_arcdata_dc_create
+- az_arcdata_dc_debug
+- az_arcdata_dc_debug_copy-logs
+- az_arcdata_dc_debug_dump
+- az_arcdata_dc_delete
+- az_arcdata_dc_endpoint
+- az_arcdata_dc_endpoint_list
+- az_arcdata_dc_export
+- az_arcdata_dc_status
+- az_arcdata_dc_status_show
+- az_arcdata_dc_upload
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Create, delete, and manage data controllers.
