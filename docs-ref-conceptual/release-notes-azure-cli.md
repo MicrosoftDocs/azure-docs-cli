@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/14/2021
+ms.date: 08/03/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,154 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 03, 2021
+
+Version 2.27.0
+
+### ACR
+
+* [BREAKING CHANGE] `az acr connected-registry install info`: Add a new required parameter `--parent-protocol`.
+* [BREAKING CHANGE] `az acr connected-registry install renew-credentials`: Add a new required parameter `--parent-protocol`.
+* `az acr import`: Support new parameter `--no-wait`
+* Fix the Python SDK compatibility issue when migrating Track 2
+* `az acr build`: Make file .dockerignore include directories with `!`
+
+### AKS
+
+* `az aks check-acr`: Fix issues parsing certain client minor versions
+
+### AppConfig
+
+* [BREAKING CHANGE] `appconfig feature set`: Set the value of parameter `--description` to empty string if it is not specified
+* [BREAKING CHANGE] `az appconfig feature`: Support namespacing for feature flags and change output fields
+* `az appconfig create`: Add tags support when creating resource
+
+### App Service
+
+* `az webapp config set`: Add support for VNet Route All property.
+* `az webapp vnet-integration add`: Default to VNet Route All. Allow cross subscription integration.
+* `az appservice ase create`: Support for ASEv3 External and Zone redundancy
+* `az webapp hybrid-connection add`: Improve help/error message and unblock Linux
+* `az webapp config access-restriction remove`: Fix #18947 issue removing service endpoint rules
+* : Fix #17424: `az appservice plan show`: Provide correct exit status
+
+### ARM
+
+* `az what-if`: Fix output formatting
+* `az bicep uninstall`: Add new command to uninstall bicep
+* `az bicep build`: Fix an issue where running with --stdout doesn't print any output
+* `az provider register`: Add deprecate info for `--accept-term`
+* `az lock create/delete`: Add examples for operating different levels of locks
+* `az deployment group/sub/mg/tenant create`: Add --what-if parameter for invoking What-If with the deployment create commands.
+* `az deployment group/sub/mg/tenant create`: Add --proceed-if-no-change parameter to skip confirmation when --confirm-with-what-if is set and there's no changes in What-If results.
+* Bump api-version from 2020-10-01 to 2021-04-01
+* `az ts create`: Make parameter `--template-file` support bicep file
+* `az resource create`: Add example for creating site extension to web app
+* `az ts export`: Fix the issue that export template specs with no linked templates failed
+
+### Backup
+
+* `az backup vault`: Add support for Customer Managed Keys(CMK)
+* `az backup restore restore-disks`: Add MSI usage in IaaS VM Restore
+
+### CDN
+
+* `az cdn endpoint rule`: Add OriginGroupOverride action support
+
+### Compute 
+
+* `az sig image-version create`: Support mixing disks, snapshots, and vhd
+* `az vmss update`: Upgrade package version to fix securityProfile issue
+* `az vm boot-diagnostics get-boot-log`: Fix crash when getting boot diagnostics log
+* `az vm list-skus`: Fix the issue that it can't query the SKU which with partially zones available
+* `az vm auto-shutdown`: Fix the issue that `--webhook` is required when `--email` is passed in
+* `az vm create`: Support creating VM from shared gallery image
+* `az vm secret add`: Add note to use Azure Key Vault VM extension instead in help
+
+### Container
+
+* `az container exec`: Fix and improve terminal experience
+
+### DataBoxEdge
+
+* Migrate databoxedge to track2 SDK
+
+### DMS
+
+* `az dms project create/az dms project task create`: Remove MySQL projects/tasks for online migrations since they are no longer supported.
+
+### IoT
+
+* `az iot hub create/update`: Add checks to prevent bad file-upload identity parameters when hub doesn't have identity
+* `az iot hub create/update`: Add `--fileupload-notification-lock-duration` parameter
+* `az iot hub create/update`: Deprecate `fileupload-storage-container-uri` parameter
+* `az iot dps/hub certificate create`: Certificates will now always be uploaded in base64 encoding.
+
+### Key Vault
+
+* [BREAKING CHANGE] Fix #13752: az keyvault create not idempotent. Creating existing keyvault will fail.
+* Fix #6372: table output for secrets isn't correct
+
+### Maps
+
+* `az maps creator create`: Support maps creator create managed
+* `az maps creator update`: Support maps creator update managed
+* `az maps creator list`: Support maps creator list managed
+* `az maps creator show`: Support maps creator show managed
+* `az maps creator delete`: Support maps creator delete managed
+
+### NetAppFiles
+
+* `az netappfiles volume pool-change`: Update help description for pool-change
+
+### Network
+
+* `az network application-gateway create`: Add `--ssl-certificate-name` argument
+* Private link add Microsoft.ServiceBus/namespaces provider
+* `az network application-gateway waf-policy custom-rule match-condition add`: Add examples
+* `az network express-route port link update`: Add `--macsec-sci-state` argument.
+* Private link add Microsoft.Web/hostingEnvironments provider
+* `az network lb frontend-ip update`: Support cross tenant for argument `--gateway-lb`.
+* `az network nic ip-config update`: Support cross tenant for argument `--gateway-lb`.
+* Private link add Microsoft.StorageSync/storageSyncServices provider
+* Private link add Microsoft.Media/mediaservices provider
+* Private link add Microsoft.Batch/batchAccounts provider
+
+### Packaging
+
+* Add licenses to all Python packages
+* Add SOCKS Proxy Support
+
+### PolicyInsights
+
+* Migrate to track 2 SDK
+
+### RDBMS
+
+* PostgreSQL, MySQL migration to GA API
+
+### Redis
+
+* `az redis create\update`: Add new parameter `--redis-version`
+
+### SQL
+
+* Update Microsoft.Sql to track2 SDK
+* `az sql server outbound-firewall-rule create`: Azure CLI Commands for Outbound Firewall Rules
+
+### Storage
+
+* Fix #18352: `az storage fs file list --exclude-dir` breaks with `--show-next-marker`
+* `az storage fs generate-sas`:  Support generate sas token for file system in ADLS Gen2 account
+* `az storage account blob-service-properties`: Support last access tracking policy
+* `storage container-rm migrate-vlw`: Support Version level Worm (VLW)
+* `az storage copy` add new option `--cap-mbps`
+
+### Synapse
+
+* `synapse workspace key update`: Fix the issue that updating a workspace key failure due to parameter `--is-active-cmk` lost
+* Reimport notebook failure
 
 ## July 14, 2021
 
