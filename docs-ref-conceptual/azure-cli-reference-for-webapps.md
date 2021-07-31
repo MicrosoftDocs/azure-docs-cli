@@ -95,7 +95,7 @@ For other App Service-related references, see the following tables:
 | [az webapp remote-connection](/cli/azure/webapp/remote-connection) | Create a remote connection by using a TCP tunnel to a web app. | Yes | [Open an SSH session to a Linux container in Azure App Service](/azure/app-service/configure-linux-open-ssh-session) |
 | [az webapp scan](/cli/azure/webapp/scan) | Manage the scans for a web app. Currently available only for Linux-based web apps. | Yes | [Scan your machines](/azure/security-center/deploy-vulnerability-assessment-vm) |
 | [az webapp traffic-routing](/cli/azure/webapp/traffic-routing) | Manage traffic routing for web apps. | | [Control Azure App Service traffic with Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager) |
-| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) ||
+| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
 
 ## Azure App Service plans
 
