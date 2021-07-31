@@ -1,24 +1,24 @@
 ---
-title: Azure CLI references for Azure Web Apps
-description: Azure CLI reference landing page for Azure Web Apps
+title: Azure CLI references for Azure App Service
+description: Azure CLI reference landing page for Azure App Service
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 06/30/2021
+ms.date: 07/30/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
 ms.custom: devx-track-azurecli
 ---
 
-# Azure CLI for Azure Web Apps
+# Azure CLI for Azure App Service
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Web Apps, and gives you the ability to manage Azure Web Apps from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure App Service, and gives you the ability to manage Azure App Service from a command line.
 
-The [Azure Web Apps](/azure/app-service) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The [Azure App Service](/azure/app-service) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
-Access to the following subgroups requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: webapp container, webapp remote-connection, and webapp scan.
+Access to the following `az webapp` references requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: `az webapp container`, `az webapp remote-connection`, and `az webapp scan`. Access to the `az functionapp app` reference requires the [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) extension. 
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
@@ -30,6 +30,11 @@ See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for a complete 
 - [Azure Web App deployment](#azure-web-app-deployment)
 - [Azure Web App WebJobs](#azure-web-app-webjobs)
 - [Additional Azure Web App references](#additional-azure-web-app-references)
+
+For other App Service-related references, see the following tables:
+
+- [Azure App Service plans](#azure-app-service-plans)
+- [Azure function apps](#azure-function-apps)
 
 ## Azure Static Web Apps
 
@@ -90,7 +95,50 @@ See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for a complete 
 | [az webapp remote-connection](/cli/azure/webapp/remote-connection) | Create a remote connection by using a TCP tunnel to a web app. | Yes | [Open an SSH session to a Linux container in Azure App Service](/azure/app-service/configure-linux-open-ssh-session) |
 | [az webapp scan](/cli/azure/webapp/scan) | Manage the scans for a web app. Currently available only for Linux-based web apps. | Yes | [Scan your machines](/azure/security-center/deploy-vulnerability-assessment-vm) |
 | [az webapp traffic-routing](/cli/azure/webapp/traffic-routing) | Manage traffic routing for web apps. | | [Control Azure App Service traffic with Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager) |
-| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
+| [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) ||
+
+## Azure App Service plans
+
+See [az appservice](/cli/azure/appservice) for a complete list of the references available to manage [Azure App Service plans](/azure/app-service/overview-hosting-plans).
+
+| Reference | Description | More information |
+|-|-|-|
+| [az appservice](/cli/azure/appservice) | Manage App Service plans. | [Introduction to the App Service Environments](/azure/app-service/environment/intro) |
+| [az appservice ase](/cli/azure/appservice/ase) | Manage App Service Environments v2. | [Introduction to the App Service Environments](/azure/app-service/environment/intro) |
+| [az appservice domain](/cli/azure/appservice/domain) | Manage custom domains. | [Map an existing custom DNS name to Azure App Service](/azure/app-service/app-service-web-tutorial-custom-domain) |
+| [az appservice hybrid-connection](/cli/azure/appservice/hybrid-connection) | Set the key that apps use to connect to hybrid-connections in an App Service plan. | [Azure App Service Hybrid Connections](/azure/app-service/app-service-hybrid-connections) |
+| [az appservice plan](/cli/azure/appservice/plan) | Manage App Service plans. | [Manage an App Service plan in Azure](/azure/app-service/app-service-plan-manage) |
+| [az appservice vnet-integration](/cli/azure/appservice/vnet-integration) | List the virtual network integrations that an appservice plan uses. | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
+
+## Azure function apps
+
+See [az functionapp](/cli/azure/functionapp) for a complete list of the references available to manage [Azure function apps](/azure/app-service/overview-hosting-plans).
+
+| Reference | Description | Extension? | More information |
+|-|-|-|-|
+| [az functionapp](/cli/azure/functionapp) | Manage function apps. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp app](/cli/azure/functionapp/app) | Manage Azure Functions app. | Yes | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp config](/cli/azure/functionapp/config) | Configure a function app. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp config access-restriction](/cli/azure/functionapp/config/access-restriction) | Manage access restrictions on a function app. | | [Set up Azure App Service access restrictions](/azure/app-service/app-service-ip-restrictions) |
+| [az functionapp config appsettings](/cli/azure/functionapp/config/appsettings) | Manage function app settings. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp config container](/cli/azure/functionapp/config/container) | Manage function app container settings. | | [Create your first function on Azure Arc using a custom container](/azure/azure-functions/create-first-function-arc-custom-container) |
+| [az functionapp config hostname](/cli/azure/functionapp/config/hostname) | Configure hostnames for a function app. | | [Azure Functions networking options](/azure/azure-functions/functions-networking-options) |
+| [az functionapp config ssl](/cli/azure/functionapp/config/ssl) | Configure SSL certificates for a function app. | | [Add a TLS/SSL certificate in Azure App Service](/azure/app-service/configure-ssl-certificate) |
+| [az functionapp cors](/cli/azure/functionapp/cors) | Manage Cross-Origin Resource Sharing (CORS) for a function app. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp deployment](/cli/azure/functionapp/deployment) | Manage function app deployments. | | [Deployment technologies in Azure Functions](/azure/azure-functions/functions-deployment-technologies) |
+| [az functionapp deployment container](/cli/azure/functionapp/deployment/container) | Manage container-based continuous deployment. | | [Create a function on Linux using a custom container](/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cazurecli) |
+| [az functionapp deployment slot](/cli/azure/functionapp/deployment/slot) | Manage function app deployment slots. | | [Azure Functions deployment slots](/azure/azure-functions/functions-deployment-slots) |
+| [az functionapp deployment source](/cli/azure/functionapp/deployment/source) | Manage function app deployment via source control. | | [Create a function in Azure](/azure/azure-functions/scripts/functions-cli-create-function-app-vsts-continuous) |
+| [az functionapp deployment user](/cli/azure/functionapp/deployment/user) | Manage user credentials for deployment. | | [Securing Azure Functions](/azure/azure-functions/security-concepts) |
+| [az functionapp devops-pipeline](/cli/azure/functionapp/devops-pipeline) | Manage Azure Function-specific integration with Azure DevOps. | | [Continuous delivery by using Azure DevOps](/azure/azure-functions/functions-how-to-azure-devops) |
+| [az functionapp function](/cli/azure/functionapp/function) | Manage function app functions. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings) |
+| [az functionapp function keys](/cli/azure/functionapp/function/keys) | Manage function keys. | | [Securing Azure Functions](/azure/azure-functions/security-concepts) |
+| [az functionapp hybrid-connection](/cli/azure/functionapp/hybrid-connection) | Manage hybrid-connections from a function app. | | [Azure App Service Hybrid Connections](/azure/app-service/app-service-hybrid-connections) |
+| [az functionapp identity](/cli/azure/functionapp/identity) | Manage a web app's managed service identity. | | [Back up App Configuration stores automatically](/azure/azure-app-configuration/howto-backup-config-store) |
+| [az functionapp keys](/cli/azure/functionapp/keys) | Manage a function app's keys. | | [Securing Azure Functions](/azure/azure-functions/security-concepts) |
+| [az functionapp log deployment](/cli/azure/functionapp/log/deployment) | Manage a function app's deployment logs. | | [Monitor Azure Functions](/azure/azure-functions/functions-monitoring) |
+| [az functionapp plan](/cli/azure/functionapp/plan) | Manage the App Service plans for a function app. | | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli) |
+| [az functionapp vnet-integration](/cli/azure/functionapp/vnet-integration) | Manage virtual networks integrations of a function app. | | [Virtual network integration](/azure/azure-functions/functions-networking-options#virtual-network-integration)
 
 ## See also
 
