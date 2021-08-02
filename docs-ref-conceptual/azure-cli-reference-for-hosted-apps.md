@@ -1,24 +1,24 @@
 ---
-title: Azure CLI references for Azure App Service
-description: Azure CLI reference landing page for Azure App Service
+title: Azure CLI references for Azure hosted apps
+description: Azure CLI reference landing page for Azure hosted apps
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 07/30/2021
+ms.date: 08/02/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
 ms.custom: devx-track-azurecli
 ---
 
-# Azure CLI for Azure App Service
+# Azure CLI for Azure hosted apps
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure App Service, and gives you the ability to manage Azure App Service from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure App Service, and gives you the ability to manage hosted apps from a command line.
 
 The [Azure App Service](/azure/app-service) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
-Access to the following `az webapp` references requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: `az webapp container`, `az webapp remote-connection`, and `az webapp scan`. Access to the `az functionapp app` reference requires the [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) extension. 
+Access to the following `az webapp` references requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: `az webapp container`, `az webapp remote-connection`, and `az webapp scan`. Access to the `az functionapp app` reference requires the [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) extension.
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
@@ -31,7 +31,7 @@ See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for a complete 
 - [Azure Web App WebJobs](#azure-web-app-webjobs)
 - [Additional Azure Web App references](#additional-azure-web-app-references)
 
-For other App Service-related references, see the following tables:
+For other hosted app references, see the following sections:
 
 - [Azure App Service plans](#azure-app-service-plans)
 - [Azure function apps](#azure-function-apps)
