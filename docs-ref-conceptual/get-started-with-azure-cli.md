@@ -32,7 +32,7 @@ After installing the CLI for the first time, check that it's installed and you'v
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-## How to open the Azure CLI and sign in
+## How to sign into the Azure CLI
 
 Before using any Azure CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az_login).
 
