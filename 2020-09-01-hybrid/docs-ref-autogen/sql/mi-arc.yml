@@ -14,48 +14,82 @@ directCommands:
   description: To set the password of the SQL managed instance, please set the environment variable AZDATA_PASSWORD.
   syntax: >-
     az sql mi-arc create --name
+                         --namespace
+                         [--agent-enabled]
+                         [--annotations]
+                         [--collation]
                          [--cores-limit]
                          [--cores-request]
+                         [--dev]
+                         [--labels]
+                         [--language]
+                         [--license-type]
                          [--memory-limit]
                          [--memory-request]
-                         [--namespace]
                          [--no-external-endpoint]
                          [--no-wait]
                          [--path]
                          [--replicas]
+                         [--service-annotations]
+                         [--service-labels]
                          [--storage-class-backups]
                          [--storage-class-data]
                          [--storage-class-datalogs]
                          [--storage-class-logs]
+                         [--tier]
+                         [--trace-flags]
+                         [--use-k8s]
                          [--volume-size-backups]
                          [--volume-size-data]
                          [--volume-size-datalogs]
                          [--volume-size-logs]
   examples:
   - summary: Create a SQL managed instance.
-    syntax: az sql mi-arc create -n sqlmi1
+    syntax: az sql mi-arc create --name sqlmi1 --namespace ns
   - summary: Create a SQL managed instance with 3 replicas in HA scenario.
-    syntax: az sql mi-arc create -n sqlmi2 --replicas 3
+    syntax: az sql mi-arc create --name sqlmi2 --namespace ns --replicas 3
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the SQL managed instance.
     description: ''
+  - isRequired: true
+    name: --namespace -s
+    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
   optionalParameters:
+  - name: --agent-enabled
+    summary: Enable SQL Server agent for the instance. Default is disabled. Allowed values are 'true' or 'false'.
+    description: ''
+  - name: --annotations
+    summary: Comma-separated list of annotations of the SQL managed instance.
+    description: ''
+  - name: --collation
+    summary: The SQL Server collation for the instance.
+    description: ''
   - name: --cores-limit
     summary: The cores limit of the managed instance as an integer.
     description: ''
   - name: --cores-request
     summary: The request for cores of the managed instance as an integer.
     description: ''
+  - name: --dev
+    summary: If this is specified, then it is considered a dev instance and will not be billed for.
+    description: ''
+  - name: --labels
+    summary: Comma-separated list of labels of the SQL managed instance.
+    description: ''
+  - name: --language
+    summary: The SQL Server locale to any supported language identifier (LCID) for the instance.
+    description: ''
+  - name: --license-type
+    summary: 'The license type to apply for this managed instance. Allowed values are: BasePrice, LicenseIncluded. Default is LicenseIncluded. The license type cannot be changed.'
+    description: ''
   - name: --memory-limit
     summary: The limit of the capacity of the managed instance as an integer.
     description: ''
   - name: --memory-request
     summary: The request for the capcity of the managed instance as an integer amount of memory in GBs.
-    description: ''
-  - name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
   - name: --no-external-endpoint
     summary: If specified, no external service will be created. Otherwise, an external service will be created using the same service type as the data controller.
@@ -69,6 +103,12 @@ directCommands:
   - name: --replicas
     summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3' or '1' with default of '1'.
     description: ''
+  - name: --service-annotations
+    summary: Comma-separated list of annotations to apply to all external services.
+    description: ''
+  - name: --service-labels
+    summary: Comma-separated list of labels to apply to all external services.
+    description: ''
   - name: --storage-class-backups
     summary: The storage class to be used for backups (/var/opt/mssql/backups). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
@@ -80,6 +120,15 @@ directCommands:
     description: ''
   - name: --storage-class-logs
     summary: The storage class to be used for logs (/var/log). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
+    description: ''
+  - name: --tier
+    summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
+    description: ''
+  - name: --trace-flags
+    summary: Comma separated list of traceflags. No flags by default.
+    description: ''
+  - name: --use-k8s
+    summary: Create SQL managed instance using local Kubernetes APIs.
     description: ''
   - name: --volume-size-backups
     summary: The size of the storage volume to be used for backups as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
@@ -118,13 +167,20 @@ directCommands:
   description: ''
   syntax: >-
     az sql mi-arc edit --name
+                       [--agent-enabled]
+                       [--annotations]
                        [--cores-limit]
                        [--cores-request]
+                       [--dev]
+                       [--labels]
                        [--memory-limit]
                        [--memory-request]
                        [--namespace]
                        [--no-wait]
                        [--path]
+                       [--service-annotations]
+                       [--service-labels]
+                       [--trace-flags]
   examples:
   - summary: Edit the configuration of a SQL managed instance.
     syntax: az sql mi-arc edit --path ./spec.json -n sqlmi1
@@ -134,11 +190,23 @@ directCommands:
     summary: The name of the SQL managed instance that is being edited. The name under which your instance is deployed cannot be changed.
     description: ''
   optionalParameters:
+  - name: --agent-enabled
+    summary: Enable SQL Server agent for the instance. Default is disabled.
+    description: ''
+  - name: --annotations
+    summary: Comma-separated list of annotations of the SQL managed instance.
+    description: ''
   - name: --cores-limit
     summary: The cores limit of the managed instance as an integer.
     description: ''
   - name: --cores-request
     summary: The request for cores of the managed instance as an integer.
+    description: ''
+  - name: --dev
+    summary: If this is specified, then it is considered a dev instance and will not be billed for.
+    description: ''
+  - name: --labels
+    summary: Comma-separated list of labels of the SQL managed instance.
     description: ''
   - name: --memory-limit
     summary: The limit of the capacity of the managed instance as an integer.
@@ -154,6 +222,15 @@ directCommands:
     description: ''
   - name: --path
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
+    description: ''
+  - name: --service-annotations
+    summary: Comma-separated list of annotations to apply to all external services.
+    description: ''
+  - name: --service-labels
+    summary: Comma-separated list of labels to apply to all external services.
+    description: ''
+  - name: --trace-flags
+    summary: Comma separated list of traceflags. No flags by default.
     description: ''
 - uid: az_sql_mi-arc_list
   name: az sql mi-arc list
