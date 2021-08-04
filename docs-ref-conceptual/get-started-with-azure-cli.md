@@ -1,6 +1,6 @@
 ---
-title: Get started with Azure CLI
-description: Get started using the Azure CLI by learning command basics.
+title: Get started with Azure Command-Line Interface (CLI) | Microsoft Docs
+description: Learn how to start using the Azure CLI by completing common commands. You can begin using the Azure CLI by running it in an Azure Cloud shell environment.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -8,11 +8,12 @@ ms.date: 01/30/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure CLI!  This article introduces the CLI and helps you complete common tasks.
+Welcome to the Azure Command-Line Interface (CLI)!  This article introduces the CLI and helps you complete common tasks.
 
 > [!NOTE]
 >
@@ -22,7 +23,7 @@ Welcome to the Azure CLI!  This article introduces the CLI and helps you complet
 
 ## Install or run in Azure Cloud Shell
 
-The easiest way to get started with the Azure CLI is by running it in an Azure Cloud Shell environment through your browser. To learn about Cloud Shell, see  [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+The easiest way to learn how to use the Azure CLI is by running it in an Azure Cloud Shell environment through your browser. To learn about Cloud Shell, see  [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
@@ -31,9 +32,9 @@ After installing the CLI for the first time, check that it's installed and you'v
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-## Sign in
+## How to sign into the Azure CLI
 
-Before using any CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az_login).
+Before using any Azure CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az_login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
@@ -41,7 +42,7 @@ After logging in, you see a list of subscriptions associated with your Azure acc
 
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
-## Common commands
+## Common Azure CLI commands
 
 This table lists some common commands used in the CLI and links to their reference documentation.
 
@@ -57,7 +58,7 @@ This table lists some common commands used in the CLI and links to their referen
 
 ## Finding commands
 
-Commands in the CLI are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
+Azure CLI commands are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
 
 To search for commands, use [az find](/cli/azure/reference-index#az_find). For example, to search for command names containing `secret`,
 use the following command:
@@ -104,7 +105,7 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 ## Learn CLI basics with quickstarts and tutorials
 
-To get you started with the Azure CLI, try an in-depth tutorial for setting up virtual machines and using the power
+To learn how to use the Azure CLI, try an in-depth tutorial for setting up virtual machines and using the power
 of the CLI to query Azure resources.
 
 > [!div class="nextstepaction"]
