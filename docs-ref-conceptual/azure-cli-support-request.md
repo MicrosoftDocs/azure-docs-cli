@@ -1,15 +1,16 @@
 ---
-title: Create an Azure support request in Azure CLI
+title: Create Azure Support Tickets – Azure CLI | Microsoft Docs
 description: Learn how to use the Azure CLI az support commands to create, update, and manage Azure support requests.
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-supportability
 ms.topic: how-to
 ms.date: 02/12/2021
-ms.custom: template-how-to, devx-track-azurecli
+ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
+keywords: azure support request, azure support, azure support ticket, support ticket management
 ---
 
-# Create an Azure support request in Azure CLI
+# Create an Azure support ticket in Azure CLI
 
 The Azure CLI enables you to create and manage Azure support tickets.
 
@@ -55,13 +56,13 @@ A support engineer will contact you using the method you indicated. For informat
 
 ## Manage support tickets
 
-To see your support tickets for your current subscription, run the [az support tickets list](/cli/azure/ext/support/support/tickets#ext_support_az_support_tickets_list) command:
+The Azure CLI enables you to perform support ticket management using various commands. To see your Azure support tickets for your current subscription, run the [az support tickets list](/cli/azure/ext/support/support/tickets#ext_support_az_support_tickets_list) command:
 
 ```azurecli
 az support tickets list
 ```
 
-To see support tickets in another subscription, run the [az account set](/cli/azure/account#az_account_set) command to change your current subscription, and then run the command.
+To see Azure support tickets in another subscription, run the [az account set](/cli/azure/account#az_account_set) command to change your current subscription, and then run the command.
 
 You can also update a ticket by using the [az support tickets update](/cli/azure/ext/support/support/tickets#ext_support_az_support_tickets_update) command:
 

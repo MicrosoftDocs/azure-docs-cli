@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI
-description: Reference for the installation of Azure CLI
+title: How to install the Azure CLI | Microsoft Docs
+description: The Azure CLI is available to install in Windows, macOS and Linux environments. It can also be run in a Docker container and Azure Cloud Shell.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -8,10 +8,11 @@ ms.date: 09/25/2020
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli, install azure cli, azure cli download, download azure cli
 ---
 
-# Install the Azure CLI
+# How to install the Azure CLI
 
 The Azure CLI is available to install in Windows, macOS and Linux environments.  It can also be run in a Docker container and Azure Cloud Shell.
 

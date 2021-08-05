@@ -1,6 +1,6 @@
 ---
-title: Install the Azure CLI beta version
-description: Reference for the installation of Azure CLI beta version
+title: How to install the Azure CLI beta version | Microsoft Docs
+description: Learn how to install the Azure CLI beta version. This beta version offers increased security for token cache, access tokens and SSL certificates.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -8,7 +8,8 @@ ms.date: 02/09/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: Install azure cli, azure cli download, install azure cli beta
 ---
 
 # Install Azure CLI beta version
@@ -43,7 +44,7 @@ You can manually call `az account get-access-token` in a terminal or use subproc
 
 First party apps can use `SharedTokenCacheCredential` from Azure Identity SDK to directly access the shared MSAL cache.
 
-## Install Azure CLI beta
+## How to install Azure CLI beta
 
 Azure CLI is built on [Python](https://www.python.org/). The supported Python versions are 3.6, 3.7, 3.8. On Windows, you will first need to [install Python](https://www.python.org/downloads/windows/).
 
@@ -90,7 +91,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    deactivate
    ```
 
-## Uninstall Azure CLI beta
+## How to uninstall Azure CLI beta
 
 To uninstall Azure CLI beta, delete the virtual environment folder.
 

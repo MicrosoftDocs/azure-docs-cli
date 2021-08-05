@@ -1,12 +1,13 @@
 ---
 title: Specifying values in Azure CLI commands
-description: Learn about the ways you can pass values to Azure CLI commands, including variables and ways to reuse common values.
+description: Learn about specifying values directly in Azure CLI commands by using shell variables, setting a subscription, creating default values, or using persistent values.
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-cli
 ms.topic: how-to
 ms.date: 03/01/2021
-ms.custom: template-how-to, devx-track-azurecli
+ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
+keywords: azure cli variables, azure cli commands, value of variable, shell variables
 ---
 
 # Specifying values in Azure CLI commands
@@ -24,7 +25,7 @@ This article discusses various ways to specify values in Azure CLI commands.
 
 ## Use shell variables
 
-Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can use variables in Bash to pass values for parameters to commands. Using variables also allows reuse of commands, either piecemeal or in scripts.
+Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can use variables in Bash to pass values for parameters to commands. Using variables with the Azure CLI also allows reuse of commands, either piecemeal or in scripts.
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
@@ -43,11 +44,11 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
 
-This example assigns values to variables that are reused, like **MyResourceGroup**. A command gets a value to assign to **osType**.
+This example shows how to assign values to variables that are reused, like **MyResourceGroup**. A command gets a value to assign to **osType**.
 
 When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
-In this example, the **MySubscription** variable must be in quotation marks. Its value contains spaces, which the command can't parse. If you work only with subscription IDs, you don't need to use quotation marks.
+In this example, the **MySubscription** variable must be in quotation marks. The value of the variable contains spaces, which the command can't parse. If you work only with subscription IDs, you don't need to use quotation marks.
 
 ## Set a subscription
 

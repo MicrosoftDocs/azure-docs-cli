@@ -8,7 +8,7 @@ ms.date: 02/22/2019
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login
 ---
 

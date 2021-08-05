@@ -51,7 +51,7 @@ See [Create an Azure service principal with the Azure CLI](create-an-azure-servi
 
 ## PowerShell syntax comparison
 
-[Choose the right command-line tool](choose-the-right-azure-command-line-tool.md) explains the difference between `tools` and `environments` with an emphasis on the Azure CLI and Azure PowerShell.  It also gives many [side-by-side command comparisons](choose-the-right-azure-command-line-tool.md#azure-cli-and-azure-powershell-side-by-side-command-comparison).  Here are two examples:
+[Choose the right command-line tool](choose-the-right-azure-command-line-tool.md) explains the difference between `tools` and `environments` with an emphasis on the Azure CLI and Azure PowerShell.  It also gives many [side-by-side command comparisons](choose-the-right-azure-command-line-tool.md#azure-cli-vs-azure-powershell-side-by-side-command-comparison).  Here are two examples:
 
 |Command|Azure CLI|Azure PowerShell|
 | --- | --- | --- |
