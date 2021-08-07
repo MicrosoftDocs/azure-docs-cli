@@ -23,7 +23,7 @@ The [Azure Storage](/azure/storage) CLI experience is composed of two parts: cor
 
 See [Azure Storage](/cli/azure/service-page/azure%20storage) for a complete list of the Azure CLI core and extension references available for the Azure Storage service. For references for each subgroup, see the tables in the following sections:
 
-- [Import-export](#import-export)
+- [Import/Export service](#importexport-service)
 - [Storage accounts](#storage-accounts)
 - [Storage blobs](#storage-blobs)
 - [Storage containers](#storage-containers)
@@ -32,15 +32,15 @@ See [Azure Storage](/cli/azure/service-page/azure%20storage) for a complete list
 - [Storage file shares](#storage-file-shares)
 - [Additional storage references](#additional-storage-references)
 
-## Import-export
+## Import/Export service
 
-These references are part of the [import-export](https://github.com/Azure/azure-cli-extensions/tree/main/src/import-export) extension.
+The references in this table are part of the [import-export](https://github.com/Azure/azure-cli-extensions/tree/main/src/import-export) extension.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az import-export](/cli/azure/import-export) | Manage import-export. |  |
-| [az import-export bit-locker-key](/cli/azure/import-export/bit-locker-key) | Import-export bit-locker-key. |
-| [az import-export location](/cli/azure/import-export/location) | Manage import-export locations. |  |
+| [az import-export](/cli/azure/import-export) | Manage the import and export jobs for the Azure Import/Export service. | [Use the Azure Import/Export service to export data from Azure Blob storage](/azure/import-export/storage-import-export-data-from-blobs?tabs=azure-cli) |
+| [az import-export bit-locker-key](/cli/azure/import-export/bit-locker-key) | List the BitLocker keys for an import or export job. | [Use the Azure Import/Export service to import data to Azure Blob Storage](/azure/import-export/storage-import-export-data-to-blobs?tabs=azure-cli)
+| [az import-export location](/cli/azure/import-export/location) | List the locations for an import or export job. | [Use Azure Import/Export service to import data to Azure Files](/azure/import-export/storage-import-export-data-to-files?tabs=azure-cli) |
 
 ## Storage accounts
 
@@ -65,17 +65,17 @@ Some references in this table are part of the [storage-preview](https://github.c
 
 | Reference | Description | Extension? | More information |
 |-|-|-|-|
-| [az storage blob](/cli/azure/storage/blob) | Manage object storage for unstructured data (blobs). |  |  |
+| [az storage blob](/cli/azure/storage/blob) | Manage object storage for unstructured data (blobs). | | |
 | [az storage blob access](/cli/azure/storage/blob/access) | Manage the access control properties of a blob when Hierarchical Namespace is enabled. | Yes | |
-| [az storage blob copy](/cli/azure/storage/blob/copy) | Manage blob copy operations.  |  |
+| [az storage blob copy](/cli/azure/storage/blob/copy) | Manage blob copy operations. | | |
 | [az storage blob directory](/cli/azure/storage/blob/directory) | Manage blob directories in storage account container. | Yes | |
 | [az storage blob directory access](/cli/azure/storage/blob/directory/access) | storage-preview extension   Manage the access control properties of a directory when Hierarchical Namespace is enabled. | Yes | |
 | [az storage blob directory metadata](/cli/azure/storage/blob/directory/metadata) | storage-preview extension  Manage directory metadata. | Yes | |
 | [az storage blob incremental-copy](/cli/azure/storage/blob/incremental-copy) | Manage blob incremental copy operations. | | |
-| [az storage blob lease](/cli/azure/storage/blob/lease) | Manage storage blob leases. |  | | |
-| [az storage blob metadata](/cli/azure/storage/blob/metadata) | Manage blob metadata. |  |  |
-| [az storage blob service-properties](/cli/azure/storage/blob/service-properties) | Manage storage blob service properties. |  |  |
-| [az storage blob service-properties delete-policy](/cli/azure/storage/blob/service-properties/delete-policy) | Manage storage blob delete-policy service properties. |  |  |
+| [az storage blob lease](/cli/azure/storage/blob/lease) | Manage storage blob leases. | | |
+| [az storage blob metadata](/cli/azure/storage/blob/metadata) | Manage blob metadata. | | |
+| [az storage blob service-properties](/cli/azure/storage/blob/service-properties) | Manage storage blob service properties. | | |
+| [az storage blob service-properties delete-policy](/cli/azure/storage/blob/service-properties/delete-policy) | Manage storage blob delete-policy service properties. | | |
 
 ## Storage containers
 
