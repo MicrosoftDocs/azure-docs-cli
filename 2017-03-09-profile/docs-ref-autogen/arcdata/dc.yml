@@ -13,30 +13,33 @@ directCommands:
   summary: Create data controller.
   description: Create data controller - kube config is required on your system along with the following environment variables ['AZDATA_USERNAME', 'AZDATA_PASSWORD'].
   syntax: >-
-    az arcdata dc create --azure-subscription
-                         --connectivity-mode
+    az arcdata dc create --connectivity-mode
+                         --k8s-namespace
                          --location
                          --name
-                         --namespace
                          --resource-group
+                         [--annotations]
                          [--infrastructure]
+                         [--labels]
                          [--path]
                          [--profile-name]
                          [--service-annotations]
                          [--service-labels]
+                         [--storage-annotations]
                          [--storage-class]
+                         [--storage-labels]
                          [--use-k8s]
   examples:
   - summary: Data controller deployment.
-    syntax: az arcdata dc create --name dc-name --namespace ns --connectivity-mode indirect --resource-group dc-group --location east --azure-subscription dc-subscription
+    syntax: az arcdata dc create --name name --k8s-namespace namespace  --connectivity-mode indirect --resource-group group  --location location, --subscription subscription
   requiredParameters:
-  - isRequired: true
-    name: --azure-subscription
-    summary: The Azure subscription ID in which the data controller resource should be added.
-    description: ''
   - isRequired: true
     name: --connectivity-mode
     summary: The connectivity to Azure - indirect or direct - which the data controller should operate in.
+    description: ''
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: The Kubernetes namespace to deploy the data controller into. If it exists already it will be used. If it does not exist, an attempt will be made to create it first.
     description: ''
   - isRequired: true
     name: --location -l
@@ -47,23 +50,24 @@ directCommands:
     summary: The name for the data controller.
     description: ''
   - isRequired: true
-    name: --namespace -s
-    summary: The Kubernetes namespace to deploy the data controller into. If it exists already it will be used. If it does not exist, an attempt will be made to create it first.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: The Azure resource group in which the data controller resource should be added.
     description: ''
   optionalParameters:
+  - name: --annotations
+    summary: Comma-separated list of annotations to apply all data controller resources.
+    description: ''
   - name: --infrastructure
-    defaultValue: other
-    summary: "The infrastructure on which the data controller will be running on. Allowed values: {'alibaba', 'azure', 'onpremises', 'gcp', 'aws', 'other'}."
+    summary: "The infrastructure on which the data controller will be running on. Allowed values: ['aws', 'gcp', 'azure', 'alibaba', 'onpremises', 'other', 'auto']."
+    description: ''
+  - name: --labels
+    summary: Comma-separated list of labels to apply to all data controller resources.
     description: ''
   - name: --path -p
-    summary: The path to a directory containing a custom configuration profile to use. Run `azdata arc dc config init` to create a custom configuration profile.
+    summary: The path to a directory containing a custom configuration profile to use. Run `az arcdata dc config init` to create a custom configuration profile.
     description: ''
   - name: --profile-name
-    summary: "The name of an existing configuration profile. Run `azdata arcdata dc config list` to see available options. One of the following: ['azure-arc-ake', 'azure-arc-aks-default-storage', 'azure-arc-aks-hci', 'azure-arc-aks-premium-storage', 'azure-arc-azure-openshift', 'azure-arc-eks', 'azure-arc-gke', 'azure-arc-kubeadm', 'azure-arc-openshift']."
+    summary: "The name of an existing configuration profile. Run `az arcdata dc config list` to see available options. One of the following: ['azure-arc-ake', 'azure-arc-aks-default-storage', 'azure-arc-aks-hci', 'azure-arc-aks-premium-storage', 'azure-arc-azure-openshift', 'azure-arc-eks', 'azure-arc-gke', 'azure-arc-kubeadm', 'azure-arc-openshift']."
     description: ''
   - name: --service-annotations
     summary: Comma-separated list of annotations to apply to all external data controller services.
@@ -71,8 +75,14 @@ directCommands:
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external data controller services.
     description: ''
+  - name: --storage-annotations
+    summary: Comma-separated list of annotations to apply to all PVCs created by the data controller.
+    description: ''
   - name: --storage-class
     summary: The storage class to be use for all data and logs persistent volumes for all data controller pods that require them.
+    description: ''
+  - name: --storage-labels
+    summary: Comma-separated list of labels to apply to all PVCs created by the data controller.
     description: ''
   - name: --use-k8s
     summary: Create data controller using local Kubernetes APIs.
@@ -82,21 +92,21 @@ directCommands:
   summary: Delete data controller.
   description: Delete data controller - kube config is required on your system.
   syntax: >-
-    az arcdata dc delete --name
-                         --namespace
+    az arcdata dc delete --k8s-namespace
+                         --name
                          [--force]
                          [--yes]
   examples:
   - summary: Data controller deployment.
-    syntax: az arcdata dc delete --name dc-name --namespace ns
+    syntax: az arcdata dc delete --name name --k8s-namespace namespace
   requiredParameters:
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: The Kubernetes namespace in which the data controller exists.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Data controller name.
-    description: ''
-  - isRequired: true
-    name: --namespace -s
-    summary: The Kubernetes namespace in which the data controller exists.
     description: ''
   optionalParameters:
   - name: --force -f
@@ -110,13 +120,14 @@ directCommands:
   summary: Export metrics, logs or usage.
   description: Export metrics, logs or usage to a file.
   syntax: >-
-    az arcdata dc export --namespace
+    az arcdata dc export --k8s-namespace
                          --path
                          --type
                          [--force]
+                         [--use-k8s]
   requiredParameters:
   - isRequired: true
-    name: --namespace -s
+    name: --k8s-namespace -k
     summary: The Kubernetes namespace in which the data controller exists.
     description: ''
   - isRequired: true
@@ -130,6 +141,9 @@ directCommands:
   optionalParameters:
   - name: --force -f
     summary: Force create output file. Overwrites any existing file at the same path.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_arcdata_dc_upload
   name: az arcdata dc upload
@@ -153,7 +167,6 @@ commands:
 - az_arcdata_dc_create
 - az_arcdata_dc_debug
 - az_arcdata_dc_debug_copy-logs
-- az_arcdata_dc_debug_dump
 - az_arcdata_dc_delete
 - az_arcdata_dc_endpoint
 - az_arcdata_dc_endpoint_list

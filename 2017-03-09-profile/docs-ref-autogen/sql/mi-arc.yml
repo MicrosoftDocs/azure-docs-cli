@@ -5,18 +5,21 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **arcdata** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az sql mi-arc** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage SQL managed instances for Arc.
+summary: Manage Azure Arc-enabled SQL managed instances.
 description: ''
 directCommands:
 - uid: az_sql_mi-arc_create
   name: az sql mi-arc create
   summary: Create a SQL managed instance.
-  description: To set the password of the SQL managed instance, please set the environment variable AZDATA_PASSWORD.
+  description: To set the password of the SQL managed instance, set the environment variable AZDATA_PASSWORD.
   syntax: >-
-    az sql mi-arc create --name
-                         --namespace
+    az sql mi-arc create --k8s-namespace
+                         --name
+                         [--admin-login-secret]
                          [--agent-enabled]
                          [--annotations]
+                         [--cert-private-key-file]
+                         [--cert-public-key-file]
                          [--collation]
                          [--cores-limit]
                          [--cores-request]
@@ -31,12 +34,16 @@ directCommands:
                          [--path]
                          [--replicas]
                          [--service-annotations]
+                         [--service-cert-secret]
                          [--service-labels]
+                         [--storage-annotations]
                          [--storage-class-backups]
                          [--storage-class-data]
                          [--storage-class-datalogs]
                          [--storage-class-logs]
+                         [--storage-labels]
                          [--tier]
+                         [--time-zone]
                          [--trace-flags]
                          [--use-k8s]
                          [--volume-size-backups]
@@ -45,29 +52,38 @@ directCommands:
                          [--volume-size-logs]
   examples:
   - summary: Create a SQL managed instance.
-    syntax: az sql mi-arc create --name sqlmi1 --namespace ns
+    syntax: az sql mi-arc create -n sqlmi1 --k8s-namespace namespace
   - summary: Create a SQL managed instance with 3 replicas in HA scenario.
-    syntax: az sql mi-arc create --name sqlmi2 --namespace ns --replicas 3
+    syntax: az sql mi-arc create -n sqlmi2 --replicas 3 --k8s-namespace namespace
   requiredParameters:
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: The name of the SQL managed instance.
     description: ''
-  - isRequired: true
-    name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
-    description: ''
   optionalParameters:
+  - name: --admin-login-secret
+    summary: Name of the Kubernetes secret to generate that hosts or will host user admin login account credential.
+    description: ''
   - name: --agent-enabled
     summary: Enable SQL Server agent for the instance. Default is disabled. Allowed values are 'true' or 'false'.
     description: ''
   - name: --annotations
     summary: Comma-separated list of annotations of the SQL managed instance.
     description: ''
+  - name: --cert-private-key-file
+    summary: Path to the file containing a PEM formatted certificate private key to be used for SQL Server.
+    description: ''
+  - name: --cert-public-key-file
+    summary: Path to the file containing a PEM formatted certificate public key to be used for SQL Server.
+    description: ''
   - name: --collation
     summary: The SQL Server collation for the instance.
     description: ''
-  - name: --cores-limit
+  - name: --cores-limit -c
     summary: The cores limit of the managed instance as an integer.
     description: ''
   - name: --cores-request
@@ -82,14 +98,14 @@ directCommands:
   - name: --language
     summary: The SQL Server locale to any supported language identifier (LCID) for the instance.
     description: ''
-  - name: --license-type
+  - name: --license-type -l
     summary: 'The license type to apply for this managed instance. Allowed values are: BasePrice, LicenseIncluded. Default is LicenseIncluded. The license type cannot be changed.'
     description: ''
-  - name: --memory-limit
-    summary: The limit of the capacity of the managed instance as an integer.
+  - name: --memory-limit -m
+    summary: 'The limit of the capacity of the managed instance as an integer number followed by Gi (gigabytes). Example: 4Gi.'
     description: ''
   - name: --memory-request
-    summary: The request for the capcity of the managed instance as an integer amount of memory in GBs.
+    summary: 'The request for the capacity of the managed instance as an integer number followed by Gi (gigabytes). Example: 4Gi.'
     description: ''
   - name: --no-external-endpoint
     summary: If specified, no external service will be created. Otherwise, an external service will be created using the same service type as the data controller.
@@ -106,23 +122,35 @@ directCommands:
   - name: --service-annotations
     summary: Comma-separated list of annotations to apply to all external services.
     description: ''
+  - name: --service-cert-secret
+    summary: Name of the Kubernetes secret to generate that hosts or will host SQL service certificate.
+    description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
+    description: ''
+  - name: --storage-annotations
+    summary: Comma-separated list of annotations to apply to all PVCs.
     description: ''
   - name: --storage-class-backups
     summary: The storage class to be used for backups (/var/opt/mssql/backups). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
-  - name: --storage-class-data
-    summary: The storage class to be used for data (.mdf). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
+  - name: --storage-class-data -d
+    summary: The storage class to be used for data files (.mdf, .ndf). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
   - name: --storage-class-datalogs
     summary: The storage class to be used for database logs (.ldf). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
-  - name: --storage-class-logs
+  - name: --storage-class-logs -g
     summary: The storage class to be used for logs (/var/log). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
-  - name: --tier
+  - name: --storage-labels
+    summary: Comma-separated list of labels to apply to all PVCs.
+    description: ''
+  - name: --tier -t
     summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
+    description: ''
+  - name: --time-zone
+    summary: The SQL Server time zone for the instance.
     description: ''
   - name: --trace-flags
     summary: Comma separated list of traceflags. No flags by default.
@@ -148,7 +176,8 @@ directCommands:
   description: ''
   syntax: >-
     az sql mi-arc delete --name
-                         [--namespace]
+                         [--k8s-namespace]
+                         [--use-k8s]
   examples:
   - summary: Delete a SQL managed instance.
     syntax: az sql mi-arc delete -n sqlmi1
@@ -158,8 +187,11 @@ directCommands:
     summary: The name of the SQL managed instance to be deleted.
     description: ''
   optionalParameters:
-  - name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_edit
   name: az sql mi-arc edit
@@ -172,15 +204,16 @@ directCommands:
                        [--cores-limit]
                        [--cores-request]
                        [--dev]
+                       [--k8s-namespace]
                        [--labels]
                        [--memory-limit]
                        [--memory-request]
-                       [--namespace]
                        [--no-wait]
                        [--path]
                        [--service-annotations]
                        [--service-labels]
                        [--trace-flags]
+                       [--use-k8s]
   examples:
   - summary: Edit the configuration of a SQL managed instance.
     syntax: az sql mi-arc edit --path ./spec.json -n sqlmi1
@@ -196,7 +229,7 @@ directCommands:
   - name: --annotations
     summary: Comma-separated list of annotations of the SQL managed instance.
     description: ''
-  - name: --cores-limit
+  - name: --cores-limit -c
     summary: The cores limit of the managed instance as an integer.
     description: ''
   - name: --cores-request
@@ -205,17 +238,17 @@ directCommands:
   - name: --dev
     summary: If this is specified, then it is considered a dev instance and will not be billed for.
     description: ''
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
   - name: --labels
     summary: Comma-separated list of labels of the SQL managed instance.
     description: ''
-  - name: --memory-limit
-    summary: The limit of the capacity of the managed instance as an integer.
+  - name: --memory-limit -m
+    summary: 'The limit of the capacity of the managed instance as an integer number followed by Gi (gigabytes). Example: 4Gi.'
     description: ''
   - name: --memory-request
-    summary: The request for the capcity of the managed instance as an integer amount of memory in GBs.
-    description: ''
-  - name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    summary: 'The request for the capacity of the managed instance as an integer number followed by Gi (gigabytes). Example: 4Gi.'
     description: ''
   - name: --no-wait
     summary: If given, the command will not wait for the instance to be in a ready state before returning.
@@ -232,17 +265,53 @@ directCommands:
   - name: --trace-flags
     summary: Comma separated list of traceflags. No flags by default.
     description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+- uid: az_sql_mi-arc_get-mirroring-cert
+  name: az sql mi-arc get-mirroring-cert
+  summary: Retrieve certificate of availability group mirroring endpoint from sql mi and store in a file.
+  description: ''
+  syntax: >-
+    az sql mi-arc get-mirroring-cert --cert-file
+                                     --name
+                                     [--k8s-namespace]
+                                     [--use-k8s]
+  examples:
+  - summary: Retrieve certificate of availability group mirroring endpoint from sqlmi1 and store in file fileName1
+    syntax: az sql mi-arc get-mirroring-cert -n sqlmi1 --cert-file fileName1
+  requiredParameters:
+  - isRequired: true
+    name: --cert-file
+    summary: The local filename to store the retrieved certificate in PEM format.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the SQL managed instance.
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
 - uid: az_sql_mi-arc_list
   name: az sql mi-arc list
   summary: List SQL managed instances.
   description: ''
-  syntax: az sql mi-arc list [--namespace]
+  syntax: >-
+    az sql mi-arc list [--k8s-namespace]
+                       [--use-k8s]
   examples:
   - summary: List SQL managed instances.
     syntax: az sql mi-arc list
   optionalParameters:
-  - name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instances exist. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_show
   name: az sql mi-arc show
@@ -250,8 +319,9 @@ directCommands:
   description: ''
   syntax: >-
     az sql mi-arc show --name
-                       [--namespace]
+                       [--k8s-namespace]
                        [--path]
+                       [--use-k8s]
   examples:
   - summary: Show the details of a SQL managed instance.
     syntax: az sql mi-arc show -n sqlmi1
@@ -261,11 +331,14 @@ directCommands:
     summary: The name of the SQL managed instance to be shown.
     description: ''
   optionalParameters:
-  - name: --namespace -s
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
   - name: --path -p
     summary: A path where the full specification for the SQL managed instance should be written. If omitted, the specification will be written to standard output.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 commands:
 - az_sql_mi-arc_config
@@ -275,10 +348,15 @@ commands:
 - az_sql_mi-arc_config_remove
 - az_sql_mi-arc_config_replace
 - az_sql_mi-arc_create
+- az_sql_mi-arc_dag
+- az_sql_mi-arc_dag_create
+- az_sql_mi-arc_dag_delete
+- az_sql_mi-arc_dag_get
 - az_sql_mi-arc_delete
 - az_sql_mi-arc_edit
 - az_sql_mi-arc_endpoint
 - az_sql_mi-arc_endpoint_list
+- az_sql_mi-arc_get-mirroring-cert
 - az_sql_mi-arc_list
 - az_sql_mi-arc_show
 globalParameters:
@@ -297,4 +375,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage SQL managed instances for Arc.
+  description: Manage Azure Arc-enabled SQL managed instances.

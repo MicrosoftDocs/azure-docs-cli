@@ -45,16 +45,16 @@ directCommands:
     az postgres flexible-server create [--address-prefixes]
                                        [--admin-password]
                                        [--admin-user]
-                                       [--assign-identity]
                                        [--backup-retention]
                                        [--database-name]
-                                       [--high-availability]
+                                       [--high-availability {Disabled, Enabled}]
                                        [--location]
                                        [--name]
                                        [--private-dns-zone]
                                        [--public-access]
                                        [--resource-group]
                                        [--sku-name]
+                                       [--standby-zone]
                                        [--storage-size]
                                        [--subnet]
                                        [--subnet-prefixes]
@@ -63,6 +63,7 @@ directCommands:
                                        [--tier]
                                        [--version]
                                        [--vnet]
+                                       [--yes]
                                        [--zone]
   examples:
   - summary: Create a PostgreSQL flexible server with default params ( resource group, location, servername, username, password ) with VNET enabled by default.
@@ -103,11 +104,8 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: hatefulkapi2
+    defaultValue: excitedpoultry2
     summary: Administrator username for the server. Once set, it cannot be changed.
-    description: ''
-  - name: --assign-identity
-    summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault. No need to enter extra argument.
     description: ''
   - name: --backup-retention
     defaultValue: "7"
@@ -118,7 +116,8 @@ directCommands:
     description: ''
   - name: --high-availability
     defaultValue: Disabled
-    summary: Enable or disable high availability feature.  Default value is Disabled. High availability can only be set during flexible server create time.
+    parameterValueGroup: Disabled, Enabled
+    summary: Enable or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -139,15 +138,18 @@ directCommands:
     defaultValue: Standard_D2s_v3
     summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_D4s_v3.'
     description: ''
+  - name: --standby-zone
+    summary: The availability zone information of the standby server when high availability is enabled.
+    description: ''
   - name: --storage-size
     defaultValue: "128"
     summary: The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
     description: ''
   - name: --subnet
-    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers provider. After delegation, this subnet cannot be used for any other type of Azure resources.
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
     description: ''
   - name: --subnet-prefixes
-    summary: The subnet IP address prefix to use when creating a new VNet in CIDR format. Default value is 10.0.0.0/24.
+    summary: The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -165,6 +167,9 @@ directCommands:
     description: ''
   - name: --vnet
     summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   - name: --zone -z
     summary: Availability zone into which to provision the resource.
@@ -278,7 +283,8 @@ directCommands:
   summary: Restart a flexible server.
   description: ''
   syntax: >-
-    az postgres flexible-server restart [--ids]
+    az postgres flexible-server restart [--failover]
+                                        [--ids]
                                         [--name]
                                         [--resource-group]
                                         [--subscription]
@@ -286,6 +292,9 @@ directCommands:
   - summary: Restart a flexible server.
     syntax: az postgres flexible-server restart --resource-group testGroup --name testServer
   optionalParameters:
+  - name: --failover
+    summary: 'Forced or planned failover for server restart operation. Allowed values: Forced, Planned.'
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -304,15 +313,18 @@ directCommands:
   description: ''
   syntax: >-
     az postgres flexible-server restore --source-server
+                                        [--address-prefixes]
                                         [--ids]
-                                        [--location]
                                         [--name]
                                         [--no-wait]
                                         [--private-dns-zone]
                                         [--resource-group]
                                         [--restore-time]
                                         [--subnet]
+                                        [--subnet-prefixes]
                                         [--subscription]
+                                        [--vnet]
+                                        [--yes]
                                         [--zone]
   examples:
   - summary: Restore 'testServer' to a specific point-in-time as a new server 'testServerNew'.
@@ -325,38 +337,47 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --source-server
-    summary: The name of the source server to restore from.
+    summary: The name or resource ID of the source server to restore from.
     description: ''
   optionalParameters:
+  - name: --address-prefixes
+    summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
   - name: --name -n
-    summary: The name of the new server that is created by the restore command.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --private-dns-zone
-    summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group if not provided by users.
+    summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2021-07-28T13:40:02+00:00
+    defaultValue: 2021-08-09T13:32:15+00:00
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00.
     description: ''
   - name: --subnet
-    summary: Resource ID of an existing subnet. Please note that the subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers if not already delegated. After delegation, this subnet cannot be used for any other type of Azure resources.
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
+    description: ''
+  - name: --subnet-prefixes
+    summary: The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --zone
+  - name: --vnet
+    summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone -z
     summary: Availability zone into which to provision the resource.
     description: ''
 - uid: az_postgres_flexible-server_show
@@ -405,22 +426,22 @@ directCommands:
   optionalParameters:
   - name: --admin-password -p
     defaultValue: '{password}'
-    summary: The login password of the administrator.
+    summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
     defaultValue: '{login}'
-    summary: The login username of the administrator.
+    summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --database-name -d
     defaultValue: '{database}'
-    summary: The name of the database.
+    summary: The name of the database to be created when provisioning the database server.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --server-name -s
     defaultValue: '{server}'
-    summary: Name of the server.
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -492,6 +513,7 @@ directCommands:
                                        [--resource-group]
                                        [--set]
                                        [--sku-name]
+                                       [--standby-zone]
                                        [--storage-size]
                                        [--subscription]
                                        [--tags]
@@ -518,7 +540,7 @@ directCommands:
     description: ''
   - name: --high-availability
     parameterValueGroup: Disabled, Enabled
-    summary: Enable or disable high availability feature.  Default value is Disabled.
+    summary: Enable or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -540,6 +562,9 @@ directCommands:
     description: ''
   - name: --sku-name
     summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_D4s_v3.'
+    description: ''
+  - name: --standby-zone
+    summary: The availability zone information of the standby server when high availability is enabled.
     description: ''
   - name: --storage-size
     summary: The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
