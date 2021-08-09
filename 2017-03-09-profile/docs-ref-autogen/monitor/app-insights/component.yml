@@ -8,28 +8,59 @@ extensionInformation: >-
 summary: Manage an Application Insights component or its subcomponents.
 description: ''
 directCommands:
+- uid: az_monitor_app-insights_component_connect-function
+  name: az monitor app-insights component connect-function
+  summary: Connect AI to an Azure function.
+  description: ''
+  syntax: >-
+    az monitor app-insights component connect-function --app
+                                                       --function
+                                                       --resource-group
+  examples:
+  - summary: Connect AI to an Azure function.
+    syntax: az monitor app-insights component connect-function -g myRG -a myAI --function myFunction
+  - summary: Connect AI to an Azure function using resource id.
+    syntax: az monitor app-insights component connect-function -g myRG -a myAI --function /subscriptions/mySub/resourceGroups/myRG/providers/Microsoft.Web/sites/myFunction
+  requiredParameters:
+  - isRequired: true
+    name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
+    description: ''
+  - isRequired: true
+    name: --function
+    summary: Name or resource id of the Azure function.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_monitor_app-insights_component_connect-webapp
   name: az monitor app-insights component connect-webapp
   summary: Connect AI to a web app.
   description: ''
   syntax: >-
-    az monitor app-insights component connect-webapp --name
+    az monitor app-insights component connect-webapp --app
                                                      --resource-group
+                                                     --web-app
                                                      [--enable-debugger {false, true}]
                                                      [--enable-profiler {false, true}]
   examples:
   - summary: Connect AI to a web app and enable both profiler and snapshot debugger for the web app.
-    syntax: az monitor app-insights component connect-webapp -g myRG -n myApp --enable-profiler --enable-snapshot-debugger
+    syntax: az monitor app-insights component connect-webapp -g myRG -a myAI --web-app myApp --enable-profiler --enable-snapshot-debugger
   - summary: Connect AI to a web app using resource id and enable profiler and disable snapshot debugger for the web app.
-    syntax: az monitor app-insights component connect-webapp --ids /subscriptions/mySub/resourceGroups/myRG/providers/Microsoft.Web/sites/myApp --enable-profiler --enable-snapshot-debugger false
+    syntax: az monitor app-insights component connect-webapp -g myRG -a myAI --web-app /subscriptions/mySub/resourceGroups/myRG/providers/Microsoft.Web/sites/myApp --enable-profiler --enable-snapshot-debugger false
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of the web app.
+    name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --web-app
+    summary: Name or resource id of the web app.
     description: ''
   optionalParameters:
   - name: --enable-debugger --enable-snapshot-debugger
@@ -207,6 +238,7 @@ commands:
 - az_monitor_app-insights_component_billing
 - az_monitor_app-insights_component_billing_show
 - az_monitor_app-insights_component_billing_update
+- az_monitor_app-insights_component_connect-function
 - az_monitor_app-insights_component_connect-webapp
 - az_monitor_app-insights_component_continues-export
 - az_monitor_app-insights_component_continues-export_create

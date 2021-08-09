@@ -299,6 +299,8 @@ directCommands:
     syntax: az vm create -n MyVm -g MyResourceGroup --image Centos --zone 1
   - summary: Create multiple VMs. In this example, 3 VMs are created. They are MyVm0, MyVm1, MyVm2.
     syntax: az vm create -n MyVm -g MyResourceGroup --image centos --count 3
+  - summary: Create a VM from shared gallery image.
+    syntax: az vm create -n MyVm -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -407,9 +409,9 @@ directCommands:
     summary: Name or ID of the dedicated host group that the VM will reside in. --host and --host-group can't be used together.
     description: ''
   - name: --image
-    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://docs.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.'
+    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. In addition, it also supports shared gallery image. This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://docs.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.'
     description: ''
-    valueFrom: az vm image list, az vm image show
+    valueFrom: az vm image list, az vm image show, az sig image-version show-shared
   - name: --license-type
     parameterValueGroup: None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server
     summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
@@ -1649,5 +1651,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/23/2021
+  ms.date: 07/30/2021
   description: Manage Linux or Windows virtual machines.

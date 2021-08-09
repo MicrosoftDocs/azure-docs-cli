@@ -9,13 +9,14 @@ directCommands:
   summary: Add a filter to a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature filter add --feature
-                                    --filter-name
+    az appconfig feature filter add --filter-name
                                     [--auth-mode {key, login}]
                                     [--connection-string]
                                     [--endpoint]
+                                    [--feature]
                                     [--filter-parameters]
                                     [--index]
+                                    [--key]
                                     [--label]
                                     [--name]
                                     [--subscription]
@@ -33,10 +34,6 @@ directCommands:
     syntax: az appconfig feature filter add -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters ArrayParam=[1,2,3]
   requiredParameters:
   - isRequired: true
-    name: --feature
-    summary: Name of the feature to which you want to add the filter.
-    description: ''
-  - isRequired: true
     name: --filter-name
     summary: Name of the filter to be added.
     description: ''
@@ -52,11 +49,17 @@ directCommands:
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
+  - name: --feature
+    summary: Name of the feature to which you want to add the filter. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
   - name: --filter-parameters
     summary: Space-separated filter parameters in 'name[=value]' format. The value must be an escaped JSON string.
     description: ''
   - name: --index
     summary: Zero-based index in the list of filters where you want to insert the new filter. If no index is specified or index is invalid, filter will be added to the end of the list.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, add to the feature flag with null label by default.
@@ -76,13 +79,14 @@ directCommands:
   summary: Delete a filter from a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature filter delete --feature
-                                       [--all]
+    az appconfig feature filter delete [--all]
                                        [--auth-mode {key, login}]
                                        [--connection-string]
                                        [--endpoint]
+                                       [--feature]
                                        [--filter-name]
                                        [--index]
+                                       [--key]
                                        [--label]
                                        [--name]
                                        [--subscription]
@@ -94,11 +98,6 @@ directCommands:
     syntax: az appconfig feature filter delete --feature color --filter-name MyFilter --index 2 --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx
   - summary: Delete all filters of a feature using App Configuration name without confirmation.
     syntax: az appconfig feature filter delete -n MyAppConfiguration --feature color --label MyLabel --all --yes
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Name of the feature from which you want to delete the filter.
-    description: ''
   optionalParameters:
   - name: --all
     summary: Delete all filters associated with a feature flag.
@@ -114,11 +113,17 @@ directCommands:
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
+  - name: --feature
+    summary: Name of the feature from which you want to delete the filter. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
   - name: --filter-name
     summary: Name of the filter to be deleted.
     description: ''
   - name: --index
     summary: Zero-based index of the filter to be deleted in case there are multiple instances with same filter name.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, delete from the feature flag with null label by default.
@@ -138,11 +143,12 @@ directCommands:
   summary: List all filters for a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature filter list --feature
-                                     [--all]
+    az appconfig feature filter list [--all]
                                      [--auth-mode {key, login}]
                                      [--connection-string]
                                      [--endpoint]
+                                     [--feature]
+                                     [--key]
                                      [--label]
                                      [--name]
                                      [--query-examples]
@@ -155,11 +161,6 @@ directCommands:
     syntax: az appconfig feature filter list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx  --feature color --top 150
   - summary: List all filters for feature flag 'color' using your 'az login' credentials.
     syntax: az appconfig feature filter list --endpoint https://myappconfiguration.azconfig.io --feature color --all --auth-mode login
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Name of the feature whose filters you want to be displayed.
-    description: ''
   optionalParameters:
   - name: --all
     summary: List all filters associated with a feature flag.
@@ -174,6 +175,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature whose filters you want to be displayed. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, display filters from the feature flag with null label by default.
@@ -196,12 +203,13 @@ directCommands:
   summary: Show filters of a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature filter show --feature
-                                     --filter-name
+    az appconfig feature filter show --filter-name
                                      [--auth-mode {key, login}]
                                      [--connection-string]
                                      [--endpoint]
+                                     [--feature]
                                      [--index]
+                                     [--key]
                                      [--label]
                                      [--name]
                                      [--query-examples]
@@ -212,10 +220,6 @@ directCommands:
   - summary: Show all instances of a feature filter when you have multiple filters with that same name.
     syntax: az appconfig feature filter show --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --filter-name MyFilter
   requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Name of the feature which contains the filter.
-    description: ''
   - isRequired: true
     name: --filter-name
     summary: Name of the filter to be displayed.
@@ -232,8 +236,14 @@ directCommands:
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
+  - name: --feature
+    summary: Name of the feature which contains the filter. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
   - name: --index
     summary: Zero-based index of the filter to be displayed in case there are multiple instances with same filter name.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, show the feature flag with null label by default.
@@ -270,5 +280,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/10/2021
+  ms.date: 07/29/2021
   description: Manage filters associated with feature flags stored in an App Configuration.
