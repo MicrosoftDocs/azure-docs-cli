@@ -9,10 +9,11 @@ directCommands:
   summary: Delete feature flag.
   description: ''
   syntax: >-
-    az appconfig feature delete --feature
-                                [--auth-mode {key, login}]
+    az appconfig feature delete [--auth-mode {key, login}]
                                 [--connection-string]
                                 [--endpoint]
+                                [--feature]
+                                [--key]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -24,11 +25,8 @@ directCommands:
     syntax: az appconfig feature delete --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label MyLabel
   - summary: Delete a feature using App Configuration endpoint and your 'az login' credentials.
     syntax: az appconfig feature delete --endpoint https://myappconfiguration.azconfig.io --feature color --auth-mode login
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Key of the feature to be deleted. Support star sign as filters, for instance \* means all key and abc\* means keys with abc as prefix. Comma separated keys are not supported. Please provide escaped string if your feature name contains comma.
-    description: ''
+  - summary: Delete a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature delete -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta --yes
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -40,6 +38,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature to be deleted. If the feature flag key is different from the default key, provide the `--key` argument instead. Support star sign as filters, for instance \* means all features and abc\* means features with abc as prefix. Comma separated features are not supported. Please provide escaped string if your feature name contains comma.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Support star sign as filters, for instance ".appconfig.featureflag/\*" means all features and ".appconfig.featureflag/abc\*" means features with abc as prefix. Comma separated features are not supported. Please provide escaped string if your feature name contains comma.
     description: ''
   - name: --label
     summary: If no label specified, delete the feature flag with null label by default. Support star sign as filters, for instance \* means all labels and abc\* means labels with abc as prefix.
@@ -59,10 +63,11 @@ directCommands:
   summary: Disable a feature flag to turn it OFF for use.
   description: ''
   syntax: >-
-    az appconfig feature disable --feature
-                                 [--auth-mode {key, login}]
+    az appconfig feature disable [--auth-mode {key, login}]
                                  [--connection-string]
                                  [--endpoint]
+                                 [--feature]
+                                 [--key]
                                  [--label]
                                  [--name]
                                  [--subscription]
@@ -72,11 +77,8 @@ directCommands:
     syntax: az appconfig feature disable -n MyAppConfiguration --feature color --label test
   - summary: Force disabling a feature using connection string.
     syntax: az appconfig feature disable --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label test --yes
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Key of the feature to be disabled.
-    description: ''
+  - summary: Disable a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature disable -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -88,6 +90,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature to be disabled. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, disable the feature flag with null label by default.
@@ -107,10 +115,11 @@ directCommands:
   summary: Enable a feature flag to turn it ON for use.
   description: ''
   syntax: >-
-    az appconfig feature enable --feature
-                                [--auth-mode {key, login}]
+    az appconfig feature enable [--auth-mode {key, login}]
                                 [--connection-string]
                                 [--endpoint]
+                                [--feature]
+                                [--key]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -120,11 +129,8 @@ directCommands:
     syntax: az appconfig feature enable -n MyAppConfiguration --feature color --label test
   - summary: Force enabling a feature using connection string.
     syntax: az appconfig feature enable --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label test --yes
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Key of the feature to be enabled.
-    description: ''
+  - summary: Enable a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature enable -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -136,6 +142,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature to be enabled. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, enable the feature flag with null label by default.
@@ -160,7 +172,8 @@ directCommands:
                               [--connection-string]
                               [--endpoint]
                               [--feature]
-                              [--fields {conditions, description, key, label, last_modified, locked, state}]
+                              [--fields {conditions, description, key, label, last_modified, locked, name, state}]
+                              [--key]
                               [--label]
                               [--name]
                               [--query-examples]
@@ -171,7 +184,7 @@ directCommands:
     syntax: az appconfig feature list -n MyAppConfiguration
   - summary: List all feature flags with null labels.
     syntax: az appconfig feature list -n MyAppConfiguration --label \0
-  - summary: List a specfic feature for any label start with v1. using connection string.
+  - summary: List a specific feature for any label start with v1. using connection string.
     syntax: az appconfig feature list --feature color --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --label v1.*
   - summary: List all features with any labels and query only key, state and conditions.
     syntax: az appconfig feature list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --fields key state conditions
@@ -179,6 +192,8 @@ directCommands:
     syntax: az appconfig feature list --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx  --top 150
   - summary: List feature flags with multiple labels.
     syntax: az appconfig feature list --label test,prod,\0 -n MyAppConfiguration
+  - summary: List all features starting with "MyApp1".
+    syntax: az appconfig feature list -n MyAppConfiguration --key .appconfig.featureflag/MyApp1*
   optionalParameters:
   - name: --all
     summary: List all feature flags.
@@ -195,11 +210,14 @@ directCommands:
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --feature
-    summary: Key of the feature to be listed. Support star sign as filters, for instance \* means all key and abc\* means keys with abc as prefix. Comma separated keys are not supported. Please provide escaped string if your feature name contains comma.
+    summary: Name of the feature to be listed. If the feature flag key is different from the default key, provide the `--key` argument instead. Support star sign as filters, for instance \* means all features and abc\* means features with abc as prefix. Comma separated features are not supported. Please provide escaped string if your feature name contains comma.
     description: ''
   - name: --fields
-    parameterValueGroup: conditions, description, key, label, last_modified, locked, state
+    parameterValueGroup: conditions, description, key, label, last_modified, locked, name, state
     summary: Customize output fields for Feature Flags.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Support star sign as filters, for instance ".appconfig.featureflag/\*" means all features and ".appconfig.featureflag/abc\*" means features with abc as prefix. Comma separated features are not supported. Please provide escaped string if your feature name contains comma.
     description: ''
   - name: --label
     summary: If no label specified, list all labels. Support star sign as filters, for instance \* means all labels and abc\* means labels with abc as prefix. Use '0' for null label.
@@ -222,10 +240,11 @@ directCommands:
   summary: Lock a feature flag to prohibit write operations.
   description: ''
   syntax: >-
-    az appconfig feature lock --feature
-                              [--auth-mode {key, login}]
+    az appconfig feature lock [--auth-mode {key, login}]
                               [--connection-string]
                               [--endpoint]
+                              [--feature]
+                              [--key]
                               [--label]
                               [--name]
                               [--subscription]
@@ -235,11 +254,8 @@ directCommands:
     syntax: az appconfig feature lock -n MyAppConfiguration --feature color --label test
   - summary: Force locking a feature using connection string.
     syntax: az appconfig feature lock --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label test --yes
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Key of the feature to be locked.
-    description: ''
+  - summary: Lock a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature lock -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -251,6 +267,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature to be locked. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, lock the feature flag with null label by default.
@@ -270,11 +292,12 @@ directCommands:
   summary: Set a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature set --feature
-                             [--auth-mode {key, login}]
+    az appconfig feature set [--auth-mode {key, login}]
                              [--connection-string]
                              [--description]
                              [--endpoint]
+                             [--feature]
+                             [--key]
                              [--label]
                              [--name]
                              [--subscription]
@@ -286,11 +309,8 @@ directCommands:
     syntax: az appconfig feature set --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --description "This is a colorful feature"
   - summary: Set a feature flag using your 'az login' credentials.
     syntax: az appconfig feature set --endpoint https://myappconfiguration.azconfig.io --feature color --label MyLabel --auth-mode login
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Name of the feature flag to be set. Only alphanumeric characters, '.', '-' and '_' are allowed.
-    description: ''
+  - summary: Set a feature flag with name "Beta" and custom key ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature set -n MyAppConfiguration --feature Beta --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -305,6 +325,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature flag to be set. Feature name cannot contain the '%' character.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, set the feature flag with null label by default.
@@ -324,11 +350,12 @@ directCommands:
   summary: Show all attributes of a feature flag.
   description: ''
   syntax: >-
-    az appconfig feature show --feature
-                              [--auth-mode {key, login}]
+    az appconfig feature show [--auth-mode {key, login}]
                               [--connection-string]
                               [--endpoint]
-                              [--fields {conditions, description, key, label, last_modified, locked, state}]
+                              [--feature]
+                              [--fields {conditions, description, key, label, last_modified, locked, name, state}]
+                              [--key]
                               [--label]
                               [--name]
                               [--query-examples]
@@ -340,11 +367,8 @@ directCommands:
     syntax: az appconfig feature show --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --fields key locked conditions state
   - summary: Show a feature flag using App Configuration endpoint and your 'az login' credentials.
     syntax: az appconfig feature show --endpoint https://myappconfiguration.azconfig.io --feature color --auth-mode login
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Name of the feature flag to be retrieved.
-    description: ''
+  - summary: Show a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature show -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -357,9 +381,15 @@ directCommands:
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
+  - name: --feature
+    summary: Name of the feature flag to be retrieved. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
   - name: --fields
-    parameterValueGroup: conditions, description, key, label, last_modified, locked, state
+    parameterValueGroup: conditions, description, key, label, last_modified, locked, name, state
     summary: Customize output fields for Feature Flags.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, show entry with null label. Filtering is not supported.
@@ -379,10 +409,11 @@ directCommands:
   summary: Unlock a feature to gain write operations.
   description: ''
   syntax: >-
-    az appconfig feature unlock --feature
-                                [--auth-mode {key, login}]
+    az appconfig feature unlock [--auth-mode {key, login}]
                                 [--connection-string]
                                 [--endpoint]
+                                [--feature]
+                                [--key]
                                 [--label]
                                 [--name]
                                 [--subscription]
@@ -392,11 +423,8 @@ directCommands:
     syntax: az appconfig feature unlock -n MyAppConfiguration --feature color --label test
   - summary: Force unlocking a feature using connection string.
     syntax: az appconfig feature unlock --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --feature color --label test --yes
-  requiredParameters:
-  - isRequired: true
-    name: --feature
-    summary: Key of the feature to be unlocked.
-    description: ''
+  - summary: Unlock a feature whose name is "Beta" but key is ".appconfig.featureflag/MyApp1:Beta".
+    syntax: az appconfig feature unlock -n MyAppConfiguration --key .appconfig.featureflag/MyApp1:Beta
   optionalParameters:
   - name: --auth-mode
     defaultValue: key
@@ -408,6 +436,12 @@ directCommands:
     description: ''
   - name: --endpoint
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature to be unlocked. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
     description: ''
   - name: --label
     summary: If no label specified, unlock the feature flag with null label by default.
@@ -453,5 +487,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/10/2021
+  ms.date: 07/29/2021
   description: Manage feature flags stored in an App Configuration.

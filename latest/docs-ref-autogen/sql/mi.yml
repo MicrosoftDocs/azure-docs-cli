@@ -324,9 +324,11 @@ directCommands:
                      [--resource-group]
                      [--set]
                      [--storage]
+                     [--subnet]
                      [--subscription]
                      [--tags]
                      [--user-assigned-identity-id]
+                     [--vnet-name]
   examples:
   - summary: Updates a mi with specified parameters and with identity
     syntax: az sql mi update -g mygroup -n myinstance -i -p mypassword --license-type mylicensetype --capacity vcorecapacity --storage storagesize
@@ -346,8 +348,10 @@ directCommands:
     syntax: az sql mi update -g mygroup -n myinstance -m SQL_Default
   - summary: Update a managed instance with User Managed Identies and Identity Type is SystemAssigned,UserAssigned.
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
-  - summary: Update a managed instance with User Managed Identies and Identity Type is UserAssigned.
+  - summary: Update a managed instance with User Managed Identies and Identity Type is UserAssigned
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
+  - summary: Move managed instance to another subnet
+    syntax: az sql mi update -g myResourceGroup -n myServer -i \ --subnet /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -420,6 +424,9 @@ directCommands:
   - name: --storage
     summary: The storage size of the managed instance. Storage size must be specified in increments of 32 GB.
     description: ''
+  - name: --subnet
+    summary: Name or ID of the subnet that allows access to an Azure Sql Managed Instance. If subnet name is provided, --vnet-name must be provided.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -428,6 +435,9 @@ directCommands:
     description: ''
   - name: --user-assigned-identity-id -a
     summary: Generate and assign an User Managed Identity(UMI) for this server.
+    description: ''
+  - name: --vnet-name
+    summary: The virtual network name.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
@@ -475,5 +485,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/26/2021
+  ms.date: 08/03/2021
   description: Manage SQL managed instances.
