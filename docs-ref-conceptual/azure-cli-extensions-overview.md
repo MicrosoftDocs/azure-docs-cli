@@ -4,7 +4,7 @@ description: Learn how to find, install, uninstall, and manage extensions with A
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/06/2020
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 

@@ -4,7 +4,7 @@ description: Learn the different authentication types for your Azure CLI login â
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/22/2019
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

@@ -4,7 +4,7 @@ description: Learn how to create and use service principals with the Azure CLI. 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/15/2019
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

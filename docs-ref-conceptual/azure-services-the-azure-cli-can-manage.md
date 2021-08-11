@@ -4,7 +4,7 @@ description: The Azure CLI can create and manage various Azure resources — vie
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/09/2021
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli

@@ -5,7 +5,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-supportability
 ms.topic: how-to
-ms.date: 02/12/2021
+ms.date: 08/01/2021
 ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
 keywords: azure support request, azure support, azure support ticket, support ticket management
 ---
