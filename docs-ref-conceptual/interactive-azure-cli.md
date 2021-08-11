@@ -4,7 +4,7 @@ description: Use the Azure CLI in interactive mode.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/09/2018
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

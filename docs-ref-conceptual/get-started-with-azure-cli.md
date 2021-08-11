@@ -4,7 +4,7 @@ description: Learn how to start using the Azure CLI by completing common command
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/30/2020
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 

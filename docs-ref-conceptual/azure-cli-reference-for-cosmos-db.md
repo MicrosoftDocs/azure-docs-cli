@@ -5,7 +5,7 @@ author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 04/30/2021
+ms.date: 08/01/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
