@@ -4,7 +4,7 @@ description: Learn about the latest updates to Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/03/2021
+ms.date: 08/17/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,6 +14,21 @@ ms.custom: devx-track-azurecli
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 17, 2021
+
+Version 2.27.1
+
+### ARM
+
+* Hotfix: Fix #19124: `az deployment what-if`: Handle unsupported and no effect change types
+
+### Batch
+
+Upgrade batch data-plane to [azure-batch 11.0.0](https://pypi.org/project/azure-batch/)
+Upgrade batch management-plane to [azure-batch-mgmt 16.0.0](https://pypi.org/project/azure-mgmt-batch/16.0.0/)
+`az batch location`: Add `list-skus` command to list SKUs available in a location
+`az batch account`: Add `outbound-endpoints` command to list outbound network dependencies
 
 ## August 03, 2021
 
