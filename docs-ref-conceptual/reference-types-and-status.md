@@ -4,7 +4,7 @@ description: An explanation of reference types and status
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/19/2020
+ms.date: 07/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
