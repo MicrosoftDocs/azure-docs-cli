@@ -5,7 +5,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 10/30/2020
+ms.date: 07/01/2021
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
