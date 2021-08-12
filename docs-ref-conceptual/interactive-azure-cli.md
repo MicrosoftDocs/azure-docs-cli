@@ -4,7 +4,7 @@ description: Use the Azure CLI in interactive mode.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/09/2018
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -28,15 +28,15 @@ If you're not already signed in to your account, use the `login` command.
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
 Turn descriptions and examples on or off using `F1`.
 
-![descriptions and examples](./media/interactive-azure-cli/descriptions-and-examples.png)
+![Descriptions and examples on/off](./media/interactive-azure-cli/descriptions-and-examples.png)
 
 You can turn the display of parameter defaults on or off using `F2`.
 
-![defaults](./media/interactive-azure-cli/defaults.png)
+![Display parameter default on/off](./media/interactive-azure-cli/defaults.png)
 
 `F3` toggles the display of some key gestures.
 
-![gestures](./media/interactive-azure-cli/gestures.png)
+![Key gestures toggle](./media/interactive-azure-cli/gestures.png)
 
 ## Scope
 
@@ -111,7 +111,7 @@ az>> #dir
 Some commands have lots of examples.
 You can scroll to the next page of examples using `CTRL-N` and the previous page using `CTRL-Y`.
 
-![examples](./media/interactive-azure-cli/examples.png)
+![Scroll to next page of examples](./media/interactive-azure-cli/examples.png)
 
 You can also look at a specific example using `::#`.
 

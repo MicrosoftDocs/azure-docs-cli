@@ -4,7 +4,7 @@ description: Learn how to install the Azure CLI beta version. This beta version 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/09/2021
+ms.date: 08/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
