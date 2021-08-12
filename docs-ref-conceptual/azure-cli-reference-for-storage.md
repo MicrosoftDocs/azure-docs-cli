@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI for Azure Storage
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Web Apps, and gives you the ability to manage Azure Web Apps from a command line.
+The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Storage, and gives you the ability to manage Azure Storage from a command line.
 
 The [Azure Storage](/azure/storage) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
