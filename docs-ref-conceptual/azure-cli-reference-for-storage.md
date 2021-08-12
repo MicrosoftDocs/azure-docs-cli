@@ -46,7 +46,7 @@ The references in this table are part of the [import-export](https://github.com/
 
 | Reference | Description | More information |
 |-|-|-|
-| [az storage account](/cli/azure/storage/account) | Manage storage accounts. | [Create a storage account](azure/storage/common/storage-account-create?tabs=azure-portal) |
+| [az storage account](/cli/azure/storage/account) | Manage storage accounts. | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli) |
 | [az storage account blob-inventory-policy](/cli/azure/storage/account/blob-inventory-policy) | Manage storage account blob inventory policy. | [Enable Azure Storage blob inventory reports](/azure/storage/blobs/blob-inventory-how-to?tabs=azure-cli) |
 | [az storage account blob-service-properties](/cli/azure/storage/account/blob-service-properties) | Manage the properties of a storage account's Blob service. | [Configure object replication for block blobs](/azure/storage/blobs/object-replication-configure?tabs=azure-cli) |
 | [az storage account encryption-scope](/cli/azure/storage/account/encryption-scope) | Manage the encryption scope for a storage account. | [Create and manage encryption scopes](/azure/storage/blobs/encryption-scope-manage?tabs=cli) |
