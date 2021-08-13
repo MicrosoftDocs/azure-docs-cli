@@ -17,14 +17,18 @@ directCommands:
                                       --name
                                       --resource-group
                                       --scopes
-                                      [--action]
+                                      [--action-groups]
+                                      [--auto-mitigate {false, true}]
+                                      [--check-ws-alerts-storage {false, true}]
                                       [--condition-query]
+                                      [--custom-properties]
                                       [--description]
                                       [--disabled {false, true}]
                                       [--evaluation-frequency]
                                       [--location]
                                       [--mad]
                                       [--severity]
+                                      [--skip-query-validation {false, true}]
                                       [--tags]
                                       [--target-resource-type]
                                       [--window-size]
@@ -60,16 +64,24 @@ directCommands:
     summary: Space-separated list of scopes the rule applies to. The resources specified in this parameter must be of the same type and exist in the same location.
     description: ''
   optionalParameters:
-  - name: --action -a
-    summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: >-
-      Usage:   --action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
-
-
-      Multiple action groups can be specified by using more than one `--action` argument.
+  - name: --action-groups
+    summary: Action Group resource Ids to invoke when the alert fires.
+    description: 'Usage:   --action-groups ACTION_GROUP_NAME_OR_ID [NAME_OR_ID,...].'
+  - name: --auto-mitigate
+    defaultValue: "1"
+    parameterValueGroup: false, true
+    summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
+    description: ''
+  - name: --check-ws-alerts-storage --cwas
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
+    description: ''
   - name: --condition-query
     summary: Query deteils to replace the placeholders in `--condition` argument.
     description: ''
+  - name: --custom-properties
+    summary: The properties of an alert payload.
+    description: 'Usage:   --custom-properties ALERT_PAYLOAD_PROPERTIES [KEY=VAL,KEY=VAL ...].'
   - name: --description
     summary: Free-text description of the rule.
     description: ''
@@ -85,12 +97,15 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --mad --mute-actions-duration
-    defaultValue: PT30M
     summary: Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired.
     description: ''
   - name: --severity
     defaultValue: "2"
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
+    description: ''
+  - name: --skip-query-validation
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether the provided query should be validated or not.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -155,10 +170,13 @@ directCommands:
   syntax: >-
     az monitor scheduled-query update --name
                                       --resource-group
-                                      [--action]
+                                      [--action-groups]
                                       [--add]
+                                      [--auto-mitigate {false, true}]
+                                      [--check-ws-alerts-storage {false, true}]
                                       [--condition]
                                       [--condition-query]
+                                      [--custom-properties]
                                       [--description]
                                       [--disabled {false, true}]
                                       [--evaluation-frequency]
@@ -167,7 +185,9 @@ directCommands:
                                       [--remove]
                                       [--set]
                                       [--severity]
+                                      [--skip-query-validation {false, true}]
                                       [--tags]
+                                      [--target-resource-type]
                                       [--window-size]
   requiredParameters:
   - isRequired: true
@@ -179,15 +199,19 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --action -a
-    summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: >-
-      Usage:   --action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
-
-
-      Multiple action groups can be specified by using more than one `--action` argument.
+  - name: --action-groups
+    summary: Action Group resource Ids to invoke when the alert fires.
+    description: 'Usage:   --action-groups ACTION_GROUP_NAME_OR_ID [NAME_OR_ID,...].'
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --auto-mitigate
+    parameterValueGroup: false, true
+    summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
+    description: ''
+  - name: --check-ws-alerts-storage --cwas
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
     description: ''
   - name: --condition
     summary: The condition which triggers the rule.
@@ -205,6 +229,9 @@ directCommands:
   - name: --condition-query
     summary: Query deteils to replace the placeholders in `--condition` argument.
     description: ''
+  - name: --custom-properties
+    summary: The properties of an alert payload.
+    description: 'Usage:   --custom-properties ALERT_PAYLOAD_PROPERTIES [KEY=VAL,KEY=VAL ...].'
   - name: --description
     summary: Free-text description of the rule.
     description: ''
@@ -230,8 +257,15 @@ directCommands:
   - name: --severity
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
     description: ''
+  - name: --skip-query-validation
+    parameterValueGroup: false, true
+    summary: The flag which indicates whether the provided query should be validated or not.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --target-resource-type --type
+    summary: The resource type of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
     description: ''
   - name: --window-size
     summary: Time over which to aggregate metrics in "##h##m##s" format.
