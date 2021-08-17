@@ -7,7 +7,7 @@ directCommands:
 - uid: az_batch_node_delete
   name: az batch node delete
   summary: Removes Compute Nodes from the specified Pool.
-  description: This operation can only run when the allocation state of the Pool is steady. When this operation runs, the allocation state changes from steady to resizing.
+  description: This operation can only run when the allocation state of the Pool is steady. When this operation runs, the allocation state changes from steady to resizing. Each request may remove up to 100 nodes.
   syntax: >-
     az batch node delete --pool-id
                          [--account-endpoint]
@@ -57,10 +57,10 @@ directCommands:
     summary: Determines what to do with a Compute Node and its running task(s) after it has been selected for deallocation. The default value is requeue.
     description: ''
   - name: --node-list
-    summary: Required. A list containing the IDs of the Compute Nodes to be removed from the specified Pool. Space-separated values.
+    summary: Required. A maximum of 100 nodes may be removed per request. Space-separated values.
     description: ''
   - name: --resize-timeout
-    summary: The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
+    summary: The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -140,7 +140,7 @@ directCommands:
     description: ''
   - name: --node-reboot-option
     parameterValueGroup: requeue, retaineddata, taskcompletion, terminate
-    summary: When to reboot the Compute Node and what to do with currently running Tasks. The default value is requeue.
+    summary: The default value is requeue.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -179,7 +179,7 @@ directCommands:
     description: ''
   - name: --node-reimage-option
     parameterValueGroup: requeue, retaineddata, taskcompletion, terminate
-    summary: When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue.
+    summary: The default value is requeue.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -268,5 +268,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/31/2021
+  ms.date: 08/07/2021
   description: Manage Batch compute nodes.

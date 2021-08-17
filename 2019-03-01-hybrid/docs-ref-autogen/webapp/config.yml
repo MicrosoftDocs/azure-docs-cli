@@ -38,8 +38,12 @@ directCommands:
   examples:
   - summary: turn on "alwaysOn"
     syntax: az webapp config set -g MyResourceGroup -n MyUniqueApp --always-on true
-  - summary: turn on "alwaysOn" through a json with content '{"alwaysOn", true}'
+  - summary: for non-PowerShell users, turn on "alwaysOn" through a json with content '{"alwaysOn", true}'
     syntax: "az webapp config set -g MyResourceGroup -n MyUniqueApp --generic-configurations '{\"alwaysOn\": true}'"
+  - summary: for PowerShell users, turn on "alwaysOn" through a json with content '{"alwaysOn", true}' (note the backslashes escaping the double quotes)
+    syntax: "az webapp config set -g MyResourceGroup -n MyUniqueApp --generic-configurations '{\\\"alwaysOn\\\": true}'"
+  - summary: for PowerShell users, set configuration through a JSON file (specified by file path) called params.json which is located in the current working directory
+    syntax: az webapp config set -g MyResourceGroup -n MyUniqueApp --generic-configurations "@.\params.json"
   optionalParameters:
   - name: --always-on
     parameterValueGroup: false, true
@@ -54,7 +58,7 @@ directCommands:
     summary: Set the Ftps state value for an app. Default value is 'AllAllowed'.
     description: ''
   - name: --generic-configurations
-    summary: Provide site configuration list in a format of either `key=value` pair or `@<json_file>`.
+    summary: 'Provide site configuration list in a format of either `key=value` pair or `@<json_file>`. PowerShell users should be sure to use escape characters like so: `{"key": value}`, instead of: `{"key": value}`.'
     description: ''
   - name: --http20-enabled
     parameterValueGroup: false, true
