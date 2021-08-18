@@ -75,21 +75,22 @@ The references in this table are part of the [import-export](https://github.com/
 
 ## Storage blobs
 
-Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) extension.
+Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) or [storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) extension.
 
 | Reference | Description | Extension? | More information |
 |-|-|-|-|
 | [az storage blob](/cli/azure/storage/blob) | Manage object storage for unstructured data (blobs). | | [Quickstart: Create, download, and list blobs with Azure CLI](/azure/storage/blobs/storage-quickstart-blobs-cli) |
-| [az storage blob access](/cli/azure/storage/blob/access) | Manage the access control properties of a blob when Hierarchical Namespace is enabled. | Yes | [Access control lists (ACLs) in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-access-control) |
+| [az storage blob access](/cli/azure/storage/blob/access) | Manage the access control properties of a blob when Hierarchical Namespace is enabled. | storage-preview | [Access control lists (ACLs) in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-access-control) |
 | [az storage blob copy](/cli/azure/storage/blob/copy) | Manage blob copy operations. | | [Move Azure storage blobs from the command line with the Azure CLI](/learn/modules/copy-blobs-from-command-line-and-code/4-exercise-move-blobs-using-cli) |
-| [az storage blob directory](/cli/azure/storage/blob/directory) | Manage blob directories in a storage account container. | Yes | [Quickstart: Create, download, and list blobs with Azure CLI](/azure/storage/blobs/storage-quickstart-blobs-cli) |
-| [az storage blob directory access](/cli/azure/storage/blob/directory/access) | Manage the access control properties of a directory when Hierarchical Namespace is enabled. | Yes | [Access control lists (ACLs) in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-access-control) |
-| [az storage blob directory metadata](/cli/azure/storage/blob/directory/metadata) | Manage directory metadata. | Yes | [View blob properties and metadata using Azure tools and code](/learn/modules/organize-blobs-properties-metadata/3-view-blob-properties-and-metadata-using-azure-tools-and-code) |
+| [az storage blob directory](/cli/azure/storage/blob/directory) | Manage blob directories in a storage account container. | storage-preview | [Quickstart: Create, download, and list blobs with Azure CLI](/azure/storage/blobs/storage-quickstart-blobs-cli) |
+| [az storage blob directory access](/cli/azure/storage/blob/directory/access) | Manage the access control properties of a directory when Hierarchical Namespace is enabled. | storage-preview | [Access control lists (ACLs) in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-access-control) |
+| [az storage blob directory metadata](/cli/azure/storage/blob/directory/metadata) | Manage directory metadata. | storage-preview | [View blob properties and metadata using Azure tools and code](/learn/modules/organize-blobs-properties-metadata/3-view-blob-properties-and-metadata-using-azure-tools-and-code) |
 | [az storage blob incremental-copy](/cli/azure/storage/blob/incremental-copy) | Manage blob incremental copy operations. | | [Move Azure storage blobs from the command line with the Azure CLI](/learn/modules/copy-blobs-from-command-line-and-code/4-exercise-move-blobs-using-cli) |
 | [az storage blob lease](/cli/azure/storage/blob/lease) | Manage storage blob leases. | | [Managing Concurrency in Blob storage](/azure/storage/blobs/concurrency-manage) |
 | [az storage blob metadata](/cli/azure/storage/blob/metadata) | Manage blob metadata. | | [View blob properties and metadata using Azure tools and code](/learn/modules/organize-blobs-properties-metadata/3-view-blob-properties-and-metadata-using-azure-tools-and-code) |
 | [az storage blob service-properties](/cli/azure/storage/blob/service-properties) | Manage storage blob service properties. | | [Deploy a static website to blob storage](/learn/modules/create-cdn-static-resources-blob-storage/1b-exercise-deploy-a-website) |
 | [az storage blob service-properties delete-policy](/cli/azure/storage/blob/service-properties/delete-policy) | Manage storage blob delete-policy service properties. | | [Deploy a static website to blob storage](/learn/modules/create-cdn-static-resources-blob-storage/1b-exercise-deploy-a-website) |
+| [az storage blob tag](/cli/azure/storage/blob/tag) | Manage storage blob tags. | storage-blob-preview | |
 
 ## Storage containers
 
@@ -120,15 +121,18 @@ Some references in this table are part of the [storage-preview](https://github.c
 
 ## Storage file systems
 
-| Reference | Description | More information |
-|-|-|-|
-| [az storage fs](/cli/azure/storage/fs) | Manage file systems in an Azure Data Lake Storage Gen2 account. | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
-| [az storage fs access](/cli/azure/storage/fs/access) | Manage file system access and permissions for an Azure Data Lake Storage Gen2 account. | [Use Azure CLI to manage ACLs in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-acl-cli) |
-| [az storage fs directory](/cli/azure/storage/fs/directory) | Manage directories in an Azure Data Lake Storage Gen2 account. | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
-| [az storage fs directory metadata](/cli/azure/storage/fs/directory/metadata) | Manage the metadata for a directory in the file system. | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
-| [az storage fs file](/cli/azure/storage/fs/file) | Manage files in an Azure Data Lake Storage Gen2 account. | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
-| [az storage fs file metadata](/cli/azure/storage/fs/file/metadata) | Manage the metadata for files in the file system. | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
-| [az storage fs metadata](/cli/azure/storage/fs/metadata) | Manage the metadata for the file system. | [Manage blob properties and metadata with .NET](/azure/storage/blobs/storage-blob-properties-metadata) |
+Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) extension.
+
+| Reference | Description | Extension? | More information |
+|-|-|-|-|
+| [az storage fs](/cli/azure/storage/fs) | Manage file systems in an Azure Data Lake Storage Gen2 account. | | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
+| [az storage fs access](/cli/azure/storage/fs/access) | Manage file system access and permissions for an Azure Data Lake Storage Gen2 account. | | [Use Azure CLI to manage ACLs in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-acl-cli) |
+| [az storage fs directory](/cli/azure/storage/fs/directory) | Manage directories in an Azure Data Lake Storage Gen2 account. | | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
+| [az storage fs directory metadata](/cli/azure/storage/fs/directory/metadata) | Manage the metadata for a directory in the file system. | | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
+| [az storage fs file](/cli/azure/storage/fs/file) | Manage files in an Azure Data Lake Storage Gen2 account. | | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
+| [az storage fs file metadata](/cli/azure/storage/fs/file/metadata) | Manage the metadata for files in the file system. | | [Use Azure CLI to manage directories and files in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli) |
+| [az storage fs metadata](/cli/azure/storage/fs/metadata) | Manage the metadata for the file system. | | [Manage blob properties and metadata with .NET](/azure/storage/blobs/storage-blob-properties-metadata) |
+| [az storage fs service-properties](/cli/azure/storage/fs/service-properties) | Manage the properties of a storage account's Azure Data Lake Storage Gen2 service. | storage-preview |  |
 
 ## Storage queues
 
@@ -140,20 +144,24 @@ Some references in this table are part of the [storage-preview](https://github.c
 
 ## Additional storage references
 
-| Reference | Description | More information |
-|-|-|-|
-| [az snapshot](/cli/azure/snapshot) | Manage point-in-time copies of managed disks, native blobs, or other snapshots. | [Create a snapshot using the portal or Azure CLI](/azure/virtual-machines/linux/snapshot-copy-managed-disk) |
-| [az storage container-rm](/cli/azure/storage/container-rm) | Manage Azure containers using the `Microsoft.Storage` resource provider. | [Manage container properties and metadata with .NET](/azure/storage/blobs/storage-blob-container-properties-metadata) |
-| [az storage cors](/cli/azure/storage/cors) | Manage storage service Cross-Origin Resource Sharing (CORS). | [Enable CORS for your Azure Storage Services using the Azure CLI](/learn/modules/set-up-cors-website-storage/5-enabling-cors-for-your-azure-storage-services-using-the-azure-cli) |
-| [az storage directory](/cli/azure/storage/directory) | Manage file storage directories. | [Quickstart: Create and manage Azure file shares using Azure CLI](/azure/storage/files/storage-how-to-use-files-cli) |
-| [az storage directory metadata](/cli/azure/storage/directory/metadata) | Manage file storage directory metadata. | [Quickstart: Create and manage Azure file shares using Azure CLI](/azure/storage/files/storage-how-to-use-files-cli) |
-| [az storage entity](/cli/azure/storage/entity) | Manage table storage entities. | [What is Azure Table storage ?](/azure/storage/tables/table-storage-overview) |
-| [az storage logging](/cli/azure/storage/logging) | Manage storage service logging information. | [Azure Storage analytics logging](/azure/storage/common/storage-analytics-logging) |
-| [az storage message](/cli/azure/storage/message) | Manage queue storage messages. | [Work with Azure Queue Storage queues](/azure/storage/queues/storage-tutorial-queues) |
-| [az storage metrics](/cli/azure/storage/metrics) | Manage storage service metrics. | [Monitoring Azure Blob Storage](/azure/storage/blobs/monitor-blob-storage) |
-| [az storage share-rm](/cli/azure/storage/share-rm) | Manage Azure file shares with the `Microsoft.Storage` resource provider. | [How to create an NFS share](/azure/storage/files/storage-files-how-to-create-nfs-shares?tabs=azure-cli) |
-| [az storage table](/cli/azure/storage/table) | Manage NoSQL key-value storage. | [Set up a function app in Azure Functions](/learn/modules/send-crop-weather-alerts/6-deploy-azure-function-app) |
-| [az storage table policy](/cli/azure/storage/table/policy) | Manage the shared access policies of a storage table. | [Create a stored access policy with .NET](/azure/storage/common/storage-stored-access-policy-define-dotnet) |
+Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) extension.
+
+| Reference | Description | Extension? | More information |
+|-|-|-|-|
+| [az snapshot](/cli/azure/snapshot) | Manage point-in-time copies of managed disks, native blobs, or other snapshots. | | [Create a snapshot using the portal or Azure CLI](/azure/virtual-machines/linux/snapshot-copy-managed-disk) |
+| [az storage azcopy](/cli/azure/storage/azcopy) | Manage storage operations with the `AzCopy` utility. | storage-preview | [Transcribe audio files](/learn/modules/intro-to-batch-transcription/3-exercise-transcribe-audio-files) |
+| [az storage azcopy blob](/cli/azure/storage/azcopy/blob) | Manage object storage for blobs with the `AzCopy` utility. | storage-preview | [Transcribe audio files](/learn/modules/intro-to-batch-transcription/3-exercise-transcribe-audio-files) |
+| [az storage container-rm](/cli/azure/storage/container-rm) | Manage Azure containers using the `Microsoft.Storage` resource provider. | | [Manage container properties and metadata with .NET](/azure/storage/blobs/storage-blob-container-properties-metadata) |
+| [az storage cors](/cli/azure/storage/cors) | Manage storage service Cross-Origin Resource Sharing (CORS). | | [Enable CORS for your Azure Storage Services using the Azure CLI](/learn/modules/set-up-cors-website-storage/5-enabling-cors-for-your-azure-storage-services-using-the-azure-cli) |
+| [az storage directory](/cli/azure/storage/directory) | Manage file storage directories. | | [Quickstart: Create and manage Azure file shares using Azure CLI](/azure/storage/files/storage-how-to-use-files-cli) |
+| [az storage directory metadata](/cli/azure/storage/directory/metadata) | Manage file storage directory metadata. | | [Quickstart: Create and manage Azure file shares using Azure CLI](/azure/storage/files/storage-how-to-use-files-cli) |
+| [az storage entity](/cli/azure/storage/entity) | Manage table storage entities. | | [What is Azure Table storage ?](/azure/storage/tables/table-storage-overview) |
+| [az storage logging](/cli/azure/storage/logging) | Manage storage service logging information. | | [Azure Storage analytics logging](/azure/storage/common/storage-analytics-logging) |
+| [az storage message](/cli/azure/storage/message) | Manage queue storage messages. | | [Work with Azure Queue Storage queues](/azure/storage/queues/storage-tutorial-queues) |
+| [az storage metrics](/cli/azure/storage/metrics) | Manage storage service metrics. | | [Monitoring Azure Blob Storage](/azure/storage/blobs/monitor-blob-storage) |
+| [az storage share-rm](/cli/azure/storage/share-rm) | Manage Azure file shares with the `Microsoft.Storage` resource provider. | | [How to create an NFS share](/azure/storage/files/storage-files-how-to-create-nfs-shares?tabs=azure-cli) |
+| [az storage table](/cli/azure/storage/table) | Manage NoSQL key-value storage. | | [Set up a function app in Azure Functions](/learn/modules/send-crop-weather-alerts/6-deploy-azure-function-app) |
+| [az storage table policy](/cli/azure/storage/table/policy) | Manage the shared access policies of a storage table. | | [Create a stored access policy with .NET](/azure/storage/common/storage-stored-access-policy-define-dotnet) |
 
 ## See also
 
