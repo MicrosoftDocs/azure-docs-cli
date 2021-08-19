@@ -1,15 +1,16 @@
 ---
-title: Azure CLI persisted parameter options
-description: How-to use Azure CLI persisted parameter to store reusable parameter values
+title: Persisted parameter options – Azure CLI | Microsoft Docs
+description: Learn how to use the Azure Command-Line Interface (CLI) persisted parameters to store reusable local persisted parameter values for Azure CLI commands.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 07/01/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure persisted parameters, persisted parameters
 ---
 
 # Azure CLI persisted parameter

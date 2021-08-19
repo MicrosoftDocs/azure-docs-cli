@@ -1,18 +1,21 @@
 ---
-title: Install the Azure CLI for Windows
-description: How to install the Azure CLI on Windows
+title: Install the Azure CLI for Windows | Microsoft Docs
+description: To install the Azure CLI on Windows, you must use an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 09/25/2020
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---
 
 # Install Azure CLI on Windows
+
+The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container. 
 
 For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
@@ -67,7 +70,7 @@ To learn more about different authentication methods, see [Sign in with Azure CL
 
 ## Troubleshooting
 
-Here are some common problems seen when installing on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing the Azure CLI on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Proxy blocks connection
 
@@ -105,7 +108,7 @@ Once on this screen type __Azure CLI__ into the program search bar. The program 
 
 ## Next Steps
 
-Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+Now that you've installed the Azure CLI on Windows, take a short tour of its features and common commands.
 
 > [!div class="nextstepaction"]
 > [Get started with the Azure CLI](get-started-with-azure-cli.md)

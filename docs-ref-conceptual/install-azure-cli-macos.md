@@ -1,17 +1,20 @@
 ---
-title: Install the Azure CLI for macOS
-description: How to install the Azure CLI on macOS
+title: Install the Azure CLI for macOS | Microsoft Docs
+description: Learn how to install and run the Azure CLI on macOS using the homebrew package manager. The Azure CLI has been tested on macOS versions 10.9 and later.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/25/2020
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 ---
 
 # Install Azure CLI on macOS
+
+The Azure Command-Line Interface (CLI) allows the execution of commands through a terminal using interactive command-line prompts or a script. You can install the Azure CLI locally on macOS computers. The Azure CLI on macOS allows the execution of various commands through a terminal using interactive command-line prompts or a script.
 
 For the macOS platform, you can install the Azure CLI with [homebrew package manager](https://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
@@ -23,7 +26,7 @@ installation of the CLI update to date. The CLI package has been tested on macOS
 Homebrew is the easiest way to manage your CLI install. It provides convenient ways to install, update, and uninstall.
 If you don't have homebrew available on your system, [install homebrew](https://docs.brew.sh/Installation.html) before continuing.
 
-You can install the CLI by updating your brew repository information, and then running the `install` command:
+You can install the Azure CLI on macOS by updating your brew repository information, and then running the `install` command:
 
 ```bash
 brew update && brew install azure-cli
@@ -112,7 +115,7 @@ For the manual installation instructions, see [Install Azure CLI on Linux manual
 
 ## Next Steps
 
-Now that you've installed the Azure CLI, take a short tour of its features and common commands.
+Now that you've installed the Azure CLI on macOS, take a short tour of its features and common commands.
 
 > [!div class="nextstepaction"]
 > [Get started with the Azure CLI](get-started-with-azure-cli.md)
