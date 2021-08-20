@@ -1,6 +1,6 @@
 ---
-title: Azure CLI release notes
-description: Learn about the latest updates to Azure CLI
+title: Azure CLI release notes | Microsoft Docs
+description: Learn about the latest updates to the Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess

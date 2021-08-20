@@ -1,6 +1,6 @@
 ---
-title: Azure CLI reference types
-description: An explanation of reference types and status
+title: Azure CLI reference types | Microsoft Docs
+description: Learn about the Azure CLI reference types, statuses and support levels
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
