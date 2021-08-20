@@ -97,10 +97,10 @@ When you provide a default value, that argument is no longer required by any com
 | | vm | string | The default VM name to use for `az vm` commands. |
 | | vmss | string | The default virtual machine scale set (VMSS) name to use for `az vmss` commands. |
 | | acr | string | The default container registry name to use for `az acr` commands. |
-| __storage__ | connection\_string | string | The default connection string to use for `az storage` commands. |
-| | account | string | The default account name to use for `az storage` commands. |
-| | key | string | The default account key to use for `az storage` commands. |
+| __storage__ | account | string | The default storage account name (e.g., **mystorageaccount** in https://mystorageaccount.blob.core.windows.net) to use for `az storage` data-plane commands (e.g., `az storage container list`). |
+| | key | string | The default access key to use for `az storage` commands. |
 | | sas\_token | string | The default SAS token to use for `az storage` commands. |
+| | connection\_string | string | The default connection string to use for `az storage` commands. |
 | __batchai__ | storage\_account | string | The default storage account to use for `az batchai` commands. |
 | | storage\_key | string | The default storage key to use for `az batchai` commands. |
 | __batch__ | account | string | The default Azure Batch account name to use for `az batch` commands. |
