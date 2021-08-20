@@ -1,19 +1,20 @@
 ---
-title: Manage Azure subscriptions with the Azure CLI
+title: How to manage Azure subscriptions – Azure CLI | Microsoft Docs
 description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI to manage your subscriptions, create management groups, and lock subscriptions.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/29/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: Azure subscriptions, manage azure subscriptions, azure management groups, azure cli set subscription, azure cli select subscription
 ---
 
-# Use Azure subscriptions with Azure CLI
+# How to manage Azure subscriptions with the Azure CLI
 
-You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
+The Azure CLI helps you manage your Azure subscription, create management groups, and lock subscriptions.  You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
 
 For detailed information on subscriptions, billing, and cost management, see the [billing and cost management documentation](/azure/billing/).
 
@@ -25,7 +26,7 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 * To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 * To learn how to sign in to a specific tenant, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
-## Commands in a subscription
+## Commands in an Azure subscription
 
 Many Azure CLI commands act within a subscription. You can always specify which subscription to work in by using the **subscription** parameter in your command. That parameter is optional. If you don't specify a subscription, the command uses your current, active subscription.
 
@@ -88,7 +89,7 @@ Your subscriptions have both a name and an ID, which is a GUID. You can use eith
 
 If you run the [az account list](/cli/azure/account#az_account_list) command again, the `IsDefault` column shows your current active subscription.
 
-## Create management groups
+## Create Azure management groups
 
 Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
 
@@ -127,7 +128,7 @@ az account management-group delete --name Contoso01
 
 Removing a subscription or deleting a management group doesn't delete or deactivate a subscription.
 
-## Set a subscription lock
+## Set an Azure subscription lock
 
 As an administrator, you may need to lock a subscription to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
 

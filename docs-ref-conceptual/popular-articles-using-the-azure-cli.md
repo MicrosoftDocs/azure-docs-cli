@@ -1,10 +1,10 @@
 ---
-title: Cross-service links for working with the Azure CLI
-description: Links to popular tutorials, quickstarts, samples, concepts, and how-to guides for services that work with Azure CLI.
+title: Find cross-service links for working with the Azure CLI | Microsoft Docs
+description: Find links to popular tutorials, quickstarts, samples, concepts, and how-to guides for services that work with Azure CLI.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/31/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli

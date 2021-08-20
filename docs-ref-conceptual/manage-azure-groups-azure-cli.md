@@ -1,19 +1,22 @@
 ---
-title: Manage Azure resource groups with Azure CLI
-description: Learn about Azure resource groups and using Azure CLI to manage your resrouce groups. Learn about persisted and default resource groups.
+title: How to manage Azure resource groups – Azure CLI | Microsoft Docs
+description: Learn how to manage Azure resource groups in the Azure CLI, a cross-platform tool to connect to Azure and execute administrative commands on Azure resources.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/15/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: Azure resource groups, resource group in azure
 ---
 
-# Working with resource groups in Azure CLI
+# How to manage Azure resource groups with the Azure CLI
 
 An Azure resource group is a container that holds related resources for an Azure solution. A resource group might contain storage, virtual machines, apps, dashboards, services, or almost anything you deal with in Azure.
+
+The Azure Command-Line Interface (CLI) allows you to create, persist, and set default Azure resource groups. The CLI will also allow you clean up resources after creating them. 
 
 ## Create a resource group
 

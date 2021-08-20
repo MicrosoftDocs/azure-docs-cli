@@ -4,7 +4,7 @@ description: The Azure CLI allows user configuration for various settings. Manag
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/30/2020 
+ms.date: 08/01/2021 
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
