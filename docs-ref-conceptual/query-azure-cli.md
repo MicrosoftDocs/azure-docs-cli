@@ -4,7 +4,7 @@ description: Learn how to perform JMESPath queries on the output of Azure CLI  c
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/23/2019
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

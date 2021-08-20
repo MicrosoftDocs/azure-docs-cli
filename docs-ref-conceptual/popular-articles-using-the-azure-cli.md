@@ -4,7 +4,7 @@ description: Find links to popular tutorials, quickstarts, samples, concepts, an
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/31/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli

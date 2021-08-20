@@ -4,7 +4,7 @@ description: Overview - Learn about the Azure CLI, a command-line tool designed 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/01/2021
+ms.date: 08/19/2021
 ms.topic: overview
 ms.service: azure-cli
 ms.devlang: azurecli 
