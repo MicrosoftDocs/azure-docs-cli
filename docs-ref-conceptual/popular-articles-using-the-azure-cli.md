@@ -10,6 +10,7 @@ ms.prod: azure
 ms.technology: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli
+keywords: 
 ---
 
 # Popular articles using the Azure CLI
