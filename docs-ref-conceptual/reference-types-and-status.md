@@ -1,5 +1,5 @@
 ---
-title: Azure CLI reference types | Microsoft Docs
+title: Reference types, status and support levels – Azure CLI | Microsoft Docs
 description: Learn about the Azure CLI reference types, statuses and support levels
 author: dbradish-microsoft
 ms.author: dbradish
@@ -8,7 +8,8 @@ ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, reference types, reference status
 ---
 
 # Overview: Azure CLI reference types and status
@@ -25,7 +26,7 @@ The Azure CLI syntax is a combination of references, commands, and parameters.  
 | Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az_network_application_gateway_create) | --name, --resource-group, --capacity
 | Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
 
-## Reference types
+## What are reference types?
 
 A reference type tells you if the reference command is part of the primary Azure CLI service, or if it is an optional add-on.  There are two types of Azure CLI reference commands: **core** and **extension**.
 
@@ -58,7 +59,7 @@ Extensions aren't shipped as part of the CLI but run as CLI commands.  Some exte
 
 You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
 
-## Reference status
+## What is reference status?
 
 Regardless of type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**.  It is the reference command status, not type, that determines stability and support level.
 

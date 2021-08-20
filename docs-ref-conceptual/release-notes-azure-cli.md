@@ -1,6 +1,6 @@
 ---
-title: Azure CLI release notes | Microsoft Docs
-description: Learn about the latest updates to the Azure CLI
+title: Release notes & updates – Azure CLI | Microsoft Docs
+description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -8,7 +8,8 @@ ms.date: 08/19/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
