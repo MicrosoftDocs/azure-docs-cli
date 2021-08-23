@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 08/23/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,6 +15,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## August 23, 2021
+
+Version 2.27.2
+
+### Cosmos DB
+
+* Hotfix: `az cosmosdb restore`: Fix the restore command for deleted accounts
 
 ## August 17, 2021
 
@@ -5788,13 +5796,13 @@ Version 2.0.42
 
 ## July 3, 2018
 
-**Version 2.0.41**
+### Version 2.0.41
 
 ### AKS
 
 * Changed monitoring to use subscription ID
 
-**Version 2.0.40**
+### Version 2.0.40
 
 ### Core
 
@@ -5960,13 +5968,13 @@ Version 2.0.38
 
 ## June 13, 2018
 
-**Version 2.0.37**
+### Version 2.0.37
 
 ### Core
 
 * Improved interactive telemetry
 
-**Version 2.0.36**
+### Version 2.0.36
 
 ### AKS
 
@@ -5982,13 +5990,13 @@ Version 2.0.38
 
 ## June 5, 2018
 
-**Version 2.0.35**
+### Version 2.0.35
 
 ### Interactive
 
 * Added limits to the dependencies of interactive mode
 
-**Version 2.0.34**
+### Version 2.0.34
 
 ### Core
 
