@@ -6,7 +6,7 @@ author: Duffney
 ms.author: jduffney
 ms.topic: quickstart
 ms.service: azure
-ms.date: 05/26/2021
+ms.date: 08/01/2021
 ms.custom: devx-track-azurecli, seo-azure-cli
 Keywords: azure command line tool, azure cli tools, azure cli vs powershell, azure cli powershell, powershell cli, azure cli vs cloud shell, shell environment
 ---

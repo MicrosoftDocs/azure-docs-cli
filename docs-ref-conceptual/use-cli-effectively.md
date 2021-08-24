@@ -1,10 +1,10 @@
 ---
-title: Use Azure CLI effectively
-description: This article provides tips for using Azure CLI effectively, such as output formats, passing parameter values, and quoting rules for different shells.
+title: Use Azure CLI effectively | Microsoft Docs
+description: Learn tips for using Azure CLI effectively, such as output formats, passing parameter values, and quoting rules for different shells.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/01/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

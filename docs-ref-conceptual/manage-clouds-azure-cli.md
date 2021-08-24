@@ -1,17 +1,18 @@
 ---
-title: Select clouds with the Azure CLI
-description: Create, sign in, and manage multiple clouds with the Azure CLI.
+title: Azure cloud management - Azure CLI | Microsoft Docs
+description: Create, sign in, and manage multiple clouds with the Azure CLI. Learn how to get information on clouds, change the current cloud, and register/unregister new clouds.
 author: dbradish-microsoft
 manager: barbkess
 ms.author: dbradish
-ms.date: 09/09/2018
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cloud management
 ---
 
-# Select clouds with the Azure CLI
+# Azure cloud management with the Azure CLI
 
 If you work across different regions or use [Azure Stack](/azure/azure-stack/user/), you may need to use more than one cloud. Microsoft provides clouds for compliance with regional laws, which are available for your use. This article shows you how to get information on clouds, change the current cloud, and register or unregister new clouds.
 

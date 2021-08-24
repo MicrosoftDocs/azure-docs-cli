@@ -1,15 +1,16 @@
 ---
-title: Tutorial on how to use persisted parameters with the Azure CLI
-description: Tutorial on using az config param-persist to store Azure CLI parameter values for repeated use
+title: Tutorial - how to use persisted parameters with the Azure CLI | Microsoft Docs
+description: Learn how to use az config param-persist and persisted parameters with the Azure CLI to store parameter values for repeated use and execute sequential commands.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
 ms.prod: azure
-ms.date: 07/01/2021
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.devlang: azurecli
 ms.technology: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: persisted parameter tutorial
 ---
 
 # Tutorial: Use persisted parameters to simplify sequential Azure CLI commands

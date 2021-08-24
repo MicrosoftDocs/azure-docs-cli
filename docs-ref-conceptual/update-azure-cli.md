@@ -1,10 +1,10 @@
 ---
-title: Update the Azure CLI
-description: Reference for the update of Azure CLI
+title: Update the Azure CLI | Microsoft Docs
+description: Learn how to update the update of Azure CLI
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/19/2020
+ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
