@@ -71,6 +71,7 @@ directCommands:
                   [--client-secret]
                   [--cluster-autoscaler-profile]
                   [--disable-local-accounts]
+                  [--disable-public-fqdn]
                   [--disable-rbac]
                   [--dns-name-prefix]
                   [--dns-service-ip]
@@ -89,7 +90,6 @@ directCommands:
                   [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
-                  [--enable-public-fqdn]
                   [--enable-rbac]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
@@ -269,6 +269,9 @@ directCommands:
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
     description: ''
+  - name: --disable-public-fqdn
+    summary: Disable public fqdn feature for private cluster.
+    description: ''
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
     description: ''
@@ -338,9 +341,6 @@ directCommands:
     description: ''
   - name: --enable-private-cluster
     summary: Enable private cluster.
-    description: ''
-  - name: --enable-public-fqdn
-    summary: (Preview) Enable public fqdn feature for private cluster.
     description: ''
   - name: --enable-rbac -r
     summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
@@ -691,7 +691,7 @@ directCommands:
     summary: Overwrite any existing cluster entry with the same name.
     description: ''
   - name: --public-fqdn
-    summary: (Preview) Get private cluster credential with server address to be public fqdn.
+    summary: Get private cluster credential with server address to be public fqdn.
     description: ''
   - name: --user -u
     defaultValue: clusterUser
@@ -900,8 +900,8 @@ directCommands:
     description: ''
 - uid: az_aks_start
   name: az aks start
-  summary: Start Managed Cluster.
-  description: Starts a Stopped Managed Cluster.
+  summary: Starts a previously stopped Managed Cluster.
+  description: See starting a cluster<target ids="starting-a-cluster" names="starting\ a\ cluster" refuri="https://docs.microsoft.com/azure/aks/start-stop-cluster"></target> for more details about starting a cluster.
   syntax: >-
     az aks start --name
                  --resource-group
@@ -921,8 +921,8 @@ directCommands:
     description: ''
 - uid: az_aks_stop
   name: az aks stop
-  summary: Stop Managed Cluster.
-  description: Stops a Running Managed Cluster.
+  summary: Stops a Managed Cluster.
+  description: This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See stopping a cluster<target ids="stopping-a-cluster" names="stopping\ a\ cluster" refuri="https://docs.microsoft.com/azure/aks/start-stop-cluster"></target> for more details about stopping a cluster.
   syntax: >-
     az aks stop --name
                 --resource-group
@@ -1095,7 +1095,7 @@ directCommands:
     summary: (PREVIEW) Disable pod security policy.
     description: ''
   - name: --disable-public-fqdn
-    summary: (Preview) Disable public fqdn feature for private cluster.
+    summary: Disable public fqdn feature for private cluster.
     description: ''
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
@@ -1128,7 +1128,7 @@ directCommands:
     summary: (PREVIEW) Enable pod security policy.
     description: ''
   - name: --enable-public-fqdn
-    summary: (Preview) Enable public fqdn feature for private cluster.
+    summary: Enable public fqdn feature for private cluster.
     description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
@@ -1327,9 +1327,6 @@ commands:
 - az_aks_app
 - az_aks_app_up
 - az_aks_browse
-- az_aks_command
-- az_aks_command_invoke
-- az_aks_command_result
 - az_aks_create
 - az_aks_disable-addons
 - az_aks_egress-endpoints
