@@ -35,7 +35,7 @@ az account show --output table
 # get access token for the default subscription
 az account get-access-token
 
-# get access toekn for a specific subscription
+# get access token for a specific subscription
 az account get-access-token --subscription "mySubscriptionName"
 ```
 
