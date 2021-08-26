@@ -137,8 +137,7 @@ For certificate stored in Key Vault, retrieve the certificate with its private k
 
 ```azurecli-interactive
 az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
-openssl pkcs12 -in /path/to/cert.pfx -nodes -out /path/to/cert.pem
-# Press ENTER as there is no password
+openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 ```
 
 ## Get an existing service principal
