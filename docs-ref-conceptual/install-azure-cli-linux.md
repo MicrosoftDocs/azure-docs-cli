@@ -45,6 +45,14 @@ When you are ready to install the Azure CLI on Linux, it is recommended to use a
 
 ::: zone-end
 
+## Remove Azure CLI data
+
+If you don't plan to reinstall Azure CLI, remove its data.
+
+```bash
+rm -rf ~/.azure
+```
+
 ## Next Steps
 
 Now that you've installed the Azure CLI, take a short tour of its features and common commands.
