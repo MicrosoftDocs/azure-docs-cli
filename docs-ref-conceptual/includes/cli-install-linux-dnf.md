@@ -42,7 +42,7 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
 3. Install with the `dnf install` command.
 
    ```bash
-   sudo yum install azure-cli
+   sudo dnf install azure-cli
    ```
  
 Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
