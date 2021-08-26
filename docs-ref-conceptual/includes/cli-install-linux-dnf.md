@@ -71,7 +71,7 @@ You can also do it step by step:
 First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
-$ sudo yum install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
+$ sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
 # build openssl from source
 $ cd ~
 $ wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
@@ -98,14 +98,25 @@ $ make
 $ sudo make install
 ```
 
-Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure CLI repository. You can now download the package and install it without dependency.
+Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure CLI repository. You can now download the package.
 
-> [!NOTE]
->
-> In case you don't have the dnf download plugin installed, you will encounter command not found error on executing the below code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
+#### Use `dnf`
 
 ```bash
+$ sudo dnf install 'dnf-command(download)'
 $ sudo dnf download azure-cli
+```
+
+#### Use `yum`
+
+```bash
+$ sudo yum install yum-utils -y
+$ sudo yumdownloader azure-cli
+```
+
+Then install the downloaded package without dependency.
+
+```bash
 $ sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
