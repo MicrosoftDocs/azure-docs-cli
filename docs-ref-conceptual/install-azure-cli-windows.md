@@ -106,6 +106,8 @@ You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninst
 
 Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.
 
+## Remove data
+
 If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<username>\.azure`.
 
 ## Next Steps

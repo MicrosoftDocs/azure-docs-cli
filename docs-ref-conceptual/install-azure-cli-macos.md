@@ -105,6 +105,8 @@ Use homebrew to uninstall the `azure-cli` package.
 brew uninstall azure-cli
 ```
 
+## Remove data
+
 If you don't plan to reinstall Azure CLI, remove its data.
 
 ```bash
