@@ -82,21 +82,25 @@ Access cloud compute capacity and scale on demand—and only pay for the resourc
 | Azure CLI references for service | Microsoft Docs
 |-|-|
 |[App Service](/cli/azure/service-page/azure%20app%20service) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
-|| [Configure App Service to deploy an image from the registry](/azure/app-service/tutorial-custom-container?pivots=container-linux#configure-app-service-to-deploy-the-image-from-the-registry)
-||[Upload image data in the cloud with Azure Storage](/azure/storage/blobs/storage-upload-process-images?tabs=dotnet%2Cazure-cli#create-an-app-service-plan)
-|[Azure Batch](/cli/azure/service-page/azure%20batch)
+| |[Configure App Service to deploy an image from the registry](/azure/app-service/tutorial-custom-container?pivots=container-linux#configure-app-service-to-deploy-the-image-from-the-registry)
+| |[Upload image data in the cloud with Azure Storage](/azure/storage/blobs/storage-upload-process-images?tabs=dotnet%2Cazure-cli#create-an-app-service-plan)
+|[Azure Batch](/cli/azure/service-page/azure%20batch) | [Run your first Batch job](/azure/batch/quick-create-cli)
 |[Azure Cloud Services](/cli/azure/service-page/azure%20cloud%20services%20(extended%20support))
-|[Azure Container Instances](/cli/azure/service-page/azure%20container%20instances)
-|[Azure Functions](/cli/azure/service-page/azure%20app%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
-|| [How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
-|[Azure Kubernetes Service (AKS)](/cli/azure/service-page/azure%20kubernetes%20service%20(aks)) | xxx
-|[Azure Service Fabric](/cli/azure/service-page/azure%20service%20fabric) | xxx
-|[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | xxx
-|[Azure Static Web Apps](/cli/azure/staticwebapp) | xxx
-|[Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines) | xxx
-|[Azure Virtual Machine Scale Sets (VMSS)](/cli/azure/vmss) | xxx
-|[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solutions) | xxx
-|[Azure Web Apps](/rest/api/appservice/webapps) | xxx
+|[Azure Container Instances](/cli/azure/service-page/azure%20container%20instances)| [Deploy a container instance in Azure](/azure/container-instances/container-instances-quickstart)
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+| |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
+|[Azure Kubernetes Service (AKS)](/cli/azure/service-page/azure%20kubernetes%20service%20(aks)) | [Deploy an AKS cluster](/azure/aks/kubernetes-walkthrough)
+| |[Create and manage multiple node pools for a cluster in AKS](/azure/aks/use-multiple-node-pools)
+|[Azure Service Fabric](/cli/azure/service-page/azure%20service%20fabric) | [Deploy Linux containers to Service Fabric](/azure/service-fabric/service-fabric-quickstart-containers-linux#create-a-service-fabric-cluster)
+| |[Create a Service Fabric cluster](/azure/service-fabric/service-fabric-cluster-creation-via-arm)
+|[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | [Read a secret from Azure Key Vault in a Spring Boot application](/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault#deploy-to-azure-spring-cloud)
+|[Azure Static Web Apps](/cli/azure/staticwebapp) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
+|[Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
+| |[Create a Windows VM](/azure/virtual-machines/windows/quick-create-cli)
+|[Azure Virtual Machine Scale Sets (VMSS)](/cli/azure/vmss) | [Create a Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli#vmss)
+|[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solutions) | [Attach disk pools to Azure VMware Solution hosts](/azure/azure-vmware/attach-disk-pools-to-azure-vmware-solution-hosts)
+|[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
+| |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
 
 ## Containers
 
@@ -104,14 +108,18 @@ Develop and manage your containerized applications faster with integrated tools.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Functions](/azure/azure-functions/) | xxx
-|[Azure Kubernetes Service (AKS)](/azure/aks/) | xxx
-|[Azure Red Hat OpenShift](/azure/openshift/) | xxx
-|[Azure Service Fabric](/azure/service-fabric/) | xxx
-|[Azure Web Apps](/rest/api/appservice/webapps) | xxx
-|[Container Instances](/azure/container-instances/) | xxx
-|[Container Registry](/azure/container-registry/) | xxx
-|[Service Fabric](/azure/service-fabric/) | xxx
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+| |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
+|[Azure Kubernetes Service (AKS)](/cli/azure/service-page/azure%20kubernetes%20service%20(aks)) | [Deploy an AKS cluster](/azure/aks/kubernetes-walkthrough)
+| |[Create and manage multiple node pools for a cluster in AKS](/azure/aks/use-multiple-node-pools)
+|[Azure Red Hat OpenShift](/cli/azure/service-page/azure%20red%20hat%20openshift) | [Create an Azure Red Hat OpenShift 4 cluster](/azure/openshift/tutorial-create-cluster)
+|[Azure Service Fabric](/cli/azure/service-page/azure%20service%20fabric) | [Deploy Linux containers to Service Fabric](/azure/service-fabric/service-fabric-quickstart-containers-linux#create-a-service-fabric-cluster)
+| |[Create a Service Fabric cluster](/azure/service-fabric/service-fabric-cluster-creation-via-arm)
+|[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
+| |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
+|[Container Instances](/cli/azure/service-page/azure%20container%20instances) | [Deploy a container instance in Azure](/azure/container-instances/container-instances-quickstart)
+|[Container Registry](/cli/azure/service-page/azure%20container%20registries) | [Frequently asked questions](/azure/container-registry/container-registry-faq)
+| |[Connect privately to an Azure container registry using Azure Private Link](/azure/container-registry/container-registry-private-link#set-up-private-endpoint---cli)
 
 ## Databases
 
@@ -119,14 +127,15 @@ Support rapid growth and innovate faster with secure, enterprise-grade, and full
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure API for FHIR](/azure/healthcare-apis/overview) | xxx
-|[Azure Cache for Redis](/azure/azure-cache-for-redis/) | xxx
-|[Azure Cosmos DB](/azure/cosmos-db/) | xxx
-|[Azure Data Migration](/azure/dms/) | xxx
-|[Azure Database for MariaDB](/azure/mariadb/) | xxx
-|[Azure Database for MySQL](/azure/mysql/) | xxx
-|[Azure Database for PostgreSQL](/azure/postgresql/) | xxx
-|[Azure SQL Database](/azure/sql-database/) | xxx
+|[Azure API for FHIR](/cli/azure/service-page/azure%20api%20for%20fhi) | [Configure customer-managed keys at rest](/azure/healthcare-apis/azure-api-for-fhir/customer-managed-key#using-azure-cli)
+|[Azure Cache for Redis](/cli/azure/service-page/azure%20cache%20for%20redis) | [Connect an App Service app to an Azure Cache for Redis](/azure/app-service/scripts/cli-connect-to-redis)
+|[Azure Cosmos DB](/cli/azure/azure-cli-reference-for-cosmos-db) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
+|[Azure Data Migration](/cli/azure/service-page/azure%20data%20migration) | [Migrate PostgreSQL to Azure DB](/azure/dms/tutorial-postgresql-azure-postgresql-online#provisioning-an-instance-of-dms-using-the-azure-cli)
+|[Azure Database for MariaDB](/cli/azure/service-page/azure%20database%20for%20mariadb) | [Create an Azure Database for MariaDB server](/azure/mariadb/quickstart-create-mariadb-server-database-using-azure-cli)
+|[Azure Database for MySQL](/cli/azure/service-page/azure%20database%20for%20mysql) | [Create a MySQL Flexible Server](/azure/mysql/flexible-server/tutorial-php-database-app#create-a-mysql-flexible-server-preview)
+|[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Create an Azure Database for PostgreSQL server](/azure/postgresql/quickstart-create-server-database-azure-cli)
+|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql?view=azure-cli-latest#sql-database) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
+| |[Manage server-level IP firewall rules](/azure/azure-sql/database/firewall-configure#use-cli-to-manage-server-level-ip-firewall-rules)
 
 ## Developer Tools
 
