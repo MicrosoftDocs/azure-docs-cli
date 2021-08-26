@@ -85,8 +85,14 @@ directCommands:
           --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init'
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
-  - summary: Create a Linux VM scale set from a specialized image version.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image $id --specialized
+  - summary: Create a VMSS from a generalized gallery image version.
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0
+  - summary: Create a VMSS from a specialized gallery image version.
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
+  - summary: Create a VMSS from the latest version of a gallery image
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
+  - summary: Create a VMSS from a gallery image shared directly to your subscription or tenant.
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /sharedgalleries/theGalleryUniqueName/images/theImage/versions/1.0.0
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax: >-
       az keyvault certificate create --vault-name vaultname -n cert1 \
@@ -106,6 +112,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM scaleset with both system and user assigned identity.
     syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a VMSS that supports SpotRestore.
+    syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1001,5 +1009,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/30/2021
+  ms.date: 08/20/2021
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
