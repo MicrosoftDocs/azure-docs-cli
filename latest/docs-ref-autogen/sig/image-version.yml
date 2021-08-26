@@ -33,51 +33,181 @@ directCommands:
                                 [--target-region-encryption]
                                 [--target-regions]
   examples:
-  - summary: Add a new image version from a managed image
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/images/MyManagedImage
   - summary: Add a new image version from a virtual machine
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
-  - summary: Add a new image version from another image version
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
-  - summary: Add a new image version from a snapshot of an OS disk.
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyOsDiskSnapshot
-  - summary: Add a new image version from a snapshot of an OS disk and add additional data disks
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyOsDiskSnapshot --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyDiskSnapshot --data-snapshot-luns 0
-  - summary: Add a new image version from a managed disk
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk
-  - summary: Add a new image version from a managed disk and add additional data disks
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk --data-snapshot-luns 0
-  - summary: Add a new image version containing a mix of snapshots and managed disks
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyDiskSnapshot1 /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk2 --data-snapshot-luns 1 2
-  - summary: Add a new image version replicated across multiple regions with different replication counts each. Eastus2 will have it's replica count set to the default replica count.
     syntax: >-
-      az sig image-version create -g MyResourceGroup --gallery-name MyGallery \
-
-      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
-
-      --managed-image image-name --target-regions eastus2 ukwest=3 southindia=2
-  - summary: Add a new image version and don't wait on it. Later you can invoke "az sig image-version wait" command when ready to create a vm from the gallery image version
-    syntax: >-
-      az sig image-version create --no-wait -g MyResourceGroup --gallery-name MyGallery \
-
-      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
-
-      --managed-image imageInTheSameResourceGroup
-  - summary: Add a new image version with target regions that have different storage account types and replica counts
-    syntax: >-
-      az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 \
-
-      --target-regions westus=2=standard_lrs eastus=3=standard_zrs \
+      az sig image-version create --resource-group MyResourceGroup \
 
       --gallery-name MyGallery --gallery-image-definition MyImage \
 
-      --managed-image imageInTheSameResourceGroup
-  - summary: Add a new image version using a VM with target regions and customer managed keys for encryption. You specify which disks in the image version to encrypt. Disks encrypted in one region must be encrypted in another region with a different disk encryption set.
-    syntax: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard eastus --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
-  - summary: Add a new image version using disks with target regions and customer managed keys for encryption. You specify which disks in the image version to encrypt. Disks encrypted in one region must be encrypted in another region with a different disk encryption set.
-    syntax: az sig image-version create -g MyResourceGroup --gallery-image-version 1.0.0 --target-regions westus=2=standard eastus --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2 --gallery-name MyGallery --gallery-image-definition MyImage --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk --data-snapshot-luns 0
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
+  - summary: Add a new image version from a managed image
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/images/MyManagedImage
+  - summary: Add a new image version from another image version
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
+  - summary: Add a new image version from a managed disk
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk
+  - summary: Add a new image version from a managed disk and add additional data disks
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyOSDisk \
+
+      --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk \
+
+      --data-snapshot-luns 0
+  - summary: Add a new image version from a snapshot of an OS disk.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyOsDiskSnapshot
+  - summary: Add a new image version from a snapshot of an OS disk and add additional snapshots as data disks
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-snapshot /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyOsDiskSnapshot \
+
+      --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyDiskSnapshot \
+
+      --data-snapshot-luns 0
   - summary: Add a new image version from a VHD of an OS disk.
-    syntax: az sig image-version create -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --os-vhd-uri <vhd-uri> --os-vhd-storage-account account
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-vhd-storage-account /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Storage/storageAccounts/mystorageaccount \
+
+      --os-vhd-uri https://mystorageaccount.blob.core.windows.net/container/path_to_vhd_file
+  - summary: Add a new image version from a VHD of an OS disk and add additional VHDs as data disks
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-vhd-storage-account /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Storage/storageAccounts/mystorageaccount \
+
+      --os-vhd-uri https://mystorageaccount.blob.core.windows.net/container/path_to_vhd_file \
+
+      --data-vhds-sa /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Storage/storageAccounts/myotherstorageaccount \
+
+      --data-vhds-uris https://myotherstorageaccount.blob.core.windows.net/container/path_to_vhd_file \
+
+      --data-vhds-luns 0
+  - summary: You can combine snapshots, managed disks, and VHDs to create a new image version. Add a new image version using a VHD as the OS disk and a managed disk and a snapshot as data disks.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --os-vhd-storage-account /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Storage/storageAccounts/mystorageaccount \
+
+      --os-vhd-uri https://mystorageaccount.blob.core.windows.net/container/path_to_vhd_file \
+
+      --data-snapshots /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/disks/MyDataDisk subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/snapshots/MyDiskSnapshot \
+
+      --data-snapshot-luns 0 1
+  - summary: Add a new image version and copy it to additional regions. The home location for the source of the image version must be included in the list of target regions. For each additional region, you can specify a different replica count and storage account type. Otherwise, the region will inherit from the global. The default replica count is 1 and the default storage account type is Standard LRS. In this example, eastus2 will have one replica stored on Standard ZRS storage, ukwest will have 3 replicas stored on Standard ZRS storage, southindia will have one replica stored on Standard LRS storage, and brazilsouth will have 2 replicas stored on Standard LRS storage.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 --replica-count 1 \
+
+      --storage-account-type Standard_ZRS --managed-image image-name \
+
+      --target-regions eastus2 ukwest=3 southindia=standard_lrs \
+
+      brazilsouth=2=standard_lrs
+  - summary: Add a new image version with encryption using a disk encryption set. Encryption is applied to each disk that is a part of the image version.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --target-regions westus=2=standard eastus \
+
+      --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 \
+
+      EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2
+  - summary: Add a new image version and don't wait on it. Later you can invoke "az sig image-version wait" command when ready to create a vm from the gallery image version
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --no-wait
+  - summary: Add a new image version but remove it from consideration as latest version in its image definition
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --exclude-from-latest true
+  - summary: Add a new image version and set its end-of-life date. The image version can still be used to create a virtual machine after its end-of-life date.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --end-of-life-date 2024-08-02T00:00:00+00:00
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -218,7 +348,7 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_list-shared
   name: az sig image-version list-shared
-  summary: List shared gallery image versions by subscription id or tenant id.
+  summary: List VM Image Versions in a gallery shared directly to your subscription or tenant.
   description: ''
   syntax: >-
     az sig image-version list-shared [--gallery-image-definition]
@@ -228,10 +358,16 @@ directCommands:
                                      [--shared-to {tenant}]
                                      [--subscription]
   examples:
-  - summary: List shared image versions by subscription id.
-    syntax: az sig image-version list-shared --gallery-image-definition "myGalleryImageName" --gallery-unique-name "galleryUniqueName" --location "myLocation"
-  - summary: List shared image versions by tenant id.
-    syntax: az sig image-version list-shared --gallery-image-definition "myGalleryImageName" --gallery-unique-name "galleryUniqueName" --location "myLocation" --shared-to tenant
+  - summary: List image versions in a gallery shared directly to your subscription in the given location and image definition.
+    syntax: >-
+      az sig image-version list-shared --gallery-unique-name galleryUniqueName \
+
+      --gallery-image-definition MyImage --location myLocation
+  - summary: List image versions in a gallery shared directly to your tenant in the given location and image definition.
+    syntax: >-
+      az sig image-version list-shared --gallery-unique-name galleryUniqueName \
+
+      --gallery-image-definition MyImage --location myLocation --shared-to tenant
   optionalParameters:
   - name: --gallery-image-definition -i
     summary: The name of the Shared Gallery Image Definition from which the Image Versions are to be listed.
@@ -293,7 +429,7 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_show-shared
   name: az sig image-version show-shared
-  summary: Get a shared gallery image version.
+  summary: Get an image version in a gallery shared directly to your subscription or tenant.
   description: ''
   syntax: >-
     az sig image-version show-shared [--gallery-image-definition]
@@ -303,8 +439,11 @@ directCommands:
                                      [--location]
                                      [--subscription]
   examples:
-  - summary: Get a shared gallery image version.
-    syntax: az sig image-version show-shared --gallery-image-definition "myGalleryImageName" --gallery-image-version "myGalleryImageVersionName" --gallery-unique-name "galleryUniqueName" --location "myLocation"
+  - summary: Get an image version in a gallery shared directly to your subscription or tenant in the given location.
+    syntax: >-
+      az sig image-version show-shared --gallery-unique-name galleryUniqueName \
+
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 --location myLocation
   optionalParameters:
   - name: --gallery-image-definition -i
     summary: The name of the Shared Gallery Image Definition from which the Image Versions are to be listed.
@@ -342,18 +481,40 @@ directCommands:
                                 [--subscription]
                                 [--target-regions]
   examples:
-  - summary: Replicate to a new set of regions
-    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --target-regions westcentralus=2 eastus2
-  - summary: Replicate to one more region
-    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --add publishingProfile.targetRegions name=westcentralus
-  - summary: Add a region with a different regional replica count
-    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --add publishingProfile.targetRegions name=westcentralus regionalReplicaCount=3
-  - summary: Remove a region
-    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --remove publishingProfile.targetRegions name=westcentralus
+  - summary: Change the replication regions and replica count
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --target-regions westcentralus=2 eastus2
+  - summary: Replicate to an additional region. Optional, you can set the replica count for the region.
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --add publishingProfile.targetRegions name=westcentralus \
+
+      regionalReplicaCount=3
   - summary: Change whether an image should be included in consideration for latest version in the image definition. Setting this value to true excludes the image from consideration and setting this value to false includes the image for consideration.
-    syntax: az sig image-version update -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0 --set publishingProfile.excludeFromLatest=true
-  - summary: update a share image version. (autogenerated)
-    syntax: az sig image-version update --gallery-image-definition MyImage --gallery-image-version 1.0.0 --gallery-name MyGallery --resource-group MyResourceGroup --set publishingProfile.excludeFromLatest=true
+    syntax: >-
+      az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
+
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+
+      --set publishingProfile.excludeFromLatest=true
+  - summary: Change the end of life date for an image version. The image can still be used to create virtual machines after the end of life date.
+    syntax: >-
+      az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
+
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+
+      --set publishingProfile.endOfLifeDate=2024-08-02T00:00:00+00:00
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -416,9 +577,19 @@ directCommands:
                               [--updated]
   examples:
   - summary: wait for an image version gets updated
-    syntax: az sig image-version wait --updated -g MyResourceGroup --gallery-name MyGallery --gallery-image-definition MyImage --gallery-image-version 1.0.0
+    syntax: >-
+      az sig image-version wait --updated --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0
   - summary: wait for image version related operation. (autogenerated)
-    syntax: az sig image-version wait --created --gallery-image-definition MyImage --gallery-image-version 1.0.0 --gallery-name MyGallery --resource-group MyResourceGroup
+    syntax: >-
+      az sig image-version wait --created --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i

@@ -35,6 +35,7 @@ directCommands:
                    [--dns-servers]
                    [--edge-zone]
                    [--enable-cross-zone-upgrade {false, true}]
+                   [--enable-spot-restore {false, true}]
                    [--encryption-at-host {false, true}]
                    [--ephemeral-os-disk {false, true}]
                    [--eviction-policy {Deallocate, Delete}]
@@ -80,6 +81,7 @@ directCommands:
                    [--secrets]
                    [--single-placement-group {false, true}]
                    [--specialized {false, true}]
+                   [--spot-restore-timeout]
                    [--ssh-dest-key-path]
                    [--ssh-key-values]
                    [--storage-container-name]
@@ -115,8 +117,14 @@ directCommands:
           --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init'
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
-  - summary: Create a Linux VM scale set from a specialized image version.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image $id --specialized
+  - summary: Create a VMSS from a generalized gallery image version.
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0
+  - summary: Create a VMSS from a specialized gallery image version.
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
+  - summary: Create a VMSS from the latest version of a gallery image
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
+  - summary: Create a VMSS from a gallery image shared directly to your subscription or tenant.
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /sharedgalleries/theGalleryUniqueName/images/theImage/versions/1.0.0
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax: >-
       az keyvault certificate create --vault-name vaultname -n cert1 \
@@ -138,6 +146,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a single zone VM scaleset in the current resource group's region
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image Centos --zones 1
+  - summary: Create a VMSS that supports SpotRestore.
+    syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -224,6 +234,10 @@ directCommands:
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: false, true
     summary: Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
+    description: ''
+  - name: --enable-spot-restore
+    parameterValueGroup: false, true
+    summary: Enable the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints.
     description: ''
   - name: --encryption-at-host
     parameterValueGroup: false, true
@@ -377,6 +391,9 @@ directCommands:
   - name: --specialized
     parameterValueGroup: false, true
     summary: Indicate whether the source image is specialized.
+    description: ''
+  - name: --spot-restore-timeout
+    summary: Timeout value expressed as an ISO 8601 time duration after which the platform will not try to restore the VMSS SPOT instances.
     description: ''
   - name: --ssh-dest-key-path
     summary: Destination file path on the VM for the SSH key. If the file already exists, the specified key(s) are appended to the file. Destination path for SSH public keys is currently limited to its default value "/home/username/.ssh/authorized_keys" due to a known issue in Linux provisioning agent.
@@ -1046,6 +1063,7 @@ directCommands:
                    [--automatic-repairs-grace-period]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
+                   [--enable-spot-restore {false, true}]
                    [--enable-terminate-notification {false, true}]
                    [--force-string]
                    [--ids]
@@ -1067,6 +1085,7 @@ directCommands:
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--set]
+                   [--spot-restore-timeout]
                    [--subscription]
                    [--terminate-notification-time]
                    [--ultra-ssd-enabled {false, true}]
@@ -1098,6 +1117,10 @@ directCommands:
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: false, true
     summary: Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
+    description: ''
+  - name: --enable-spot-restore
+    parameterValueGroup: false, true
+    summary: Enable the Spot-Try-Restore feature where evicted VMSS SPOT instances will be tried to be restored opportunistically based on capacity availability and pricing constraints.
     description: ''
   - name: --enable-terminate-notification
     parameterValueGroup: false, true
@@ -1168,6 +1191,9 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --spot-restore-timeout
+    summary: Timeout value expressed as an ISO 8601 time duration after which the platform will not try to restore the VMSS SPOT instances.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1359,5 +1385,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/30/2021
+  ms.date: 08/20/2021
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
