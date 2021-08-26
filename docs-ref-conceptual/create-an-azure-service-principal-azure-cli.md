@@ -30,9 +30,11 @@ This article shows you the steps for creating, getting information about, and re
 
 ## Create a service principal
 
-Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command. When creating a service principal, you choose the type of sign-in authentication it uses.
+Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command. 
 
-There are two types of authentication available for Azure service principals: Password-based authentication, and certificate-based authentication.
+The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
+
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: Password-based authentication, and certificate-based authentication.
 
 > [!NOTE]
 >
@@ -59,9 +61,6 @@ Without any authentication parameters, password-based authentication is used wit
 > is __no longer supported__ to prevent the accidental use of weak passwords.
 
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
-
-The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
 
 ### Certificate-based authentication
 
@@ -130,19 +129,17 @@ az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertNa
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-For certificates stored in Key Vault, retrieve the certificate's private key with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show). In Key Vault, the name of the certificate's secret
-is the same as the certificate name. If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
+If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
 
-> [!TIP]
->
-> If your service principal was created using the `create-for-rbac` with the `--create-cert --keyvault <your-key-vault>` flags,
-> in order to successfully pass your pem file to the `az login` you must run the following conversions
-> `az keyvault secret download --file /save/path/for/pfx --vault-name <your-vault-name> --name <your-key-name> --encoding base64`
-> then to convert to a valid pem file
-> `openssl pkcs12 -in /path/for/pfx.pfx -clcerts -nodes -out /save/path/for/pem.pem`
+#### Retrieve certificate from Key Vault
 
-The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication.
-Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
+For certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
+
+```azurecli-interactive
+az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
+openssl pkcs12 -in /path/to/cert.pfx -nodes -out /path/to/cert.pem
+# Press ENTER as there is no password
+```
 
 ## Get an existing service principal
 

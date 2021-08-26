@@ -70,22 +70,11 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file.  For an example of a PEM file format, see [Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md#sign-in-using-a-service-principal). 
->
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](create-an-azure-service-principal-azure-cli.md#certificate-based-authentication). 
 
 > [!IMPORTANT]
 >
-> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key
-> must be available without signing in to Azure. To retrieve a private key for use offline,
-> use [az keyvault secret show](/cli/azure/keyvault/secret).
-
-> [!TIP]
->
-> If your service principal was created using the `create-for-rbac` with the `--create-cert --keyvault <your-key-vault>` flags,
-> in order to successfully pass your pem file to the `az login` you must run the following conversions
-> `az keyvault secret download --file /save/path/for/pfx --vault-name <your-vault-name> --name <your-key-name> --encoding base64`
-> then to convert to a valid pem file
-> `openssl pkcs12 -in /path/for/pfx.pfx -clcerts -nodes -out /save/path/for/pem.pem`
+> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](create-an-azure-service-principal-azure-cli.md#retrieve-certificate-from-key-vault).
 
 ```azurecli-interactive
 az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
