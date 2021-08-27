@@ -34,7 +34,7 @@ Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: Password-based authentication, and certificate-based authentication.
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: password-based authentication, and certificate-based authentication.
 
 > [!NOTE]
 >
