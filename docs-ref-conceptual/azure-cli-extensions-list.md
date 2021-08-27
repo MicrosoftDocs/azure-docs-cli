@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/26/2021
+ms.date: 08/27/2021
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -124,13 +124,13 @@ You will be prompted to install an extension on first use.
 |[storage-blob-preview](https://github.com/Azure/azure-cli-extensions) | 2.25.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.7.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
-|[stream-analytics](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools stream-analytics Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
-|[subscription](https://github.com/Azure/azure-cli-extensions) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.4](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
-|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.2](https://github.com/azure/azure-cli-extensions/tree/master/src/support/HISTORY.rst) |
+|[stream-analytics](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools stream-analytics Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions) |
+|[subscription](https://github.com/Azure/azure-cli-extensions) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.4](https://github.com/Azure/azure-cli-extensions) |
+|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.2](https://github.com/azure/azure-cli-extensions/tree/master/src/support) |
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights) | 2.11.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights/HISTORY.rst) |
-|[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap/HISTORY.rst) |
+|[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 2.0.67 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Preview | [0.2.8](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.3.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/vm-repair/HISTORY.rst) |
-|[vmware](https://github.com/Azure/az-vmware-cli) | 2.11.0 | Azure VMware Solution commands. | GA | [3.1.0](https://github.com/Azure/az-vmware-cli/HISTORY.rst) |
+|[vmware](https://github.com/Azure/az-vmware-cli) | 2.11.0 | Azure VMware Solution commands. | GA | [3.1.0](https://github.com/Azure/az-vmware-cli) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/master/src/webpubsub) | 2.22.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webpubsub/HISTORY.rst) |
