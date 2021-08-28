@@ -33,7 +33,7 @@ See [Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines)
 
 ## Desktop virtualization
 
-The references in this table are part of the [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) extension.
+All the references in this table are part of the [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) extension.
 
 | Reference | Description |
 |-|-|
@@ -53,16 +53,16 @@ The references in this table are part of the [desktopvirtualization](https://git
 
 ## Virtual machine maintenance
 
-The references in this table are part of the [maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) extension.
+All the references in this table are part of the [maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) extension.
 
 | Reference | Description | More information |
 |-|-|-|
-| [az maintenance applyupdate](/cli/azure/maintenance/applyupdate) | Apply maintenance updates. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
-| [az maintenance applyupdate-for-resource-group](/cli/azure/maintenance/applyupdate-for-resource-group) | Manage maintenance configuration for a resource group. |  |
+| [az maintenance applyupdate](/cli/azure/maintenance/applyupdate) | Manage how maintenance updates are applied. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
+| [az maintenance applyupdate-for-resource-group](/cli/azure/maintenance/applyupdate-for-resource-group) | Manage how maintenance updates are applied for a resource group. |  |
 | [az maintenance assignment](/cli/azure/maintenance/assignment) | Manage maintenance configuration assignments. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
-| [az maintenance configuration](/cli/azure/maintenance/configuration) | Manage maintenance configuration. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
-| [az maintenance configuration-for-resource-group](/cli/azure/maintenance/configuration-for-resource-group) | Manage maintenance configuration for a resource group. |  |
-| [az maintenance public-configuration](/cli/azure/maintenance/public-configuration) | Manage public maintenance configuration. | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure?tabs=azure-cli) |
+| [az maintenance configuration](/cli/azure/maintenance/configuration) | Manage maintenance configuration records | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
+| [az maintenance configuration-for-resource-group](/cli/azure/maintenance/configuration-for-resource-group) | Manage maintenance configuration records for a resource group. |  |
+| [az maintenance public-configuration](/cli/azure/maintenance/public-configuration) | Manage public maintenance configuration records. | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure?tabs=azure-cli) |
 | [az maintenance update](/cli/azure/maintenance/update) | Manage maintenance updates. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
 
 ## Shared image galleries
@@ -70,9 +70,9 @@ The references in this table are part of the [maintenance](https://github.com/Az
 | Reference | Description | More information |
 |-|-|-|
 | [az sig](/cli/azure/sig) | Manage shared image galleries. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
-| [az sig image-definition](/cli/azure/sig/image-definition) | Manage shared gallery images definitions. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
-| [az sig image-version](/cli/azure/sig/image-version) | Manage shared gallery image versions. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
-| [az sig share](/cli/azure/sig/share) | Manage image gallery sharing profiles. |  |
+| [az sig image-definition](/cli/azure/sig/image-definition) | Manage the image definitions in a shared image gallery. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
+| [az sig image-version](/cli/azure/sig/image-version) | Manage the image versions in an image definition. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
+| [az sig share](/cli/azure/sig/share) | Manage the sharing profile of a shared image gallery. |  |
 
 ## Virtual machines
 
@@ -81,51 +81,54 @@ Some references in this table are part of the [aem](https://github.com/Azure/azu
 | Reference | Description | Extension? | More information |
 |-|-|-|-|
 | [az vm](/cli/azure/vm) | Manage Windows or Linux virtual machines. | | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
-| [az vm aem](/cli/azure/vm/aem) | Manage Azure Enhanced Monitoring for SAP. | aem |  |
-| [az vm availability-set](/cli/azure/vm/availability-set) | Manage the availability sets for a virtual machine resource. | | [Create a complete Linux virtual machine with the Azure CLI](/azure/virtual-machines/linux/create-cli-complete) |
+| [az vm aem](/cli/azure/vm/aem) | Manage Azure Enhanced Monitoring for SAP for a virtual machine. | aem |  |
+| [az vm availability-set](/cli/azure/vm/availability-set) | Manage the availability sets of a virtual machine resource group. | | [Create a complete Linux virtual machine with the Azure CLI](/azure/virtual-machines/linux/create-cli-complete) |
 | [az vm boot-diagnostics](/cli/azure/vm/boot-diagnostics) | Manage the boot diagnostics for a virtual machine. | | |
-| [az vm diagnostics](/cli/azure/vm/diagnostics) | Manage the diagnostics settings for a virtual machine. | | |
-| [az vm disk](/cli/azure/vm/disk) | Manage the managed data disks attached to a virtual machine. | | [Enable on-demand bursting](/azure/virtual-machines/disks-enable-bursting?tabs=azure-cli) |
-| [az vm encryption](/cli/azure/vm/encryption) | Manage the encryption of the disks of a virtual machine. | | [Quickstart: Create and encrypt a Linux VM with the Azure CLI](/azure/virtual-machines/linux/disk-encryption-cli-quickstart) |
+| [az vm diagnostics](/cli/azure/vm/diagnostics) | Manage the diagnostics extension settings for a virtual machine. | | |
+| [az vm disk](/cli/azure/vm/disk) | Attach or detach managed data disks on a virtual machine. | | [Enable on-demand bursting](/azure/virtual-machines/disks-enable-bursting?tabs=azure-cli) |
+| [az vm encryption](/cli/azure/vm/encryption) | Manage the encryption of a virtual machine's disks. | | [Quickstart: Create and encrypt a Linux VM with the Azure CLI](/azure/virtual-machines/linux/disk-encryption-cli-quickstart) |
 | [az vm extension](/cli/azure/vm/extension) | Manage the extensions for a virtual machine. | | [Virtual machine extensions and features for Linux](/azure/virtual-machines/extensions/features-linux) |
 | [az vm extension image](/cli/azure/vm/extension/image) | Find the available extensions for a virtual machine. | | [Virtual machine extensions and features for Linux](/azure/virtual-machines/extensions/features-linux) |
 | [az vm host](/cli/azure/vm/host) | Manage the dedicated hosts for a virtual machine. | | [Deploy to dedicated hosts using the Azure CLI](/azure/virtual-machines/linux/dedicated-hosts-cli) |
 | [az vm host group](/cli/azure/vm/host/group) | Manage the dedicated host groups for a virtual machine. | | [Deploy to dedicated hosts using the Azure CLI](/azure/virtual-machines/linux/dedicated-hosts-cli) |
-| [az vm identity](/cli/azure/vm/identity) | Manage the service identities of a virtual machine. | | [Configure managed identities for Azure resources on an Azure VM using Azure CLI](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) |
-| [az vm image](/cli/azure/vm/image) | Show image information for a virtual machine. | | [Find Azure Marketplace image information using the Azure CLI](/azure/virtual-machines/linux/cli-ps-findimage) |
-| [az vm image terms](/cli/azure/vm/image/terms) | Manage Azure Marketplace image terms for a virtual machine. | | [Find Azure Marketplace image information using the Azure CLI](/azure/virtual-machines/linux/cli-ps-findimage) |
-| [az vm monitor](/cli/azure/vm/monitor) | Manage the monitor aspect for a virtual machine. | | |
-| [az vm monitor log](/cli/azure/vm/monitor/log) | Manage the log analytics workspace for a virtual machine. | | |
-| [az vm monitor metrics](/cli/azure/vm/monitor/metrics) | Manage the metrics for a virtual machine. | | |
-| [az vm nic](/cli/azure/vm/nic) | Manage the network interfaces on a virtual machine. | | [How to create a Linux virtual machine in Azure with multiple network interface cards](/azure/virtual-machines/linux/multiple-nics) |
-| [az vm repair](/cli/azure/vm/repair) | Manage repair commands to fix a virtual machine. | vm-repair | |
-| [az vm run-command](/cli/azure/vm/run-command) | Manage run commands on a virtual machine. | | [Rotate certificates in Azure Kubernetes Service](/azure/aks/certificate-rotation) |
-| [az vm secret](/cli/azure/vm/secret) | Manage secrets on a virtual machine. | | [Tutorial: Use TLS/SSL certificates to secure a web server](/azure/virtual-machines/linux/tutorial-secure-web-server) |
-| [az vm unmanaged-disk](/cli/azure/vm/unmanaged-disk) | Manage the unmanaged data disks attached to a virtual machine. | | [Azure Virtual Machines planning and implementation for SAP NetWeaver](/azure/virtual-machines/workloads/sap/planning-guide) |
-| [az vm user](/cli/azure/vm/user) | Manage the user accounts for a virtual machine. | | [Manage administrative users, SSH, and check or repair disks on Linux VMs using the VMAccess Extension with the Azure CLI](/azure/virtual-machines/extensions/vmaccess) |
+| [az vm identity](/cli/azure/vm/identity) | Manage the service identities for a virtual machine. | | [Configure managed identities for Azure resources on an Azure VM using Azure CLI](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) |
+| [az vm image](/cli/azure/vm/image) | Show information about available virtual machine images. | | [Find Azure Marketplace image information using the Azure CLI](/azure/virtual-machines/linux/cli-ps-findimage) |
+| [az vm image terms](/cli/azure/vm/image/terms) | Manage Azure Marketplace image terms. | | [Find Azure Marketplace image information using the Azure CLI](/azure/virtual-machines/linux/cli-ps-findimage) |
+| [az vm monitor log](/cli/azure/vm/monitor/log) | Show the log analytics workspace for a virtual machine. | | |
+| [az vm monitor metrics](/cli/azure/vm/monitor/metrics) | Show the metrics for a virtual machine. | | |
+| [az vm nic](/cli/azure/vm/nic) | Manage the network interfaces for a virtual machine. | | [How to create a Linux virtual machine in Azure with multiple network interface cards](/azure/virtual-machines/linux/multiple-nics) |
+| [az vm repair](/cli/azure/vm/repair) | Manage repair virtual machines and scripts. | vm-repair | |
+| [az vm run-command](/cli/azure/vm/run-command) | Manage run commands for a virtual machine. | | [Rotate certificates in Azure Kubernetes Service](/azure/aks/certificate-rotation) |
+| [az vm secret](/cli/azure/vm/secret) | Manage secrets for a virtual machine. | | [Tutorial: Use TLS/SSL certificates to secure a web server](/azure/virtual-machines/linux/tutorial-secure-web-server) |
+| [az vm unmanaged-disk](/cli/azure/vm/unmanaged-disk) | Manage unmanaged data disks for a virtual machine. | | [Azure Virtual Machines planning and implementation for SAP NetWeaver](/azure/virtual-machines/workloads/sap/planning-guide) |
+| [az vm user](/cli/azure/vm/user) | Manage user accounts for a virtual machine. | | [Manage administrative users, SSH, and check or repair disks on Linux VMs using the VMAccess Extension with the Azure CLI](/azure/virtual-machines/extensions/vmaccess) |
 
 ## Virtual machine scale sets
 
 | Reference | Description | More information |
 |-|-|-|
-| [az vmss](/cli/azure/vmss) | Manage groupings of virtual machines in an Azure virtual machine scale set. | [Quickstart: Create a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/quick-create-cli) |
-| [az vmss diagnostics](/cli/azure/vmss/diagnostics) | Configure Diagnostics extension for a virtual machine scale set. | |
-| [az vmss disk](/cli/azure/vmss/disk) | Manage the data disks of a virtual machine scale set. | [Tutorial: Create and use disks with virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-disks-cli) |
-| [az vmss encryption](/cli/azure/vmss/encryption) | Manage the encryption of a virtual machine scale set. | [Encrypt OS and attached data disks in a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/disk-encryption-cli) |
-| [az vmss extension](/cli/azure/vmss/extension) | Manage the extensions of a virtual machine scale set. | [Quickstart: Create a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/quick-create-cli) |
-| [az vmss extension image](/cli/azure/vmss/extension/image) | Find the available virtual machine extension images of a virtual machine scale set. | |
-| [az vmss identity](/cli/azure/vmss/identity) | Manage service identities of a virtual machine scale set. | [Create and manage virtual machine scale set](/azure/virtual-machine-scale-sets/scripts/cli-sample-manage-scale-set) |
-| [az vmss nic](/cli/azure/vmss/nic) | Manage the network interfaces of a virtual machine scale set. | |
-| [az vmss rolling-upgrade](/cli/azure/vmss/rolling-upgrade) | Manage the rolling upgrades of a virtual machine scale set. | |
-| [az vmss run-command](/cli/azure/vmss/run-command) | Manage the run commands on a virtual machine scale set. | |
+| [az vmss](/cli/azure/vmss) | Manage Azure virtual machine scale sets. | [Quickstart: Create a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/quick-create-cli) |
+| [az vmss diagnostics](/cli/azure/vmss/diagnostics) | Configure Azure Diagnostics extension for a virtual machine scale set. | |
+| [az vmss disk](/cli/azure/vmss/disk) | Manage the data disks for a virtual machine scale set. | [Tutorial: Create and use disks with virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-disks-cli) |
+| [az vmss encryption](/cli/azure/vmss/encryption) | Manage the encryption for a virtual machine scale set. | [Encrypt OS and attached data disks in a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/disk-encryption-cli) |
+| [az vmss extension](/cli/azure/vmss/extension) | Manage the extensions for a virtual machine scale set. | [Quickstart: Create a virtual machine scale set with the Azure CLI](/azure/virtual-machine-scale-sets/quick-create-cli) |
+| [az vmss extension image](/cli/azure/vmss/extension/image) | Show information about available extension images for a virtual machine scale set. | |
+| [az vmss identity](/cli/azure/vmss/identity) | Manage the service identities for a virtual machine scale set. | [Create and manage virtual machine scale set](/azure/virtual-machine-scale-sets/scripts/cli-sample-manage-scale-set) |
+| [az vmss nic](/cli/azure/vmss/nic) | Manage the network interfaces for a virtual machine scale set. | |
+| [az vmss rolling-upgrade](/cli/azure/vmss/rolling-upgrade) | Manage rolling upgrades for a virtual machine scale set. | |
+| [az vmss run-command](/cli/azure/vmss/run-command) | Manage run commands for a virtual machine scale set. | |
 
 ## Additional storage references
 
-| Reference | Description | More information |
-|-|-|-|
-| [az ppg](/cli/azure/ppg) | Manage proximity placement groups. | [Deploy VMs to proximity placement groups using Azure CLI](/azure/virtual-machines/linux/proximity-placement-groups) |
-| [az ssh](/cli/azure/ssh) | Manage the SSH configuration for a virtual machine. | [Login to a Linux virtual machine in Azure with Azure Active Directory using SSH certificate-based authentication](/azure/active-directory/devices/howto-vm-sign-in-azure-ad-linux) |
-| [az sshkey](/cli/azure/sshkey) | Manage the SSH public key configuration for a virtual machine. | |
+Some references in this table are part of the [serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console) or [ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) extension.
+
+| Reference | Description | Extension? | More information |
+|-|-|-|-|
+| [az ppg](/cli/azure/ppg) | Manage proximity placement groups. | | [Deploy VMs to proximity placement groups using Azure CLI](/azure/virtual-machines/linux/proximity-placement-groups) |
+| [az serial-console](/cli/azure/serial-console) | Manage the Azure Serial Console for a virtual machine or virtual machine scale set. | serial-console | |
+| [az serial-console send](/cli/azure/serial-console/send) | Use the Azure Serial Console to send commands to a virtual machine or virtual machine scale set. | serial-console | |
+| [az ssh](/cli/azure/ssh) | Manage SSH configuration. | ssh | [Login to a Linux virtual machine in Azure with Azure Active Directory using SSH certificate-based authentication](/azure/active-directory/devices/howto-vm-sign-in-azure-ad-linux) |
+| [az sshkey](/cli/azure/sshkey) | Manage SSH public key configuration. | | |
 
 ## See also
 
