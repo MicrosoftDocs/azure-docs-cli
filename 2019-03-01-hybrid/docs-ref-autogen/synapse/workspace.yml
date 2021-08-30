@@ -4,6 +4,49 @@ name: az synapse workspace
 summary: Manage Synapse workspaces.
 description: ''
 directCommands:
+- uid: az_synapse_workspace_activate
+  name: az synapse workspace activate
+  summary: Activates a workspace and change it's state from pending to success state when the workspace is first being provisioned and double encryption is enabled.
+  description: When creating an Azure Synapse Analytics workspace, you can choose to encrypt all data at rest in the workspace with a customer-managed key which will provide double encryption to the workspace.You may need to set up the encryption environment firstly, such as to create a key vault with purge protection enable and specify Access Polices to the key vault. Then use this cmdlet to activate the new Azure Synapse Analytics workspace which double encryption is enabled using a customer-managed key.
+  syntax: >-
+    az synapse workspace activate --key-identifier
+                                  [--ids]
+                                  [--name]
+                                  [--no-wait]
+                                  [--resource-group]
+                                  [--subscription]
+                                  [--workspace-name]
+  examples:
+  - summary: activate a workspace.
+    syntax: >-
+      az synapse workspace activate --name newkey --workspace-name testsynapseworkspace \
+
+      --resource-group rg --key-identifier https://{keyvaultname}.vault.azure.net/keys/{keyname}
+  requiredParameters:
+  - isRequired: true
+    name: --key-identifier
+    summary: 'The Key Vault Url of the workspace encryption key. should be in the format of: https://{keyvaultname}.vault.azure.net/keys/{keyname}.'
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The workspace customer-managed key display name. All existing keys can be found using /"az synapse workspace key list/" cmdlet.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --workspace-name
+    summary: The workspace name.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 - uid: az_synapse_workspace_check-name
   name: az synapse workspace check-name
   summary: Check if a Synapse workspace name is available or not.
@@ -307,6 +350,7 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 commands:
+- az_synapse_workspace_activate
 - az_synapse_workspace_check-name
 - az_synapse_workspace_create
 - az_synapse_workspace_delete
@@ -322,7 +366,6 @@ commands:
 - az_synapse_workspace_key_delete
 - az_synapse_workspace_key_list
 - az_synapse_workspace_key_show
-- az_synapse_workspace_key_update
 - az_synapse_workspace_key_wait
 - az_synapse_workspace_list
 - az_synapse_workspace_managed-identity
@@ -350,5 +393,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/18/2021
+  ms.date: 08/26/2021
   description: Manage Synapse workspaces.
