@@ -13,6 +13,9 @@ directCommands:
                       --resource-group
                       [--c2d-max-delivery-count]
                       [--c2d-ttl]
+                      [--dds {false, true}]
+                      [--disable-local-auth {false, true}]
+                      [--disable-module-sas {false, true}]
                       [--fc]
                       [--fcs]
                       [--fcu]
@@ -45,6 +48,8 @@ directCommands:
     syntax: az iot hub create --resource-group MyResourceGroup --name MyIotHub --location westus --tags a=b c=d
   - summary: Create an IoT Hub with a system-assigned managed identity, and assign a role and scope to a storage account for the created identity.
     syntax: az iot hub create --resource-group MyResourceGroup --name MyIotHub --location westus --mi-system-assigned --role "Storage Blob Data Contributor" --scopes {resourceId}
+  - summary: Create an IoT Hub with local authentication, device SAS keys, and module SAS keys all disabled
+    syntax: az iot hub create --resource-group MyResourceGroup --name MyIotHub --location westus --disable-local-auth --disable-device-sas --disable-module-sas
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -62,6 +67,18 @@ directCommands:
   - name: --c2d-ttl --ct
     defaultValue: "1"
     summary: The amount of time a message is available for the device to consume before it is expired by IoT Hub, between 1 and 48 hours.
+    description: ''
+  - name: --dds --disable-device-sas
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable all device (including Edge devices but excluding modules) scoped SAS keys for authentication.
+    description: ''
+  - name: --disable-local-auth --dla
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication.
+    description: ''
+  - name: --disable-module-sas --dms
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable module-scoped SAS keys for authentication.
     description: ''
   - name: --fc --fileupload-storage-container-name
     summary: The name of the root container where you upload files. The container need not exist but should be creatable using the connectionString specified.
@@ -757,6 +774,9 @@ directCommands:
     az iot hub update [--add]
                       [--c2d-max-delivery-count]
                       [--c2d-ttl]
+                      [--dds {false, true}]
+                      [--disable-local-auth {false, true}]
+                      [--disable-module-sas {false, true}]
                       [--fc]
                       [--fcs]
                       [--fcu]
@@ -802,6 +822,8 @@ directCommands:
     syntax: az iot hub update -n MyIoTHub --fileupload-sas-ttl 5 --fileupload-storage-auth-type identityBased --fileupload-storage-identity [system]
   - summary: Update the IoT Hub file upload notification settings and queue lock duration
     syntax: az iot hub update -n MyIoTHub --fileupload-notification-max-delivery-count 50 --fileupload-notification-ttl 48 --fileupload-notifications --fileupload-notification-lock-duration 10
+  - summary: Update the IoT Hub local authentication, device SAS, and module SAS settings
+    syntax: az iot hub update -n MyIoTHub --disable-local-auth --disable-device-sas false --disable-module-sas true
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -811,6 +833,18 @@ directCommands:
     description: ''
   - name: --c2d-ttl --ct
     summary: The amount of time a message is available for the device to consume before it is expired by IoT Hub, between 1 and 48 hours.
+    description: ''
+  - name: --dds --disable-device-sas
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable all device (including Edge devices but excluding modules) scoped SAS keys for authentication.
+    description: ''
+  - name: --disable-local-auth --dla
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable IoT hub scoped SAS keys for authentication.
+    description: ''
+  - name: --disable-module-sas --dms
+    parameterValueGroup: false, true
+    summary: A boolean indicating whether or not to disable module-scoped SAS keys for authentication.
     description: ''
   - name: --fc --fileupload-storage-container-name
     summary: The name of the root container where you upload files. The container need not exist but should be creatable using the connectionString specified.
@@ -1013,5 +1047,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/29/2021
+  ms.date: 08/30/2021
   description: Manage Azure IoT hubs.
