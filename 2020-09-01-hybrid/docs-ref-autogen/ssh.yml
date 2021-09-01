@@ -96,28 +96,38 @@ directCommands:
   summary: SSH into Azure VMs using an ssh certificate.
   description: ''
   syntax: >-
-    az ssh vm [--ip]
+    az ssh vm [--hostname]
               [--name]
+              [--port]
               [--prefer-private-ip]
               [--private-key-file]
               [--public-key-file]
               [--resource-group]
+              [<SSH_ARGS>]
   examples:
   - summary: Give a resource group and VM to SSH to
     syntax: az ssh vm --resource-group myResourceGroup --vm-name myVm
   - summary: Give the public IP (or hostname) of a VM to SSH to
-    syntax: az ssh vm --ip 1.2.3.4
+    syntax: >-
+      az ssh vm --ip 1.2.3.4
+
+      az ssh vm --hostname example.com
   - summary: Using a custom private key file
     syntax: az ssh vm --ip 1.2.3.4 --private-key-file key --public-key-file key.pub
+  - summary: Using additional ssh arguments
+    syntax: az ssh vm --ip 1.2.3.4 -- -A -o ForwardX11=yes
   optionalParameters:
-  - name: --ip
-    summary: The public IP address (or hostname) of the VM.
+  - name: --hostname --ip
+    summary: The public (or reachable private) IP address (or hostname) of the VM.
     description: ''
   - name: --name --vm-name -n
     summary: The name of the VM.
     description: ''
+  - name: --port
+    summary: SSH port.
+    description: ''
   - name: --prefer-private-ip
-    summary: Will use a private IP if available. By default only public IPs are used.
+    summary: Will prefer private IP.  Requires connectivity to the private IP.
     description: ''
   - name: --private-key-file -i
     summary: The RSA private key file path.
@@ -127,6 +137,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: <SSH_ARGS>
+    summary: Additional arguments passed to OpenSSH.
     description: ''
 commands:
 - az_ssh_cert
