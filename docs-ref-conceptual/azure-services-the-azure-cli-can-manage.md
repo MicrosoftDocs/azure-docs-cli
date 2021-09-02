@@ -129,12 +129,12 @@ Support rapid growth and innovate faster with secure, enterprise-grade, and full
 |-|-|
 |[Azure API for FHIR](/cli/azure/service-page/azure%20api%20for%20fhi) | [Configure customer-managed keys at rest](/azure/healthcare-apis/azure-api-for-fhir/customer-managed-key#using-azure-cli)
 |[Azure Cache for Redis](/cli/azure/service-page/azure%20cache%20for%20redis) | [Connect an App Service app to an Azure Cache for Redis](/azure/app-service/scripts/cli-connect-to-redis)
-|[Azure Cosmos DB](/cli/azure/azure-cli-reference-for-cosmos-db) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
+|[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
 |[Azure Data Migration](/cli/azure/service-page/azure%20data%20migration) | [Migrate PostgreSQL to Azure DB](/azure/dms/tutorial-postgresql-azure-postgresql-online#provisioning-an-instance-of-dms-using-the-azure-cli)
 |[Azure Database for MariaDB](/cli/azure/service-page/azure%20database%20for%20mariadb) | [Create an Azure Database for MariaDB server](/azure/mariadb/quickstart-create-mariadb-server-database-using-azure-cli)
 |[Azure Database for MySQL](/cli/azure/service-page/azure%20database%20for%20mysql) | [Create a MySQL Flexible Server](/azure/mysql/flexible-server/tutorial-php-database-app#create-a-mysql-flexible-server-preview)
 |[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Create an Azure Database for PostgreSQL server](/azure/postgresql/quickstart-create-server-database-azure-cli)
-|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql?view=azure-cli-latest#sql-database) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
+|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 | |[Manage server-level IP firewall rules](/azure/azure-sql/database/firewall-configure#use-cli-to-manage-server-level-ip-firewall-rules)
 
 ## Developer Tools
@@ -143,12 +143,15 @@ Use Microsoft's comprehensive set of [development tools](/product-categories/dev
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Configuration](/azure/azure-app-configuration/) | xxx
-|[Azure DevOps](/azure/devops/) | xxx
-|[Azure DevTest Labs](/azure/lab-services/) | xxx
-|[Azure Lab Services](/azure/lab-services/classroom-labs/) | xxx
-|[Azure Pipelines](/azure/devops/pipelines/) | xxx
-|[Visual Studio](/visualstudio/codespaces/overview/what-is-vsonline) | xxx
+|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps?view=azure-cli-latest#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
+| |[Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app?pivots=platform-linux)
+|[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
+|[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
+|[Azure Lab Services](/cli/azure/service-page/azure%20lab%20services) | 
+|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
+| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=azure-devops-cli)
+| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=azure-cli)
+|[Visual Studio](/cli/azure/service-page/visual%20studio) | 
 
 ## DevOps
 
@@ -156,60 +159,68 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Artifacts](/azure/devops/artifacts/) | xxx
-|[Azure Boards](/devops/boards/) | xxx
-|[Azure DevOps](/azure/devops/) | xxx
-|[Azure DevTest Labs](/azure/lab-services/) | xxx
-|[Azure Monitor](/azure/azure-monitor/) | xxx
-|[Azure Pipelines](/azure/devops/pipelines/) | xxx
-|[Azure Repos](/azure/devops/repos/) | xxx
+|[Azure Artifacts](/cli/azure/azure-cli-reference-for-devops#azure-artifacts) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops)
+|[Azure Boards](/cli/azure/azure-cli-reference-for-devops#azure-boards) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&tabs=azure-devops-cli#open-project-settings-list-project-areas)
+|[Azure DevOps](/cli/azure/azure-cli-reference-for-devops) | See links in reference summary.
+|[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
+|[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
+| |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
+|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
+| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=azure-devops-cli)
+| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=azure-cli)
+|[Azure Repos](/cli/azure/azure-cli-reference-for-devops#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops)
 
 ## Hybrid
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Active Directory (AD)](/azure/active-directory/) | xxx
-|[Azure Arc](/azure/azure-arc/servers/overview) | xxx
-|[Azure Database for PostgreSQL](/azure/postgresql/) | xxx
-|[Azure DevOps](/azure/devops/) | xxx
-|[Azure IoT Edge](/azure/iot-edge/) | xxx
-|[Azure Security Center](/azure/security-center/) | xxx
-|[Azure Sentinel](/azure/sentinel/overview) | xxx
-|[Azure SQL Database](/azure/sql-database/) | xxx
-|[Azure Stack HCI](/azure-stack/hci/) | xxx
+|[Azure Active Directory (AD)](/cli/azure/service-page/azure%20active%20directory) | [Create an Azure service principal](create-an-azure-service-principal-azure-cli.md)
+|[Azure Arc](/cli/azure/service-page/azure%20arc) | [Delete Azure Arc data controller](/azure/azure-arc/data/uninstall-azure-arc-data-controller)
+|[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Deploy a Django web app with PostgreSQL in Azure App Service](/azure/app-service/tutorial-python-postgresql-app?tabs=cmd%2Cclone&pivots=postgres-single-server)
+|[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
+|[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|[Azure Security Center](/cli/azure/service-page/azure%20security%20center) | 
+|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) | 
+|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
+|[Azure Stack HCI](/cli/azure/stack-hci) | 
 
 ## Identity
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Active Directory (AD)](/azure/active-directory/) | xxx
+|[Azure Active Directory (AD)](/cli/azure/service-page/azure%20active%20directory) | [Create an Azure service principal](create-an-azure-service-principal-azure-cli.md)
 
 ## Integration
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[API Management](/azure/api-management/) | xxx
-|[Azure Logic Apps](/azure/logic-apps/) | xxx
-|[Event Grid](/azure/event-grid/) | xxx
-|[Service Bus](/azure/service-bus/) | xxx
+|[API Management](/cli/azure/service-page/api%20management) | [Mock API responses](/azure/api-management/mock-api-responses?tabs=azure-cli)
+| |[Create and publish a product](/azure/api-management/api-management-howto-add-products?tabs=azure-cli)
+|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [/cli/azure/service-page/azure%20logic%20apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
+|[Event Grid](/cli/azure/service-page/azure%20event%20grid) | [Route custom events to web endpoint](/azure/event-grid/custom-event-quickstart)
+|[Service Bus](/cli/azure/service-page/azure%20service%20bus%20messaging) | [Enable dead lettering on message expiration for Azure Service Bus queues and subscriptions](/azure/service-bus-messaging/enable-dead-letter#using-azure-cli)
 
 ## Internet of Things
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[API Management](/azure/api-management/) | xxx
-|[Azure Cosmos DB](/azure/cosmos-db/) | xxx
-|[Azure Functions](/azure/azure-functions/) | xxx
-|[Azure IoT Central](/azure/iot-central/) | xxx
-|[Azure IoT Edge](/azure/iot-edge/) | xxx
-|[Azure IoT Hub](/azure/iot-hub/) | xxx
-|[Azure Logic Apps](/azure/logic-apps/) | xxx
-|[Azure Machine Learning](/azure/machine-learning/) | xxx
-|[Azure Maps](/azure/azure-maps/) | xxx
-|[Azure Notification Hubs](/azure/notification-hubs/) | xxx
-|[Azure Stream Analytics](/azure/stream-analytics/) | xxx
-|[Azure Time Series Insights](/azure/time-series-insights/) | xxx
-|[Event Grid](/azure/event-grid/) | xxx
+|[API Management](/cli/azure/service-page/api%20management) | [Mock API responses](/azure/api-management/mock-api-responses?tabs=azure-cli)
+| |[Create and publish a product](/azure/api-management/api-management-howto-add-products?tabs=azure-cli)
+|[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+| |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
+|[Azure IoT Central](azure-cli-reference-for-iot.md) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
+|[Azure IoT Edge](azure-cli-reference-for-iot.md) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
+| |[Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|[Azure IoT Hub](azure-cli-reference-for-iot.md) | [Configure IoT Hub message routing](/azure/iot-hub/tutorial-routing)
+|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [/cli/azure/service-page/azure%20logic%20apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
+|[Azure Machine Learning](/cli/azure/service-page/azure%20machine%20learning) | [Create and manage an Azure Machine Learning compute instance](/azure/machine-learning/how-to-create-manage-compute-instance?tabs=azure-cli)
+| |[Manage access to an Azure Machine Learning workspace](/azure/machine-learning/how-to-assign-roles)
+|[Azure Maps](/cli/azure/service-page/azure%20maps) | xxx
+|[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | xxx
+|[Azure Stream Analytics](/cli/azure/service-page/azure%20stream%20analytics) | xxx
+|[Azure Time Series Insights](/cli/azure/service-page/azure%20time%20series%20insights) | xxx
+|[Event Grid](/cli/azure/service-page/azure%20event%20grid) | [Route custom events to web endpoint](/azure/event-grid/custom-event-quickstart)
 
 ## Management and Governance
 
