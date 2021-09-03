@@ -393,7 +393,7 @@ Version 2.26.0
 
 ### Azurestack
 
-* [ACR][AKS] Add azurestack hybrid profile for AKS
+* Azure Stack Hub Support for AKS and ACR has been added in 2020-09-01-hybrid profile
 
 ### Backup
 
