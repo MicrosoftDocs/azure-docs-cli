@@ -147,13 +147,6 @@ Version 2.28.0
 * `az synapse`: Add managed private endpoints feature.
 * Spark pool remove library requirement
 
-2.27.2
-++++++
-
-### Cosmos DB
-
-* Hotfix: `az cosmosdb restore`: Fix the restore command for deleted accounts
-
 ## August 23, 2021
 
 Version 2.27.2
