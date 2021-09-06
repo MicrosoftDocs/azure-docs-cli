@@ -48,11 +48,19 @@ The beta version of the Azure CLI supports all commands and will stay in sync wi
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
+> [!Note]
+> PowerShell must be run as administrator.
+
+Start PowerShell as administrator and run the following command:
+
    ```PowerShell
    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
    ```
 
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version. After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
+This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
+
+> [!Note]
+> After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
 
 ### Azure CLI Command (for update only)
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
