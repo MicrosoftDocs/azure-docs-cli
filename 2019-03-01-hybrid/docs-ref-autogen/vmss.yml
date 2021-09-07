@@ -100,8 +100,6 @@ directCommands:
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
   - summary: Create a VMSS from the latest version of a gallery image
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
-  - summary: Create a VMSS from a gallery image shared directly to your subscription or tenant.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /sharedgalleries/theGalleryUniqueName/images/theImage/versions/1.0.0
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax: >-
       az keyvault certificate create --vault-name vaultname -n cert1 \
@@ -123,6 +121,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a VMSS that supports SpotRestore.
     syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
+  - summary: Create a VMSS from shared gallery image. (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -203,9 +203,9 @@ directCommands:
     summary: Probe name from the existing load balancer, mainly used for rolling upgrade or automatic repairs.
     description: ''
   - name: --image
-    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. Valid URN format: "Publisher:Offer:Sku:Version".'
+    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. In addition, it also supports shared gallery image. Valid URN format: "Publisher:Offer:Sku:Version".'
     description: ''
-    valueFrom: az vm image list, az vm image show
+    valueFrom: az vm image list, az vm image show, az sig image-version show-shared
   - name: --instance-count
     defaultValue: "2"
     summary: Number of VMs in the scale set.
@@ -1125,5 +1125,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/20/2021
+  ms.date: 09/03/2021
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

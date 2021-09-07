@@ -179,6 +179,7 @@ directCommands:
                  [--authentication-type {all, password, ssh}]
                  [--availability-set]
                  [--boot-diagnostics-storage]
+                 [--capacity-reservation-group]
                  [--computer-name]
                  [--count]
                  [--custom-data]
@@ -266,8 +267,6 @@ directCommands:
     syntax: az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
   - summary: Create a VM from the latest version of a gallery image
     syntax: az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
-  - summary: Create a VM from a gallery image shared directly to your subscription or tenant.
-    syntax: az vm create -n MyVm -g MyResourceGroup --image /sharedgalleries/theGalleryUniqueName/images/theImage/versions/1.0.0
   - summary: Create a VM by attaching to a managed operating system disk.
     syntax: az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux
   - summary: 'Create an Ubuntu Linux VM using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init.'
@@ -305,7 +304,7 @@ directCommands:
     syntax: az vm create -n MyVm -g MyResourceGroup --image Centos --zone 1
   - summary: Create multiple VMs. In this example, 3 VMs are created. They are MyVm0, MyVm1, MyVm2.
     syntax: az vm create -n MyVm -g MyResourceGroup --image centos --count 3
-  - summary: Create a VM from shared gallery image.
+  - summary: Create a VM from shared gallery image (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
     syntax: az vm create -n MyVm -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   requiredParameters:
   - isRequired: true
@@ -348,6 +347,9 @@ directCommands:
     description: ''
   - name: --boot-diagnostics-storage
     summary: Pre-existing storage account name or its blob uri to capture boot diagnostics. Its sku should be one of Standard_GRS, Standard_LRS and Standard_RAGRS.
+    description: ''
+  - name: --capacity-reservation-group --crg
+    summary: The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
     description: ''
   - name: --computer-name
     summary: The host OS name of the virtual machine. Defaults to the name of the VM.
@@ -1351,6 +1353,7 @@ directCommands:
   description: Update VM objects and properties using paths that correspond to 'az vm show'.
   syntax: >-
     az vm update [--add]
+                 [--capacity-reservation-group]
                  [--disk-caching]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
@@ -1385,6 +1388,9 @@ directCommands:
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --capacity-reservation-group --crg
+    summary: The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
     description: ''
   - name: --disk-caching
     summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
@@ -1657,5 +1663,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/20/2021
+  ms.date: 09/03/2021
   description: Manage Linux or Windows virtual machines.

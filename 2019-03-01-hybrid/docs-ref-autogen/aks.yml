@@ -111,6 +111,8 @@ directCommands:
                   [--max-count]
                   [--max-pods]
                   [--min-count]
+                  [--nat-gateway-idle-timeout]
+                  [--nat-gateway-managed-outbound-ip-count]
                   [--network-plugin {azure, kubenet}]
                   [--network-policy]
                   [--no-ssh-key]
@@ -127,7 +129,7 @@ directCommands:
                   [--nodepool-name]
                   [--nodepool-tags]
                   [--os-sku]
-                  [--outbound-type {loadBalancer, userDefinedRouting}]
+                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-subnet-id]
                   [--ppg]
@@ -165,6 +167,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
   - summary: Create a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
+  - summary: Create a kubernetes cluster with a AKS managed NAT gateway, with two outbound AKS managed IPs an idle flow timeout of 4 minutes
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --nat-gateway-managed-outbound-ip-count 2 --nat-gateway-idle-timeout 4
   - summary: Create a kubernetes cluster with basic SKU load balancer and AvailabilitySet vm set type.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku basic --vm-set-type AvailabilitySet
   - summary: Create a kubernetes cluster with authorized apiserver IP ranges.
@@ -406,6 +410,12 @@ directCommands:
   - name: --min-count
     summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
+  - name: --nat-gateway-idle-timeout
+    summary: NAT gateway idle timeout in minutes.
+    description: Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ip-count
+    summary: NAT gateway managed outbound IP count.
+    description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --network-plugin
     parameterValueGroup: azure, kubenet
     summary: The Kubernetes network plugin to use.
@@ -465,9 +475,9 @@ directCommands:
     summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
-    parameterValueGroup: loadBalancer, userDefinedRouting
+    parameterValueGroup: loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting
     summary: How outbound traffic will be configured for a cluster.
-    description: Select between loadBalancer and userDefinedRouting. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
+    description: Select between loadBalancer, userDefinedRouting, managedNATGateway and userAssignedNATGateway. If not set, defaults to type loadBalancer. Requires --vnet-subnet-id to be provided with a preconfigured route table and --load-balancer-sku to be Standard.
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
@@ -982,6 +992,8 @@ directCommands:
                   [--load-balancer-outbound-ports]
                   [--max-count]
                   [--min-count]
+                  [--nat-gateway-idle-timeout]
+                  [--nat-gateway-managed-outbound-ip-count]
                   [--no-uptime-sla]
                   [--no-wait]
                   [--tags]
@@ -1008,6 +1020,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
   - summary: Update a kubernetes cluster with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
+  - summary: Update a kubernetes cluster of managedNATGateway outbound type with two outbound AKS managed IPs an idle flow timeout of 4 minutes
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --nat-gateway-managed-outbound-ip-count 2 --nat-gateway-idle-timeout 4
   - summary: Update a kubernetes cluster with authorized apiserver ip ranges.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --api-server-authorized-ip-ranges 193.168.1.0/24,194.168.1.0/24
   - summary: Disable authorized apiserver ip ranges feature for a kubernetes cluster.
@@ -1154,6 +1168,12 @@ directCommands:
   - name: --min-count
     summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
+  - name: --nat-gateway-idle-timeout
+    summary: NAT gateway idle timeout in minutes.
+    description: Desired idle timeout for NAT gateway outbound flows, default is 4 minutes. Please specify a value in the range of [4, 120]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --nat-gateway-managed-outbound-ip-count
+    summary: NAT gateway managed outbound IP count.
+    description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --no-uptime-sla
     summary: Change a paid managed cluster to a free one.
     description: ''
