@@ -24,6 +24,7 @@ directCommands:
                    [--automatic-repairs-grace-period]
                    [--backend-pool-name]
                    [--backend-port]
+                   [--capacity-reservation-group]
                    [--computer-name-prefix]
                    [--custom-data]
                    [--data-disk-caching]
@@ -123,8 +124,6 @@ directCommands:
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
   - summary: Create a VMSS from the latest version of a gallery image
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
-  - summary: Create a VMSS from a gallery image shared directly to your subscription or tenant.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /sharedgalleries/theGalleryUniqueName/images/theImage/versions/1.0.0
   - summary: Create a Debian VM scaleset using Key Vault secrets.
     syntax: >-
       az keyvault certificate create --vault-name vaultname -n cert1 \
@@ -148,6 +147,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image Centos --zones 1
   - summary: Create a VMSS that supports SpotRestore.
     syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
+  - summary: Create a VMSS from shared gallery image. (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -200,6 +201,9 @@ directCommands:
     description: ''
   - name: --backend-port
     summary: When creating a new load balancer, backend port to open with NAT rules (Defaults to 22 on Linux and 3389 on Windows). When creating an application gateway, the backend port to use for the backend HTTP settings.
+    description: ''
+  - name: --capacity-reservation-group --crg
+    summary: The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
     description: ''
   - name: --computer-name-prefix
     summary: Computer name prefix for all of the virtual machines in the scale set. Computer name prefixes must be 1 to 15 characters long.
@@ -261,9 +265,9 @@ directCommands:
     summary: Name or ID of dedicated host group that the virtual machine scale set resides in.
     description: ''
   - name: --image
-    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. Valid URN format: "Publisher:Offer:Sku:Version".'
+    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. In addition, it also supports shared gallery image. Valid URN format: "Publisher:Offer:Sku:Version".'
     description: ''
-    valueFrom: az vm image list, az vm image show
+    valueFrom: az vm image list, az vm image show, az sig image-version show-shared
   - name: --instance-count
     defaultValue: "2"
     summary: Number of VMs in the scale set.
@@ -1061,6 +1065,7 @@ directCommands:
   syntax: >-
     az vmss update [--add]
                    [--automatic-repairs-grace-period]
+                   [--capacity-reservation-group]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-spot-restore {false, true}]
@@ -1109,6 +1114,9 @@ directCommands:
     description: ''
   - name: --automatic-repairs-grace-period
     summary: The amount of time (in minutes, between 30 and 90) for which automatic repairs are suspended due to a state change on VM.
+    description: ''
+  - name: --capacity-reservation-group --crg
+    summary: The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
     description: ''
   - name: --enable-automatic-repairs
     parameterValueGroup: false, true
@@ -1385,5 +1393,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/20/2021
+  ms.date: 09/03/2021
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

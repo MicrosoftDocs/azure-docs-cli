@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/23/2021
+ms.date: 09/07/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,6 +15,137 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## September 07, 2021
+
+Version 2.28.0
+
+### ACR
+
+* `az acr create/update`: Add support for disabling export through `--allow-exports`
+* `az acr`: Bump core api-version to `2021-06-01-preview` from `2020-11-01-preview`. agent_pool, tasks and runs operations unchanged from `2019-06-01-preview`
+* `az acr task credential`: Fix the issue where task credentials were not used
+* `az acr task logs`: Fix the AttributeError when querying the task logs
+
+### ACS
+
+* [BREAKING CHANGE] `az aks nodepool update`: Change rejecting the ability to use max-surge with node-image-only
+
+### AKS
+
+* `az aks install-cli`: Add support for kubelogin darwin/arm64 releases
+* Fix incorrectly passed parameter for option `--assign-kubelet-identity` in aks create sub-command
+* Upgrade api-version to `2021-07-01` for ACS module
+* `az aks create/update`: Add support for private cluster public fqdn feature
+* Revert PR #18825: `az aks create/update`: Add parameter `--auto-upgrade-channel` to support auto upgrade (with fix)
+* `aks create/aks nodepool add`: Add parameter ` --os-sku` to support choosing the underlying container host OS
+
+### App Config
+
+* `appconfig kv import/export`: Add endpoint validation during import and export
+
+### App Service
+
+* `az webapp config storage-account list/add/update/delete`: Remove preview flag
+* Fix #18497: `functionapp identity show`: Fix the crashes when the functionapp name does not reference an existing functionapp
+* `az webapp config set`: Add additional help examples for powershell users
+* Fix #17818: `az functionapp update`:  Add instance validation for updating functionapp
+* `az webapp config hostname add`: Fix the issue caused by AttributeError
+* `az webapp config hostname add`: Fix the issue caused by AttributeError
+* Fix #16470: `az staticwebapp secrets`: Add commands to manage deployment secrets
+* `az webapp deployment source config-local-git`: Fix the issue caused by AttributeError when slot option is specified
+* `az webapp deleted restore` : Fix the issue that 'WebAppsOperations' object has no attribute 'restore_from_deleted_app'
+* `az webapp up`: Add ability to deploy Linux and Windows webapps to the same resource group
+* `az webapp up`: Add support for deploying to an App Service Environment
+* Fix #19098: `az webapp deployment slot auto-swap `: Fix the AttributeError error for parameters `--slot --disable`
+
+### ARM
+
+* `az feature registration`: Add az feature registration apis
+* `az tag create`: Add the note for handling existing tag in help
+* `az ts create`: Fix issue where creating a template spec with inner deployments that reference a common template fails
+
+### CDN
+
+* `az cdn endpoint create`: Fix endpoint creation failure with `--content-types-to-compress`
+
+### Compute
+
+* `az ssh vm`: Raise error for managed identity and Cloud Shell
+* Upgrade api-version for VM and VMSS from `2021-03-01` to `2021-04-01`
+* `az vmss create/update`: Support spot restore policy to VM scale sets
+* Add new examples for creating disk from share image gallery
+* `az vm image​ list/list-offers/list-skus/list-publishers/show`: Add new parameter ​`--edge-zone`​ to support querying the image under edge zone
+* Fix the issue caused by the lack of `os_type` when creating VM from shared gallery id
+* Update shared image gallery doc
+* `az capacity reservation`: Add new commands to manage capacity reservation
+* `az capacity reservation group`: Add new commands to manage capacity reservation group
+* `az vm create/update`: Add new parameter `--capacity-reservation-group` to support association to capacity reservation
+* `az vmss create/update`: Add new parameter `--capacity-reservation-group` to support association to capacity reservation
+* `az vmss create`: Support creating VMSS from shared gallery image
+
+### IoT
+
+* `az iot hub/dps certificate update/create`: Add `--verified` argument to mark certificates as verified without proof-of-possession flow
+* `az iot hub create/update`: Add `--disable-local-auth`, `--disable-device-sas`, and `--disable-module-sas` arguments to configure accepted SAS key authentication methods.
+
+### Key Vault
+
+* `az keyvault private-endpoint-connection list`: Support list mhsm's private endpoint connections
+* `az keyvault set-policy`: `--key-permissions` add new option `release`
+
+### Network
+
+* Fix NSG rule creation example mistake
+* Add a new command group `az network custom-ip prefix`.
+* `az network public-ip`: Add parameter `--ip-address`.
+* `az network public-ip prefix create`: Add parameter `--custom-ip-prefix-name`.
+* `az network dns record-set {record-type} add-record`: Support idempotent
+* PrivateLink supports `Microsoft.Purview/accounts` 2021-07-01
+* `az network bastion ssh`: connect to a Virtual machine through ssh using Bastion Tunneling.
+* `az network bastion rdp`: connect to a Virtual machine through native RDP using Bastion Tunneling.
+* `az network bastion tunnel`: connect to a Virtual machine using Bastion Tunneling.
+
+### Packaging
+
+* Use Python 3.9 in Homebrew formula
+* When installed with RPM, run python3.6 if available
+* Add Ubuntu 21.04 Hirsute Hippo support
+* Add Debian 11 Bullseye support
+* Drop Ubuntu 20.10 Groovy Gorilla support
+
+### PowerBI
+
+* Add private link provider Microsoft.PowerBI/privateLinkServicesForPowerBI
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server migration`: Rename `--migration-id` to `--migration-name`
+* [BREAKING CHANGE] `az mysql flexible-server create/update`: `--high-availability` available parameter is changed from 'Enabled' to 'ZoneRedundant' and 'SameZone' .
+* Fix maintenance window update issue with MySQL and Change restart parameter to be case insensitive
+* `az mysql flexible-server restore` enables network option change from private network  to public network and vice versa.
+* `az mysql flexible-server replica create`: Add `zone` parameter.
+
+### Role
+
+* `az role assignment create`: Support `ForeignGroup` for `--assignee-principal-type`
+* `az role assignment create`: Do not invoke Graph API if `--assignee-principal-type` is provided
+
+### SQL
+
+* `az sql mi update`: Add --subnet and --vnet-name parameters to support the cross subnet update SLO
+* Fix the enum name change in track2 Python SDK
+
+### Storage
+
+* Fix #10765: Refine error message when account key is incorrect padding
+
+### Synapse
+
+* [BREAKING CHANGE] Rename `az synapse workspace key update` to `az synapse workspace key activate` and remove `--is-active`
+* Optimize submit spark job arguments
+* `az synapse`: Add managed private endpoints feature.
+* Spark pool remove library requirement
 
 ## August 23, 2021
 
@@ -255,7 +386,7 @@ Version 2.26.0
 
 ### Azurestack
 
-* [ACR][AKS] Add azurestack hybrid profile for AKS
+* Azure Stack Hub Support for AKS and ACR has been added in 2020-09-01-hybrid profile
 
 ### Backup
 
