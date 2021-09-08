@@ -95,7 +95,7 @@ Access cloud compute capacity and scale on demand—and only pay for the resourc
 | |[Create a Service Fabric cluster](/azure/service-fabric/service-fabric-cluster-creation-via-arm)
 |[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | [Read a secret from Azure Key Vault in a Spring Boot application](/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault#deploy-to-azure-spring-cloud)
 |[Azure Static Web Apps](/cli/azure/staticwebapp) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
-|[Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
+|[Azure Virtual Machines](/cli/azure/azure-cli-reference-for-virtual-machines) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
 | |[Create a Windows VM](/azure/virtual-machines/windows/quick-create-cli)
 |[Azure Virtual Machine Scale Sets (VMSS)](/cli/azure/vmss) | [Create a Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli#vmss)
 |[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solutions) | [Attach disk pools to Azure VMware Solution hosts](/azure/azure-vmware/attach-disk-pools-to-azure-vmware-solution-hosts)
@@ -165,7 +165,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
 | |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
-|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
+|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
 | |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=azure-devops-cli)
 | |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=azure-cli)
 |[Azure Repos](/cli/azure/azure-cli-reference-for-devops#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops)
@@ -196,7 +196,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |-|-|
 |[API Management](/cli/azure/service-page/api%20management) | [Mock API responses](/azure/api-management/mock-api-responses?tabs=azure-cli)
 | |[Create and publish a product](/azure/api-management/api-management-howto-add-products?tabs=azure-cli)
-|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [/cli/azure/service-page/azure%20logic%20apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
+|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [Create and manage integration accounts for B2B enterprise integrations in Azure Logic Apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
 |[Event Grid](/cli/azure/service-page/azure%20event%20grid) | [Route custom events to web endpoint](/azure/event-grid/custom-event-quickstart)
 |[Service Bus](/cli/azure/service-page/azure%20service%20bus%20messaging) | [Enable dead lettering on message expiration for Azure Service Bus queues and subscriptions](/azure/service-bus-messaging/enable-dead-letter#using-azure-cli)
 
@@ -209,111 +209,118 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
 |[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
 | |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
-|[Azure IoT Central](azure-cli-reference-for-iot.md) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
-|[Azure IoT Edge](azure-cli-reference-for-iot.md) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
+|[Azure IoT Central](/cli/azure/iot/central) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
+|[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
 | |[Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
-|[Azure IoT Hub](azure-cli-reference-for-iot.md) | [Configure IoT Hub message routing](/azure/iot-hub/tutorial-routing)
-|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [/cli/azure/service-page/azure%20logic%20apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
+|[Azure IoT Hub](/cli/azure/iot/hub) | [Configure IoT Hub message routing](/azure/iot-hub/tutorial-routing)
+|[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [Create and manage integration accounts for B2B enterprise integrations in Azure Logic Apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
 |[Azure Machine Learning](/cli/azure/service-page/azure%20machine%20learning) | [Create and manage an Azure Machine Learning compute instance](/azure/machine-learning/how-to-create-manage-compute-instance?tabs=azure-cli)
 | |[Manage access to an Azure Machine Learning workspace](/azure/machine-learning/how-to-assign-roles)
-|[Azure Maps](/cli/azure/service-page/azure%20maps) | xxx
-|[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | xxx
-|[Azure Stream Analytics](/cli/azure/service-page/azure%20stream%20analytics) | xxx
-|[Azure Time Series Insights](/cli/azure/service-page/azure%20time%20series%20insights) | xxx
+|[Azure Maps](/cli/azure/maps) | 
+|[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | [Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings?tabs=azure-cli)
+| | [Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli?tabs=azure-cli)
+|[Azure Stream Analytics](/cli/azure/service-page/azure%20stream%20analytics) | [Create an Azure Stream Analytics job using the Azure CLI](/azure/stream-analytics/quick-create-azure-cli?tabs=azure-cli)
+|[Azure Time Series Insights](/cli/azure/service-page/azure%20time%20series%20insights) | [Authentication and authorization for Azure Time Series Insights API](/azure/time-series-insights/time-series-insights-authentication-and-authorization?tabs=azure-cli)
+| | [Create an Azure Time Series Insights Gen2 environment using the Azure CLI](/azure/time-series-insights/how-to-create-environment-using-cli?tabs=azure-cli)
 |[Event Grid](/cli/azure/service-page/azure%20event%20grid) | [Route custom events to web endpoint](/azure/event-grid/custom-event-quickstart)
 
 ## Management and Governance
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Automation](/azure/automation/automation-intro) | xxx
-|[Azure Advisor](/azure/advisor/) | xxx
-|[Azure Backup](/azure/backup/) | xxx
-|[Azure Blueprint](/azure/governance/blueprints/) | xxx
-|[Azure Cost Management and Billing](/azure/cost-management-billing/) | xxx
-|[Azure Managed Applications](/azure/azure-resource-manager/managed-applications/) | xxx
-|[Azure Monitor](/azure/azure-monitor/) | xxx
-|[Azure Policy](/azure/governance/policy/) | xxx
-|[Azure Resource Manager](/azure/azure-resource-manager/) | xxx
+|[Automation](/cli/azure/automation) | xxx
+|[Azure Advisor](/cli/azure/advisor) | xxx
+|[Azure Backup](/cli/azure/backup) | xxx
+|[Azure Blueprint](/cli/azure/blueprint) | xxx
+|[Azure Cost Management and Billing](/cli/azure/service-page/azure%20cost%20management%20+%20billing) | xxx
+|[Azure Managed Applications](/cli/azure/service-page/azure%20managed%20applications) | xxx
+|[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
+| |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
+|[Azure Policy](/cli/azure/service-page/azure%20policy) | xxx
+|[Azure Resource Manager](/cli/azure/service-page/azure%20resource%20manager) | xxx
 |[Azure Resource Manager templates](/azure/azure-resource-manager/templates/template-tutorial-deployment-script) | xxx
-|[Traffic Manager](/azure/traffic-manager/) | xxx
+|[Traffic Manager](/cli/azure/network/traffic-manager/) | xxx
 
 ## Media
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Content Delivery Network](/azure/cdn/) | xxx
-|[Media Services](/azure/media-services/) | xxx
+|[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | xxx
+|[Media Services](/cli/azure/service-page/azure%20media%20services) | xxx
 
 ## Migration
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Cost Management and Billing](/azure/cost-management-billing/) | xxx
+|[Azure Cost Management and Billing](/cli/azure/service-page/azure%20cost%20management%20+%20billing) | xxx
 
 ## Mobile
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[API Management](/azure/api-management/) | xxx
-|[App Service](/azure/app-service/) | xxx
-|[Azure Cognitive Search](/azure/search/) | xxx
-|[Azure Communication Service](/azure/communication-services/) | xxx
-|[Azure Data Migration](/azure/dms/) | xxx
-|[Azure Notification Hubs](/azure/notification-hubs/) | xxx
-|[Spatial Anchors](/windows/mixed-reality/mixed-reality) | xxx
+|[API Management](/cli/azure/service-page/api%20management) | xxx
+|[App Service](/cli/azure/service-page/azure%20app%20service) | xxx
+|[Azure Cognitive Search](/cli/azure/service-page/azure%20cognitive%20search)|[Manage your Azure Cognitive Search service](/azure/search/search-manage-azure-cli)
+|[Azure Communication Service](/cli/azure/service-page/azure%20communication%20service) | xxx
+|[Azure Data Migration](/cli/azure/service-page/azure%20data%20migration) | xxx
+|[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | [Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings?tabs=azure-cli)
+| | [Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli?tabs=azure-cli)
+|[Spatial Anchors](/cli/azure/service-page/azure%20spatial%20anchors) | xxx
 
 ## Networking
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure DNS](/azure/dns/) | xxx
-|[Azure Private Link](/azure/private-link/) | xxx
-|[Content Delivery Network](/azure/cdn/) | xxx
-|[Load Balancer](/azure/load-balancer/) | xxx
-|[Traffic Manager](/azure/traffic-manager/) | xxx
-|[Virtual Network](/azure/virtual-network/) | xxx
+|[Azure DNS](/cli/azure/network/dns) | xxx
+|[Azure Private Link](/cli/azure/network/private-link-service) | xxx
+|[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | xxx
+|[Load Balancer](/cli/azure/network/lb) | xxx
+|[Traffic Manager](/cli/azure/network/traffic-manager) | xxx
+|[Virtual Network](/cli/azure/network/vnet) | xxx
 
 ## Security
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Active Directory (AD)](/azure/active-directory/) | xxx
-|[Azure Dedicated HSM](/azure/dedicated-hsm/) | xxx
-|[Azure Security Center](/azure/security-center/) | xxx
-|[Azure Sentinel](/azure/sentinel/overview) | xxx
-|[Key Vault](/azure/key-vault/) | xxx
-|[Microsoft Azure Attestation](/azure/attestation/overview) | xxx
+|[Azure Active Directory (AD)](/cli/azure/service-page/azure%20active%20directory) | xxx
+|[Azure Dedicated HSM](/cli/azure/service-page/azure%20dedicated%20hsm) | xxx
+|[Azure Security Center](/cli/azure/service-page/azure%20security%20center) | xxx
+|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) | xxx
+|[Key Vault](/cli/azure/service-page/azure%20key%20vault) | xxx
+|[Microsoft Azure Attestation](/cli/azure/service-page/azure%20attestation) | xxx
 
 ## Storage
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Backup](/azure/backup/) | xxx
-|[Azure Data Lake Storage](/azure/storage/blobs/data-lake-storage-introduction/) | xxx
-|[Azure Data Share](/azure/data-share/) | xxx
-|[Azure Disk Storage](/azure/virtual-machines/windows/managed-disks-overview) | xxx
-|[Azure HPC Cache](/azure/hpc-cache/hpc-cache-overview) | xxx
-|[Azure NetApp Files](/azure/azure-netapp-files/) | xxx
-|[Azure Storage](/azure/storage/) | xxx
+|[Azure Backup](/cli/azure/service-page/azure%20backup) | xxx
+|[Azure Data Lake Storage](/cli/azure/service-page/azure%20data%20lake%20storage) | xxx
+|[Azure Data Share](azure-cli-reference-for-data-share.md) | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data?tabs=azure-cli)
+|| [Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share?tabs=azure-cli)
+|[Azure Disk Storage](/cli/azure/service-page/azure%20disk%20storage) | xxx
+|[Azure HPC Cache](/cli/azure/service-page/azure%20hpc%20cache) | xxx
+|[Azure NetApp Files](/cli/azure/service-page/azure%20netapp%20files) | xxx
+|[Azure Storage](/cli/azure/azure-cli-reference-for-storage) | xxx
 |[Managed Disks](/azure/virtual-machines/windows/managed-disks-overview/) | xxx
-|[Storage Accounts](/azure/storage/common/storage-account-overview/) | xxx
+|[Storage Accounts](/cli/azure/azure-cli-reference-for-storage#storage-accounts) | xxx
 
 ## Web
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Service](/azure/app-service/)
-|[API Management](/azure/api-management/)
-|[Azure Cognitive Search](/azure/search/)
-|[Azure Communication Service](/azure/communication-services/)
-|[Azure Notification Hubs](/azure/notification-hubs/)
-|[Azure SignalR](/azure/azure-signalr/)
-|[Azure Spring Cloud](/azure/spring-cloud/)
-|[Azure Web Apps](/rest/api/appservice/webapps)
-|[Content Delivery Network](/azure/cdn/)
-|[Notification Hubs](/azure/notification-hubs/)
-|[Static Web Apps](/azure/static-web-apps/overview)
+|[App Service](/cli/azure/service-page/azure%20app%20service) | xxx
+|[API Management](/cli/azure/service-page/api%20management) | xxx
+|[Azure Cognitive Search](/cli/azure/service-page/azure%20cognitive%20search)|[Manage your Azure Cognitive Search service](/azure/search/search-manage-azure-cli)
+|[Azure Communication Service](/cli/azure/service-page/azure%20communication%20service) | xxx
+|[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | [Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings?tabs=azure-cli)
+| | [Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli?tabs=azure-cli)
+|[Azure SignalR](/cli/azure/service-page/azure%20signalr) | xxx
+|[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | [Read a secret from Azure Key Vault in a Spring Boot application](/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault#deploy-to-azure-spring-cloud)
+|[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
+| |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
+|[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | xxx
+|[Notification Hubs](/azure/notification-hubs/) | xxx
+|[Static Web Apps](/azure/static-web-apps/overview) | xxx
 
 ## See also
 
