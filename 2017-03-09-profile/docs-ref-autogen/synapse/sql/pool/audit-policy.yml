@@ -9,7 +9,8 @@ directCommands:
   summary: Get a SQL pool's auditing policy.
   description: ''
   syntax: >-
-    az synapse sql pool audit-policy show [--ids]
+    az synapse sql pool audit-policy show [--blob-auditing-policy-name]
+                                          [--ids]
                                           [--name]
                                           [--query-examples]
                                           [--resource-group]
@@ -19,6 +20,9 @@ directCommands:
   - summary: Get a SQL pool's auditing policy.
     syntax: az synapse sql pool audit-policy show --name sqlpool --workspace-name testsynapseworkspace --resource-group rg
   optionalParameters:
+  - name: --blob-auditing-policy-name -b
+    summary: Name of the blob auditing policy name.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -46,9 +50,15 @@ directCommands:
     az synapse sql pool audit-policy update [--actions]
                                             [--add]
                                             [--blob-auditing-policy-name]
+                                            [--blob-storage-target-state {Disabled, Enabled}]
+                                            [--eh]
+                                            [--ehari]
+                                            [--ehts {Disabled, Enabled}]
                                             [--enable-azure-monitor {false, true}]
                                             [--force-string]
                                             [--ids]
+                                            [--lats {Disabled, Enabled}]
+                                            [--lawri]
                                             [--name]
                                             [--remove]
                                             [--resource-group]
@@ -65,28 +75,70 @@ directCommands:
   examples:
   - summary: Enable by storage account name.
     syntax: >-
-      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
 
-      --state Enabled --storage-account mystorageaccount --blob-auditing-policy-name bapname
+      --resource-group rg --state Enabled --blob-storage-target-state Enabled --storage-account mystorage \
+
+      --blob-auditing-policy-name bapname
   - summary: Enable by storage endpoint and key.
     syntax: >-
-      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
 
-      --state Enabled --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY== \
+      --resource-group rg --state Enabled --blob-storage-target-state Enabled \
+
+      --storage-endpoint https://mystorage.blob.core.windows.net --storage-key MYKEY== \
 
       --blob-auditing-policy-name bapname
   - summary: Set the list of audit actions.
     syntax: >-
-      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
 
-      --actions FAILED_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public' \
+      --resource-group rg --actions SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public' \
 
       --blob-auditing-policy-name bapname
   - summary: Disable an auditing policy.
     syntax: >-
-      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace --resource-group rg \
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
 
-      --state Disabled --blob-auditing-policy-name bapname
+      --resource-group rg --state Disabled --blob-auditing-policy-name bapname
+  - summary: Disable a blob storage auditing policy.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --blob-storage-target-state Disabled --blob-auditing-policy-name bapname
+  - summary: Enable a log analytics auditing policy.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --state Enabled --log-analytics-target-state Enabled \
+
+      --log-analytics-workspace-resource-id myworkspaceresourceid --blob-auditing-policy-name bapname
+  - summary: Disable a log analytics auditing policy.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --log-analytics-target-state Disabled --blob-auditing-policy-name bapname
+  - summary: Enable an event hub auditing policy.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --state Enabled --event-hub-target-state Enabled \
+
+      --event-hub-authorization-rule-id eventhubauthorizationruleid --event-hub eventhubname \
+
+      --blob-auditing-policy-name bapname
+  - summary: Enable an event hub auditing policy for default event hub.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg --state Enabled --event-hub-target-state Enabled \
+
+      --event-hub-authorization-rule-id eventhubauthorizationruleid --blob-auditing-policy-name bapname
+  - summary: Disable an event hub auditing policy.
+    syntax: >-
+      az synapse sql pool audit-policy update --name sqlpool --workspace-name testsynapseworkspace \
+
+      --resource-group rg  --event-hub-target-state Disabled --blob-auditing-policy-name bapname
   optionalParameters:
   - name: --actions
     summary: List of actions and action groups to audit.
@@ -97,6 +149,20 @@ directCommands:
   - name: --blob-auditing-policy-name -b
     summary: Name of the blob auditing policy name.
     description: ''
+  - name: --blob-storage-target-state --bsts
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether blob storage is a destination for audit records.
+    description: ''
+  - name: --eh --event-hub
+    summary: The name of the event hub. If none is specified when providing event_hub_authorization_rule_id, the default event hub will be selected.
+    description: ''
+  - name: --ehari --event-hub-authorization-rule-id
+    summary: The resource Id for the event hub authorization rule.
+    description: ''
+  - name: --ehts --event-hub-target-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether event hub is a destination for audit records.
+    description: ''
   - name: --enable-azure-monitor
     parameterValueGroup: false, true
     summary: Whether enabling azure monitor target or not.
@@ -106,6 +172,13 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --lats --log-analytics-target-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Indicate whether log analytics is a destination for audit records.
+    description: ''
+  - name: --lawri --log-analytics-workspace-resource-id
+    summary: The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Audit Logs.
     description: ''
   - name: --name -n
     summary: The SQL pool name.
@@ -169,5 +242,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/26/2021
+  ms.date: 09/08/2021
   description: Manage a SQL pool's auditing policy.
