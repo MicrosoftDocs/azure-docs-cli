@@ -243,7 +243,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 | |[Remediate non-compliant resources with Azure Policy remediation tasks](/azure/governance/policy/how-to/remediate-resources#create-a-remediation-task-through-azure-cli)
 |[Azure Resource Manager](/cli/azure/service-page/azure%20resource%20manager) | [Use tags to organize your Azure resources and management hierarchy](/azure/azure-resource-manager/management/tag-resources#azure-cli)
 | | [Manage Azure Resource Manager resource groups by using Azure CLI](/azure/azure-resource-manager/management/manage-resource-groups-cli)
-|[Azure Resource Manager templates](/azure/azure-resource-manager/templates/template-tutorial-deployment-script) | [Azure Resource Manager template specs](/azure/azure-resource-manager/templates/template-specs?tabs=azure-cli)
+|[Azure Resource Manager templates](/cli/azure/group) | [Azure Resource Manager template specs](/azure/azure-resource-manager/templates/template-specs?tabs=azure-cli)
 | | [Create and deploy template spec](/azure/azure-resource-manager/templates/quickstart-create-template-specs?tabs=azure-cli)
 |[Traffic Manager](/cli/azure/network/traffic-manager/) | [Create a Traffic Manager profile for a highly available web application using Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli)
 
@@ -322,7 +322,6 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Storage](/cli/azure/azure-cli-reference-for-storage) | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security?tabs=azure-cli)
 | | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Create an Azure file share](/azure/storage/files/storage-how-to-create-file-share?tabs=azure-cli)
-|[Managed Disks](/cli/azure/disk) |
 |[Storage Accounts](/cli/azure/azure-cli-reference-for-storage#storage-accounts) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 
 ## Web
@@ -344,8 +343,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
 |[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint)
-|[Notification Hubs](/azure/notification-hubs/) | xxx
-|[Static Web Apps](/azure/static-web-apps/overview) | xxx
+|[Azure Static Web Apps](/azure/static-web-apps/overview) | xxx
 
 ## See also
 
