@@ -49,7 +49,7 @@ Use [Azure Analytics](/services/#ai-machine-learning) to gather, store, process,
 |[Azure Data Share](azure-cli-reference-for-data-share.md) | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data?tabs=azure-cli)
 || [Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share?tabs=azure-cli)
 |[Azure Databricks](/cli/azure/service-page/azure%20databricks) | [Quickstart: Run a Spark job on Azure Databricks Workspace](/azure/databricks/scenarios/quickstart-create-databricks-workspace-portal?tabs=azure-cli)
-|| [Build a data pipeline by using Azure Data Factory, DevOps, and ML](/azure/devops/pipelines/apps/cd/azure/build-data-pipeline?view=azure-devops)
+|| [Build a data pipeline by using Azure Data Factory, DevOps, and ML](/azure/devops/pipelines/apps/cd/azure/build-data-pipeline?view=azure-devops&preserve-view=true)
 |[Azure HDInsight](/cli/azure/service-page/azure%20hdinsight) | [Manage Azure HDInsight clusters](/azure/hdinsight/hdinsight-administer-use-command-line)
 || [Create an Apache Kafka REST proxy enabled cluster in HDInsight](/azure/hdinsight/kafka/tutorial-cli-rest-proxy)
 |[Event Hubs](/cli/azure/service-page/azure%20event%20hubs) | [Route custom events to Azure Event Hubs](/azure/event-grid/custom-event-to-eventhub)
@@ -143,15 +143,15 @@ Use Microsoft's comprehensive set of [development tools](/product-categories/dev
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps?view=azure-cli-latest#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
+|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps?view=azure-cli-latest&preserve-view=true#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
 | |[Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app?pivots=platform-linux)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
-|[Azure Lab Services](/cli/azure/service-page/azure%20lab%20services) | 
-|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
-| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=azure-devops-cli)
-| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=azure-cli)
-|[Visual Studio](/cli/azure/service-page/visual%20studio) | 
+|[Azure Lab Services](/cli/azure/service-page/azure%20lab%20services) |
+|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
+|[Visual Studio](/cli/azure/service-page/visual%20studio) |
 
 ## DevOps
 
@@ -159,16 +159,16 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Artifacts](/cli/azure/azure-cli-reference-for-devops#azure-artifacts) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops)
-|[Azure Boards](/cli/azure/azure-cli-reference-for-devops#azure-boards) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&tabs=azure-devops-cli#open-project-settings-list-project-areas)
+|[Azure Artifacts](/cli/azure/azure-cli-reference-for-devops#azure-artifacts) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops&preserve-view=true)
+|[Azure Boards](/cli/azure/azure-cli-reference-for-devops#azure-boards) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&preserve-view=true&tabs=azure-devops-cli#open-project-settings-list-project-areas)
 |[Azure DevOps](/cli/azure/azure-cli-reference-for-devops) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
 | |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
-|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&tabs=azure-devops-cli)
-| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&tabs=azure-devops-cli)
-| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=azure-cli)
-|[Azure Repos](/cli/azure/azure-cli-reference-for-devops#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops)
+|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+| |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+| |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
+|[Azure Repos](/cli/azure/azure-cli-reference-for-devops#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops&preserve-view=true)
 
 ## Hybrid
 
@@ -228,7 +228,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Automation](/cli/azure/automation) |
+|[Automation](/cli/azure/automation) | [Enable Update Management using Azure Resource Manager template](/azure/automation/update-management/enable-from-template)
 |[Azure Advisor](/cli/azure/advisor) | [Create Azure Advisor alerts on new recommendations using an ARM template](/azure/advisor/advisor-alerts-arm?tabs=CLI)
 |[Azure Backup](/cli/azure/backup) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 | | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
@@ -323,6 +323,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 | | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Create an Azure file share](/azure/storage/files/storage-how-to-create-file-share?tabs=azure-cli)
 |[Storage Accounts](/cli/azure/azure-cli-reference-for-storage#storage-accounts) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
+| | [Manage storage account access keys](/azure/storage/common/storage-account-keys-manage?tabs=azure-cli)
 
 ## Web
 
@@ -343,7 +344,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
 |[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint)
-|[Azure Static Web Apps](/azure/static-web-apps/overview) | xxx
+|[Azure Static Web Apps](/cli/azure/staticwebapp) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
 
 ## See also
 
