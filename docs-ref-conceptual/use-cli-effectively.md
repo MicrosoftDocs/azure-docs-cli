@@ -4,18 +4,18 @@ description: Learn tips for using Azure CLI effectively, such as output formats,
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
 ---
 
-# Use Azure CLI effectively
+# How to use Azure CLI effectively
 
 Azure CLI allows you to configure and manage Azure from Bash, PowerShell, or a Command Prompt window. Azure CLI supports command reuse, both on an ad-hoc basis and through scripts. You'll need to be aware of the capabilities of the shell that you run.
 
-This article discusses tips useful for Azure CLI and how to avoid pitfalls.
+This article discusses useful tips on how to use the Azure CLI and how to avoid pitfalls.
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
