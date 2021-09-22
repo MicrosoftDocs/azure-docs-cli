@@ -179,7 +179,7 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
 |[Azure Security Center](/cli/azure/service-page/azure%20security%20center) |
-|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) | 
+|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) |
 |[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
 |[Azure Stack HCI](/cli/azure/stack-hci) |
 
