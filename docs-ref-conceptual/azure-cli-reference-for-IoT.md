@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure IoT | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure IoT. With over 100 different commands available, you can work effectively with Azure IoT from a command line.
+description: Find Azure CLI core and extension reference commands to manage Azure IoT. With over 100 different commands available, you can work effectively with Azure IoT from a command line.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli

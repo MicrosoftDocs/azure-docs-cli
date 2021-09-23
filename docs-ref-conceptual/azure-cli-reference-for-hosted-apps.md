@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure hosted apps | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure hosted apps.
+description: Find Azure CLI core and extension reference commands to manage Azure hosted apps.  Follow links to popular articles to learn how to use the Azure CLI for Azure hoted apps.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli

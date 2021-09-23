@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure Monitor | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure Monitor. With over 100 different commands, you can work effectively with Azure Monitor from a command line.
+description: LFind Azure CLI core and extension reference commands to manage Azure Monitor. Follow links to popular articles to learn how to use the Azure CLI for Azure Monitor
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli

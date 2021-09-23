@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure Virtual Machines | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure Virtual Machines
+description: Find Azure CLI core and extension reference commands to manage Azure Virtual Machines.  Follow links to popular articles to learn how to use the Azure CLI for Azure VMs.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli

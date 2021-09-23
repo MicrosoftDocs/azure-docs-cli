@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure Cosmos DB | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure Cosmos DB. 
+description: Find Azure CLI core and extension reference commands to manage Azure Cosmos DB.  Follow links to popular articles to learn how to use the Azure CLI for Azure Cosmos DB.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli

@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure Storage | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure Storage.
+description: Find Azure CLI core and extension reference commands to manage Azure Storage.  Follow links to popular articles to learn how to use the Azure CLI for Azure Storage.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
@@ -29,7 +29,7 @@ See [Azure Storage](/cli/azure/service-page/azure%20storage) for an alphabetic l
 - [Storage file systems](#storage-file-system-references)
 - [Storage queues](#storage-queue-references)
 - [Storage file shares](#storage-file-share-references)
-- [Storage file shares (SMB 3.0)](#storage-file-shares-smb-30-references)
+- [Storage file shares (SMB 3.0)](#storage-file-share-smb-30-references)
 - [Additional storage references](#additional-storage-references)
 
 > [!NOTE]

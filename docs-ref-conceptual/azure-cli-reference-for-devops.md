@@ -1,6 +1,6 @@
 ---
 title: Azure CLI references for Azure DevOps | Microsoft Docs
-description: Learn how to use the Azure CLI to manage Azure DevOps. 
+description: Find Azure CLI core and extension reference commands to manage Azure DevOps.  Follow links to popular articles to learn how to use the Azure CLI for Azure DevOps.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
@@ -22,7 +22,7 @@ The Azure CLI commands for [Azure DevOps](/azure/devops) allow you to streamline
 - [Azure Artifacts](#azure-artifact-references)
 - [Azure Boards](#azure-board-references) 
 - [Azure DevOps Organizations](#azure-devops-organization-references) 
-- [Azure Functions (DevOps integration)](#azure-functions-devops-integration-references) 
+- [Azure Functions (DevOps integration)](#azure-function-devops-integration-references) 
 - [Azure Pipelines](#azure-pipeline-references) 
 - [Azure Repos](#azure-repo-references) 
 
