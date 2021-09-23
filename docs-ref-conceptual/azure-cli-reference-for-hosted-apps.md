@@ -26,16 +26,16 @@ Access to the following `az webapp` references requires the [webapp](https://git
 
 See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for an alphabetic list of Azure CLI core and extension references available for the Azure Web App service. For references in each subgroup, see the tables in the following sections:
 
-- [Azure Static Web Apps](#azure-static-web-apps)
-- [Azure Web App configuration](#azure-web-app-configuration)
-- [Azure Web App deployment](#azure-web-app-deployment)
-- [Azure Web App WebJobs](#azure-web-app-webjobs)
+- [Azure Static Web Apps](#azure-static-web-app-references)
+- [Azure Web App configuration](#azure-web-app-configuration-references)
+- [Azure Web App deployment](#azure-web-app-deployment-references)
+- [Azure Web App WebJobs](#azure-web-app-webjob-references)
 - [Additional Azure Web App references](#additional-azure-web-app-references)
 
 For other hosted app references, see the following sections:
 
-- [Azure App Service plans](#azure-app-service-plans)
-- [Azure function apps](#azure-function-apps)
+- [Azure App Service plans](#azure-app-service-plan-references)
+- [Azure function apps](#azure-function-app-references)
 
 ## Azure Static Web App references
 

@@ -19,12 +19,12 @@ The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of com
 
 The Azure CLI commands for [Azure DevOps](/azure/devops) allow you to streamline tasks bypassing user interface workflows.  They are associated with the following Azure CLI reference groups. Except for Azure Functions, use of each of these reference groups requires the [azure-devops](https://github.com/Azure/azure-devops-cli-extension) extension:
 
-- [Azure Artifacts](#azure-artifacts)
-- [Azure Boards](#azure-boards) 
-- [Azure DevOps Organizations](#azure-devops-organizations) 
-- [Azure Functions (DevOps integration)](#azure-functions-devops-integration) 
-- [Azure Pipelines](#azure-pipelines) 
-- [Azure Repos](#azure-repos) 
+- [Azure Artifacts](#azure-artifact-references)
+- [Azure Boards](#azure-board-references) 
+- [Azure DevOps Organizations](#azure-devops-organization-references) 
+- [Azure Functions (DevOps integration)](#azure-functions-devops-integration-references) 
+- [Azure Pipelines](#azure-pipeline-references) 
+- [Azure Repos](#azure-repo-references) 
 
 For the Azure CLI references in each subgroup, see the tables in the following sections.
 
@@ -33,7 +33,7 @@ For the Azure CLI references in each subgroup, see the tables in the following s
 
 List of Azure CLI references that can be used to manage Azure DevOps, reference descriptions, and links to popular articles:
 
-## Azure Artifacts references
+## Azure Artifact references
 
 [Azure Artifacts](/cli/azure/artifacts) has the following references:
 
@@ -59,7 +59,7 @@ List of Azure CLI references that can be used to manage Azure DevOps, reference 
 
 [Azure DevOps](/cli/azure/devops) has the following references:
 
-### Security
+### Security references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -68,7 +68,7 @@ List of Azure CLI references that can be used to manage Azure DevOps, reference 
 | [az devops security permission](/cli/azure/devops/security/permission) | Manage security permissions. | [Get started with permissions, access, and security groups](/azure/devops/organizations/security/about-permissions) |
 | [az devops security permission namespace](/cli/azure/devops/security/permission/namespace) | Manage security namespaces. | [Security namespace and permission reference](/azure/devops/organizations/security/namespace-reference) |
 
-### Service endpoint
+### Service endpoint references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -76,7 +76,7 @@ List of Azure CLI references that can be used to manage Azure DevOps, reference 
 | [az devops service-endpoint azurerm](/cli/azure/devops/service-endpoint/azurerm) | Manage Azure Resource Manager service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
 | [az devops service-endpoint github](/cli/azure/devops/service-endpoint/github) | Manage GitHub service endpoints and connections. | [Service connections](/azure/devops/pipelines/library/service-endpoints) |
 
-### Additional DevOps references
+### Additional DevOps organization references
 
 | Reference | Description | More information |
 |-|-|-|
