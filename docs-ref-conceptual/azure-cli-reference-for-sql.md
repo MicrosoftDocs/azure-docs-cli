@@ -17,9 +17,7 @@ keywords: azure cli references, azure sql
 
 The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services and gives you the ability to manage Azure SQL services from a command-line.
 
-The Azure CLI commands for [Azure SQL](/azure/azure-sql/) are associated with the following Azure CLI reference groups. It's composed of core references only and ships as part of the Azure CLI.  
-
-See [az sql](/cli/azure/sql) for an alphabetic list of the Azure CLI core and extension references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections:
+The Azure CLI commands for [Azure SQL](/azure/azure-sql/) is composed of core references only and ships as part of the Azure CLI.  See [az sql](/cli/azure/sql) for an alphabetic list of the Azure CLI core and extension references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections:
 
 - [SQL database](#sql-database-references)
 - [SQL Managed Instance](#sql-managed-instance-references)
