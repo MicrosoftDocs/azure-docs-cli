@@ -42,7 +42,7 @@ directCommands:
   summary: Create a new key, stores it, then returns key parameters and attributes to the client.
   description: The create key operation can be used to create any key type in Vault or HSM. If the named key already exists, Vault or HSM creates a new version of the key. It requires the keys/create permission.
   syntax: >-
-    az keyvault key create [--curve {P-256, P-256K, P-384, P-521}]
+    az keyvault key create [--curve]
                            [--disabled {false, true}]
                            [--expires]
                            [--hsm-name]
@@ -58,7 +58,6 @@ directCommands:
                            [--vault-name]
   optionalParameters:
   - name: --curve
-    parameterValueGroup: P-256, P-256K, P-384, P-521
     summary: 'Elliptic curve name. For valid values, see: https://docs.microsoft.com/rest/api/keyvault/createkey/createkey#jsonwebkeycurvename.'
     description: ''
   - name: --disabled
@@ -72,7 +71,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --kty
     parameterValueGroup: EC, EC-HSM, RSA, RSA-HSM, oct, oct-HSM
@@ -295,7 +294,7 @@ directCommands:
   syntax: >-
     az keyvault key import [--byok-file]
                            [--byok-string]
-                           [--curve {P-256, P-256K, P-384, P-521}]
+                           [--curve]
                            [--disabled {false, true}]
                            [--expires]
                            [--hsm-name]
@@ -319,7 +318,6 @@ directCommands:
     summary: BYOK string containing the key to be imported. Must not be password protected.
     description: ''
   - name: --curve
-    parameterValueGroup: P-256, P-256K, P-384, P-521
     summary: The curve name of the key to import (only for BYOK).
     description: ''
   - name: --disabled
@@ -333,7 +331,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --kty
     defaultValue: RSA
@@ -631,8 +629,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_show
   name: az keyvault key show
-  summary: Gets the public part of a stored key.
-  description: The get key operation is applicable to all key types. If the requested key is symmetric, then no key material is released in the response. This operation requires the keys/get permission.
+  summary: Get a key's attributes and, if it's an asymmetric key, its public material.
+  description: Requires keys/get permission.
   syntax: >-
     az keyvault key show [--hsm-name]
                          [--id]
