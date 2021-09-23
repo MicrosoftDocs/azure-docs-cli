@@ -1,29 +1,38 @@
 ---
-title: Azure CLI references for Azure Cosmos DB
-description: Azure CLI reference landing page for Azure Cosmos DB
+title: Azure CLI references for Azure Cosmos DB | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure Cosmos DB. 
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 08/01/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure cosmos db
 ---
 
-# Azure CLI for Azure Cosmos DB
+# Azure CLI reference commands for Azure Cosmos DB
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Cosmos DB, and gives you the ability to manage Cosmos DB services from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Cosmos DB, and gives you the ability to manage Cosmos DB services from a command-line.
 
-## References for Azure Cosmos DB
-
-The [Azure Cosmos DB](/azure/cosmos-db/introduction) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The Azure CLI commands for [Azure Cosmos DB](/azure/cosmos-db/introduction) are composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
 See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core and extension references available for the Azure Cosmos DB service. For references for each subgroup, see the tables in the following sections.
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
+
+See [Azure Cosmos DB](/cli/azure/service-page/azure%20cosmos%20db) for an alphabetic list of Azure CLI core and extension references available for the Azure Cosmos DB service. For references in each subgroup, see the tables in the following sections:
+
+- [SQL API](#sql-api-references)
+- [API for MongoDB](#api-for-mongodb-references)
+- [Cassandra API](#cassandra-api-references)
+- [Managed Instance for Apache Cassandra](#managed-instance-for-apache-cassandra-references)
+- [Gremlin API](#gremlin-api-references)
+- [Table API](#table-api-references)
+- [Additional Cosmos DB references](#additional-cosmos-db-references)
 
 ## SQL API references
 
@@ -82,7 +91,7 @@ See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core
 | [az cosmosdb table](/cli/azure/cosmosdb/table) | Manage the Table resources of an Azure Cosmos DB account. | [Introduction to Table API in Azure Cosmos DB](/azure/cosmos-db/table-introduction) | core |
 | [az cosmosdb table throughput](/cli/azure/cosmosdb/table/throughput) | Manage the throughput Table resources of an Azure Cosmos DB account. | [Request units in Azure Cosmos DB](/azure/cosmos-db/request-units) | Core |
 
-## Additional references
+## Additional Cosmos DB references
 
 | Reference | Description | More information | Core or extension
 |-|-|-|-|

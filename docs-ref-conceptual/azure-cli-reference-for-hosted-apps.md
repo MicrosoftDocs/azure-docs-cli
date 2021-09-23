@@ -1,29 +1,30 @@
 ---
-title: Azure CLI references for Azure hosted apps
-description: Azure CLI reference landing page for Azure hosted apps
+title: Azure CLI references for Azure hosted apps | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure hosted apps.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 08/02/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure hosted apps, azure web apps, Azure static web app, azure app service
 ---
 
-# Azure CLI for Azure hosted apps
+# Azure CLI reference commands for Azure hosted apps
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure App Service, and gives you the ability to manage hosted apps from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services and gives you the ability to manage hosted apps from a command-line.
 
-The [Azure App Service](/azure/app-service) CLI experience is composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The Azure CLI commands for [Azure App Service](/azure/app-service) are composed of two parts: **core** and **extension**. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
 Access to the following `az webapp` references requires the [webapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/webapp) extension: `az webapp container`, `az webapp remote-connection`, and `az webapp scan`. Access to the `az functionapp app` reference requires the [deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) extension.
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for a complete list of the Azure CLI core and extension references available for the Azure Web Apps service. For references for each subgroup, see the tables in the following sections:
+See [Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) for an alphabetic list of Azure CLI core and extension references available for the Azure Web App service. For references in each subgroup, see the tables in the following sections:
 
 - [Azure Static Web Apps](#azure-static-web-apps)
 - [Azure Web App configuration](#azure-web-app-configuration)
@@ -36,7 +37,7 @@ For other hosted app references, see the following sections:
 - [Azure App Service plans](#azure-app-service-plans)
 - [Azure function apps](#azure-function-apps)
 
-## Azure Static Web Apps
+## Azure Static Web App references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -46,7 +47,7 @@ For other hosted app references, see the following sections:
 | [az staticwebapp hostname](/cli/azure/staticwebapp/hostname) | Manage custom hostnames of functions of a static web app. | [Add an API to Azure Static Web Apps with Azure Functions](/azure/static-web-apps/add-api) |
 | [az staticwebapp users](/cli/azure/staticwebapp/users) | Manage users of a static web app. | [Accessing user information in Azure Static Web Apps](/azure/static-web-apps/user-information) |
 
-## Azure Web App configuration
+## Azure Web App configuration references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -61,7 +62,7 @@ For other hosted app references, see the following sections:
 | [az webapp config ssl](/cli/azure/webapp/config/ssl) | Configure SSL certificates for a web app. | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
 | [az webapp config storage-account](/cli/azure/webapp/config/storage-account) | Manage a web app's Azure storage account configurations. Applies only to Linux and Windows Containers web apps). | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 
-## Azure Web App deployment
+## Azure Web App deployment references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -71,7 +72,7 @@ For other hosted app references, see the following sections:
 | [az webapp deployment source](/cli/azure/webapp/deployment/source) | Manage web app deployment via source control. | [Secure access to application data](/azure/storage/blobs/storage-secure-access-application?tabs=azure-cli) |
 | [az webapp deployment user](/cli/azure/webapp/deployment/user) | Manage user credentials for deployment. | [Configure the local Git deployment](/azure/key-vault/general/tutorial-net-create-vault-azure-web-app#configure-the-local-git-deployment) |
 
-## Azure Web App WebJobs
+## Azure Web App WebJob references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -97,7 +98,7 @@ For other hosted app references, see the following sections:
 | [az webapp traffic-routing](/cli/azure/webapp/traffic-routing) | Manage traffic routing for web apps. | | [Control Azure App Service traffic with Azure Traffic Manager](/azure/app-service/web-sites-traffic-manager) |
 | [az webapp vnet-integration](/cli/azure/webapp/vnet-integration) | Manage the virtual network integrations for a web app. | | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
 
-## Azure App Service plans
+## Azure App Service plan references
 
 See [az appservice](/cli/azure/appservice) for a complete list of the references available to manage [Azure App Service plans](/azure/app-service/overview-hosting-plans).
 
@@ -110,7 +111,7 @@ See [az appservice](/cli/azure/appservice) for a complete list of the references
 | [az appservice plan](/cli/azure/appservice/plan) | Manage App Service plans. | [Manage an App Service plan in Azure](/azure/app-service/app-service-plan-manage) |
 | [az appservice vnet-integration](/cli/azure/appservice/vnet-integration) | List the virtual network integrations that an appservice plan uses. | [Integrate your app with an Azure virtual network](/azure/app-service/web-sites-integrate-with-vnet) |
 
-## Azure function apps
+## Azure function app references
 
 See [az functionapp](/cli/azure/functionapp) for a complete list of the references available to manage [Azure function apps](/azure/app-service/overview-hosting-plans).
 

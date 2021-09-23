@@ -1,33 +1,31 @@
 ---
-title: Azure CLI references for Azure Monitor
-description: Azure CLI reference landing page for Azure Monitor
+title: Azure CLI references for Azure Monitor | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure Monitor. With over 100 different commands, you can work effectively with Azure Monitor from a command line.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 04/09/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure references, azure monitor
 ---
 
-# Azure CLI for Azure Monitor
+# Azure CLI reference commands for Azure Monitor
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources for many Azure services. For Azure Monitor, over 100 different commands are available, which give you the ability to work effectively with the service from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources for many Azure services. For Azure Monitor, over 100 different commands are available, which give you the ability to work effectively with the service from a command-line.
 
-## References for Azure Monitor
-
-The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI footprint **extension**. The extension is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
+The Azure CLI commands for [Azure Monitor](/azure/azure-monitor/) are composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure Monitor CLI footprint **extension**. The Azure CLI extension for Azure Monitor is automatically installed the first time you run the extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 > [!IMPORTANT]
 >
-> Azure Monitor now includes Application Insights and Log Analytics. As such, you must install the extensions for each sub-area when working with Azure Monitor CLI.
+> Azure Monitor now includes Application Insights and Log Analytics. You must install the extensions for each sub-area when working with the Azure CLI for Azure Monitor. You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
 
-### References
+## Azure Monitor references
 
-> [!NOTE]
-> You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
+List of Azure CLI references that can be used to manage Azure Monitor, reference descriptions, and links to popular articles:
 
 | Reference | Install extension | Description | For more information
 |-|-|-|-|
@@ -47,12 +45,12 @@ The [Azure Monitor](/azure/azure-monitor/) CLI experience is composed of two par
 | [az monitor private-link-scope](/cli/azure/monitor/private-link-scope) | | Manage monitor private link scope resources. | [Use Azure Private Link to securely connect networks to Azure Monitor](/azure/azure-monitor/platform/private-link-security)
 | [az monitor scheduled-query](/cli/azure/monitor/scheduled-query) | yes | Manage scheduled queries.
 
-## Popular Monitor articles using the Azure CLI
+## Popular Azure Monitor articles using the Azure CLI
 
 - [Azure Monitor CLI samples](/azure/azure-monitor/samples/cli-samples)
 - [Create a Log Analytics workspace with Azure CLI](/azure/azure-monitor/learn/quick-create-workspace-cli)
 
-## Azure CLI reference examples
+## Azure CLI reference examples for Azure Monitor
 
 Examples are provided with every Azure CLI reference. Although you can also complete these tasks through the Azure portal, using the Azure CLI requires a command line. Here are a few code blocks to give you an idea of how easy it is to use the Azure CLI.
 

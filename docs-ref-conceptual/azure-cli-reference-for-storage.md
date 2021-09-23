@@ -1,40 +1,43 @@
 ---
-title: Azure CLI references for Azure Storage
-description: Azure CLI reference landing page for Azure Storage
+title: Azure CLI references for Azure Storage | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure Storage.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 08/12/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure storage, azure storage sync, azure import-export
 ---
 
-# Azure CLI for Azure Storage
+# Azure CLI reference commands for Azure Storage
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Storage, and gives you the ability to manage Azure Storage from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services, including Azure Storage, and gives you the ability to manage Azure Storage from a command line.
 
-The [Azure Storage](/azure/storage) CLI experience is composed of two parts: a core and its extensions. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The Azure CLI commands for [Azure Storage](/azure/storage) are composed of two parts: a **core** and its **extensions**. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-See [Azure Storage](/cli/azure/service-page/azure%20storage) for a complete list of the Azure CLI core and extension references available for the Azure Storage service. For references for each subgroup, see the tables in the following sections:
+See [Azure Storage](/cli/azure/service-page/azure%20storage) for an alphabetic list of the Azure CLI core and extension references available for the Azure Storage service. For references for each subgroup, see the tables in the following sections:
 
-- [Azure File Sync](#azure-file-sync)
-- [Import/Export service](#importexport-service)
-- [Storage accounts](#storage-accounts)
-- [Storage blobs](#storage-blobs)
-- [Storage containers](#storage-containers)
-- [Storage file systems](#storage-file-systems)
-- [Storage queues](#storage-queues)
-- [Storage file shares](#storage-file-shares)
-- [Storage file shares (SMB 3.0)](#storage-file-shares-smb-30)
+- [Azure File Sync](#azure-file-sync-references)
+- [Import/Export service](#importexport-service-references)
+- [Storage accounts](#storage-account-references)
+- [Storage blobs](#storage-blob-references)
+- [Storage containers](#storage-container-references)
+- [Storage file systems](#storage-file-system-references)
+- [Storage queues](#storage-queue-references)
+- [Storage file shares](#storage-file-share-references)
+- [Storage file shares (SMB 3.0)](#storage-file-shares-smb-30-references)
 - [Additional storage references](#additional-storage-references)
 
-## Azure File Sync
+List of Azure CLI references that can be used to manage Azure Storage, reference descriptions, and links to popular articles:
+
+## Azure File Sync references
 
 The references in this table are part of the [storagesync](https://github.com/Azure/azure-cli-extensions/tree/main/src/storagesync) extension.
 
@@ -46,7 +49,7 @@ The references in this table are part of the [storagesync](https://github.com/Az
 | [az storagesync sync-group cloud-endpoint](/cli/azure/storagesync/sync-group/cloud-endpoint) | Manage cloud endpoints in a storage sync service sync group. | [Deploy Azure File Sync](/azure/storage/file-sync/file-sync-deployment-guide?tabs=azure-cli) |
 | [az storagesync sync-group server-endpoint](/cli/azure/storagesync/sync-group/server-endpoint) | Manage server endpoints in a storage sync service sync group. | [Deploy Azure File Sync](/azure/storage/file-sync/file-sync-deployment-guide?tabs=azure-cli) |
 
-## Import/Export service
+## Import/Export service references
 
 The references in this table are part of the [import-export](https://github.com/Azure/azure-cli-extensions/tree/main/src/import-export) extension.
 
@@ -56,7 +59,7 @@ The references in this table are part of the [import-export](https://github.com/
 | [az import-export bit-locker-key](/cli/azure/import-export/bit-locker-key) | List the BitLocker keys for an import or export job. | |
 | [az import-export location](/cli/azure/import-export/location) | Show location details for an import or export job. | [Use Azure Import/Export service to import data to Azure Files](/azure/import-export/storage-import-export-data-to-files?tabs=azure-cli) |
 
-## Storage accounts
+## Storage account references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -73,7 +76,7 @@ The references in this table are part of the [import-export](https://github.com/
 | [az storage account private-endpoint-connection](/cli/azure/storage/account/private-endpoint-connection) | Manage a storage account's private endpoint connection. | |
 | [az storage account private-link-resource](/cli/azure/storage/account/private-link-resource) | Manage a storage account's private link resources. | |
 
-## Storage blobs
+## Storage blob references
 
 Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) or [storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) extension.
 
@@ -92,7 +95,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 | [az storage blob service-properties delete-policy](/cli/azure/storage/blob/service-properties/delete-policy) | Manage storage blob delete-policy service properties. | |  |
 | [az storage blob tag](/cli/azure/storage/blob/tag) | Manage storage blob tags. | storage-blob-preview | |
 
-## Storage containers
+## Storage container references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -103,7 +106,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 | [az storage container metadata](/cli/azure/storage/container/metadata) | Manage container metadata. | [View blob properties and metadata using azure tools and code](/learn/modules/organize-blobs-properties-metadata/3-view-blob-properties-and-metadata-using-azure-tools-and-code) |
 | [az storage container policy](/cli/azure/storage/container/policy) | Manage container-stored access policies. | [Use Azure Blob storage Shared Access Signatures to restrict access to data in HDInsight](/azure/hdinsight/hdinsight-storage-sharedaccesssignature-permissions) |
 
-## Storage file shares
+## Storage file share references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -111,7 +114,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 | [az storage share metadata](/cli/azure/storage/share/metadata) | Manage the metadata of a file share. | |
 | [az storage share policy](/cli/azure/storage/share/policy) | Manage shared access policies of a file share. |  |
 
-## Storage file shares (SMB 3.0)
+## Storage file share (SMB 3.0) references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -119,7 +122,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 | [az storage file copy](/cli/azure/storage/file/copy) | Manage the file copy operations of a file share. | |
 | [az storage file metadata](/cli/azure/storage/file/metadata) | Manage the metadata of a file share. | |
 
-## Storage file systems
+## Storage file system references
 
 Some references in this table are part of the [storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) extension.
 
@@ -134,7 +137,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 | [az storage fs metadata](/cli/azure/storage/fs/metadata) | Manage the metadata for the file system. | | |
 | [az storage fs service-properties](/cli/azure/storage/fs/service-properties) | Manage the properties of a storage account's Azure Data Lake Storage Gen2 service. | storage-preview |  |
 
-## Storage queues
+## Storage queue references
 
 | Reference | Description | More information |
 |-|-|-|

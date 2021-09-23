@@ -1,33 +1,34 @@
 ---
-title: Azure CLI references for Azure IoT
-description: Azure CLI reference landing page for Azure IoT
+title: Azure CLI references for Azure IoT | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure IoT. With over 100 different commands available, you can work effectively with Azure IoT from a command line.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 04/09/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: paymaun.heidari
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure iot, azure maps, azure tsi
 ---
 
-# Azure CLI for Azure IoT
+# Azure CLI reference commands for Azure IoT
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources for many Azure services. For Azure IoT, over 100 different commands are available, which give you the ability to work effectively with the service from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources for many Azure services. For Azure IoT, over 100 different commands are available, which give you the ability to work effectively with the service from a command-line.
 
-## References for IoT
-
-The [Azure IoT](/azure/iot-fundamentals/) CLI experience is composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure IoT CLI **extension**.
+The Azure CLI commands for [Azure IoT](/azure/iot-fundamentals/) are composed of two parts: Azure CLI (commonly referred to as CLI **core**) and the Azure CLI **extension** for IoT .
 
 IoT functionality in Azure CLI **core** is focused on infrastructure management and configuration. IoT Hub CRUD operations, or configuring IoT Hub message routes are typical use cases for core commands.
 
-The IoT **extension** introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example, managing fleets of devices, monitoring device-to-cloud events, and invoking cloud to device methods are all enabled via the IoT extension. The Azure IoT extension for Azure CLI unlocks the use of experimental or pre-release technology, which contributes to its versatility in various scenarios and use cases. The extension is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
-
-### Reference commands
+The Azure CLI **extension** for IOT introduces rich features and functionality to manage, manipulate and interact with the data, entities and objects on the infrastructure itself. For example, managing fleets of devices, monitoring device-to-cloud events, and invoking cloud to device methods are all enabled via the IoT extension. The Azure CLI extension for IoT unlocks the use of experimental or pre-release technology, which contributes to its versatility in various scenarios and use cases. Azure CLI extensions are automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
+
+## Reference command List
+
+List of Azure CLI references that can be used to manage Azure IoT, reference type and reference descriptions:
 
 | Reference | Core or extension | Description
 |-|-|-|
@@ -40,7 +41,7 @@ The IoT **extension** introduces rich features and functionality to manage, mani
 | [az iot hub](/cli/azure/iot/hub) | Both | Manage Azure IoT Hub infrastructure.
 | [az iot product](/cli/azure/iot/product) | Extension | Manage device testing for product certification.
 
-### Additional CLI commands for Azure services used by IoT
+## Additional Azure CLI commands for Azure services used by IoT
 
 | Reference | Type | Description
 |-|-|-|

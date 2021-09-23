@@ -1,31 +1,37 @@
 ---
-title: Azure CLI references for Azure Network
-description: Azure CLI reference landing page for Azure Network
+title: Azure CLI references for Azure Network | Microsoft Docs
+description: Learn how to use the Azure CLI to manage Azure Network. Effectively manage the networking services and capabilities in Azure from a command line. 
 author: dbradish-microsoft
 manager: barbkess
 ms.topic: reference
-ms.date: 04/09/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.reviewer: mohnader
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure network
 ---
 
-# Azure CLI for Azure Network
+# Azure CLI reference commands for Azure Network
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure Network, and gives you the ability to manage networking services from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services and gives you the ability to manage networking services from a command-line.
 
-## References for Azure Network
+The Azure CLI commands for [Azure Network](/azure/networking/) are composed of two parts: **core** and **extension**. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands, and is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
-The [Azure Network](/azure/networking/) CLI experience is composed of two parts: **core** and **extension**. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands, and is automatically installed the first time you run an extension reference. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
+See [az network](/cli/azure/network) for an alphabetic list of the Azure CLI core and extension references available for the Azure Network service. For references for each subgroup, see the tables in the following sections:
 
-See [az network](/cli/azure/network) for a complete list of Azure CLI core references for Azure Network.  Follow the links below for extension references.
+- [Virtual network](#virtual-network-references)
+- [WAN and On-premise connectivity](#wan-and-on-premise-connectivity-references)
+- [Load balancing and IP](#load-balancing-and-ip-references)
+- [Security](#security-references)
+- [Monitoring](#monitoring-references)
+- [List](#list-references)
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the `az extension add` command to manually install an extension.
 
-### Virtual network
+## Virtual network references 
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
@@ -45,7 +51,7 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | vNet | [az network vnet-tap](/cli/azure/network/vnet/tap) | Manage virtual network taps. | yes
 | vNet | [az network vnet-gateway](/cli/azure/network/vnet-gateway) | Use an Azure Virtual Network Gateway to establish secure, cross-premises connectivity. |
 
-### WAN and On-premise connectivity
+## WAN and On-premise connectivity references
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
@@ -60,7 +66,7 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | vRouter | [az network vrouter](/cli/azure/network/vrouter) | Manage virtual routers. |
 | vWAN | [az network vwan](/cli/azure/network/vwan) | Manage virtual WANs. | yes
 
-### Load balancing and IP
+## Load balancing and IP references
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
@@ -73,7 +79,7 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Local gateway | [az network local-gateway](/cli/azure/network/local-gateway) | Manage local gateways. |
 | Traffic manager | [az network traffic-manager](/cli/azure/network/traffic-manager) | Manage the routing of incoming traffic. |
 
-### Security
+## Security references
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
@@ -88,13 +94,13 @@ See [az network](/cli/azure/network) for a complete list of Azure CLI core refer
 | Private link | [az network private-link-resource](/cli/azure/network/private-link-resource) | Manage private link resources. |
 | Private link | [az network private-link-service](/cli/azure/network/private-link-service) | Manage private link services. |
 
-### Monitoring
+## Monitoring references
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | Watcher | [az network watcher](/cli/azure/network/watcher) | Manage the Azure Network Watcher. |
 
-### List
+## List references
 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
