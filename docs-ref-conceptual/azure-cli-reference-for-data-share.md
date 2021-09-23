@@ -19,9 +19,9 @@ The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of com
 
 All Azure CLI commands for [Azure Data Share](/azure/data-share/) are currently in an extension to the Azure CLI core. The datashare extension gives you access to experimental and pre-release commands and is automatically installed the first time you run an `az datashare` command. For more information about Azure CLI extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
 
-List of Azure Data Share CLI references that can be used to manage Azure Data Share, and descriptions of each type of reference:
-
 ## Reference list
+
+List of Azure Data Share CLI references that can be used to manage Azure Data Share, and descriptions of each type of reference:
 
 |Azure CLI Reference |Description
 |-|-|

@@ -26,12 +26,8 @@ The Azure CLI commands for [Azure DevOps](/azure/devops) allow you to streamline
 - [Azure Pipelines](#azure-pipeline-references) 
 - [Azure Repos](#azure-repo-references) 
 
-For the Azure CLI references in each subgroup, see the tables in the following sections.
-
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
-
-List of Azure CLI references that can be used to manage Azure DevOps, reference descriptions, and links to popular articles:
 
 ## Azure Artifact references
 

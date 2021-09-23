@@ -19,7 +19,7 @@ The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of com
 
 The Azure CLI commands for [Azure Storage](/azure/storage) are composed of two parts: a **core** and its **extensions**. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
-See [Azure Storage](/cli/azure/service-page/azure%20storage) for an alphabetic list of the Azure CLI core and extension references available for the Azure Storage service. For references for each subgroup, see the tables in the following sections:
+See [az storage](/cli/azure/service-page/azure%20storage) for an alphabetic list of the Azure CLI core and extension references available for the Azure Storage service. For references for each subgroup, see the tables in the following sections:
 
 - [Azure File Sync](#azure-file-sync-references)
 - [Import/Export service](#importexport-service-references)

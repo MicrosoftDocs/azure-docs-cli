@@ -108,7 +108,7 @@ See [az network](/cli/azure/network) for an alphabetic list of the Azure CLI cor
 | Service | [az network list-service-tags](/cli/azure/network#az_network_list_service_tags) | List all service tags that belong to different resources. |
 | Usage | [az network list-usages](/cli/azure/network#az_network_list_usages) | List the number of network resources in a region that are used against a subscription quota. |
 
-## Popular network articles using the Azure CLI
+## Popular Azure Network articles using the Azure CLI
 
 - [Create virtual machines](/cli/azure/azure-cli-vm-tutorial)
 - [Create a virtual network](/azure/virtual-network/quick-create-cli)

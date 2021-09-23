@@ -19,12 +19,10 @@ The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of com
 
 The Azure CLI commands for [Azure Cosmos DB](/azure/cosmos-db/introduction) are composed of two parts: core and extension. Core Azure CLI commands ship as part of the CLI and are fully supported. An extension gives you access to experimental and pre-release commands. For more information about extension references, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
-See [az cosmosdb](/cli/azure/cosmosdb) for a complete list of the Azure CLI core and extension references available for the Azure Cosmos DB service. For references for each subgroup, see the tables in the following sections.
-
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-See [Azure Cosmos DB](/cli/azure/service-page/azure%20cosmos%20db) for an alphabetic list of Azure CLI core and extension references available for the Azure Cosmos DB service. For references in each subgroup, see the tables in the following sections:
+See [az cosmosdb](/cli/azure/service-page/azure%20cosmos%20db) for an alphabetic list of Azure CLI core and extension references available for the Azure Cosmos DB service. For references in each subgroup, see the tables in the following sections:
 
 - [SQL API](#sql-api-references)
 - [API for MongoDB](#api-for-mongodb-references)

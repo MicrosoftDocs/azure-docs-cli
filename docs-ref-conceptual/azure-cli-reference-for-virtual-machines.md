@@ -17,7 +17,7 @@ keywords: azure cli references, azure virtual machines, desktop virtualization, 
 
 The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services and enables you to manage Azure Virtual Machines from a command line.
 
-The [Azure Virtual Machines](/azure/virtual-machines) CLI experience is composed of two parts: a core and its extensions. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The [Azure Virtual Machines](/azure/virtual-machines) CLI experience is composed of two parts: a **core** and its **extensions**. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
