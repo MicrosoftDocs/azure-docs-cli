@@ -281,7 +281,7 @@ The following are Azure CLI environment variables:
 
 You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, you can't use the `try` and `catch` keywords.
 
-An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
+An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. If the previous command fails, `$?` has the value of `$False`. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
 
 The follow example shows how this automatic variable can work for error handling:
 
@@ -293,7 +293,7 @@ Write-Error "Error creating storage account"
 }
 ```
 
-The first command lacks the required `--location` parameter, so it fails. The conditional finds that `$?` is false and writes an error. You can use an `else` clause to more closely approximate a Try-Catch block.
+The first command lacks the required `--location` parameter, so it fails. The conditional finds that `$?` is false and writes an error.
 
 By default, PowerShell catches only terminating errors. You can change this behavior by using the `$ErrorActionPreference` global variable.
 
