@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI effectively, such as output formats,
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 10/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -276,6 +276,38 @@ The following are Azure CLI environment variables:
 |--------------------------------|------------------------|
 | **AZURE_CONFIG_DIR**           | The global directory for configuration files, logs, and telemetry. If unspecified, this value defaults to `~/.azure.` |
 | **AZURE_EXTENSION_DIR**        | The directory containing extension installations. If unspecified, this value defaults to the `cliextensions` subdirectory within the global configuration directory. |
+
+## Error handling for Azure CLI in PowerShell
+
+You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, you can't use the `try` and `catch` keywords.
+
+An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
+
+The follow example shows how this automatic variable can work for error handling:
+
+```powershell
+az group create --name MyResourceGroup 
+if ($? -eq $False) 
+{
+Write-Error "Error creating storage account"
+}
+```
+
+The first command lacks the required `--location` parameter, so it fails. The conditional finds that `$?` is false and writes an error. You can use an `else` clause to more closely approximate a Try-Catch block.
+
+By default, PowerShell catches only terminating errors. You can change this behavior by using the `$ErrorActionPreference` global variable.
+
+```powershell
+$ErrorActionPreference = "Stop"
+```
+
+After testing, be sure to change the value back:
+
+```powershell
+$ErrorActionPreference = "Continue"
+```
+
+For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
 
 ## Next steps
 
