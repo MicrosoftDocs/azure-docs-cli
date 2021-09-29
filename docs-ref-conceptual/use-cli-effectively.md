@@ -287,32 +287,32 @@ The follow example shows how this automatic variable can work for error handling
 
 ```powershell
 az group create --name MyResourceGroup 
-    if ($? -eq $False) {
-        Write-Error "Error creating storage account"
-    }
+if ($? -eq $false) {
+    Write-Error "Error creating resource group."
+}
 ```
 
-The first command lacks the required `--location` parameter, so it fails. The conditional finds that `$?` is false and writes an error.
+The `az` command fails because it is missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
 
-You can use the `try` and `catch` keywords. Use `throw` to create an exception for the `try` block to catch:
+If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for the `try` block to catch:
 
 ```powershell
 $ErrorActionPreference = "Stop"
 try {
     az group create --name MyResourceGroup 
-    if ($? -eq $False) {
+    if ($? -eq $false) {
         throw 'Group create failed.'
     }
 }
 catch {
-    Write-Error "Error creating storage account"
+    Write-Error "Error creating the resource group."
 }
 $ErrorActionPreference = "Continue"
 ```
 
 By default, PowerShell catches only terminating errors. This example sets the `$ErrorActionPreference` global variable to `Stop` so PowerShell can handle the error.
 
-The conditional tests the `$?` variable to see whether the command fails. If so, the `throw` keyword creates an exception to catch.
+The conditional statement tests the `$?` variable to see if the previous command failed. If so, the `throw` keyword creates an exception to catch. The `catch` block can be used to write an error message or handle the error.
 
 The example restores `$ErrorActionPreference` to its default value.
 
