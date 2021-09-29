@@ -18,8 +18,13 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 > [!WARNING]
 > Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.
+
+> [!NOTE]
+> The `azure-cli` deb package does not support ARM64 architecture. Currently the only way to use Azure CLI on ARM64 is to install from PyPI (https://pypi.org/project/azure-cli/):
 >
-> The `azure-cli` deb package does not support ARM64 architecture.
+>```bash
+>pip install azure-cli
+>```
 
 ## Installation Options
 
