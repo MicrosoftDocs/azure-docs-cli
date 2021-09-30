@@ -30,6 +30,7 @@ directCommands:
                               --resource-group
                               [--access-tier {Cool, Hot}]
                               [--action]
+                              [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
@@ -43,6 +44,7 @@ directCommands:
                               [--domain-name]
                               [--domain-sid]
                               [--edge-zone]
+                              [--enable-alw {false, true}]
                               [--enable-files-aadds {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-hierarchical-namespace {false, true}]
@@ -58,6 +60,8 @@ directCommands:
                               [--forest-name]
                               [--https-only {false, true}]
                               [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                              [--immutability-period]
+                              [--immutability-state {Disabled, Locked, Unlocked}]
                               [--key-exp-days]
                               [--key-vault-user-identity-id]
                               [--kind {BlobStorage, BlockBlobStorage, FileStorage, Storage, StorageV2}]
@@ -98,6 +102,10 @@ directCommands:
   - name: --action
     defaultValue: Allow
     summary: The action of virtual network rule. Possible value is Allow.
+    description: ''
+  - name: --allow-append --allow-protected-append-writes -w
+    parameterValueGroup: false, true
+    summary: This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted.
     description: ''
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
@@ -143,6 +151,10 @@ directCommands:
     description: ''
   - name: --edge-zone
     summary: The name of edge zone.
+    description: ''
+  - name: --enable-alw
+    parameterValueGroup: false, true
+    summary: The account level immutability property. The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default.
     description: ''
   - name: --enable-files-aadds
     parameterValueGroup: false, true
@@ -198,6 +210,13 @@ directCommands:
   - name: --identity-type
     parameterValueGroup: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
     summary: The identity type.
+    description: ''
+  - name: --immutability-period --immutability-period-in-days
+    summary: The immutability period for the blobs in the container since the policy creation, in days.
+    description: ''
+  - name: --immutability-state
+    parameterValueGroup: Disabled, Locked, Unlocked
+    summary: Defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allow-protected-append-write property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted.
     description: ''
   - name: --key-exp-days --key-expiration-period-in-days
     summary: Expiration period in days of the Key Policy assigned to the storage account.
@@ -588,6 +607,7 @@ directCommands:
   syntax: >-
     az storage account update [--access-tier {Cool, Hot}]
                               [--add]
+                              [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
@@ -613,6 +633,8 @@ directCommands:
                               [--https-only {false, true}]
                               [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                               [--ids]
+                              [--immutability-period]
+                              [--immutability-state {Disabled, Locked, Unlocked}]
                               [--key-exp-days]
                               [--key-vault-user-identity-id]
                               [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
@@ -641,6 +663,10 @@ directCommands:
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --allow-append --allow-protected-append-writes -w
+    parameterValueGroup: false, true
+    summary: This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted.
     description: ''
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
@@ -728,6 +754,13 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --immutability-period --immutability-period-in-days
+    summary: The immutability period for the blobs in the container since the policy creation, in days.
+    description: ''
+  - name: --immutability-state
+    parameterValueGroup: Disabled, Locked, Unlocked
+    summary: Defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allow-protected-append-write property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted.
     description: ''
   - name: --key-exp-days --key-expiration-period-in-days
     summary: Expiration period in days of the Key Policy assigned to the storage account.

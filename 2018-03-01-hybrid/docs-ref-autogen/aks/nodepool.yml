@@ -49,13 +49,16 @@ directCommands:
                         [--spot-max-price]
                         [--tags]
                         [--vnet-subnet-id]
+                        [--workload-runtime {OCIContainer, WasmWasi}]
   examples:
   - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
   - summary: Create a nodepool with EncryptionAtHost enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-encryption-at-host
-  - summary: Create a nodepool cluster with a specific os-sku
+  - summary: Create a nodepool with a specific os-sku
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu
+  - summary: Create a nodepool which can run wasm workloads.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --workload-runtime WasmWasi
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -181,6 +184,11 @@ directCommands:
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
+    description: ''
+  - name: --workload-runtime
+    defaultValue: OCIContainer
+    parameterValueGroup: OCIContainer, WasmWasi
+    summary: Determines the type of workload a node can run. Defaults to OCIContainer.
     description: ''
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
