@@ -1,17 +1,18 @@
 ---
-title: Azure CLI alias extension
-description: How to use the Azure CLI alias extension
+title: Alias extension - Azure CLI | Microsoft Docs
+description: The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Learn how to use the Azure CLI alias extension.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2018
+ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli alias extension, alias extension, alias commands
 ---
 
-# The Azure CLI alias extension
+# How to use the Azure CLI alias extension
 
 The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow simple by allowing shortcuts. Since aliases are powered by the Jinja2 template engine, they even offer advanced argument processing.
 
@@ -22,7 +23,7 @@ The alias extension allows users to define custom commands for the Azure CLI by 
 
 The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI](./install-azure-cli.md).
 
-Install the extension with the [az extension add](/cli/azure/extension#az_extension_add) command.
+Install the alias extension with the [az extension add](/cli/azure/extension#az_extension_add) command.
 
 ```azurecli-interactive
 az extension add --name alias
@@ -40,7 +41,7 @@ Name
 alias
 ```
 
-## Keep the extension up-to-date
+## Keep the alias extension up-to-date
 
 The alias extension is under active development and new versions are released regularly. New versions aren't installed when you update the CLI. Install the updates for the extension with [az extension update](/cli/azure/extension#az_extension_update).
 
@@ -73,7 +74,7 @@ az rg ls
 az vm ls
 ```
 
-Do not include `az` as part of the command.
+Do not include `az` as part of the alias command.
 
 Aliases can also be shortcuts for complete commands. The next example lists available resource groups and their locations in table output:
 
