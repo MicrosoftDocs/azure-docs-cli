@@ -78,32 +78,47 @@ directCommands:
                                 --sql-admin-login-password
                                 --sql-admin-login-user
                                 --storage-account
+                                [--account-name]
                                 [--allowed-tenant-ids]
                                 [--cmk]
+                                [--collaboration-branch]
                                 [--enable-managed-virtual-network {false, true}]
+                                [--host-name]
                                 [--key-name]
                                 [--location]
                                 [--no-wait]
                                 [--prevent-data-exfiltration {false, true}]
+                                [--project-name]
+                                [--repository-name]
+                                [--repository-type {AzureDevOpsGit, GitHub}]
+                                [--root-folder]
                                 [--subscription]
                                 [--tags]
+                                [--tenant-id]
   examples:
   - summary: Create a Synapse workspace
     syntax: >-
-      az synapse workspace create --name fromcli4 --resource-group rg \
+      az synapse workspace create --name testworkspace --resource-group rg \
         --storage-account testadlsgen2 --file-system testfilesystem \
         --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US"
   - summary: Create a Synapse workspace with storage resource id
     syntax: >-
-      az synapse workspace create --name fromcli4 --resource-group rg \
+      az synapse workspace create --name testworkspace --resource-group rg \
         --storage-account /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/testadlsgen2 --file-system testfilesystem \
         --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US"
   - summary: Create a Synapse workspace using customer-managed key
     syntax: >-
-      az synapse workspace create --name fromcli4 --resource-group rg \
+      az synapse workspace create --name testworkspace --resource-group rg \
         --storage-account testadlsgen2 --file-system testfilesystem \
         --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US" \
         --key-identifier https://{keyvaultname}.vault.azure.net/keys/{keyname} --key-name testcmk
+  - summary: Create a Synapse workspace connecting to azure devops
+    syntax: >-
+      az synapse workspace create --name testworkspace --resource-group rg \
+        --storage-account testadlsgen2 --file-system testfilesystem \
+        --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US" \
+        --repository-type AzureDevOpsGit --account-name testuser --project-name testprj \
+        --repository-name testrepo --collaboration-branch main
   requiredParameters:
   - isRequired: true
     name: --file-system
@@ -130,15 +145,24 @@ directCommands:
     summary: The data lake storage account name or resource id.
     description: ''
   optionalParameters:
+  - name: --account-name
+    summary: GitHub account name used for the repository or Azure devops organization name.
+    description: ''
   - name: --allowed-tenant-ids
     summary: The approved Azure AD tenants which outbound data traffic allowed to. The Azure AD tenant of the current user will be included by default. Use ('' in PowerShell) to disable all allowed tenant ids.
     description: ''
   - name: --cmk --key-identifier
     summary: 'The customer-managed key used to encrypt all data at rest in the workspace. Key identifier should be in the format of: https://{keyvaultname}.vault.azure.net/keys/{keyname}.'
     description: ''
+  - name: --collaboration-branch
+    summary: The branch name where you will collaborate with others and from which you will publish.
+    description: ''
   - name: --enable-managed-virtual-network --enable-managed-vnet
     parameterValueGroup: false, true
     summary: The flag indicates whether enable managed virtual network.
+    description: ''
+  - name: --host-name
+    summary: If using github Enterprise Server, provide sever URL like https://github.mydomain.com.Do not use this option with GitHub Enterprise Cloud.
     description: ''
   - name: --key-name
     defaultValue: default
@@ -154,11 +178,28 @@ directCommands:
     parameterValueGroup: false, true
     summary: The flag indicates whether enable data exfiltration.
     description: ''
+  - name: --project-name
+    summary: The project name to which you are connecting.
+    description: ''
+  - name: --repository-name
+    summary: The name of the repository to which you are connecting.
+    description: ''
+  - name: --repository-type
+    parameterValueGroup: AzureDevOpsGit, GitHub
+    summary: The repository configuration type.
+    description: ''
+  - name: --root-folder
+    defaultValue: /
+    summary: The name of the folder to the location of your Azure synapse JSON resources are imported. Default is /.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --tenant-id
+    summary: The tenant id used to connect Azure devops.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 - uid: az_synapse_workspace_delete
@@ -254,23 +295,40 @@ directCommands:
   summary: Update a Synapse workspace.
   description: ''
   syntax: >-
-    az synapse workspace update [--allowed-tenant-ids]
+    az synapse workspace update [--account-name]
+                                [--allowed-tenant-ids]
+                                [--collaboration-branch]
+                                [--host-name]
                                 [--ids]
                                 [--key-name]
                                 [--name]
                                 [--no-wait]
+                                [--project-name]
+                                [--repository-name]
+                                [--repository-type {AzureDevOpsGit, GitHub}]
                                 [--resource-group]
+                                [--root-folder]
                                 [--sql-admin-login-password]
                                 [--subscription]
                                 [--tags]
+                                [--tenant-id]
   examples:
   - summary: Update a Synapse workspace
     syntax: >-
       az synapse workspace update --name fromcli4 --resource-group rg \
         --tags key1=value1
   optionalParameters:
+  - name: --account-name
+    summary: GitHub account name used for the repository or Azure devops organization name.
+    description: ''
   - name: --allowed-tenant-ids
     summary: The approved Azure AD tenants which outbound data traffic allowed to. The Azure AD tenant of the current user will be included by default. Use ('' in PowerShell) to disable all allowed tenant ids.
+    description: ''
+  - name: --collaboration-branch
+    summary: The branch name where you will collaborate with others and from which you will publish.
+    description: ''
+  - name: --host-name
+    summary: If using github Enterprise Server, provide sever URL like https://github.mydomain.com.Do not use this option with GitHub Enterprise Cloud.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -284,8 +342,21 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --project-name
+    summary: The project name to which you are connecting.
+    description: ''
+  - name: --repository-name
+    summary: The name of the repository to which you are connecting.
+    description: ''
+  - name: --repository-type
+    parameterValueGroup: AzureDevOpsGit, GitHub
+    summary: The repository configuration type.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --root-folder
+    summary: The name of the folder to the location of your Azure synapse JSON resources are imported. Default is /.
     description: ''
   - name: --sql-admin-login-password -p
     summary: The sql administrator login password.
@@ -295,6 +366,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --tenant-id
+    summary: The tenant id used to connect Azure devops.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 - uid: az_synapse_workspace_wait
@@ -393,5 +467,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/08/2021
+  ms.date: 09/29/2021
   description: Manage Synapse workspaces.

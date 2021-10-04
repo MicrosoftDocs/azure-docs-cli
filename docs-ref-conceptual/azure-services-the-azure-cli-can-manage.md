@@ -19,14 +19,14 @@ The Azure CLI is available across many Azure services, and is a flexible yet pow
 
 ## AI + Machine Learning
 
-Use [AI + Machine Learning](/services/#ai-machine-learning) to create the next generation of applications using artificial intelligence capabilities for any developer and any scenario.
+Use AI + Machine Learning to create the next generation of applications using artificial intelligence capabilities for any developer and any scenario.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
 |[Azure Bot Service](/cli/azure/service-page/azure%20bot%20service)| [Identify providers](/azure/bot-service/bot-builder-concept-identity-providers)
 |[Azure Databricks](/cli/azure/service-page/azure%20databricks)| [Build a data pipeline](/azure/devops/pipelines/apps/cd/azure/build-data-pipeline)
 |[Azure Cognitive Search](/cli/azure/service-page/azure%20cognitive%20search)|[Manage your Azure Cognitive Search service](/azure/search/search-manage-azure-cli)
-|[Azure Cognitive Services](/cli/azure/service-page/azure%20cognitive%20service) | [How to create and manage LUIS resources](/azure/cognitive-services/LUIS/luis-how-to-azure-subscription?tabs=cli)
+|[Azure Cognitive Services](/cli/azure/service-page/azure%20cognitive%20service) | [How to create and manage LUIS resources](/azure/cognitive-services/LUIS/luis-how-to-azure-subscription?tabs=without-portal)
 || [Configure Azure Cognitive Services virtual networks](/azure/cognitive-services/cognitive-services-virtual-networks?tabs=azure-cli)
 || [Quickstart: Create a Cognitive Services resource](/azure/cognitive-services/cognitive-services-apis-create-account-cli)
 |[Azure Machine Learning](/cli/azure/service-page/azure%20machine%20learning)| [Manage roles in your workspace](/azure/machine-learning/how-to-assign-roles)
@@ -36,11 +36,11 @@ Use [AI + Machine Learning](/services/#ai-machine-learning) to create the next g
 
 ## Analytics
 
-Use [Azure Analytics](/services/#ai-machine-learning) to gather, store, process, analyze, and visualize data of any variety, volume, or velocity.
+Use Azure Analytics to gather, store, process, analyze, and visualize data of any variety, volume, or velocity.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Data Explorer](/cli/azure/service-page/azure%20data%20explorer) | [Ingest blobs into Azure Data Explorer by subscribing to Event Grid notifications](/azure/data-explorer/ingest-data-event-grid)
+|[Azure Data Explorer](/cli/azure/service-page/azure%20data%20explorer) | [Create an Azure Data Explorer cluster and database by using Azure CLI](/azure/data-explorer/create-cluster-database-cli)
 || [Ingest data from Apache Kafka into Azure Data Explorer](/azure/data-explorer/ingest-data-kafka)
 |[Azure Data Factory](/cli/azure/service-page/azure%20data%20factory) | [Quickstart: Create an Azure Data Factory](/azure/data-factory/quickstart-create-data-factory-azure-cli)
 |[Data Lake Analytics](/cli/azure/service-page/azure%20data%20lake%20analytics) | [Manage Azure Data Lake Analytics](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
@@ -62,12 +62,11 @@ Use [Azure Analytics](/services/#ai-machine-learning) to gather, store, process,
 
 ## Blockchain
 
-Build and manage [blockchain](/services/#blockchain) based applications with a suite of integrated tools.
+Build and manage blockchain based applications with a suite of integrated tools.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Blockchain](/cli/azure/service-page/azure%20blockchain)|[Create an Azure Blockchain Service blockchain member](/azure/blockchain/service/create-member-cli)
-|| [Manage Azure Blockchain Service](/azure/blockchain/service/manage-cli)
+|[Blockchain](/cli/azure/service-page/azure%20blockchain)|
 |[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Create an Azure Cosmos account](/azure/cosmos-db/create-sql-api-dotnet-v4#create-account)
 || [Configure an IP access control policy](/azure/cosmos-db/how-to-configure-firewall#configure-ip-firewall-cli)
 || [Create custom role definitions](/azure/cosmos-db/how-to-setup-rbac#using-the-azure-cli)
@@ -77,7 +76,7 @@ Build and manage [blockchain](/services/#blockchain) based applications with a s
 
 ## Compute
 
-Access cloud compute capacity and scale on demand—and only pay for the resources you use.  Whether you’re building new applications or deploying existing ones, [Azure compute](/product-categories/compute/) provides the infrastructure you need to run your apps.
+Access cloud compute capacity and scale on demand—and only pay for the resources you use.  Whether you’re building new applications or deploying existing ones, Azure compute provides the infrastructure you need to run your apps.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
@@ -87,7 +86,7 @@ Access cloud compute capacity and scale on demand—and only pay for the resourc
 |[Azure Batch](/cli/azure/service-page/azure%20batch) | [Run your first Batch job](/azure/batch/quick-create-cli)
 |[Azure Cloud Services](/cli/azure/service-page/azure%20cloud%20services%20(extended%20support))
 |[Azure Container Instances](/cli/azure/service-page/azure%20container%20instances)| [Deploy a container instance in Azure](/azure/container-instances/container-instances-quickstart)
-|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azure-cli)
 | |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
 |[Azure Kubernetes Service (AKS)](/cli/azure/service-page/azure%20kubernetes%20service%20(aks)) | [Deploy an AKS cluster](/azure/aks/kubernetes-walkthrough)
 | |[Create and manage multiple node pools for a cluster in AKS](/azure/aks/use-multiple-node-pools)
@@ -98,17 +97,17 @@ Access cloud compute capacity and scale on demand—and only pay for the resourc
 |[Azure Virtual Machines](/cli/azure/azure-cli-reference-for-virtual-machines) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
 | |[Create a Windows VM](/azure/virtual-machines/windows/quick-create-cli)
 |[Azure Virtual Machine Scale Sets (VMSS)](/cli/azure/vmss) | [Create a Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli#vmss)
-|[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solutions) | [Attach disk pools to Azure VMware Solution hosts](/azure/azure-vmware/attach-disk-pools-to-azure-vmware-solution-hosts)
+|[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solution) | [Attach disk pools to Azure VMware Solution hosts](/azure/azure-vmware/attach-disk-pools-to-azure-vmware-solution-hosts)
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
 
 ## Containers
 
-Develop and manage your containerized applications faster with integrated tools.  Save costs by lifting and shifting your existing applications to [containers](/product-categories/containers/), and build microservices applications to deliver value to your users faster.
+Develop and manage your containerized applications faster with integrated tools.  Save costs by lifting and shifting your existing applications to containers, and build microservices applications to deliver value to your users faster.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azure-cli)
 | |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
 |[Azure Kubernetes Service (AKS)](/cli/azure/service-page/azure%20kubernetes%20service%20(aks)) | [Deploy an AKS cluster](/azure/aks/kubernetes-walkthrough)
 | |[Create and manage multiple node pools for a cluster in AKS](/azure/aks/use-multiple-node-pools)
@@ -123,11 +122,11 @@ Develop and manage your containerized applications faster with integrated tools.
 
 ## Databases
 
-Support rapid growth and innovate faster with secure, enterprise-grade, and fully managed [database services](/product-categories/databases/).
+Support rapid growth and innovate faster with secure, enterprise-grade, and fully managed database services.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure API for FHIR](/cli/azure/service-page/azure%20api%20for%20fhi) | [Configure customer-managed keys at rest](/azure/healthcare-apis/azure-api-for-fhir/customer-managed-key#using-azure-cli)
+|[Azure API for FHIR](/cli/azure/service-page/azure%20api%20for%20fhir) | [Configure customer-managed keys at rest](/azure/healthcare-apis/azure-api-for-fhir/customer-managed-key#using-azure-cli)
 |[Azure Cache for Redis](/cli/azure/service-page/azure%20cache%20for%20redis) | [Connect an App Service app to an Azure Cache for Redis](/azure/app-service/scripts/cli-connect-to-redis)
 |[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
 |[Azure Data Migration](/cli/azure/service-page/azure%20data%20migration) | [Migrate PostgreSQL to Azure DB](/azure/dms/tutorial-postgresql-azure-postgresql-online#provisioning-an-instance-of-dms-using-the-azure-cli)
@@ -139,7 +138,7 @@ Support rapid growth and innovate faster with secure, enterprise-grade, and full
 
 ## Developer Tools
 
-Use Microsoft's comprehensive set of [development tools](/product-categories/developer-tools/) to build, manage, and continuously deliver cloud applications—using any platform or language.
+Use Microsoft's comprehensive set of development tools to build, manage, and continuously deliver cloud applications—using any platform or language.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
@@ -155,7 +154,7 @@ Use Microsoft's comprehensive set of [development tools](/product-categories/dev
 
 ## DevOps
 
-Azure [DevOps](/product-categories/devops/) technologies deliver innovation faster with simple, reliable tools for continuous delivery.
+Azure DevOps technologies deliver innovation faster with simple, reliable tools for continuous delivery.
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
@@ -180,7 +179,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
 |[Azure Security Center](/cli/azure/service-page/azure%20security%20center) |
-|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) | 
+|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) |
 |[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
 |[Azure Stack HCI](/cli/azure/stack-hci) |
 
@@ -207,7 +206,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[API Management](/cli/azure/service-page/api%20management) | [Mock API responses](/azure/api-management/mock-api-responses?tabs=azure-cli)
 | |[Create and publish a product](/azure/api-management/api-management-howto-add-products?tabs=azure-cli)
 |[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
-|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azurecli)
+|[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azure-cli)
 | |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
 |[Azure IoT Central](/cli/azure/iot/central) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
 |[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
@@ -233,7 +232,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Backup](/cli/azure/backup) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 | | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
 |[Azure Blueprint](/cli/azure/blueprint) | [Define and Assign an Azure Blueprint with Azure CLI](/azure/governance/blueprints/create-blueprint-azurecli)
-|[Azure Cost Management and Billing](/cli/azure/service-page/azure%20cost%20management%20+%20billing) | [Explore and analyze costs with cost analysis](/azure/cost-management-billing/costs/quick-acm-cost-analysis)
+|[Azure Cost Management and Billing](/cli/azure/service-page/azure%20cost%20management%20+%20billing) | [Create and manage exported data](/azure/cost-management-billing/costs/tutorial-export-acm-data?tabs=azure-cli)
 | |[Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement?tabs=azure-cli)
 |[Azure Managed Applications](/cli/azure/service-page/azure%20managed%20applications) | [Create and publish a managed application definition](/azure/azure-resource-manager/managed-applications/publish-service-catalog-app?tabs=azure-cli)
 | | [Create managed application with custom actions and resources](/azure/azure-resource-manager/managed-applications/tutorial-create-managed-app-with-custom-provider?tabs=azurecli-interactive)
@@ -339,7 +338,7 @@ Azure [DevOps](/product-categories/devops/) technologies deliver innovation fast
 |[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | [Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings?tabs=azure-cli)
 | | [Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli?tabs=azure-cli)
 |[Azure SignalR](/cli/azure/service-page/azure%20signalr) | [Azure SignalR Service authentication](/azure/azure-signalr/signalr-concept-authenticate-oauth)
-| | [Use private endpoints for Azure SignalR Service](/azure/azure-signalr/howto-private-endpoints)
+| | [Use private endpoints for Azure SignalR Service](/azure/azure-signalr/howto-private-endpoints#create-a-private-endpoint-using-azure-cli)
 |[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | [Read a secret from Azure Key Vault in a Spring Boot application](/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault#deploy-to-azure-spring-cloud)
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)

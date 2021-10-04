@@ -99,6 +99,7 @@ directCommands:
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--ca-profile]
                   [--client-secret]
+                  [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
                   [--dns-name-prefix]
@@ -211,6 +212,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --location <location> --kubernetes-version 1.20.7 --edge-zone <edge-zone-name>
   - summary: Create a kubernetes cluster with a specific OS SKU
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu
+  - summary: Create a kubernetes cluster with custom tags
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --tags "foo=bar" "baz=qux"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -280,6 +283,9 @@ directCommands:
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
+  - name: --disable-local-accounts
+    summary: If set to true, getting static credential will be disabled for this cluster.
+    description: ''
   - name: --disable-public-fqdn
     summary: Disable public fqdn feature for private cluster.
     description: ''
@@ -305,16 +311,17 @@ directCommands:
     summary: Enable the Kubernetes addons in a comma-separated list.
     description: >-
       These addons are available:
-          http_application_routing - configure ingress with automatic public DNS name creation.
-          monitoring - turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one.
-                       Specify "--workspace-resource-id" to use an existing workspace.
-                       If monitoring addon is enabled --no-wait argument will have no effect
-          azure-policy - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                       Learn more at aka.ms/aks/policy.
-          virtual-node - enable AKS Virtual Node.
-                       Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-                       aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-          confcom      - enable confcom addon, this will enable SGX device plugin by default.
+          - http_application_routing : configure ingress with automatic public DNS name creation.
+          - monitoring               : turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one.
+                                       Specify "--workspace-resource-id" to use an existing workspace.
+                                       If monitoring addon is enabled --no-wait argument will have no effect
+          - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                       Learn more at aka.ms/aks/policy.
+          - virtual-node             : enable AKS Virtual Node.
+                                       Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+                                       aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
+          - confcom                  : enable confcom addon, this will enable SGX device plugin by default.
+          - open-service-mesh        : enable Open Service Mesh addon.
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
     description: ''
@@ -467,7 +474,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
   - name: --uptime-sla
     summary: Enable a paid managed cluster service with a financially backed SLA.
@@ -583,13 +590,14 @@ directCommands:
   summary: Enable Kubernetes addons.
   description: >-
     These addons are available:
-        http_application_routing - configure ingress with automatic public DNS name creation.
-        monitoring - turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-                     If monitoring addon is enabled --no-wait argument will have no effect
-        virtual-node - enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-        azure-policy - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                     Learn more at aka.ms/aks/policy.
-        ingress-appgw - enable Application Gateway Ingress Controller addon.
+        - http_application_routing : configure ingress with automatic public DNS name creation.
+        - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+                                     If monitoring addon is enabled --no-wait argument will have no effect
+        - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+        - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                     Learn more at aka.ms/aks/policy.
+        - ingress-appgw            : enable Application Gateway Ingress Controller addon.
+        - open-service-mesh        : enable Open Service Mesh addon.
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -609,6 +617,8 @@ directCommands:
     syntax: az aks enable-addons --addons virtual-node --name MyManagedCluster --resource-group MyResourceGroup --subnet MySubnetName
   - summary: Enable ingress-appgw addon with subnet prefix.
     syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons ingress-appgw --appgw-subnet-cidr 10.2.0.0/16 --appgw-name gateway
+  - summary: Enable open-service-mesh addon.
+    syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons open-service-mesh
   requiredParameters:
   - isRequired: true
     name: --addons -a
@@ -1096,11 +1106,13 @@ directCommands:
                   [--disable-ahub]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-public-fqdn]
                   [--load-balancer-idle-timeout]
@@ -1113,6 +1125,7 @@ directCommands:
                   [--no-uptime-sla]
                   [--no-wait]
                   [--subscription]
+                  [--tags]
                   [--update-cluster-autoscaler]
                   [--uptime-sla]
                   [--windows-admin-password]
@@ -1154,6 +1167,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-rbac
   - summary: Disable Azure RBAC in a managed AAD AKS cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-rbac
+  - summary: Update the tags of a kubernetes cluster
+    syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --tags "foo=bar" "baz=qux"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1198,6 +1213,9 @@ directCommands:
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
+  - name: --disable-local-accounts
+    summary: If set to true, getting static credential will be disabled for this cluster.
+    description: ''
   - name: --disable-public-fqdn
     summary: Disable public fqdn feature for private cluster.
     description: ''
@@ -1212,6 +1230,9 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-local-accounts
+    summary: If set to true, will enable getting static credential for this cluster.
     description: ''
   - name: --enable-managed-identity
     summary: Update current cluster to use managed identity to manage cluster resource group.
@@ -1248,6 +1269,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
   - name: --update-cluster-autoscaler -u
     summary: Update min-count or max-count for cluster autoscaler.
@@ -1488,6 +1512,13 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 commands:
+- az_aks_addon
+- az_aks_addon_disable
+- az_aks_addon_enable
+- az_aks_addon_list
+- az_aks_addon_list-available
+- az_aks_addon_show
+- az_aks_addon_update
 - az_aks_app
 - az_aks_app_up
 - az_aks_browse
@@ -1561,5 +1592,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/18/2021
+  ms.date: 09/29/2021
   description: Manage Azure Kubernetes Services.
