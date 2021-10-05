@@ -1,14 +1,15 @@
 ---
-title: Azure CLI beta breaking change
-description: How to migrate from accessTokens.json to Azure Identity and MSAL
+title: Migrate to Azure Identity – Azure CLI | Microsoft Docs
+description: Azure CLI beta internally replaces ADAL with Azure Identity and MSAL. Learn how to migrate from accessTokens.json to Azure Identity and MSAL.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/19/2021 
+ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: migrate to azure identity, azure cli beta
 ---
 # Migrate to Azure Identity
 
@@ -16,7 +17,7 @@ Azure CLI beta internally replaces Azure Active Directory Authentication Library
 
 This article provides detail about this breaking change and gives examples on how to get an access-token in Azure CLI beta.
 
-## Beta release breaking change
+## Azure CLI beta release breaking change
 
 The current Azure CLI saves the ADAL refresh tokens and access tokens to `~/.azure/accessToken.json`. Azure CLI beta uses MSAL and will no longer generate `accessTokens.json` after a successful login.  Tokens will be saved to MSAL's shared token cache called `msal.cache`.  To get an access token, use `az account get-access-token` instead. 
 

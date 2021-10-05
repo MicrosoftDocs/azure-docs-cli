@@ -1,17 +1,18 @@
 ---
-title: Update the Azure CLI | Microsoft Docs
-description: Learn how to update the update of Azure CLI
+title: How to update the Azure CLI | Microsoft Docs
+description: Learn how to update the Azure Command-Line Interface (CLI) by performing a manual update or enabling auto-upgrade for the CLI.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: update azure cli
 ---
 
-# Update the Azure CLI
+# How to update the Azure CLI
 
 You can rely on package managers to update a local install of the Azure CLI on Windows, macOS and Linux environments (see the `Update` section in each platform-specific install instruction). The CLI also provides in-tool commands to upgrade manually or automatically.
 
