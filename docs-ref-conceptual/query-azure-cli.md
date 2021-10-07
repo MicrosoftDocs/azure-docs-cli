@@ -140,7 +140,7 @@ Querying Boolean values is slightly different.  There are two options:
 az account list --query "[?isDefault]"
 
 # If you want a false value, use an escape character.
-az account list --query "[?isDefault == \`false\`]"
+az account list --query "[?isDefault == ``false``]"
 ```
 
 ## Get multiple values
