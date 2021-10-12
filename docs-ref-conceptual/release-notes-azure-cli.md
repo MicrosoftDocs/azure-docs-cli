@@ -145,8 +145,9 @@ Version 2.29.0
 * `az synapse workspace create/update`: Add arguments for supporting synapse workspace repository configuration
 * `az synapse spark-job-definition`: Support spark job definition CRUD
 
-2.28.1
-++++++
+## September 09, 2021
+
+Version 2.28.1
 
 ### ARM
 
