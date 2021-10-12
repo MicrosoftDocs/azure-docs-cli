@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2021
+ms.date: 10/12/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,6 +15,143 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## October 12, 2021
+
+Version 2.29.0
+
+### AKS
+
+* `az aks check-acr`: Bump canipull to 0.0.3 alpha to support sovereign cloud
+* `az aks create/update`: Add new parameter `--disable-local-accounts` to support disable local accounts
+* `az aks enable-addons`: Support open-service-mesh addon
+* `az aks create/update`: Add support for updating tags
+
+### App Config
+
+* Fix dependencies for multiple installations of `jsondiff` and `javaproperties`
+
+### App Service
+
+* `az webapp create/up`: Correct the typo of wrong java version in help
+* `az logicapp create/delete/show/list`: Add new commands to support logicapp related operations
+* `az staticwebapp environment delete`: Add command to support deleting static app environment
+* `az functionapp show`: Add kind validation for show operation
+* `az webapp config backup list`: Fix issue that returned backup configuration instead of backup list
+* `az logicapp start/restart/stop`: Add new commands for logicapp
+* `az webapp config storage-account`: Update parameter descriptions
+
+### ARM
+
+* `az deployment`: Remove the log of printing request body from custom policy
+* `az deployment group create`: Fix incorrect scope in the example of creating deployment from template-spec
+* `az ts create`: Simplify overwrite confirmation message
+
+### Backup
+
+* `az backup container register`: Fix refresh container bug
+* `az backup`: Add CRR functionality for Azure Workload
+* `az backup`: Add support for MAB backup management type in some sub commands
+
+### Compute 
+
+* `az sig create/update`: Add new parameter `--soft-delete` to support soft delete
+* `az sig image-version`: Add new parameter `--replication-mode` to support setting replication mode
+* `az vm/vmss update`: Fix disassociation VM/VMSS from capacity reservation
+* `az vm/vmss create`: Hide alias `--data-delete-option` in help
+* `az vmss create`: Support quick creation for flexible VMSS
+
+### Container
+
+* [BREAKING CHANGE] `az container create`: Remove `--network-profile` parameter, property no longer supported
+* `az container logs`: Fix the attribute error introduced by Track 2 migration
+* `az container create`: Add parameter `--acr-identity` for support of MSI authenticated ACR image pull
+
+### Cosmos DB
+
+* `az cosmosdb identity assign/remove`: Add support for user identity
+
+### Eventhub
+
+* `az eventhubs namespace update`: Add `--infra-encryption` for encryption (enable-require-infrastructure-encryption).
+* `az eventhubs namespace create/update`: Add `--disable-local-auth` to enable or disable SAS authentication.
+* `az eventhubs namespace`: Add `private-endpoint-connection` and `private-link-resource` command groups
+
+### Key Vault
+
+* [BREAKING CHANGE] Fix #18479: `az keyvault network-rule add`: Fix the bug which allows duplicate `--ip-address` with the ones already in the network-rule
+* Fix #10254: `az keyvault network-rule add`: Add capability to accept multiple ip-addresses as a list in the form of `--ip-address ip1 [ip2] [ip3]...`
+* `az keyvault delete`: Add warning when deleting managed HSM
+
+### Network
+
+* Add `az network custom-ip prefix wait`
+* Add `az network vnet-gateway packet-capture wait`
+* Add `az network vnet-gateway vpn-client ipsec-policy wait`
+* Add `az network vnet-gateway nat-rule wait`
+* Add `az network vpn-connection packet-capture wait`
+* Private link and endpoint support for provider `Microsoft.BotService/botServices` to supported private endpoints operations
+* `az network application-gateway client-cert`: Add commands `update` and `show`
+* `az network application-gateway ssl-profile`: Add commands `update` and `show`
+* `az network application-gateway http-listener create`: Add parameter `--ssl-profile`
+* `az network application-gateway http-listener update`: Add parameter `--ssl-profile`
+* Onboard hdinsight private link2 network cmdlets
+* `az network bastion create`: Add `--tags` argument
+* Private link and endpoint support for provider `Microsoft.Authorization/resourceManagementPrivateLinks`
+* Private link and endpoint support for provider `Microsoft.MachineLearningServices/workspaces`
+
+### Profile
+
+* `az account show`: Deprecate `--sdk-auth`
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server migration`: Change `--properties @{filepath}` to `--properties {filepath}`
+* `az postgres flexible-server migration create`: User can pass in filename with double quotes or no quotes and same for absolute paths.
+* `az postgres flexible-server migration check-name-availability`: Add a command to check if a migration name is available.
+* `az postgres flexible-server migration update`:  Add `--start-data-migration` to reschedule the migration to start right now.
+* Update list-skus, create command location setting and replica command
+
+### Role
+
+* `az ad sp create-for-rbac`: Deprecate `--sdk-auth`
+
+### Security
+
+* Add command `az security setting update`
+
+### Storage
+
+* Fix #19279: Add clarification for file system name to also mean container name.
+* Fix #19059: Fix doc link to point to public doc website
+* `az storage account hns-migration start/stop`: Support migrate a storage account to enable hierarchical namespace
+* `az storage container-rm create/update`: Add `--root-squash` to support enable nfsv3 root squash or all squash
+* Fix #17858: `az storage blob upload`: make --name optional
+* `az storage account create/update`: Add --public-network-access parameter
+* `az storage container immutability-policy create`: Add --allow-protected-append-writes-all/--w-all parameter
+* `az storage container legal-hold set`: Add --allow-protected-append-writes-all/--w-all parameter
+* `az storage account create/update`: Enable account level immutability
+
+### Synapse
+
+* [BREAKING CHANGE] `az synapse sql/pool audit-policy update`: Add parameter `blob-storage-target-state`, `log-analytics-target-state`, `event-hub-target-state` (at least choose one of these 3 paras) 
+* `az synapse integration-runtime`: Support start/stop integration-runtime
+* `az synapse trigger`: Add az synapse trigger wait
+* `az synapse trigger-run`: Add az synapse trigger-run cancel
+* `az synapse integration-runtime`: Deprecate `create` command and will redirect to `managed create` or `self-hosted create` command
+* `az synapse dataset/pipeline/linked-service/trigger`: Deprecate `set` command and will redirect to `update` command
+* `az synapse workspace-package`: Support workspace package CRUD
+* `az synapse spark pool update`: Support add or remove specific packages
+* `az synapse workspace create/update`: Add arguments for supporting synapse workspace repository configuration
+* `az synapse spark-job-definition`: Support spark job definition CRUD
+
+## September 09, 2021
+
+Version 2.28.1
+
+### ARM
+
+Hotfix: Fix #19468: pip installs azure-cli 2.0.73 because of the dependency on deprecated package `jsmin`
 
 ## September 07, 2021
 
