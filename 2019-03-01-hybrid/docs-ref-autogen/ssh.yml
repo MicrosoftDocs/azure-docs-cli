@@ -5,72 +5,9 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **ssh** extension for Azure CLI and requires version 2.4.0 or higher.  The extension will automatically install the first time you run an **az ssh** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: SSH into resources (Azure VMs, Arc servers, etc) using AAD issued openssh certificates.
+summary: SSH into resources (Azure VMs, etc) using AAD issued openssh certificates.
 description: ''
 directCommands:
-- uid: az_ssh_arc
-  name: az ssh arc
-  summary: SSH into Azure Arc Servers.
-  description: Users can now login using AAD issued certificates or using local user credentials. We recommend login using AAD issued certificates as azure automatically rotate SSH CA keys. To SSH as a local user in the target machine, you must provide the local user name using the --local-user argument.
-  syntax: >-
-    az ssh arc [--certificate-file]
-               [--delete-private-key]
-               [--local-user]
-               [--name]
-               [--port]
-               [--private-key-file]
-               [--public-key-file]
-               [--resource-group]
-               [--resource-id]
-               [--ssh-client-path]
-               [<SSH_ARGS>]
-  examples:
-  - summary: Give a resource group and Arc Server Name to SSH using AAD issued certificates
-    syntax: az ssh arc --resource-group myResourceGroup --vm-name myArcServer
-  - summary: Give the Resource ID of an Arc Server to SSH using AAD issued certificates
-    syntax: az ssh arc --resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.HybridCompute/machines/myArcServer
-  - summary: Using a custom private key file
-    syntax: az ssh arc --resource-group myResourceGroup --vm-name myArcServer --private-key-file key --public-key-file key.pub
-  - summary: Give a local user name to SSH to a local user using certificate-based authentication
-    syntax: az ssh arc  --resource-group myResourceGroup --vm-name myArcServer --certificate-file cert.pub --private-key key --local-user name
-  - summary: Give a local user name to SSH to a local user using key-based authentication
-    syntax: az ssh arc --resource-group myRG --vm-name myVM --local-user name --private-key-file key
-  - summary: Give a local user name to SSH to a local user using password-based authentication
-    syntax: az ssh arc --resource-id /subscriptions/mySubsription/resourceGroups/myRG/providers/Microsoft.HybridCompute/machines/myArcServer --local-user username
-  optionalParameters:
-  - name: --certificate-file -c
-    summary: Path to certificate file.
-    description: ''
-  - name: --delete-private-key
-    summary: This is an internal argument. This argument is used by Azure Portal to provide a one click SSH login experience in Cloud shell.
-    description: ''
-  - name: --local-user
-    summary: The username for a local user.
-    description: ''
-  - name: --name --vm-name -n
-    summary: The name of the Arc Server.
-    description: ''
-  - name: --port
-    summary: Port to connect to on the remote host.
-    description: ''
-  - name: --private-key-file -i
-    summary: The RSA private key file path.
-    description: ''
-  - name: --public-key-file -p
-    summary: The RSA public key file path.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --resource-id
-    summary: The Resource ID of the Arc Server.
-    description: ''
-  - name: --ssh-client-path
-    summary: Path to ssh executable. Default to ssh pre-installed if not provided.
-    description: ''
-  - name: <SSH_ARGS>
-    summary: Additional arguments passed to OpenSSH.
-    description: ''
 - uid: az_ssh_cert
   name: az ssh cert
   summary: Create an SSH RSA certificate signed by AAD.
@@ -94,17 +31,13 @@ directCommands:
   description: Other software (git/rsync/etc) that support setting an SSH command can be set to use the config file by setting the command to 'ssh -F /path/to/config' e.g. rsync -e 'ssh -F /path/to/config'.
   syntax: >-
     az ssh config --file
-                  [--certificate-file]
                   [--ip]
-                  [--local-user]
                   [--name]
                   [--overwrite]
-                  [--port]
                   [--prefer-private-ip]
                   [--private-key-file]
                   [--public-key-file]
                   [--resource-group]
-                  [--resource-id]
   examples:
   - summary: Give a resource group and VM for which to create a config, and save in a local file
     syntax: az ssh config --resource-group myResourceGroup --vm-name myVm --file ./sshconfig
@@ -137,23 +70,14 @@ directCommands:
     summary: The file path to write the SSH config to.
     description: ''
   optionalParameters:
-  - name: --certificate-file -c
-    summary: Path to certificate file.
-    description: ''
   - name: --ip
     summary: The public IP address (or hostname) of the VM.
-    description: ''
-  - name: --local-user
-    summary: The username for a local user.
     description: ''
   - name: --name --vm-name -n
     summary: The name of the VM.
     description: ''
   - name: --overwrite
     summary: Overwrites the config file if this flag is set.
-    description: ''
-  - name: --port
-    summary: Port to connect to on the remote host.
     description: ''
   - name: --prefer-private-ip
     summary: Will use a private IP if available. By default only public IPs are used.
@@ -167,31 +91,23 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --resource-id
-    summary: The Resource ID of the Azure VM or Arc Server.
-    description: ''
 - uid: az_ssh_vm
   name: az ssh vm
-  summary: SSH into Azure VMs or Arc Servers.
-  description: Users can now login using AAD issued certificates or using local user credentials. We recommend login using AAD issued certificates as azure automatically rotate SSH CA keys. To SSH as a local user in the target machine, you must provide the local user name using the --local-user argument.
+  summary: SSH into Azure VMs using an ssh certificate.
+  description: ''
   syntax: >-
-    az ssh vm [--certificate-file]
-              [--delete-private-key]
-              [--hostname]
-              [--local-user]
+    az ssh vm [--hostname]
               [--name]
               [--port]
               [--prefer-private-ip]
               [--private-key-file]
               [--public-key-file]
               [--resource-group]
-              [--resource-id]
-              [--ssh-client-path]
               [<SSH_ARGS>]
   examples:
-  - summary: Give a resource group and VM to SSH using AAD issued certificates
-    syntax: az ssh vm --resource-group myResourceGroup --vm-name myVM
-  - summary: Give the public IP (or hostname) of a VM to SSH to SSH using AAD issued certificates
+  - summary: Give a resource group and VM to SSH to
+    syntax: az ssh vm --resource-group myResourceGroup --vm-name myVm
+  - summary: Give the public IP (or hostname) of a VM to SSH to
     syntax: >-
       az ssh vm --ip 1.2.3.4
 
@@ -200,26 +116,9 @@ directCommands:
     syntax: az ssh vm --ip 1.2.3.4 --private-key-file key --public-key-file key.pub
   - summary: Using additional ssh arguments
     syntax: az ssh vm --ip 1.2.3.4 -- -A -o ForwardX11=yes
-  - summary: Give the Resource ID of a VM to SSH using AAD issued certificates. Using the resource ID to identify the target machine is useful when there is an Azure VM and a Arc Server with the same name in the same resource group.
-    syntax: az ssh vm --resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/virtualMachines/myVM
-  - summary: Give a local user name to SSH using local user credentials on the target machine using certificate based authentication.
-    syntax: az ssh vm --local-user username --ip 1.2.3.4 --certificate-file cert.pub --private-key key
-  - summary: Give a local user name to SSH using local user credentials on the target machine using key based authentication.
-    syntax: az ssh vm --local-user username --resource-group myResourceGroup --vm-name myVM --private-key-file key
-  - summary: Give a local user name to SSH using local user credentials on the target machine using password based authentication.
-    syntax: az ssh vm --local-user username --resource-id /subscriptions/mySubsription/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/machines/myArcServer
   optionalParameters:
-  - name: --certificate-file -c
-    summary: Path to a certificate file used for authentication when using local user credentials.
-    description: ''
-  - name: --delete-private-key
-    summary: This is an internal argument. This argument is used by Azure Portal to provide a one click SSH login experience in Cloud shell.
-    description: ''
   - name: --hostname --ip
     summary: The public (or reachable private) IP address (or hostname) of the VM.
-    description: ''
-  - name: --local-user
-    summary: The username for a local user.
     description: ''
   - name: --name --vm-name -n
     summary: The name of the VM.
@@ -239,17 +138,10 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --resource-id
-    summary: The Resource ID of the Azure VM or Arc Server.
-    description: ''
-  - name: --ssh-client-path
-    summary: Path to ssh executable. Default to ssh pre-installed if not provided.
-    description: ''
   - name: <SSH_ARGS>
     summary: Additional arguments passed to OpenSSH.
     description: ''
 commands:
-- az_ssh_arc
 - az_ssh_cert
 - az_ssh_config
 - az_ssh_vm
@@ -269,4 +161,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: SSH into resources (Azure VMs, Arc servers, etc) using AAD issued openssh certificates.
+  description: SSH into resources (Azure VMs, etc) using AAD issued openssh certificates.
