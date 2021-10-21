@@ -95,8 +95,12 @@ directCommands:
                   [--enable-sgxquotehelper]
                   [--enable-ultra-ssd]
                   [--enable-vmss]
+                  [--enable-windows-gmsa]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
+                  [--gmsa-dns-server]
+                  [--gmsa-root-domain-name]
+                  [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--http-proxy-config]
                   [--kubelet-config]
                   [--kubernetes-version]
@@ -196,6 +200,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-aad --enable-azure-rbac
   - summary: Create a kubernetes cluster with a specific os-sku
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu
+  - summary: Create a kubernetes cluster with enabling Windows gmsa and with setting DNS server in the vnet used by the cluster.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa
+  - summary: Create a kubernetes cluster with enabling Windows gmsa but without setting DNS server in the vnet used by the cluster.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -362,11 +370,30 @@ directCommands:
   - name: --enable-vmss
     summary: To be deprecated. Use vm_set_type instead.
     description: ''
+  - name: --enable-windows-gmsa
+    summary: Enable Windows gmsa.
+    description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing.
+    description: ''
+  - name: --gmsa-dns-server
+    summary: Specify DNS server for Windows gmsa for this cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gmsa-root-domain-name
+    summary: Specify root domain name for Windows gmsa for this cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gpu-instance-profile
+    parameterValueGroup: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
+    summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
     description: ''
   - name: --http-proxy-config
     summary: Http Proxy configuration for this cluster.
@@ -991,6 +1018,9 @@ directCommands:
                   [--enable-pod-security-policy]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
+                  [--enable-windows-gmsa]
+                  [--gmsa-dns-server]
+                  [--gmsa-root-domain-name]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -1058,6 +1088,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-azure-rbac
   - summary: Disable Azure RBAC in a managed AAD AKS cluster
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-azure-rbac
+  - summary: Enable Windows gmsa for a kubernetes cluster with setting DNS server in the vnet used by the cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa
+  - summary: Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1153,6 +1187,21 @@ directCommands:
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --enable-windows-gmsa
+    summary: Enable Windows gmsa on cluster.
+    description: ''
+  - name: --gmsa-dns-server
+    summary: Specify DNS server for Windows gmsa on cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gmsa-root-domain-name
+    summary: Specify root domain name for Windows gmsa on cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
     description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
