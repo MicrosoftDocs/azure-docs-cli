@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/12/2021
+ms.date: 10/26/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,6 +15,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## October 26, 2021
+
+Version 2.29.1
+
+### Compute
+
+Hotfix: Fix #19897,#19903: Fix static webapp commands that are broken due to the upgrade of `azure-mgmt-web` to 4.0.0
 
 ## October 12, 2021
 
