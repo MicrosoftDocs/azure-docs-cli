@@ -37,11 +37,15 @@ Install the CLI using `docker run`.
 > docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli
 > ```
 
-The CLI is installed on the image as the `az` command in `/usr/local/bin`. To sign in, run the [az login](/cli/azure/reference-index#az_login) command.
+## Install specific version
+
+To install specific version:
+
+```bash
+docker run -it mcr.microsoft.com/azure-cli:2.29.1
+```
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
 
 ## Update Docker image
 

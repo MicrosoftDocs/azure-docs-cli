@@ -46,11 +46,25 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 
    Input 2 to continue install by ignoring some of its dependencies.
 
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
+## Install specific version
+
+You must first configure `azure-cli` repository information first as shown above.
+
+To view available versions:
+
+```bash
+zypper search --details --match-exact azure-cli
+```
+
+To install specific version:
+
+```bash
+sudo zypper install --from azure-cli azure-cli=2.29.1-1.el7
+```
+
+You may enter `v` to confirm the version that will be installed.
 
 [!INCLUDE [interactive-login](interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 

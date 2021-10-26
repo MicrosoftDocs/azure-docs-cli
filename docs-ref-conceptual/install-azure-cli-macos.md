@@ -38,11 +38,16 @@ brew update && brew install azure-cli
 > The Azure CLI is guaranteed to be compatible with the latest version of `python3`
 > published on Homebrew.
 
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
+## Install specific version
+
+To install specific version:
+
+```bash
+curl -L https://raw.githubusercontent.com/azclibot/homebrew-core/azcli2.29.1/Formula/azure-cli.rb > azure-cli.rb
+brew install --build-from-source azure-cli.rb
+```
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 ## Troubleshooting
 
