@@ -62,8 +62,6 @@ To install specific version:
 sudo zypper install --from azure-cli azure-cli=2.29.1-1.el7
 ```
 
-You may enter `v` to confirm the version that will be installed.
-
 [!INCLUDE [interactive-login](interactive-login.md)]
 
 ## Troubleshooting
