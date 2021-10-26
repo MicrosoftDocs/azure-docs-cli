@@ -69,13 +69,23 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo apt-get install azure-cli
     ```
 
-## Sign in to Azure with the Azure CLI
+## Install specific version
 
-Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az_login) command.
+You must first configure `azure-cli` repository information as shown above.
+
+To view available versions:
+
+```bash
+apt-cache policy azure-cli
+```
+
+To install specific version:
+
+```bash
+sudo apt-get install azure-cli=2.29.1-1~bullseye
+```
 
 [!INCLUDE [interactive-login](interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 

@@ -31,12 +31,16 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 When the installer asks if it can make changes to your computer, click the "Yes" box.
 
-### Azure CLI current version
+### Current version
 
 Download and install the current release of the Azure CLI.  After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
 
 > [!div class="nextstepaction"]
 > [Current release of the Azure CLI](https://aka.ms/installazurecliwindows)
+
+### Specific version
+
+To download the MSI installer for specific version, change the version segment in URL https://azcliprod.blob.core.windows.net/msi/azure-cli-2.29.1.msi and download it.
 
 ### Azure CLI beta version
 
@@ -58,6 +62,8 @@ Start PowerShell as administrator and run the following command:
    ```
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
+
+To install specific version, replace the `-Uri` argument with https://azcliprod.blob.core.windows.net/msi/azure-cli-2.29.1.msi with version segment changed.
 
 > [!Note]
 > After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
