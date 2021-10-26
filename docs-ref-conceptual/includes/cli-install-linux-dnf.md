@@ -49,17 +49,17 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
 
 You must first configure `azure-cli` repository information as shown above.
 
-To view available versions:
+1. To view available versions:
 
-```bash
-dnf --showduplicates list azure-cli
-```
+   ```bash
+   dnf list --showduplicates azure-cli
+   ```
 
-To install specific version:
+2. To install specific version:
 
-```bash
-sudo dnf install azure-cli-2.29.1-1.el7
-```
+   ```bash
+   sudo dnf install azure-cli-2.29.1-1.el7
+   ```
 
 [!INCLUDE [interactive-login](interactive-login.md)]
 

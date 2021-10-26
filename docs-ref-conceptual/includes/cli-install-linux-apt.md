@@ -73,17 +73,17 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 You must first configure `azure-cli` repository information as shown above.
 
-To view available versions:
+1. To view available versions:
 
-```bash
-apt-cache policy azure-cli
-```
+    ```bash
+    apt-cache policy azure-cli
+    ```
 
-To install specific version:
+2. To install specific version:
 
-```bash
-sudo apt-get install azure-cli=2.29.1-1~bullseye
-```
+    ```bash
+    sudo apt-get install azure-cli=2.29.1-1~bullseye
+    ```
 
 [!INCLUDE [interactive-login](interactive-login.md)]
 

@@ -50,17 +50,17 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 
 You must first configure `azure-cli` repository information first as shown above.
 
-To view available versions:
+1. To view available versions:
 
-```bash
-zypper search --details --match-exact azure-cli
-```
+   ```bash
+   zypper search --details --match-exact azure-cli
+   ```
 
-To install specific version:
+2. To install specific version:
 
-```bash
-sudo zypper install --from azure-cli azure-cli=2.29.1-1.el7
-```
+   ```bash
+   sudo zypper install --from azure-cli azure-cli=2.29.1-1.el7
+   ```
 
 [!INCLUDE [interactive-login](interactive-login.md)]
 
