@@ -1,9 +1,9 @@
 ---
 title: MSAL-based Azure CLI | Microsoft Docs
 description: Learn about the MSAL-based Azure CLI.
-author: dbradish-microsoft, jiasli
-ms.author: dbradish, jiasli
-manager: barbkess, yonzhan
+author: dbradish-microsoft
+ms.author: dbradish
+manager: barbkess
 ms.date: 10/28/2021
 ms.topic: conceptual
 ms.service: azure-cli
@@ -29,7 +29,7 @@ Below are several alternatives you may consider:
 
 ### Calling `az account get-access-token`
 
-You can manually call [`az account get-access-token`](account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in `az account show`.
+You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in `az account show`.
 
 ### Using `AzureCliCredential`
 
