@@ -8,14 +8,14 @@ ms.prod: azure
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.devlang: azurecli
-ms.technology: azure-cli 
+ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---
 
 # Install Azure CLI on Windows
 
-The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container. 
+The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
 For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
@@ -29,11 +29,7 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
-When the installer asks if it can make changes to your computer, click the "Yes" box.
-
-### Azure CLI current version
-
-Download and install the latest release of the Azure CLI.  After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
+Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box. After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
 
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
