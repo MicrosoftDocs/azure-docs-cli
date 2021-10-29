@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 10/21/2021
+ms.date: 11/02/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,6 +15,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 # [Current release notes](#tab/azure-cli)
+
+## November 02, 2021
+
+Version 2.29.2
+
+### ARO
+
+* Hotfix: `az aro create`: Remove Identifier URIs
 
 ## October 21, 2021
 
