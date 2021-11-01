@@ -58,7 +58,7 @@ You must first configure `azure-cli` repository information as shown above.
 2. To install specific version:
 
    ```bash
-   sudo dnf install azure-cli-2.29.1-1.el7
+   sudo dnf install azure-cli-<version>-1.el7
    ```
 
 [!INCLUDE [interactive-login](interactive-login.md)]

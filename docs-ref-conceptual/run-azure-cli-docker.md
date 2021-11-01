@@ -20,7 +20,7 @@ with an isolated environment to run the CLI in. The image can also be used as a 
 ## Install Azure CLI in Docker
 
 > [!NOTE]
-> The Azure CLI has migrated to [Microsoft Container Registry](https://azure.microsoft.com/services/container-registry). 
+> The Azure CLI has migrated to [Microsoft Container Registry](https://azure.microsoft.com/services/container-registry).
 > Existing tags on Docker Hub are still supported, but new releases will only be available as mcr.microsoft.com/azure-cli.
 
 Install the CLI using `docker run`.
@@ -42,7 +42,7 @@ Install the CLI using `docker run`.
 To install specific version:
 
 ```bash
-docker run -it mcr.microsoft.com/azure-cli:2.29.1
+docker run -it mcr.microsoft.com/azure-cli:<version>
 ```
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]

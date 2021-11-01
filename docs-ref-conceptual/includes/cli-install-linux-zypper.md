@@ -5,7 +5,7 @@ manager: barbkess
 ms.date: 11/24/2020
 ms.topic: include
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
@@ -59,7 +59,7 @@ You must first configure `azure-cli` repository information first as shown above
 2. To install specific version:
 
    ```bash
-   sudo zypper install --from azure-cli azure-cli=2.29.1-1.el7
+   sudo zypper install --from azure-cli azure-cli=<version>-1.el7
    ```
 
 [!INCLUDE [interactive-login](interactive-login.md)]
@@ -120,7 +120,7 @@ allow HTTPS connections to the following addresses:
 
 ### SSL certificate problem
 
-When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.  
+When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.
 
 ```bach
 sudo zypper update-ca-certificates

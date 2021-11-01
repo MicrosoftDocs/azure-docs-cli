@@ -8,14 +8,14 @@ ms.prod: azure
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.devlang: azurecli
-ms.technology: azure-cli 
+ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---
 
 # Install Azure CLI on Windows
 
-The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container. 
+The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
 For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
@@ -40,11 +40,11 @@ Download and install the current release of the Azure CLI.  After the installati
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL https://azcliprod.blob.core.windows.net/msi/azure-cli-2.29.1.msi and download it.
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it.
 
 ### Azure CLI beta version
 
-The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md). 
+The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.  For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md).
 
 # [Microsoft Installer (MSI) with Command](#tab/azure-powershell)
 
@@ -63,7 +63,7 @@ Start PowerShell as administrator and run the following command:
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
 
-To install specific version, replace the `-Uri` argument with https://azcliprod.blob.core.windows.net/msi/azure-cli-2.29.1.msi with version segment changed.
+To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed.
 
 > [!Note]
 > After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
