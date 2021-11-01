@@ -41,6 +41,8 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 ## Install specific version
 
+Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+
 To install specific version:
 
 ```bash
