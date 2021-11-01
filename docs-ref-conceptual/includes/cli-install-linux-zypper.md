@@ -62,8 +62,6 @@ You must first configure `azure-cli` repository information first as shown above
    sudo zypper install --from azure-cli azure-cli=<version>-1.el7
    ```
 
-[!INCLUDE [interactive-login](interactive-login.md)]
-
 ## Troubleshooting
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).

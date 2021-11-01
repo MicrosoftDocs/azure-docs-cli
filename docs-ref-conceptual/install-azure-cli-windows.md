@@ -75,12 +75,7 @@ To install specific version, replace the `-Uri` argument with `https://azcliprod
 
 ## Run the Azure CLI
 
-You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
-not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az_login) command.
-
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
 ## Troubleshooting
 

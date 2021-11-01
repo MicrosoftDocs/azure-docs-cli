@@ -61,8 +61,6 @@ You must first configure `azure-cli` repository information as shown above.
    sudo dnf install azure-cli-<version>-1.el7
    ```
 
-[!INCLUDE [interactive-login](interactive-login.md)]
-
 ## Troubleshooting
 
 Here are some common problems seen when installing with `dnf`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).

@@ -85,8 +85,6 @@ You must first configure `azure-cli` repository information as shown above.
     sudo apt-get install azure-cli=<version>-1~bullseye
     ```
 
-[!INCLUDE [interactive-login](interactive-login.md)]
-
 ## Troubleshooting
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).

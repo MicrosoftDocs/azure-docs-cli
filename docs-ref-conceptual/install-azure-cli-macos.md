@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 ---
@@ -37,8 +37,6 @@ brew update && brew install azure-cli
 > The Azure CLI has a dependency on the Homebrew `python3` package, and will install it.
 > The Azure CLI is guaranteed to be compatible with the latest version of `python3`
 > published on Homebrew.
-
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
 
 ## Troubleshooting
 
