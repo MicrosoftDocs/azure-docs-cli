@@ -1,9 +1,9 @@
 ---
 title: MSAL-based Azure CLI | Microsoft Docs
 description: Learn about the MSAL-based Azure CLI.
-author: dbradish-microsoft
-ms.author: dbradish
-manager: barbkess
+author: jiasli
+ms.author: jiasli
+manager: yonzhan
 ms.date: 10/28/2021
 ms.topic: conceptual
 ms.service: azure-cli
@@ -21,16 +21,41 @@ Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/mic
 
 ## `accessTokens.json` deprecation
 
-Previous versions of Azure CLI save ADAL tokens and service principal entries to `~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer work.
+Previous versions of Azure CLI save ADAL tokens and service principal entries to `~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
 
 The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.
+
+## Alternatives to consider
 
 Below are several alternatives you may consider:
 
 ### Calling `az account get-access-token`
 
-You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in `az account show`.
+You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show).
+
+```azurecli
+# get the active subscription
+az account show --output table
+
+# get access token for the active subscription
+az account get-access-token
+
+# get access token for a specific subscription
+az account get-access-token --subscription "<subscription ID or name>"
+```
 
 ### Using `AzureCliCredential`
 
 `AzureCliCredential` is a credential type in all existing language SDKs. It uses subprocess to call `az account get-access-token` to get an access token for the current logged-in account.
+
+## See also
+
+* MSAL
+  * [Overview of the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-overview)
+  * [Migrate applications to the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-migration)
+* Python
+  * [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential) in Python
+* .NET
+  * [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential) in .NET
+* Java
+  * [AzureCliCredential Class](/java/api/com.azure.identity.azureclicredential) in Java
