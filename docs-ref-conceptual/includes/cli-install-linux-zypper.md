@@ -48,9 +48,9 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 
 ## Install specific version
 
-You must first configure `azure-cli` repository information first as shown above.
+You must first configure `azure-cli` repository information first as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
-1. To view available versions:
+1. To view available versions with command:
 
    ```bash
    zypper search --details --match-exact azure-cli

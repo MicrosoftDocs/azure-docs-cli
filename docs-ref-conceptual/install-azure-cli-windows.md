@@ -40,7 +40,7 @@ Download and install the current release of the Azure CLI.  After the installati
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it.
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
 ### Azure CLI beta version
 
@@ -63,7 +63,7 @@ Start PowerShell as administrator and run the following command:
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
 
-To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed.
+To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
 > [!Note]
 > After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
