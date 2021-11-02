@@ -39,8 +39,17 @@ directCommands:
     description: ''
 - uid: az_postgres_flexible-server_create
   name: az postgres flexible-server create
-  summary: Create a flexible server.
-  description: ''
+  summary: Create a PostgreSQL flexible server.
+  description: >-
+    Create a PostgreSQL flexible server with custom or default configuration. For more information for network configuration, see
+
+    - Configure public access
+
+    https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-manage-firewall-cli
+
+    - Configure private access
+
+    https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-manage-virtual-network-cli.
   syntax: >-
     az postgres flexible-server create [--address-prefixes]
                                        [--admin-password]
@@ -66,36 +75,58 @@ directCommands:
                                        [--yes]
                                        [--zone]
   examples:
-  - summary: Create a PostgreSQL flexible server with default params ( resource group, location, servername, username, password ) with public access enabled by default.
-    syntax: az postgres flexible-server create
-  - summary: Create a PostgreSQL flexible server with default params ( resource group, location, servername, username, password ) with all public IPs(0.0.0.0 - 255.255.255.255).
-    syntax: az postgres flexible-server create --public-access all
-  - summary: Create a PostgreSQL flexible server with default params ( resource group, location, servername, username, password ) with public access without any firewall rules.
-    syntax: az postgres flexible-server create --public-access none
-  - summary: Create a PostgreSQL flexible server with public access and add client IP address to have access to the server
-    syntax: az postgres flexible-server create --public-access <my_client_ip>
-  - summary: Create a PostgreSQL flexible server with public access and add the range of IP address to have access to this server
-    syntax: az postgres flexible-server create --public-access <start_ip_address-end_ip_address>
-  - summary: Create a PostgreSQL flexible server with public access and allow applications from Azure IP addresses to connect to your flexible server
-    syntax: az postgres flexible-server create --public-access 0.0.0.0
-  - summary: Create a PostgreSQL flexible server with specified SKU and storage, using defaults from local context.
-    syntax: az postgres flexible-server create --name testServer --admin-password password
-  - summary: Create a PostgreSQL flexible server using already existing virtual network and subnet. If provided virtual network and subnet does not exists then virtual network and subnet with default address prefix will be created.
-    syntax: az postgres flexible-server create --vnet myVnet --subnet mySubnet
-  - summary: Create a PostgreSQL flexible server using already existing virtual network, subnet, and using the subnet ID. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers, if not already delegated.
-    syntax: az postgres flexible-server create --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName}
-  - summary: Create a PostgreSQL flexible server using new virtual network, subnet with non-default address prefix.
-    syntax: az postgres flexible-server create --vnet myVnet --address-prefixes 15.0.0.0/24 --subnet mySubnet --subnet-prefixes 15.0.0.0/24
-  - summary: Create a PostgreSQL flexible server using new virtual network, subnet, and new private dns zone address
-    syntax: az postgres flexible-server create --vnet myVnet --subnet mySubnet --private-dns-zone myDnsZone.private.postgres.database.azure.com
-  - summary: Create a PostgreSQL flexible server using existing subnet and private dns zone address in different resource group
-    syntax: az postgres flexible-server create --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName} --private-dns-zone /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/privateDnsZones/myDnsZone.private.postgres.database.azure.com
-  - summary: Create a PostgreSQL flexible server with  parameters set.
+  - summary: Create a PostgreSQL flexible server with custom parameters
     syntax: >-
       az postgres flexible-server create --location northeurope --resource-group testGroup \
-        --name testServer --admin-user username --admin-password password \
-        --sku-name Standard_D4s_v3 --tier GeneralPurpose --public-access 0.0.0.0 \
-        --storage-size 512 --tags "key=value" --version 12
+        --name testserver --admin-user username --admin-password password \
+        --sku-name Standard_B1ms --tier Burstable --public-access 153.24.26.117 --storage-size 128 \
+        --tags "key=value" --version 13 --high-availability Enabled --zone 1 \
+        --standby-zone 3
+  - summary: Create a PostgreSQL flexible server with default parameters and public access enabled by default.       Resource group, server name, username, password, and default database will be created by CLI
+    syntax: az postgres flexible-server create
+  - summary: Create a PostgreSQL flexible server with public access and add the range of IP address to have access to this server. The --public-access parameter can be 'All', 'None', <startIpAddress>, or <startIpAddress>-<endIpAddress>
+    syntax: az postgres flexible-server create --resource-group testGroup --name testserver --public-access 125.23.54.31-125.23.54.35
+  - summary: Create a PostgreSQL flexible server with private access. If provided virtual network and subnet do not exists, virtual network and subnet with the specified address prefixes will be created.
+    syntax: az postgres flexible-server create --resource-group testGroup --name testserver --vnet myVnet --subnet mySubnet --address-prefixes 10.0.0.0/16 --subnet-prefixes 10.0.0.0/24
+  - summary: Create a PostgreSQL flexible server using a new subnet resource ID and new private DNS zone resource ID. The subnet and DNS zone can be created in different subscription or resource group.
+    syntax: >-
+      az postgres flexible-server create \
+        --resource-group testGroup --name testserver \
+        --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName} \
+        --private-dns-zone /subscriptions/{SubID}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testPostgreSQLFlexibleDnsZone.private.postgres.database.azure.com \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24
+  - summary: Create a PostgreSQL flexible server using existing network resources in the same resource group. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforPostgreSQL/flexibleServers, if not already delegated. The private DNS zone will be linked to the virtual network if not already linked.
+    syntax: >-
+      # create vnet
+
+      az network vnet create --resource-group testGroup --name testVnet --location testLocation --address-prefixes 172.0.0.0/16
+
+
+      # create subnet
+
+      az network vnet subnet create --resource-group testGroup --vnet-name testVnet --address-prefixes 172.0.0.0/24 --name testSubnet
+
+
+      # create private dns zone
+
+      az network private-dns zone create -g testGroup -n testDNS.private.postgres.database.azure.com
+
+
+      az postgres flexible-server create --resource-group testGroup \
+        --name testserver --location testLocation \
+        --subnet /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
+        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com\
+
+
+      az postgres flexible-server create --resource-group testGroup --name testserver \
+        --vnet testVnet --subnet testSubnet --location testLocation \
+        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+  - summary: Create a PostgreSQL flexible server using existing network resources in the different resource group / subscription.
+    syntax: >-
+      az postgres flexible-server create --resource-group testGroup \
+         --name testserver --location testLocation \
+        --subnet /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
+        --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
   optionalParameters:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -104,7 +135,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: stingypeacock5
+    defaultValue: fluidlapwing0
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
@@ -186,9 +217,9 @@ directCommands:
                                        [--yes]
   examples:
   - summary: Delete a flexible server.
-    syntax: az postgres flexible-server delete --resource-group testGroup --name testServer
+    syntax: az postgres flexible-server delete --resource-group testGroup --name testserver
   - summary: Delete a flexible server without prompt or confirmation.
-    syntax: az postgres flexible-server delete --resource-group testGroup --name testServer --yes
+    syntax: az postgres flexible-server delete --resource-group testGroup --name testserver --yes
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -252,6 +283,8 @@ directCommands:
     syntax: az postgres flexible-server list
   - summary: List all PostgreSQL flexible servers in a resource group.
     syntax: az postgres flexible-server list --resource-group testGroup
+  - summary: List all PostgreSQL flexible servers in a resource group in table format.
+    syntax: az postgres flexible-server list --resource-group testGroup --output table
   optionalParameters:
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
@@ -290,7 +323,11 @@ directCommands:
                                         [--subscription]
   examples:
   - summary: Restart a flexible server.
-    syntax: az postgres flexible-server restart --resource-group testGroup --name testServer
+    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver
+  - summary: Restart a server with planned failover
+    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver --failover Planned
+  - summary: Restart a server with forced failover
+    syntax: az postgres flexible-server restart --resource-group testGroup --name testserver --failover Forced
   optionalParameters:
   - name: --failover
     summary: 'Forced or planned failover for server restart operation. Allowed values: Forced, Planned.'
@@ -327,13 +364,15 @@ directCommands:
                                         [--yes]
                                         [--zone]
   examples:
-  - summary: Restore 'testServer' to a specific point-in-time as a new server 'testServerNew'.
-    syntax: az postgres flexible-server restore --resource-group testGroup --name testServerNew --source-server testServer --restore-time "2017-06-15T13:10:00Z"
-  - summary: Restore 'testServer2' to 'testServerNew', where 'testServerNew' is in a different resource group from 'testServer2'.
+  - summary: Restore 'testserver' to a specific point-in-time as a new server 'testserverNew'.
+    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver --restore-time "2017-06-15T13:10:00Z"
+  - summary: Restore 'testserver2' to 'testserverNew', where 'testserverNew' is in a different resource group from 'testserver2'.
     syntax: >-
-      az postgres flexible-server restore --resource-group testGroup --name testServerNew \
-        --source-server "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforPostgreSQL/servers/testServer2" \
+      az postgres flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server "/subscriptions/${SubID}/resourceGroups/${ResourceGroup}/providers/Microsoft.DBforPostgreSQL/servers/testserver2" \
         --restore-time "2017-06-15T13:10:00Z"
+  - summary: Restore 'testserver' to current point-in-time as a new server 'testserverNew'.
+    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -359,7 +398,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2021-10-30T13:20:48+00:00
+    defaultValue: 2021-11-02T03:19:29+00:00
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -392,7 +431,7 @@ directCommands:
                                      [--subscription]
   examples:
   - summary: Get the details of a flexible server
-    syntax: az postgres flexible-server show --resource-group testGroup --name testServer
+    syntax: az postgres flexible-server show --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -422,7 +461,7 @@ directCommands:
                                                        [--subscription]
   examples:
   - summary: Show connection strings for cmd and programming languages.
-    syntax: az postgres flexible-server show-connection-string -s testServer -u username -p password -d databasename
+    syntax: az postgres flexible-server show-connection-string -s testserver -u username -p password -d databasename
   optionalParameters:
   - name: --admin-password -p
     defaultValue: '{password}'
@@ -457,7 +496,7 @@ directCommands:
                                       [--subscription]
   examples:
   - summary: Start a flexible server.
-    syntax: az postgres flexible-server start --resource-group testGroup --name testServer
+    syntax: az postgres flexible-server start --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -482,7 +521,7 @@ directCommands:
                                      [--subscription]
   examples:
   - summary: Stop a flexible server.
-    syntax: az postgres flexible-server stop --resource-group testGroup --name testServer
+    syntax: az postgres flexible-server stop --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -522,9 +561,9 @@ directCommands:
   - summary: Update a flexible server's sku, using local context for server and resource group.
     syntax: az postgres flexible-server update --sku-name Standard_D4s_v3
   - summary: Update a server's tags.
-    syntax: az postgres flexible-server update --resource-group testGroup --name testServer --tags "k1=v1" "k2=v2"
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
   - summary: Reset password
-    syntax: az postgres flexible-server update --resource-group testGroup --name testServer -p password123
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'

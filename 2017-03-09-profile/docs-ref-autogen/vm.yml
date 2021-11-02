@@ -977,6 +977,7 @@ directCommands:
                  [--remove]
                  [--resource-group]
                  [--set]
+                 [--size]
                  [--subscription]
                  [--workspace]
   examples:
@@ -990,6 +991,20 @@ directCommands:
     syntax: az vm update -n name -g group --add networkProfile.networkInterfaces primary=false id={NIC_ID}
   - summary: Remove the fourth NIC from a VM.
     syntax: az vm update -n name -g group --remove networkProfile.networkInterfaces 3
+  - summary: Add an existing VM to a dedicated host
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host my-host
+
+      az vm start -n name -g group
+  - summary: Add an existing VM to a dedicated host group
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host-group my-host-group
+
+      az vm start -n name -g group
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -1021,6 +1036,9 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --size
+    summary: The new size of the virtual machine. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1200,5 +1218,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/18/2021
+  ms.date: 10/29/2021
   description: Manage Linux or Windows virtual machines.
