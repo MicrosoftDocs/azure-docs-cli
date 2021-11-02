@@ -18,6 +18,7 @@ directCommands:
                                  --usage-threshold
                                  --vnet
                                  [--allowed-clients]
+                                 [--avs-data-store]
                                  [--backup-enabled {false, true}]
                                  [--backup-id]
                                  [--backup-policy-id]
@@ -25,9 +26,12 @@ directCommands:
                                  [--cifs {false, true}]
                                  [--cool-access {false, true}]
                                  [--coolness-period]
+                                 [--default-group-quota]
+                                 [--default-user-quota]
                                  [--encryption-key-source]
                                  [--endpoint-type]
                                  [--has-root-access]
+                                 [--is-def-quota-enabled {false, true}]
                                  [--kerberos-enabled {false, true}]
                                  [--kerberos5-r]
                                  [--kerberos5-rw]
@@ -36,6 +40,7 @@ directCommands:
                                  [--kerberos5p-r]
                                  [--kerberos5p-rw]
                                  [--ldap-enabled {false, true}]
+                                 [--network-features]
                                  [--policy-enforced {false, true}]
                                  [--protocol-types]
                                  [--remote-volume-resource-id]
@@ -97,6 +102,9 @@ directCommands:
   - name: --allowed-clients
     summary: Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names.
     description: ''
+  - name: --avs-data-store
+    summary: Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. Possible values are Enabled and Disabled. Default value is Disabled.
+    description: ''
   - name: --backup-enabled
     parameterValueGroup: false, true
     summary: Backup Enabled.
@@ -121,6 +129,12 @@ directCommands:
   - name: --coolness-period
     summary: Specifies the number of days after which data that is not accessed by clients will be tiered.
     description: ''
+  - name: --default-group-quota
+    summary: Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    description: ''
+  - name: --default-user-quota
+    summary: Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    description: ''
   - name: --encryption-key-source
     summary: Encryption Key Source.
     description: ''
@@ -129,6 +143,10 @@ directCommands:
     description: ''
   - name: --has-root-access
     summary: Has root access to volume.
+    description: ''
+  - name: --is-def-quota-enabled
+    parameterValueGroup: false, true
+    summary: Specifies if default quota is enabled for the volume.
     description: ''
   - name: --kerberos-enabled
     parameterValueGroup: false, true
@@ -155,6 +173,9 @@ directCommands:
   - name: --ldap-enabled
     parameterValueGroup: false, true
     summary: Specifies whether LDAP is enabled or not for a given NFS volume.
+    description: ''
+  - name: --network-features
+    summary: Basic network, or Standard features available to the volume. Possible values are Basic and Standard. Default value is Basic.
     description: ''
   - name: --policy-enforced
     parameterValueGroup: false, true
@@ -422,8 +443,11 @@ directCommands:
                                  [--add]
                                  [--backup-enabled {false, true}]
                                  [--backup-policy-id]
+                                 [--default-group-quota]
+                                 [--default-user-quota]
                                  [--force-string]
                                  [--ids]
+                                 [--is-def-quota-enabled {false, true}]
                                  [--name]
                                  [--policy-enforced {false, true}]
                                  [--pool-name]
@@ -454,11 +478,21 @@ directCommands:
   - name: --backup-policy-id
     summary: Backup Policy Resource ID.
     description: ''
+  - name: --default-group-quota
+    summary: Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    description: ''
+  - name: --default-user-quota
+    summary: Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --is-def-quota-enabled
+    parameterValueGroup: false, true
+    summary: Specifies if default quota is enabled for the volume.
     description: ''
   - name: --name --volume-name -n -v
     summary: The name of the ANF volume.
@@ -546,5 +580,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/15/2021
+  ms.date: 10/15/2021
   description: Manage Azure NetApp Files (ANF) Volume Resources.

@@ -72,9 +72,13 @@ directCommands:
 - uid: az_login
   name: az login
   summary: Log in to Azure.
-  description: ''
+  description: >-
+    By default, this command logs in with a user account. CLI will try to launch a web browser to log in interactively. If a web browser is not available, CLI will fall back to device code login.
+
+    To login with a service principal, specify --service-principal.
   syntax: >-
     az login [--allow-no-subscriptions]
+             [--federated-token]
              [--identity]
              [--password]
              [--scope]
@@ -92,13 +96,16 @@ directCommands:
     syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p VerySecret --tenant contoso.onmicrosoft.com
   - summary: Log in with a service principal using client certificate.
     syntax: az login --service-principal -u http://azure-cli-2016-08-05-14-31-15 -p ~/mycertfile.pem --tenant contoso.onmicrosoft.com
-  - summary: Log in using a VM's system assigned identity
+  - summary: Log in using a VM's system-assigned managed identity.
     syntax: az login --identity
-  - summary: Log in using a VM's user assigned identity. Client or object ids of the service identity also work
+  - summary: Log in using a VM's user-assigned managed identity. Client or object ids of the service identity also work.
     syntax: az login --identity -u /subscriptions/<subscriptionId>/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   optionalParameters:
   - name: --allow-no-subscriptions
     summary: Support access tenants without subscriptions. It's uncommon but useful to run tenant level commands, such as 'az ad'.
+    description: ''
+  - name: --federated-token
+    summary: Federated token that can be used for OIDC token exchange.
     description: ''
   - name: --identity -i
     summary: Log in using the Virtual Machine's identity.
@@ -421,4 +428,4 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/18/2020
+  ms.date: 10/15/2021

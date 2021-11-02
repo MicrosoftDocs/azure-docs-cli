@@ -1,10 +1,6 @@
 ### YamlMime:AzureCLIGroup
 uid: az_managed-cassandra_datacenter
 name: az managed-cassandra datacenter
-extensionInformation: >-
-  > [!Note]
-
-  > This reference is part of the **cosmosdb-preview** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az managed-cassandra datacenter** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Azure Managed Cassandra DataCenter.
 description: ''
 directCommands:
@@ -19,8 +15,15 @@ directCommands:
                                            --delegated-subnet-id
                                            --node-count
                                            --resource-group
+                                           [--availability-zone {false, true}]
+                                           [--backup-storage-customer-key-uri]
                                            [--base64-encoded-cassandra-yaml-fragment]
+                                           [--disk-capacity]
+                                           [--disk-sku]
+                                           [--managed-disk-customer-key-uri]
                                            [--no-wait]
+                                           [--sku]
+                                           [--subscription]
   examples:
   - summary: Create a Managed Cassandra Datacenter in a Cassandra Cluster. Each datacenter should atleast have 3 nodes.
     syntax: >-
@@ -63,11 +66,33 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --availability-zone -z
+    parameterValueGroup: false, true
+    summary: If the data center haves Availability Zone feature, apply it to the Virtual Machine ScaleSet that host the data center virtual machines.
+    description: ''
+  - name: --backup-storage-customer-key-uri -p
+    summary: Indicates the Key Uri of the customer key to use for encryption of the backup storage account.
+    description: ''
   - name: --base64-encoded-cassandra-yaml-fragment -b
     summary: This is a Base64 encoded yaml file that is a subset of cassandra.yaml.  Supported fields will be honored and others will be ignored.
     description: ''
+  - name: --disk-capacity
+    summary: Number of disk used for data centers. Default value is 4.
+    description: ''
+  - name: --disk-sku
+    summary: Disk SKU used for data centers. Default value is P30.
+    description: ''
+  - name: --managed-disk-customer-key-uri -k
+    summary: Key uri to use for encryption of managed disks. Ensure the system assigned identity of the cluster has been assigned appropriate permissions(key get/wrap/unwrap permissions) on the key.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --sku
+    summary: Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_managed-cassandra_datacenter_delete
   name: az managed-cassandra datacenter delete
@@ -78,6 +103,7 @@ directCommands:
                                            --data-center-name
                                            --resource-group
                                            [--no-wait]
+                                           [--subscription]
                                            [--yes]
   examples:
   - summary: Deletes a Managed Cassandra Datacenter in the given Cluster.
@@ -101,6 +127,9 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -111,6 +140,8 @@ directCommands:
   syntax: >-
     az managed-cassandra datacenter list --cluster-name
                                          --resource-group
+                                         [--query-examples]
+                                         [--subscription]
   examples:
   - summary: List all Managed Cassandra DataCenters in a given Cluster.
     syntax: az managed-cassandra datacenter list --resource-group MyResourceGroup --cluster-name MyCluster
@@ -123,6 +154,13 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_managed-cassandra_datacenter_show
   name: az managed-cassandra datacenter show
   summary: Get a Managed Cassandra DataCenter Resource.
@@ -131,6 +169,8 @@ directCommands:
     az managed-cassandra datacenter show --cluster-name
                                          --data-center-name
                                          --resource-group
+                                         [--query-examples]
+                                         [--subscription]
   examples:
   - summary: Gets a Managed Cassandra Datacenter Resource. ProvisioningState tells the state of this datacenter. If the datacenter does not exist a NotFound response is returned.
     syntax: az managed-cassandra datacenter show --resource-group MyResourceGroup --cluster-name MyCluster --data-center-name MyDataCenter
@@ -147,6 +187,13 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --query-examples
+    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_managed-cassandra_datacenter_update
   name: az managed-cassandra datacenter update
   summary: Update a Datacenter in an Azure Managed Cassandra Cluster.
@@ -155,9 +202,12 @@ directCommands:
     az managed-cassandra datacenter update --cluster-name
                                            --data-center-name
                                            --resource-group
+                                           [--backup-storage-customer-key-uri]
                                            [--base64-encoded-cassandra-yaml-fragment]
+                                           [--managed-disk-customer-key-uri]
                                            [--no-wait]
                                            [--node-count]
+                                           [--subscription]
   examples:
   - summary: Scale the number of nodes in a datacenter. This is a scale up operation assuming that the create datacenter was done with 3 nodes. Each datacenter should atleast have 3 nodes.
     syntax: az managed-cassandra datacenter update --resource-group MyResourceGroup --cluster-name MyCluster --data-center-name MyDataCenter --node-count 6
@@ -177,14 +227,23 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --backup-storage-customer-key-uri -p
+    summary: Indicates the Key Uri of the customer key to use for encryption of the backup storage account.
+    description: ''
   - name: --base64-encoded-cassandra-yaml-fragment -b
     summary: This is a Base64 encoded yaml file that is a subset of cassandra.yaml.  Supported fields will be honored and others will be ignored.
+    description: ''
+  - name: --managed-disk-customer-key-uri -k
+    summary: Key uri to use for encryption of managed disks. Ensure the system assigned identity of the cluster has been assigned appropriate permissions(key get/wrap/unwrap permissions) on the key.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --node-count -n
     summary: The number of Cassandra virtual machines in this data center. The minimum value is 3.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_managed-cassandra_datacenter_create

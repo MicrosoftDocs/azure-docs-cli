@@ -45,12 +45,14 @@ directCommands:
     az keyvault key create [--curve]
                            [--disabled {false, true}]
                            [--expires]
+                           [--exportable {false, true}]
                            [--hsm-name]
                            [--id]
                            [--kty {EC, EC-HSM, RSA, RSA-HSM, oct, oct-HSM}]
                            [--name]
                            [--not-before]
                            [--ops {decrypt, encrypt, export, import, sign, unwrapKey, verify, wrapKey}]
+                           [--policy]
                            [--protection {hsm, software}]
                            [--size]
                            [--subscription]
@@ -66,6 +68,10 @@ directCommands:
     description: ''
   - name: --expires
     summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --exportable
+    parameterValueGroup: false, true
+    summary: Whether the private key can be exported. To create key with release policy, "exportable" must be true and caller must have "export" permission.
     description: ''
   - name: --hsm-name
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
@@ -86,6 +92,9 @@ directCommands:
   - name: --ops
     parameterValueGroup: decrypt, encrypt, export, import, sign, unwrapKey, verify, wrapKey
     summary: Space-separated list of permitted JSON web key operations.
+    description: ''
+  - name: --policy
+    summary: The policy rules under which the key can be exported. Policy definition as JSON, or a path to a file containing JSON policy definition.
     description: ''
   - name: --protection -p
     parameterValueGroup: hsm, software
@@ -297,6 +306,7 @@ directCommands:
                            [--curve]
                            [--disabled {false, true}]
                            [--expires]
+                           [--exportable {false, true}]
                            [--hsm-name]
                            [--id]
                            [--kty {EC, RSA}]
@@ -306,6 +316,7 @@ directCommands:
                            [--pem-file]
                            [--pem-password]
                            [--pem-string]
+                           [--policy]
                            [--protection {hsm, software}]
                            [--subscription]
                            [--tags]
@@ -326,6 +337,10 @@ directCommands:
     description: ''
   - name: --expires
     summary: Expiration UTC datetime  (Y-m-d'T'H:M:S'Z').
+    description: ''
+  - name: --exportable
+    parameterValueGroup: false, true
+    summary: Whether the private key can be exported. To create key with release policy, "exportable" must be true and caller must have "export" permission.
     description: ''
   - name: --hsm-name
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
@@ -356,6 +371,9 @@ directCommands:
     description: ''
   - name: --pem-string
     summary: PEM string containing the key to be imported.
+    description: ''
+  - name: --policy
+    summary: The policy rules under which the key can be exported. Policy definition as JSON, or a path to a file containing JSON policy definition.
     description: ''
   - name: --protection -p
     parameterValueGroup: hsm, software
@@ -586,6 +604,7 @@ directCommands:
                                    [--name]
                                    [--not-before]
                                    [--ops {decrypt, encrypt, export, import, sign, unwrapKey, verify, wrapKey}]
+                                   [--policy]
                                    [--subscription]
                                    [--tags]
                                    [--vault-name]
@@ -613,6 +632,9 @@ directCommands:
   - name: --ops
     parameterValueGroup: decrypt, encrypt, export, import, sign, unwrapKey, verify, wrapKey
     summary: Space-separated list of permitted JSON web key operations.
+    description: ''
+  - name: --policy
+    summary: The policy rules under which the key can be exported. Policy definition as JSON, or a path to a file containing JSON policy definition.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -724,5 +746,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/18/2021
+  ms.date: 10/26/2021
   description: Manage keys.
