@@ -14,8 +14,6 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
-# [Current release notes](#tab/azure-cli)
-
 ## November 02, 2021
 
 Version 2.30.0
@@ -2131,7 +2129,7 @@ Version 2.14.0
 
 * Add List-SKUS Command, Table Transformers, Local Context for Postgres, MySQL, Mariadb Single Server
 * [BREAKING CHANGE] Parameter name updates. Improvements to Management Plane for MySQL and PostgreSQL
-* `az postgres|mariadb|mysql server create` : Update create experience for Postgres, MySQL and MariaDB - new fields in the output , Introduce new values for `--public` parameter in create command (all,<IP>,<IPRange>,0.0.0.0)
+* `az postgres|mariadb|mysql server create` : Update create experience for Postgres, MySQL and MariaDB - new fields in the output , Introduce new values for `--public` parameter in create command (all,\<IP\>,\<IPRange\>,0.0.0.0)
 
 ### SignalR
 
@@ -8501,31 +8499,3 @@ You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
-
-# [Beta release notes](#tab/azure-cli-beta)
-
-## February 8, 2021
-
-> [!NOTE]
->
->  BREAKING CHANGES are introduced in this release.  Carefully read all release notes prior to installation.
->
-> The beta version does not guarantee product level quality so it should not be used in your production environment.
-
-* Azure CLI beta internally replaces [ADAL](https://github.com/AzureAD/azure-activedirectory-library-for-python) with [Azure Identity](https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/identity/azure-identity) and [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python). Existing ADAL token cache (`~/.azure/accessToken.json`) will be migrated to MSAL encrypted token cache automatically when any command requiring a credential is executed.
-
-* There are several changes to `az login`.  (Run `az login --help` for more details.)
-  * [BREAKING CHANGE] `~/.azure/accessToken.json` will no longer be created after a successful login. To get an access token, use [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) instead.
-  * [BREAKING CHANGE] `--use-cert-sn-issuer` argument is not supported.
-  * After logging in with a managed identity, all `clientId`, `objectId` and `resourceId` will be shown.
-  * Fix #13188: `az login` with managed identity indicating system assigned when the identity is user assigned.
-
-* [BREAKING CHANGE] Skip SSL verification via environment `ADAL_PYTHON_SSL_NO_VERIFY` has been removed. See [work behind a proxy](/cli/azure/use-cli-effectively#work-behind-a-proxy) for trusting a self-signed root certificate.
-
-The beta version of the Azure CLI supports all commands and will stay in sync with the current released version.
-
-For installation instructions, see [Install Azure CLI beta version](install-azure-cli-beta.md).
-
-If you find issues in the beta release, the Azure CLI engineering team welcomes your comments on [GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
-
----
