@@ -44,13 +44,22 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
    ```bash
    sudo dnf install azure-cli
    ```
- 
-Run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
 
+## Install specific version
 
-[!INCLUDE [interactive-login](interactive-login.md)]
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
+1. To view available versions with command:
+
+   ```bash
+   dnf list --showduplicates azure-cli
+   ```
+
+2. To install specific version:
+
+   ```bash
+   sudo dnf install azure-cli-<version>-1.el7
+   ```
 
 ## Troubleshooting
 

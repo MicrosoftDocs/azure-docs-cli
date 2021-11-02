@@ -29,10 +29,16 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
+### Latest version
+
 Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box. After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
 
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
+
+### Specific version
+
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
 # [Microsoft Installer (MSI) with Command](#tab/azure-powershell)
 
@@ -51,6 +57,8 @@ Start PowerShell as administrator and run the following command:
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
 
+To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+
 > [!Note]
 > After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
 
@@ -61,12 +69,7 @@ This will download and install the latest version of the Azure CLI for Windows. 
 
 ## Run the Azure CLI
 
-You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell. PowerShell offers some tab completion features
-not available from Windows Command Prompt. To sign in, run the [az login](/cli/azure/reference-index#az_login) command.
-
-[!INCLUDE [interactive-login](includes/interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
+You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
 ## Troubleshooting
 
