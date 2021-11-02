@@ -5,7 +5,7 @@ manager: barbkess
 ms.date: 11/24/2020
 ms.topic: include
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
@@ -46,11 +46,21 @@ for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLE
 
    Input 2 to continue install by ignoring some of its dependencies.
 
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
+## Install specific version
 
-[!INCLUDE [interactive-login](interactive-login.md)]
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
+1. To view available versions with command:
+
+   ```bash
+   zypper search --details --match-exact azure-cli
+   ```
+
+2. To install specific version:
+
+   ```bash
+   sudo zypper install --from azure-cli azure-cli=<version>-1.el7
+   ```
 
 ## Troubleshooting
 
@@ -108,7 +118,7 @@ allow HTTPS connections to the following addresses:
 
 ### SSL certificate problem
 
-When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.  
+When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.
 
 ```bach
 sudo zypper update-ca-certificates
