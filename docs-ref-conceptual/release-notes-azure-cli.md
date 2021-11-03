@@ -18,6 +18,10 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 Version 2.30.0
 
+### Core
+
+* [BREAKING CHANGE] Migrate from ADAL to MSAL. For more details, see [MSAL-based Azure CLI](/cli/azure/msal-based-azure-cli)
+
 ### ACR
 
 * [BREAKING CHANGE] `az connected-registry`: `--repository` flag short version `-t` is being removed.
