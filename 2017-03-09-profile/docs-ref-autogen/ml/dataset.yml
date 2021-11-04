@@ -1,0 +1,223 @@
+### YamlMime:AzureCLIGroup
+uid: az_ml_dataset
+name: az ml dataset
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **ml** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az ml dataset** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Azure ML dataset assets.
+description: Azure ML dataset assets are references to file(s) in your storage services or public URLs along with any corresponding metadata. They are not copies of your data. You can use these dataset assets to access relevant data during model training and mount or download the referenced data to your compute target.
+directCommands:
+- uid: az_ml_dataset_create
+  name: az ml dataset create
+  summary: Create a dataset asset.
+  description: >-
+    Dataset assets can be defined from files on your local machine or as references to files in cloud storage. The created dataset asset will be tracked in the workspace under the specified name and version.
+
+
+    To create a dataset asset from file(s) on your local machine, specify the 'local_path' field in your YAML config. Azure ML will upload these file(s) to the blob container that backs the workspace's default datastore (named 'workspaceblobstore'). The created dataset asset will then point to that uploaded data.
+
+
+    To create a dataset asset that references file(s) in cloud storage, specify the 'datastore' that corresponds to the storage service and the 'path' to the file(s) in storage in your YAML config.
+
+
+    You can also create a dataset asset directly from a storage URL or public URL. To do so, specify the URL to the 'path' field in your YAML config.
+  syntax: >-
+    az ml dataset create --resource-group
+                         --workspace-name
+                         [--description]
+                         [--file]
+                         [--local-path]
+                         [--name]
+                         [--paths]
+                         [--set]
+                         [--tags]
+                         [--version]
+  examples:
+  - summary: Create a dataset asset from a YAML specification file
+    syntax: az ml dataset create --file data.yml --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --description -d
+    summary: Description of the dataset.
+    description: ''
+  - name: --file -f
+    summary: Local path to the YAML file containing the Azure ML dataset specification.
+    description: ''
+  - name: --local-path -l
+    summary: Local file or folder path to create the dataset.
+    description: ''
+  - name: --name -n
+    summary: Name of the dataset.
+    description: ''
+  - name: --paths -p
+    summary: "Path of data in supported URI formats to create the dataset. Examples: 'folder:azureml://datastores/mydatastore/paths/path_to_data/', 'file:azureml://datastores/mydatastore/paths/path_to_data/myfile.csv'."
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --tags
+    summary: Space-separated tags for the dataset.
+    description: ''
+  - name: --version -v
+    summary: Version of the dataset.
+    description: ''
+- uid: az_ml_dataset_delete
+  name: az ml dataset delete
+  summary: Delete a dataset asset.
+  description: ''
+  syntax: >-
+    az ml dataset delete --name
+                         --resource-group
+                         --version
+                         --workspace-name
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the data asset.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_dataset_list
+  name: az ml dataset list
+  summary: List dataset assets in a workspace.
+  description: ''
+  syntax: >-
+    az ml dataset list --resource-group
+                       --workspace-name
+                       [--max-results]
+                       [--name]
+  examples:
+  - summary: List all the dataset assets in a workspace
+    syntax: az ml dataset list --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the dataset asset versions for the specified name in a workspace
+    syntax: az ml dataset list --name my-data --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the dataset assets in a workspace using --query argument to execute a JMESPath query on the results of commands.
+    syntax: az ml dataset list --query "[].{Name:name}" --output table --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --max-results -r
+    summary: Max number of results to return.
+    description: ''
+  - name: --name -n
+    summary: Name of the data asset. If provided, all the data versions under this name will be returned.
+    description: ''
+- uid: az_ml_dataset_show
+  name: az ml dataset show
+  summary: Shows details for a dataset asset.
+  description: ''
+  syntax: >-
+    az ml dataset show --name
+                       --resource-group
+                       --version
+                       --workspace-name
+  examples:
+  - summary: Show details for a dataset asset with the specified name and version
+    syntax: az ml dataset show --name my-data --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the data asset.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_dataset_update
+  name: az ml dataset update
+  summary: Update a dataset asset.
+  description: Only the 'description' and 'tags' properties can be updated.
+  syntax: >-
+    az ml dataset update --resource-group
+                         --workspace-name
+                         [--add]
+                         [--force-string]
+                         [--name]
+                         [--remove]
+                         [--set]
+                         [--version]
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --version -v
+    summary: Version of the data asset.
+    description: ''
+commands:
+- az_ml_dataset_create
+- az_ml_dataset_delete
+- az_ml_dataset_list
+- az_ml_dataset_show
+- az_ml_dataset_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Azure ML dataset assets are references to file(s) in your storage services or public URLs along with any corresponding metadata. They are not copies of your data. You can use these dataset assets to access relevant data during model training and mount or download the referenced data to your compute target.
