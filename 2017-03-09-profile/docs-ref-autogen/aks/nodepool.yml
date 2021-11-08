@@ -47,6 +47,7 @@ directCommands:
                         [--ppg]
                         [--priority {Regular, Spot}]
                         [--scale-down-mode {Deallocate, Delete}]
+                        [--snapshot-id]
                         [--spot-max-price]
                         [--tags]
                         [--vnet-subnet-id]
@@ -60,6 +61,8 @@ directCommands:
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu
   - summary: Create a nodepool which can run wasm workloads.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --workload-runtime WasmWasi
+  - summary: create a kubernetes cluster with a snapshot id.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -161,7 +164,6 @@ directCommands:
     summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --os-type
-    defaultValue: Linux
     summary: The OS Type. Linux or Windows.
     description: ''
   - name: --pod-subnet-id
@@ -179,6 +181,9 @@ directCommands:
     defaultValue: Delete
     parameterValueGroup: Deallocate, Delete
     summary: Describes how VMs are added to or removed from nodepools.
+    description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to create this nodepool.
     description: ''
   - name: --spot-max-price
     defaultValue: nan
@@ -465,6 +470,7 @@ directCommands:
                             [--max-surge]
                             [--no-wait]
                             [--node-image-only]
+                            [--snapshot-id]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -493,6 +499,9 @@ directCommands:
     description: ''
   - name: --node-image-only
     summary: Only upgrade agent pool's node image.
+    description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to upgrade this nodepool.
     description: ''
 commands:
 - az_aks_nodepool_add
