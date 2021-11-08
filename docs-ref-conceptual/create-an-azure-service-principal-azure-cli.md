@@ -173,7 +173,7 @@ The Azure CLI has the following commands to manage role assignments:
 * [az role assignment create](/cli/azure/role/assignment#az_role_assignment_create)
 * [az role assignment delete](/cli/azure/role/assignment#az_role_assignment_delete)
 
-The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
+We recommend you use the **Contributor** role at minimum for a service principal. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access. For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
 This example adds the **Reader** role and removes the **Contributor** one:
 
