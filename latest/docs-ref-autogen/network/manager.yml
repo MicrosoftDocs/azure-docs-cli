@@ -13,19 +13,23 @@ directCommands:
   summary: Create a Network Manager.
   description: ''
   syntax: >-
-    az network manager create --name
+    az network manager create --location
+                              --name
                               --resource-group
                               [--description]
                               [--display-name]
                               [--id]
-                              [--location]
                               [--network-manager-scopes]
                               [--scope-accesses]
                               [--tags]
   examples:
   - summary: Create/Update Azure Virtual Network Manager
-    syntax: az network manager create --name "TestNetworkManager" --description "My Test Network Manager" --display-name "TestNetworkManager" --scope-accesses "Security" "Routing" "Connectivity" --network-manager-scopes management-groups="/Microsoft.Management/testmg" subscriptions="/subscriptions/00000000-0000-0000-0000-000000000000" --resource-group "rg1"
+    syntax: az network manager create --name "TestNetworkManager" -l eastus2euap --description "My Test Network Manager" --display-name "TestNetworkManager" --scope-accesses "SecurityAdmin" "Connectivity" --network-manager-scopes management-groups="/providers/Microsoft.Management/testmg" subscriptions="/subscriptions/00000000-0000-0000-0000-000000000000" --resource-group "rg1"
   requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
   - isRequired: true
     name: --name --network-manager-name -n
     summary: The name of the network manager.
@@ -43,9 +47,6 @@ directCommands:
     description: ''
   - name: --id
     summary: Resource ID.
-    description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --network-manager-scopes
     summary: Scope of Network Manager.
@@ -109,18 +110,18 @@ directCommands:
   - name: --top
     summary: An optional query parameter which specifies the maximum number of records to be returned by the server.
     description: ''
-- uid: az_network_manager_list-active-config
-  name: az network manager list-active-config
+- uid: az_network_manager_list-active-connectivity-config
+  name: az network manager list-active-connectivity-config
   summary: Lists active configurations in a network manager.
   description: ''
   syntax: >-
-    az network manager list-active-config --name
-                                          --resource-group
-                                          [--region]
-                                          [--skip-token]
+    az network manager list-active-connectivity-config --name
+                                                       --resource-group
+                                                       [--region]
+                                                       [--skip-token]
   examples:
   - summary: Get Azure Virtual Network Manager Active Configuration
-    syntax: az network manager list-active-config --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
+    syntax: az network manager list-active-connectivity-config --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --name --network-manager-name -n
@@ -148,7 +149,7 @@ directCommands:
                                                        [--skip-token]
   examples:
   - summary: Get Azure Virtual Network Manager Active Security Admin Rule
-    syntax: az network manager list-active-security-admin-rule --network-manager-name "testNetworkManager" --resource-group "myResourceGroup --region eastus2euap"
+    syntax: az network manager list-active-security-admin-rule --network-manager-name "testNetworkManager" --resource-group "myResourceGroup" --region "eastus2euap"
   requiredParameters:
   - isRequired: true
     name: --name --network-manager-name -n
@@ -205,7 +206,7 @@ directCommands:
                                           [--skip-token]
   examples:
   - summary: Post Azure Virtual Network Manager Deployment Status
-    syntax: az network manager list-deploy-status --network-manager-name "testNetworkManager" --deployment-types "Connectivity" "AdminPolicy" --regions "eastus" "westus" --resource-group "resoureGroupSample"
+    syntax: az network manager list-deploy-status --network-manager-name "testNetworkManager" --deployment-types "Connectivity" "SecurityAdmin" --regions "eastus" "westus" --resource-group "resoureGroupSample"
   requiredParameters:
   - isRequired: true
     name: --name --network-manager-name -n
@@ -225,17 +226,41 @@ directCommands:
   - name: --skip-token
     summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
     description: ''
-- uid: az_network_manager_list-effective-config
-  name: az network manager list-effective-config
+- uid: az_network_manager_list-effective-connectivity-config
+  name: az network manager list-effective-connectivity-config
   summary: Lists effective configuration in a network manager.
   description: ''
   syntax: >-
-    az network manager list-effective-config --resource-group
-                                             --virtual-network-name
-                                             [--skip-token]
+    az network manager list-effective-connectivity-config --resource-group
+                                                          --virtual-network-name
+                                                          [--skip-token]
   examples:
   - summary: Get Azure Virtual Network Manager Effective Configuration
-    syntax: az network manager list-effective-config --virtual-network-name "myVirtualNetwork" --resource-group "myResourceGroup"
+    syntax: az network manager list-effective-connectivity-config --virtual-network-name "myVirtualNetwork" --resource-group "myResourceGroup"
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --virtual-network-name --vnet-name
+    summary: The name of the virtual network.
+    description: ''
+  optionalParameters:
+  - name: --skip-token
+    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    description: ''
+- uid: az_network_manager_list-effective-security-admin-rule
+  name: az network manager list-effective-security-admin-rule
+  summary: Lists effective configuration in a network manager.
+  description: ''
+  syntax: >-
+    az network manager list-effective-security-admin-rule --resource-group
+                                                          --virtual-network-name
+                                                          [--skip-token]
+  examples:
+  - summary: Get Azure Virtual Network Manager Effective Configuration
+    syntax: az network manager list-effective-security-admin-rule --virtual-network-name "myVirtualNetwork" --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -401,18 +426,6 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
-- az_network_manager_admin-rule
-- az_network_manager_admin-rule_collection
-- az_network_manager_admin-rule_collection_create
-- az_network_manager_admin-rule_collection_delete
-- az_network_manager_admin-rule_collection_list
-- az_network_manager_admin-rule_collection_show
-- az_network_manager_admin-rule_collection_update
-- az_network_manager_admin-rule_create
-- az_network_manager_admin-rule_delete
-- az_network_manager_admin-rule_list
-- az_network_manager_admin-rule_show
-- az_network_manager_admin-rule_update
 - az_network_manager_connect-config
 - az_network_manager_connect-config_create
 - az_network_manager_connect-config_delete
@@ -429,39 +442,52 @@ commands:
 - az_network_manager_group_show
 - az_network_manager_group_update
 - az_network_manager_list
-- az_network_manager_list-active-config
+- az_network_manager_list-active-connectivity-config
 - az_network_manager_list-active-security-admin-rule
 - az_network_manager_list-active-security-user-rule
 - az_network_manager_list-deploy-status
-- az_network_manager_list-effective-config
+- az_network_manager_list-effective-connectivity-config
+- az_network_manager_list-effective-security-admin-rule
 - az_network_manager_list-effect-vnet
 - az_network_manager_post-commit
 - az_network_manager_security-admin-config
 - az_network_manager_security-admin-config_create
 - az_network_manager_security-admin-config_delete
 - az_network_manager_security-admin-config_list
+- az_network_manager_security-admin-config_rule-collection
+- az_network_manager_security-admin-config_rule-collection_create
+- az_network_manager_security-admin-config_rule-collection_delete
+- az_network_manager_security-admin-config_rule-collection_list
+- az_network_manager_security-admin-config_rule-collection_rule
+- az_network_manager_security-admin-config_rule-collection_rule_create
+- az_network_manager_security-admin-config_rule-collection_rule_delete
+- az_network_manager_security-admin-config_rule-collection_rule_list
+- az_network_manager_security-admin-config_rule-collection_rule_show
+- az_network_manager_security-admin-config_rule-collection_rule_update
+- az_network_manager_security-admin-config_rule-collection_show
+- az_network_manager_security-admin-config_rule-collection_update
 - az_network_manager_security-admin-config_show
 - az_network_manager_security-admin-config_update
 - az_network_manager_security-user-config
 - az_network_manager_security-user-config_create
 - az_network_manager_security-user-config_delete
 - az_network_manager_security-user-config_list
+- az_network_manager_security-user-config_rule-collection
+- az_network_manager_security-user-config_rule-collection_create
+- az_network_manager_security-user-config_rule-collection_delete
+- az_network_manager_security-user-config_rule-collection_list
+- az_network_manager_security-user-config_rule-collection_rule
+- az_network_manager_security-user-config_rule-collection_rule_create
+- az_network_manager_security-user-config_rule-collection_rule_delete
+- az_network_manager_security-user-config_rule-collection_rule_list
+- az_network_manager_security-user-config_rule-collection_rule_show
+- az_network_manager_security-user-config_rule-collection_rule_update
+- az_network_manager_security-user-config_rule-collection_show
+- az_network_manager_security-user-config_rule-collection_update
 - az_network_manager_security-user-config_show
 - az_network_manager_security-user-config_update
 - az_network_manager_show
 - az_network_manager_update
-- az_network_manager_user-rule
-- az_network_manager_user-rule_collection
-- az_network_manager_user-rule_collection_create
-- az_network_manager_user-rule_collection_delete
-- az_network_manager_user-rule_collection_list
-- az_network_manager_user-rule_collection_show
-- az_network_manager_user-rule_collection_update
-- az_network_manager_user-rule_create
-- az_network_manager_user-rule_delete
-- az_network_manager_user-rule_list
-- az_network_manager_user-rule_show
-- az_network_manager_user-rule_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
