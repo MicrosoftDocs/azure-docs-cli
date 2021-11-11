@@ -213,7 +213,8 @@ What default output format would you like?
  [3] table - Human-readable output format.
  [4] tsv - Tab- and Newline-delimited. Great for GREP, AWK, etc.
  [5] yaml - YAML formatted output. An alternative to JSON. Great for configuration files.
- [6] none - No output, except for errors and warnings.
+ [6] yamlc - Colored YAML formatted output. An alternative to JSON. Great for configuration files.
+ [7] none - No output, except for errors and warnings.
 Please enter a choice [1]:
 ```
 
