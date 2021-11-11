@@ -4,7 +4,7 @@ description: The Azure CLI offers various output formats such as JSON and YAML. 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 11/11/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -21,6 +21,7 @@ to format CLI output. The argument values and types of output are:
 `json`   | JSON string. This setting is the default
 `jsonc`  | Colorized JSON
 `yaml`   | YAML, a human-readable alternative to JSON
+`yamlc`  | Colorized YAML
 `table`  | ASCII table with keys as column headings
 `tsv`    | Tab-separated values, with no keys
 `none`   | No output other than errors and warnings
