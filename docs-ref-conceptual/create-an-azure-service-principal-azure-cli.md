@@ -44,16 +44,15 @@ When creating a service principal, you choose the type of sign-in authentication
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 >
-> By default, `az ad sp create-for-rbac` assigns the [Contributor](/azure/role-based-access-control/built-in-roles#contributor) role to the service principal at the subscription scope. To reduce your risk of a compromised service principal, assign a more specific role and narrow the scope to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
->
-> In a future release, `az ad sp create-for-rbac` will NOT create a **Contributor** role assignment by default. If needed, use the `--role` argument to explicitly create a role assignment.
+> We recommend using `Contributor` for the `--role` parameter at a minimum. To reduce your risk of a compromised service principal, assign a more specific role and narrow the scope to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
+
 
 ### Password-based authentication
 
 Without any authentication parameters, password-based authentication is used with a random password created for you.
 
   ```azurecli-interactive
-  az ad sp create-for-rbac --name ServicePrincipalName
+  az ad sp create-for-rbac --name ServicePrincipalName --role Contributor
   ```
 
 > [!IMPORTANT]
@@ -70,25 +69,25 @@ For certificate-based authentication, use the `--cert` argument. This argument r
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name ServicePrincipalName --cert "-----BEGIN CERTIFICATE-----
+az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --cert "-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----"
 ```
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name ServicePrincipalName --cert @/path/to/cert.pem
+az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --cert @/path/to/cert.pem
 ```
 
 The `--keyvault` argument can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name ServicePrincipalName --cert CertName --keyvault VaultName
+az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --cert CertName --keyvault VaultName
 ```
 
 To create a _self-signed_ certificate for authentication, use the `--create-cert` argument:
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name ServicePrincipalName --create-cert
+az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --create-cert
 ```
 
 Console output:
@@ -123,7 +122,7 @@ myCertificateValue
 The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertName --keyvault VaultName
+az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --create-cert --cert CertName --keyvault VaultName
 ```
 
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
@@ -174,7 +173,7 @@ The Azure CLI has the following commands to manage role assignments:
 * [az role assignment create](/cli/azure/role/assignment#az_role_assignment_create)
 * [az role assignment delete](/cli/azure/role/assignment#az_role_assignment_delete)
 
-The default role for a service principal is **Contributor**. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access.  For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
+We recommend you use the **Contributor** role at minimum for a service principal. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access. For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
 This example adds the **Reader** role and removes the **Contributor** one:
 
