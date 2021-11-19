@@ -37,7 +37,7 @@ plaintext files on Linux and MacOS.
 
 ## Alternatives to consider
 
-Below are several alternatives you may consider for backwards compatibility:
+Below are a couple alternatives you may consider for backwards compatibility:
 
 ### Calling `az account get-access-token`
 
