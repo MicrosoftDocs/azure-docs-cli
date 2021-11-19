@@ -14,21 +14,16 @@ keywords: msal, msal-based azure cli
 
 # MSAL-based Azure CLI
 
-Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python)
-as the underlying authentication library. MSAL uses AAD v2.0 authentication flow to provide more
-functionality and increases security for token cache.
+Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library. MSAL uses AAD v2.0 authentication flow to provide more functionality and increases security for token cache.
 
 > [!WARNING]
 > BREAKING CHANGES are introduced in Azure CLI 2.30.0. Carefully read document prior to installation.
 
 ## `accessTokens.json` deprecation
 
-Previous versions of Azure CLI save ADAL tokens and service principal entries to
-`~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate
-`accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
+Previous versions of Azure CLI save ADAL tokens and service principal entries to `~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
 
-The MSAL token cache and service principal entries are saved as encrypted files on Windows, and
-plaintext files on Linux and MacOS.
+The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.
 
 > [!IMPORTANT]
 > When using Azure CLI in a pipeline, like as Azure DevOps, ensure all tasks/stages are using
@@ -41,10 +36,7 @@ Below are a couple alternatives you may consider for backwards compatibility:
 
 ### Calling `az account get-access-token`
 
-You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token)
-in a terminal or use subprocess to call it from another programming language. By default, the
-returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown
-in [`az account show`](/cli/azure/account#az_account_show).
+You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show).
 
 ```azurecli
 # get the active subscription
@@ -59,8 +51,7 @@ az account get-access-token --subscription "<subscription ID or name>"
 
 ### Using `AzureCliCredential`
 
-`AzureCliCredential` is a credential type in all existing language SDKs. It uses subprocess to call
-`az account get-access-token` to get an access token for the current logged-in account.
+`AzureCliCredential` is a credential type in all existing language SDKs. It uses subprocess to call `az account get-access-token` to get an access token for the current logged-in account.
 
 ## See also
 
