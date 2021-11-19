@@ -31,9 +31,10 @@ The MSAL token cache and service principal entries are saved as encrypted files 
 plaintext files on Linux and MacOS.
 
 > [!IMPORTANT]
-> When using Azure CLI in a pipeline such as Azure DevOps, ensure all tasks/stages are using the
-> same versions of Azure CLI are above v2.30.0 when using MSAL-based azure CLI. Azure CLI 2.30.0 is
-> not backwards compatible with Prior versions.
+
+> When using Azure CLI in a pipeline, like as Azure DevOps, ensure all tasks/stages are using
+> versions of Azure CLI above v2.30.0 for MSAL-based azure CLI. Azure CLI 2.30.0 is not
+> backwards compatible with Prior versions and throws and error when using incompatible errors.
 
 ## Alternatives to consider
 
