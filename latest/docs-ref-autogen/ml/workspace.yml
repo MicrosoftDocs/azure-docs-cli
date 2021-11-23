@@ -22,11 +22,14 @@ directCommands:
   description: 'When a workspace is created, several Azure resources that will be used by Azure ML also get created by default: Azure Storage, Azure Container Registry, Azure Key Vault, and Azure Application Insights. You can instead use existing Azure resource instances for those when creating the workspace by specifying the resource IDs in the workspace configuration YAML file.'
   syntax: >-
     az ml workspace create --resource-group
-                           [--file,]
+                           [--description]
+                           [--display-name]
+                           [--file]
                            [--location]
+                           [--name]
                            [--no-wait]
                            [--set]
-                           [--workspace-name]
+                           [--tags]
   examples:
   - summary: Create a workspace from a YAML specification file.
     syntax: az ml workspace create --file workspace.yml --resource-group my-resource-group
@@ -36,11 +39,20 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --file, -f
+  - name: --description
+    summary: Description of the object.
+    description: ''
+  - name: --display-name
+    summary: Display name for the workspace.
+    description: ''
+  - name: --file -f
     summary: Local path to the YAML file containing the Azure ML workspace specification.
     description: ''
   - name: --location -l
     summary: The location to be used for the new workspace.
+    description: ''
+  - name: --name -n
+    summary: Name of the Azure ML workspace.
     description: ''
   - name: --no-wait
     summary: Do not wait for workspace creation to finish.
@@ -48,119 +60,154 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
     description: ''
-  - name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
     description: ''
 - uid: az_ml_workspace_delete
   name: az ml workspace delete
   summary: Delete a workspace.
   description: By default the dependent resources associated with the workspace (Azure Storage, Azure Container Registry, Azure Key Vault, Azure Application Insights) are not deleted. To delete those as well, include --all-resources.
   syntax: >-
-    az ml workspace delete --resource-group
-                           --workspace-name
+    az ml workspace delete --name
+                           --resource-group
                            [--all-resources]
                            [--no-wait]
                            [--yes]
   requiredParameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --all-resources
     summary: Delete all the dependent resources associated with the workspace (Azure Storage account, Azure Container Registry, Azure Application Insights, Azure Key Vault).
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_ml_workspace_diagnose
+  name: az ml workspace diagnose
+  summary: Diagnose workspace setup problems.
+  description: If your workspace is not working as expected, you can run this diagnosis to check if the workspace has been broken. For private endpoint workspace, it will also help check out if the network setup to this workspace and its dependent resource has problem or not.
+  syntax: >-
+    az ml workspace diagnose --name
+                             --resource-group
+                             [--no-wait]
+  examples:
+  - summary: diagnose a workspace.
+    syntax: az ml workspace diagnose --name my-workspace-name --no-wait -g my-resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
 - uid: az_ml_workspace_list
   name: az ml workspace list
   summary: List all the workspaces in a subscription.
   description: The list of workspaces can be filtered by resource group.
   syntax: >-
-    az ml workspace list --resource-group
-                         [--max-results]
+    az ml workspace list [--max-results]
+                         [--resource-group]
   examples:
   - summary: List all the workspaces in a resource group
     syntax: az ml workspace list --resource-group my-resource-group
   - summary: List all the workspace using --query argument to execute a JMESPath query on the results of commands.
     syntax: az ml workspace list --query "[].{Name:name}"  --output table --resource-group my-resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --max-results -r
     summary: Max number of results to return.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_ml_workspace_list-keys
   name: az ml workspace list-keys
   summary: List workspace keys for dependent resources such as Azure Storage, Azure Container Registry, and Azure Application Insights.
   description: ''
   syntax: >-
-    az ml workspace list-keys --resource-group
-                              --workspace-name
+    az ml workspace list-keys --name
+                              --resource-group
   requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_workspace_show
   name: az ml workspace show
   summary: Show details for a workspace.
   description: ''
   syntax: >-
-    az ml workspace show --resource-group
-                         --workspace-name
+    az ml workspace show --name
+                         --resource-group
   requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_workspace_sync-keys
   name: az ml workspace sync-keys
   summary: Sync workspace keys for dependent resources such as Azure Storage, Azure Container Registry, and Azure Application Insights.
   description: If the keys for any resource in the workspace are changed, it can take around an hour for them to automatically be updated. This command triggers the workspace to immediately synchronize keys. A possible scenario is needing immediate access to storage after regenerating the storage keys.
   syntax: >-
-    az ml workspace sync-keys --resource-group
-                              --workspace-name
+    az ml workspace sync-keys --name
+                              --resource-group
   requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_workspace_update
   name: az ml workspace update
   summary: Update a workspace.
   description: The 'description', 'tags', and 'friendly_name' properties can be updated.
   syntax: >-
-    az ml workspace update --resource-group
+    az ml workspace update --name
+                           --resource-group
                            [--add]
+                           [--description]
+                           [--display-name]
+                           [--file]
                            [--force-string]
+                           [--image-build-compute]
+                           [--no-wait]
+                           [--public-network-access]
                            [--remove]
                            [--set]
-                           [--workspace-name]
+  examples:
+  - summary: update a workspace from a YAML specification file.
+    syntax: az ml workspace update --resource-group my-resource-group --name my-workspace-name --file workspace.yml
   requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -169,8 +216,26 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --description
+    summary: Description of the object.
+    description: ''
+  - name: --display-name
+    summary: Display name for the workspace.
+    description: ''
+  - name: --file -f
+    summary: Local path to the YAML file containing the Azure ML workspace specification.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --image-build-compute -i
+    summary: The name of the compute target to use for building environment Docker images when the container registry is behind a VNet.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running-operation to finish. Default is False.
+    description: ''
+  - name: --public-network-access
+    summary: Allow public endpoint connectivity when a workspace is private link enabled.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -178,12 +243,10 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
 commands:
 - az_ml_workspace_create
 - az_ml_workspace_delete
+- az_ml_workspace_diagnose
 - az_ml_workspace_list
 - az_ml_workspace_list-keys
 - az_ml_workspace_show

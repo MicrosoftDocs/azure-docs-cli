@@ -13,34 +13,22 @@ directCommands:
   summary: Create a new network manager connectivity configuration.
   description: ''
   syntax: >-
-    az network manager connect-config create --configuration-name
+    az network manager connect-config create --applies-to-groups
+                                             --configuration-name
                                              --name
                                              --resource-group
-                                             [--applies-to-groups]
                                              [--connectivity-topology {HubAndSpoke, Mesh}]
-                                             [--delete-peering {false, true}]
+                                             [--delete-existing-peering {false, true}]
                                              [--description]
                                              [--display-name]
                                              [--hubs]
                                              [--is-global {false, true}]
   examples:
   - summary: Create/Update Azure Virtual Network Manager Connectivity Configuration
-    syntax: az network manager connect-config create --configuration-name "myTestConnectivityConfig" --description "Sample Configuration" --applies-to-groups group-connectivity="None" is-global=false network-group-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkManagerGroups/group1" use-hub-gateway=true --connectivity-topology "HubAndSpoke" --delete-peering true --display-name "myTestConnectivityConfig" --hubs resource-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig" resource-type="Microsoft.Network/virtualNetworks" --is-global true --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
+    syntax: az network manager connect-config create --configuration-name "myTestConnectivityConfig" --description "Sample Configuration" --applies-to-groups group-connectivity="None" is-global=false network-group-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkManagerGroups/group1" use-hub-gateway=true --connectivity-topology "HubAndSpoke" --delete-existing-peering true --display-name "myTestConnectivityConfig" --hubs resource-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig" resource-type="Microsoft.Network/virtualNetworks" --is-global true --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
-    name: --configuration-name
-    summary: The name of the network manager connectivity configuration.
-    description: ''
-  - isRequired: true
-    name: --name --network-manager-name -n
-    summary: The name of the network manager.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --applies-to-groups
+    name: --applies-to-groups
     summary: Groups for configuration.
     description: >-
       Usage: --applies-to-groups network-group-id=XX use-hub-gateway=XX is-global=XX group-connectivity=XX
@@ -56,11 +44,24 @@ directCommands:
 
 
       Multiple actions can be specified by using more than one --applies-to-groups argument.
+  - isRequired: true
+    name: --configuration-name
+    summary: The name of the network manager connectivity configuration.
+    description: ''
+  - isRequired: true
+    name: --name --network-manager-name -n
+    summary: The name of the network manager.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
   - name: --connectivity-topology
     parameterValueGroup: HubAndSpoke, Mesh
     summary: Connectivity topology type.
     description: ''
-  - name: --delete-peering
+  - name: --delete-existing-peering
     parameterValueGroup: false, true
     summary: Flag if need to remove current existing peerings.
     description: ''
@@ -178,7 +179,7 @@ directCommands:
                                              [--add]
                                              [--applies-to-groups]
                                              [--connectivity-topology {HubAndSpokeTopology, MeshTopology}]
-                                             [--delete-peering {false, true}]
+                                             [--delete-existing-peering {false, true}]
                                              [--description]
                                              [--display-name]
                                              [--force-string]
@@ -223,7 +224,7 @@ directCommands:
     parameterValueGroup: HubAndSpokeTopology, MeshTopology
     summary: Connectivity topology type.
     description: ''
-  - name: --delete-peering
+  - name: --delete-existing-peering
     parameterValueGroup: false, true
     summary: Flag if need to remove current existing peerings.
     description: ''

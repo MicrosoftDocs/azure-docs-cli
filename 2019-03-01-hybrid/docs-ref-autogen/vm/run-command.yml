@@ -4,6 +4,133 @@ name: az vm run-command
 summary: Manage run commands on a Virtual Machine.
 description: For more information, see https://docs.microsoft.com/azure/virtual-machines/windows/run-command or https://docs.microsoft.com/azure/virtual-machines/linux/run-command.
 directCommands:
+- uid: az_vm_run-command_create
+  name: az vm run-command create
+  summary: The operation to create the run command.
+  description: ''
+  syntax: >-
+    az vm run-command create --name
+                             --resource-group
+                             --vm-name
+                             [--async-execution {false, true}]
+                             [--command-id]
+                             [--error-blob-uri]
+                             [--location]
+                             [--no-wait]
+                             [--output-blob-uri]
+                             [--parameters]
+                             [--protected-parameters]
+                             [--run-as-password]
+                             [--run-as-user]
+                             [--script]
+                             [--script-uri]
+                             [--subscription]
+                             [--tags]
+                             [--timeout-in-seconds]
+  examples:
+  - summary: Create a run command.
+    syntax: az vm run-command create --resource-group "myResourceGroup" --location "West US" --async-execution false --parameters arg1=param1 arg2=value1 --run-as-password "<runAsPassword>" --run-as-user "user1" --script "Write-Host Hello World!" --timeout-in-seconds 3600 --run-command-name "myRunCommand" --vm-name "myVM"
+  requiredParameters:
+  - isRequired: true
+    name: --name --run-command-name
+    summary: The name of the virtual machine run command.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --vm-name
+    summary: The name of the virtual machine.
+    description: ''
+  optionalParameters:
+  - name: --async-execution
+    parameterValueGroup: false, true
+    summary: Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for script to complete.
+    description: ''
+  - name: --command-id
+    summary: Specify a commandId of predefined built-in script.
+    description: ''
+  - name: --error-blob-uri
+    summary: Specify the Azure storage blob where script error stream will be uploaded.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --output-blob-uri
+    summary: Specify the Azure storage blob where script output stream will be uploaded.
+    description: ''
+  - name: --parameters
+    summary: The parameters used by the script.
+    description: 'Usage: --parameters arg1=XX arg2=XX.'
+  - name: --protected-parameters
+    summary: The parameters used by the script.
+    description: 'Usage: --protected-parameters credentials=somefoo secret=somebar.'
+  - name: --run-as-password
+    summary: Password if needed for using run-as-user parameter. It will be encrypted and not logged.
+    description: ''
+  - name: --run-as-user
+    summary: By default script process runs under system/root user. Specify custom user to host the process.
+    description: ''
+  - name: --script
+    summary: Specify the script content to be executed on the VM.
+    description: ''
+  - name: --script-uri
+    summary: Specify the script download location.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --timeout-in-seconds
+    summary: The timeout in seconds to execute the run command.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+- uid: az_vm_run-command_delete
+  name: az vm run-command delete
+  summary: The operation to delete the run command.
+  description: ''
+  syntax: >-
+    az vm run-command delete --name
+                             [--ids]
+                             [--no-wait]
+                             [--resource-group]
+                             [--subscription]
+                             [--vm-name]
+                             [--yes]
+  examples:
+  - summary: Delete a run command.
+    syntax: az vm run-command delete --resource-group "myResourceGroup" --run-command-name "myRunCommand" --vm-name "myVM"
+  requiredParameters:
+  - isRequired: true
+    name: --name --run-command-name
+    summary: The name of the virtual machine run command.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the virtual machine.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_run-command_invoke
   name: az vm run-command invoke
   summary: Execute a specific run command on a vm.
@@ -72,59 +199,254 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_run-command_list
   name: az vm run-command list
-  summary: Lists all available run commands for a subscription in a location.
+  summary: The operation to get all run commands of a Virtual Machine. And Lists all available run commands for a subscription in a location.
   description: ''
   syntax: >-
-    az vm run-command list --location
+    az vm run-command list [--expand]
+                           [--location]
                            [--query-examples]
+                           [--resource-group]
                            [--subscription]
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+                           [--vm-name]
+  examples:
+  - summary: List run commands in a Virtual Machine.
+    syntax: az vm run-command list --resource-group "myResourceGroup" --vm-name "myVM"
+  - summary: List all available run commands for a subscription in a location.
+    syntax: az vm run-command list --location "SoutheastAsia"
+  optionalParameters:
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  optionalParameters:
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vm-name
+    summary: The name of the virtual machine.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_run-command_show
   name: az vm run-command show
-  summary: Gets specific run command for a subscription in a location.
+  summary: The operation to get the run command. And Gets specific run command for a subscription in a location.
   description: ''
   syntax: >-
-    az vm run-command show --command-id
-                           --location
+    az vm run-command show [--command-id]
+                           [--expand]
+                           [--ids]
+                           [--location]
+                           [--name]
                            [--query-examples]
+                           [--resource-group]
                            [--subscription]
+                           [--vm-name]
   examples:
-  - summary: vm run-command show (autogenerated)
-    syntax: az vm run-command show --command-id RunShellScript --location westus2
-  requiredParameters:
-  - isRequired: true
-    name: --command-id
+  - summary: Get the run commands in the virtual machine.
+    syntax: az vm run-command show --resource-group "myResourceGroup" --run-command-name "myRunCommand" --vm-name "myVM"
+  - summary: Get specific run command for a subscription in a location.
+    syntax: az vm run-command show --command-id "RunPowerShellScript" --location "SoutheastAsia"
+  optionalParameters:
+  - name: --command-id
     summary: The command id.
     description: ''
-    valueFrom: az vm run-command list
-  - isRequired: true
-    name: --location -l
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  optionalParameters:
+  - name: --name --run-command-name
+    summary: The name of the virtual machine run command.
+    description: ''
   - name: --query-examples
     summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --vm-name
+    summary: The name of the virtual machine.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+- uid: az_vm_run-command_update
+  name: az vm run-command update
+  summary: The operation to update the run command.
+  description: ''
+  syntax: >-
+    az vm run-command update --name
+                             [--async-execution {false, true}]
+                             [--command-id]
+                             [--error-blob-uri]
+                             [--ids]
+                             [--location]
+                             [--no-wait]
+                             [--output-blob-uri]
+                             [--parameters]
+                             [--protected-parameters]
+                             [--resource-group]
+                             [--run-as-password]
+                             [--run-as-user]
+                             [--script]
+                             [--script-uri]
+                             [--subscription]
+                             [--tags]
+                             [--timeout-in-seconds]
+                             [--vm-name]
+  examples:
+  - summary: Update a run command.
+    syntax: az vm run-command update --resource-group "myResourceGroup" --location "West US" --async-execution false --parameters arg1=param1 arg2=value1 --run-as-password "<runAsPassword>" --run-as-user "user1" --script "Write-Host Hello World!" --timeout-in-seconds 3600 --run-command-name "myRunCommand" --vm-name "myVM"
+  requiredParameters:
+  - isRequired: true
+    name: --name --run-command-name
+    summary: The name of the virtual machine run command.
+    description: ''
+  optionalParameters:
+  - name: --async-execution
+    parameterValueGroup: false, true
+    summary: Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for script to complete.
+    description: ''
+  - name: --command-id
+    summary: Specify a commandId of predefined built-in script.
+    description: ''
+  - name: --error-blob-uri
+    summary: Specify the Azure storage blob where script error stream will be uploaded.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --output-blob-uri
+    summary: Specify the Azure storage blob where script output stream will be uploaded.
+    description: ''
+  - name: --parameters
+    summary: The parameters used by the script.
+    description: 'Usage: --parameters arg1=XX arg2=XX.'
+  - name: --protected-parameters
+    summary: The parameters used by the script.
+    description: 'Usage: --protected-parameters credentials=somefoo secret=somebar.'
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --run-as-password
+    summary: Password if needed for using run-as-user parameter. It will be encrypted and not logged.
+    description: ''
+  - name: --run-as-user
+    summary: By default script process runs under system/root user. Specify custom user to host the process.
+    description: ''
+  - name: --script
+    summary: Specify the script content to be executed on the VM.
+    description: ''
+  - name: --script-uri
+    summary: Specify the script download location.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --timeout-in-seconds
+    summary: The timeout in seconds to execute the run command.
+    description: ''
+  - name: --vm-name
+    summary: The name of the virtual machine.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+- uid: az_vm_run-command_wait
+  name: az vm run-command wait
+  summary: Place the CLI in a waiting state until a condition of the res virtual-machine-run-command is met.
+  description: ''
+  syntax: >-
+    az vm run-command wait [--command-id]
+                           [--created]
+                           [--custom]
+                           [--deleted]
+                           [--exists]
+                           [--expand]
+                           [--ids]
+                           [--interval]
+                           [--location]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
+                           [--timeout]
+                           [--updated]
+                           [--vm-name]
+  optionalParameters:
+  - name: --command-id
+    summary: The command id.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --name --run-command-name
+    summary: The name of the virtual machine run command.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --vm-name
+    summary: The name of the virtual machine.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 commands:
+- az_vm_run-command_create
+- az_vm_run-command_delete
 - az_vm_run-command_invoke
 - az_vm_run-command_list
 - az_vm_run-command_show
+- az_vm_run-command_update
+- az_vm_run-command_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -142,5 +464,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/18/2021
+  ms.date: 10/29/2021
   description: For more information, see https://docs.microsoft.com/azure/virtual-machines/windows/run-command or https://docs.microsoft.com/azure/virtual-machines/linux/run-command.

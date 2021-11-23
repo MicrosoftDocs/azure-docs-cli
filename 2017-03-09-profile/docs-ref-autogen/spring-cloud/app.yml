@@ -8,6 +8,95 @@ extensionInformation: >-
 summary: Commands to manage apps in Azure Spring Cloud.
 description: ''
 directCommands:
+- uid: az_spring-cloud_app_append-loaded-public-certificate
+  name: az spring-cloud app append-loaded-public-certificate
+  summary: Append a new loaded public certificate to an app in the Azure Spring Cloud.
+  description: ''
+  syntax: >-
+    az spring-cloud app append-loaded-public-certificate --certificate-name
+                                                         --load-trust-store {false, true}
+                                                         --name
+                                                         --resource-group
+                                                         --service
+  examples:
+  - summary: Append a new loaded public certificate to an app.
+    syntax: az spring-cloud app append-loaded-public-certificate --name MyApp --service MyCluster --resource-group MyResourceGroup --certificate-name MyCertName --load-trust-store true
+  requiredParameters:
+  - isRequired: true
+    name: --certificate-name
+    summary: Name of the certificate to be appended.
+    description: ''
+  - isRequired: true
+    name: --load-trust-store
+    parameterValueGroup: false, true
+    summary: If true, the certificate would be loaded into trust store for Java applications.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+- uid: az_spring-cloud_app_append-persistent-storage
+  name: az spring-cloud app append-persistent-storage
+  summary: Append a new persistent storage to an app in the Azure Spring Cloud.
+  description: ''
+  syntax: >-
+    az spring-cloud app append-persistent-storage --mount-path
+                                                  --name
+                                                  --persistent-storage-type
+                                                  --resource-group
+                                                  --service
+                                                  --share-name
+                                                  --storage-name
+                                                  [--mount-options]
+                                                  [--read-only {false, true}]
+  examples:
+  - summary: Append a new persistent storage to an app.
+    syntax: az spring-cloud app append-persistent-storage --persistent-storage-type AzureFileVolume --share-name MyShareName --mount-path /MyMountPath --storage-name MyStorageName -n MyApp -g MyResourceGroup -s MyService
+  requiredParameters:
+  - isRequired: true
+    name: --mount-path
+    summary: The path for the persistent storage volume to be mounted.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of app.
+    description: ''
+  - isRequired: true
+    name: --persistent-storage-type -t
+    summary: Type of the persistent storage volumed.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --service -s
+    summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
+    description: ''
+  - isRequired: true
+    name: --share-name
+    summary: The name of the pre-created file share. ShareName should be provided only if the type of the persistent storage volume is AzureFileVolume.
+    description: ''
+  - isRequired: true
+    name: --storage-name
+    summary: Name of the storage resource you created in Azure Spring Cloud.
+    description: ''
+  optionalParameters:
+  - name: --mount-options
+    summary: '[optional] The mount options for the persistent storage volume.'
+    description: ''
+  - name: --read-only
+    parameterValueGroup: false, true
+    summary: '[optional] If true, the persistent storage volume will be read only.'
+    description: ''
 - uid: az_spring-cloud_app_create
   name: az spring-cloud app create
   summary: Create a new app with a default deployment in the Azure Spring Cloud.
@@ -19,11 +108,14 @@ directCommands:
                                [--assign-endpoint {false, true}]
                                [--assign-identity {false, true}]
                                [--cpu]
+                               [--disable-probe {false, true}]
                                [--enable-persistent-storage {false, true}]
                                [--env]
                                [--instance-count]
                                [--jvm-options]
+                               [--loaded-public-certificate-file]
                                [--memory]
+                               [--persistent-storage]
                                [--runtime-version {Java_11, Java_8, NetCore_31}]
   examples:
   - summary: Create an app with the default configuration.
@@ -56,6 +148,10 @@ directCommands:
     defaultValue: "1"
     summary: CPU resource quantity. Should be 500m or number of CPU cores.
     description: ''
+  - name: --disable-probe
+    parameterValueGroup: false, true
+    summary: If true, disable the liveness and readiness probe.
+    description: ''
   - name: --enable-persistent-storage
     parameterValueGroup: false, true
     summary: If true, mount a 50G (Standard Pricing tier) or 1G (Basic Pricing tier) disk with default path.
@@ -70,9 +166,15 @@ directCommands:
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
+  - name: --loaded-public-certificate-file -f
+    summary: A json file path indicates the certificates which would be loaded to app.
+    description: ''
   - name: --memory
     defaultValue: 1Gi
     summary: 'Memory resource quantity. Should be 512Mi or #Gi, e.g., 1Gi, 3Gi.'
+    description: ''
+  - name: --persistent-storage
+    summary: A json file path for the persistent storages to be mounted to the app.
     description: ''
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_8, NetCore_31
@@ -109,6 +211,7 @@ directCommands:
                                --service
                                [--artifact-path]
                                [--deployment]
+                               [--disable-probe {false, true}]
                                [--disable-validation {false, true}]
                                [--env]
                                [--jvm-options]
@@ -144,6 +247,10 @@ directCommands:
     description: ''
   - name: --deployment -d
     summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
+  - name: --disable-probe
+    parameterValueGroup: false, true
+    summary: If true, disable the liveness and readiness probe.
     description: ''
   - name: --disable-validation
     parameterValueGroup: false, true
@@ -502,12 +609,15 @@ directCommands:
                                --service
                                [--assign-endpoint {false, true}]
                                [--deployment]
+                               [--disable-probe {false, true}]
                                [--enable-end-to-end-tls {false, true}]
                                [--enable-persistent-storage {false, true}]
                                [--env]
                                [--https-only {false, true}]
                                [--jvm-options]
+                               [--loaded-public-certificate-file]
                                [--main-entry]
+                               [--persistent-storage]
                                [--runtime-version {Java_11, Java_8, NetCore_31}]
   examples:
   - summary: Add an environment variable for the app.
@@ -533,6 +643,10 @@ directCommands:
   - name: --deployment -d
     summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
     description: ''
+  - name: --disable-probe
+    parameterValueGroup: false, true
+    summary: If true, disable the liveness and readiness probe.
+    description: ''
   - name: --enable-end-to-end-tls
     parameterValueGroup: false, true
     summary: If true, enable end to end tls.
@@ -551,14 +665,22 @@ directCommands:
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
+  - name: --loaded-public-certificate-file -f
+    summary: A json file path indicates the certificates which would be loaded to app.
+    description: ''
   - name: --main-entry -m
     summary: The path to the .NET executable relative to zip root.
+    description: ''
+  - name: --persistent-storage
+    summary: A json file path for the persistent storages to be mounted to the app.
     description: ''
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_8, NetCore_31
     summary: Runtime version of used language.
     description: ''
 commands:
+- az_spring-cloud_app_append-loaded-public-certificate
+- az_spring-cloud_app_append-persistent-storage
 - az_spring-cloud_app_binding
 - az_spring-cloud_app_binding_cosmos
 - az_spring-cloud_app_binding_cosmos_add
@@ -584,8 +706,11 @@ commands:
 - az_spring-cloud_app_deployment
 - az_spring-cloud_app_deployment_create
 - az_spring-cloud_app_deployment_delete
+- az_spring-cloud_app_deployment_generate-heap-dump
+- az_spring-cloud_app_deployment_generate-thread-dump
 - az_spring-cloud_app_deployment_list
 - az_spring-cloud_app_deployment_show
+- az_spring-cloud_app_deployment_start-jfr
 - az_spring-cloud_app_identity
 - az_spring-cloud_app_identity_assign
 - az_spring-cloud_app_identity_remove

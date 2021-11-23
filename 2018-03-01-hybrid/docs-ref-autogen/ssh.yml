@@ -23,7 +23,7 @@ directCommands:
     summary: The file path to write the SSH cert to, defaults to public key path with -aadcert.pub appened.
     description: ''
   - name: --public-key-file -p
-    summary: The RSA public key file path.
+    summary: The RSA public key file path. If not provided, generated key pair is stored in the same directory as --file.
     description: ''
 - uid: az_ssh_config
   name: az ssh config
@@ -31,9 +31,13 @@ directCommands:
   description: Other software (git/rsync/etc) that support setting an SSH command can be set to use the config file by setting the command to 'ssh -F /path/to/config' e.g. rsync -e 'ssh -F /path/to/config'.
   syntax: >-
     az ssh config --file
+                  [--certificate-file]
                   [--ip]
+                  [--keys-dest-folder]
+                  [--local-user]
                   [--name]
                   [--overwrite]
+                  [--port]
                   [--prefer-private-ip]
                   [--private-key-file]
                   [--public-key-file]
@@ -70,14 +74,26 @@ directCommands:
     summary: The file path to write the SSH config to.
     description: ''
   optionalParameters:
+  - name: --certificate-file -c
+    summary: Path to certificate file.
+    description: ''
   - name: --ip
     summary: The public IP address (or hostname) of the VM.
+    description: ''
+  - name: --keys-dest-folder --keys-destination-folder
+    summary: Folder where new generated keys will be stored.
+    description: ''
+  - name: --local-user
+    summary: The username for a local user.
     description: ''
   - name: --name --vm-name -n
     summary: The name of the VM.
     description: ''
   - name: --overwrite
     summary: Overwrites the config file if this flag is set.
+    description: ''
+  - name: --port
+    summary: SSH port.
     description: ''
   - name: --prefer-private-ip
     summary: Will use a private IP if available. By default only public IPs are used.
@@ -94,9 +110,11 @@ directCommands:
 - uid: az_ssh_vm
   name: az ssh vm
   summary: SSH into Azure VMs using an ssh certificate.
-  description: ''
+  description: Users can login using AAD issued certificates or using local user credentials. We recommend login using AAD issued certificates. To SSH as a local user in the target machine, you must provide the local user name using the --local-user argument.
   syntax: >-
-    az ssh vm [--hostname]
+    az ssh vm [--certificate-file]
+              [--hostname]
+              [--local-user]
               [--name]
               [--port]
               [--prefer-private-ip]
@@ -116,9 +134,21 @@ directCommands:
     syntax: az ssh vm --ip 1.2.3.4 --private-key-file key --public-key-file key.pub
   - summary: Using additional ssh arguments
     syntax: az ssh vm --ip 1.2.3.4 -- -A -o ForwardX11=yes
+  - summary: Give a local user name to SSH using local user credentials on the target machine using certificate based authentication.
+    syntax: az ssh vm --local-user username --ip 1.2.3.4 --certificate-file cert.pub --private-key key
+  - summary: Give a local user name to SSH using local user credentials on the target machine using key based authentication.
+    syntax: az ssh vm --local-user username --resource-group myResourceGroup --vm-name myVM --private-key-file key
+  - summary: Give a local user name to SSH using local user credentials on the target machine using password based authentication.
+    syntax: az ssh vm --local-user username --ip 1.2.3.4
   optionalParameters:
+  - name: --certificate-file -c
+    summary: Path to a certificate file used for authentication when using local user credentials.
+    description: ''
   - name: --hostname --ip
     summary: The public (or reachable private) IP address (or hostname) of the VM.
+    description: ''
+  - name: --local-user
+    summary: The username for a local user.
     description: ''
   - name: --name --vm-name -n
     summary: The name of the VM.

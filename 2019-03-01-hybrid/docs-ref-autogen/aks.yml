@@ -4,7 +4,7 @@ name: az aks
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **aks-preview** extension for Azure CLI and requires version 2.0.49 or higher.  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **aks-preview** extension for Azure CLI and requires version 2.27.0 or higher.  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure Kubernetes Services.
 description: ''
 directCommands:
@@ -76,6 +76,7 @@ directCommands:
                   [--dns-name-prefix]
                   [--dns-service-ip]
                   [--docker-bridge-address]
+                  [--edge-zone]
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
@@ -142,6 +143,7 @@ directCommands:
                   [--service-cidr]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
+                  [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
                   [--uptime-sla]
@@ -205,6 +207,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa
   - summary: Create a kubernetes cluster with enabling Windows gmsa but without setting DNS server in the vnet used by the cluster.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: create a kubernetes cluster with a snapshot id.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -216,7 +220,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --aad-admin-group-object-ids
-    summary: Comma seperated list of aad group object IDs that will be set as cluster admin.
+    summary: Comma-separated list of aad group object IDs that will be set as cluster admin.
     description: ''
   - name: --aad-client-app-id
     summary: The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
@@ -241,7 +245,7 @@ directCommands:
     summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
     description: ''
   - name: --api-server-authorized-ip-ranges
-    summary: Comma seperated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    summary: Comma-separated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --appgw-id
     summary: Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
@@ -298,6 +302,9 @@ directCommands:
   - name: --docker-bridge-address
     summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
     description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
+  - name: --edge-zone
+    summary: The name of edge zone.
+    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
@@ -483,7 +490,6 @@ directCommands:
     summary: The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
     description: ''
   - name: --node-vm-size -s
-    defaultValue: Standard_DS2_v2
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --node-zones --zones -z
@@ -491,7 +497,7 @@ directCommands:
     summary: (--node-zones will be deprecated, use --zones) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --nodepool-labels
-    summary: 'Space-separated labels: key[=value] [key[=value] ...]. You can not change the node labels through CLI after creation. See https://aka.ms/node-labels for syntax of labels.'
+    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
     description: ''
   - name: --nodepool-name
     defaultValue: nodepool1
@@ -531,6 +537,9 @@ directCommands:
   - name: --skip-subnet-role-assignment
     summary: Skip role assignment for subnet (advanced networking).
     description: If specified, please make sure your service principal has the access to your subnet.
+  - name: --snapshot-id
+    summary: The source snapshot id used to create this cluster.
+    description: ''
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
     summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
@@ -780,19 +789,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: az_aks_get-versions
-  name: az aks get-versions
-  summary: Get the versions available for creating a managed Kubernetes cluster.
-  description: ''
-  syntax: az aks get-versions --location
-  examples:
-  - summary: Get the versions available for creating a managed Kubernetes cluster
-    syntax: az aks get-versions --location westus2
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
 - uid: az_aks_kanalyze
   name: az aks kanalyze
   summary: Display diagnostic results for the Kubernetes cluster after kollect is done.
@@ -1040,6 +1036,7 @@ directCommands:
                   [--nat-gateway-managed-outbound-ip-count]
                   [--no-uptime-sla]
                   [--no-wait]
+                  [--nodepool-labels]
                   [--rotation-poll-interval]
                   [--tags]
                   [--update-cluster-autoscaler]
@@ -1112,7 +1109,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --aad-admin-group-object-ids
-    summary: Comma seperated list of aad group object IDs that will be set as cluster admin.
+    summary: Comma-separated list of aad group object IDs that will be set as cluster admin.
     description: ''
   - name: --aad-tenant-id
     summary: The ID of an Azure Active Directory tenant.
@@ -1121,7 +1118,7 @@ directCommands:
     summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
     description: ''
   - name: --api-server-authorized-ip-ranges
-    summary: Comma seperated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
+    summary: Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --assign-identity
     summary: (PREVIEW) Specify an existing user assigned identity to manage cluster resource group.
@@ -1243,6 +1240,9 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --nodepool-labels
+    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
     description: ''
   - name: --rotation-poll-interval
     summary: Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
@@ -1429,7 +1429,6 @@ commands:
 - az_aks_get-credentials
 - az_aks_get-os-options
 - az_aks_get-upgrades
-- az_aks_get-versions
 - az_aks_kanalyze
 - az_aks_kollect
 - az_aks_maintenanceconfiguration
@@ -1445,6 +1444,8 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_start
+- az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
 - az_aks_pod-identity
@@ -1459,6 +1460,11 @@ commands:
 - az_aks_rotate-certs
 - az_aks_scale
 - az_aks_show
+- az_aks_snapshot
+- az_aks_snapshot_create
+- az_aks_snapshot_delete
+- az_aks_snapshot_list
+- az_aks_snapshot_show
 - az_aks_start
 - az_aks_stop
 - az_aks_update
