@@ -43,7 +43,7 @@ directCommands:
   - name: --admin-username
     summary: Name of the administrator user account that can be used to SSH into the node(s).
     description: ''
-  - name: --file
+  - name: --file -f
     summary: Local path to the YAML file containing the Azure ML compute specification.
     description: ''
   - name: --identity-type
@@ -95,6 +95,7 @@ directCommands:
                          [--ssh-key-value]
                          [--ssh-public-access-enabled]
                          [--subnet]
+                         [--tags]
                          [--tier]
                          [--type]
                          [--user-assigned-identities]
@@ -123,7 +124,7 @@ directCommands:
     summary: Name of the administrator user account that can be used to SSH into the node(s).
     description: ''
   - name: --description
-    summary: Description of the compute target.
+    summary: Description of the object.
     description: ''
   - name: --file -f
     summary: Local path to the YAML file containing the Azure ML compute specification.
@@ -132,7 +133,7 @@ directCommands:
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --idle-time-before-scale-down -d
-    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 120.'
     description: ''
   - name: --max-instances
     summary: 'The maximum number of nodes to use on the cluster. Default: 4.'
@@ -160,6 +161,9 @@ directCommands:
     description: ''
   - name: --subnet
     summary: Name of the subnet. Can also reference a subnet in an existing vnet by ID instead of name. If subnet ID is specified then vnet-name will be ignored. Subnet ID can refer to a vnet/subnet in another RG by specifying the fully qualified subnet ID. Required when vnet name is specified.
+    description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
     description: ''
   - name: --tier
     summary: 'VM priority tier. Allowed values: dedicated, low_priority.'
@@ -266,6 +270,30 @@ directCommands:
     description: ''
   - name: --type
     summary: 'The type of compute target. Allowed values: AmlCompute, ComputeInstance, Kubernetes.'
+    description: ''
+- uid: az_ml_compute_list-nodes
+  name: az ml compute list-nodes
+  summary: List node details for a compute target. The only supported compute type for this command is AML compute.
+  description: ''
+  syntax: >-
+    az ml compute list-nodes --name
+                             --resource-group
+                             --workspace-name
+  examples:
+  - summary: List node details for an AML compute target
+    syntax: az ml compute list-nodes --name nc6-cluster --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the compute target (Required if not specified in the yaml file).
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_compute_list-sizes
   name: az ml compute list-sizes
@@ -462,7 +490,7 @@ directCommands:
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --idle-time-before-scale-down -d
-    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 120.'
     description: ''
   - name: --max-instances
     summary: 'Maximum number of nodes to use. Default: 4.'
@@ -488,6 +516,7 @@ commands:
 - az_ml_compute_delete
 - az_ml_compute_detach
 - az_ml_compute_list
+- az_ml_compute_list-nodes
 - az_ml_compute_list-sizes
 - az_ml_compute_list-usage
 - az_ml_compute_restart
