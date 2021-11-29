@@ -25,9 +25,12 @@ Previous versions of Azure CLI save ADAL tokens and service principal entries to
 
 The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.
 
+> [!IMPORTANT]
+> When using Azure CLI in a pipeline, like as Azure DevOps, ensure all tasks/stages are using versions of Azure CLI above v2.30.0 for MSAL-based azure CLI. Azure CLI 2.30.0 is not backwards compatible with Prior versions and throws and error when using incompatible errors.
+
 ## Alternatives to consider
 
-Below are several alternatives you may consider:
+Below are a couple alternatives you may consider for backwards compatibility:
 
 ### Calling `az account get-access-token`
 
@@ -50,12 +53,12 @@ az account get-access-token --subscription "<subscription ID or name>"
 
 ## See also
 
-* MSAL
-  * [Overview of the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-overview)
-  * [Migrate applications to the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-migration)
-* Python
-  * [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential) in Python
-* .NET
-  * [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential) in .NET
-* Java
-  * [AzureCliCredential Class](/java/api/com.azure.identity.azureclicredential) in Java
+- MSAL
+  - [Overview of the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-overview)
+  - [Migrate applications to the Microsoft Authentication Library (MSAL)](/azure/active-directory/develop/msal-migration)
+- Python
+  - [AzureCliCredential Class](/python/api/azure-identity/azure.identity.azureclicredential) in Python
+- .NET
+  - [AzureCliCredential Class](/dotnet/api/azure.identity.azureclicredential) in .NET
+- Java
+  - [AzureCliCredential Class](/java/api/com.azure.identity.azureclicredential) in Java
