@@ -4,7 +4,7 @@ name: az spring-cloud
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **spring-cloud** extension for Azure CLI and requires version 2.0.67 or higher.  The extension will automatically install the first time you run an **az spring-cloud** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **spring-cloud** extension for Azure CLI and requires version 2.25.0 or higher.  The extension will automatically install the first time you run an **az spring-cloud** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage Azure Spring Cloud.
 description: ''
 directCommands:
@@ -20,11 +20,11 @@ directCommands:
                            [--app-network-resource-group]
                            [--app-subnet]
                            [--disable-app-insights {false, true}]
-                           [--disable-distributed-tracing {false, true}]
                            [--enable-java-agent {false, true}]
                            [--location]
                            [--no-wait]
                            [--reserved-cidr-range]
+                           [--sampling-rate]
                            [--service-runtime-network-resource-group]
                            [--service-runtime-subnet]
                            [--sku]
@@ -33,11 +33,13 @@ directCommands:
   examples:
   - summary: Create a new Azure Spring Cloud in westus.
     syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus
-  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights by using the instrumentation key.
-    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights-key MyInstrumentationKey
-  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights and enable Java In-Process Agent.
-    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --enable-java-agent true --app-insights MyInstrumentationName
-  - summary: Create a new Azure Spring Cloud with distributed tracing disabled.
+  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights by using the Connection string (recommended) or Instrumentation key.
+    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights-key "MyConnectionString"
+  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights.
+    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights appInsightsName
+  - summary: Create a new Azure Spring Cloud in westus with an existing Application Insights and specify the sampling rate.
+    syntax: az spring-cloud create -n MyService -g MyResourceGroup -l westus --app-insights appInsightsName --sampling-rate 10
+  - summary: Create a new Azure Spring Cloud with Application Insights disabled.
     syntax: az spring-cloud create -n MyService -g MyResourceGroup --disable-app-insights
   - summary: Create a new Azure Spring Cloud with VNet-injected via giving VNet name in current resource group
     syntax: az spring-cloud create -n MyService -g MyResourceGroup --vnet MyVNet --app-subnet MyAppSubnet --service-runtime-subnet MyServiceRuntimeSubnet
@@ -57,7 +59,7 @@ directCommands:
     summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
     description: ''
   - name: --app-insights-key
-    summary: Instrumentation key of the existing Application Insights.
+    summary: Connection string (recommended) or Instrumentation key of the existing Application Insights.
     description: ''
   - name: --app-network-resource-group --app-nrg
     summary: The resource group where all network resources for apps will be created in.
@@ -69,13 +71,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
     description: ''
-  - name: --disable-distributed-tracing
-    parameterValueGroup: false, true
-    summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
-    description: ''
   - name: --enable-java-agent
     parameterValueGroup: false, true
-    summary: Enable java in-process agent.
+    summary: Java in process agent is now GA-ed and used by default when Application Insights enabled. This parameter is no longer needed and will be removed in future release.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -85,6 +83,9 @@ directCommands:
     description: ''
   - name: --reserved-cidr-range
     summary: Comma-separated list of IP address ranges in CIDR format. The IP ranges are reserved to host underlying Azure Spring Cloud infrastructure, which should be 3 at least /16 unused IP ranges, must not overlap with any Subnet IP ranges.
+    description: ''
+  - name: --sampling-rate
+    summary: Sampling Rate of application insights. Minimum is 0, maximum is 100.
     description: ''
   - name: --service-runtime-network-resource-group --svc-nrg
     summary: The resource group where all network resources for Azure Spring Cloud service runtime will be created in.
@@ -148,6 +149,48 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_spring-cloud_start
+  name: az spring-cloud start
+  summary: Start an Azure Spring Cloud.
+  description: ''
+  syntax: >-
+    az spring-cloud start --name
+                          --resource-group
+                          [--no-wait]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of Azure Spring Cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: az_spring-cloud_stop
+  name: az spring-cloud stop
+  summary: Stop an Azure Spring Cloud.
+  description: ''
+  syntax: >-
+    az spring-cloud stop --name
+                         --resource-group
+                         [--no-wait]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of Azure Spring Cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_spring-cloud_update
   name: az spring-cloud update
   summary: Update an Azure Spring Cloud.
@@ -158,15 +201,12 @@ directCommands:
                            [--app-insights]
                            [--app-insights-key]
                            [--disable-app-insights {false, true}]
-                           [--disable-distributed-tracing {false, true}]
                            [--no-wait]
                            [--sku]
                            [--tags]
   examples:
   - summary: Update pricing tier.
     syntax: az spring-cloud update -n MyService --sku Standard -g MyResourceGroup
-  - summary: Enable the distributed tracing of the existing Azure Spring Cloud.
-    syntax: az spring-cloud update -n MyService -g MyResourceGroup --disable-app-insights false
   - summary: Update the tags of the existing Azure Spring Cloud.
     syntax: az spring-cloud update -n MyService -g MyResourceGroup --tags key1=value1 key2=value2
   requiredParameters:
@@ -183,15 +223,11 @@ directCommands:
     summary: Name of the existing Application Insights in the same Resource Group. Or Resource ID of the existing Application Insights in a different Resource Group.
     description: ''
   - name: --app-insights-key
-    summary: Instrumentation key of the existing Application Insights.
+    summary: Connection string (recommended) or Instrumentation key of the existing Application Insights.
     description: ''
   - name: --disable-app-insights
     parameterValueGroup: false, true
     summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
-    description: ''
-  - name: --disable-distributed-tracing
-    parameterValueGroup: false, true
-    summary: Disable distributed tracing, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -204,6 +240,8 @@ directCommands:
     description: ''
 commands:
 - az_spring-cloud_app
+- az_spring-cloud_app_append-loaded-public-certificate
+- az_spring-cloud_app_append-persistent-storage
 - az_spring-cloud_app_binding
 - az_spring-cloud_app_binding_cosmos
 - az_spring-cloud_app_binding_cosmos_add
@@ -229,8 +267,11 @@ commands:
 - az_spring-cloud_app_deployment
 - az_spring-cloud_app_deployment_create
 - az_spring-cloud_app_deployment_delete
+- az_spring-cloud_app_deployment_generate-heap-dump
+- az_spring-cloud_app_deployment_generate-thread-dump
 - az_spring-cloud_app_deployment_list
 - az_spring-cloud_app_deployment_show
+- az_spring-cloud_app_deployment_start-jfr
 - az_spring-cloud_app_identity
 - az_spring-cloud_app_identity_assign
 - az_spring-cloud_app_identity_remove
@@ -254,6 +295,7 @@ commands:
 - az_spring-cloud_certificate
 - az_spring-cloud_certificate_add
 - az_spring-cloud_certificate_list
+- az_spring-cloud_certificate_list-reference-app
 - az_spring-cloud_certificate_remove
 - az_spring-cloud_certificate_show
 - az_spring-cloud_config-server
@@ -271,6 +313,15 @@ commands:
 - az_spring-cloud_delete
 - az_spring-cloud_list
 - az_spring-cloud_show
+- az_spring-cloud_start
+- az_spring-cloud_stop
+- az_spring-cloud_storage
+- az_spring-cloud_storage_add
+- az_spring-cloud_storage_list
+- az_spring-cloud_storage_list-persistent-storage
+- az_spring-cloud_storage_remove
+- az_spring-cloud_storage_show
+- az_spring-cloud_storage_update
 - az_spring-cloud_test-endpoint
 - az_spring-cloud_test-endpoint_disable
 - az_spring-cloud_test-endpoint_enable

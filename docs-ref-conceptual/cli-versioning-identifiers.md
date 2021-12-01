@@ -1,14 +1,15 @@
 ---
-title: Differences between Azure CLI products  
+title: Differences between Azure CLI products | Microsoft Docs
 description: Understand how Azure CLI products are named and versioned, and how to upgrade.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/12/2018
+ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure, cli, command line
 ---
 
 # Differences between Azure CLI products

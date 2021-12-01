@@ -189,6 +189,7 @@ directCommands:
                  [--enable-auto-update {false, true}]
                  [--encryption-at-host {false, true}]
                  [--ephemeral-os-disk {false, true}]
+                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
                  [--generate-ssh-keys]
                  [--host]
@@ -368,6 +369,10 @@ directCommands:
   - name: --ephemeral-os-disk
     parameterValueGroup: false, true
     summary: Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
+    description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --eviction-policy
     parameterValueGroup: Deallocate, Delete
@@ -1223,7 +1228,10 @@ directCommands:
   syntax: >-
     az vm update [--add]
                  [--disk-caching]
+                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                  [--force-string]
+                 [--host]
+                 [--host-group]
                  [--ids]
                  [--license-type {None, RHEL_BYOS, RHEL_ELS_6, SLES_BYOS, Windows_Client, Windows_Server}]
                  [--max-price]
@@ -1235,6 +1243,7 @@ directCommands:
                  [--remove]
                  [--resource-group]
                  [--set]
+                 [--size]
                  [--subscription]
                  [--ultra-ssd-enabled {false, true}]
                  [--workspace]
@@ -1250,6 +1259,20 @@ directCommands:
     syntax: az vm update -n name -g group --add networkProfile.networkInterfaces primary=false id={NIC_ID}
   - summary: Remove the fourth NIC from a VM.
     syntax: az vm update -n name -g group --remove networkProfile.networkInterfaces 3
+  - summary: Add an existing VM to a dedicated host
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host my-host
+
+      az vm start -n name -g group
+  - summary: Add an existing VM to a dedicated host group
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host-group my-host-group
+
+      az vm start -n name -g group
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -1257,8 +1280,18 @@ directCommands:
   - name: --disk-caching
     summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
     description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--size`. Allows you to choose the Ephemeral OS disk provisioning location.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --host
+    summary: ID of the dedicated host that the VM will reside in. --host and --host-group can't be used together. You should deallocate the VM before update, and start the VM after update. Please check out help for more examples.
+    description: ''
+  - name: --host-group
+    summary: Name or ID of the dedicated host group that the VM will reside in. --host and --host-group can't be used together. You should deallocate the VM before update, and start the VM after update. Please check out help for more examples.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1294,6 +1327,9 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --size
+    summary: The new size of the virtual machine. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1471,9 +1507,13 @@ commands:
 - az_vm_resize
 - az_vm_restart
 - az_vm_run-command
+- az_vm_run-command_create
+- az_vm_run-command_delete
 - az_vm_run-command_invoke
 - az_vm_run-command_list
 - az_vm_run-command_show
+- az_vm_run-command_update
+- az_vm_run-command_wait
 - az_vm_secret
 - az_vm_secret_add
 - az_vm_secret_format
@@ -1510,5 +1550,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/18/2021
+  ms.date: 10/29/2021
   description: Manage Linux or Windows virtual machines.

@@ -35,10 +35,13 @@ directCommands:
                    [--disable-overprovision]
                    [--dns-servers]
                    [--edge-zone]
+                   [--enable-agent {false, true}]
+                   [--enable-auto-update {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--encryption-at-host {false, true}]
                    [--ephemeral-os-disk {false, true}]
+                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
                    [--generate-ssh-keys]
                    [--health-probe]
@@ -63,6 +66,7 @@ directCommands:
                    [--os-disk-name]
                    [--os-disk-size-gb]
                    [--os-type {linux, windows}]
+                   [--patch-mode {AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual}]
                    [--pause-time-between-batches]
                    [--plan-name]
                    [--plan-product]
@@ -149,6 +153,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
   - summary: Create a VMSS from shared gallery image. (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
+  - summary: Create a Windows VMSS with patch mode 'Manual' (Currently patch mode 'AutomaticByPlatform' is not supported during VMSS creation as health extension which is required for 'AutomaticByPlatform' mode cannot be set during VMSS creation).
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image Win2019Datacenter --enable-agent --enable-auto-update false --patch-mode Manual --orchestration-mode Flexible
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -235,6 +241,14 @@ directCommands:
   - name: --edge-zone
     summary: The name of edge zone.
     description: ''
+  - name: --enable-agent
+    parameterValueGroup: false, true
+    summary: Indicate whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
+    description: ''
+  - name: --enable-auto-update
+    parameterValueGroup: false, true
+    summary: Indicate whether Automatic Updates is enabled for the Windows virtual machine.
+    description: ''
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: false, true
     summary: Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
@@ -250,6 +264,10 @@ directCommands:
   - name: --ephemeral-os-disk
     parameterValueGroup: false, true
     summary: Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
+    description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --eviction-policy
     parameterValueGroup: Deallocate, Delete
@@ -302,7 +320,7 @@ directCommands:
     summary: 'The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. Default: 20%.'
     description: ''
   - name: --network-api-version
-    summary: Specify the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. Possible value is 2020-11-01.
+    summary: Specify the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. Default value is 2020-11-01.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -331,6 +349,10 @@ directCommands:
   - name: --os-type
     parameterValueGroup: linux, windows
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
+    description: ''
+  - name: --patch-mode
+    parameterValueGroup: AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual
+    summary: "Mode of in-guest patching to IaaS virtual machine. Allowed values for Windows VM: AutomaticByOS, AutomaticByPlatform, Manual. Allowed values for Linux VM: AutomaticByPlatform, ImageDefault. Manual - You control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the paramater --enable-auto-update must be false. AutomaticByOS - The virtual machine will automatically be updated by the OS. The parameter --enable-auto-update must be true. AutomaticByPlatform - the virtual machine will automatically updated by the OS. ImageDefault - The virtual machine's default patching configuration is used. The parameter --enable-agent and --enable-auto-update must be true."
     description: ''
   - name: --pause-time-between-batches
     summary: 'The wait time between completing the update for all virtual machines in one batch and starting the next batch. Default: 0 seconds.'
@@ -690,8 +712,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_list-instances
   name: az vmss list-instances
-  summary: Gets a list of all virtual machines in a VM scale sets.
-  description: ''
+  summary: Get a list of all virtual machines in a VM scale sets.
+  description: Return a list of virtual machines managed by VMSS. For VMSS in Flexible Orchestration mode, please use "az vm list" to get full details.
   syntax: >-
     az vmss list-instances [--expand]
                            [--filter]
@@ -1070,6 +1092,7 @@ directCommands:
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--enable-terminate-notification {false, true}]
+                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                    [--force-string]
                    [--ids]
                    [--instance-id]
@@ -1095,6 +1118,7 @@ directCommands:
                    [--terminate-notification-time]
                    [--ultra-ssd-enabled {false, true}]
                    [--user-data]
+                   [--vm-sku]
   examples:
   - summary: Update a VMSS' license type for Azure Hybrid Benefit.
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --license-type windows_server
@@ -1108,6 +1132,8 @@ directCommands:
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --set virtualMachineProfile.storageProfile.dataDisks[0].diskMBpsReadWrite=66
   - summary: Update a VM to use a custom image.
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --set virtualMachineProfile.storageProfile.imageReference.id=imageID
+  - summary: Update a Linux VMSS to patch mode 'AutomaticByPlatform'.
+    syntax: az vmss update -n MyVmss -g MyResourceGroup --set virtualMachineProfile.osProfile.linuxConfiguration.patchSettings.patchMode=AutomaticByPlatform
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -1133,6 +1159,10 @@ directCommands:
   - name: --enable-terminate-notification
     parameterValueGroup: false, true
     summary: Enable terminate notification.
+    description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--vm-sku`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -1215,6 +1245,9 @@ directCommands:
     description: ''
   - name: --user-data
     summary: UserData for the virtual machines in the scale set. It can be passed in as file or string. If empty string is passed in, the existing value will be deleted.
+    description: ''
+  - name: --vm-sku
+    summary: The new size of the virtual machine instances in the scale set. Default to "Standard_DS1_v2". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_update-instances
@@ -1316,6 +1349,9 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 commands:
+- az_vmss_application
+- az_vmss_application_list
+- az_vmss_application_set
 - az_vmss_create
 - az_vmss_deallocate
 - az_vmss_delete
@@ -1364,9 +1400,12 @@ commands:
 - az_vmss_rolling-upgrade_get-latest
 - az_vmss_rolling-upgrade_start
 - az_vmss_run-command
+- az_vmss_run-command_create
+- az_vmss_run-command_delete
 - az_vmss_run-command_invoke
 - az_vmss_run-command_list
 - az_vmss_run-command_show
+- az_vmss_run-command_update
 - az_vmss_scale
 - az_vmss_set-orchestration-service-state
 - az_vmss_show
@@ -1393,5 +1432,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/18/2021
+  ms.date: 10/29/2021
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

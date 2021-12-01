@@ -15,12 +15,13 @@ directCommands:
                                   [--capacity]
                                   [--cluster-arm-id]
                                   [--default-action {Allow, Deny}]
+                                  [--disable-local-auth {false, true}]
                                   [--enable-auto-inflate {false, true}]
                                   [--enable-kafka {false, true}]
                                   [--enable-trusted-service-access {false, true}]
                                   [--location]
                                   [--maximum-throughput-units]
-                                  [--sku {Basic, Standard}]
+                                  [--sku {Basic, Premium, Standard}]
                                   [--subscription]
                                   [--tags]
                                   [--zone-redundant {false, true}]
@@ -51,6 +52,10 @@ directCommands:
     parameterValueGroup: Allow, Deny
     summary: Default Action for Network Rule Set.
     description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates whether SAS authentication is enabled/disabled for the Event Hubs.
+    description: ''
   - name: --enable-auto-inflate
     parameterValueGroup: false, true
     summary: A boolean value that indicates whether AutoInflate is enabled for eventhub namespace.
@@ -71,7 +76,7 @@ directCommands:
     description: ''
   - name: --sku
     defaultValue: Standard
-    parameterValueGroup: Basic, Standard
+    parameterValueGroup: Basic, Premium, Standard
     summary: Namespace SKU.
     description: ''
   - name: --subscription
@@ -125,8 +130,8 @@ directCommands:
     syntax: az eventhubs namespace exists --name mynamespace --subscription MySubscription
   requiredParameters:
   - isRequired: true
-    name: --name
-    summary: Name to check the namespace name availability.
+    name: --name -n
+    summary: Namespace name. Name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number.
     description: ''
   optionalParameters:
   - name: --subscription
@@ -196,13 +201,15 @@ directCommands:
                                   [--assign-identity {false, true}]
                                   [--capacity]
                                   [--default-action {Allow, Deny}]
+                                  [--disable-local-auth {false, true}]
                                   [--enable-auto-inflate {false, true}]
                                   [--enable-kafka {false, true}]
                                   [--enable-trusted-service-access {false, true}]
                                   [--force-string]
                                   [--ids]
+                                  [--infra-encryption {false, true}]
                                   [--key-name]
-                                  [--key-source {Microsoft.KeyVault}]
+                                  [--key-source]
                                   [--key-vault-uri]
                                   [--key-version]
                                   [--maximum-throughput-units]
@@ -210,7 +217,7 @@ directCommands:
                                   [--remove]
                                   [--resource-group]
                                   [--set]
-                                  [--sku {Basic, Standard}]
+                                  [--sku {Basic, Premium, Standard}]
                                   [--subscription]
                                   [--tags]
   examples:
@@ -231,6 +238,10 @@ directCommands:
     parameterValueGroup: Allow, Deny
     summary: Default Action for Network Rule Set.
     description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates whether SAS authentication is enabled/disabled for the Event Hubs.
+    description: ''
   - name: --enable-auto-inflate
     parameterValueGroup: false, true
     summary: A boolean value that indicates whether AutoInflate is enabled for eventhub namespace.
@@ -249,11 +260,14 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --infra-encryption
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates whether Infrastructure Encryption (Double Encryption) is enabled/disabled.
+    description: ''
   - name: --key-name
     summary: The name of the KeyVault key.
     description: ''
   - name: --key-source
-    parameterValueGroup: Microsoft.KeyVault
     summary: Encryption key source.
     description: ''
   - name: --key-vault-uri
@@ -278,7 +292,7 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku
-    parameterValueGroup: Basic, Standard
+    parameterValueGroup: Basic, Premium, Standard
     summary: Namespace SKU.
     description: ''
   - name: --subscription
@@ -306,6 +320,14 @@ commands:
 - az_eventhubs_namespace_network-rule_add
 - az_eventhubs_namespace_network-rule_list
 - az_eventhubs_namespace_network-rule_remove
+- az_eventhubs_namespace_private-endpoint-connection
+- az_eventhubs_namespace_private-endpoint-connection_approve
+- az_eventhubs_namespace_private-endpoint-connection_delete
+- az_eventhubs_namespace_private-endpoint-connection_list
+- az_eventhubs_namespace_private-endpoint-connection_reject
+- az_eventhubs_namespace_private-endpoint-connection_show
+- az_eventhubs_namespace_private-link-resource
+- az_eventhubs_namespace_private-link-resource_show
 - az_eventhubs_namespace_show
 - az_eventhubs_namespace_update
 globalParameters:
@@ -325,5 +347,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/08/2021
+  ms.date: 09/29/2021
   description: Manage Azure EventHubs namespace and Authorizationrule.

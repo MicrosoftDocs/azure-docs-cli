@@ -5,12 +5,12 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **k8s-configuration** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az k8s-configuration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage Kubernetes configuration.
+summary: Commands to manage resources from Microsoft.KubernetesConfiguration.
 description: ''
 directCommands:
 - uid: az_k8s-configuration_create
   name: az k8s-configuration create
-  summary: Create a Kubernetes configuration.
+  summary: Create a Flux v1 Kubernetes configuration (This command is for Flux v1, to use the newer Flux v2, run "az k8s-configuration flux create").
   description: ''
   syntax: >-
     az k8s-configuration create --cluster-name
@@ -33,7 +33,7 @@ directCommands:
                                 [--ssh-private-key]
                                 [--ssh-private-key-file]
   examples:
-  - summary: Create a Kubernetes configuration
+  - summary: Create a Flux v1 Kubernetes configuration
     syntax: >-
       az k8s-configuration create --resource-group MyResourceGroup --cluster-name MyClusterName \
 
@@ -43,7 +43,7 @@ directCommands:
 
       --repository-url git://github.com/fluxHowTo/flux-get-started --enable-helm-operator  \
 
-      --helm-operator-chart-version 1.2.0 --scope namespace --helm-operator-params '--set helm.versions=v3' \
+      --helm-operator-chart-version 1.4.0 --scope namespace --helm-operator-params '--set helm.versions=v3' \
 
       --ssh-private-key '' --ssh-private-key-file '' --https-user '' --https-key '' \
 
@@ -54,13 +54,13 @@ directCommands:
     summary: Name of the Kubernetes cluster.
     description: ''
   - isRequired: true
-    name: --cluster-type
+    name: --cluster-type -t
     parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters.
+    summary: Specify Arc connected clusters or AKS managed clusters.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the Kubernetes Configuration.
+    summary: Name of the configuration.
     description: ''
   - isRequired: true
     name: --repository-url -u
@@ -81,7 +81,7 @@ directCommands:
     summary: Enable support for Helm chart deployments.
     description: ''
   - name: --helm-operator-chart-version --hop-chart-version
-    defaultValue: 1.2.0
+    defaultValue: 1.4.0
     summary: Chart version of the Helm Operator (if enabled).
     description: ''
   - name: --helm-operator-params --hop-params
@@ -111,17 +111,17 @@ directCommands:
     summary: Specify Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances.
     description: ''
   - name: --ssh-known-hosts-file
-    summary: Specify filepath to known_hosts contents containing public SSH keys required to access private Git instances.
+    summary: Specify file path to known_hosts contents containing public SSH keys required to access private Git instances.
     description: ''
   - name: --ssh-private-key
     summary: Specify Base64-encoded private ssh key for private repository sync.
     description: ''
   - name: --ssh-private-key-file
-    summary: Specify filepath to private ssh key for private repository sync.
+    summary: Specify file path to private ssh key for private repository sync.
     description: ''
 - uid: az_k8s-configuration_delete
   name: az k8s-configuration delete
-  summary: Delete a Kubernetes configuration.
+  summary: Delete a Flux v1 Kubernetes configuration (This command is for Flux v1, to use the newer Flux v2, run "az k8s-configuration flux delete").
   description: ''
   syntax: >-
     az k8s-configuration delete --cluster-name
@@ -130,7 +130,7 @@ directCommands:
                                 --resource-group
                                 [--yes]
   examples:
-  - summary: Delete a Kubernetes configuration
+  - summary: Delete a Flux v1 Kubernetes configuration
     syntax: >-
       az k8s-configuration delete --resource-group MyResourceGroup --cluster-name MyClusterName \
 
@@ -141,13 +141,13 @@ directCommands:
     summary: Name of the Kubernetes cluster.
     description: ''
   - isRequired: true
-    name: --cluster-type
+    name: --cluster-type -t
     parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters.
+    summary: Specify Arc connected clusters or AKS managed clusters.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the Kubernetes Configuration.
+    summary: Name of the configuration.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -159,14 +159,14 @@ directCommands:
     description: ''
 - uid: az_k8s-configuration_list
   name: az k8s-configuration list
-  summary: List Kubernetes configurations.
+  summary: List Flux v1 Kubernetes configurations (This command is for Flux v1, to use the newer Flux v2, run "az k8s-configuration flux list").
   description: ''
   syntax: >-
     az k8s-configuration list --cluster-name
                               --cluster-type {connectedClusters, managedClusters}
                               --resource-group
   examples:
-  - summary: List all Kubernetes configurations of a cluster
+  - summary: List Flux v1 Kubernetes configuration
     syntax: >-
       az k8s-configuration list --resource-group MyResourceGroup --cluster-name MyClusterName \
 
@@ -177,9 +177,9 @@ directCommands:
     summary: Name of the Kubernetes cluster.
     description: ''
   - isRequired: true
-    name: --cluster-type
+    name: --cluster-type -t
     parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters.
+    summary: Specify Arc connected clusters or AKS managed clusters.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -187,7 +187,7 @@ directCommands:
     description: ''
 - uid: az_k8s-configuration_show
   name: az k8s-configuration show
-  summary: Show details of a Kubernetes configuration.
+  summary: Show details of a Flux v1 Kubernetes configuration (This command is for Flux v1, to use the newer Flux v2, run "az k8s-configuration flux show").
   description: ''
   syntax: >-
     az k8s-configuration show --cluster-name
@@ -195,7 +195,7 @@ directCommands:
                               --name
                               --resource-group
   examples:
-  - summary: Show a Kubernetes configuration
+  - summary: Show details of a Flux v1 Kubernetes configuration
     syntax: >-
       az k8s-configuration show --resource-group MyResourceGroup --cluster-name MyClusterName \
 
@@ -206,91 +206,35 @@ directCommands:
     summary: Name of the Kubernetes cluster.
     description: ''
   - isRequired: true
-    name: --cluster-type
+    name: --cluster-type -t
     parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters.
+    summary: Specify Arc connected clusters or AKS managed clusters.
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of the Kubernetes Configuration.
+    summary: Name of the configuration.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_k8s-configuration_update
-  name: az k8s-configuration update
-  summary: Update a Kubernetes configuration.
-  description: ''
-  syntax: >-
-    az k8s-configuration update --cluster-name
-                                --cluster-type {connectedClusters, managedClusters}
-                                --name
-                                --resource-group
-                                [--enable-helm-operator {false, true}]
-                                [--helm-operator-chart-version]
-                                [--helm-operator-params]
-                                [--operator-params]
-                                [--repository-url]
-                                [--ssh-known-hosts]
-                                [--ssh-known-hosts-file]
-  examples:
-  - summary: Update an existing Kubernetes configuration
-    syntax: >-
-      az k8s-configuration update --resource-group MyResourceGroup --cluster-name MyClusterName \
-
-      --cluster-type connectedClusters --name MyConfigurationName --enable-helm-operator \
-
-      --repository-url git://github.com/fluxHowTo/flux-get-started --operator-params "'--git-readonly'" \
-
-      --helm-operator-chart-version 1.2.0 --helm-operator-params '--set helm.versions=v3'
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: Name of the Kubernetes cluster.
-    description: ''
-  - isRequired: true
-    name: --cluster-type
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Name of the Kubernetes Configuration.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --enable-helm-operator --enable-hop
-    parameterValueGroup: false, true
-    summary: Enable support for Helm chart deployments.
-    description: ''
-  - name: --helm-operator-chart-version --hop-chart-version
-    summary: Chart version of the Helm Operator (if enabled).
-    description: ''
-  - name: --helm-operator-params --hop-params
-    summary: Chart values for the Helm Operator (if enabled).
-    description: ''
-  - name: --operator-params
-    summary: Parameters for the Operator.
-    description: ''
-  - name: --repository-url -u
-    summary: Url of the source control repository.
-    description: ''
-  - name: --ssh-known-hosts
-    summary: Specify Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances.
-    description: ''
-  - name: --ssh-known-hosts-file
-    summary: Specify filepath to known_hosts contents containing public SSH keys required to access private Git instances.
     description: ''
 commands:
 - az_k8s-configuration_create
 - az_k8s-configuration_delete
+- az_k8s-configuration_flux
+- az_k8s-configuration_flux_create
+- az_k8s-configuration_flux_delete
+- az_k8s-configuration_flux_kustomization
+- az_k8s-configuration_flux_kustomization_create
+- az_k8s-configuration_flux_kustomization_delete
+- az_k8s-configuration_flux_kustomization_list
+- az_k8s-configuration_flux_kustomization_show
+- az_k8s-configuration_flux_kustomization_update
+- az_k8s-configuration_flux_list
+- az_k8s-configuration_flux_show
+- az_k8s-configuration_flux_update
 - az_k8s-configuration_list
 - az_k8s-configuration_show
-- az_k8s-configuration_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -307,4 +251,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage Kubernetes configuration.
+  description: Commands to manage resources from Microsoft.KubernetesConfiguration.

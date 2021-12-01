@@ -15,11 +15,13 @@ directCommands:
   syntax: >-
     az ml model create --resource-group
                        --workspace-name
-                       [--datastore-name]
+                       [--description]
                        [--file]
                        [--local-path]
+                       [--model-uri]
                        [--name]
                        [--set]
+                       [--tags]
                        [--version]
   examples:
   - summary: Create a model from a YAML specification file
@@ -36,20 +38,26 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
-  - name: --datastore-name -z
-    summary: Name of the datastore to upload the model to.
+  - name: --description
+    summary: Description of the object.
     description: ''
   - name: --file -f
-    summary: Local path to the YAML file containing the Azure ML model specification. --name/-n and --version/-v must be provided if YAML file is not having name and version.
+    summary: Local path to the YAML file containing the Azure ML model specification. --name/-n and --version/-v must be provided if YAML file does not have name and version.
     description: ''
   - name: --local-path -l
     summary: Path to the model file(s). This can be either a file or a directory. If specified, --name/-n and --version/-v must also be provided.
+    description: ''
+  - name: --model-uri -p
+    summary: "Path of model in supported URI formats to create the model. Examples: 'folder:azureml://datastores/mydatastore/paths/path_to_model/', 'file:azureml://datastores/mydatastore/paths/path_to_model/myfile.csv'."
     description: ''
   - name: --name -n
     summary: Name of the model.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
     description: ''
   - name: --version -v
     summary: Version of the model.
@@ -119,13 +127,11 @@ directCommands:
   syntax: >-
     az ml model show --name
                      --resource-group
+                     --version
                      --workspace-name
-                     [--version]
   examples:
   - summary: Show details for a model with the specified name and version
     syntax: az ml model show --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Show details for the latest version of a model with the specified name
-    syntax: az ml model show --name my-model --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -136,12 +142,12 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
+    name: --version -v
+    summary: Version of the model.
+    description: ''
+  - isRequired: true
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --version -v
-    summary: Version of the model. If omitted, the latest version is shown.
     description: ''
 - uid: az_ml_model_update
   name: az ml model update
@@ -150,12 +156,12 @@ directCommands:
   syntax: >-
     az ml model update --name
                        --resource-group
+                       --version
                        --workspace-name
                        [--add]
                        [--force-string]
                        [--remove]
                        [--set]
-                       [--version]
   examples:
   - summary: Update a model's flavors
     syntax: az ml model update --name my-model --version 1 --set flavors.python_function.python_version=3.8 --resource-group my-resource-group --workspace-name my-workspace
@@ -167,6 +173,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the model.
     description: ''
   - isRequired: true
     name: --workspace-name -w
@@ -184,9 +194,6 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --version -v
-    summary: Version of the model.
     description: ''
 commands:
 - az_ml_model_create

@@ -11,18 +11,22 @@ directCommands:
 - uid: az_ml_compute_attach
   name: az ml compute attach
   summary: Attach an existing compute resource to a workspace.
-  description: AKS clusters, Kubernetes clusters and remote VMs can be attached as compute targets.
+  description: Kubernetes clusters and remote VMs can be attached as compute targets.
   syntax: >-
     az ml compute attach --resource-group
                          --workspace-name
+                         [--admin-password]
                          [--admin-username]
                          [--file]
+                         [--identity-type]
                          [--name]
                          [--namespace]
                          [--no-wait]
                          [--resource-id]
-                         [--ssh-key-value]
+                         [--ssh-port]
+                         [--ssh-private-key-file]
                          [--type]
+                         [--user-assigned-identities]
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -33,11 +37,17 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --admin-password
+    summary: The administrator user password that can be used to SSH into the node(s).
+    description: ''
   - name: --admin-username
     summary: Name of the administrator user account that can be used to SSH into the node(s).
     description: ''
-  - name: --file
+  - name: --file -f
     summary: Local path to the YAML file containing the Azure ML compute specification.
+    description: ''
+  - name: --identity-type
+    summary: 'The type of manged identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --name -n
     summary: Name of the compute target (Required if not specified in the yaml file).
@@ -49,13 +59,19 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-id
-    summary: The fully qualified ID of the resource, including the resource name and resource type.
+    summary: The fully qualified ID of the resource, including the resource name and resource type (Required if not specified in the yaml file).
     description: ''
-  - name: --ssh-key-value
-    summary: SSH public key of the administrator user account.
+  - name: --ssh-port
+    summary: The port number that can be used to SSH into the node(s). If not specified, the default (port 22) will be used.
+    description: ''
+  - name: --ssh-private-key-file
+    summary: The file containing the SSH private key of the administrator user account.
     description: ''
   - name: --type -t
-    summary: 'The type of compute target. Allowed values: AKS, virtualmachine.'
+    summary: 'The type of compute target. Allowed values: virtualmachine, Kubernetes.'
+    description: ''
+  - name: --user-assigned-identities -i
+    summary: The user assigned identity's resource ID, required for --identity_type=UserAssigned.
     description: ''
 - uid: az_ml_compute_create
   name: az ml compute create
@@ -74,12 +90,13 @@ directCommands:
                          [--min-instances]
                          [--name]
                          [--no-wait]
-                         [--priority]
-                         [--public-ip]
                          [--set]
                          [--size]
                          [--ssh-key-value]
+                         [--ssh-public-access-enabled]
                          [--subnet]
+                         [--tags]
+                         [--tier]
                          [--type]
                          [--user-assigned-identities]
                          [--user-object-id]
@@ -107,7 +124,7 @@ directCommands:
     summary: Name of the administrator user account that can be used to SSH into the node(s).
     description: ''
   - name: --description
-    summary: Description of the compute target.
+    summary: Description of the object.
     description: ''
   - name: --file -f
     summary: Local path to the YAML file containing the Azure ML compute specification.
@@ -115,8 +132,8 @@ directCommands:
   - name: --identity-type
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
-  - name: --idle-time-before-scale-down -s
-    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
+  - name: --idle-time-before-scale-down -d
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 120.'
     description: ''
   - name: --max-instances
     summary: 'The maximum number of nodes to use on the cluster. Default: 4.'
@@ -128,13 +145,7 @@ directCommands:
     summary: Name of the compute target. Required if --file/-f is not provided.
     description: ''
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --priority
-    summary: 'VM priority. Allowed values: Dedicated, LowPriority.'
-    description: ''
-  - name: --public-ip
-    summary: Public IP Address of this ComputeInstance (only applies to ComputeInstance).
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
@@ -145,11 +156,20 @@ directCommands:
   - name: --ssh-key-value
     summary: SSH public key of the administrator user account.
     description: ''
+  - name: --ssh-public-access-enabled -p
+    summary: Indicates whether public SSH port is enabled.
+    description: ''
   - name: --subnet
-    summary: Name of the subnet.
+    summary: Name of the subnet. Can also reference a subnet in an existing vnet by ID instead of name. If subnet ID is specified then vnet-name will be ignored. Subnet ID can refer to a vnet/subnet in another RG by specifying the fully qualified subnet ID. Required when vnet name is specified.
+    description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
+    description: ''
+  - name: --tier
+    summary: 'VM priority tier. Allowed values: dedicated, low_priority.'
     description: ''
   - name: --type -t
-    summary: 'The type of compute target. Required if --file/-f is not provided. Allowed values: AmlCompute, ComputeInstance, Kuberntes.'
+    summary: 'The type of compute target. Required if --file/-f is not provided. Allowed values: AmlCompute, ComputeInstance.'
     description: ''
   - name: --user-assigned-identities -i
     summary: Use '[system]' to set a system assigned identity else input resource IDs separated by commas (ie <ResourceID1>,<ResourceID2>) to set user assigned identities.
@@ -188,7 +208,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -249,8 +269,31 @@ directCommands:
     summary: Max number of results to return.
     description: ''
   - name: --type
-    defaultValue: amlcompute
     summary: 'The type of compute target. Allowed values: AmlCompute, ComputeInstance, Kubernetes.'
+    description: ''
+- uid: az_ml_compute_list-nodes
+  name: az ml compute list-nodes
+  summary: List node details for a compute target. The only supported compute type for this command is AML compute.
+  description: ''
+  syntax: >-
+    az ml compute list-nodes --name
+                             --resource-group
+                             --workspace-name
+  examples:
+  - summary: List node details for an AML compute target
+    syntax: az ml compute list-nodes --name nc6-cluster --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the compute target (Required if not specified in the yaml file).
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_compute_list-sizes
   name: az ml compute list-sizes
@@ -301,11 +344,12 @@ directCommands:
 - uid: az_ml_compute_restart
   name: az ml compute restart
   summary: Restart a ComputeInstance target.
-  description: ''
+  description: --no-wait option is recommended.
   syntax: >-
     az ml compute restart --name
                           --resource-group
                           --workspace-name
+                          [--no-wait]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -318,6 +362,10 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
 - uid: az_ml_compute_show
   name: az ml compute show
@@ -367,7 +415,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
 - uid: az_ml_compute_stop
   name: az ml compute stop
@@ -393,12 +441,12 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
 - uid: az_ml_compute_update
   name: az ml compute update
   summary: Update a compute target.
-  description: The 'tags', 'description', 'max_instances', 'min_instances', 'idle_time_before_scale_down', 'identity_type', and 'user_assigned_identities' properties can be updated.
+  description: The 'tags', 'max_instances', 'min_instances', 'idle_time_before_scale_down', 'identity_type', and 'user_assigned_identities' properties can be updated.
   syntax: >-
     az ml compute update --name
                          --resource-group
@@ -409,12 +457,15 @@ directCommands:
                          [--idle-time-before-scale-down]
                          [--max-instances]
                          [--min-instances]
+                         [--no-wait]
                          [--remove]
                          [--set]
                          [--user-assigned-identities]
   examples:
   - summary: Update the minimum number of nodes for an AmlCompute cluster
     syntax: az ml compute update --name nc6-cluster --min-instances 1 --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Update existing tags or add new tags for an AmlCompute cluster
+    syntax: az ml compute update --name nc6-cluster --set tags.key1=value1 tags.key2=value2 --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -438,14 +489,17 @@ directCommands:
   - name: --identity-type
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
-  - name: --idle-time-before-scale-down -s
-    summary: 'Node idle time in seconds before scaling down the cluster. Default: 1800.'
+  - name: --idle-time-before-scale-down -d
+    summary: 'Node idle time in seconds before scaling down the cluster. Default: 120.'
     description: ''
   - name: --max-instances
     summary: 'Maximum number of nodes to use. Default: 4.'
     description: ''
   - name: --min-instances
     summary: 'Minimum number of nodes to use. Default: 0.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running-operation to finish. Default is False.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -462,6 +516,7 @@ commands:
 - az_ml_compute_delete
 - az_ml_compute_detach
 - az_ml_compute_list
+- az_ml_compute_list-nodes
 - az_ml_compute_list-sizes
 - az_ml_compute_list-usage
 - az_ml_compute_restart

@@ -8,6 +8,68 @@ extensionInformation: >-
 summary: Commands to manage private clouds.
 description: ''
 directCommands:
+- uid: az_vmware_private-cloud_add-availability-zone
+  name: az vmware private-cloud add-availability-zone
+  summary: Add an Availability Zone to a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud add-availability-zone --private-cloud
+                                                  --resource-group
+                                                  [--secondary-zone]
+                                                  [--strategy]
+                                                  [--zone]
+  requiredParameters:
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --secondary-zone
+    summary: The secondary availability zone for the private cloud.
+    description: ''
+  - name: --strategy
+    summary: The availability strategy for the private cloud.
+    description: ''
+  - name: --zone
+    summary: The primary availability zone for the private cloud.
+    description: ''
+- uid: az_vmware_private-cloud_add-cmk-encryption
+  name: az vmware private-cloud add-cmk-encryption
+  summary: Add a Customer Managed Keys Encryption to a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud add-cmk-encryption --private-cloud
+                                               --resource-group
+                                               [--enc-kv-key-name]
+                                               [--enc-kv-key-version]
+                                               [--enc-kv-url]
+                                               [--enc-status]
+  requiredParameters:
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --enc-kv-key-name
+    summary: The name of the encryption key vault key.
+    description: ''
+  - name: --enc-kv-key-version
+    summary: The version of the encryption key vault key.
+    description: ''
+  - name: --enc-kv-url
+    summary: The URL of the encryption key vault.
+    description: ''
+  - name: --enc-status
+    summary: Status of customer managed encryption key.
+    description: ''
 - uid: az_vmware_private-cloud_addidentitysource
   name: az vmware private-cloud addidentitysource
   summary: Add a vCenter Single Sign On Identity Source to a private cloud.
@@ -74,32 +136,94 @@ directCommands:
     defaultValue: Disabled
     summary: Protect LDAP communication using SSL certificate (LDAPS). Specify "Enabled" or "Disabled".
     description: ''
+- uid: az_vmware_private-cloud_add-identity-source
+  name: az vmware private-cloud add-identity-source
+  summary: Add a vCenter Single Sign On Identity Source to a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud add-identity-source --alias
+                                                --base-group-dn
+                                                --base-user-dn
+                                                --domain
+                                                --name
+                                                --password
+                                                --primary-server
+                                                --private-cloud
+                                                --resource-group
+                                                --username
+                                                [--secondary-server]
+                                                [--ssl]
+  requiredParameters:
+  - isRequired: true
+    name: --alias
+    summary: The domain's NetBIOS name.
+    description: ''
+  - isRequired: true
+    name: --base-group-dn
+    summary: The base distinguished name for groups.
+    description: ''
+  - isRequired: true
+    name: --base-user-dn
+    summary: The base distinguished name for users.
+    description: ''
+  - isRequired: true
+    name: --domain
+    summary: The domain's dns name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the identity source.
+    description: ''
+  - isRequired: true
+    name: --password
+    summary: The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups.
+    description: ''
+  - isRequired: true
+    name: --primary-server
+    summary: Primary server URL.
+    description: ''
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --username
+    summary: The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group.
+    description: ''
+  optionalParameters:
+  - name: --secondary-server
+    summary: Secondary server URL.
+    description: ''
+  - name: --ssl
+    defaultValue: Disabled
+    summary: Protect LDAP communication using SSL certificate (LDAPS). Specify "Enabled" or "Disabled".
+    description: ''
 - uid: az_vmware_private-cloud_create
   name: az vmware private-cloud create
   summary: Create a private cloud.
   description: ''
   syntax: >-
     az vmware private-cloud create --cluster-size
-                                   --location
                                    --name
                                    --network-block
                                    --resource-group
                                    --sku
                                    [--accept-eula]
-                                   [--circuit-primary-subnet]
-                                   [--circuit-secondary-subnet]
                                    [--internet]
+                                   [--location]
+                                   [--mi-system-assigned]
                                    [--nsxt-password]
                                    [--tags]
                                    [--vcenter-password]
+                                   [--yes]
   requiredParameters:
   - isRequired: true
     name: --cluster-size
     summary: Number of hosts for the default management cluster. Minimum of 3 and maximum of 16.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --name -n
@@ -121,14 +245,14 @@ directCommands:
   - name: --accept-eula
     summary: Accept the end-user license agreement without prompting.
     description: ''
-  - name: --circuit-primary-subnet
-    summary: A /30 subnet for the primary circuit in the Express Route to configure routing between your network and Microsoft's Enterprise edge (MSEEs) routers.
-    description: ''
-  - name: --circuit-secondary-subnet
-    summary: A /30 subnet for the secondary circuit in the Express Route to configure routing between your network and Microsoft's Enterprise edge (MSEEs) routers.
-    description: ''
   - name: --internet
     summary: Connectivity to internet. Specify "Enabled" or "Disabled".
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --mi-system-assigned
+    summary: Enable a system assigned identity.
     description: ''
   - name: --nsxt-password
     summary: NSX-T Manager password.
@@ -138,6 +262,9 @@ directCommands:
     description: ''
   - name: --vcenter-password
     summary: VCenter admin password.
+    description: ''
+  - name: --yes
+    summary: Delete without confirmation.
     description: ''
 - uid: az_vmware_private-cloud_delete
   name: az vmware private-cloud delete
@@ -158,7 +285,49 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --yes
-    summary: Deletes without confirmation.
+    summary: Delete without confirmation.
+    description: ''
+- uid: az_vmware_private-cloud_delete-availability-zone
+  name: az vmware private-cloud delete-availability-zone
+  summary: Delete an Availability Zone from a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud delete-availability-zone --private-cloud
+                                                     --resource-group
+                                                     [--yes]
+  requiredParameters:
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes
+    summary: Delete without confirmation.
+    description: ''
+- uid: az_vmware_private-cloud_delete-cmk-encryption
+  name: az vmware private-cloud delete-cmk-encryption
+  summary: Delete a Customer Managed Keys Encryption from a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud delete-cmk-encryption --private-cloud
+                                                  --resource-group
+                                                  [--yes]
+  requiredParameters:
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes
+    summary: Delete without confirmation.
     description: ''
 - uid: az_vmware_private-cloud_deleteidentitysource
   name: az vmware private-cloud deleteidentitysource
@@ -170,6 +339,7 @@ directCommands:
                                                  --name
                                                  --private-cloud
                                                  --resource-group
+                                                 [--yes]
   requiredParameters:
   - isRequired: true
     name: --alias
@@ -190,6 +360,46 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes
+    summary: Delete without confirmation.
+    description: ''
+- uid: az_vmware_private-cloud_delete-identity-source
+  name: az vmware private-cloud delete-identity-source
+  summary: Delete a vCenter Single Sign On Identity Source for a private cloud.
+  description: ''
+  syntax: >-
+    az vmware private-cloud delete-identity-source --alias
+                                                   --domain
+                                                   --name
+                                                   --private-cloud
+                                                   --resource-group
+                                                   [--yes]
+  requiredParameters:
+  - isRequired: true
+    name: --alias
+    summary: The domain's NetBIOS name.
+    description: ''
+  - isRequired: true
+    name: --domain
+    summary: The domain's dns name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the identity source.
+    description: ''
+  - isRequired: true
+    name: --private-cloud -c
+    summary: Name of the private cloud.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes
+    summary: Delete without confirmation.
     description: ''
 - uid: az_vmware_private-cloud_list
   name: az vmware private-cloud list
@@ -216,16 +426,13 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: az_vmware_private-cloud_rotate-nsxt-password
-  name: az vmware private-cloud rotate-nsxt-password
-  summary: Rotate the NSX-T Manager password.
+- uid: az_vmware_private-cloud_list-admin-credentials
+  name: az vmware private-cloud list-admin-credentials
+  summary: List the admin credentials for the private cloud.
   description: ''
   syntax: >-
-    az vmware private-cloud rotate-nsxt-password --private-cloud
-                                                 --resource-group
-  examples:
-  - summary: Rotate the NSX-T Manager password.
-    syntax: az vmware private-cloud rotate-nsxt-password --resource-group MyResourceGroup --private-cloud MyPrivateCloud
+    az vmware private-cloud list-admin-credentials --private-cloud
+                                                   --resource-group
   requiredParameters:
   - isRequired: true
     name: --private-cloud -c
@@ -235,6 +442,14 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_vmware_private-cloud_rotate-nsxt-password
+  name: az vmware private-cloud rotate-nsxt-password
+  summary: Rotate the NSX-T Manager password.
+  description: ''
+  syntax: az vmware private-cloud rotate-nsxt-password
+  examples:
+  - summary: Rotate the NSX-T Manager password.
+    syntax: az vmware private-cloud rotate-nsxt-password
 - uid: az_vmware_private-cloud_rotate-vcenter-password
   name: az vmware private-cloud rotate-vcenter-password
   summary: Rotate the vCenter password.
@@ -242,6 +457,7 @@ directCommands:
   syntax: >-
     az vmware private-cloud rotate-vcenter-password --private-cloud
                                                     --resource-group
+                                                    [--yes]
   examples:
   - summary: Rotate the vCenter password.
     syntax: az vmware private-cloud rotate-vcenter-password --resource-group MyResourceGroup --private-cloud MyPrivateCloud
@@ -253,6 +469,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes
+    summary: Delete without confirmation.
     description: ''
 - uid: az_vmware_private-cloud_show
   name: az vmware private-cloud show
@@ -279,6 +499,7 @@ directCommands:
                                    --resource-group
                                    [--cluster-size]
                                    [--internet]
+                                   [--tags]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -295,13 +516,27 @@ directCommands:
   - name: --internet
     summary: Connectivity to internet. Specify "Enabled" or "Disabled".
     description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
 commands:
+- az_vmware_private-cloud_add-availability-zone
+- az_vmware_private-cloud_add-cmk-encryption
 - az_vmware_private-cloud_addidentitysource
+- az_vmware_private-cloud_add-identity-source
 - az_vmware_private-cloud_create
 - az_vmware_private-cloud_delete
+- az_vmware_private-cloud_delete-availability-zone
+- az_vmware_private-cloud_delete-cmk-encryption
 - az_vmware_private-cloud_deleteidentitysource
+- az_vmware_private-cloud_delete-identity-source
+- az_vmware_private-cloud_identity
+- az_vmware_private-cloud_identity_assign
+- az_vmware_private-cloud_identity_remove
+- az_vmware_private-cloud_identity_show
 - az_vmware_private-cloud_list
 - az_vmware_private-cloud_listadmincredentials
+- az_vmware_private-cloud_list-admin-credentials
 - az_vmware_private-cloud_rotate-nsxt-password
 - az_vmware_private-cloud_rotate-vcenter-password
 - az_vmware_private-cloud_show

@@ -51,6 +51,10 @@ directCommands:
     az kusto cluster create --cluster-name
                             --resource-group
                             --sku
+                            [--accepted-audiences]
+                            [--allowed-fqdn-list]
+                            [--allowed-ip-range-list]
+                            [--enable-auto-stop {false, true}]
                             [--enable-disk-encryption {false, true}]
                             [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
@@ -60,8 +64,10 @@ directCommands:
                             [--if-none-match]
                             [--key-vault-properties]
                             [--location]
+                            [--network-access {Disabled, Enabled}]
                             [--no-wait]
                             [--optimized-autoscale]
+                            [--public-network-access {Disabled, Enabled}]
                             [--tags]
                             [--trusted-external-tenants]
                             [--type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
@@ -70,7 +76,7 @@ directCommands:
                             [--zones]
   examples:
   - summary: KustoClustersCreateOrUpdate
-    syntax: az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
+    syntax: az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --allowed-ip-range-list "0.0.0.0/0" --enable-auto-stop true --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --public-network-access "Enabled" --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -93,6 +99,26 @@ directCommands:
 
       tier: Required. SKU tier.
   optionalParameters:
+  - name: --accepted-audiences
+    summary: The cluster's accepted audiences.
+    description: >-
+      Usage: --accepted-audiences value=XX
+
+
+      value: GUID or valid URL representing an accepted audience.
+
+
+      Multiple actions can be specified by using more than one --accepted-audiences argument.
+  - name: --allowed-fqdn-list
+    summary: List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster.
+    description: ''
+  - name: --allowed-ip-range-list
+    summary: The list of ips in the format of CIDR allowed to connect to the cluster.
+    description: ''
+  - name: --enable-auto-stop
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days).
+    description: ''
   - name: --enable-disk-encryption
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the cluster's disks are encrypted.
@@ -125,15 +151,19 @@ directCommands:
       Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
-      key-name: Required. The name of the key vault key.
+      key-name: The name of the key vault key.
 
       key-version: The version of the key vault key.
 
-      key-vault-uri: Required. The Uri of the key vault.
+      key-vault-uri: The Uri of the key vault.
 
       user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --network-access --restrict-outbound-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -151,6 +181,10 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
 
       maximum: Required. Maximum allowed instances count.
+  - name: --public-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -169,7 +203,7 @@ directCommands:
     summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
   - name: --uai --user-assigned-identities
-    summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
+    summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file."
     description: ''
   - name: --virtual-network-configuration
     summary: Virtual network definition.
@@ -323,6 +357,25 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_kusto_cluster_list-outbound-network-dependency-endpoint
+  name: az kusto cluster list-outbound-network-dependency-endpoint
+  summary: Gets the network endpoints of all outbound dependencies of a Kusto cluster.
+  description: ''
+  syntax: >-
+    az kusto cluster list-outbound-network-dependency-endpoint --cluster-name
+                                                               --resource-group
+  examples:
+  - summary: Get Kusto cluster outbound network dependencies
+    syntax: az kusto cluster list-outbound-network-dependency-endpoint --name "kustoclusterrptest" --resource-group "kustorptest"
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the Kusto cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_kusto_cluster_list-sku
   name: az kusto cluster list-sku
   summary: Returns the SKUs available for the provided resource. And Lists eligible SKUs for Kusto resource provider.
@@ -451,6 +504,10 @@ directCommands:
   syntax: >-
     az kusto cluster update --cluster-name
                             --resource-group
+                            [--accepted-audiences]
+                            [--allowed-fqdn-list]
+                            [--allowed-ip-range-list]
+                            [--enable-auto-stop {false, true}]
                             [--enable-disk-encryption {false, true}]
                             [--enable-double-encryption {false, true}]
                             [--enable-purge {false, true}]
@@ -459,8 +516,10 @@ directCommands:
                             [--if-match]
                             [--key-vault-properties]
                             [--location]
+                            [--network-access {Disabled, Enabled}]
                             [--no-wait]
                             [--optimized-autoscale]
+                            [--public-network-access {Disabled, Enabled}]
                             [--sku]
                             [--tags]
                             [--trusted-external-tenants]
@@ -469,7 +528,7 @@ directCommands:
                             [--virtual-network-configuration]
   examples:
   - summary: KustoClustersUpdate
-    syntax: az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --engine-type "V2" --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
+    syntax: az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-auto-stop true --enable-purge true --enable-streaming-ingest true --engine-type "V3" --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --restrict-outbound-network-access "Disabled" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -480,6 +539,26 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --accepted-audiences
+    summary: The cluster's accepted audiences.
+    description: >-
+      Usage: --accepted-audiences value=XX
+
+
+      value: GUID or valid URL representing an accepted audience.
+
+
+      Multiple actions can be specified by using more than one --accepted-audiences argument.
+  - name: --allowed-fqdn-list
+    summary: List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster.
+    description: ''
+  - name: --allowed-ip-range-list
+    summary: The list of ips in the format of CIDR allowed to connect to the cluster.
+    description: ''
+  - name: --enable-auto-stop
+    parameterValueGroup: false, true
+    summary: A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days).
+    description: ''
   - name: --enable-disk-encryption
     parameterValueGroup: false, true
     summary: A boolean value that indicates if the cluster's disks are encrypted.
@@ -509,15 +588,19 @@ directCommands:
       Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
-      key-name: Required. The name of the key vault key.
+      key-name: The name of the key vault key.
 
       key-version: The version of the key vault key.
 
-      key-vault-uri: Required. The Uri of the key vault.
+      key-vault-uri: The Uri of the key vault.
 
       user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --network-access --restrict-outbound-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -535,6 +618,10 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
 
       maximum: Required. Maximum allowed instances count.
+  - name: --public-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
+    description: ''
   - name: --sku
     summary: The SKU of the cluster.
     description: >-
@@ -564,7 +651,7 @@ directCommands:
     summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
   - name: --uai --user-assigned-identities
-    summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/@json-file."
+    summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file."
     description: ''
   - name: --virtual-network-configuration
     summary: Virtual network definition.
@@ -640,6 +727,7 @@ commands:
 - az_kusto_cluster_list
 - az_kusto_cluster_list-follower-database
 - az_kusto_cluster_list-language-extension
+- az_kusto_cluster_list-outbound-network-dependency-endpoint
 - az_kusto_cluster_list-sku
 - az_kusto_cluster_remove-language-extension
 - az_kusto_cluster_show
