@@ -60,7 +60,7 @@ Without any authentication parameters, password-based authentication is used wit
 > As of Azure CLI 2.0.68, the `--password` parameter to create a service principal with a user-defined password
 > is __no longer supported__ to prevent the accidental use of weak passwords.
 
-The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
+The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#6-reset-credentials).
 
 ### Certificate-based authentication
 
@@ -129,7 +129,7 @@ az ad sp create-for-rbac --name ServicePrincipalName --create-cert --cert CertNa
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
+If you lose access to a certificate's private key, [reset the service principal credentials](#6-reset-credentials).
 
 #### Retrieve certificate from Key Vault
 
@@ -164,7 +164,7 @@ az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 >
 > `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az_ad_sp_show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
 > Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show), but no other secrets are stored by default.
-> If you forget an authentication method or secret, [reset the service principal credentials](#reset-credentials).
+> If you forget an authentication method or secret, [reset the service principal credentials](#6-reset-credentials).
 
 ## 3. Manage service principal roles
 
@@ -222,7 +222,7 @@ The following section provides an example of how to create an resource for [Azur
 * [az storage account create](/cli/azure/storage/account#az_storage_account_create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
 
-To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
+To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
 
 1. Log in as the service principal.
 
