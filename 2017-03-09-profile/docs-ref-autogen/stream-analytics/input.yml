@@ -4,8 +4,8 @@ name: az stream-analytics input
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **stream-analytics** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az stream-analytics input** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage stream-analytics input.
+  > This reference is part of the **stream-analytics** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az stream-analytics input** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage input with stream analytics.
 description: ''
 directCommands:
 - uid: az_stream-analytics_input_create
@@ -13,127 +13,72 @@ directCommands:
   summary: Create an input or replaces an already existing input under an existing streaming job.
   description: ''
   syntax: >-
-    az stream-analytics input create --datasource
+    az stream-analytics input create --input-name
                                      --job-name
-                                     --name
                                      --resource-group
-                                     --serialization
-                                     --type {Reference, Stream}
+                                     [--if-match]
+                                     [--if-none-match]
+                                     [--properties]
   examples:
-  - summary: Create an input
-    syntax: >-
-      az stream-analytics input create --resource-group MyResourceGroup --job-name MyJobName \
-
-      --name MyInputName --type Stream --datasource @datasource.json --serialization \
-
-      @serialization.json
-       (below is an example of Blob Storage for "datasource.json")
-       {
-           "type": "Microsoft.Storage/Blob",
-           "properties": {
-               "storageAccounts": [
-                   {
-                       "accountName": "someAccountName",
-                       "accountKey": "someAccountKey=="
-                   }
-               ],
-               "container": "state",
-               "pathPattern": "{date}/{time}",
-               "dateFormat": "yyyy/MM/dd",
-               "timeFormat": "HH",
-               "sourcePartitionCount": 16
-           }
-       }
-       (below is an example of Event Hub for "datasource.json")
-       {
-           "type": "Microsoft.ServiceBus/EventHub",
-           "properties": {
-               "serviceBusNamespace": "sdktest",
-               "sharedAccessPolicyName": "RootManageSharedAccessKey",
-               "sharedAccessPolicyKey": "someSharedAccessPolicyKey==",
-               "eventHubName": "sdkeventhub",
-               "consumerGroupName": "sdkconsumergroup"
-           }
-       }
-       (below is an example of Iot Hub for "datasource.json")
-       {
-           "type": "Microsoft.Devices/IotHubs",
-           "properties": {
-               "iotHubNamespace": "iothub",
-               "sharedAccessPolicyName": "owner",
-               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
-               "consumerGroupName": "sdkconsumergroup",
-               "endpoint": "messages/events"
-           }
-       }
-       (below is an example of Csv for "serialization.json")
-       {
-           "type": "Csv",
-           "properties": {
-               "fieldDelimiter": ",",
-               "encoding": "UTF8"
-           }
-       }
-       (below is an example of Json for "serialization.json")
-       {
-           "type": "Json",
-           "properties": {
-               "encoding": "UTF8"
-           }
-       }
-       (below is an example of Avro for "serialization.json")
-       {
-           "type": "Avro"
-       }
+  - summary: Create a reference blob input with CSV serialization
+    syntax: az stream-analytics input create --properties "{\"type\":\"Reference\",\"datasource\":{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"container\":\"state\",\"dateFormat\":\"yyyy/MM/dd\",\"pathPattern\":\"{date}/{time}\",\"storageAccounts\":[{\"accountKey\":\"someAccountKey==\",\"accountName\":\"someAccountName\"}],\"timeFormat\":\"HH\"}},\"serialization\":{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\",\"}}}" --input-name "input7225" --job-name "sj9597" --resource-group "sjrg8440"
+  - summary: Create a stream Event Hub input with JSON serialization
+    syntax: az stream-analytics input create --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.ServiceBus/EventHub\",\"properties\":{\"consumerGroupName\":\"sdkconsumergroup\",\"eventHubName\":\"sdkeventhub\",\"serviceBusNamespace\":\"sdktest\",\"sharedAccessPolicyKey\":\"someSharedAccessPolicyKey==\",\"sharedAccessPolicyName\":\"RootManageSharedAccessKey\"}},\"serialization\":{\"type\":\"Json\",\"properties\":{\"encoding\":\"UTF8\"}}}" --input-name "input7425" --job-name "sj197" --resource-group "sjrg3139"
+  - summary: Create a stream IoT Hub input with Avro serialization
+    syntax: az stream-analytics input create --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.Devices/IotHubs\",\"properties\":{\"consumerGroupName\":\"sdkconsumergroup\",\"endpoint\":\"messages/events\",\"iotHubNamespace\":\"iothub\",\"sharedAccessPolicyKey\":\"sharedAccessPolicyKey=\",\"sharedAccessPolicyName\":\"owner\"}},\"serialization\":{\"type\":\"Avro\"}}" --input-name "input7970" --job-name "sj9742" --resource-group "sjrg3467"
+  - summary: Create a stream blob input with CSV serialization
+    syntax: az stream-analytics input create --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"container\":\"state\",\"dateFormat\":\"yyyy/MM/dd\",\"pathPattern\":\"{date}/{time}\",\"sourcePartitionCount\":16,\"storageAccounts\":[{\"accountKey\":\"someAccountKey==\",\"accountName\":\"someAccountName\"}],\"timeFormat\":\"HH\"}},\"serialization\":{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\",\"}}}" --input-name "input8899" --job-name "sj6695" --resource-group "sjrg8161"
   requiredParameters:
   - isRequired: true
-    name: --datasource
-    summary: The datasource of the input.
+    name: --input-name --name -n
+    summary: The name of the input.
     description: ''
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the input.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --serialization
-    summary: The serialization of the input.
+  optionalParameters:
+  - name: --if-match
+    summary: The ETag of the input. Omit this value to always overwrite the current input. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
     description: ''
-  - isRequired: true
-    name: --type
-    parameterValueGroup: Reference, Stream
-    summary: The type of the input.
+  - name: --if-none-match
+    summary: Set to '\*' to allow a new input to be created, but to prevent updating an existing input. Other values will result in a 412 Pre-condition Failed response.
+    description: ''
+  - name: --properties
+    summary: 'The properties that are associated with an input. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
     description: ''
 - uid: az_stream-analytics_input_delete
   name: az stream-analytics input delete
   summary: Delete an input from the streaming job.
   description: ''
   syntax: >-
-    az stream-analytics input delete --job-name
-                                     --name
+    az stream-analytics input delete --input-name
+                                     --job-name
                                      --resource-group
+                                     [--yes]
   examples:
   - summary: Delete an input
-    syntax: az stream-analytics input delete --resource-group MyResourceGroup --job-name MyJobName --name MyInputName
+    syntax: az stream-analytics input delete --input-name "input7225" --job-name "sj9597" --resource-group "sjrg8440"
   requiredParameters:
+  - isRequired: true
+    name: --input-name --name -n
+    summary: The name of the input.
+    description: ''
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the input.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_stream-analytics_input_list
   name: az stream-analytics input list
@@ -142,9 +87,12 @@ directCommands:
   syntax: >-
     az stream-analytics input list --job-name
                                    --resource-group
+                                   [--select]
   examples:
   - summary: List all inputs in a streaming job
-    syntax: az stream-analytics input list --resource-group MyResourceGroup --job-name MyJobName
+    syntax: az stream-analytics input list --job-name "sj9597" --resource-group "sjrg8440"
+  - summary: List all inputs in a streaming job and include diagnostic information using the $select OData query parameter
+    syntax: az stream-analytics input list --select "*" --job-name "sj7804" --resource-group "sjrg3276"
   requiredParameters:
   - isRequired: true
     name: --job-name
@@ -154,25 +102,35 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --select
+    summary: The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "\*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '\*' as a valid value.
+    description: ''
 - uid: az_stream-analytics_input_show
   name: az stream-analytics input show
   summary: Get details about the specified input.
   description: ''
   syntax: >-
-    az stream-analytics input show --job-name
-                                   --name
+    az stream-analytics input show --input-name
+                                   --job-name
                                    --resource-group
   examples:
-  - summary: Get details about specified input
-    syntax: az stream-analytics input show --resource-group MyResourceGroup --job-name MyJobName --name MyInputName
+  - summary: Get a reference blob input with CSV serialization
+    syntax: az stream-analytics input show --input-name "input7225" --job-name "sj9597" --resource-group "sjrg8440"
+  - summary: Get a stream Event Hub input with JSON serialization
+    syntax: az stream-analytics input show --input-name "input7425" --job-name "sj197" --resource-group "sjrg3139"
+  - summary: Get a stream IoT Hub input with Avro serialization
+    syntax: az stream-analytics input show --input-name "input7970" --job-name "sj9742" --resource-group "sjrg3467"
+  - summary: Get a stream blob input with CSV serialization
+    syntax: az stream-analytics input show --input-name "input8899" --job-name "sj6695" --resource-group "sjrg8161"
   requiredParameters:
+  - isRequired: true
+    name: --input-name --name -n
+    summary: The name of the input.
+    description: ''
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the input.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -180,24 +138,25 @@ directCommands:
     description: ''
 - uid: az_stream-analytics_input_test
   name: az stream-analytics input test
-  summary: Test an input.
+  summary: Test whether an input’s datasource is reachable and usable by the Azure Stream Analytics service.
   description: ''
   syntax: >-
-    az stream-analytics input test --job-name
-                                   --name
+    az stream-analytics input test --input-name
+                                   --job-name
                                    --resource-group
                                    [--no-wait]
+                                   [--properties]
   examples:
   - summary: Test the connection for an input
-    syntax: az stream-analytics input test --resource-group MyResourceGroup --job-name MyJobName --name MyInputName
+    syntax: az stream-analytics input test --input-name "input7225" --job-name "sj9597" --resource-group "sjrg8440"
   requiredParameters:
+  - isRequired: true
+    name: --input-name --name -n
+    summary: The name of the input.
+    description: ''
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the input.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -207,12 +166,111 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --properties
+    summary: 'The properties that are associated with an input. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+- uid: az_stream-analytics_input_update
+  name: az stream-analytics input update
+  summary: Update an existing input under an existing streaming job. This can be used to partially update (ie. update one or two properties) an input without affecting the rest the job or input definition.
+  description: ''
+  syntax: >-
+    az stream-analytics input update --input-name
+                                     --job-name
+                                     --resource-group
+                                     [--if-match]
+                                     [--properties]
+  examples:
+  - summary: Update a reference blob input
+    syntax: az stream-analytics input update --properties "{\"type\":\"Reference\",\"datasource\":{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"container\":\"differentContainer\"}},\"serialization\":{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\"|\"}}}" --input-name "input7225" --job-name "sj9597" --resource-group "sjrg8440"
+  - summary: Update a stream Event Hub input
+    syntax: az stream-analytics input update --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.ServiceBus/EventHub\",\"properties\":{\"consumerGroupName\":\"differentConsumerGroupName\"}},\"serialization\":{\"type\":\"Avro\"}}" --input-name "input7425" --job-name "sj197" --resource-group "sjrg3139"
+  - summary: Update a stream IoT Hub input
+    syntax: az stream-analytics input update --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.Devices/IotHubs\",\"properties\":{\"endpoint\":\"messages/operationsMonitoringEvents\"}},\"serialization\":{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\"|\"}}}" --input-name "input7970" --job-name "sj9742" --resource-group "sjrg3467"
+  - summary: Update a stream blob input
+    syntax: az stream-analytics input update --properties "{\"type\":\"Stream\",\"datasource\":{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"sourcePartitionCount\":32}},\"serialization\":{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\"|\"}}}" --input-name "input8899" --job-name "sj6695" --resource-group "sjrg8161"
+  requiredParameters:
+  - isRequired: true
+    name: --input-name --name -n
+    summary: The name of the input.
+    description: ''
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --if-match
+    summary: The ETag of the input. Omit this value to always overwrite the current input. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    description: ''
+  - name: --properties
+    summary: 'The properties that are associated with an input. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+- uid: az_stream-analytics_input_wait
+  name: az stream-analytics input wait
+  summary: Place the CLI in a waiting state until a condition of the stream-analytics input is met.
+  description: ''
+  syntax: >-
+    az stream-analytics input wait --input-name
+                                   --job-name
+                                   --resource-group
+                                   [--created]
+                                   [--custom]
+                                   [--deleted]
+                                   [--exists]
+                                   [--interval]
+                                   [--timeout]
+                                   [--updated]
+  examples:
+  - summary: Pause executing next line of CLI script until the stream-analytics input is successfully created.
+    syntax: az stream-analytics input wait --input-name "input8899" --job-name "sj6695" --resource-group "sjrg8161" --created
+  requiredParameters:
+  - isRequired: true
+    name: --input-name --name -n
+    summary: The name of the input.
+    description: ''
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
 commands:
 - az_stream-analytics_input_create
 - az_stream-analytics_input_delete
 - az_stream-analytics_input_list
 - az_stream-analytics_input_show
 - az_stream-analytics_input_test
+- az_stream-analytics_input_update
+- az_stream-analytics_input_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -229,4 +287,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage stream-analytics input.
+  description: Manage input with stream analytics.

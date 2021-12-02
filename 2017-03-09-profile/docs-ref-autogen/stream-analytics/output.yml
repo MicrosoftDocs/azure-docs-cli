@@ -4,8 +4,8 @@ name: az stream-analytics output
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **stream-analytics** extension for Azure CLI and requires version 2.3.1 or higher.  The extension will automatically install the first time you run an **az stream-analytics output** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage stream-analytics output.
+  > This reference is part of the **stream-analytics** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az stream-analytics output** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage output with stream analytics.
 description: ''
 directCommands:
 - uid: az_stream-analytics_output_create
@@ -13,169 +13,41 @@ directCommands:
   summary: Create an output or replaces an already existing output under an existing streaming job.
   description: ''
   syntax: >-
-    az stream-analytics output create --datasource
-                                      --job-name
+    az stream-analytics output create --job-name
                                       --name
                                       --resource-group
+                                      [--datasource]
+                                      [--if-match]
+                                      [--if-none-match]
                                       [--serialization]
+                                      [--size-window]
+                                      [--time-window]
   examples:
-  - summary: Create an output
-    syntax: >-
-      az stream-analytics output create --resource-group MyResourceGroup --job-name MyJobName \
-
-      --name MyOutputName --datasource @datasource.json --serialization @serialization.json
-       (below is an example of DataLake for "datasource.json")
-       {
-           "type": "Microsoft.DataLake/Accounts",
-           "properties": {
-               "accountName": "someaccount",
-               "tenantId": "cea4e98b-c798-49e7-8c40-4a2b3beb47dd",
-               "refreshToken": "someRefreshToken==",
-               "tokenUserPrincipalName": "bobsmith@contoso.com",
-               "tokenUserDisplayName": "Bob Smith",
-               "filePathPrefix": "{date}/{time}",
-               "dateFormat": "yyyy/MM/dd",
-               "timeFormat": "HH"
-           }
-       }
-       (below is an example of SQL Database for "datasource.json")
-       {
-           "type": "Microsoft.Sql/Server/Database",
-           "properties": {
-               "server": "someServer",
-               "database": "someDatabase",
-               "user": "someUser",
-               "password": "somePassword",
-               "table": "someTable"
-           }
-       }
-       (below is an example of Table Storage for "datasource.json")
-       {
-           "type": "Microsoft.Storage/Table",
-           "properties": {
-               "accountName": "someAccountName",
-               "accountKey": "accountKey==",
-               "table": "samples",
-               "partitionKey": "partitionKey",
-               "rowKey": "rowKey",
-               "columnsToRemove": [
-                   "column1",
-                   "column2"
-               ],
-               "batchSize": 25
-           }
-       }
-       (below is an example of Blob Storage for "datasource.json")
-       {
-           "type": "Microsoft.Storage/Blob",
-           "properties": {
-               "storageAccounts": [
-                   {
-                       "accountName": "someAccountName",
-                       "accountKey": "accountKey=="
-                   }
-               ],
-               "container": "state",
-               "pathPattern": "{date}/{time}",
-               "dateFormat": "yyyy/MM/dd",
-               "timeFormat": "HH"
-           }
-       }
-       (below is an example of DocumentDB for "datasource.json")
-       {
-           "type": "Microsoft.Storage/DocumentDB",
-           "properties": {
-               "accountId": "someAccountId",
-               "accountKey": "accountKey==",
-               "database": "db01",
-               "collectionNamePattern": "collection",
-               "partitionKey": "key",
-               "documentId": "documentId"
-           }
-       }
-       (below is an example of Event Hub for "datasource.json")
-       {
-           "type": "Microsoft.ServiceBus/EventHub",
-           "properties": {
-               "serviceBusNamespace": "sdktest",
-               "sharedAccessPolicyName": "RootManageSharedAccessKey",
-               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
-               "eventHubName": "sdkeventhub",
-               "partitionKey": "partitionKey"
-           }
-       }
-       (below is an example of PowerBI for "datasource.json")
-       {
-           "type": "PowerBI",
-           "properties": {
-               "dataset": "someDataset",
-               "table": "someTable",
-               "refreshToken": "someRefreshToken==",
-               "tokenUserPrincipalName": "bobsmith@contoso.com",
-               "tokenUserDisplayName": "Bob Smith",
-               "groupId": "ac40305e-3e8d-43ac-8161-c33799f43e95",
-               "groupName": "MyPowerBIGroup"
-           }
-       }
-       (below is an example of Service Bus Queue for "datasource.json")
-       {
-           "type": "Microsoft.ServiceBus/Queue",
-           "properties": {
-               "serviceBusNamespace": "sdktest",
-               "sharedAccessPolicyName": "RootManageSharedAccessKey",
-               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
-               "queueName": "sdkqueue",
-               "propertyColumns": [
-                   "column1",
-                   "column2"
-               ]
-           }
-       }
-       (below is an example of Service Bus Topic for "datasource.json")
-       {
-           "type": "Microsoft.ServiceBus/Topic",
-           "properties": {
-               "serviceBusNamespace": "sdktest",
-               "sharedAccessPolicyName": "RootManageSharedAccessKey",
-               "sharedAccessPolicyKey": "sharedAccessPolicyKey=",
-               "topicName": "sdktopic",
-               "propertyColumns": [
-                   "column1",
-                   "column2"
-               ]
-           }
-       }
-       (below is an example of Csv for "serialization.json")
-       {
-           "type": "Csv",
-           "properties": {
-               "fieldDelimiter": ",",
-               "encoding": "UTF8"
-           }
-       }
-       (below is an example of Json for "serialization.json")
-       {
-           "type": "Json",
-           "properties": {
-               "encoding": "UTF8",
-               "format": "Array"
-           }
-       }
-       (below is an example of Avro for "serialization.json")
-       {
-           "type": "Avro"
-       }
+  - summary: Create a DocumentDB output
+    syntax: az stream-analytics output create --job-name "sj2331" --datasource "{\"type\":\"Microsoft.Storage/DocumentDB\",\"properties\":{\"accountId\":\"someAccountId\",\"accountKey\":\"accountKey==\",\"collectionNamePattern\":\"collection\",\"database\":\"db01\",\"documentId\":\"documentId\",\"partitionKey\":\"key\"}}" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Create a Power BI output
+    syntax: az stream-analytics output create --job-name "sj2331" --datasource "{\"type\":\"PowerBI\",\"properties\":{\"dataset\":\"someDataset\",\"groupId\":\"ac40305e-3e8d-43ac-8161-c33799f43e95\",\"groupName\":\"MyPowerBIGroup\",\"refreshToken\":\"someRefreshToken==\",\"table\":\"someTable\",\"tokenUserDisplayName\":\"Bob Smith\",\"tokenUserPrincipalName\":\"bobsmith@contoso.com\"}}" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Create a Service Bus Queue output with Avro serialization
+    syntax: az stream-analytics output create --job-name "sj5095" --datasource "{\"type\":\"Microsoft.ServiceBus/Queue\",\"properties\":{\"propertyColumns\":[\"column1\",\"column2\"],\"queueName\":\"sdkqueue\",\"serviceBusNamespace\":\"sdktest\",\"sharedAccessPolicyKey\":\"sharedAccessPolicyKey=\",\"sharedAccessPolicyName\":\"RootManageSharedAccessKey\",\"systemPropertyColumns\":{\"MessageId\":\"col3\",\"PartitionKey\":\"col4\"}}}" --serialization "{\"type\":\"Avro\"}" --output-name "output3456" --resource-group "sjrg3410"
+  - summary: Create a Service Bus Topic output with CSV serialization
+    syntax: az stream-analytics output create --job-name "sj7094" --datasource "{\"type\":\"Microsoft.ServiceBus/Topic\",\"properties\":{\"propertyColumns\":[\"column1\",\"column2\"],\"serviceBusNamespace\":\"sdktest\",\"sharedAccessPolicyKey\":\"sharedAccessPolicyKey=\",\"sharedAccessPolicyName\":\"RootManageSharedAccessKey\",\"topicName\":\"sdktopic\"}}" --serialization "{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\",\"}}" --output-name "output7886" --resource-group "sjrg6450"
+  - summary: Create a blob output with CSV serialization
+    syntax: az stream-analytics output create --job-name "sj900" --datasource "{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"container\":\"state\",\"dateFormat\":\"yyyy/MM/dd\",\"pathPattern\":\"{date}/{time}\",\"storageAccounts\":[{\"accountKey\":\"accountKey==\",\"accountName\":\"someAccountName\"}],\"timeFormat\":\"HH\"}}" --serialization "{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\",\"}}" --output-name "output1623" --resource-group "sjrg5023"
+  - summary: Create an Azure Data Lake Store output with JSON serialization
+    syntax: az stream-analytics output create --job-name "sj3310" --datasource "{\"type\":\"Microsoft.DataLake/Accounts\",\"properties\":{\"accountName\":\"someaccount\",\"dateFormat\":\"yyyy/MM/dd\",\"filePathPrefix\":\"{date}/{time}\",\"refreshToken\":\"someRefreshToken==\",\"tenantId\":\"cea4e98b-c798-49e7-8c40-4a2b3beb47dd\",\"timeFormat\":\"HH\",\"tokenUserDisplayName\":\"Bob Smith\",\"tokenUserPrincipalName\":\"bobsmith@contoso.com\"}}" --serialization "{\"type\":\"Json\",\"properties\":{\"format\":\"Array\",\"encoding\":\"UTF8\"}}" --output-name "output5195" --resource-group "sjrg6912"
+  - summary: Create an Azure SQL database output
+    syntax: az stream-analytics output create --job-name "sj6458" --datasource "{\"type\":\"Microsoft.Sql/Server/Database\",\"properties\":{\"database\":\"someDatabase\",\"password\":\"somePassword\",\"server\":\"someServer\",\"table\":\"someTable\",\"user\":\"<user>\"}}" --output-name "output1755" --resource-group "sjrg2157"
+  - summary: Create an Azure Table output
+    syntax: az stream-analytics output create --job-name "sj2790" --datasource "{\"type\":\"Microsoft.Storage/Table\",\"properties\":{\"accountKey\":\"accountKey==\",\"accountName\":\"someAccountName\",\"batchSize\":25,\"columnsToRemove\":[\"column1\",\"column2\"],\"partitionKey\":\"partitionKey\",\"rowKey\":\"rowKey\",\"table\":\"samples\"}}" --output-name "output958" --resource-group "sjrg5176"
+  - summary: Create an Event Hub output with JSON serialization
+    syntax: az stream-analytics output create --job-name "sj3310" --datasource "{\"type\":\"Microsoft.ServiceBus/EventHub\",\"properties\":{\"eventHubName\":\"sdkeventhub\",\"partitionKey\":\"partitionKey\",\"serviceBusNamespace\":\"sdktest\",\"sharedAccessPolicyKey\":\"sharedAccessPolicyKey=\",\"sharedAccessPolicyName\":\"RootManageSharedAccessKey\"}}" --serialization "{\"type\":\"Json\",\"properties\":{\"format\":\"Array\",\"encoding\":\"UTF8\"}}" --output-name "output5195" --resource-group "sjrg6912"
   requiredParameters:
-  - isRequired: true
-    name: --datasource
-    summary: The datasource of the output.
-    description: ''
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --output-name -n
     summary: The name of the output.
     description: ''
   - isRequired: true
@@ -183,8 +55,23 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --datasource
+    summary: 'Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --if-match
+    summary: The ETag of the output. Omit this value to always overwrite the current output. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    description: ''
+  - name: --if-none-match
+    summary: Set to '\*' to allow a new output to be created, but to prevent updating an existing output. Other values will result in a 412 Pre-condition Failed response.
+    description: ''
   - name: --serialization
-    summary: The serialization of the output.
+    summary: 'Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --size-window
+    summary: The size window to constrain a Stream Analytics output to.
+    description: ''
+  - name: --time-window
+    summary: The time frame for filtering Stream Analytics job outputs.
     description: ''
 - uid: az_stream-analytics_output_delete
   name: az stream-analytics output delete
@@ -194,24 +81,26 @@ directCommands:
     az stream-analytics output delete --job-name
                                       --name
                                       --resource-group
+                                      [--yes]
   examples:
   - summary: Delete an output
-    syntax: >-
-      az stream-analytics output delete --resource-group MyResourceGroup --job-name MyJobName --name \
-
-      MyOutputName
+    syntax: az stream-analytics output delete --job-name "sj6458" --name "output1755" --resource-group "sjrg2157"
   requiredParameters:
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --output-name -n
     summary: The name of the output.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_stream-analytics_output_list
   name: az stream-analytics output list
@@ -220,9 +109,10 @@ directCommands:
   syntax: >-
     az stream-analytics output list --job-name
                                     --resource-group
+                                    [--select]
   examples:
   - summary: List all outputs in a streaming job
-    syntax: az stream-analytics output list --resource-group MyResourceGroup --job-name MyJobName
+    syntax: az stream-analytics output list --job-name "sj6458" --resource-group "sjrg2157"
   requiredParameters:
   - isRequired: true
     name: --job-name
@@ -231,6 +121,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --select
+    summary: The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "\*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '\*' as a valid value.
     description: ''
 - uid: az_stream-analytics_output_show
   name: az stream-analytics output show
@@ -241,18 +135,33 @@ directCommands:
                                     --name
                                     --resource-group
   examples:
-  - summary: Get details about an output
-    syntax: >-
-      az stream-analytics output show --resource-group MyResourceGroup --job-name MyJobName --name \
-
-      MyOutputName
+  - summary: Get a DocumentDB output
+    syntax: az stream-analytics output show --job-name "sj2331" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Get a Power BI output
+    syntax: az stream-analytics output show --job-name "sj2331" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Get a Service Bus Queue output with Avro serialization
+    syntax: az stream-analytics output show --job-name "sj5095" --output-name "output3456" --resource-group "sjrg3410"
+  - summary: Get a Service Bus Topic output with CSV serialization
+    syntax: az stream-analytics output show --job-name "sj7094" --output-name "output7886" --resource-group "sjrg6450"
+  - summary: Get a blob output with CSV serialization
+    syntax: az stream-analytics output show --job-name "sj900" --output-name "output1623" --resource-group "sjrg5023"
+  - summary: Get an Azure Data Lake Store output with JSON serialization
+    syntax: az stream-analytics output show --job-name "sj3310" --output-name "output5195" --resource-group "sjrg6912"
+  - summary: Get an Azure Data Warehouse output
+    syntax: az stream-analytics output show --job-name "sjName" --output-name "output958" --resource-group "sjrg"
+  - summary: Get an Azure SQL database output
+    syntax: az stream-analytics output show --job-name "sj6458" --output-name "output1755" --resource-group "sjrg2157"
+  - summary: Get an Azure Table output
+    syntax: az stream-analytics output show --job-name "sj2790" --output-name "output958" --resource-group "sjrg5176"
+  - summary: Get an Event Hub output with JSON serialization
+    syntax: az stream-analytics output show --job-name "sj3310" --output-name "output5195" --resource-group "sjrg6912"
   requiredParameters:
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --output-name -n
     summary: The name of the output.
     description: ''
   - isRequired: true
@@ -261,26 +170,27 @@ directCommands:
     description: ''
 - uid: az_stream-analytics_output_test
   name: az stream-analytics output test
-  summary: Test an output.
+  summary: Test whether an output’s datasource is reachable and usable by the Azure Stream Analytics service.
   description: ''
   syntax: >-
     az stream-analytics output test --job-name
                                     --name
                                     --resource-group
+                                    [--datasource]
                                     [--no-wait]
+                                    [--serialization]
+                                    [--size-window]
+                                    [--time-window]
   examples:
   - summary: Test the connection for an output
-    syntax: >-
-      az stream-analytics output test --resource-group MyResourceGroup --job-name MyJobName --name \
-
-      MyOutputName
+    syntax: az stream-analytics output test --job-name "sj6458" --output-name "output1755" --resource-group "sjrg2157"
   requiredParameters:
   - isRequired: true
     name: --job-name
     summary: The name of the streaming job.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --output-name -n
     summary: The name of the output.
     description: ''
   - isRequired: true
@@ -288,8 +198,136 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --datasource
+    summary: 'Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --serialization
+    summary: 'Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --size-window
+    summary: The size window to constrain a Stream Analytics output to.
+    description: ''
+  - name: --time-window
+    summary: The time frame for filtering Stream Analytics job outputs.
+    description: ''
+- uid: az_stream-analytics_output_update
+  name: az stream-analytics output update
+  summary: Update an existing output under an existing streaming job. This can be used to partially update (ie. update one or two properties) an output without affecting the rest the job or output definition.
+  description: ''
+  syntax: >-
+    az stream-analytics output update --job-name
+                                      --name
+                                      --resource-group
+                                      [--datasource]
+                                      [--if-match]
+                                      [--serialization]
+                                      [--size-window]
+                                      [--time-window]
+  examples:
+  - summary: Update a DocumentDB output
+    syntax: az stream-analytics output update --job-name "sj2331" --datasource "{\"type\":\"Microsoft.Storage/DocumentDB\",\"properties\":{\"partitionKey\":\"differentPartitionKey\"}}" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Update a Power BI output
+    syntax: az stream-analytics output update --job-name "sj2331" --datasource "{\"type\":\"PowerBI\",\"properties\":{\"dataset\":\"differentDataset\"}}" --output-name "output3022" --resource-group "sjrg7983"
+  - summary: Update a Service Bus Queue output with Avro serialization
+    syntax: az stream-analytics output update --job-name "sj5095" --datasource "{\"type\":\"Microsoft.ServiceBus/Queue\",\"properties\":{\"queueName\":\"differentQueueName\"}}" --serialization "{\"type\":\"Json\",\"properties\":{\"format\":\"LineSeparated\",\"encoding\":\"UTF8\"}}" --output-name "output3456" --resource-group "sjrg3410"
+  - summary: Update a Service Bus Topic output with CSV serialization
+    syntax: az stream-analytics output update --job-name "sj7094" --datasource "{\"type\":\"Microsoft.ServiceBus/Topic\",\"properties\":{\"topicName\":\"differentTopicName\"}}" --serialization "{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\"|\"}}" --output-name "output7886" --resource-group "sjrg6450"
+  - summary: Update a blob output with CSV serialization
+    syntax: az stream-analytics output update --job-name "sj900" --datasource "{\"type\":\"Microsoft.Storage/Blob\",\"properties\":{\"container\":\"differentContainer\"}}" --serialization "{\"type\":\"Csv\",\"properties\":{\"encoding\":\"UTF8\",\"fieldDelimiter\":\"|\"}}" --output-name "output1623" --resource-group "sjrg5023"
+  - summary: Update an Azure Data Lake Store output with JSON serialization
+    syntax: az stream-analytics output update --job-name "sj3310" --datasource "{\"type\":\"Microsoft.DataLake/Accounts\",\"properties\":{\"accountName\":\"differentaccount\"}}" --serialization "{\"type\":\"Json\",\"properties\":{\"format\":\"LineSeparated\",\"encoding\":\"UTF8\"}}" --output-name "output5195" --resource-group "sjrg6912"
+  - summary: Update an Azure SQL database output
+    syntax: az stream-analytics output update --job-name "sj6458" --datasource "{\"type\":\"Microsoft.Sql/Server/Database\",\"properties\":{\"table\":\"differentTable\"}}" --output-name "output1755" --resource-group "sjrg2157"
+  - summary: Update an Azure Table output
+    syntax: az stream-analytics output update --job-name "sj2790" --datasource "{\"type\":\"Microsoft.Storage/Table\",\"properties\":{\"partitionKey\":\"differentPartitionKey\"}}" --output-name "output958" --resource-group "sjrg5176"
+  - summary: Update an Event Hub output with JSON serialization
+    syntax: az stream-analytics output update --job-name "sj3310" --datasource "{\"type\":\"Microsoft.ServiceBus/EventHub\",\"properties\":{\"partitionKey\":\"differentPartitionKey\"}}" --serialization "{\"type\":\"Json\",\"properties\":{\"format\":\"LineSeparated\",\"encoding\":\"UTF8\"}}" --output-name "output5195" --resource-group "sjrg6912"
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name --output-name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --datasource
+    summary: 'Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --if-match
+    summary: The ETag of the output. Omit this value to always overwrite the current output. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    description: ''
+  - name: --serialization
+    summary: 'Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests. Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --size-window
+    summary: The size window to constrain a Stream Analytics output to.
+    description: ''
+  - name: --time-window
+    summary: The time frame for filtering Stream Analytics job outputs.
+    description: ''
+- uid: az_stream-analytics_output_wait
+  name: az stream-analytics output wait
+  summary: Place the CLI in a waiting state until a condition of the stream-analytics output is met.
+  description: ''
+  syntax: >-
+    az stream-analytics output wait --job-name
+                                    --name
+                                    --resource-group
+                                    [--created]
+                                    [--custom]
+                                    [--deleted]
+                                    [--exists]
+                                    [--interval]
+                                    [--timeout]
+                                    [--updated]
+  examples:
+  - summary: Pause executing next line of CLI script until the stream-analytics output is successfully created.
+    syntax: az stream-analytics output wait --job-name "sj3310" --output-name "output5195" --resource-group "sjrg6912" --created
+  requiredParameters:
+  - isRequired: true
+    name: --job-name
+    summary: The name of the streaming job.
+    description: ''
+  - isRequired: true
+    name: --name --output-name -n
+    summary: The name of the output.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
 - az_stream-analytics_output_create
@@ -297,6 +335,8 @@ commands:
 - az_stream-analytics_output_list
 - az_stream-analytics_output_show
 - az_stream-analytics_output_test
+- az_stream-analytics_output_update
+- az_stream-analytics_output_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -313,4 +353,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage stream-analytics output.
+  description: Manage output with stream analytics.

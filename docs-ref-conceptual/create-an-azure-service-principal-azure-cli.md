@@ -28,7 +28,7 @@ tools rather than allowing them to log in with a user identity.
 
 This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
 
-## Create a service principal
+## 1. Create a service principal
 
 Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command. 
 
@@ -59,7 +59,7 @@ Without any authentication parameters, password-based authentication is used wit
 > As of Azure CLI 2.0.68, the `--password` parameter to create a service principal with a user-defined password
 > is __no longer supported__ to prevent the accidental use of weak passwords.
 
-The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#reset-credentials).
+The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#6-reset-credentials).
 
 ### Certificate-based authentication
 
@@ -128,7 +128,7 @@ az ad sp create-for-rbac --name ServicePrincipalName --role Contributor --create
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-If you lose access to a certificate's private key, [reset the service principal credentials](#reset-credentials).
+If you lose access to a certificate's private key, [reset the service principal credentials](#6-reset-credentials).
 
 #### Retrieve certificate from Key Vault
 
@@ -139,7 +139,7 @@ az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --na
 openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 ```
 
-## Get an existing service principal
+## 2. Get an existing service principal
 
 A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list). By default this
 command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` argument. Getting this list can take a long time, so it's
@@ -163,9 +163,9 @@ az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 >
 > `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az_ad_sp_show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
 > Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show), but no other secrets are stored by default.
-> If you forget an authentication method or secret, [reset the service principal credentials](#reset-credentials).
+> If you forget an authentication method or secret, [reset the service principal credentials](#6-reset-credentials).
 
-## Manage service principal roles
+## 3. Manage service principal roles
 
 The Azure CLI has the following commands to manage role assignments:
 
@@ -194,7 +194,7 @@ The changes can be verified by listing the assigned roles:
 az role assignment list --assignee APP_ID
 ```
 
-## Sign in using a service principal
+## 4. Sign in using a service principal
 
 Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
 
@@ -212,7 +212,7 @@ az login --service-principal --username APP_ID --tenant TENANT_ID --password /pa
 
 To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
 
-## Create a resource using service principal
+## 5. Create a resource using service principal
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
@@ -221,7 +221,7 @@ The following section provides an example of how to create an resource for [Azur
 * [az storage account create](/cli/azure/storage/account#az_storage_account_create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
 
-To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#sign-in-using-a-service-principal).
+To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
 
 1. Log in as the service principal.
 
@@ -255,7 +255,7 @@ To sign in with a service principal, you need the `appId`, `tenant`, and `passwo
     az storage account keys list --name MY_RESOURCE_<SERVICENAME> --resource-group MY_RESOURCE_GROUP
     ```
 
-## Reset credentials
+## 6. Reset credentials
 
 If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az_ad_sp_credential_reset). The reset command takes the same arguments
 as `az ad sp create-for-rbac`.
