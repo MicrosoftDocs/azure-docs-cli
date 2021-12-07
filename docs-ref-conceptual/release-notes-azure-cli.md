@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/02/2021
+ms.date: 12/07/2021
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli

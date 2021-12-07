@@ -32,9 +32,11 @@ directCommands:
       az policy assignment create --policy {PolicyName} -p "{ \"allowedLocations\": \
           { \"value\": [ \"australiaeast\", \"eastus\", \"japaneast\" ] } }"
   - summary: Create a resource policy assignment with a system assigned identity.
-    syntax: az policy assignment create --name myPolicy --policy {PolicyName} --assign-identity
+    syntax: az policy assignment create --name myPolicy --policy {PolicyName} --mi-system-assigned --location eastus
   - summary: Create a resource policy assignment with a system assigned identity. The identity will have 'Contributor' role access to the subscription.
-    syntax: az policy assignment create --name myPolicy --policy {PolicyName} --assign-identity --identity-scope /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --role Contributor
+    syntax: az policy assignment create --name myPolicy --policy {PolicyName} --mi-system-assigned --identity-scope /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --role Contributor --location eastus
+  - summary: Create a resource policy assignment with a user assigned identity.
+    syntax: az policy assignment create --name myPolicy --policy {PolicyName} -g MyResourceGroup --mi-user-assigned myAssignedId --location westus
   - summary: Create a resource policy assignment with an enforcement mode. It indicates whether a policy effect will be enforced or not during assignment creation and update. Please visit https://aka.ms/azure-policyAssignment-enforcement-mode for more information.
     syntax: az policy assignment create --name myPolicy --policy {PolicyName} --enforcement-mode 'DoNotEnforce'
   optionalParameters:
@@ -185,5 +187,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/20/2021
+  ms.date: 11/24/2021
   description: Manage resource policy assignments.

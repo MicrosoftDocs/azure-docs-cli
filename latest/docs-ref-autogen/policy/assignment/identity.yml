@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_policy_assignment_identity_assign
   name: az policy assignment identity assign
-  summary: Add a system assigned identity to a policy assignment.
+  summary: Add a system assigned identity or a user assigned identity to a policy assignment.
   description: ''
   syntax: >-
     az policy assignment identity assign --name
@@ -14,11 +14,15 @@ directCommands:
                                          [--resource-group]
                                          [--role]
                                          [--scope]
+                                         [--system-assigned]
+                                         [--user-assigned]
   examples:
   - summary: Add a system assigned managed identity to a policy assignment.
-    syntax: az policy assignment identity assign -g MyResourceGroup -n MyPolicyAssignment
+    syntax: az policy assignment identity assign --system-assigned -g MyResourceGroup -n MyPolicyAssignment
   - summary: Add a system assigned managed identity to a policy assignment and grant it the 'Contributor' role for the current resource group.
-    syntax: az policy assignment identity assign -g MyResourceGroup -n MyPolicyAssignment --role Contributor --identity-scope /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/MyResourceGroup
+    syntax: az policy assignment identity assign --system-assigned -g MyResourceGroup -n MyPolicyAssignment --role Contributor --identity-scope /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/MyResourceGroup
+  - summary: Add a user assigned managed identity to a policy assignment.
+    syntax: az policy assignment identity assign --user-assigned MyAssignedId -g MyResourceGroup -n MyPolicyAssignment
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -37,6 +41,12 @@ directCommands:
     description: ''
   - name: --scope
     summary: Scope to which this policy assignment applies.
+    description: ''
+  - name: --system-assigned
+    summary: Provide this flag to use system assigned identity for policy assignment. Check out help for more examples.
+    description: ''
+  - name: --user-assigned
+    summary: UserAssigned Identity Id to be used for policy assignment. Check out help for more examples.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_policy_assignment_identity_remove
@@ -109,5 +119,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/20/2021
+  ms.date: 11/24/2021
   description: Manage a policy assignment's managed identity.
