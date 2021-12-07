@@ -30,8 +30,10 @@ directCommands:
                           [--runtime {custom, dotnet, dotnet-isolated, java, node, powershell, python}]
                           [--runtime-version]
                           [--scope]
+                          [--subnet]
                           [--subscription]
                           [--tags]
+                          [--vnet]
   examples:
   - summary: Create a basic function app.
     syntax: az functionapp create -g MyResourceGroup  -p MyPlan -n MyUniqueAppName -s MyStorageAccount
@@ -66,7 +68,7 @@ directCommands:
     summary: Geographic location where function app will be hosted. Use `az functionapp list-consumption-locations` to view available locations.
     description: ''
   - name: --deployment-container-image-name -i
-    summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
+    summary: Container image name from Docker Hub, e.g. publisher/image-name:tag.
     description: ''
   - name: --deployment-local-git -l
     summary: Enable local git.
@@ -113,11 +115,17 @@ directCommands:
   - name: --scope
     summary: Scope that the system assigned identity can access.
     description: ''
+  - name: --subnet
+    summary: Name or resource ID of the pre-existing subnet to have the webapp join. The --vnet is argument also needed if specifying subnet by name.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --vnet
+    summary: Name or resource ID of the regional virtual network. If there are multiple vnets of the same name across different resource groups, use vnet resource id to specify which vnet to use. If vnet name is used, by default, the vnet in the same resource group as the webapp will be used. Must be used with --subnet argument.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_functionapp_delete
@@ -559,5 +567,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/28/2021
+  ms.date: 11/30/2021
   description: Manage function apps. To install the Azure Functions Core tools see https://github.com/Azure/azure-functions-core-tools.

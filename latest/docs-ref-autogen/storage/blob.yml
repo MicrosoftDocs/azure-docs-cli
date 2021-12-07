@@ -588,7 +588,7 @@ directCommands:
     summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
     description: ''
   - name: --include
-    summary: 'Specify one or more additional datasets to include in the response. Options include: (c)opy, (d)eleted, (m)etadata, (s)napshots, (v)ersions, (t)ags. Can be combined.'
+    summary: 'Specify one or more additional datasets to include in the response. Options include: (c)opy, (d)eleted, (m)etadata, (s)napshots, (v)ersions, (t)ags, (i)mmutabilitypolicy, (l)egalhold, (d)eletedwithversions. Can be combined.'
     description: ''
   - name: --marker
     summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
@@ -832,15 +832,15 @@ directCommands:
   summary: Set blob legal hold.
   description: ''
   syntax: >-
-    az storage blob set-legal-hold --legal-hold {false, true}
+    az storage blob set-legal-hold --container-name
+                                   --legal-hold {false, true}
+                                   --name
                                    [--account-key]
                                    [--account-name]
                                    [--auth-mode {key, login}]
-                                   [--blob-url]
                                    [--connection-string]
-                                   [--container-name]
-                                   [--name]
                                    [--sas-token]
+                                   [--subscription]
                                    [--timeout]
   examples:
   - summary: Configure blob legal hold.
@@ -849,9 +849,17 @@ directCommands:
     syntax: az storage blob set-legal-hold --legal-hold false -c mycontainer -n myblob --account-name mystorageaccount --account-key 0000-0000
   requiredParameters:
   - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
     name: --legal-hold
     parameterValueGroup: false, true
     summary: Specified if a legal hold should be set on the blob.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   optionalParameters:
   - name: --account-key
@@ -864,24 +872,19 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --blob-url
-    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
-    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --container-name -c
-    summary: The container name.
-    description: ''
-  - name: --name -n
-    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_set-tier
   name: az storage blob set-tier
   summary: Set the block or page tiers on the blob.
@@ -1736,5 +1739,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/23/2021
+  ms.date: 11/08/2021
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

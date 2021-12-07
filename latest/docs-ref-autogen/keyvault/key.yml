@@ -25,7 +25,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -34,7 +34,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_create
@@ -42,7 +42,7 @@ directCommands:
   summary: Create a new key, stores it, then returns key parameters and attributes to the client.
   description: The create key operation can be used to create any key type in Vault or HSM. If the named key already exists, Vault or HSM creates a new version of the key. It requires the keys/create permission.
   syntax: >-
-    az keyvault key create [--curve]
+    az keyvault key create [--curve {P-256, P-256K, P-384, P-521}]
                            [--disabled {false, true}]
                            [--expires]
                            [--exportable {false, true}]
@@ -60,6 +60,7 @@ directCommands:
                            [--vault-name]
   optionalParameters:
   - name: --curve
+    parameterValueGroup: P-256, P-256K, P-384, P-521
     summary: 'Elliptic curve name. For valid values, see: https://docs.microsoft.com/rest/api/keyvault/createkey/createkey#jsonwebkeycurvename.'
     description: ''
   - name: --disabled
@@ -84,7 +85,7 @@ directCommands:
     summary: 'The type of key to create. For valid values, see: https://docs.microsoft.com/rest/api/keyvault/createkey/createkey#jsonwebkeytype.'
     description: ''
   - name: --name -n
-    summary: Name of the key.
+    summary: Name of the key. Required if --id is not specified.
     description: ''
   - name: --not-before
     summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
@@ -118,19 +119,30 @@ directCommands:
   summary: Decrypt a single block of encrypted data.
   description: The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT operation applies to asymmetric and symmetric keys stored in Vault or HSM since it uses the private portion of the key. This operation requires the keys/decrypt permission.
   syntax: >-
-    az keyvault key decrypt --algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}
+    az keyvault key decrypt --algorithm {A128CBC, A128CBCPAD, A128GCM, A192CBC, A192CBCPAD, A192GCM, A256CBC, A256CBCPAD, A256GCM, RSA-OAEP, RSA-OAEP-256, RSA1_5}
                             --value
+                            [--aad]
                             [--data-type {base64, plaintext}]
                             [--hsm-name]
                             [--id]
+                            [--iv]
                             [--name]
                             [--subscription]
+                            [--tag]
                             [--vault-name]
                             [--version]
+  examples:
+  - summary: Decrypt value(Base64 encoded string returned by encrypt command) with valut's key using RSA-OAEP and get result as base64 encoded.
+    syntax: az keyvault key decrypt --name mykey --vault-name myvault --algorithm RSA-OAEP --data-type base64 --value "CbFcCxHG7WTU+nbpFRrHoqSduwlPy8xpWxf1JxZ2y12BY/qFJirMSYq1i4SO9rvSmvmEMxFV5kw5s9Tc+YoKmv8X6oe+xXx+JytYV8obA5l3OQD9epuuQHWW0kir/mp88lzhcYWxYuF7mKDpPKDV4if+wnAZqQ4woB6t2JEZU5MVK3s+3E/EU4ehb5XrVxAl6xpYy8VYbyF33uJ5s+aUsYIrsVtXgrW99HQ3ic7tJtIOGuWqKhPCdQRezRkOcyxkJcmnDHOLjWA/9strzzx/dyg/t884gT7qrkmIHh8if9SFal/vi1h4XhoDqUleMTnKev2IFHyDNcYVYG3pftJiuA=="
+  - summary: Decrypt value(Base64 encoded string returned by encrypt command) with MHSM's key using AES-GCM and get result as plaintext.
+    syntax: >-
+      az keyvault key decrypt --name mykey --hsm-name myhsm --algorithm A256GCM --value "N5w02jS77xg536Ddzv/xPWQ=" --data-type plaintext
+
+      --aad "101112131415161718191a1b1c1d1e1f" --iv "727b26f78e55cf4cd8d34216" --tag "f7207d02cead35a77a1c7e5f8af959e9"
   requiredParameters:
   - isRequired: true
     name: --algorithm -a
-    parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
+    parameterValueGroup: A128CBC, A128CBCPAD, A128GCM, A192CBC, A192CBCPAD, A192GCM, A256CBC, A256CBCPAD, A256GCM, RSA-OAEP, RSA-OAEP-256, RSA1_5
     summary: Algorithm identifier.
     description: ''
   - isRequired: true
@@ -138,6 +150,9 @@ directCommands:
     summary: The value to be decrypted, which should be the result of "az keyvault encrypt".
     description: ''
   optionalParameters:
+  - name: --aad
+    summary: Optional data that is authenticated but not encrypted. For use with AES-GCM decryption.
+    description: ''
   - name: --data-type
     defaultValue: base64
     parameterValueGroup: base64, plaintext
@@ -149,14 +164,20 @@ directCommands:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
+  - name: --iv
+    summary: The initialization vector used during encryption. Required for AES decryption.
+    description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --tag
+    summary: The authentication tag generated during encryption. Required for only AES-GCM decryption.
+    description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
@@ -186,7 +207,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_download
@@ -222,7 +243,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
@@ -231,7 +252,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
@@ -242,19 +263,26 @@ directCommands:
   summary: Encrypt an arbitrary sequence of bytes using an encryption key that is stored in a Vault or HSM.
   description: The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Vault or HSM. Note that the ENCRYPT operation only supports a single block of data, the size of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly necessary for symmetric keys stored in Vault pr HSM since protection with an asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/encrypt permission.
   syntax: >-
-    az keyvault key encrypt --algorithm {RSA-OAEP, RSA-OAEP-256, RSA1_5}
+    az keyvault key encrypt --algorithm {A128CBC, A128CBCPAD, A128GCM, A192CBC, A192CBCPAD, A192GCM, A256CBC, A256CBCPAD, A256GCM, RSA-OAEP, RSA-OAEP-256, RSA1_5}
                             --value
+                            [--aad]
                             [--data-type {base64, plaintext}]
                             [--hsm-name]
                             [--id]
+                            [--iv]
                             [--name]
                             [--subscription]
                             [--vault-name]
                             [--version]
+  examples:
+  - summary: Encrypt value(Base64 encoded string) with valut's key using RSA-OAEP.
+    syntax: az keyvault key encrypt --name mykey --vault-name myvault --algorithm RSA-OAEP --value "YWJjZGVm" --data-type base64
+  - summary: Encrypt value(plaintext) with MHSM's key using AES-GCM.
+    syntax: az keyvault key encrypt --name mykey --hsm-name myhsm --algorithm A256GCM --value "this is plaintext" --data-type plaintext --aad "101112131415161718191a1b1c1d1e1f"
   requiredParameters:
   - isRequired: true
     name: --algorithm -a
-    parameterValueGroup: RSA-OAEP, RSA-OAEP-256, RSA1_5
+    parameterValueGroup: A128CBC, A128CBCPAD, A128GCM, A192CBC, A192CBCPAD, A192GCM, A256CBC, A256CBCPAD, A256GCM, RSA-OAEP, RSA-OAEP-256, RSA1_5
     summary: Algorithm identifier.
     description: ''
   - isRequired: true
@@ -262,6 +290,9 @@ directCommands:
     summary: The value to be encrypted. Default data type is Base64 encoded string.
     description: ''
   optionalParameters:
+  - name: --aad
+    summary: Optional data that is authenticated but not encrypted. For use with AES-GCM encryption.
+    description: ''
   - name: --data-type
     defaultValue: base64
     parameterValueGroup: base64, plaintext
@@ -273,6 +304,9 @@ directCommands:
   - name: --id
     summary: Id of the key. If specified all other 'Id' arguments should be omitted.
     description: ''
+  - name: --iv
+    summary: Initialization vector. Required for only AES-CBC(PAD) encryption.
+    description: ''
   - name: --name -n
     summary: Name of the key. Required if --id is not specified.
     description: ''
@@ -280,7 +314,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
@@ -303,7 +337,7 @@ directCommands:
   syntax: >-
     az keyvault key import [--byok-file]
                            [--byok-string]
-                           [--curve]
+                           [--curve {P-256, P-256K, P-384, P-521}]
                            [--disabled {false, true}]
                            [--expires]
                            [--exportable {false, true}]
@@ -329,6 +363,7 @@ directCommands:
     summary: BYOK string containing the key to be imported. Must not be password protected.
     description: ''
   - name: --curve
+    parameterValueGroup: P-256, P-256K, P-384, P-521
     summary: The curve name of the key to import (only for BYOK).
     description: ''
   - name: --disabled
@@ -354,7 +389,7 @@ directCommands:
     summary: The type of key to import (only for BYOK).
     description: ''
   - name: --name -n
-    summary: Name of the key.
+    summary: Name of the key. Required if --id is not specified.
     description: ''
   - name: --not-before
     summary: Key not usable before the provided UTC datetime  (Y-m-d'T'H:M:S'Z').
@@ -406,7 +441,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --include-managed
     parameterValueGroup: false, true
@@ -440,7 +475,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --maxresults
     summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
@@ -480,7 +515,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_purge
@@ -507,7 +542,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_random
@@ -529,7 +564,7 @@ directCommands:
     summary: Name of the HSM.
     description: ''
   - name: --id
-    summary: Id of the HSM.
+    summary: Full URI of the HSM.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -559,7 +594,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_key_restore
@@ -593,7 +628,7 @@ directCommands:
     summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
     description: ''
   - name: --id
-    summary: Id of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --name -n
     summary: Name of the key. (Only for restoring from storage account).
@@ -695,7 +730,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
@@ -730,7 +765,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Key Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
@@ -760,7 +795,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name
-    summary: Name of the Vault. Required if --id is not specified.
+    summary: Name of the Vault.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 commands:
@@ -803,5 +838,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2021
+  ms.date: 11/30/2021
   description: Manage keys.
