@@ -8,7 +8,7 @@ manager: barbkess
 ms.devlang: azure-cli
 ms.topic: tutorial
 ms.prod: azure
-ms.technology: azurecli
+ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vm, virtual machine in azure cli
 ---

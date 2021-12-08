@@ -1,6 +1,6 @@
 ---
 title: Create virtual machines prerequisites (VM) – Azure CLI | Microsoft Docs
-description: Learn how to create virtual machines (VM) with the Azure CLI by completing this tutorial through Azure Cloud Shell or by installing the CLI locally.
+description: Prerequisites for creating a virtual machines (VM) with the Azure CLI.
 ms.date: 07/09/2018
 ms.author: dbradish
 author: dbradish-microsoft
@@ -8,7 +8,7 @@ manager: barbkess
 ms.devlang: azure-cli
 ms.topic: tutorial
 ms.prod: azure
-ms.technology: azurecli
+ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vm, virtual machine in azure cli
 ---
