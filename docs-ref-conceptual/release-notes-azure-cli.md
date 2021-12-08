@@ -14,7 +14,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
-## December 14, 2021
+## December 7, 2021
 
 Version 2.31.0
 
