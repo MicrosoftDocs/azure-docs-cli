@@ -23,8 +23,7 @@ az vm show --name TutorialVM1 --resource-group TutorialResources
 ```
 
 You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
-and more. Most importantly,
-it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
+and more. Most importantly, it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
 to get more information about the VM's configuration and capabilities.
 
 In order to extract the object ID we want, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org)Start
@@ -46,6 +45,8 @@ There's a lot going on here, just by adding the query. Each part of it reference
 
 The output format `tsv` (tab-separated values) is guaranteed to only include the result data and whitespace consisting of tabs and newlines.
 Since the returned value is a single bare string, it's safe to assign directly to an environment variable.
+
+For more information about querying Azure CLI output see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
 
 Go ahead and assign the NIC object ID to an environment variable now.
 

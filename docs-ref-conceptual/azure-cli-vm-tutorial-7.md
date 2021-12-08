@@ -21,7 +21,7 @@ to capture data to be stored in shell variables, and looked at some of the resou
 Where you go from here depends on what you plan to use the CLI for. There are a variety of materials that go further
 in depth on the features covered in this tutorial.
 
-### Samples
+## Samples
 
 If you want to get started right away with specific tasks, look at some sample scripts.
 
@@ -29,26 +29,26 @@ If you want to get started right away with specific tasks, look at some sample s
 * Working with [webapps](/azure/app-service/app-service-cli-samples?toc=%2Fcli%2Fazure%2Ftoc.json) and [Azure Functions](/azure/azure-functionfunctions-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
 * Working with databases - [Azure SQL databases](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json), [PostgreSQL](/azurpostgresql/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), [MySQL](/azure/mysql/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), an[CosmosDB](/azure/cosmos-db/cli-samples?toc=%2fcli%2fazure%2ftoc.json).
 
-### In-depth CLI documentation
-
-There are also topics that go deeper into the CLI features that were shown in the tutorial.
-
-* Learn more about [output formats](format-output-azure-cli.md)
-* Learn more about [output queries](query-azure-cli.md)
-* Learn more about [authorization in Azure](authenticate-azure-cli.md)
-
-### Other useful documentation
-
-You might want to take time to explore more advanced features of the CLI, like
-  [configuring defaults](azure-cli-configuration.md) or [extensions](azure-cli-extensions-overview.md).
-
-### Feedback
+## Get support
 
 If you'd like to give feedback, suggestions, or ask questions about the CLI, there are a number of
 ways for you to get in touch.
 
 * `az feedback` is a built-in command for the CLI that allows providing free-form feedback to the team.
+* For personalized support see [Create an Azure support ticket in Azure CLI](azure-cli-support-request.md)
 * File a feature request or a bug report with the CLI in the [Azure CLI repository](https://github.com/Azure/azure-cli).
 * Ask a question or get clarification by filing an issue in the [Azure CLI documentation repository](https://github.com/MicrosoftDocs/azure-docs-clissues).
 
-We hope that you enjoy using the Azure CLI!
+## See also
+
+For more information on the CLI features that were shown in the tutorial see:
+
+* [Output formats for Azure CLI commands](format-output-azure-cli.md)
+* [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
+* [Sign in with Azure CLI](authenticate-azure-cli.md)
+
+For more information on virtual machines see:
+
+* [Linux virtual machines in Azure](/azure/virtual-machines/linux/overview)
+* [Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks)
+* [Bringing and creating Linux images in Azure](/azure/virtual-machines/linux/imaging)

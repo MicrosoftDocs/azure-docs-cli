@@ -15,8 +15,8 @@ keywords: azure cli create vm, virtual machine in azure cli
 
 # 1- Overview and Prerequisites
 
-In this tutorial, you learn all of the steps involved in creating a virtual machine with the Azure CLI. The tutorial
-also covers output queries, Azure resource reuse, and resource cleanup.
+In this tutorial, you'll learn how to create a virtual machine with the Azure CLI. This tutorial
+also covers Azure CLI specific concepts such as persisted parameters, output queries, and shell variables.
 
 This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
 locally.
@@ -32,6 +32,16 @@ Use __ctrl-shift-v__ (__cmd-shift-v__ on macOS) to paste tutorial text into Azur
     ```
 
     Complete the authentication process by following the steps displayed in your terminal.
+
+## Turn on persisted parameters
+
+Persisted parameters store parameter values for future use, so you can drop repeated parameter values between sequential commands. Use the [az config param-persist on](/cli/azure/config/param-persist#az_config_param_persist_on) command to enable persisted parameters.
+
+```azurecli
+az config param-persist on
+ ```
+
+For more information on persisted parameters see [Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial?tabs=azure-cli).
 
 ## Create a resource group
 
