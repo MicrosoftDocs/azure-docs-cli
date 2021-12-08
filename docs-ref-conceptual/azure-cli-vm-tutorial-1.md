@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vm, virtual machine in azure cli
 ---
 
-# 1- Overview and Prerequisites
+# 1 - Overview and Prerequisites
 
 In this tutorial, you'll learn how to create a virtual machine with the Azure CLI. This tutorial
 also covers Azure CLI specific concepts such as persisted parameters, output queries, and shell variables.
