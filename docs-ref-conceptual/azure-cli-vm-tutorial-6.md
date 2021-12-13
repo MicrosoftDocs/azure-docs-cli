@@ -20,7 +20,7 @@ can delete individual resources with the `delete` command, but the safest way to
 in a resource group is with `group delete`.
 
 ```azurecli-interactive
-az group delete --name $resource_group --no-wait
+az group delete --name $resourceGroup --no-wait
 ```
 
 This command deletes the resources created during the tutorial, and is guaranteed to deallocate
@@ -28,7 +28,7 @@ them in the correct order. The `--no-wait` parameter keeps the CLI from blocking
 deletion takes place. If you want to wait until the deletion is complete or watch it progress, use the `group wait` command.
 
 ```azurecli-interactive
-az group wait --name $resource_group --deleted
+az group wait --name $resourceGroup --deleted
 ```
 
 With cleanup completed, the tutorial is finished. Continue on for a summary of everything

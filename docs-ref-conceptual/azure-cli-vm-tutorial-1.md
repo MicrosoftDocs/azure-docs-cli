@@ -35,11 +35,9 @@ In Azure, all resources are allocated in a resource management group. Resource g
 that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
 ```azurecli
-# shell variable for resource group name
-resource_group=VMTutorialResources
-
-# shell variable for resource location
+# create shell variables
+resourceGroup=VMTutorialResources
 location=eastus
 
-az group create --name $resource_group --location $location
+az group create --name $resourceGroup --location $location
  ```

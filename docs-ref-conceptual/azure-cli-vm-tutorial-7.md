@@ -15,7 +15,7 @@ keywords: more information about azure cli and vm, virtual machine in azure cli
 
 # 7 - Summary
 
-Congratulations! You learned how to create VMs with new or existing resources, used the `--query` and `--output` arguments
+Congratulations! You learned how to create a VM that's connected to a VNet, used the `--query` and `--output` arguments
 to capture data to be stored in shell variables, and looked at some of the resources that get created for Azure VMs.
 
 Where you go from here depends on what you plan to use the CLI for. There are a variety of materials that go further

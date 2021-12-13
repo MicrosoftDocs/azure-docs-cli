@@ -22,22 +22,16 @@ Subnets allow you to segment the VNet address space into sub-networks for organi
 Use the [az network vnet create](/cli/azure/network/vnet#az_network_vnet_create) command to create a virtual network named `TutorialVNet1` with address prefix of 10.0.0.0/16 and a subnet named `TutorialSubnet1` with address prefix of 10.0.0.0/24.
 
 ```azurecli-interactive
-# shell variable for VNet name
-VNet=TutorialVNet1
-
-# shell variable for subnet name
-subnet=TutorialSubnet1
-
-# shell variable for VNet address prefix
-address_prefix=10.0.0.0/16
-
-# shell variable for subnet address prefix
-subnet_prefix=10.0.0.0/24
+# create shell variables
+vnetName=TutorialVNet1
+subnetName=TutorialSubnet1
+vnetAddressPrefix=10.0.0.0/16
+subnetAddressPrefix=10.0.0.0/24
 
 az network vnet create \
-  --name $VNet \
-  --resource-group $resource_group \
-  --address-prefixes $address_prefix \
-  --subnet-name $subnet \
-  --subnet-prefixes $subnet_prefix
+  --name $vnetName \
+  --resource-group $resourceGroup \
+  --address-prefixes $vnetAddressPrefix \
+  --subnet-name $subnetName \
+  --subnet-prefixes $subnetAddressPrefix
 ```

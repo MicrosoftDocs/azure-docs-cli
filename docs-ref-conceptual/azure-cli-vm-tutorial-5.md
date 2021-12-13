@@ -1,5 +1,5 @@
 ---
-title: Set environment variables from CLI output – Azure CLI | Microsoft Docs
+title: Set shell variables from CLI output – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information and store results in an Azure CLI shell variable.
 ms.date: 11/12/2021
 ms.author: dbradish
@@ -18,13 +18,13 @@ keywords: virtual machine in azure cli, set shell variables from cli output
 Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
 
 ```azurecli-interactive
-az network nic show --ids $NIC_ID
+az network nic show --ids $nicId
 ```
 
 This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. The following query shows how to obtain the public IP address and subnet object IDs.
 
 ```azurecli-interactive
-az network nic show --ids $NIC_ID \
+az network nic show --ids $nicId \
   --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
   -o json
 ```
@@ -48,8 +48,8 @@ the shell `read` command to load results into multiple variables. Since two valu
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
 ```bash
-read -d '' IP_ID subnet_ID <<< $(az network nic show \
-  --ids $NIC_ID \
+read -d '' ipId subnetId <<< $(az network nic show \
+  --ids $nicId \
   --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
   -o tsv)
 ```
@@ -57,7 +57,7 @@ read -d '' IP_ID subnet_ID <<< $(az network nic show \
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI, it will not be needed for the rest of the tutorial.
 
 ```bash
-VM_IP_address=$(az network public-ip show --ids $IP_ID \
+vmIpAddress=$(az network public-ip show --ids $ipId \
   --query ipAddress \
   -o tsv)
 ```
@@ -65,5 +65,5 @@ VM_IP_address=$(az network public-ip show --ids $IP_ID \
 Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
 
 ```bash
-echo $VM_IP_address
+echo $vmIpAddress
 ```

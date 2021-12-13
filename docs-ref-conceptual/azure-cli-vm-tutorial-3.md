@@ -18,22 +18,22 @@ keywords: azure cli create vm, virtual machine in azure cli
 Virtual machines (VM) in Azure have a large number of dependencies. The CLI creates these resources for you based on
 the command-line arguments you specify. In this section, you'll learn how to deploy a VM to a VNet.
 
-To deploy a VM on a VNet, they must have the same Azure location. Once a VM is created, you cannot change the VNet it is connected to.
+To deploy a VM on a VNet, they must have the same Azure location. Once a VM is created, you cannot change the VNet to which it is connected.
 
 ## Create a VM
 
 Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtual machine running Ubuntu, which uses SSH authentication for login, and is connected to the subnet and VNet you created in the previous section.
 
 ```azurecli-interactive
-# shell variable for VM name
-VM=TutorialVM1
+# create shell variables
+vmName=TutorialVM1
 
 az vm create \
-  --resource-group $resource_group \
-  --name $VM \
+  --resource-group $resourceGroup \
+  --name $vmName \
   --image UbuntuLTS \
-  --vnet-name $VNet \
-  --subnet $subnet \
+  --vnet-name $vnetName \
+  --subnet $subnetName \
   --generate-ssh-keys \
   --output json \
   --verbose 

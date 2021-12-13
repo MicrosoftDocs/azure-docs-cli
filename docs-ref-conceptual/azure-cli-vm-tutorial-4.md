@@ -19,7 +19,7 @@ Now that a VM has been created, detailed information about it can be retrieved. 
 `show`.
 
 ```azurecli-interactive
-az vm show --name $vm --resource-group $resource_group
+az vm show --name $vmName --resource-group $resourceGroup
 ```
 
 You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
@@ -30,8 +30,8 @@ In order to extract the object ID we want, the `--query` argument is used. Queri
 with getting the network interface controller (NIC) object ID.
 
 ```azurecli-interactive
-az vm show --name $VM \
-  --resource-group $resource_group \
+az vm show --name $vmName \
+  --resource-group $resourceGroup \
   --query 'networkProfile.networkInterfaces[].id' \
   --output tsv
 ```
@@ -44,14 +44,16 @@ There's a lot going on here, just by adding the query. Each part of it reference
   of the query on each array element. In this case, it gets the `id` value of every array element.
 
 The output format `tsv` (tab-separated values) is guaranteed to only include the result data and whitespace consisting of tabs and newlines.
-Since the returned value is a single bare string, it's safe to assign directly to an environment variable.
+Since the returned value is a single bare string, it's safe to assign directly to an shell variable.
 
 For more information about querying Azure CLI output see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
 
-Go ahead and assign the NIC object ID to an environment variable now.
+Go ahead and assign the NIC object ID to an shell variable now.
 
 ```bash
-NIC_ID=$(az vm show -n $VM -g $resource_group \
+nicId=$(az vm show \
+  -n $vmName \
+  -g $resourceGroup \
   --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
 ```
