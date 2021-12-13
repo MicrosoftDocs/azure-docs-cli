@@ -10,7 +10,7 @@ ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: azure cli create vm, virtual machine in azure cli
+keywords: azure cli clean up resources, virtual machine in azure cli
 ---
 
 # 6 - Cleanup

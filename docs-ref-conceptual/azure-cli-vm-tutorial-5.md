@@ -10,10 +10,10 @@ ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: virtual machine in azure cli
+keywords: virtual machine in azure cli, set shell variables from cli output 
 ---
 
-# 5 - Set environment variables from CLI output
+# 5 - Set shell variables from CLI output
 
 Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
 
