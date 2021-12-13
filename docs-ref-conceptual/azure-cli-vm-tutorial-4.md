@@ -19,7 +19,7 @@ Now that a VM has been created, detailed information about it can be retrieved. 
 `show`.
 
 ```azurecli-interactive
-az vm show --name TutorialVM1 --resource-group TutorialResources
+az vm show --name $vm --resource-group $resource_group
 ```
 
 You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
@@ -30,8 +30,8 @@ In order to extract the object ID we want, the `--query` argument is used. Queri
 with getting the network interface controller (NIC) object ID.
 
 ```azurecli-interactive
-az vm show --name TutorialVM1 \
-  --resource-group TutorialResources \
+az vm show --name $vm \
+  --resource-group $resource_group \
   --query 'networkProfile.networkInterfaces[].id' \
   --output tsv
 ```
@@ -51,7 +51,7 @@ For more information about querying Azure CLI output see [How to query Azure CLI
 Go ahead and assign the NIC object ID to an environment variable now.
 
 ```bash
-NIC_ID=$(az vm show -n TutorialVM1 -g TutorialResources \
+NIC_ID=$(az vm show -n $vm -g $resource_group \
   --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
 ```

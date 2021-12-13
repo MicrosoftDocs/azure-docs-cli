@@ -66,7 +66,7 @@ Confirm that the VM is running by connecting over SSH.
 ssh <PUBLIC_IP_ADDRESS>
 ```
 
-Go ahead and log out from the VM.
+Go ahead and log out from the VM by typing `exit`.
 
 There are other ways to get this IP address after the VM has started. In the next section you will see how to get detailed information on
 the VM, and how to filter it.
