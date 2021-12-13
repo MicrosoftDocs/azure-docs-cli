@@ -29,10 +29,10 @@ vnet=`TutorialVNet1`
 subnet=`TutorialSubnet1`
 
 # shell variable for VNet address prefix
-address_prefix=`10.0.0.0/16`
+address_prefix=10.0.0.0/16
 
 # shell variable for subnet address prefix
-subnet_prefix=`10.0.0.0/24`
+subnet_prefix=10.0.0.0/24
 
 az network vnet create \
   --name $vnet \
