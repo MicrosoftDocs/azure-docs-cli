@@ -36,10 +36,10 @@ that make them easier to work with as a collection. Use the [az group create](/c
 
 ```azurecli
 # shell variable for resource group name
-resource_group=`VMTutorialResources`
+resource_group=VMTutorialResources
 
 # shell variable for resource location
-location='eastus'
+location=eastus
 
 az group create --name $resource_group --location $location
  ```
