@@ -1,7 +1,7 @@
 ---
-title: Set environment variables from CLI output – Azure CLI | Microsoft Docs
-description: Learn how to get virtual machines (VM) information and store results in an Azure CLI shell variable.
-ms.date: 07/09/2018
+title: Get virtual machines information with queries (VM) – Azure CLI | Microsoft Docs
+description: Learn how to get virtual machines (VM) information with Azure CLI queries.
+ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
@@ -10,61 +10,50 @@ ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: virtual machine in azure cli
+keywords: azure cli create vm, virtual machine in azure cli
 ---
 
-# 4 - Set environment variables from CLI output
+# 4 - Get VM information with queries
 
-Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
-
-```azurecli-interactive
-az network nic show --ids $NIC_ID
-```
-
-This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now the goal is to obtain the public IP address and subnet object IDs.
+Now that a VM has been created, detailed information about it can be retrieved. The common command for getting information from a resource is
+`show`.
 
 ```azurecli-interactive
-az network nic show --ids $NIC_ID \
-  --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
-  -o json
+az vm show --name TutorialVM1 --resource-group TutorialResources
 ```
 
-```json
-{
-  "IP": [
-    "/subscriptions/.../resourceGroups/TutorialResources/providers/Microsoft.Network/publicIPAddresses/TutorialVM1PublicIP"
-  ],
-  "Subnet": [
-    "/subscriptions/.../resourceGroups/TutorialResources/providers/Microsoft.Network/virtualNetworks/TutorialVM1VNET/subnets/TutorialVM1Subnet"
-  ]
-}
+You'll see a lot of information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
+and more. Most importantly, it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
+to get more information about the VM's configuration and capabilities.
+
+In order to extract the object ID we want, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org)Start
+with getting the network interface controller (NIC) object ID.
+
+```azurecli-interactive
+az vm show --name TutorialVM1 \
+  --resource-group TutorialResources \
+  --query 'networkProfile.networkInterfaces[].id' \
+  --output tsv
 ```
 
-This command displays a JSON object that has custom keys ('IP' and 'Subnet') for the extracted values. While this style of output might not be useful
-for command-line tools, it helps with human readability and can be used with custom scripts.
+There's a lot going on here, just by adding the query. Each part of it references a key in the output JSON, or is a JMESPath operator.
 
-In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. This style of output can be processed by
-the shell `read` command to load results into multiple variables. Since two values on separate lines are displayed, the `read` command
-delimiter must be set to the empty string rather than the default of non-newline whitespace.
+* `networkProfile` is a key of the top-level JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
+  its keys are referenced from the parent key with the `.` operator.
+* The `networkInterfaces` value is an array, so it is flattened with the `[]` operator. This operator runs the remainder
+  of the query on each array element. In this case, it gets the `id` value of every array element.
+
+The output format `tsv` (tab-separated values) is guaranteed to only include the result data and whitespace consisting of tabs and newlines.
+Since the returned value is a single bare string, it's safe to assign directly to an environment variable.
+
+For more information about querying Azure CLI output see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
+
+Go ahead and assign the NIC object ID to an environment variable now.
 
 ```bash
-read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
-  --ids $NIC_ID \
-  --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
+NIC_ID=$(az vm show -n TutorialVM1 -g TutorialResources \
+  --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
 ```
 
-You won't use the subnet ID right away, but it should be stored now to avoid having to perform a second lookup later. For now,
-use the public IP object ID to look up the public IP address and store it in a shell variable.
-
-```bash
-VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
-  --query ipAddress \
-  -o tsv)
-```
-
-Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to thVM.
-
-```bash
-echo $VM1_IP_ADDR
-```
+This example also demonstrates the use of short arguments. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.

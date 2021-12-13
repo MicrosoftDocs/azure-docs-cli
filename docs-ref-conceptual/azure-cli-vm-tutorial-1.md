@@ -1,7 +1,7 @@
 ---
-title: Create virtual machines prerequisites (VM) – Azure CLI | Microsoft Docs
-description: Prerequisites for creating a virtual machines (VM) with the Azure CLI.
-ms.date: 07/09/2018
+title: Create virtual machine (VM) on a virtual network (VNet) prerequisites – Azure CLI | Microsoft Docs
+description: Prerequisites for creating a virtual machines (VM) on a virtual network (VNet) with the Azure CLI.
+ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
@@ -15,40 +15,31 @@ keywords: azure cli create vm, virtual machine in azure cli
 
 # 1 - Overview and Prerequisites
 
-In this tutorial, you'll learn how to create a virtual machine with the Azure CLI. This tutorial
-also covers Azure CLI specific concepts such as persisted parameters, output queries, and shell variables.
+In this tutorial, you'll learn how to create a virtual network (VNet) and deploy a virtual machine (VM) to the VNet with the Azure CLI. This tutorial
+also covers Azure CLI specific concepts such as shell variables and output queries.
 
 This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
 locally.
 
 Use __ctrl-shift-v__ (__cmd-shift-v__ on macOS) to paste tutorial text into Azure Cloud Shell.
 
-## Prerequisites
+[!INCLUDE [azure-cli-prepare-your-environment.md](./includes/azure-cli-prepare-your-environment.md)]
 
-- **Sign in** If you're using a local install of the CLI, you need to sign in before performing any other steps.
+## Shell variables
 
-    ```azurecli-interactive
-    az login
-    ```
-
-    Complete the authentication process by following the steps displayed in your terminal.
-
-## Turn on persisted parameters
-
-Persisted parameters store parameter values for future use, so you can drop repeated parameter values between sequential commands. Use the [az config param-persist on](/cli/azure/config/param-persist#az_config_param_persist_on) command to enable persisted parameters.
-
-```azurecli
-az config param-persist on
- ```
-
-For more information on persisted parameters see [Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial?tabs=azure-cli).
+Shell variables store values for future use and can be used to pass values to command parameters. Shell variables allow for the reuse of commands, both on their own and in scripts. This tutorial uses shell variables for easier customization of command parameters. To use your own parameter values instead of using the provided values, change the values assigned to the shell variables. For more information about shell variables see [Use shell variables](/cli/azure/azure-cli-variables#use-shell-variables).
 
 ## Create a resource group
 
 In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
-that make them easier to work with as a collection. For this tutorial, all of the created resources go into a
-single group named `TutorialResources`.
+that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
 ```azurecli
-az group create --name TutorialResources --location eastus
+# shell variable for resource group name
+resource_group=`VMTutorialResources`
+
+# shell variable for resource location
+location='eastus'
+
+az group create --name $resource_group --location $location
  ```

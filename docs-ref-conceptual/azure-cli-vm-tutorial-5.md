@@ -1,7 +1,7 @@
 ---
-title: Creating a new virtual machine on the existing subnet (VM) – Azure CLI | Microsoft Docs
-description: Learn how to create a new virtual machine on the existing subnet with Azure CLI.
-ms.date: 07/09/2018
+title: Set environment variables from CLI output – Azure CLI | Microsoft Docs
+description: Learn how to get virtual machines (VM) information and store results in an Azure CLI shell variable.
+ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
@@ -10,29 +10,61 @@ ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: azure cli create vm, virtual machine in azure cli
+keywords: virtual machine in azure cli
 ---
 
-# 5 - Creating a new VM on the existing subnet
+# 5 - Set environment variables from CLI output
 
-The second VM uses the existing subnet. You can skip a few steps to get the public IP address of the new VM stored into an environment
-variable right away, since it's returned in the VM creation information. If you'd need other information about the VM later, it can always be
-obtained from the `az vm show` command.
+Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
+
+```azurecli-interactive
+az network nic show --ids $NIC_ID
+```
+
+This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now the goal is to obtain the public IP address and subnet object IDs.
+
+```azurecli-interactive
+az network nic show --ids $NIC_ID \
+  --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
+  -o json
+```
+
+```json
+{
+  "IP": [
+    "/subscriptions/.../resourceGroups/TutorialResources/providers/Microsoft.Network/publicIPAddresses/TutorialVM1PublicIP"
+  ],
+  "Subnet": [
+    "/subscriptions/.../resourceGroups/TutorialResources/providers/Microsoft.Network/virtualNetworks/TutorialVM1VNET/subnets/TutorialVM1Subnet"
+  ]
+}
+```
+
+This command displays a JSON object that has custom keys ('IP' and 'Subnet') for the extracted values. While this style of output might not be useful
+for command-line tools, it helps with human readability and can be used with custom scripts.
+
+In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. This style of output can be processed by
+the shell `read` command to load results into multiple variables. Since two values are displayed on separate lines, the `read` command
+delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
 ```bash
-VM2_IP_ADDR=$(az vm create -g TutorialResources \
-  -n TutorialVM2 \
-  --image UbuntuLTS \
-  --generate-ssh-keys \
-  --subnet $SUBNET_ID \
-  --query publicIpAddress \
+read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
+  --ids $NIC_ID \
+  --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
   -o tsv)
 ```
 
-Using the stored IP address, SSH into the newly created VM.
+You won't use the subnet ID right away, but it should be stored now to avoid having to perform a second lookup later. For now,
+use the public IP object ID to look up the public IP address and store it in a shell variable.
 
 ```bash
-ssh $VM2_IP_ADDR
+VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
+  --query ipAddress \
+  -o tsv)
 ```
 
-Go ahead and log out from the VM.
+Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
+
+```bash
+echo $VM1_IP_ADDR
+```

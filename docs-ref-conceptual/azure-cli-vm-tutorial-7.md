@@ -1,7 +1,7 @@
 ---
 title: Summary of virtual machine resources (VM) – Azure CLI | Microsoft Docs
 description: Summary of what was taught in the virtual machine tutorial.
-ms.date: 07/09/2018
+ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
@@ -45,10 +45,9 @@ For more information on the CLI features that were shown in the tutorial see:
 
 * [Output formats for Azure CLI commands](format-output-azure-cli.md)
 * [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
-* [Sign in with Azure CLI](authenticate-azure-cli.md)
 
-For more information on virtual machines see:
+For more information on virtual networks and virtual machines see:
 
+* [Virtual networks and virtual machines in Azure](/azure/virtual-network/network-overview)
 * [Linux virtual machines in Azure](/azure/virtual-machines/linux/overview)
-* [Manage Azure disks with the Azure CLI](/azure/virtual-machines/linux/tutorial-manage-disks)
 * [Bringing and creating Linux images in Azure](/azure/virtual-machines/linux/imaging)
