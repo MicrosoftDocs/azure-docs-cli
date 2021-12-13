@@ -37,7 +37,7 @@ subnet_prefix=`10.0.0.0/24`
 az network vnet create \
   --name $vnet \
   --resource-group $resource_group \
-  --address-prefixes $address_prefix
-  --subnet-name $subnet
+  --address-prefixes $address_prefix \
+  --subnet-name $subnet \
   -subnet-prefixes $subnet_prefix
 ```
