@@ -23,7 +23,7 @@ Use the [az network vnet create](/cli/azure/network/vnet#az_network_vnet_create)
 
 ```azurecli-interactive
 # shell variable for VNet name
-vnet=TutorialVNet1
+VNet=TutorialVNet1
 
 # shell variable for subnet name
 subnet=TutorialSubnet1
@@ -35,7 +35,7 @@ address_prefix=10.0.0.0/16
 subnet_prefix=10.0.0.0/24
 
 az network vnet create \
-  --name $vnet \
+  --name $VNet \
   --resource-group $resource_group \
   --address-prefixes $address_prefix \
   --subnet-name $subnet \

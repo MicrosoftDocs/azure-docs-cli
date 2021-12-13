@@ -26,13 +26,13 @@ Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtu
 
 ```azurecli-interactive
 # shell variable for VM name
-vm=TutorialVM1
+VM=TutorialVM1
 
 az vm create \
   --resource-group $resource_group \
-  --name $vm \
+  --name $VM \
   --image UbuntuLTS \
-  --vnet-name $vnet \
+  --vnet-name $VNet \
   --subnet $subnet \
   --generate-ssh-keys \
   --output json \

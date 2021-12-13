@@ -30,7 +30,7 @@ In order to extract the object ID we want, the `--query` argument is used. Queri
 with getting the network interface controller (NIC) object ID.
 
 ```azurecli-interactive
-az vm show --name $vm \
+az vm show --name $VM \
   --resource-group $resource_group \
   --query 'networkProfile.networkInterfaces[].id' \
   --output tsv
@@ -51,7 +51,7 @@ For more information about querying Azure CLI output see [How to query Azure CLI
 Go ahead and assign the NIC object ID to an environment variable now.
 
 ```bash
-NIC_ID=$(az vm show -n $vm -g $resource_group \
+NIC_ID=$(az vm show -n $VM -g $resource_group \
   --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
 ```

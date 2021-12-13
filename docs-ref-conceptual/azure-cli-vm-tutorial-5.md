@@ -21,7 +21,7 @@ Now that you have the NIC ID, run `az network nic show` to get its information. 
 az network nic show --ids $NIC_ID
 ```
 
-This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. Right now the goal is to obtain the public IP address and subnet object IDs.
+This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. The following query shows how to obtain the public IP address and subnet object IDs.
 
 ```azurecli-interactive
 az network nic show --ids $NIC_ID \
@@ -48,17 +48,16 @@ the shell `read` command to load results into multiple variables. Since two valu
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
 ```bash
-read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
+read -d '' IP_ID subnet_ID <<< $(az network nic show \
   --ids $NIC_ID \
   --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
   -o tsv)
 ```
 
-You won't use the subnet ID right away, but it should be stored now to avoid having to perform a second lookup later. For now,
-use the public IP object ID to look up the public IP address and store it in a shell variable.
+Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI, it will not be needed for the rest of the tutorial.
 
 ```bash
-VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
+VM_IP_address=$(az network public-ip show --ids $IP_ID \
   --query ipAddress \
   -o tsv)
 ```
@@ -66,5 +65,5 @@ VM1_IP_ADDR=$(az network public-ip show --ids $IP_ID \
 Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
 
 ```bash
-echo $VM1_IP_ADDR
+echo $VM_IP_address
 ```
