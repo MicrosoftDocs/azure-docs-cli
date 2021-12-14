@@ -46,6 +46,10 @@ directCommands:
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i myregistry.azurecr.io/docker-image:tag
   - summary: create a WebApp using shared App Service Plan that is in a different resource group.
     syntax: AppServicePlanID=$(az appservice plan show -n SharedAppServicePlan -g MyASPRG --query "id" --out tsv) az webapp create -g MyResourceGroup -p "$AppServicePlanID" -n MyUniqueAppName
+  - summary: create a WebApp in an appservice kubernetes environment
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location /subscriptions/sub_id/resourcegroups/group_name/providers/microsoft.extendedlocation/customlocations/custom_location_name
+  - summary: create a WebApp in an appservice kubernetes environment and in the same resource group as the custom location
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location custom_location_name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -60,7 +64,7 @@ directCommands:
     summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
     description: ''
   - name: --custom-location
-    summary: Name or ID of the custom location.
+    summary: Name or ID of the custom location. Use an ID for a custom location in a different resource group from the app.
     description: ''
   - name: --deployment-container-image-name -i
     summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
