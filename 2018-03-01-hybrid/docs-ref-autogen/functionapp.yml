@@ -42,6 +42,10 @@ directCommands:
     syntax: az functionapp create --consumption-plan-location westus --name MyUniqueAppName --os-type Windows --resource-group MyResourceGroup --runtime dotnet --storage-account MyStorageAccount
   - summary: Create a function app using a private ACR image.
     syntax: az functionapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime node --storage-account MyStorageAccount --deployment-container-image-name myacr.azurecr.io/myimage:tag --docker-registry-server-password passw0rd --docker-registry-server-user MyUser
+  - summary: Create a function app in an app service kubernetes environment
+    syntax: az functionapp create -g MyResourceGroup  -p MyPlan -n MyUniqueAppName -s MyStorageAccount --custom-location /subscriptions/sub_id/resourcegroups/group_name/providers/microsoft.extendedlocation/customlocations/custom_location_name
+  - summary: Create a function app in an app service kubernetes environment and in the same resource group as the custom location
+    syntax: az functionapp create -g MyResourceGroup  -p MyPlan -n MyUniqueAppName -s MyStorageAccount --custom-location custom_location_name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -66,7 +70,7 @@ directCommands:
     summary: Geographic location where Function App will be hosted. Use `az functionapp list-consumption-locations` to view available locations.
     description: ''
   - name: --custom-location
-    summary: Name or ID of the custom location.
+    summary: Name or ID of the custom location. Use an ID for a custom location in a different resource group from the app.
     description: ''
   - name: --deployment-container-image-name -i
     summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
