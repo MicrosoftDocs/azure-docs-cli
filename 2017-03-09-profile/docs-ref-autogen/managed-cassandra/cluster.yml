@@ -17,14 +17,14 @@ directCommands:
                                         --delegated-management-subnet-id
                                         --location
                                         --resource-group
-                                        [--authentication-method]
+                                        [--authentication-method {Cassandra, Ldap, None}]
                                         [--cassandra-version]
                                         [--client-certificates]
                                         [--cluster-name-override]
                                         [--external-gossip-certificates]
                                         [--external-seed-nodes]
                                         [--hours-between-backups]
-                                        [--identity]
+                                        [--identity-type {None, SystemAssigned}]
                                         [--initial-cassandra-admin-password]
                                         [--no-wait]
                                         [--repair-enabled]
@@ -63,7 +63,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --authentication-method
-    summary: Authentication mode can be None or Cassandra. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used.
+    parameterValueGroup: Cassandra, Ldap, None
+    summary: Authentication mode can be None, Cassandra or Ldap. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used. Ldap is in preview.
     description: ''
   - name: --cassandra-version
     summary: The version of Cassandra chosen.
@@ -83,8 +84,10 @@ directCommands:
   - name: --hours-between-backups
     summary: The number of hours between backup attempts.
     description: ''
-  - name: --identity
-    summary: Identity used to authenticate.
+  - name: --identity-type
+    defaultValue: None
+    parameterValueGroup: None, SystemAssigned
+    summary: Type of identity used for Customer Managed Disk Key.
     description: ''
   - name: --initial-cassandra-admin-password -i
     summary: The intial password to be configured when a cluster is created for authentication_method Cassandra.
@@ -143,32 +146,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: az_managed-cassandra_cluster_node-status
-  name: az managed-cassandra cluster node-status
-  summary: Gets Status of all the nodes in all the datacenters in a given Cluster.
-  description: ''
-  syntax: >-
-    az managed-cassandra cluster node-status --cluster-name
-                                             --resource-group
-                                             [--no-wait]
-  examples:
-  - summary: This command gets the status of all the nodes in this cluster. By default a json is returned.
-    syntax: az managed-cassandra cluster node-status --resource-group MyResourceGroup --cluster-name MyCluster
-  - summary: This command gets the status of all the nodes in this cluster. When a table output is specified only one token is displayed. Use json output to get all the tokens.
-    syntax: az managed-cassandra cluster node-status --resource-group MyResourceGroup --cluster-name MyCluster --output table
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: Cluster Name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
 - uid: az_managed-cassandra_cluster_show
   name: az managed-cassandra cluster show
   summary: Get a Managed Cassandra Cluster Resource.
@@ -195,13 +172,13 @@ directCommands:
   syntax: >-
     az managed-cassandra cluster update --cluster-name
                                         --resource-group
-                                        [--authentication-method]
+                                        [--authentication-method {Cassandra, Ldap, None}]
                                         [--cassandra-version]
                                         [--client-certificates]
                                         [--external-gossip-certificates]
                                         [--external-seed-nodes]
                                         [--hours-between-backups]
-                                        [--identity]
+                                        [--identity-type {None, SystemAssigned}]
                                         [--no-wait]
                                         [--repair-enabled]
                                         [--tags]
@@ -221,7 +198,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --authentication-method
-    summary: Authentication mode can be None or Cassandra. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used.
+    parameterValueGroup: Cassandra, Ldap, None
+    summary: Authentication mode can be None, Cassandra or Ldap. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used. Ldap is in preview.
     description: ''
   - name: --cassandra-version
     summary: The version of Cassandra chosen.
@@ -238,8 +216,9 @@ directCommands:
   - name: --hours-between-backups
     summary: The number of hours between backup attempts.
     description: ''
-  - name: --identity
-    summary: Identity used to authenticate.
+  - name: --identity-type
+    parameterValueGroup: None, SystemAssigned
+    summary: Type of identity used for Customer Managed Disk Key.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -251,10 +230,12 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 commands:
+- az_managed-cassandra_cluster_backup
+- az_managed-cassandra_cluster_backup_list
+- az_managed-cassandra_cluster_backup_show
 - az_managed-cassandra_cluster_create
 - az_managed-cassandra_cluster_delete
 - az_managed-cassandra_cluster_list
-- az_managed-cassandra_cluster_node-status
 - az_managed-cassandra_cluster_show
 - az_managed-cassandra_cluster_update
 globalParameters:
