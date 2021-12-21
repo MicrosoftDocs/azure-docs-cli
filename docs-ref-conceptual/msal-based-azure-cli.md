@@ -26,11 +26,11 @@ Previous versions of Azure CLI save ADAL tokens and service principal entries to
 The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.
 
 > [!IMPORTANT]
-> When using Azure CLI in a pipeline, like as Azure DevOps, ensure all tasks/stages are using versions of Azure CLI above v2.30.0 for MSAL-based azure CLI. Azure CLI 2.30.0 is not backwards compatible with Prior versions and throws and error when using incompatible errors.
+> When using Azure CLI in a pipeline like Azure DevOps, ensure all tasks and stages are using versions of Azure CLI above v2.30.0 for MSAL-based Azure CLI. Azure CLI 2.30.0 is not backwards compatible with prior versions and throws an error when working with versions below 2.30.0.
 
 ## Alternatives to consider
 
-Below are a couple alternatives you may consider for backwards compatibility:
+Below are a couple alternatives you may consider for stability:
 
 ### Calling `az account get-access-token`
 
