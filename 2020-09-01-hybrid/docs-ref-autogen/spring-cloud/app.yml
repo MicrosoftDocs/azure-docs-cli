@@ -210,6 +210,10 @@ directCommands:
                                --resource-group
                                --service
                                [--artifact-path]
+                               [--container-args]
+                               [--container-command]
+                               [--container-image]
+                               [--container-registry]
                                [--deployment]
                                [--disable-probe {false, true}]
                                [--disable-validation {false, true}]
@@ -217,6 +221,8 @@ directCommands:
                                [--jvm-options]
                                [--main-entry]
                                [--no-wait]
+                               [--registry-password]
+                               [--registry-username]
                                [--runtime-version {Java_11, Java_8, NetCore_31}]
                                [--source-path]
                                [--target-module]
@@ -228,6 +234,10 @@ directCommands:
     syntax: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup --jar-path app.jar --jvm-options="-XX:+UseG1GC -XX:+UseStringDeduplication" --env foo=bar
   - summary: Deploy source code to a specific deployment of an app.
     syntax: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup -d green-deployment
+  - summary: Deploy a container image on Docker Hub to an app.
+    syntax: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup --container-image contoso/your-app:v1
+  - summary: Deploy a container image on a private registry to an app.
+    syntax: az spring-cloud app deploy -n MyApp -s MyCluster -g MyResourceGroup --container-image contoso/your-app:v1 --container-registry myacr.azurecr.io --registry-username <username> --registry-password <password>
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -244,6 +254,19 @@ directCommands:
   optionalParameters:
   - name: --artifact-path
     summary: Deploy the specified pre-built artifact (jar or netcore zip).
+    description: ''
+  - name: --container-args
+    summary: The arguments of the container image.
+    description: ''
+  - name: --container-command
+    summary: The command of the container image.
+    description: ''
+  - name: --container-image
+    summary: The container image tag.
+    description: ''
+  - name: --container-registry
+    defaultValue: docker.io
+    summary: The registry of the container image.
     description: ''
   - name: --deployment -d
     summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
@@ -267,6 +290,12 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --registry-password
+    summary: The password of the container registry.
+    description: ''
+  - name: --registry-username
+    summary: The username of the container registry.
     description: ''
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_8, NetCore_31
@@ -489,11 +518,15 @@ directCommands:
   summary: Show build log of the last deploy, only apply to source code deploy, default to production deployment.
   description: ''
   syntax: >-
-    az spring-cloud app show-deploy-log --name
+    az spring-cloud app show-deploy-log --deployment
+                                        --name
                                         --resource-group
                                         --service
-                                        [--deployment]
   requiredParameters:
+  - isRequired: true
+    name: --deployment -d
+    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of app.
@@ -505,10 +538,6 @@ directCommands:
   - isRequired: true
     name: --service -s
     summary: Name of Azure Spring Cloud, you can configure the default service using az configure --defaults spring-cloud=<name>.
-    description: ''
-  optionalParameters:
-  - name: --deployment -d
-    summary: Name of an existing deployment of the app. Default to the production deployment if not specified.
     description: ''
 - uid: az_spring-cloud_app_start
   name: az spring-cloud app start

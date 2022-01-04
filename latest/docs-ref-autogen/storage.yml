@@ -42,6 +42,7 @@ directCommands:
                     [--source-sas]
                     [--source-share]
                     [--subscription]
+                    [<EXTRA_OPTIONS>]
   examples:
   - summary: Upload a single file to Azure Blob using url.
     syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob]
@@ -101,6 +102,8 @@ directCommands:
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a set of files from Azure File Share using wildcards, and you can also specify your storage account and share information as above.
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
+  - summary: Upload a single file to Azure Blob using url with azcopy options pass-through.
+    syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob] -- --block-size-mb=0.25 --check-length
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -202,6 +205,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: <EXTRA_OPTIONS>
+    summary: Other options which will be passed through to azcopy as it is. Please put all the extra options after a `--`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_remove
@@ -650,5 +656,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/08/2021
+  ms.date: 12/30/2021
   description: Manage Azure Cloud Storage resources.
