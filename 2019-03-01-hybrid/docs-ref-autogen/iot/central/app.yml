@@ -17,15 +17,18 @@ directCommands:
                               --subdomain
                               [--display-name]
                               [--location]
+                              [--mi-system-assigned]
                               [--no-wait]
-                              [--sku {F1, S1, ST0, ST1, ST2}]
+                              [--sku {ST0, ST1, ST2}]
                               [--subscription]
                               [--template]
   examples:
   - summary: Create an IoT Central application in the region of the resource group using the default pricing SKU.
-    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates
-  - summary: Create an IoT Central application the in the 'United States' region with the 'ST1' pricing plan and an industry template.
-    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates -p ST1 -t iotc-distribution
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app
+  - summary: Create an IoT Central application the in the 'East US' region with the 'ST1' pricing plan and an industry template.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l eastus -p ST1 -t iotc-distribution
+  - summary: Create an IoT Central application using system-assigned managed identity.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app --mi-system-assigned
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -46,12 +49,15 @@ directCommands:
   - name: --location -l
     summary: Where your app's info and resources are stored. We will default to the location of the target resource group. See documentation for a full list of supported locations.
     description: ''
+  - name: --mi-system-assigned
+    summary: Provide this flag to use system assigned identity.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku -p
     defaultValue: ST2
-    parameterValueGroup: F1, S1, ST0, ST1, ST2
+    parameterValueGroup: ST0, ST1, ST2
     summary: Pricing plan for IoT Central application.
     description: ''
   - name: --subscription
@@ -197,6 +203,10 @@ directCommands:
 commands:
 - az_iot_central_app_create
 - az_iot_central_app_delete
+- az_iot_central_app_identity
+- az_iot_central_app_identity_assign
+- az_iot_central_app_identity_remove
+- az_iot_central_app_identity_show
 - az_iot_central_app_list
 - az_iot_central_app_show
 - az_iot_central_app_update
@@ -217,5 +227,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/30/2021
+  ms.date: 12/30/2021
   description: Create, delete, view, and update your IoT Central apps.

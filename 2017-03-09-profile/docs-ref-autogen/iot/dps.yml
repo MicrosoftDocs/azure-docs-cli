@@ -5,30 +5,50 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az iot dps** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage entities in an Azure IoT Hub Device Provisioning Service. Augmented with the IoT extension.
+summary: Manage entities in an Azure IoT Hub Device Provisioning Service (DPS). Augmented with the IoT extension.
 description: ''
 directCommands:
 - uid: az_iot_dps_compute-device-key
   name: az iot dps compute-device-key
   summary: Generate a derived device SAS key.
-  description: Generate a derived device key from a DPS enrollment group symmetric key.
+  description: Generate a derived device key for a DPS enrollment group.
   syntax: >-
-    az iot dps compute-device-key --key
-                                  --registration-id
+    az iot dps compute-device-key --registration-id
+                                  [--dps-name]
+                                  [--enrollment-id]
+                                  [--key]
+                                  [--login]
+                                  [--resource-group]
   examples:
-  - summary: Basic usage
+  - summary: Compute the device key with the given symmetric key.
     syntax: az iot dps compute-device-key --key {enrollement_group_symmetric_key} --registration-id {registration_id}
+  - summary: Compute the device key with the given enrollment group.
+    syntax: az iot dps compute-device-key -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --registration-id {registration_id}
   requiredParameters:
-  - isRequired: true
-    name: --key --symmetric-key
-    summary: The symmetric shared access key for the enrollment group.
-    description: ''
   - isRequired: true
     name: --registration-id
     summary: ID of device registration.
     description: ''
+  optionalParameters:
+  - name: --dps-name -n
+    summary: Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
+    description: ''
+  - name: --enrollment-id --group-id
+    summary: Enrollment group ID.
+    description: ''
+  - name: --key --symmetric-key
+    summary: The symmetric shared access key for the enrollment group. This bypasses the Device Provisioning Service registry and generates the SAS token directly from the supplied symmetric key without further validation. All other command parameters aside from registration ID will be ignored.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --dps-name is not provided.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 commands:
 - az_iot_dps_compute-device-key
+- az_iot_dps_connection-string
+- az_iot_dps_connection-string_show
 - az_iot_dps_enrollment
 - az_iot_dps_enrollment_create
 - az_iot_dps_enrollment_delete
@@ -61,4 +81,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage entities in an Azure IoT Hub Device Provisioning Service. Augmented with the IoT extension.
+  description: Manage entities in an Azure IoT Hub Device Provisioning Service (DPS). Augmented with the IoT extension.

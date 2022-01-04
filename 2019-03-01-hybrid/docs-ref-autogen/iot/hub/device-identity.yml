@@ -15,10 +15,16 @@ directCommands:
     When using the auth method of shared_private_key (also known as symmetric keys),
 
     if no custom keys are provided the service will generate them for the device.
+
+
+    If a device scope is provided for an edge device, the value will automatically be
+
+    converted to a parent scope.
   syntax: >-
     az iot hub device-identity create --device-id
                                       [--am {shared_private_key, x509_ca, x509_thumbprint}]
                                       [--auth-type {key, login}]
+                                      [--device-scope]
                                       [--edge-enabled {false, true}]
                                       [--hub-name]
                                       [--login]
@@ -40,8 +46,10 @@ directCommands:
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --output-dir /path/to/output
   - summary: Create an IoT device with self-signed certificate authorization and explicitly provide primary and secondary thumbprints.
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --ptp {thumbprint_1} --stp {thumbprint_2}
-  - summary: Create an IoT device with root CA authorization with disabled status and reason
+  - summary: Create an IoT device with root CA authorization with disabled status and reason.
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_ca --status disabled --status-reason 'for reasons'
+  - summary: Create an IoT device with a device scope.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --device-scope 'ms-azure-iot-edge://edge0-123456789123456789'
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -57,6 +65,9 @@ directCommands:
     defaultValue: key
     parameterValueGroup: key, login
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
+  - name: --device-scope
+    summary: The scope of the device. For edge devices, this is auto-generated and immutable. For leaf devices, set this to create child/parent relationship.
     description: ''
   - name: --edge-enabled --ee
     parameterValueGroup: false, true

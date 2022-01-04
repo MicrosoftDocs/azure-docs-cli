@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 12/07/2021
+ms.date: 01/04/2022
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,80 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## January 04, 2022
+
+Version 2.32.0
+
+### AKS
+
+* `az aks create`: Add new parameter `--enable-fips-image` to support enabling fips image
+* `az aks nodepool add`: Add new parameter `--enable-fips-image` to support enabling fips image
+
+### App Service
+
+* [BREAKING CHANGE] `az webapp up`: Remove support for the python|3.6 (linux and windows), ruby|2.5 (linux), and php|7.3 (windows) runtimes. Add support for the python|3.9 runtime (linux), php|8.0 (linux), and ruby|2.7 (linux)
+* [BREAKING CHANGE] `az webapp create`: Remove support for the python|3.6 (linux and windows), ruby|2.5 (linux), and php|7.3 (windows) runtimes. Add support for the python|3.9 runtime (linux), php|8.0 (linux), and ruby|2.7 (linux)
+* [BREAKING CHANGE] `az functionapp create`: Remove python 3.6 support
+* Fix #19550: `az staticwebapp users update`: Allow updating static web app user roles again
+* `az logicapp create`: Autogenerate a WS1 App Service Plan when no value for `--plan` or `--consumption-plan-location` is provided
+* `az appservice plan create`: Allow creating App Service Plans for Logic Apps (SKUs WS1, WS2, and WS3)
+* Fix #20757: `az webapp up`: Fix list index out of range when no `--plan` argument passed
+* Fix #18652: `az webapp up`: Search for \*.csproj in child directories
+* `az webapp list-runtimes`: Remove support for the python|3.6 (linux and windows), ruby|2.5 (linux), and php|7.3 (windows) runtimes. Add support for the python|3.9 runtime (linux), php|8.0 (linux), and ruby|2.7 (linux)
+
+### Backup
+
+* `az backup restore restore-azurewl`: Add client side validations
+* `az backup container unregister`: Support MAB type for parameter `--backup-management-type`
+* `az backup protectable-item list/show`: Add auto-protection policy and node-list field in the response for SQLInstance SQLAG
+* `az backup protection auto-enable-for-azurewl/auto-disable-for-azurewl`: Add support for SQLAG
+
+### Compute 
+
+* `az vm/vmss create/update`: Expand validate license types for `--license-type` parameter
+* `az sig image-definition list-shared`: Add new parameters `--marker` and `--show-next-marker` to support paging
+* `az sig image-version list-shared`: Add new parameters `--marker` and `--show-next-marker` to support paging
+
+### IoT
+
+* `az iot hub update`: Add error handling for file-upload parameters and fixes empty $default storage endpoint errors
+* `az iot central app create`: Add new parameter `--mi-system-assigned` to support creating an app with system-assigned managed identity
+* `az iot central app identity show/assign/remove`: Add new commands to manage the system-assigned managed identity to an existing IoT Central app
+* `az iot dps access-policy`: Be replaced with `az iot dps policy`
+* `az iot dps linked-hub create`: Add convenience arguments for linking hubs
+
+### Network
+
+* Fix #19482: Azure Bastion AAD fix for new CLI core changes
+* `az network lb inbound-nat-pool create`: Add new parameter `--backend-pool-name`
+
+### Profile
+
+* `az account show/set`: Add `-n`, `--name` argument
+
+### Redis
+
+* `az redis identity`: Add support for assigning and modifying Identity
+
+### REST
+
+* [BREAKING CHANGE] `az rest`: Remove `resourceGroup`, `x509ThumbprintHex` transforms
+
+### Role
+
+* [BREAKING CHANGE] `az ad sp create-for-rbac`: Drop `name` property from the output. Use `appId` instead
+* [BREAKING CHANGE] `az ad sp create-for-rbac`: No role assignment will be created by default
+
+### Storage
+
+* `az storage copy`: Add positional argument `extra_options` to pass through options to `azcopy`
+
+### Synapse
+
+* [BREAKING CHANGE] `az synapse managed private endpoints create`: Remove `--resource-id` and `--group-id`, use `--file` instead
+* `az synapse sql pool create/restore`: Add parameters `--storage-type` to support specifying storage account type
+* `az synapse kql-script`: New command group to support Kusto script
 
 ## December 07, 2021
 
