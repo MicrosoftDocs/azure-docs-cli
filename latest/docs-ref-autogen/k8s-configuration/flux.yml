@@ -17,14 +17,18 @@ directCommands:
                                      --cluster-type {connectedClusters, managedClusters}
                                      --name
                                      --resource-group
+                                     --url
+                                     [--access-key]
                                      [--branch]
+                                     [--bucket-name]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
+                                     [--insecure {false, true}]
                                      [--interval]
-                                     [--kind {git}]
+                                     [--kind {bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
@@ -32,13 +36,13 @@ directCommands:
                                      [--namespace]
                                      [--no-wait]
                                      [--scope {cluster, namespace}]
+                                     [--secret-key]
                                      [--semver]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
                                      [--suspend {false, true}]
                                      [--tag]
                                      [--timeout]
-                                     [--url]
   examples:
   - summary: Create a Flux v2 Kubernetes configuration
     syntax: >-
@@ -51,6 +55,19 @@ directCommands:
       --kind git --url https://github.com/Azure/arc-k8s-demo \
 
       --branch main --kustomization name=my-kustomization
+  - summary: Create a Kubernetes v2 Flux Configuration with Bucket Source Kind
+    syntax: >-
+      az k8s-configuration flux create --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters \
+
+      --name myconfig --scope cluster --namespace my-namespace \
+
+      --kind bucket --url https://bucket-provider.minio.io \
+
+      --bucket-name my-bucket --kustomization name=my-kustomization \
+
+      --access-key my-access-key --secret-key my-secret-key
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -69,9 +86,19 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - isRequired: true
+    name: --url -u
+    summary: URL of the source to reconcile.
+    description: ''
   optionalParameters:
+  - name: --access-key
+    summary: Access Key Id used to authenticate with the bucket url.
+    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
+    description: ''
+  - name: --bucket-name
+    summary: Name of the S3 bucket at the given url to connect to.
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
@@ -88,12 +115,16 @@ directCommands:
   - name: --https-user
     summary: HTTPS username for private repository sync.
     description: ''
+  - name: --insecure
+    parameterValueGroup: false, true
+    summary: Communicate with a bucket without TLS.
+    description: ''
   - name: --interval --sync-interval
     summary: Time between reconciliations of the source on the cluster.
     description: ''
   - name: --kind
     defaultValue: git
-    parameterValueGroup: git
+    parameterValueGroup: bucket, git
     summary: Source kind to reconcile.
     description: ''
   - name: --known-hosts
@@ -120,6 +151,9 @@ directCommands:
     parameterValueGroup: cluster, namespace
     summary: Specify scope of the operator to be 'namespace' or 'cluster'.
     description: ''
+  - name: --secret-key
+    summary: Secret Key used to authenticate with the bucket url.
+    description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
     description: ''
@@ -138,9 +172,6 @@ directCommands:
     description: ''
   - name: --timeout
     summary: Maximum time to reconcile the source before timing out.
-    description: ''
-  - name: --url -u
-    summary: URL of the git repo source to reconcile.
     description: ''
 - uid: az_k8s-configuration_flux_delete
   name: az k8s-configuration flux delete
@@ -259,18 +290,23 @@ directCommands:
                                      --cluster-type {connectedClusters, managedClusters}
                                      --name
                                      --resource-group
+                                     [--access-key]
                                      [--branch]
+                                     [--bucket-name]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
+                                     [--insecure {false, true}]
                                      [--interval]
+                                     [--kind {bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
                                      [--local-auth-ref]
                                      [--no-wait]
+                                     [--secret-key]
                                      [--semver]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
@@ -278,6 +314,7 @@ directCommands:
                                      [--tag]
                                      [--timeout]
                                      [--url]
+                                     [--yes]
   examples:
   - summary: Update a Flux v2 Kubernetes configuration
     syntax: >-
@@ -307,8 +344,14 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --access-key
+    summary: Access Key Id used to authenticate with the bucket url.
+    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
+    description: ''
+  - name: --bucket-name
+    summary: Name of the S3 bucket at the given url to connect to.
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
@@ -325,8 +368,16 @@ directCommands:
   - name: --https-user
     summary: HTTPS username for private repository sync.
     description: ''
+  - name: --insecure
+    parameterValueGroup: false, true
+    summary: Communicate with a bucket without TLS.
+    description: ''
   - name: --interval --sync-interval
     summary: Time between reconciliations of the source on the cluster.
+    description: ''
+  - name: --kind
+    parameterValueGroup: bucket, git
+    summary: Source kind to reconcile.
     description: ''
   - name: --known-hosts
     summary: Base64-encoded known_hosts data containing public SSH keys required to access private Git instances.
@@ -342,6 +393,9 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --secret-key
+    summary: Secret Key used to authenticate with the bucket url.
     description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
@@ -363,7 +417,10 @@ directCommands:
     summary: Maximum time to reconcile the source before timing out.
     description: ''
   - name: --url -u
-    summary: URL of the git repo source to reconcile.
+    summary: URL of the source to reconcile.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 commands:
 - az_k8s-configuration_flux_create
