@@ -34,9 +34,7 @@ brew update && brew install azure-cli
 
 > [!IMPORTANT]
 >
-> The Azure CLI has a dependency on the Homebrew `python3` package, and will install it.
-> The Azure CLI is guaranteed to be compatible with the latest version of `python3`
-> published on Homebrew.
+> The Azure CLI has a dependency on the Homebrew `python@3.10` package, and will install it.
 
 ## Troubleshooting
 
@@ -49,11 +47,11 @@ The Homebrew formula of Azure CLI installs a completion file named `az` in the H
 ### Unable to find Python or installed packages
 
 There may be a minor version mismatch or other issue during homebrew installation. The CLI doesn't use a Python virtual environment, so it relies on finding
-the installed Python version. A possible fix is to install and relink the `python3` dependency from Homebrew.
+the installed Python version. A possible fix is to install and relink the `python@3.10` dependency from Homebrew.
 
 ```bash
-brew update && brew install python3 && brew upgrade python3
-brew link --overwrite python3
+brew update && brew install python@3.10 && brew upgrade python@3.10
+brew link --overwrite python@3.10
 ```
 
 ### CLI version 1.x is installed
