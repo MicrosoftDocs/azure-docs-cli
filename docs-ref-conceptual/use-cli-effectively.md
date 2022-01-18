@@ -148,7 +148,7 @@ Many commands offer a `--no-wait` parameter, which allows other commands to run.
 az group delete --name MyResourceGroup --no-wait
 ```
 
-When you remove a resource group, you also remove all the resources that belong to it. Reclaiming these resources can take a long time. When this command is run with the `--no-wait` parameter, the console can accept new commands immediately, even though it's still working on this command.
+When deleting a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. Running the command with the `--no-wait` parameter, allows the console to accept new commands without interrupting the removal.
 
 Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az_vm_wait) command to support creating independent resources in parallel:
 
