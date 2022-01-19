@@ -4,7 +4,7 @@ name: az iot central user
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az iot central user** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.24.1 or higher.  The extension will automatically install the first time you run an **az iot central user** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage and configure IoT Central users.
 description: ''
 directCommands:
@@ -20,6 +20,7 @@ directCommands:
                                [--central-api-uri]
                                [--email]
                                [--object-id]
+                               [--org-id]
                                [--tenant-id]
                                [--token]
   examples:
@@ -38,7 +39,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --role -r
-    summary: The role that will be associated with this token. You can specify one of the built-in roles, or specify the role ID of a custom role. See more at https://aka.ms/iotcentral-customrolesdocs.
+    summary: The role that will be associated with this token or user. You can specify one of the built-in roles, or specify the role ID of a custom role. See more at https://aka.ms/iotcentral-customrolesdocs.
     description: ''
   optionalParameters:
   - name: --api-version --av
@@ -51,13 +52,16 @@ directCommands:
     summary: 'The IoT Central DNS suffix associated with your application. Default value is: azureiotcentral.com.'
     description: ''
   - name: --email
-    summary: Email address of user to be added to the app.
+    summary: Email address of user to be added to the app. If this is specified, service principal parameters (tenant_id and object_id) will be ignored.
     description: ''
   - name: --object-id --oid
-    summary: Object ID for service principal to be added to the app. Tenant ID must also be specified.
+    summary: Object ID for service principal to be added to the app. Tenant ID must also be specified. If email is specified this gets ignored and the user will not be a service principal user but a standard "email" user.
+    description: ''
+  - name: --org-id --organization-id
+    summary: The ID of the organization for the user role assignment. Only available for api-version == 1.1-preview.
     description: ''
   - name: --tenant-id --tnid
-    summary: Tenant ID for service principal to be added to the app. Object ID must also be specified.
+    summary: Tenant ID for service principal to be added to the app. Object ID must also be specified. If email is specified this gets ignored and the user will not be a service principal user but a standard "email" user.
     description: ''
   - name: --token
     summary: If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
@@ -162,11 +166,68 @@ directCommands:
   - name: --token
     summary: If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
     description: ''
+- uid: az_iot_central_user_update
+  name: az iot central user update
+  summary: Update roles for a user in the application.
+  description: >-
+    Update a user with a different roles.
+
+    Updating the tenantId or objectId for a service principal user is not allowed.
+
+    Updating the email address for an email user is not allowed.
+  syntax: >-
+    az iot central user update --app-id
+                               --assignee
+                               [--api-version {1.0, 1.1-preview, preview}]
+                               [--central-api-uri]
+                               [--email]
+                               [--object-id]
+                               [--roles]
+                               [--tenant-id]
+                               [--token]
+  examples:
+  - summary: Update roles for a user by email or service principal in the application.
+    syntax: az iot central user update --user-id {userId} --app-id {appId} --roles "org1\admin"
+  requiredParameters:
+  - isRequired: true
+    name: --app-id -n
+    summary: The App ID of the IoT Central app you want to manage. You can find the App ID in the "About" page for your application under the help menu.
+    description: ''
+  - isRequired: true
+    name: --assignee --user-id
+    summary: ID associated with the user.
+    description: ''
+  optionalParameters:
+  - name: --api-version --av
+    defaultValue: "1.0"
+    parameterValueGroup: 1.0, 1.1-preview, preview
+    summary: The API version for the requested operation.
+    description: ''
+  - name: --central-api-uri --central-dns-suffix
+    defaultValue: azureiotcentral.com
+    summary: 'The IoT Central DNS suffix associated with your application. Default value is: azureiotcentral.com.'
+    description: ''
+  - name: --email
+    summary: Email address of user to be added to the app. If this is specified, service principal parameters (tenant_id and object_id) will be ignored.
+    description: ''
+  - name: --object-id --oid
+    summary: Object ID for service principal to be added to the app. Tenant ID must also be specified. If email is specified this gets ignored and the user will not be a service principal user but a standard "email" user.
+    description: ''
+  - name: --roles
+    summary: Comma-separated list of roles that will be associated with this user. You can specify one of the built-in roles, or specify the role ID of a custom role. See more at https://aka.ms/iotcentral-customrolesdocs. Organizations can be specified alongside roles when running with API version == 1.1-preview. E.g. "organization_idrole".
+    description: ''
+  - name: --tenant-id --tnid
+    summary: Tenant ID for service principal to be added to the app. Object ID must also be specified. If email is specified this gets ignored and the user will not be a service principal user but a standard "email" user.
+    description: ''
+  - name: --token
+    summary: If you'd prefer to submit your request without authenticating against the Azure CLI, you can specify a valid user token to authenticate your request. You must specify the type of key as part of the request. Learn more at https://aka.ms/iotcentraldocsapi.
+    description: ''
 commands:
 - az_iot_central_user_create
 - az_iot_central_user_delete
 - az_iot_central_user_list
 - az_iot_central_user_show
+- az_iot_central_user_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

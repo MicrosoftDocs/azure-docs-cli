@@ -18,15 +18,16 @@ directCommands:
                                      --name
                                      --resource-group
                                      --url
-                                     [--access-key]
                                      [--branch]
+                                     [--bucket-access-key]
+                                     [--bucket-insecure {false, true}]
                                      [--bucket-name]
+                                     [--bucket-secret-key]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
-                                     [--insecure {false, true}]
                                      [--interval]
                                      [--kind {bucket, git}]
                                      [--known-hosts]
@@ -36,7 +37,6 @@ directCommands:
                                      [--namespace]
                                      [--no-wait]
                                      [--scope {cluster, namespace}]
-                                     [--secret-key]
                                      [--semver]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
@@ -67,7 +67,7 @@ directCommands:
 
       --bucket-name my-bucket --kustomization name=my-kustomization \
 
-      --access-key my-access-key --secret-key my-secret-key
+      --bucket-access-key my-access-key --bucket-secret-key my-secret-key
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -91,14 +91,21 @@ directCommands:
     summary: URL of the source to reconcile.
     description: ''
   optionalParameters:
-  - name: --access-key
-    summary: Access Key Id used to authenticate with the bucket url.
-    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
     description: ''
+  - name: --bucket-access-key
+    summary: Access Key ID used to authenticate with the bucket.
+    description: ''
+  - name: --bucket-insecure
+    parameterValueGroup: false, true
+    summary: Communicate with a bucket without TLS.
+    description: ''
   - name: --bucket-name
-    summary: Name of the S3 bucket at the given url to connect to.
+    summary: Name of the S3 bucket to sync.
+    description: ''
+  - name: --bucket-secret-key
+    summary: Secret Key used to authenticate with the bucket.
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
@@ -114,10 +121,6 @@ directCommands:
     description: ''
   - name: --https-user
     summary: HTTPS username for private repository sync.
-    description: ''
-  - name: --insecure
-    parameterValueGroup: false, true
-    summary: Communicate with a bucket without TLS.
     description: ''
   - name: --interval --sync-interval
     summary: Time between reconciliations of the source on the cluster.
@@ -150,9 +153,6 @@ directCommands:
     defaultValue: cluster
     parameterValueGroup: cluster, namespace
     summary: Specify scope of the operator to be 'namespace' or 'cluster'.
-    description: ''
-  - name: --secret-key
-    summary: Secret Key used to authenticate with the bucket url.
     description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
@@ -290,15 +290,16 @@ directCommands:
                                      --cluster-type {connectedClusters, managedClusters}
                                      --name
                                      --resource-group
-                                     [--access-key]
                                      [--branch]
+                                     [--bucket-access-key]
+                                     [--bucket-insecure {false, true}]
                                      [--bucket-name]
+                                     [--bucket-secret-key]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
-                                     [--insecure {false, true}]
                                      [--interval]
                                      [--kind {bucket, git}]
                                      [--known-hosts]
@@ -306,7 +307,6 @@ directCommands:
                                      [--kustomization]
                                      [--local-auth-ref]
                                      [--no-wait]
-                                     [--secret-key]
                                      [--semver]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
@@ -325,6 +325,13 @@ directCommands:
       --url https://github.com/Azure/arc-k8s-demo --branch main \
 
       --kustomization name=my-kustomization path=./my/new-path
+  - summary: Update a Flux v2 Kubernetse configuration with Bucket Source Kind to connect insecurely
+    syntax: >-
+      az k8s-configuration flux update --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters --name myconfig \
+
+      --bucket-insecure
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -344,14 +351,21 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --access-key
-    summary: Access Key Id used to authenticate with the bucket url.
-    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
     description: ''
+  - name: --bucket-access-key
+    summary: Access Key ID used to authenticate with the bucket.
+    description: ''
+  - name: --bucket-insecure
+    parameterValueGroup: false, true
+    summary: Communicate with a bucket without TLS.
+    description: ''
   - name: --bucket-name
-    summary: Name of the S3 bucket at the given url to connect to.
+    summary: Name of the S3 bucket to sync.
+    description: ''
+  - name: --bucket-secret-key
+    summary: Secret Key used to authenticate with the bucket.
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
@@ -367,10 +381,6 @@ directCommands:
     description: ''
   - name: --https-user
     summary: HTTPS username for private repository sync.
-    description: ''
-  - name: --insecure
-    parameterValueGroup: false, true
-    summary: Communicate with a bucket without TLS.
     description: ''
   - name: --interval --sync-interval
     summary: Time between reconciliations of the source on the cluster.
@@ -393,9 +403,6 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --secret-key
-    summary: Secret Key used to authenticate with the bucket url.
     description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
