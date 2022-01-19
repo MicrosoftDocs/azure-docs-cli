@@ -9,7 +9,7 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: 
+keywords:
 ---
 # How to query Azure CLI command output using a JMESPath query
 
@@ -97,7 +97,7 @@ A common case is that you need to only get _one_ value out of a CLI command, suc
 sure that you're only getting one property out of the query. Modifying the last example to get only the admin username:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o json
 ```
 
 ```JSON
@@ -122,7 +122,7 @@ type information. The best output option that the CLI offers for this purpose is
 a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unquoted.
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o tsv
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
 ```
 
 ```output
@@ -170,7 +170,7 @@ The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 last section by changing the multiselect list to a hash:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }" -o json
 ```
 
 ```json
@@ -193,7 +193,7 @@ If `[]` appears at the start of the query, it flattens the CLI command result. T
 To get the name, OS, and administrator name for each VM in a resource group:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}' -o json
+az vm list -g QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" -o json
 ```
 
 ```json
@@ -220,7 +220,7 @@ When combined with the `--output table` output format, the column names match up
 hash:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
+az vm list -g QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
 ```output
@@ -246,7 +246,7 @@ This query expression flattens the `osProfile.linuxConfiguration.ssh.publicKeys`
 element:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }" -o json
 ```
 
 ```json
