@@ -4,7 +4,7 @@ name: az iot dps enrollment-group
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az iot dps enrollment-group** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.24.1 or higher.  The extension will automatically install the first time you run an **az iot dps enrollment-group** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage enrollment groups in an Azure IoT Hub Device Provisioning Service.
 description: ''
 directCommands:
@@ -13,9 +13,10 @@ directCommands:
   summary: Create an enrollment group in an Azure IoT Hub Device Provisioning Service.
   description: ''
   syntax: >-
-    az iot dps enrollment-group create --enrollment-id
+    az iot dps enrollment-group create --eid
                                        [--allocation-policy {custom, geoLatency, hashed, static}]
                                        [--api-version]
+                                       [--auth-type {key, login}]
                                        [--ca-name]
                                        [--certificate-path]
                                        [--dps-name]
@@ -46,7 +47,7 @@ directCommands:
     syntax: az iot dps enrollment-group create -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --allocation-policy custom --webhook-url {webhook_url} --api-version {api_version}
   requiredParameters:
   - isRequired: true
-    name: --enrollment-id --group-id
+    name: --eid --enrollment-id --gid --group-id
     summary: Enrollment group ID.
     description: ''
   optionalParameters:
@@ -56,6 +57,11 @@ directCommands:
     description: ''
   - name: --api-version --av
     summary: 'The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.'
+    description: ''
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iotdps-data-auth-type=<auth-type-value>`.
     description: ''
   - name: --ca-name --cn --root-ca-name
     summary: The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
@@ -116,17 +122,23 @@ directCommands:
   summary: Delete an enrollment group in an Azure IoT Hub Device Provisioning Service.
   description: ''
   syntax: >-
-    az iot dps enrollment-group delete --enrollment-id
+    az iot dps enrollment-group delete --eid
+                                       [--auth-type {key, login}]
                                        [--dps-name]
                                        [--etag]
                                        [--login]
                                        [--resource-group]
   requiredParameters:
   - isRequired: true
-    name: --enrollment-id --group-id
+    name: --eid --enrollment-id --gid --group-id
     summary: Enrollment group ID.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iotdps-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --dps-name -n
     summary: Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
     description: ''
@@ -144,11 +156,17 @@ directCommands:
   summary: List enrollments groups in an Azure IoT Hub Device Provisioning Service.
   description: ''
   syntax: >-
-    az iot dps enrollment-group list [--dps-name]
+    az iot dps enrollment-group list [--auth-type {key, login}]
+                                     [--dps-name]
                                      [--login]
                                      [--resource-group]
                                      [--top]
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iotdps-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --dps-name -n
     summary: Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
     description: ''
@@ -166,7 +184,8 @@ directCommands:
   summary: Get an enrollment group's details in an Azure IoT Hub Device Provisioning Service.
   description: ''
   syntax: >-
-    az iot dps enrollment-group show --enrollment-id
+    az iot dps enrollment-group show --eid
+                                     [--auth-type {key, login}]
                                      [--dps-name]
                                      [--keys {false, true}]
                                      [--login]
@@ -178,10 +197,15 @@ directCommands:
     syntax: az iot dps enrollment-group show --dps-name {dps_name} -g {resource_group} --enrollment-id {symmetric_key_enrollment_id} --show-keys
   requiredParameters:
   - isRequired: true
-    name: --enrollment-id --group-id
+    name: --eid --enrollment-id --gid --group-id
     summary: Enrollment group ID.
     description: ''
   optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iotdps-data-auth-type=<auth-type-value>`.
+    description: ''
   - name: --dps-name -n
     summary: Name of the Azure IoT Hub Device Provisioning Service. Required if --login is not provided.
     description: ''
@@ -200,9 +224,10 @@ directCommands:
   summary: Update an enrollment group in an Azure IoT Hub Device Provisioning Service.
   description: ''
   syntax: >-
-    az iot dps enrollment-group update --enrollment-id
+    az iot dps enrollment-group update --eid
                                        [--allocation-policy {custom, geoLatency, hashed, static}]
                                        [--api-version]
+                                       [--auth-type {key, login}]
                                        [--ca-name]
                                        [--certificate-path]
                                        [--dps-name]
@@ -234,7 +259,7 @@ directCommands:
     syntax: az iot dps enrollment-group update -g {resource_group_name} --dps-name {dps_name} --enrollment-id {enrollment_id} --primary-key {new_primary_key} --etag AAAAAAAAAAA=
   requiredParameters:
   - isRequired: true
-    name: --enrollment-id --group-id
+    name: --eid --enrollment-id --gid --group-id
     summary: Enrollment group ID.
     description: ''
   optionalParameters:
@@ -244,6 +269,11 @@ directCommands:
     description: ''
   - name: --api-version --av
     summary: 'The API version of the provisioning service types sent in the custom allocation request. Minimum supported version: 2018-09-01-preview.'
+    description: ''
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iotdps-data-auth-type=<auth-type-value>`.
     description: ''
   - name: --ca-name --cn --root-ca-name
     summary: The name of the primary root CA certificate. If attestation with a root CA certificate is desired then a root ca name must be provided.
