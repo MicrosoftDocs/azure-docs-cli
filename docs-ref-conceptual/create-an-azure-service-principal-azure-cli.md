@@ -30,9 +30,9 @@ This article shows you the steps for creating, getting information about, and re
 
 ## 1. Create a service principal
 
-Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command. 
+Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command. 
 
-The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list).
+The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
 
 When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: password-based authentication, and certificate-based authentication.
 
@@ -132,7 +132,7 @@ If you lose access to a certificate's private key, [reset the service principal 
 
 #### Retrieve certificate from Key Vault
 
-For certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
+For certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
 
 ```azurecli-interactive
 az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
@@ -141,7 +141,7 @@ openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 
 ## 2. Get an existing service principal
 
-A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az_ad_sp_list). By default this
+A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this
 command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` argument. Getting this list can take a long time, so it's
 recommended that you filter the list with one of the following arguments:
 
@@ -161,17 +161,17 @@ az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 
 > [!IMPORTANT]
 >
-> `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az_ad_sp_show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
-> Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az_keyvault_secret_show), but no other secrets are stored by default.
+> `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
+> Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default.
 > If you forget an authentication method or secret, [reset the service principal credentials](#6-reset-credentials).
 
 ## 3. Manage service principal roles
 
 The Azure CLI has the following commands to manage role assignments:
 
-* [az role assignment list](/cli/azure/role/assignment#az_role_assignment_list)
-* [az role assignment create](/cli/azure/role/assignment#az_role_assignment_create)
-* [az role assignment delete](/cli/azure/role/assignment#az_role_assignment_delete)
+* [az role assignment list](/cli/azure/role/assignment#az-role-assignment-list)
+* [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create)
+* [az role assignment delete](/cli/azure/role/assignment#az-role-assignment-delete)
 
 We recommend you use the **Contributor** role at minimum for a service principal. This role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access. For more information on Role-Based Access Control (RBAC) and roles, see [RBAC: Built-in roles](/azure/active-directory/role-based-access-built-in-roles).
 
@@ -216,10 +216,10 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
-* [az login](/cli/azure/reference-index#az_login)
-* [az group create](/cli/azure/group#az_group_create)
-* [az storage account create](/cli/azure/storage/account#az_storage_account_create)
-* [az storage account keys list](/cli/azure/storage/account/keys#az_storage_account_keys_list)
+* [az login](/cli/azure/reference-index#az-login)
+* [az group create](/cli/azure/group#az-group-create)
+* [az storage account create](/cli/azure/storage/account#az-storage-account-create)
+* [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
 To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
 
@@ -257,7 +257,7 @@ To sign in with a service principal, you need the `appId`, `tenant`, and `passwo
 
 ## 6. Reset credentials
 
-If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az_ad_sp_credential_reset). The reset command takes the same arguments
+If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same arguments
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive

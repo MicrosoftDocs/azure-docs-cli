@@ -19,7 +19,7 @@ With extensions, you gain access to experimental and pre-release commands along 
 
 ## How to find extensions
 
-To see the Azure CLI extensions provided and maintained by Microsoft, use the [az extension list-available](/cli/azure/extension#az_extension_list_available) command.
+To see the Azure CLI extensions provided and maintained by Microsoft, use the [az extension list-available](/cli/azure/extension#az-extension-list-available) command.
 
 ```azurecli-interactive
 az extension list-available --output table
@@ -31,7 +31,7 @@ We also host a [list of extensions](azure-cli-extensions-list.md) on the documen
 
 ### Install extensions manually
 
-Once you have found an extension to install, use [az extension add](/cli/azure/extension#az_extension_add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
+Once you have found an extension to install, use [az extension add](/cli/azure/extension#az-extension-add) to get it. If the extension is listed in `az extension list-available`, you can install the extension by name.
 
 ```azurecli-interactive
 az extension add --name <extension-name>
@@ -77,7 +77,7 @@ az config set extension.run_after_dynamic_install=no
 
 ## How to update extensions
 
-If an extension was installed by name, update it using [az extension update](/cli/azure/extension#az_extension_update).
+If an extension was installed by name, update it using [az extension update](/cli/azure/extension#az-extension-update).
 
 ```azurecli-interactive
 az extension update --name <extension-name>
@@ -90,7 +90,7 @@ Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.m
 
 ## How to uninstall extensions
 
-If you no longer need an extension, remove it with [az extension remove](/cli/azure/extension#az_extension_remove).
+If you no longer need an extension, remove it with [az extension remove](/cli/azure/extension#az-extension-remove).
 
 ```azurecli-interactive
 az extension remove --name <extension-name>

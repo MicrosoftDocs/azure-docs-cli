@@ -23,7 +23,7 @@ The Azure CLI syntax is a combination of references, commands, and parameters.  
 | Azure Service | Reference | Reference subservice | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
 | Azure CLI | [az config](/cli/azure/config) | | | az config | --local, --output -o
-| Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az_network_application_gateway_create) | --name, --resource-group, --capacity
+| Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
 | Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
 
 ## What are reference types?
@@ -55,7 +55,7 @@ Extensions aren't shipped as part of the CLI but run as CLI commands.  Some exte
 | az iot hub device identify create | | yes
 
 > [!IMPORTANT]
-> You must install an extension prior to use by running the [az extension add](/cli/azure/extension#az_extension_add) command.
+> You must install an extension prior to use by running the [az extension add](/cli/azure/extension#az-extension-add) command.
 
 You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
 
