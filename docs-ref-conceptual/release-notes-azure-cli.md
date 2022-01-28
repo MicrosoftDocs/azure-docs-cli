@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 01/04/2022
+ms.date: 02/01/2022
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,102 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## February 01, 2022
+
+Version 2.33.0
+
+### ACR
+
+* `az acr connected-registry create`: Add `--notifications` to support adding patterns for generating notification events on connected registry artifacts
+* `az acr connected-registry update`: Add `--add-notifications` and `--remove-notifications` to support adding or removing patterns for generating notification events on connected registry artifacts
+
+### AKS
+
+* `az aks nodepool add/update/upgrade`: Add new parameter `--aks-custom-headers` to support custom headers
+* `az aks create`: Add new parameter `--snapshot-id` to support creating a nodepool from snapshot when creating a cluster
+* `az aks nodepool add/upgrade`: Add new parameter `--snapshot-id` to support creating a nodepool from snapshot
+* `az aks snapshot create/delete/list/show`: Add new commands to support the management of snapshot related operations
+* `az aks update/az aks nodepool update`: Allow empty string as label value
+
+### App Config
+
+* [BREAKING CHANGE] Support app service slots
+
+### App Service
+
+* `az webapp vnet-integration add`: Fix a bug that prevented adding a vnet in a different subscription from the webapp
+* `az functionapp vnet-integration add`: Fix a bug that prevented adding a vnet in a different subscription from the functionapp
+* `az webapp create`: Support joining a vnet in a different subscription
+* `az functionapp create`: Support joining a vnet in a different subscription
+* `az functionapp create` : Remove preview from PowerShell runtime for linux
+* `az appservice plan update`: Add `--elastic-scale` and `--max-elastic-worker-count` parameters to support elastic scale
+* `az webapp update`: Add `--minimum-elastic-instance-count` and `--prewarmed-instance-count` parameters to support setting instance count
+* `az webapp up`: Add help text and debug text for configuration saving and loading
+* `az webapp list-runtimes`: Support node 16-lts runtime for linux and windows
+
+### Batch
+
+* `az batch create/activate`: Add clarify application package path help info for argument `--package-file`
+
+### Bot Service
+
+* `az bot create`: Add location as specified by user to bot creation for regionality/EUDB
+
+### Compute 
+
+* `az image builder create`: Add new parameter `--proxy-vm-size` to support proxy VM size customization
+* `az image builder create`: Add new parameter `--build-vm-identities` to support user assigned identities customization
+* `az vmss update`: Add new parameter `--force-deletion` to support force delete VMSS
+* `az vm/vmss create`: Add warning log and modify help to inform that the default value `Contributor` of `--role` will be removed
+* `az disk-encryption-set create`: Make the parameter `--source-vault` un-required
+* `az vm create/update`: Add new parameters `--v-cpus-available` and `--v-cpus-per-core` to support VMSize customization
+
+### Cosmos DB
+
+* `az managed-cassandra cluster status`: Add table format support
+
+### Key Vault
+
+* `az keyvault create`: Add default permissions on keyvault creation
+
+### Monitor
+
+* `az monitor action-group`: Support event hub receiver
+
+### NetAppFiles
+
+* `az netappfiles account ad add`: Add new optional parameter named encrypt-dc-connections
+* `az netappfiles volume export-policy add`: Add missing optional parameters kerberos5_read_only, kerberos5_read_write, kerberos5i_read_only, kerberos5i_read_write, kerberos5_p_read_only, kerberos5_p_read_write, has_root_access, chown_mode
+* `az netappfiles account ad update`: Add command
+
+### Network
+
+* Add Microsoft.DataFactory/factories to supported Private Endpoints
+* Add Microsoft.Databricks/workspaces to supported private endpoints
+* `az network private-endpoint`: Add parameter and subgroup to support IP Configuration, ASG and NicName
+* `az network traffic-manager endpoint create/update`: Add new arguments `--min-child-ipv4` and `--min-child-ipv6`.
+* Add Microsoft.HybridCompute/privateLinkScopes to supported Private Endpoints
+
+### Packaging
+
+* Update Dockerfile base image from Alpine 3.14 to 3.15
+
+### RDBMS
+
+* `az postgres flexible-server create`: Change default postgres version
+
+### Redis
+
+* `az redis create`: Add default value for identity and public network access as `None`
+
+### ServiceConnector
+
+* Support new target resources: servicebus, eventhub, appconfig
+
+### Storage
+
+* Stop supporting `--auth-mode login` for `az storage blob sync` and `az storage fs directory upload/download`
 
 ## January 04, 2022
 
