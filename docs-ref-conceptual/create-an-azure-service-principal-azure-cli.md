@@ -1,6 +1,6 @@
 ---
 title: Create an Azure service principal – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed. 
+description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -30,7 +30,7 @@ This article shows you the steps for creating, getting information about, and re
 
 ## 1. Create a service principal
 
-Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az-ad-sp-create-for-rbac) command. 
+Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command.
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
 
