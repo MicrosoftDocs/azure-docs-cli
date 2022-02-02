@@ -47,7 +47,7 @@ In order to use command-line tools, change the command to remove the custom JSON
 the shell `read` command to load results into multiple variables. Since two values are displayed on separate lines, the `read` command
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
-```bash
+```azurecli
 read -d '' ipId subnetId <<< $(az network nic show \
   --ids $nicId \
   --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
@@ -56,7 +56,7 @@ read -d '' ipId subnetId <<< $(az network nic show \
 
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI, it will not be needed for the rest of the tutorial.
 
-```bash
+```azurecli
 vmIpAddress=$(az network public-ip show --ids $ipId \
   --query ipAddress \
   -o tsv)

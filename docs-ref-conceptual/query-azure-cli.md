@@ -108,7 +108,7 @@ This looks like a valid single value, but note that the `"` characters are retur
 that the object is a JSON string. It's important to note that when you assign this value directly as output from the command
 to an environment variable, the quotes may __not__ be interpreted by the shell:
 
-```bash
+```azurecli
 USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
 echo $USER
 ```
@@ -360,7 +360,7 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 To start experimenting with JMESPath, the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package offers an interactive environment to work
 with queries. Data is piped as input, and then queries are written and run in the editor.
 
-```bash
+```azurecli
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
