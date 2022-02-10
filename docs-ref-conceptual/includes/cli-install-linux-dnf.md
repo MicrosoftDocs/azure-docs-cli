@@ -80,31 +80,31 @@ You can also do it step by step:
 First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
-$ sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
+sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
 # build openssl from source
-$ cd ~
-$ wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
-$ tar -xzf openssl-1.1.1d.tar.gz
-$ cd openssl-1.1.1d
-$ ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl
-$ make
-$ sudo make install
+cd ~
+wget https://www.openssl.org/source/openssl-1.1.1d.tar.gz
+tar -xzf openssl-1.1.1d.tar.gz
+cd openssl-1.1.1d
+./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl
+make
+sudo make install
 # configure shared object lookup directory so that libssl.so.1.1 can be found
-$ echo "/usr/local/ssl/lib" | sudo tee /etc/ld.so.conf.d/openssl-1.1.1d.conf
+echo "/usr/local/ssl/lib" | sudo tee /etc/ld.so.conf.d/openssl-1.1.1d.conf
 # reload config
-$ sudo ldconfig -v
+sudo ldconfig -v
 ```
 
 Then build Python 3 from source:
 
 ```bash
-$ PYTHON_VERSION="3.6.9"
-$ PYTHON_SRC_DIR=$(mktemp -d)
-$ wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
-$ cd $PYTHON_SRC_DIR/Python-$PYTHON_VERSION
-$ ./configure --prefix=/usr --with-openssl=/usr/local/ssl
-$ make
-$ sudo make install
+PYTHON_VERSION="3.6.9"
+PYTHON_SRC_DIR=$(mktemp -d)
+wget -qO- https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz | tar -xz -C "$PYTHON_SRC_DIR"
+cd $PYTHON_SRC_DIR/Python-$PYTHON_VERSION
+./configure --prefix=/usr --with-openssl=/usr/local/ssl
+make
+sudo make install
 ```
 
 Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure CLI repository. You can now download the package and install it without dependency.
@@ -114,14 +114,14 @@ Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure
 > In case you don't have the dnf download plugin installed, you will encounter command not found error on executing the below code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
 
 ```bash
-$ sudo dnf download azure-cli
-$ sudo rpm -ivh --nodeps azure-cli-*.rpm
+sudo dnf download azure-cli
+sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
 As an alternative, you can also install Python 3 through some [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Following this way, if you have set up `python3` but are still getting an error `python3: command not found` when trying to run the cli, you need to add it to your path.
 
 ```bash
-$ scl enable rh-python36 bash
+scl enable rh-python36 bash
 ```
 
 ### Proxy blocks connection
