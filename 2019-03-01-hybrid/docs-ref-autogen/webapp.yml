@@ -303,8 +303,7 @@ directCommands:
   summary: List web apps.
   description: ''
   syntax: >-
-    az webapp list [--query-examples]
-                   [--resource-group]
+    az webapp list [--resource-group]
                    [--subscription]
   examples:
   - summary: List all web apps in MyResourceGroup.
@@ -314,9 +313,6 @@ directCommands:
   - summary: List all running web apps.
     syntax: az webapp list --query "[?state=='Running']"
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -428,7 +424,6 @@ directCommands:
   syntax: >-
     az webapp show [--ids]
                    [--name]
-                   [--query-examples]
                    [--resource-group]
                    [--slot]
                    [--subscription]
@@ -441,9 +436,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -555,7 +547,7 @@ directCommands:
     description: ''
 - uid: az_webapp_up
   name: az webapp up
-  summary: Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app.
+  summary: Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app. Each time the command is successfully run, default argument values for resource group, sku, location, plan, and name are saved for the current directory. These defaults are then used for any arguments not provided on subsequent runs of the command in the same directory.  Use 'az configure' to manage defaults.
   description: ''
   syntax: >-
     az webapp up [--app-service-environment]
@@ -619,7 +611,7 @@ directCommands:
     summary: Set the OS type for the app to be created.
     description: ''
   - name: --plan -p
-    summary: Name of the appserviceplan associated with the webapp.
+    summary: Name of the app service plan associated with the webapp.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -645,7 +637,9 @@ directCommands:
                      [--force-string]
                      [--https-only {false, true}]
                      [--ids]
+                     [--minimum-elastic-instance-count]
                      [--name]
+                     [--prewarmed-instance-count]
                      [--remove]
                      [--resource-group]
                      [--set]
@@ -681,8 +675,14 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --minimum-elastic-instance-count -i
+    summary: Minimum number of instances. App must be in an elastic scale App Service Plan.
+    description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - name: --prewarmed-instance-count -w
+    summary: Number of preWarmed instances. App must be in an elastic scale App Service Plan.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -797,17 +797,20 @@ commands:
 - az_webapp_config_storage-account_update
 - az_webapp_connection
 - az_webapp_connection_create
+- az_webapp_connection_create_appconfig
 - az_webapp_connection_create_confluent-cloud
 - az_webapp_connection_create_cosmos-cassandra
 - az_webapp_connection_create_cosmos-gremlin
 - az_webapp_connection_create_cosmos-mongo
 - az_webapp_connection_create_cosmos-sql
 - az_webapp_connection_create_cosmos-table
+- az_webapp_connection_create_eventhub
 - az_webapp_connection_create_keyvault
 - az_webapp_connection_create_mysql
 - az_webapp_connection_create_mysql-flexible
 - az_webapp_connection_create_postgres
 - az_webapp_connection_create_postgres-flexible
+- az_webapp_connection_create_servicebus
 - az_webapp_connection_create_signalr
 - az_webapp_connection_create_storage-blob
 - az_webapp_connection_create_storage-file
@@ -819,17 +822,20 @@ commands:
 - az_webapp_connection_list-support-types
 - az_webapp_connection_show
 - az_webapp_connection_update
+- az_webapp_connection_update_appconfig
 - az_webapp_connection_update_confluent-cloud
 - az_webapp_connection_update_cosmos-cassandra
 - az_webapp_connection_update_cosmos-gremlin
 - az_webapp_connection_update_cosmos-mongo
 - az_webapp_connection_update_cosmos-sql
 - az_webapp_connection_update_cosmos-table
+- az_webapp_connection_update_eventhub
 - az_webapp_connection_update_keyvault
 - az_webapp_connection_update_mysql
 - az_webapp_connection_update_mysql-flexible
 - az_webapp_connection_update_postgres
 - az_webapp_connection_update_postgres-flexible
+- az_webapp_connection_update_servicebus
 - az_webapp_connection_update_signalr
 - az_webapp_connection_update_storage-blob
 - az_webapp_connection_update_storage-file

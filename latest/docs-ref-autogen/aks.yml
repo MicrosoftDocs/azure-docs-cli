@@ -156,6 +156,7 @@ directCommands:
                   [--service-cidr]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
+                  [--snapshot-id]
                   [--ssh-key-value]
                   [--subscription]
                   [--tags]
@@ -222,6 +223,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --aks-custom-headers WindowsContainerRuntime=containerd,AKSHTTPCustomFeatures=Microsoft.ContainerService/CustomNodeConfigPreview
   - summary: Create a kubernetes cluster with FIPS-enabled OS
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-fips-image
+  - summary: create a kubernetes cluster with a snapshot id.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -446,7 +449,6 @@ directCommands:
     summary: Public IP prefix ID used to assign public IPs to VMSS nodes.
     description: ''
   - name: --node-vm-size -s
-    defaultValue: Standard_DS2_v2
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --nodepool-labels
@@ -487,6 +489,9 @@ directCommands:
   - name: --skip-subnet-role-assignment
     summary: Skip role assignment for subnet (advanced networking).
     description: If specified, please make sure your service principal has the access to your subnet.
+  - name: --snapshot-id
+    summary: The source snapshot id used to create this cluster.
+    description: ''
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
     summary: Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
@@ -924,13 +929,9 @@ directCommands:
   summary: List managed Kubernetes clusters.
   description: ''
   syntax: >-
-    az aks list [--query-examples]
-                [--resource-group]
+    az aks list [--resource-group]
                 [--subscription]
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -1044,7 +1045,6 @@ directCommands:
   syntax: >-
     az aks show --name
                 --resource-group
-                [--query-examples]
                 [--subscription]
   examples:
   - summary: Show the details for a managed Kubernetes cluster
@@ -1059,9 +1059,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -1651,5 +1648,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/14/2021
+  ms.date: 01/26/2022
   description: Manage Azure Kubernetes Services.

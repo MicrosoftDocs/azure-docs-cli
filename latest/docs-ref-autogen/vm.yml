@@ -202,7 +202,7 @@ directCommands:
                  [--host]
                  [--host-group]
                  [--image]
-                 [--license-type {None, RHEL_BASE, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
+                 [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                  [--location]
                  [--max-price]
                  [--nic-delete-option]
@@ -248,6 +248,8 @@ directCommands:
                  [--ultra-ssd-enabled {false, true}]
                  [--use-unmanaged-disk]
                  [--user-data]
+                 [--v-cpus-available]
+                 [--v-cpus-per-core]
                  [--validate]
                  [--vmss]
                  [--vnet-address-prefix]
@@ -297,7 +299,7 @@ directCommands:
       az vm create -g group-name -n vm-name --admin-username deploy  \
         --image debian --secrets "$vm_secrets"
   - summary: Create a CentOS VM with a system assigned identity. The VM will have a 'Contributor' role with access to a storage account.
-    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity [system] --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity [system] --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1 --role Contributor
   - summary: Create a debian VM with a user assigned identity.
     syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM with both system and user assigned identity.
@@ -431,7 +433,7 @@ directCommands:
     description: ''
     valueFrom: az vm image list, az vm image show, az sig image-version show-shared
   - name: --license-type
-    parameterValueGroup: None, RHEL_BASE, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
     summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --location -l
@@ -522,7 +524,7 @@ directCommands:
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role name or id the system assigned identity will have.
+    summary: Role name or id the system assigned identity will have. Please note that the default value "Contributor" will be removed in the future, so please specify '--role' and '--scope' at the same time when assigning a role to the managed identity.
     description: ''
   - name: --scope
     summary: Scope that the system assigned identity can access.
@@ -583,6 +585,12 @@ directCommands:
     description: ''
   - name: --user-data
     summary: UserData for the VM. It can be passed in as file or string.
+    description: ''
+  - name: --v-cpus-available
+    summary: Specify the number of vCPUs available for the VM.
+    description: ''
+  - name: --v-cpus-per-core
+    summary: Specify the ratio of vCPU to physical core. Setting this property to 1 also means that hyper-threading is disabled.
     description: ''
   - name: --validate
     summary: Generate and validate the ARM template without creating any resources.
@@ -847,8 +855,7 @@ directCommands:
   summary: List details of Virtual Machines.
   description: '`--resource-group` can pass in an empty string as a parameter, which will output all VM information under the subscription. For more information on querying information about Virtual Machines, see https://docs.microsoft.com/cli/azure/query-az-cli2.'
   syntax: >-
-    az vm list [--query-examples]
-               [--resource-group]
+    az vm list [--resource-group]
                [--show-details]
                [--subscription]
   examples:
@@ -859,9 +866,6 @@ directCommands:
   - summary: List all VMs by resource group with details.
     syntax: az vm list -g MyResourceGroup -d
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -1231,7 +1235,6 @@ directCommands:
     az vm show [--ids]
                [--include-user-data]
                [--name]
-               [--query-examples]
                [--resource-group]
                [--show-details]
                [--subscription]
@@ -1249,9 +1252,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -1377,7 +1377,7 @@ directCommands:
                  [--host]
                  [--host-group]
                  [--ids]
-                 [--license-type {None, RHEL_BASE, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
+                 [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                  [--max-price]
                  [--name]
                  [--no-wait]
@@ -1391,6 +1391,8 @@ directCommands:
                  [--subscription]
                  [--ultra-ssd-enabled {false, true}]
                  [--user-data]
+                 [--v-cpus-available]
+                 [--v-cpus-per-core]
                  [--workspace]
                  [--write-accelerator]
   examples:
@@ -1457,7 +1459,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --license-type
-    parameterValueGroup: None, RHEL_BASE, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
     summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --max-price
@@ -1500,6 +1502,12 @@ directCommands:
     description: ''
   - name: --user-data
     summary: UserData for the VM. It can be passed in as file or string. If empty string is passed in, the existing value will be deleted.
+    description: ''
+  - name: --v-cpus-available
+    summary: Specify the number of vCPUs available for the VM.
+    description: ''
+  - name: --v-cpus-per-core
+    summary: Specify the ratio of vCPU to physical core. Setting this property to 1 also means that hyper-threading is disabled.
     description: ''
   - name: --workspace
     summary: Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
@@ -1720,5 +1728,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/18/2021
+  ms.date: 01/17/2022
   description: Manage Linux or Windows virtual machines.

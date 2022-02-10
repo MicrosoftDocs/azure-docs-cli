@@ -12,6 +12,7 @@ directCommands:
     az aks nodepool add --cluster-name
                         --name
                         --resource-group
+                        [--aks-custom-headers]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
@@ -36,6 +37,7 @@ directCommands:
                         [--os-type]
                         [--ppg]
                         [--priority {Regular, Spot}]
+                        [--snapshot-id]
                         [--spot-max-price]
                         [--subscription]
                         [--tags]
@@ -52,6 +54,8 @@ directCommands:
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --os-sku Ubuntu
   - summary: Create a nodepool with FIPS-enabled OS
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-fips-image
+  - summary: create a kubernetes cluster with a snapshot id.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -66,6 +70,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
@@ -136,7 +143,6 @@ directCommands:
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --os-type
-    defaultValue: Linux
     summary: The OS Type. Linux or Windows.
     description: ''
   - name: --ppg
@@ -146,6 +152,9 @@ directCommands:
     defaultValue: Regular
     parameterValueGroup: Regular, Spot
     summary: The priority of the node pool.
+    description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to create this nodepool.
     description: ''
   - name: --spot-max-price
     defaultValue: nan
@@ -233,7 +242,6 @@ directCommands:
   syntax: >-
     az aks nodepool list --cluster-name
                          --resource-group
-                         [--query-examples]
                          [--subscription]
   requiredParameters:
   - isRequired: true
@@ -245,9 +253,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -296,7 +301,6 @@ directCommands:
     az aks nodepool show --cluster-name
                          --name
                          --resource-group
-                         [--query-examples]
                          [--subscription]
   requiredParameters:
   - isRequired: true
@@ -312,9 +316,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -393,6 +394,7 @@ directCommands:
     az aks nodepool update --cluster-name
                            --name
                            --resource-group
+                           [--aks-custom-headers]
                            [--disable-cluster-autoscaler]
                            [--enable-cluster-autoscaler]
                            [--labels]
@@ -425,6 +427,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
@@ -468,10 +473,12 @@ directCommands:
     az aks nodepool upgrade --cluster-name
                             --name
                             --resource-group
+                            [--aks-custom-headers]
                             [--kubernetes-version]
                             [--max-surge]
                             [--no-wait]
                             [--node-image-only]
+                            [--snapshot-id]
                             [--subscription]
   requiredParameters:
   - isRequired: true
@@ -487,6 +494,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to upgrade the node pool to, such as "1.16.9".
     description: ''
@@ -498,6 +508,9 @@ directCommands:
     description: ''
   - name: --node-image-only
     summary: Only upgrade agent pool's node image.
+    description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to upgrade this nodepool.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -531,5 +544,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/14/2021
+  ms.date: 01/26/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

@@ -55,7 +55,7 @@ Version 2.33.0
 
 * `az bot create`: Add location as specified by user to bot creation for regionality/EUDB
 
-### Compute 
+### Compute
 
 * `az image builder create`: Add new parameter `--proxy-vm-size` to support proxy VM size customization
 * `az image builder create`: Add new parameter `--build-vm-identities` to support user assigned identities customization
@@ -138,7 +138,7 @@ Version 2.32.0
 * `az backup protectable-item list/show`: Add auto-protection policy and node-list field in the response for SQLInstance SQLAG
 * `az backup protection auto-enable-for-azurewl/auto-disable-for-azurewl`: Add support for SQLAG
 
-### Compute 
+### Compute
 
 * `az vm/vmss create/update`: Expand validate license types for `--license-type` parameter
 * `az sig image-definition list-shared`: Add new parameters `--marker` and `--show-next-marker` to support paging
@@ -610,12 +610,9 @@ Version 2.28.0
 * `az acr task credential`: Fix the issue where task credentials were not used
 * `az acr task logs`: Fix the AttributeError when querying the task logs
 
-### ACS
-
-* [BREAKING CHANGE] `az aks nodepool update`: Change rejecting the ability to use max-surge with node-image-only
-
 ### AKS
 
+* [BREAKING CHANGE] `az aks nodepool update`: Change rejecting the ability to use max-surge with node-image-only
 * `az aks install-cli`: Add support for kubelogin darwin/arm64 releases
 * Fix incorrectly passed parameter for option `--assign-kubelet-identity` in aks create sub-command
 * Upgrade api-version to `2021-07-01` for ACS module
