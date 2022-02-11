@@ -142,7 +142,7 @@ Use Microsoft's comprehensive set of development tools to build, manage, and con
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps?view=azure-cli-latest&preserve-view=true#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
+|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
 | |[Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app?pivots=platform-linux)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
