@@ -50,7 +50,7 @@ For more information about querying Azure CLI output see [How to query Azure CLI
 
 Go ahead and assign the NIC object ID to an shell variable now.
 
-```bash
+```azurecli
 nicId=$(az vm show \
   -n $vmName \
   -g $resourceGroup \
