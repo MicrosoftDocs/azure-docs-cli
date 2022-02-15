@@ -1,11 +1,11 @@
 ---
-title: Summary of virtual machine resources (VM) – Azure CLI | Microsoft Docs
+title: Summary of virtual machine resources (VM) - Azure CLI | Microsoft Docs
 description: Summary of what was taught in the virtual machine tutorial.
 ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli

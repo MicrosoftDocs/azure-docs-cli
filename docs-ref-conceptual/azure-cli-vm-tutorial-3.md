@@ -1,11 +1,11 @@
 ---
-title: Create a virtual machines (VM) – Azure CLI | Microsoft Docs
+title: Create a virtual machines (VM) - Azure CLI | Microsoft Docs
 description: Learn how to create virtual machines (VM) connected to a virtual network (VNet) with the Azure CLI .
 ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli

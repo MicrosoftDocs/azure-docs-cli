@@ -8,7 +8,7 @@ ms.date: 02/12/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 keywords: az extension, azure cli extensions, azure extensions
 ---

@@ -1,11 +1,11 @@
 ---
-title: Set shell variables from CLI output – Azure CLI | Microsoft Docs
+title: Set shell variables from CLI output - Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information and store results in an Azure CLI shell variable.
 ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azure-cli
+ms.devlang: azurecli
 ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
