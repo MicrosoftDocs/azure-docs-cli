@@ -4,7 +4,7 @@ name: az aks
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **aks-preview** extension for Azure CLI and requires version 2.31.0 or higher.  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **aks-preview** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure Kubernetes Services.
 description: ''
 directCommands:
@@ -70,6 +70,7 @@ directCommands:
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--client-secret]
                   [--cluster-autoscaler-profile]
+                  [--crg-id]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
@@ -214,6 +215,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   - summary: create a kubernetes cluster with a snapshot id.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
+  - summary: create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
+    syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity CRG-RG-ID --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -288,6 +291,9 @@ directCommands:
     description: ''
   - name: --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --crg-id
+    summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
     description: ''
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
