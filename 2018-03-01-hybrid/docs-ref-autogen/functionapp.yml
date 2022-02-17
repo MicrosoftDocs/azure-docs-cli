@@ -4,7 +4,7 @@ name: az functionapp
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **appservice-kube** extension for the Azure CLI  (version 2.26.0 or higher).  The extension will automatically install the first time you run an **az functionapp** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **appservice-kube** extension for the Azure CLI  (version 2.33.0 or higher).  The extension will automatically install the first time you run an **az functionapp** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage function apps. To install the Azure Functions Core tools see https://github.com/Azure/azure-functions-core-tools.
 description: ''
 directCommands:
@@ -18,6 +18,7 @@ directCommands:
                           --storage-account
                           [--app-insights]
                           [--app-insights-key]
+                          [--assign-identity]
                           [--consumption-plan-location]
                           [--custom-location]
                           [--deployment-container-image-name]
@@ -27,13 +28,15 @@ directCommands:
                           [--disable-app-insights {false, true}]
                           [--docker-registry-server-password]
                           [--docker-registry-server-user]
-                          [--functions-version {2, 3}]
+                          [--functions-version {2, 3, 4}]
                           [--max-worker-count]
                           [--min-worker-count]
                           [--os-type {Linux, Windows}]
                           [--plan]
-                          [--runtime {dotnet, java, node, powershell, python}]
+                          [--role]
+                          [--runtime {custom, dotnet, dotnet-isolated, java, node, powershell, python}]
                           [--runtime-version]
+                          [--scope]
                           [--tags]
   examples:
   - summary: Create a basic function app.
@@ -66,6 +69,9 @@ directCommands:
   - name: --app-insights-key
     summary: Instrumentation key of App Insights to be added.
     description: ''
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    description: ''
   - name: --consumption-plan-location -c
     summary: Geographic location where Function App will be hosted. Use `az functionapp list-consumption-locations` to view available locations.
     description: ''
@@ -96,7 +102,7 @@ directCommands:
     summary: The container registry server username.
     description: ''
   - name: --functions-version
-    parameterValueGroup: 2, 3
+    parameterValueGroup: 2, 3, 4
     summary: The functions app version.
     description: ''
   - name: --max-worker-count
@@ -112,12 +118,19 @@ directCommands:
   - name: --plan -p
     summary: Name or resource id of the function app service plan. Use 'appservice plan create' to get one.
     description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
   - name: --runtime
-    parameterValueGroup: dotnet, java, node, powershell, python
+    parameterValueGroup: custom, dotnet, dotnet-isolated, java, node, powershell, python
     summary: The functions runtime stack.
     description: ''
   - name: --runtime-version
     summary: 'The version of the functions runtime stack. Allowed values for each --runtime are: node -> [8, 10, 12], python -> [3.6, 3.7, 3.8], java -> [8].'
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'

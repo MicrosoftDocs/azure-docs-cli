@@ -104,6 +104,7 @@ directCommands:
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                  [--host-group-id]
                   [--http-proxy-config]
                   [--ip-families]
                   [--kubelet-config]
@@ -122,7 +123,7 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--network-plugin {azure, kubenet}]
+                  [--network-plugin {azure, kubenet, none}]
                   [--network-policy]
                   [--no-ssh-key]
                   [--no-wait]
@@ -217,6 +218,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   - summary: create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity CRG-RG-ID --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
+  - summary: create a kubernetes cluster with support of hostgroup id.
+    syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.13 --location westus2 --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
+  - summary: Create a kubernetes cluster with no CNI installed.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -417,6 +422,9 @@ directCommands:
     parameterValueGroup: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
     description: ''
+  - name: --host-group-id
+    summary: (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
+    description: ''
   - name: --http-proxy-config
     summary: Http Proxy configuration for this cluster.
     description: ''
@@ -462,7 +470,7 @@ directCommands:
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
-    description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+    description: If not specified, defaults based on network-plugin. 30 for "azure", 110 for "kubenet", or 250 for "none".
   - name: --min-count
     summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
     description: ''
@@ -473,9 +481,9 @@ directCommands:
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --network-plugin
-    parameterValueGroup: azure, kubenet
+    parameterValueGroup: azure, kubenet, none
     summary: The Kubernetes network plugin to use.
-    description: Specify "azure" for advanced networking configurations. Defaults to "kubenet".
+    description: Specify "azure" for routable pod IPs from VNET, "kubenet" for non-routable pod IPs with an overlay network, or "none" for no networking configured.
   - name: --network-policy
     summary: (PREVIEW) The Kubernetes network policy to use.
     description: >-

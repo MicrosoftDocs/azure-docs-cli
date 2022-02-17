@@ -25,6 +25,7 @@ directCommands:
                         [--enable-ultra-ssd]
                         [--eviction-policy {Deallocate, Delete}]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                        [--host-group-id]
                         [--kubelet-config]
                         [--kubernetes-version]
                         [--labels]
@@ -66,6 +67,8 @@ directCommands:
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   - summary: create a nodepool with a Capacity Reservation Group(CRG) ID.
     syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --node-vm-size VMSize --crg-id "/subscriptions/SubID/resourceGroups/ResourceGroupName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
+  - summary: create a nodepool in an existing AKS cluster with host group id
+    syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -110,6 +113,9 @@ directCommands:
     parameterValueGroup: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
     summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
     description: ''
+  - name: --host-group-id
+    summary: (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
+    description: ''
   - name: --kubelet-config
     summary: Kubelet configurations for agent nodes.
     description: ''
@@ -128,7 +134,7 @@ directCommands:
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
-    description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+    description: If not specified, defaults based on network-plugin. 30 for "azure", 110 for "kubenet", or 250 for "none".
   - name: --max-surge
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
