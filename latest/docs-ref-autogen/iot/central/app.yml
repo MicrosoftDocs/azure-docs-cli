@@ -17,15 +17,18 @@ directCommands:
                               --subdomain
                               [--display-name]
                               [--location]
+                              [--mi-system-assigned]
                               [--no-wait]
-                              [--sku {F1, S1, ST0, ST1, ST2}]
+                              [--sku {ST0, ST1, ST2}]
                               [--subscription]
                               [--template]
   examples:
   - summary: Create an IoT Central application in the region of the resource group using the default pricing SKU.
-    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates
-  - summary: Create an IoT Central application the in the 'United States' region with the 'ST1' pricing plan and an industry template.
-    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l unitedstates -p ST1 -t iotc-distribution
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app
+  - summary: Create an IoT Central application the in the 'East US' region with the 'ST1' pricing plan and an industry template.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app -l eastus -p ST1 -t iotc-distribution
+  - summary: Create an IoT Central application using system-assigned managed identity.
+    syntax: az iot central app create -n my-first-iot-app -g MyResourceGroup -s my-iot-app --mi-system-assigned
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -46,12 +49,15 @@ directCommands:
   - name: --location -l
     summary: Where your app's info and resources are stored. We will default to the location of the target resource group. See documentation for a full list of supported locations.
     description: ''
+  - name: --mi-system-assigned
+    summary: Provide this flag to use system assigned identity.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku -p
     defaultValue: ST2
-    parameterValueGroup: F1, S1, ST0, ST1, ST2
+    parameterValueGroup: ST0, ST1, ST2
     summary: Pricing plan for IoT Central application.
     description: ''
   - name: --subscription
@@ -102,8 +108,7 @@ directCommands:
   summary: List IoT Central applications.
   description: All of the IoT Central apps that are part of your subscription.
   syntax: >-
-    az iot central app list [--query-examples]
-                            [--resource-group]
+    az iot central app list [--resource-group]
                             [--subscription]
   examples:
   - summary: List all IoT Central apps in my subscription.
@@ -111,9 +116,6 @@ directCommands:
   - summary: List all IoT Central apps in the resource group 'MyResourceGroup' within my subscription.
     syntax: az iot central app list -g MyResourceGroup
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -127,7 +129,6 @@ directCommands:
   description: Information about your app, like app name, subdomain, pricing plan, and location.
   syntax: >-
     az iot central app show --name
-                            [--query-examples]
                             [--resource-group]
                             [--subscription]
   examples:
@@ -141,9 +142,6 @@ directCommands:
     summary: IoT Central application name.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -197,6 +195,10 @@ directCommands:
 commands:
 - az_iot_central_app_create
 - az_iot_central_app_delete
+- az_iot_central_app_identity
+- az_iot_central_app_identity_assign
+- az_iot_central_app_identity_remove
+- az_iot_central_app_identity_show
 - az_iot_central_app_list
 - az_iot_central_app_show
 - az_iot_central_app_update
@@ -217,5 +219,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/30/2021
+  ms.date: 01/27/2022
   description: Create, delete, view, and update your IoT Central apps.

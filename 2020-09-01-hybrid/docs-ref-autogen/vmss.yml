@@ -33,8 +33,11 @@ directCommands:
                    [--data-disk-sizes-gb]
                    [--disable-overprovision]
                    [--dns-servers]
+                   [--enable-agent {false, true}]
+                   [--enable-auto-update {false, true}]
                    [--encryption-at-host {false, true}]
                    [--ephemeral-os-disk {false, true}]
+                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
                    [--generate-ssh-keys]
                    [--health-probe]
@@ -44,7 +47,7 @@ directCommands:
                    [--lb]
                    [--lb-nat-pool-name]
                    [--lb-sku {Basic, Standard}]
-                   [--license-type {None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server}]
+                   [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                    [--location]
                    [--max-price]
                    [--no-wait]
@@ -126,7 +129,7 @@ directCommands:
       az vmss create -g group-name -n vm-name --admin-username deploy  \
         --image debian --secrets "$vm_secrets"
   - summary: Create a VM scaleset with system assigned identity. The VM will have a 'Contributor' Role with access to a storage account.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1 --role Contributor
   - summary: Create a debian VM scaleset with a user assigned identity.
     syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM scaleset with both system and user assigned identity.
@@ -135,6 +138,8 @@ directCommands:
     syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
   - summary: Create a VMSS from shared gallery image. (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
+  - summary: Create a Windows VMSS with patch mode 'Manual' (Currently patch mode 'AutomaticByPlatform' is not supported during VMSS creation as health extension which is required for 'AutomaticByPlatform' mode cannot be set during VMSS creation).
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image Win2019Datacenter --enable-agent --enable-auto-update false --patch-mode Manual --orchestration-mode Flexible
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -153,7 +158,7 @@ directCommands:
     summary: Password for the VM if authentication type is 'Password'.
     description: ''
   - name: --admin-username
-    summary: Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
+    summary: Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
     description: ''
   - name: --app-gateway
     summary: Name to use when creating a new application gateway (default) or referencing an existing one. Can also reference an existing application gateway by ID or specify "" for none.
@@ -215,6 +220,14 @@ directCommands:
   - name: --dns-servers
     summary: Space-separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
     description: ''
+  - name: --enable-agent
+    parameterValueGroup: false, true
+    summary: Indicate whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
+    description: ''
+  - name: --enable-auto-update
+    parameterValueGroup: false, true
+    summary: Indicate whether Automatic Updates is enabled for the Windows virtual machine.
+    description: ''
   - name: --encryption-at-host
     parameterValueGroup: false, true
     summary: Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
@@ -222,6 +235,10 @@ directCommands:
   - name: --ephemeral-os-disk
     parameterValueGroup: false, true
     summary: Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
+    description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --eviction-policy
     parameterValueGroup: Deallocate, Delete
@@ -255,8 +272,8 @@ directCommands:
     summary: Sku of the Load Balancer to create. Default to 'Standard' when single placement group is turned off; otherwise, default to 'Basic'. The public IP is supported to be created on edge zone only when it is 'Standard'.
     description: ''
   - name: --license-type
-    parameterValueGroup: None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server
-    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --location -l
     summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
@@ -329,7 +346,7 @@ directCommands:
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role name or id the system assigned identity will have.
+    summary: Role name or id the system assigned identity will have. Please note that the default value "Contributor" will be removed in the future, so please specify '--role' and '--scope' at the same time when assigning a role to the managed identity.
     description: ''
   - name: --scale-in-policy
     parameterValueGroup: Default, NewestVM, OldestVM
@@ -562,16 +579,12 @@ directCommands:
   summary: List VMSS.
   description: ''
   syntax: >-
-    az vmss list [--query-examples]
-                 [--resource-group]
+    az vmss list [--resource-group]
                  [--subscription]
   examples:
   - summary: List VMSS (autogenerated)
     syntax: az vmss list --resource-group MyResourceGroup
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -633,8 +646,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_list-instances
   name: az vmss list-instances
-  summary: Gets a list of all virtual machines in a VM scale sets.
-  description: ''
+  summary: Get a list of all virtual machines in a VM scale sets.
+  description: Return a list of virtual machines managed by VMSS. For VMSS in Flexible Orchestration mode, please use "az vm list" to get full details.
   syntax: >-
     az vmss list-instances [--expand]
                            [--filter]
@@ -870,7 +883,6 @@ directCommands:
     az vmss show --name
                  --resource-group
                  [--instance-id]
-                 [--query-examples]
                  [--subscription]
   examples:
   - summary: Get details on VMs within a VMSS. (autogenerated)
@@ -887,9 +899,6 @@ directCommands:
   optionalParameters:
   - name: --instance-id
     summary: VM instance ID. If missing, show the VMSS.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1006,10 +1015,12 @@ directCommands:
                    [--automatic-repairs-grace-period]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-terminate-notification {false, true}]
+                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                   [--force-deletion]
                    [--force-string]
                    [--ids]
                    [--instance-id]
-                   [--license-type {None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server}]
+                   [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                    [--max-price]
                    [--name]
                    [--no-wait]
@@ -1024,6 +1035,7 @@ directCommands:
                    [--subscription]
                    [--terminate-notification-time]
                    [--ultra-ssd-enabled {false, true}]
+                   [--vm-sku]
   examples:
   - summary: Update a VMSS' license type for Azure Hybrid Benefit.
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --license-type windows_server
@@ -1037,6 +1049,8 @@ directCommands:
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --set virtualMachineProfile.storageProfile.dataDisks[0].diskMBpsReadWrite=66
   - summary: Update a VM to use a custom image.
     syntax: az vmss update --name MyScaleSet --resource-group MyResourceGroup --set virtualMachineProfile.storageProfile.imageReference.id=imageID
+  - summary: Update a Linux VMSS to patch mode 'AutomaticByPlatform'.
+    syntax: az vmss update -n MyVmss -g MyResourceGroup --set virtualMachineProfile.osProfile.linuxConfiguration.patchSettings.patchMode=AutomaticByPlatform
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -1052,6 +1066,13 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable terminate notification.
     description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--vm-sku`. Allows you to choose the Ephemeral OS disk provisioning location.
+    description: ''
+  - name: --force-deletion
+    summary: This property allow you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
@@ -1062,8 +1083,8 @@ directCommands:
     summary: Update the VM instance with this ID. If missing, Update the VMSS.
     description: ''
   - name: --license-type
-    parameterValueGroup: None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server
-    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --max-price
     summary: The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
@@ -1111,6 +1132,9 @@ directCommands:
   - name: --ultra-ssd-enabled
     parameterValueGroup: false, true
     summary: Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
+    description: ''
+  - name: --vm-sku
+    summary: The new size of the virtual machine instances in the scale set. Default to "Standard_DS1_v2". See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_update-instances
@@ -1260,9 +1284,12 @@ commands:
 - az_vmss_rolling-upgrade_get-latest
 - az_vmss_rolling-upgrade_start
 - az_vmss_run-command
+- az_vmss_run-command_create
+- az_vmss_run-command_delete
 - az_vmss_run-command_invoke
 - az_vmss_run-command_list
 - az_vmss_run-command_show
+- az_vmss_run-command_update
 - az_vmss_scale
 - az_vmss_set-orchestration-service-state
 - az_vmss_show
@@ -1289,5 +1316,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/03/2021
+  ms.date: 01/17/2022
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

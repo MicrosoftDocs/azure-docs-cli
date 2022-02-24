@@ -4,7 +4,7 @@ name: az ml model
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **ml** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az ml model** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **ml** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az ml model** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure ML models.
 description: Azure ML models consist of the binary file(s) that represent a machine learning model and any corresponding metadata.  These models can be used in endpoint deployments for real-time and batch inference.
 directCommands:
@@ -15,11 +15,13 @@ directCommands:
   syntax: >-
     az ml model create --resource-group
                        --workspace-name
-                       [--datastore-name]
+                       [--description]
                        [--file]
                        [--local-path]
+                       [--model-uri]
                        [--name]
                        [--set]
+                       [--tags]
                        [--version]
   examples:
   - summary: Create a model from a YAML specification file
@@ -36,20 +38,26 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
-  - name: --datastore-name -z
-    summary: Name of the datastore to upload the model to.
+  - name: --description
+    summary: Description of the object.
     description: ''
   - name: --file -f
-    summary: Local path to the YAML file containing the Azure ML model specification. --name/-n and --version/-v must be provided if YAML file is not having name and version.
+    summary: Local path to the YAML file containing the Azure ML model specification. --name/-n and --version/-v must be provided if YAML file does not have name and version.
     description: ''
   - name: --local-path -l
     summary: Path to the model file(s). This can be either a file or a directory. If specified, --name/-n and --version/-v must also be provided.
+    description: ''
+  - name: --model-uri -p
+    summary: "Path of model in supported URI formats to create the model. Examples: 'folder:azureml://datastores/mydatastore/paths/path_to_model/', 'file:azureml://datastores/mydatastore/paths/path_to_model/myfile.csv'."
     description: ''
   - name: --name -n
     summary: Name of the model.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
     description: ''
   - name: --version -v
     summary: Version of the model.
@@ -61,8 +69,44 @@ directCommands:
   syntax: >-
     az ml model delete --name
                        --resource-group
-                       --version
                        --workspace-name
+                       [--label]
+                       [--version]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the model.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the model.
+    description: ''
+  - name: --version -v
+    summary: Version of the model.
+    description: ''
+- uid: az_ml_model_download
+  name: az ml model download
+  summary: Download all model-related files.
+  description: The files will be downloaded into a folder named after the model's name.
+  syntax: >-
+    az ml model download --name
+                         --resource-group
+                         --version
+                         --workspace-name
+                         [--download-path]
+  examples:
+  - summary: Download a model with the specified name and version
+    syntax: az ml model download --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Download a model with the specified name and version, into a specified local path
+    syntax: az ml model download --name my-model --version 1  --download-path local_path --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -79,6 +123,10 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --download-path -p
+    summary: Path to download the model files, defaults to the current working directory.
     description: ''
 - uid: az_ml_model_list
   name: az ml model list
@@ -120,12 +168,11 @@ directCommands:
     az ml model show --name
                      --resource-group
                      --workspace-name
+                     [--label]
                      [--version]
   examples:
   - summary: Show details for a model with the specified name and version
     syntax: az ml model show --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Show details for the latest version of a model with the specified name
-    syntax: az ml model show --name my-model --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -140,8 +187,11 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --label -l
+    summary: Label of the model.
+    description: ''
   - name: --version -v
-    summary: Version of the model. If omitted, the latest version is shown.
+    summary: Version of the model.
     description: ''
 - uid: az_ml_model_update
   name: az ml model update
@@ -153,6 +203,7 @@ directCommands:
                        --workspace-name
                        [--add]
                        [--force-string]
+                       [--label]
                        [--remove]
                        [--set]
                        [--version]
@@ -179,6 +230,9 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --label -l
+    summary: Label of the model.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
@@ -191,6 +245,7 @@ directCommands:
 commands:
 - az_ml_model_create
 - az_ml_model_delete
+- az_ml_model_download
 - az_ml_model_list
 - az_ml_model_show
 - az_ml_model_update

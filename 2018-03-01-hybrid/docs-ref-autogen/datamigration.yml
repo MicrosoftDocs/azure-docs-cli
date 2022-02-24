@@ -1,0 +1,208 @@
+### YamlMime:AzureCLIGroup
+uid: az_datamigration
+name: az datamigration
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **datamigration** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az datamigration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Data Migration.
+description: ''
+directCommands:
+- uid: az_datamigration_get-assessment
+  name: az datamigration get-assessment
+  summary: Start assessment on SQL Server instance(s).
+  description: ''
+  syntax: >-
+    az datamigration get-assessment [--config-file-path]
+                                    [--connection-string]
+                                    [--output-folder]
+                                    [--overwrite]
+  examples:
+  - summary: Run SQL Assessment on given SQL Server using connection string.
+    syntax: az datamigration get-assessment --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\AssessmentOutput" --overwrite
+  - summary: Run SQL Assessment on given SQL Server using assessment config file.
+    syntax: az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
+  optionalParameters:
+  - name: --config-file-path
+    summary: Path of the ConfigFile.
+    description: ''
+  - name: --connection-string
+    summary: SQL Server Connection Strings.
+    description: ''
+  - name: --output-folder
+    summary: Output folder to store assessment report.
+    description: ''
+  - name: --overwrite
+    summary: Enable this parameter to overwrite the existing assessment report.
+    description: ''
+- uid: az_datamigration_get-sku-recommendation
+  name: az datamigration get-sku-recommendation
+  summary: Give SKU recommendations for Azure SQL offerings.
+  description: ''
+  syntax: >-
+    az datamigration get-sku-recommendation [--config-file-path]
+                                            [--database-allow-list]
+                                            [--database-deny-list]
+                                            [--display-result]
+                                            [--elastic-strategy]
+                                            [--end-time]
+                                            [--output-folder]
+                                            [--overwrite]
+                                            [--scaling-factor]
+                                            [--start-time]
+                                            [--target-percentile]
+                                            [--target-platform]
+                                            [--target-sql-instance]
+  examples:
+  - summary: Get SKU recommendation for given SQL Server using command line.
+    syntax: az datamigration get-sku-recommendation --output-folder "C:\PerfCollectionOutput" --database-allow-list AdventureWorks, AdventureWorks2 --display-result --overwrite
+  - summary: Get SKU recommendation for given SQL Server using assessment config file.
+    syntax: az datamigration get-sku-recommendation --config-file-path "C:\Users\user\document\config.json"
+  optionalParameters:
+  - name: --config-file-path
+    summary: Path of the ConfigFile.
+    description: ''
+  - name: --database-allow-list
+    summary: 'Space separated list of names of databases to be allowed for SKU recommendation consideration while excluding all others. Only set one of the following or neither: databaseAllowList, databaseDenyList. Default: null.'
+    description: ''
+  - name: --database-deny-list
+    summary: 'Space separated list of names of databases to not be considered for SKU recommendation. Only set one of the following or neither: databaseAllowList, databaseDenyList. Default: null.'
+    description: ''
+  - name: --display-result
+    summary: Whether or not to print the SKU recommendation results to the console. Enable this parameter to display result.
+    description: ''
+  - name: --elastic-strategy
+    summary: Whether or not to use the elastic strategy for SKU recommendations based on resource usage profiling. Enable this parameter to use elastic strategy.
+    description: ''
+  - name: --end-time
+    summary: 'UTC end time of performance data points to consider during aggregation, in YYYY-MM-DD HH:MM format. Only used for baseline (non-elastic) strategy. Default: all data points collected will be considered.'
+    description: ''
+  - name: --output-folder
+    summary: Output folder where performance data of the SQL Server is stored. The value here must be the same as the one used in PerfDataCollection.
+    description: ''
+  - name: --overwrite
+    summary: Whether or not to overwrite any existing SKU recommendation reports. Enable this paramater to overwrite.
+    description: ''
+  - name: --scaling-factor
+    defaultValue: "100"
+    summary: Scaling (comfort) factor used during SKU recommendation. For example, if it is determined that there is a 4 vCore CPU requirement with a scaling factor of 150%, then the true CPU requirement will be 6 vCores.
+    description: ''
+  - name: --start-time
+    summary: 'UTC start time of performance data points to consider during aggregation, in YYYY-MM-DD HH:MM format. Only used for baseline (non-elastic) strategy. Default: all data points collected will be considered.'
+    description: ''
+  - name: --target-percentile
+    defaultValue: "95"
+    summary: Percentile of data points to be used during aggregation of the performance data. Only used for baseline (non-elastic) strategy.
+    description: ''
+  - name: --target-platform
+    defaultValue: Any
+    summary: 'Target platform for SKU recommendation: either AzureSqlDatabase, AzureSqlManagedInstance, AzureSqlVirtualMachine, or Any. If Any is selected, then SKU recommendations for all three target platforms will be evaluated, and the best fit will be returned.'
+    description: ''
+  - name: --target-sql-instance
+    summary: 'Name of the SQL instance for which SKU should be recommendeded. Default: outputFolder will be scanned for files created by the PerfDataCollection action, and recommendations will be provided for every instance found.'
+    description: ''
+- uid: az_datamigration_performance-data-collection
+  name: az datamigration performance-data-collection
+  summary: Collect performance data for given SQL Server instance(s).
+  description: ''
+  syntax: >-
+    az datamigration performance-data-collection [--config-file-path]
+                                                 [--connection-string]
+                                                 [--number-of-interation]
+                                                 [--output-folder]
+                                                 [--perf-query-interval]
+                                                 [--static-query-interval]
+  examples:
+  - summary: Collect performance data of a given SQL Server using connection string.
+    syntax: az datamigration performance-data-collection --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\PerfCollectionOutput" --number-of-interation 5 --perf-query-interval 10 --static-query-interval 60
+  - summary: Collect performance data of a given SQL Server using assessment config file.
+    syntax: az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
+  optionalParameters:
+  - name: --config-file-path
+    summary: Path of the ConfigFile.
+    description: ''
+  - name: --connection-string
+    summary: SQL Server Connection Strings.
+    description: ''
+  - name: --number-of-interation
+    defaultValue: "20"
+    summary: 'Number of iterations of performance data collection to perform before persisting to file. For example, with default values, performance data will be persisted every 30 seconds \* 20 iterations = 10 minutes. Minimum: 2.'
+    description: ''
+  - name: --output-folder
+    summary: Output folder to store performance data.
+    description: ''
+  - name: --perf-query-interval
+    defaultValue: "30"
+    summary: Interval at which to query performance data, in seconds.
+    description: ''
+  - name: --static-query-interval
+    defaultValue: "3600"
+    summary: Interval at which to query and persist static configuration data, in seconds.
+    description: ''
+- uid: az_datamigration_register-integration-runtime
+  name: az datamigration register-integration-runtime
+  summary: Register Database Migration Service on Integration Runtime.
+  description: ''
+  syntax: >-
+    az datamigration register-integration-runtime --auth-key
+                                                  [--ir-path]
+  examples:
+  - summary: Register Sql Migration Service on Self Hosted Integration Runtime.
+    syntax: az datamigration register-integration-runtime --auth-key "IR@00000-0000000-000000-aaaaa-bbbb-cccc"
+  - summary: Install Integration Runtime and register a Sql Migration Service on it.
+    syntax: az datamigration register-integration-runtime --auth-key "IR@00000-0000000-000000-aaaaa-bbbb-cccc" --ir-path "C:\Users\user\Downloads\IntegrationRuntime.msi"
+  requiredParameters:
+  - isRequired: true
+    name: --auth-key
+    summary: AuthKey of SQL Migration Service.
+    description: ''
+  optionalParameters:
+  - name: --ir-path
+    summary: Path of Integration Runtime MSI.
+    description: ''
+commands:
+- az_datamigration_get-assessment
+- az_datamigration_get-sku-recommendation
+- az_datamigration_performance-data-collection
+- az_datamigration_register-integration-runtime
+- az_datamigration_sql-managed-instance
+- az_datamigration_sql-managed-instance_cancel
+- az_datamigration_sql-managed-instance_create
+- az_datamigration_sql-managed-instance_cutover
+- az_datamigration_sql-managed-instance_show
+- az_datamigration_sql-managed-instance_wait
+- az_datamigration_sql-service
+- az_datamigration_sql-service_create
+- az_datamigration_sql-service_delete
+- az_datamigration_sql-service_delete-node
+- az_datamigration_sql-service_list
+- az_datamigration_sql-service_list-auth-key
+- az_datamigration_sql-service_list-integration-runtime-metric
+- az_datamigration_sql-service_list-migration
+- az_datamigration_sql-service_regenerate-auth-key
+- az_datamigration_sql-service_show
+- az_datamigration_sql-service_update
+- az_datamigration_sql-service_wait
+- az_datamigration_sql-vm
+- az_datamigration_sql-vm_cancel
+- az_datamigration_sql-vm_create
+- az_datamigration_sql-vm_cutover
+- az_datamigration_sql-vm_show
+- az_datamigration_sql-vm_wait
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage Data Migration.

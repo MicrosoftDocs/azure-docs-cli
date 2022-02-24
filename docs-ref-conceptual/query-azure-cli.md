@@ -9,7 +9,7 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: 
+keywords:
 ---
 # How to query Azure CLI command output using a JMESPath query
 
@@ -117,7 +117,7 @@ az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
 ---
 ## [PowerShell](#tab/powershell)
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o json
 ```
 ---
 ## [Bash](#tab/bash)
@@ -136,7 +136,7 @@ This looks like a valid single value, but note that the `"` characters are retur
 that the object is a JSON string. It's important to note that when you assign this value directly as output from the command
 to an environment variable, the quotes may __not__ be interpreted by the shell:
 
-```bash
+```azurecli
 USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
 echo $USER
 ```
@@ -150,7 +150,7 @@ type information. The best output option that the CLI offers for this purpose is
 a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unquoted.
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o tsv
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
 ```
 
 ```output
@@ -168,7 +168,7 @@ Querying Boolean values is slightly different.  There are two options:
 az account list --query "[?isDefault]"
 
 # If you want a false value, use an escape character.
-az account list --query "[?isDefault == \`false\`]"
+az account list --query "[?isDefault == ``false``]"
 ```
 
 ## Get multiple values
@@ -198,7 +198,7 @@ The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 last section by changing the multiselect list to a hash:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }" -o json
 ```
 
 ```json
@@ -221,7 +221,7 @@ If `[]` appears at the start of the query, it flattens the CLI command result. T
 To get the name, OS, and administrator name for each VM in a resource group:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}' -o json
+az vm list -g QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" -o json
 ```
 
 ```json
@@ -248,7 +248,7 @@ When combined with the `--output table` output format, the column names match up
 hash:
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
+az vm list -g QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
 ```output
@@ -274,7 +274,7 @@ This query expression flattens the `osProfile.linuxConfiguration.ssh.publicKeys`
 element:
 
 ```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }' -o json
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }" -o json
 ```
 
 ```json
@@ -401,7 +401,7 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 To start experimenting with JMESPath, the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package offers an interactive environment to work
 with queries. Data is piped as input, and then queries are written and run in the editor.
 
-```bash
+```azurecli
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```

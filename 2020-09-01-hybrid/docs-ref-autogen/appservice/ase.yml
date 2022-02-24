@@ -223,8 +223,7 @@ directCommands:
   summary: List app service environments.
   description: ''
   syntax: >-
-    az appservice ase list [--query-examples]
-                           [--resource-group]
+    az appservice ase list [--resource-group]
                            [--subscription]
   examples:
   - summary: List all app service environments in subscription.
@@ -232,9 +231,6 @@ directCommands:
   - summary: List all app service environment in resource group.
     syntax: az appservice ase list --resource-group MyResourceGroup
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -296,7 +292,6 @@ directCommands:
   description: ''
   syntax: >-
     az appservice ase show --name
-                           [--query-examples]
                            [--resource-group]
                            [--subscription]
   examples:
@@ -308,9 +303,6 @@ directCommands:
     summary: Name of the app service environment.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -320,32 +312,39 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_update
   name: az appservice ase update
-  summary: Update app service environment v2.
+  summary: Update app service environment.
   description: ''
   syntax: >-
     az appservice ase update --name
+                             [--allow-new-private-endpoint-connections {false, true}]
                              [--front-end-scale-factor]
                              [--front-end-sku {I1, I2, I3}]
                              [--no-wait]
                              [--resource-group]
                              [--subscription]
   examples:
-  - summary: Update app service environment with medium front-ends and scale factor of 10.
+  - summary: Update app service environment v2 with medium front-ends and scale factor of 10.
     syntax: >-
-      az appservice ase update -n MyAseName -g MyResourceGroup --front-end-sku I2 \
+      az appservice ase update -n MyAseV2Name -g MyResourceGroup --front-end-sku I2 \
         --front-end-scale-factor 10
+  - summary: Update app service environment v3 to allow new private endpoint connections.
+    syntax: az appservice ase update -n MyAseV3Name -g MyResourceGroup --allow-new-private-endpoint-connections
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the app service environment.
     description: ''
   optionalParameters:
+  - name: --allow-new-private-endpoint-connections -p
+    parameterValueGroup: false, true
+    summary: (ASEv3 only) Configure Apps in App Service Environment to allow new private endpoint connections.
+    description: ''
   - name: --front-end-scale-factor
-    summary: Scale of front ends to app service plan instance ratio between 5 and 15.
+    summary: (ASEv2 only) Scale of front ends to app service plan instance ratio between 5 and 15.
     description: ''
   - name: --front-end-sku
     parameterValueGroup: I1, I2, I3
-    summary: Size of front end servers.
+    summary: (ASEv2 only) Size of front end servers.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -383,5 +382,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/01/2021
+  ms.date: 01/26/2022
   description: Manage App Service Environments.

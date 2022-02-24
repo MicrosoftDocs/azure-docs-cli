@@ -4,18 +4,18 @@ description: Learn tips for using Azure CLI effectively, such as output formats,
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 10/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
 ---
 
-# Use Azure CLI effectively
+# How to use Azure CLI effectively
 
 Azure CLI allows you to configure and manage Azure from Bash, PowerShell, or a Command Prompt window. Azure CLI supports command reuse, both on an ad-hoc basis and through scripts. You'll need to be aware of the capabilities of the shell that you run.
 
-This article discusses tips useful for Azure CLI and how to avoid pitfalls.
+This article discusses useful tips on how to use the Azure CLI and how to avoid pitfalls.
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
@@ -23,13 +23,13 @@ If you have questions about any Azure CLI command, search in [Azure CLI Referenc
 
 ## Output formatting
 
-Many Azure CLI commands show you data in the console. This information can be the goal of a command, as in this example, where The [az account show](/cli/azure/account#az_account_show) command shows your current subscription:
+Many Azure CLI commands show you data in the console. This information can be the goal of a command, as in this example, where The [az account show](/cli/azure/account#az-account-show) command shows your current subscription:
 
 ```azurecli
 az account show
 ```
 
-Sometimes, the information that a command displays reflects the changes you've made. This example creates a resource group by using the [az group create](/cli/azure/group#az_group_create) command:
+Sometimes, the information that a command displays reflects the changes you've made. This example creates a resource group by using the [az group create](/cli/azure/group#az-group-create) command:
 
 ```azurecli
 az group create --name MyResourceGroup --location eastus
@@ -37,7 +37,7 @@ az group create --name MyResourceGroup --location eastus
 
 If you run this command, the Azure CLI console shows you the resource group you just created.
 
-You can select the format for output by specifying the `--output` parameter. In this example, the [az account list](/cli/azure/account#az_account_list) command lists all subscriptions that you can access as a table:
+You can select the format for output by specifying the `--output` parameter. In this example, the [az account list](/cli/azure/account#az-account-list) command lists all subscriptions that you can access as a table:
 
 ```azurecli
 az account list --output table
@@ -55,7 +55,7 @@ For more information about these and other formats, see [Output formats for Azur
 
 Azure CLI commands run in a shell. This article uses Bash, but there are other options. You can use standard shell syntax to simplify Azure CLI usage.
 
-You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example uses the [az vm list](/cli/azure/vm#az_vm_list) command with the query `[?powerState=='VM running'].id` to find the IDs of VMs whose power state is equal to VM running.  Wrapping the command with `$()` assigns the command's return value to **running_vm_ids**. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](/cli/azure/query-azure-cli).
+You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example uses the [az vm list](/cli/azure/vm#az_vm_list) command with the query `[?powerState=='VM running'].id` to find the IDs of running VMs. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](/cli/azure/query-azure-cli).
 
 ```azurecli
 running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details \
@@ -148,9 +148,9 @@ Many commands offer a `--no-wait` parameter, which allows other commands to run.
 az group delete --name MyResourceGroup --no-wait
 ```
 
-When you remove a resource group, you also remove all the resources that belong to it. Reclaiming these resources can take a long time. The `--no-wait` parameter When this command runs, the console can accept commands immediately, even though it's still working on the command.
+When deleting a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. Running the command with the `--no-wait` parameter, allows the console to accept new commands without interrupting the removal.
 
-Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az_vm_wait) command to support creating independent resources in parallel:
+Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
 
 ```azurecli
 az vm create --resource-group VMResources --name virtual-machine-01 --image centos --no-wait
@@ -184,9 +184,9 @@ If you run Azure CLI on a build machine where multiple jobs can be run in parall
 
 ## Generic update arguments
 
-Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az_vm_update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
+Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az-vm-update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
 
-The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az_vm_show).
+The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az-vm-show).
 
 ```azurecli
 az vm show --resource-group VMResources --name virtual-machine-01
@@ -206,11 +206,11 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 A service you want to work with might not have Azure CLI support yet. You can use the [az resource](/cli/azure/resource) commands to work with these resources.
 
-If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az_deployment_group_create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
+If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
 
 ## REST API commands
 
-If generic update arguments and [az resource](/cli/azure/resource) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az_rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
+If generic update arguments and [az resource](/cli/azure/resource) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 
@@ -276,6 +276,47 @@ The following are Azure CLI environment variables:
 |--------------------------------|------------------------|
 | **AZURE_CONFIG_DIR**           | The global directory for configuration files, logs, and telemetry. If unspecified, this value defaults to `~/.azure.` |
 | **AZURE_EXTENSION_DIR**        | The directory containing extension installations. If unspecified, this value defaults to the `cliextensions` subdirectory within the global configuration directory. |
+
+## Error handling for Azure CLI in PowerShell
+
+You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, Azure CLI doesn't create exceptions for PowerShell to catch.
+
+An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. If the previous command fails, `$?` has the value of `$False`. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
+
+The follow example shows how this automatic variable can work for error handling:
+
+```powershell
+az group create --name MyResourceGroup 
+if ($? -eq $false) {
+    Write-Error "Error creating resource group."
+}
+```
+
+The `az` command fails because it is missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
+
+If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for the `try` block to catch:
+
+```powershell
+$ErrorActionPreference = "Stop"
+try {
+    az group create --name MyResourceGroup 
+    if ($? -eq $false) {
+        throw 'Group create failed.'
+    }
+}
+catch {
+    Write-Error "Error creating the resource group."
+}
+$ErrorActionPreference = "Continue"
+```
+
+By default, PowerShell catches only terminating errors. This example sets the `$ErrorActionPreference` global variable to `Stop` so PowerShell can handle the error.
+
+The conditional statement tests the `$?` variable to see if the previous command failed. If so, the `throw` keyword creates an exception to catch. The `catch` block can be used to write an error message or handle the error.
+
+The example restores `$ErrorActionPreference` to its default value.
+
+For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
 
 ## Next steps
 

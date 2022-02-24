@@ -49,9 +49,10 @@ directCommands:
   summary: Get a token for utilities to access Azure.
   description: The token will be valid for at least 5 minutes with the maximum at 60 minutes. If the subscription argument isn't specified, the current account is used.
   syntax: >-
-    az account get-access-token [--resource]
+    az account get-access-token [--name]
+                                [--resource]
                                 [--resource-type {aad-graph, arm, batch, data-lake, media, ms-graph, oss-rdbms}]
-                                [--subscription]
+                                [--scope]
                                 [--tenant]
   examples:
   - summary: Get an access token for the current account
@@ -63,15 +64,18 @@ directCommands:
   - summary: Get an access token to use with MS Graph API
     syntax: az account get-access-token --resource-type ms-graph
   optionalParameters:
+  - name: --name --subscription -n -s
+    summary: Name or ID of subscription.
+    description: ''
   - name: --resource
-    summary: Azure resource endpoints. Default to Azure Resource Manager.
+    summary: Azure resource endpoints in AAD v1.0.
     description: ''
   - name: --resource-type
     parameterValueGroup: aad-graph, arm, batch, data-lake, media, ms-graph, oss-rdbms
     summary: Type of well-known resource.
     description: ''
-  - name: --subscription -s
-    summary: Name or ID of subscription.
+  - name: --scope
+    summary: Space-separated AAD scopes in AAD v2.0. Default to Azure Resource Manager.
     description: ''
   - name: --tenant -t
     summary: Tenant ID for which the token is acquired. Only available for user and service principal account, not for MSI or Cloud Shell account.
@@ -79,18 +83,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/profile/_help.py
 - uid: az_account_list
   name: az account list
-  summary: Get a list of subscriptions for the logged in account.
+  summary: Get a list of subscriptions for the logged in account. By default, only 'Enabled' subscriptions from the current cloud is shown.
   description: ''
   syntax: >-
     az account list [--all]
-                    [--query-examples]
                     [--refresh]
   optionalParameters:
   - name: --all
-    summary: List all subscriptions, rather than just 'Enabled' ones.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+    summary: List all subscriptions from all clouds, rather than just 'Enabled' ones.
     description: ''
   - name: --refresh
     summary: Retrieve up-to-date subscriptions from server.
@@ -106,10 +106,10 @@ directCommands:
   name: az account set
   summary: Set a subscription to be the current active subscription.
   description: ''
-  syntax: az account set --subscription
+  syntax: az account set --name
   requiredParameters:
   - isRequired: true
-    name: --subscription -s
+    name: --name --subscription -n -s
     summary: Name or ID of subscription.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/profile/_help.py
@@ -122,18 +122,14 @@ directCommands:
 
     When --sdk-auth is used, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](https://aka.ms/azadsp-managed-identities) if available to avoid the need to use credentials.
   syntax: >-
-    az account show [--query-examples]
+    az account show [--name]
                     [--sdk-auth]
-                    [--subscription]
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+  - name: --name --subscription -n -s
+    summary: Name or ID of subscription.
     description: ''
   - name: --sdk-auth
     summary: Output result to a file compatible with Azure SDK auth. Only applicable when authenticating with a Service Principal.
-    description: ''
-  - name: --subscription -s
-    summary: Name or ID of subscription.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/profile/_help.py
 commands:
@@ -191,5 +187,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/18/2020
+  ms.date: 10/15/2021
   description: Manage Azure subscription information.

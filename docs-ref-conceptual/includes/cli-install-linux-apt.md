@@ -13,8 +13,11 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 14.04 LTS (Trusty Tahir), 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 20.10 (Groovy Gorilla) |
-| Debian       | Debian 8 (Jessie), Debian 9 (Stretch), Debian 10 (Buster) |
+| Ubuntu       | 14.04 LTS (Trusty Tahir), 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 21.04 (Hirsute Hippo) |
+| Debian       | Debian 8 (Jessie), Debian 9 (Stretch), Debian 10 (Buster), Debian 11 (Bullseye) |
+
+> [!WARNING]
+> Starting from Azure CLI 2.34.0, no DEB packages will be released for Ubuntu 14.04 (Trusty Tahir) and Debian 8 (Jessie). You may continue to use historical versions of Azure CLI on these systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
 
 > [!WARNING]
 > Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.
@@ -69,13 +72,21 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo apt-get install azure-cli
     ```
 
-## Sign in to Azure with the Azure CLI
+## Install specific version
 
-Run the Azure CLI with the `az` command. To sign in, use the [az login](/cli/azure/reference-index#az_login) command.
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
 
-[!INCLUDE [interactive-login](interactive-login.md)]
+1. To view available versions with command:
 
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
+    ```bash
+    apt-cache policy azure-cli
+    ```
+
+2. To install specific version:
+
+    ```bash
+    sudo apt-get install azure-cli=<version>-1~bullseye
+    ```
 
 ## Troubleshooting
 

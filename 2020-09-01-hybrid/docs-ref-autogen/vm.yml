@@ -81,7 +81,7 @@ directCommands:
 - uid: az_vm_capture
   name: az vm capture
   summary: Capture information for a stopped VM.
-  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image.
+  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
   syntax: >-
     az vm capture --vhd-name-prefix
                   [--ids]
@@ -189,12 +189,13 @@ directCommands:
                  [--enable-auto-update {false, true}]
                  [--encryption-at-host {false, true}]
                  [--ephemeral-os-disk {false, true}]
+                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
                  [--generate-ssh-keys]
                  [--host]
                  [--host-group]
                  [--image]
-                 [--license-type {None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server}]
+                 [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                  [--location]
                  [--max-price]
                  [--nics]
@@ -284,7 +285,7 @@ directCommands:
       az vm create -g group-name -n vm-name --admin-username deploy  \
         --image debian --secrets "$vm_secrets"
   - summary: Create a CentOS VM with a system assigned identity. The VM will have a 'Contributor' role with access to a storage account.
-    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity [system] --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1
+    syntax: az vm create -n MyVm -g rg1 --image centos --assign-identity [system] --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1 --role Contributor
   - summary: Create a debian VM with a user assigned identity.
     syntax: az vm create -n MyVm -g rg1 --image debian --assign-identity /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a debian VM with both system and user assigned identity.
@@ -311,7 +312,7 @@ directCommands:
     summary: Password for the VM if authentication type is 'Password'.
     description: ''
   - name: --admin-username
-    summary: Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
+    summary: Username for the VM. Default value is current username of OS. If the default value is system reserved, then default value will be set to azureuser. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachines/createorupdate#osprofile to get a full list of reserved values.
     description: ''
   - name: --asgs
     summary: Space-separated list of existing application security groups to associate with the VM.
@@ -369,6 +370,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
     description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
+    description: ''
   - name: --eviction-policy
     parameterValueGroup: Deallocate, Delete
     summary: The eviction policy for the Spot priority virtual machine. Default eviction policy is Deallocate for a Spot priority virtual machine.
@@ -387,8 +392,8 @@ directCommands:
     description: ''
     valueFrom: az vm image list, az vm image show, az sig image-version show-shared
   - name: --license-type
-    parameterValueGroup: None, RHEL_BYOS, SLES_BYOS, Windows_Client, Windows_Server
-    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --location -l
     summary: Location in which to create VM and related resources. If default location is not configured, will default to the resource group's location.
@@ -467,7 +472,7 @@ directCommands:
     description: ''
   - name: --role
     defaultValue: Contributor
-    summary: Role name or id the system assigned identity will have.
+    summary: Role name or id the system assigned identity will have. Please note that the default value "Contributor" will be removed in the future, so please specify '--role' and '--scope' at the same time when assigning a role to the managed identity.
     description: ''
   - name: --scope
     summary: Scope that the system assigned identity can access.
@@ -546,7 +551,7 @@ directCommands:
 - uid: az_vm_deallocate
   name: az vm deallocate
   summary: Deallocate a VM.
-  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image.
+  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
   syntax: >-
     az vm deallocate [--ids]
                      [--name]
@@ -632,7 +637,7 @@ directCommands:
 - uid: az_vm_generalize
   name: az vm generalize
   summary: Mark a VM as generalized, allowing it to be imaged for multiple deployments.
-  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-capture-image.
+  description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
   syntax: >-
     az vm generalize [--ids]
                      [--name]
@@ -706,8 +711,7 @@ directCommands:
   summary: List details of Virtual Machines.
   description: '`--resource-group` can pass in an empty string as a parameter, which will output all VM information under the subscription. For more information on querying information about Virtual Machines, see https://docs.microsoft.com/cli/azure/query-az-cli2.'
   syntax: >-
-    az vm list [--query-examples]
-               [--resource-group]
+    az vm list [--resource-group]
                [--show-details]
                [--subscription]
   examples:
@@ -718,9 +722,6 @@ directCommands:
   - summary: List all VMs by resource group with details.
     syntax: az vm list -g MyResourceGroup -d
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -1089,7 +1090,6 @@ directCommands:
   syntax: >-
     az vm show [--ids]
                [--name]
-               [--query-examples]
                [--resource-group]
                [--show-details]
                [--subscription]
@@ -1104,9 +1104,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -1223,9 +1220,12 @@ directCommands:
   syntax: >-
     az vm update [--add]
                  [--disk-caching]
+                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                  [--force-string]
+                 [--host]
+                 [--host-group]
                  [--ids]
-                 [--license-type {None, RHEL_BYOS, RHEL_ELS_6, SLES_BYOS, Windows_Client, Windows_Server}]
+                 [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server}]
                  [--max-price]
                  [--name]
                  [--no-wait]
@@ -1235,6 +1235,7 @@ directCommands:
                  [--remove]
                  [--resource-group]
                  [--set]
+                 [--size]
                  [--subscription]
                  [--ultra-ssd-enabled {false, true}]
                  [--workspace]
@@ -1250,6 +1251,20 @@ directCommands:
     syntax: az vm update -n name -g group --add networkProfile.networkInterfaces primary=false id={NIC_ID}
   - summary: Remove the fourth NIC from a VM.
     syntax: az vm update -n name -g group --remove networkProfile.networkInterfaces 3
+  - summary: Add an existing VM to a dedicated host
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host my-host
+
+      az vm start -n name -g group
+  - summary: Add an existing VM to a dedicated host group
+    syntax: >-
+      az vm deallocate -n name -g group
+
+      az vm update -n name -g group --host-group my-host-group
+
+      az vm start -n name -g group
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -1257,15 +1272,25 @@ directCommands:
   - name: --disk-caching
     summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
     description: ''
+  - name: --ephemeral-os-disk-placement --ephemeral-placement
+    parameterValueGroup: CacheDisk, ResourceDisk
+    summary: Only applicable when used with `--size`. Allows you to choose the Ephemeral OS disk provisioning location.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --host
+    summary: ID of the dedicated host that the VM will reside in. --host and --host-group can't be used together. You should deallocate the VM before update, and start the VM after update. Please check out help for more examples.
+    description: ''
+  - name: --host-group
+    summary: Name or ID of the dedicated host group that the VM will reside in. --host and --host-group can't be used together. You should deallocate the VM before update, and start the VM after update. Please check out help for more examples.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --license-type
-    parameterValueGroup: None, RHEL_BYOS, RHEL_ELS_6, SLES_BYOS, Windows_Client, Windows_Server
-    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multitenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
+    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD , Windows_Client, Windows_Server
+    summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --max-price
     summary: The maximum price (in US Dollars) you are willing to pay for a Spot VM/VMSS. -1 indicates that the Spot VM/VMSS should not be evicted for price reasons.
@@ -1294,6 +1319,9 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --size
+    summary: The new size of the virtual machine. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1471,9 +1499,13 @@ commands:
 - az_vm_resize
 - az_vm_restart
 - az_vm_run-command
+- az_vm_run-command_create
+- az_vm_run-command_delete
 - az_vm_run-command_invoke
 - az_vm_run-command_list
 - az_vm_run-command_show
+- az_vm_run-command_update
+- az_vm_run-command_wait
 - az_vm_secret
 - az_vm_secret_add
 - az_vm_secret_format
@@ -1510,5 +1542,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/03/2021
+  ms.date: 01/17/2022
   description: Manage Linux or Windows virtual machines.

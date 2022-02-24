@@ -1,12 +1,200 @@
 ### YamlMime:AzureCLIGroup
 uid: az_webapp
 name: az webapp
-extensionInformation: >-
-  > [!Note]
-
-  > This reference is part of the **authV2** extension for Azure CLI and requires version 2.23.0 or higher.  The extension will automatically install the first time you run an **az webapp** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage web apps.
 description: ''
+directCommands:
+- uid: az_webapp_create
+  name: az webapp create
+  summary: Create a web app.
+  description: The web app's name must be able to produce a unique FQDN as AppName.azurewebsites.net.
+  syntax: >-
+    az webapp create --name
+                     --resource-group
+                     [--assign-identity]
+                     [--custom-location]
+                     [--deployment-container-image-name]
+                     [--deployment-local-git]
+                     [--deployment-source-branch]
+                     [--deployment-source-url]
+                     [--docker-registry-server-password]
+                     [--docker-registry-server-user]
+                     [--max-worker-count]
+                     [--min-worker-count]
+                     [--multicontainer-config-file]
+                     [--multicontainer-config-type {COMPOSE, KUBE}]
+                     [--plan]
+                     [--role]
+                     [--runtime]
+                     [--scope]
+                     [--startup-file]
+                     [--tags]
+  examples:
+  - summary: Create a web app with the default configuration.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName
+  - summary: Create a web app with a Java 11 runtime using '|' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java|11|Java SE|11"
+  - summary: Create a web app with a Java 11 runtime using ':' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:11"
+  - summary: Create a web app with a NodeJS 10.14 runtime and deployed from a local git repository.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|10.14" --deployment-local-git
+  - summary: Create a web app with an image from DockerHub.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i nginx
+  - summary: Create a web app with an image from a private DockerHub registry.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i MyImageName -s username -w password
+  - summary: Create a web app with an image from a private Azure Container Registry.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i myregistry.azurecr.io/docker-image:tag
+  - summary: create a WebApp using shared App Service Plan that is in a different resource group.
+    syntax: AppServicePlanID=$(az appservice plan show -n SharedAppServicePlan -g MyASPRG --query "id" --out tsv) az webapp create -g MyResourceGroup -p "$AppServicePlanID" -n MyUniqueAppName
+  - summary: create a WebApp in an appservice kubernetes environment
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location /subscriptions/sub_id/resourcegroups/group_name/providers/microsoft.extendedlocation/customlocations/custom_location_name
+  - summary: create a WebApp in an appservice kubernetes environment and in the same resource group as the custom location
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location custom_location_name
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the new web app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    description: ''
+  - name: --custom-location
+    summary: Name or ID of the custom location. Use an ID for a custom location in a different resource group from the app.
+    description: ''
+  - name: --deployment-container-image-name -i
+    summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --deployment-local-git -l
+    summary: Enable local git.
+    description: ''
+  - name: --deployment-source-branch -b
+    defaultValue: master
+    summary: The branch to deploy.
+    description: ''
+  - name: --deployment-source-url -u
+    summary: Git repository URL to link with manual integration.
+    description: ''
+  - name: --docker-registry-server-password -w
+    summary: The container registry server password. Required for private registries.
+    description: ''
+  - name: --docker-registry-server-user -s
+    summary: The container registry server username.
+    description: ''
+  - name: --max-worker-count
+    summary: Maximum number of workers to be allocated.
+    description: ''
+  - name: --min-worker-count
+    summary: Minimum number of workers to be allocated.
+    description: ''
+  - name: --multicontainer-config-file
+    summary: Linux only. Config file for multicontainer apps. (local or remote).
+    description: ''
+  - name: --multicontainer-config-type
+    parameterValueGroup: COMPOSE, KUBE
+    summary: Linux only.
+    description: ''
+  - name: --plan -p
+    summary: Name or resource id of the app service plan. Use 'appservice plan create' to get one.
+    description: ''
+  - name: --role
+    defaultValue: Contributor
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --runtime -r
+    summary: Canonicalized web runtime in the format of Framework|Version, e.g. "PHP|5.6". Use `az webapp list-runtimes` for available list.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --startup-file
+    summary: Linux only. The web's startup file.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_webapp_restart
+  name: az webapp restart
+  summary: Restart a web app.
+  description: ''
+  syntax: >-
+    az webapp restart --name
+                      --resource-group
+                      [--slot]
+  examples:
+  - summary: Restart a web app. (autogenerated)
+    syntax: az webapp restart --name MyWebapp --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+- uid: az_webapp_scale
+  name: az webapp scale
+  summary: Modify the number of instances of a webapp.
+  description: ''
+  syntax: >-
+    az webapp scale --instance-count
+                    --name
+                    --resource-group
+                    [--slot]
+  examples:
+  - summary: Change the number of instances of MyApp to 2.
+    syntax: az webapp scale -g MyResourceGroup -n MyApp --instance-count 2
+  requiredParameters:
+  - isRequired: true
+    name: --instance-count
+    defaultValue: "1"
+    summary: Number of instances.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+- uid: az_webapp_show
+  name: az webapp show
+  summary: Get the details of a web app.
+  description: ''
+  syntax: >-
+    az webapp show --name
+                   --resource-group
+                   [--slot]
+  examples:
+  - summary: Get the details of a web app. (autogenerated)
+    syntax: az webapp show --name MyWebapp --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
 commands:
 - az_webapp_auth
 - az_webapp_auth_apple
@@ -42,12 +230,71 @@ commands:
 - az_webapp_auth-classic
 - az_webapp_auth-classic_show
 - az_webapp_auth-classic_update
+- az_webapp_config
+- az_webapp_config_ssl
+- az_webapp_config_ssl_bind
+- az_webapp_config_ssl_unbind
+- az_webapp_connection
+- az_webapp_connection_create
+- az_webapp_connection_create_appconfig
+- az_webapp_connection_create_confluent-cloud
+- az_webapp_connection_create_cosmos-cassandra
+- az_webapp_connection_create_cosmos-gremlin
+- az_webapp_connection_create_cosmos-mongo
+- az_webapp_connection_create_cosmos-sql
+- az_webapp_connection_create_cosmos-table
+- az_webapp_connection_create_eventhub
+- az_webapp_connection_create_keyvault
+- az_webapp_connection_create_mysql
+- az_webapp_connection_create_mysql-flexible
+- az_webapp_connection_create_postgres
+- az_webapp_connection_create_postgres-flexible
+- az_webapp_connection_create_servicebus
+- az_webapp_connection_create_signalr
+- az_webapp_connection_create_storage-blob
+- az_webapp_connection_create_storage-file
+- az_webapp_connection_create_storage-queue
+- az_webapp_connection_create_storage-table
+- az_webapp_connection_delete
+- az_webapp_connection_list
+- az_webapp_connection_list-configuration
+- az_webapp_connection_list-support-types
+- az_webapp_connection_show
+- az_webapp_connection_update
+- az_webapp_connection_update_appconfig
+- az_webapp_connection_update_confluent-cloud
+- az_webapp_connection_update_cosmos-cassandra
+- az_webapp_connection_update_cosmos-gremlin
+- az_webapp_connection_update_cosmos-mongo
+- az_webapp_connection_update_cosmos-sql
+- az_webapp_connection_update_cosmos-table
+- az_webapp_connection_update_eventhub
+- az_webapp_connection_update_keyvault
+- az_webapp_connection_update_mysql
+- az_webapp_connection_update_mysql-flexible
+- az_webapp_connection_update_postgres
+- az_webapp_connection_update_postgres-flexible
+- az_webapp_connection_update_servicebus
+- az_webapp_connection_update_signalr
+- az_webapp_connection_update_storage-blob
+- az_webapp_connection_update_storage-file
+- az_webapp_connection_update_storage-queue
+- az_webapp_connection_update_storage-table
+- az_webapp_connection_validate
+- az_webapp_connection_wait
+- az_webapp_create
+- az_webapp_deployment
+- az_webapp_deployment_source
+- az_webapp_deployment_source_config-zip
+- az_webapp_restart
+- az_webapp_scale
 - az_webapp_scan
 - az_webapp_scan_list-result
 - az_webapp_scan_show-result
 - az_webapp_scan_start
 - az_webapp_scan_stop
 - az_webapp_scan_track
+- az_webapp_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

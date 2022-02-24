@@ -4,7 +4,7 @@ name: az k8s-extension
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **k8s-extension** extension for Azure CLI and requires version 2.24.0 or higher.  The extension will automatically install the first time you run an **az k8s-extension** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **k8s-extension** extension for the Azure CLI  (version 2.24.0 or higher).  The extension will automatically install the first time you run an **az k8s-extension** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage Kubernetes Extensions.
 description: ''
 directCommands:
@@ -23,22 +23,15 @@ directCommands:
                             [--config-file]
                             [--config-protected]
                             [--config-protected-file]
+                            [--no-wait]
                             [--release-namespace]
                             [--release-train]
                             [--scope {cluster, namespace}]
-                            [--tags]
                             [--target-namespace]
                             [--version]
   examples:
   - summary: Create a Kubernetes Extension
-    syntax: >-
-      az k8s-extension create --resource-group my-resource-group \
-
-      --cluster-name mycluster --cluster-type connectedClusters \
-
-      --name myextension --extension-type microsoft.openservicemesh \
-
-      --scope cluster --release-train stable
+    syntax: az k8s-extension create --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension --extension-type microsoft.openservicemesh --scope cluster --release-train stable
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -78,6 +71,9 @@ directCommands:
   - name: --config-protected-file --configuration-protected-settings-file
     summary: JSON file path for configuration-protected-settings.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --release-namespace
     summary: Specify the namespace to install the extension release.
     description: ''
@@ -87,9 +83,6 @@ directCommands:
   - name: --scope
     parameterValueGroup: cluster, namespace
     summary: Specify the extension scope.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --target-namespace
     summary: Specify the target namespace to install to for the extension instance. This parameter is required if extension scope is set to 'namespace'.
@@ -106,13 +99,12 @@ directCommands:
                             --cluster-type {appliances, connectedClusters, managedClusters}
                             --name
                             --resource-group
+                            [--force]
+                            [--no-wait]
                             [--yes]
   examples:
   - summary: Delete an existing Kubernetes Extension
-    syntax: >-
-      az k8s-extension delete --resource-group my-resource-group \
-
-      --cluster-name mycluster --cluster-type connectedClusters --name myextension
+    syntax: az k8s-extension delete --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -132,6 +124,12 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --force
+    summary: Specify whether to force delete the extension from the cluster.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --yes -y
     summary: Ignore confirmation prompts.
     description: ''
@@ -145,10 +143,7 @@ directCommands:
                           --resource-group
   examples:
   - summary: List all Kubernetes Extensions on a cluster
-    syntax: >-
-      az k8s-extension list --resource-group my-resource-group \
-
-      --cluster-name mycluster --cluster-type connectedClusters
+    syntax: az k8s-extension list --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -174,10 +169,7 @@ directCommands:
                           --resource-group
   examples:
   - summary: Show details of a Kubernetes Extension
-    syntax: >-
-      az k8s-extension show --resource-group my-resource-group \
-
-      --cluster-name mycluster --cluster-type connectedClusters --name myextension
+    syntax: az k8s-extension show --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -196,11 +188,80 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_k8s-extension_update
+  name: az k8s-extension update
+  summary: Update mutable properties of a Kubernetes Extension.
+  description: For update to ConfigSettings and ConfigProtectedSettings, please refer to documentation of the cluster extension service to check update to these properties is supported before updating these properties.
+  syntax: >-
+    az k8s-extension update --cluster-name
+                            --cluster-type {appliances, connectedClusters, managedClusters}
+                            --name
+                            --resource-group
+                            [--auto-upgrade {false, true}]
+                            [--config]
+                            [--config-file]
+                            [--config-protected]
+                            [--config-protected-file]
+                            [--no-wait]
+                            [--release-train]
+                            [--version]
+                            [--yes]
+  examples:
+  - summary: Update a Kubernetes Extension
+    syntax: az k8s-extension update --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension --auto-upgrade true/false --version extension-version --release-train stable --configuration-settings settings-key=settings-value --configuration-protected-settings protected-settings-key=protected-value --configuration-settings-file=config-settings-file --configuration-protected-settings-file=protected-settings-file
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name -c
+    summary: Name of the Kubernetes cluster.
+    description: ''
+  - isRequired: true
+    name: --cluster-type -t
+    parameterValueGroup: appliances, connectedClusters, managedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the extension instance.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --auto-upgrade --auto-upgrade-minor-version
+    parameterValueGroup: false, true
+    summary: Automatically upgrade minor version of the extension instance.
+    description: ''
+  - name: --config --configuration-settings
+    summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --config-file --configuration-settings-file
+    summary: JSON file path for configuration-settings.
+    description: ''
+  - name: --config-protected --configuration-protected-settings
+    summary: Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --config-protected-file --configuration-protected-settings-file
+    summary: JSON file path for configuration-protected-settings.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --release-train
+    summary: Specify the release train for the extension type.
+    description: ''
+  - name: --version
+    summary: Specify the version to install for the extension instance if --auto-upgrade-minor-version is not enabled.
+    description: ''
+  - name: --yes -y
+    summary: Ignore confirmation prompts.
+    description: ''
 commands:
 - az_k8s-extension_create
 - az_k8s-extension_delete
 - az_k8s-extension_list
 - az_k8s-extension_show
+- az_k8s-extension_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

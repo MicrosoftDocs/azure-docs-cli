@@ -16,6 +16,7 @@ directCommands:
                     [--content-type]
                     [--exclude-path]
                     [--exclude-pattern]
+                    [--extra-options]
                     [--follow-symlinks]
                     [--include-path]
                     [--include-pattern]
@@ -82,6 +83,8 @@ directCommands:
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/[path/to/directory] -d /path/to/dir --recursive
   - summary: Download a set of files from Azure File Share using wildcards, and you can also specify your storage account and share information as above.
     syntax: az storage copy -s https://[account].file.core.windows.net/[share]/ --include-pattern foo* -d /path/to/dir --recursive
+  - summary: Upload a single file to Azure Blob using url with azcopy options pass-through.
+    syntax: az storage copy -s /path/to/file.txt -d https://[account].blob.core.windows.net/[container]/[path/to/blob] -- --block-size-mb=0.25 --check-length
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -108,6 +111,9 @@ directCommands:
   - name: --exclude-pattern
     summary: 'Exclude these files where the name matches the pattern list. For example: \*.jpg;\*.pdf;exactName. This option supports wildcard characters (\*).'
     description: ''
+  - name: --extra-options
+    summary: ''
+    description: ''
   - name: --follow-symlinks
     summary: Follow symbolic links when uploading from local file system.
     description: ''
@@ -119,7 +125,7 @@ directCommands:
     description: ''
   - name: --preserve-s2s-access-tier
     parameterValueGroup: false, true
-    summary: Preserve access tier during service to service copy. Please refer to https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-storage-tiers to ensure destination storage account support setting access tier. In the cases that setting access tier is not supported, please use `--preserve-s2s-access-tier false` to bypass copying access tier. (Default true).
+    summary: Preserve access tier during service to service copy. Please refer to https://docs.microsoft.com/azure/storage/blobs/storage-blob-storage-tiers to ensure destination storage account support setting access tier. In the cases that setting access tier is not supported, please use `--preserve-s2s-access-tier false` to bypass copying access tier. (Default true).
     description: ''
   - name: --put-md5
     summary: Create an MD5 hash of each file, and save the hash as the Content-MD5 property of the destination blob/file.Only available when uploading.
@@ -215,22 +221,22 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
 - az_storage_account
-- az_storage_account_blob-inventory-policy
-- az_storage_account_blob-inventory-policy_create
-- az_storage_account_blob-inventory-policy_delete
-- az_storage_account_blob-inventory-policy_show
-- az_storage_account_blob-inventory-policy_update
 - az_storage_account_check-name
 - az_storage_account_create
 - az_storage_account_delete
-- az_storage_account_file-service-properties
-- az_storage_account_file-service-properties_show
-- az_storage_account_file-service-properties_update
 - az_storage_account_generate-sas
 - az_storage_account_keys
 - az_storage_account_keys_list
 - az_storage_account_keys_renew
 - az_storage_account_list
+- az_storage_account_local-user
+- az_storage_account_local-user_create
+- az_storage_account_local-user_delete
+- az_storage_account_local-user_list
+- az_storage_account_local-user_list-keys
+- az_storage_account_local-user_regenerate-password
+- az_storage_account_local-user_show
+- az_storage_account_local-user_update
 - az_storage_account_network-rule
 - az_storage_account_network-rule_add
 - az_storage_account_network-rule_list
@@ -468,5 +474,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/23/2021
+  ms.date: 12/30/2021
   description: Manage Azure Cloud Storage resources.

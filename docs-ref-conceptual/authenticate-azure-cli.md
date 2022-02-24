@@ -4,7 +4,7 @@ description: Learn the different authentication types for your Azure CLI login â
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/22/2019
+ms.date: 09/10/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -15,7 +15,7 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 # Sign in with Azure CLI 
 
 There are several authentication types for the Azure Command-Line Interface (CLI), so how do you log in?  The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
-Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az_login) command. When writing scripts, the recommended approach is
+Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When writing scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
 None of your login information is stored by Azure CLI. Instead, an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens)
@@ -61,7 +61,7 @@ az login -u <username> -p <password>
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 pre-defined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
 allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
-about service principals, see [Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md#sign-in-using-a-service-principal).
+about service principals, see [Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md#4-sign-in-using-a-service-principal).
 
 To sign in with a service principal, you need:
 

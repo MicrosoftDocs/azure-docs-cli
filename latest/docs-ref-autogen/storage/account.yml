@@ -30,6 +30,7 @@ directCommands:
                               --resource-group
                               [--access-tier {Cool, Hot}]
                               [--action]
+                              [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
@@ -43,6 +44,7 @@ directCommands:
                               [--domain-name]
                               [--domain-sid]
                               [--edge-zone]
+                              [--enable-alw {false, true}]
                               [--enable-files-aadds {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-hierarchical-namespace {false, true}]
@@ -58,12 +60,15 @@ directCommands:
                               [--forest-name]
                               [--https-only {false, true}]
                               [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                              [--immutability-period]
+                              [--immutability-state {Disabled, Locked, Unlocked}]
                               [--key-exp-days]
                               [--key-vault-user-identity-id]
                               [--kind {BlobStorage, BlockBlobStorage, FileStorage, Storage, StorageV2}]
                               [--location]
                               [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
                               [--net-bios-domain-name]
+                              [--public-network-access {Disabled, Enabled}]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--require-infrastructure-encryption {false, true}]
@@ -97,6 +102,10 @@ directCommands:
   - name: --action
     defaultValue: Allow
     summary: The action of virtual network rule. Possible value is Allow.
+    description: ''
+  - name: --allow-append --allow-protected-append-writes -w
+    parameterValueGroup: false, true
+    summary: This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted.
     description: ''
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
@@ -142,6 +151,10 @@ directCommands:
     description: ''
   - name: --edge-zone
     summary: The name of edge zone.
+    description: ''
+  - name: --enable-alw
+    parameterValueGroup: false, true
+    summary: The account level immutability property. The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default.
     description: ''
   - name: --enable-files-aadds
     parameterValueGroup: false, true
@@ -198,6 +211,13 @@ directCommands:
     parameterValueGroup: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
     summary: The identity type.
     description: ''
+  - name: --immutability-period --immutability-period-in-days
+    summary: The immutability period for the blobs in the container since the policy creation, in days.
+    description: ''
+  - name: --immutability-state
+    parameterValueGroup: Disabled, Locked, Unlocked
+    summary: Defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allow-protected-append-write property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted.
+    description: ''
   - name: --key-exp-days --key-expiration-period-in-days
     summary: Expiration period in days of the Key Policy assigned to the storage account.
     description: ''
@@ -218,6 +238,10 @@ directCommands:
     description: ''
   - name: --net-bios-domain-name
     summary: Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
+    description: ''
+  - name: --public-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Enable or disable public network access to the storage account.
     description: ''
   - name: --publish-internet-endpoints
     parameterValueGroup: false, true
@@ -299,7 +323,7 @@ directCommands:
 
     cluster will become primary after failover. For more information, please refer to
 
-    https://docs.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance.
+    https://docs.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance.
   syntax: >-
     az storage account failover [--ids]
                                 [--name]
@@ -413,8 +437,7 @@ directCommands:
   summary: List storage accounts.
   description: ''
   syntax: >-
-    az storage account list [--query-examples]
-                            [--resource-group]
+    az storage account list [--resource-group]
                             [--subscription]
   examples:
   - summary: List all storage accounts in a subscription.
@@ -422,9 +445,6 @@ directCommands:
   - summary: List all storage accounts in a resource group.
     syntax: az storage account list -g MyResourceGroup
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -468,7 +488,6 @@ directCommands:
     az storage account show [--expand]
                             [--ids]
                             [--name]
-                            [--query-examples]
                             [--resource-group]
                             [--subscription]
   examples:
@@ -485,9 +504,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The storage account name.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -583,6 +599,7 @@ directCommands:
   syntax: >-
     az storage account update [--access-tier {Cool, Hot}]
                               [--add]
+                              [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
                               [--allow-cross-tenant-replication {false, true}]
                               [--allow-shared-key-access {false, true}]
@@ -608,11 +625,14 @@ directCommands:
                               [--https-only {false, true}]
                               [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                               [--ids]
+                              [--immutability-period]
+                              [--immutability-state {Disabled, Locked, Unlocked}]
                               [--key-exp-days]
                               [--key-vault-user-identity-id]
                               [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
                               [--name]
                               [--net-bios-domain-name]
+                              [--public-network-access {Disabled, Enabled}]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--remove]
@@ -635,6 +655,10 @@ directCommands:
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --allow-append --allow-protected-append-writes -w
+    parameterValueGroup: false, true
+    summary: This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted.
     description: ''
   - name: --allow-blob-public-access
     parameterValueGroup: false, true
@@ -723,6 +747,13 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --immutability-period --immutability-period-in-days
+    summary: The immutability period for the blobs in the container since the policy creation, in days.
+    description: ''
+  - name: --immutability-state
+    parameterValueGroup: Disabled, Locked, Unlocked
+    summary: Defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allow-protected-append-write property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted.
+    description: ''
   - name: --key-exp-days --key-expiration-period-in-days
     summary: Expiration period in days of the Key Policy assigned to the storage account.
     description: ''
@@ -738,6 +769,10 @@ directCommands:
     description: ''
   - name: --net-bios-domain-name
     summary: Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
+    description: ''
+  - name: --public-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Enable or disable public network access to the storage account.
     description: ''
   - name: --publish-internet-endpoints
     parameterValueGroup: false, true
@@ -803,10 +838,21 @@ commands:
 - az_storage_account_file-service-properties_show
 - az_storage_account_file-service-properties_update
 - az_storage_account_generate-sas
+- az_storage_account_hns-migration
+- az_storage_account_hns-migration_start
+- az_storage_account_hns-migration_stop
 - az_storage_account_keys
 - az_storage_account_keys_list
 - az_storage_account_keys_renew
 - az_storage_account_list
+- az_storage_account_local-user
+- az_storage_account_local-user_create
+- az_storage_account_local-user_delete
+- az_storage_account_local-user_list
+- az_storage_account_local-user_list-keys
+- az_storage_account_local-user_regenerate-password
+- az_storage_account_local-user_show
+- az_storage_account_local-user_update
 - az_storage_account_management-policy
 - az_storage_account_management-policy_create
 - az_storage_account_management-policy_delete
@@ -857,5 +903,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/23/2021
+  ms.date: 12/30/2021
   description: Manage storage accounts.

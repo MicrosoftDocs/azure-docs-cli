@@ -4,7 +4,7 @@ name: az ml environment
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **ml** extension for Azure CLI and requires version 2.15.0 or higher.  The extension will automatically install the first time you run an **az ml environment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **ml** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az ml environment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure ML environments.
 description: Azure ML environments define the execution environment for jobs and endpoint deployments, encapsulating the dependencies for training and inference. These environment definitions are built into Docker images.
 directCommands:
@@ -17,20 +17,29 @@ directCommands:
 
     The created environment will be tracked in the workspace under the specified name and version.
   syntax: >-
-    az ml environment create --file
-                             --resource-group
+    az ml environment create --resource-group
                              --workspace-name
+                             [--build-context]
+                             [--conda-file]
+                             [--description]
+                             [--dockerfile-path]
+                             [--file]
+                             [--image]
                              [--name]
+                             [--os-type]
                              [--set]
+                             [--tags]
                              [--version]
   examples:
   - summary: Create an environment from a YAML specification file
     syntax: az ml environment create --file my_env.yml --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create an environment from a docker image
+    syntax: az ml environment create --name my-env --version 1 --file my_env.yml  --image pytorch/pytorch --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create an environment from a build context
+    syntax: az ml environment create --name my-env --version 1 --file my_env.yml  --build-context envs/context/ --dockerfile-path Dockerfile --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create an environment from a conda specification
+    syntax: az ml environment create --name my-env --version 1 --file my_env.yml  --conda-file conda_dep.yml --image mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04 --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
-  - isRequired: true
-    name: --file -f
-    summary: Local path to the YAML file containing the Azure ML environment specification.
-    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -40,11 +49,36 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --build-context -b
+    summary: Local path to the directory to use as a Docker build context. --build-context/-b and --image/-i are mutually exclusive arguments.
+    description: ''
+  - name: --conda-file -c
+    summary: Local path to a conda specification file. --image/-i must also be specified if this argument is used.
+    description: ''
+  - name: --description
+    summary: Description of the object.
+    description: ''
+  - name: --dockerfile-path -d
+    defaultValue: /Dockerfile
+    summary: Relative path to the Dockerfile within the directory specified by --build-context/-b. If omitted, './Dockerfile' is used.
+    description: ''
+  - name: --file -f
+    summary: Local path to the YAML file containing the Azure ML environment specification.
+    description: ''
+  - name: --image -i
+    summary: Docker image. --image/-i and --build-context/-b are mutually exclusive arguments.
+    description: ''
   - name: --name -n
     summary: Name of the environment.
     description: ''
+  - name: --os-type
+    summary: 'Type of operating system. Allowed values: linux, windows. Default: linux.'
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
     description: ''
   - name: --version -v
     summary: Version of the environment.
@@ -56,8 +90,9 @@ directCommands:
   syntax: >-
     az ml environment delete --name
                              --resource-group
-                             --version
                              --workspace-name
+                             [--label]
+                             [--version]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -68,12 +103,15 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --version -v
-    summary: Version of the environment.
-    description: ''
-  - isRequired: true
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the environment.
+    description: ''
+  - name: --version -v
+    summary: Version of the environment.
     description: ''
 - uid: az_ml_environment_list
   name: az ml environment list
@@ -115,12 +153,11 @@ directCommands:
     az ml environment show --name
                            --resource-group
                            --workspace-name
+                           [--label]
                            [--version]
   examples:
   - summary: Show details for an environment with the specified name and version
     syntax: az ml environment show --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Show details for the latest version of an environment with the specified name
-    syntax: az ml environment show --name my-env --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -135,8 +172,11 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --label -l
+    summary: Label of the environment.
+    description: ''
   - name: --version -v
-    summary: Version of the environment. If omitted, the latest version is shown.
+    summary: Version of the environment.
     description: ''
 - uid: az_ml_environment_update
   name: az ml environment update
@@ -148,6 +188,7 @@ directCommands:
                              --workspace-name
                              [--add]
                              [--force-string]
+                             [--label]
                              [--remove]
                              [--set]
                              [--version]
@@ -170,6 +211,9 @@ directCommands:
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --label -l
+    summary: Label of the environment.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'

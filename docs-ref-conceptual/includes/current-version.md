@@ -2,8 +2,8 @@
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/07/2021
+ms.date: 02/14/2022
 ms.topic: include
 ---
 
-The current version of the Azure CLI is __2.28.0__. For information about the latest release, see the [release notes](../release-notes-azure-cli.md). To find your installed version and see if you need to update, run [az version](/cli/azure/reference-index#az_version).
+The current version of the Azure CLI is __2.33.1__. For information about the latest release, see the [release notes](../release-notes-azure-cli.md). To find your installed version and see if you need to update, run [az version](/cli/azure/reference-index#az_version).

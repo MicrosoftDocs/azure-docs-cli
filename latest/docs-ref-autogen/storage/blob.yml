@@ -557,7 +557,6 @@ directCommands:
                          [--marker]
                          [--num-results]
                          [--prefix]
-                         [--query-examples]
                          [--sas-token]
                          [--show-next-marker]
                          [--subscription]
@@ -588,7 +587,7 @@ directCommands:
     summary: When the request includes this parameter, the operation returns a BlobPrefix element in the result list that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string.
     description: ''
   - name: --include
-    summary: 'Specify one or more additional datasets to include in the response. Options include: (c)opy, (d)eleted, (m)etadata, (s)napshots, (v)ersions, (t)ags. Can be combined.'
+    summary: 'Specify one or more additional datasets to include in the response. Options include: (c)opy, (d)eleted, (m)etadata, (s)napshots, (v)ersions, (t)ags, (i)mmutabilitypolicy, (l)egalhold, (d)eletedwithversions. Can be combined.'
     description: ''
   - name: --marker
     summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
@@ -599,9 +598,6 @@ directCommands:
     description: ''
   - name: --prefix
     summary: Filter the results to return only blobs whose name begins with the specified prefix.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -832,15 +828,15 @@ directCommands:
   summary: Set blob legal hold.
   description: ''
   syntax: >-
-    az storage blob set-legal-hold --legal-hold {false, true}
+    az storage blob set-legal-hold --container-name
+                                   --legal-hold {false, true}
+                                   --name
                                    [--account-key]
                                    [--account-name]
                                    [--auth-mode {key, login}]
-                                   [--blob-url]
                                    [--connection-string]
-                                   [--container-name]
-                                   [--name]
                                    [--sas-token]
+                                   [--subscription]
                                    [--timeout]
   examples:
   - summary: Configure blob legal hold.
@@ -849,9 +845,17 @@ directCommands:
     syntax: az storage blob set-legal-hold --legal-hold false -c mycontainer -n myblob --account-name mystorageaccount --account-key 0000-0000
   requiredParameters:
   - isRequired: true
+    name: --container-name -c
+    summary: The container name.
+    description: ''
+  - isRequired: true
     name: --legal-hold
     parameterValueGroup: false, true
     summary: Specified if a legal hold should be set on the blob.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The blob name.
     description: ''
   optionalParameters:
   - name: --account-key
@@ -864,24 +868,19 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
-  - name: --blob-url
-    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
-    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
-    description: ''
-  - name: --container-name -c
-    summary: The container name.
-    description: ''
-  - name: --name -n
-    summary: The blob name.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_set-tier
   name: az storage blob set-tier
   summary: Set the block or page tiers on the blob.
@@ -964,7 +963,6 @@ directCommands:
                          [--if-none-match]
                          [--if-unmodified-since]
                          [--lease-id]
-                         [--query-examples]
                          [--sas-token]
                          [--snapshot]
                          [--subscription]
@@ -1012,9 +1010,6 @@ directCommands:
     description: ''
   - name: --lease-id
     summary: Required if the blob has an active lease.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -1112,7 +1107,6 @@ directCommands:
                          --source
                          [--account-key]
                          [--account-name]
-                         [--auth-mode {key, login}]
                          [--connection-string]
                          [--destination]
                          [--exclude-path]
@@ -1140,10 +1134,6 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: key, login
-    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -1317,7 +1307,6 @@ directCommands:
   syntax: >-
     az storage blob upload --container-name
                            --file
-                           --name
                            [--account-key]
                            [--account-name]
                            [--auth-mode {key, login}]
@@ -1337,6 +1326,7 @@ directCommands:
                            [--max-connections]
                            [--maxsize-condition]
                            [--metadata]
+                           [--name]
                            [--no-progress]
                            [--sas-token]
                            [--socket-timeout]
@@ -1358,10 +1348,6 @@ directCommands:
   - isRequired: true
     name: --file -f
     summary: Path of the file to upload as the blob content.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
     description: ''
   optionalParameters:
   - name: --account-key
@@ -1422,6 +1408,9 @@ directCommands:
     description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
@@ -1737,5 +1726,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/23/2021
+  ms.date: 12/30/2021
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

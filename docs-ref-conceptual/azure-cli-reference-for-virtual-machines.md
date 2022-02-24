@@ -1,37 +1,38 @@
 ---
-title: Azure CLI references for Azure Virtual Machines
-description: Azure CLI reference landing page for Azure Virtual Machines
+title: Azure CLI references for Azure Virtual Machines | Microsoft Docs
+description: Find Azure CLI core and extension reference commands to manage Azure Virtual Machines.  Follow links to popular articles to learn how to use the Azure CLI for Azure VMs.
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 08/26/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure virtual machines, desktop virtualization, image, shared image gallery
 ---
 
-# Azure CLI for Azure Virtual Machines
+# Azure CLI reference commands for Azure Virtual Machines
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services and enables you to manage Azure Virtual Machines from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands you use to create and manage Azure resources. It's available across many Azure services and enables you to manage Azure Virtual Machines from a command line.
 
-The [Azure Virtual Machines](/azure/virtual-machines) CLI experience is composed of two parts: a core and its extensions. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
+The [Azure Virtual Machines](/azure/virtual-machines) CLI experience is composed of two parts: a **core** and its **extensions**. Core Azure CLI commands ship as part of the CLI and are fully supported. Extensions give you access to experimental and pre-release commands. For more information about using extensions, see [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).  
 
 > [!NOTE]
 > You're prompted to install an extension reference on first use. Or, you can use the [az extension add](/cli/azure/extension#az_extension_add) command to manually install an extension by name.
 
-See [Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines) for the Azure CLI core and extension references available for the Azure Virtual Machines service. For references in each subgroup, see the tables in the following sections:
+See [Azure Virtual Machines](/cli/azure/service-page/azure%20virtual%20machines) for an alphabetic list of Azure CLI core and extension references available for the Azure Virtual Machine service. For references in each subgroup, see the tables in the following sections:
 
-- [Desktop virtualization](#desktop-virtualization)
-- [Virtual machine images](#virtual-machine-images)
-- [Virtual machine maintenance](#virtual-machine-maintenance)
-- [Shared image galleries](#shared-image-galleries)
-- [Virtual machines](#virtual-machines)
-- [Virtual machine scale sets](#virtual-machine-scale-sets)
+- [Desktop virtualization](#desktop-virtualization-references)
+- [Virtual machine images](#virtual-machine-image-references)
+- [Virtual machine maintenance](#virtual-machine-maintenance-references)
+- [Shared image galleries](#shared-image-gallery-references)
+- [Virtual machines](#virtual-machine-references)
+- [Virtual machine scale sets](#virtual-machine-scale-set-references)
 - [Additional storage references](#additional-storage-references)
 
-## Desktop virtualization
+## Desktop virtualization references
 
 All the references in this table are part of the [desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) extension.
 
@@ -42,7 +43,7 @@ All the references in this table are part of the [desktopvirtualization](https:/
 | [az desktopvirtualization hostpool](/cli/azure/desktopvirtualization/hostpool) | Manage desktop virtualization host pools. |
 | [az desktopvirtualization workspace](/cli/azure/desktopvirtualization/workspace) | Manage desktop virtualization workspaces. |
 
-## Virtual machine images
+## Virtual machine image references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -51,7 +52,7 @@ All the references in this table are part of the [desktopvirtualization](https:/
 | [az image builder customizer](/cli/azure/image/builder/customizer) | Manage image builder template customizers. |  |
 | [az image builder output](/cli/azure/image/builder/output) | Manage image builder template output distributors. |  |
 
-## Virtual machine maintenance
+## Virtual machine maintenance references
 
 All the references in this table are part of the [maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) extension.
 
@@ -65,7 +66,7 @@ All the references in this table are part of the [maintenance](https://github.co
 | [az maintenance public-configuration](/cli/azure/maintenance/public-configuration) | Manage public maintenance configuration records. | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure?tabs=azure-cli) |
 | [az maintenance update](/cli/azure/maintenance/update) | Manage maintenance updates. | [Control updates with Maintenance Control and the Azure CLI](/azure/virtual-machines/maintenance-control-cli) |
 
-## Shared image galleries
+## Shared image gallery references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -74,7 +75,7 @@ All the references in this table are part of the [maintenance](https://github.co
 | [az sig image-version](/cli/azure/sig/image-version) | Manage the image versions in an image definition. | [Tutorial: Create and use a custom image for virtual machine scale sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli) |
 | [az sig share](/cli/azure/sig/share) | Manage the sharing profile of a shared image gallery. |  |
 
-## Virtual machines
+## Virtual machine references
 
 Some references in this table are part of the [aem](https://github.com/Azure/azure-cli-extensions/tree/main/src/aem) or [vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) extension.
 
@@ -103,7 +104,7 @@ Some references in this table are part of the [aem](https://github.com/Azure/azu
 | [az vm unmanaged-disk](/cli/azure/vm/unmanaged-disk) | Manage unmanaged data disks for a virtual machine. | | [Azure Virtual Machines planning and implementation for SAP NetWeaver](/azure/virtual-machines/workloads/sap/planning-guide) |
 | [az vm user](/cli/azure/vm/user) | Manage user accounts for a virtual machine. | | [Manage administrative users, SSH, and check or repair disks on Linux VMs using the VMAccess Extension with the Azure CLI](/azure/virtual-machines/extensions/vmaccess) |
 
-## Virtual machine scale sets
+## Virtual machine scale set references
 
 | Reference | Description | More information |
 |-|-|-|
