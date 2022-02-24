@@ -4,24 +4,35 @@ name: az iot hub device-identity
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for Azure CLI and requires version 2.17.1 or higher.  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.24.1 or higher).  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage IoT devices.
 description: ''
 directCommands:
 - uid: az_iot_hub_device-identity_create
   name: az iot hub device-identity create
   summary: Create a device in an IoT Hub.
-  description: ''
+  description: >-
+    When using the auth method of shared_private_key (also known as symmetric keys),
+
+    if no custom keys are provided the service will generate them for the device.
+
+
+    If a device scope is provided for an edge device, the value will automatically be
+
+    converted to a parent scope.
   syntax: >-
     az iot hub device-identity create --device-id
                                       [--am {shared_private_key, x509_ca, x509_thumbprint}]
                                       [--auth-type {key, login}]
+                                      [--device-scope]
                                       [--edge-enabled {false, true}]
                                       [--hub-name]
                                       [--login]
                                       [--od]
+                                      [--pk]
                                       [--primary-thumbprint]
                                       [--resource-group]
+                                      [--secondary-key]
                                       [--secondary-thumbprint]
                                       [--sta {disabled, enabled}]
                                       [--star]
@@ -35,8 +46,10 @@ directCommands:
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --output-dir /path/to/output
   - summary: Create an IoT device with self-signed certificate authorization and explicitly provide primary and secondary thumbprints.
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_thumbprint --ptp {thumbprint_1} --stp {thumbprint_2}
-  - summary: Create an IoT device with root CA authorization with disabled status and reason
+  - summary: Create an IoT device with root CA authorization with disabled status and reason.
     syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --am x509_ca --status disabled --status-reason 'for reasons'
+  - summary: Create an IoT device with a device scope.
+    syntax: az iot hub device-identity create -n {iothub_name} -d {device_id} --device-scope 'ms-azure-iot-edge://edge0-123456789123456789'
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -46,12 +59,15 @@ directCommands:
   - name: --am --auth-method
     defaultValue: shared_private_key
     parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
-    summary: The authorization type an entity is to be created with.
+    summary: The authorization method an entity is to be created with.
     description: ''
   - name: --auth-type
     defaultValue: key
     parameterValueGroup: key, login
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
+  - name: --device-scope
+    summary: The scope of the device. For edge devices, this is auto-generated and immutable. For leaf devices, set this to create child/parent relationship.
     description: ''
   - name: --edge-enabled --ee
     parameterValueGroup: false, true
@@ -66,14 +82,20 @@ directCommands:
   - name: --od --output-dir
     summary: Generate self-signed cert and use its thumbprint. Output to specified target directory.
     description: ''
+  - name: --pk --primary-key
+    summary: The primary symmetric shared access key stored in base64 format.
+    description: ''
   - name: --primary-thumbprint --ptp
-    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    summary: Self-signed certificate thumbprint to use for the primary thumbprint.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --secondary-key --sk
+    summary: The secondary symmetric shared access key stored in base64 format.
+    description: ''
   - name: --secondary-thumbprint --stp
-    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    summary: Self-signed certificate thumbprint to use for the secondary thumbprint.
     description: ''
   - name: --sta --status
     defaultValue: enabled
@@ -363,7 +385,7 @@ directCommands:
     description: ''
   - name: --am --auth-method
     parameterValueGroup: shared_private_key, x509_ca, x509_thumbprint
-    summary: The authorization type an entity is to be created with.
+    summary: The authorization method an entity is to be created with.
     description: ''
   - name: --auth-type
     defaultValue: key
@@ -390,7 +412,7 @@ directCommands:
     summary: The primary symmetric shared access key stored in base64 format.
     description: ''
   - name: --primary-thumbprint --ptp
-    summary: Explicit self-signed certificate thumbprint to use for primary key.
+    summary: Self-signed certificate thumbprint to use for the primary thumbprint.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -402,7 +424,7 @@ directCommands:
     summary: The secondary symmetric shared access key stored in base64 format.
     description: ''
   - name: --secondary-thumbprint --stp
-    summary: Explicit self-signed certificate thumbprint to use for secondary key.
+    summary: Self-signed certificate thumbprint to use for the secondary thumbprint.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'

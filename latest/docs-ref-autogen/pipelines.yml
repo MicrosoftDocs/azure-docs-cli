@@ -142,7 +142,6 @@ directCommands:
                       [--name]
                       [--org]
                       [--project]
-                      [--query-examples]
                       [--query-order {ModifiedAsc, ModifiedDesc, NameAsc, NameDesc, None}]
                       [--repository]
                       [--repository-type {bitbucket, git, github, githubenterprise, svn, tfsgit, tfsversioncontrol}]
@@ -164,9 +163,6 @@ directCommands:
     description: ''
   - name: --project -p
     summary: Name or ID of the project. You can configure the default project using az devops configure -d project=NAME_OR_ID. Required if not configured as default or picked up via git config.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --query-order
     parameterValueGroup: ModifiedAsc, ModifiedDesc, NameAsc, NameDesc, None
@@ -198,6 +194,7 @@ directCommands:
                      [--name]
                      [--open]
                      [--org]
+                     [--parameters]
                      [--project]
                      [--subscription]
                      [--variables]
@@ -227,6 +224,9 @@ directCommands:
   - name: --org --organization
     summary: 'Azure DevOps organization URL. You can configure the default organization using az devops configure -d organization=ORG_URL. Required if not configured as default or picked up via git config. Example: https://dev.azure.com/MyOrganizationName/.'
     description: ''
+  - name: --parameters
+    summary: Space separated "name=value" pairs for the parameters you would like to set.
+    description: ''
   - name: --project -p
     summary: Name or ID of the project. You can configure the default project using az devops configure -d project=NAME_OR_ID. Required if not configured as default or picked up via git config.
     description: ''
@@ -248,7 +248,6 @@ directCommands:
                       [--open]
                       [--org]
                       [--project]
-                      [--query-examples]
                       [--subscription]
   optionalParameters:
   - name: --detect
@@ -273,9 +272,6 @@ directCommands:
   - name: --project -p
     summary: Name or ID of the project. You can configure the default project using az devops configure -d project=NAME_OR_ID. Required if not configured as default or picked up via git config.
     description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -284,11 +280,10 @@ directCommands:
   summary: Update a pipeline.
   description: ''
   syntax: >-
-    az pipelines update [--branch]
+    az pipelines update --id
+                        [--branch]
                         [--description]
                         [--detect {false, true}]
-                        [--id]
-                        [--name]
                         [--new-folder-path]
                         [--new-name]
                         [--org]
@@ -296,6 +291,11 @@ directCommands:
                         [--queue-id]
                         [--subscription]
                         [--yaml-path]
+  requiredParameters:
+  - isRequired: true
+    name: --id
+    summary: Id of the pipeline to update.
+    description: ''
   optionalParameters:
   - name: --branch
     summary: Branch name for which the pipeline will be configured.
@@ -306,12 +306,6 @@ directCommands:
   - name: --detect
     parameterValueGroup: false, true
     summary: Automatically detect organization.
-    description: ''
-  - name: --id
-    summary: Id of the pipeline to update.
-    description: ''
-  - name: --name
-    summary: Name of the pipeline to update.
     description: ''
   - name: --new-folder-path
     summary: New full path of the folder to move the pipeline to. e.g. "user1/production_pipelines".

@@ -1,35 +1,32 @@
 ---
-title: Azure CLI references for Azure SQL
-description: Azure CLI reference landing page for Azure SQL
+title: Azure CLI references for Azure SQL | Microsoft Docs
+description: Find Azure CLI core and extension reference commands to manage Azure SQL.  Follow links to popular articles to learn how to use the Azure CLI for Azure SQL
 author: dbradish-microsoft
 manager: barbkess
 ms.devlang: azurecli
 ms.topic: reference
-ms.date: 05/21/2021
+ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: azure cli references, azure sql
 ---
 
-# Azure CLI for Azure SQL
+# Azure CLI reference commands for Azure SQL
 
-The Azure Command Line Interface ([Azure CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services, including Azure SQL, and gives you the ability to manage Azure SQL services from a command line.
+The Azure Command-Line Interface ([CLI](./what-is-azure-cli.md)) is a set of commands used to create and manage Azure resources. It's available across many Azure services and gives you the ability to manage Azure SQL services from a command-line.
 
-## References for Azure SQL
+The Azure CLI commands for [Azure SQL](/azure/azure-sql/) is composed of core references only and ships as part of the Azure CLI.  See [az sql](/cli/azure/sql) for an alphabetic list of the Azure CLI core and extension references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections:
 
-The [Azure SQL](/azure/azure-sql/) CLI experience is associated with the following Azure CLI reference groups. It's composed of core references only and ships as part of the CLI.  
+- [SQL database](#sql-database-references)
+- [SQL Managed Instance](#sql-managed-instance-references)
+- [SQL Managed Instance database](#sql-managed-instance-database-references)
+- [SQL server](#sql-server-references)
+- [SQL virtual machine](#sql-virtual-machine-references)
+- [Additional references](#additional-sql-references)
 
-See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references available for the Azure SQL service. For references for each subgroup, see the tables in the following sections:
-
-- [SQL database](#sql-database)
-- [SQL Managed Instance](#sql-managed-instance)
-- [SQL Managed Instance database](#sql-managed-instance-database)
-- [SQL servers](#sql-servers)
-- [SQL virtual machines](#sql-virtual-machines)
-- [Additional references](#additional-references)
-
-## SQL database
+## SQL database references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -44,7 +41,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql db tde](/cli/azure/sql/db/tde) | Manage a SQL database's transparent data encryption. | [Transparent data encryption](/azure/azure-sql/database/transparent-data-encryption-tde-overview) |
 | [az sql db threat-policy](/cli/azure/sql/db/threat-policy) | Manage a SQL database's threat detection policies. | [Configure Advanced Threat Protection](/azure/azure-sql/database/threat-detection-configure) |
 
-## SQL Managed Instance
+## SQL Managed Instance references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -55,7 +52,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql mi op](/cli/azure/sql/mi/op) | Manage operations on a SQL Managed Instance. | [Overview of Azure SQL Managed Instance management operations](/azure/azure-sql/managed-instance/management-operations-overview) |
 | [az sql mi tde-key](/cli/azure/sql/mi/tde-key) | Manage a SQL Managed Instance's encryption protector. | [Transparent data encryption](/azure/azure-sql/database/transparent-data-encryption-tde-overview) |
 
-## SQL Managed Instance database
+## SQL Managed Instance database references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -65,7 +62,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql midb ltr-policy](/cli/azure/sql/midb/ltr-policy) | Manage SQL Managed Instance database long-term retention policy. | [Long-term retention](/azure/azure-sql/database/long-term-retention-overview) |
 | [az sql midb short-term-retention-policy](/cli/azure/sql/midb/short-term-retention-policy) | Manage SQL Managed Instance database backup short-term retention policy. | [Automated backups](/azure/azure-sql/database/automated-backups-overview) |
 
-## SQL servers
+## SQL server references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -81,7 +78,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql server tde-key](/cli/azure/sql/server/tde-key) | Manage a server's encryption protector. | [Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure) |
 | [az sql server vnet-rule](/cli/azure/sql/server/vnet-rule) | Manage a server's virtual network rules. | [Use virtual network service endpoints and rules for servers](/azure/azure-sql/database/vnet-service-endpoint-rule-overview) |
 
-## SQL virtual machines
+## SQL virtual machine references
 
 | Reference | Description | More information |
 |-|-|-|
@@ -89,7 +86,7 @@ See [az sql](/cli/azure/sql) for a complete list of the Azure CLI references ava
 | [az sql vm group](/cli/azure/sql/vm/group) | Manage SQL virtual machine groups. | [Always On availability group on SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/availability-group-overview) |
 | [az sql vm group ag-listener](/cli/azure/sql/vm/group/ag-listener) | Manage SQL availability group listeners. | [Configure one or more Always On availability group listeners](/azure/azure-sql/virtual-machines/windows/availability-group-listener-powershell-configure) |
 
-## Additional references
+## Additional SQL references
 
 | Reference | Description | More information |
 |-|-|-|

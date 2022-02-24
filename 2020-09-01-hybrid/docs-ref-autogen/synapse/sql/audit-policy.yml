@@ -11,15 +11,10 @@ directCommands:
   syntax: >-
     az synapse sql audit-policy show --resource-group
                                      --workspace-name
-                                     [--blob-auditing-policy-name]
-                                     [--query-examples]
                                      [--subscription]
   examples:
   - summary: Get a SQL's auditing policy.
-    syntax: >-
-      az synapse sql audit-policy show --workspace-name testsynapseworkspace --resource-group rg \
-
-      --blob-auditing-policy-name bapolicyname
+    syntax: az synapse sql audit-policy show --workspace-name testsynapseworkspace --resource-group rg
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -30,12 +25,6 @@ directCommands:
     summary: The workspace name.
     description: ''
   optionalParameters:
-  - name: --blob-auditing-policy-name -b
-    summary: Name of the blob auditing policy name.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -74,53 +63,50 @@ directCommands:
   - summary: Enable by storage account name.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg --state Enabled \
-          --blob-storage-target-state Enabled --storage-account mystorage --blob-auditing-policy-name bapname
+          --blob-storage-target-state Enabled --storage-account mystorage
   - summary: Enable by storage endpoint and key.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg --state Enabled \
           --blob-storage-target-state Enabled --storage-endpoint https://mystorage.blob.core.windows.net \
-          --storage-key MYKEY== --blob-auditing-policy-name bapname
+          --storage-key MYKEY==
   - summary: Set the list of audit actions.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --actions SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public' \
-
-      --blob-auditing-policy-name bapolicyname
+      --actions SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP 'UPDATE on database::mydb by public'
   - summary: Disable an auditing policy.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --state Disabled --blob-auditing-policy-name bapolicyname
+      --state Disabled
   - summary: Disable a blob storage auditing policy.
     syntax: >-
       az synapse sql audit-policy update --workspace-name testsynapseworkspace --resource-group rg \
 
-      --blob-storage-target-state Disabled --blob-auditing-policy-name bapname
+      --blob-storage-target-state Disabled
   - summary: Enable a log analytics auditing policy.
     syntax: >-
       az synapse sql audit-policy update --resource-group mygroup --workspace-name myws --state Enabled \
-          --log-analytics-target-state Enabled --log-analytics-workspace-resource-id myworkspaceresourceid \
-          --blob-auditing-policy-name bapname
+          --log-analytics-target-state Enabled --log-analytics-workspace-resource-id myworkspaceresourceid
   - summary: Disable a log analytics auditing policy.
     syntax: >-
       az synapse sql audit-policy update --resource-group mygroup --workspace-name myws --state Enabled
-          --log-analytics-target-state Disabled --blob-auditing-policy-name bapname
+          --log-analytics-target-state Disabled
   - summary: Enable an event hub auditing policy.
     syntax: >-
       az synapse sql audit-policy update --resource-group mygroup --workspace-name myws --state Enabled \
           --event-hub-target-state Enabled \
           --event-hub-authorization-rule-id eventhubauthorizationruleid \
-          --event-hub eventhubname --blob-auditing-policy-name bapname
+          --event-hub eventhubname
   - summary: Enable an event hub auditing policy for default event hub.
     syntax: >-
       az synapse sql audit-policy update --resource-group mygroup --workspace-name myws --state Enabled \
           --event-hub-target-state Enabled \
-          --event-hub-authorization-rule-id eventhubauthorizationruleid --blob-auditing-policy-name bapname
+          --event-hub-authorization-rule-id eventhubauthorizationruleid
   - summary: Disable an event hub auditing policy.
     syntax: >-
       az synapse sql audit-policy update --resource-group mygroup --workspace-name myws
-         --state Enabled --event-hub-target-state Disabled --blob-auditing-policy-name bapname
+         --state Enabled --event-hub-target-state Disabled
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -137,8 +123,9 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --blob-auditing-policy-name -b
-    summary: Name of the blob auditing policy name.
+  - name: --blob-auditing-policy-name
+    defaultValue: default
+    summary: ''
     description: ''
   - name: --blob-storage-target-state --bsts
     parameterValueGroup: Disabled, Enabled
@@ -225,8 +212,8 @@ directCommands:
                                      [--updated]
   requiredParameters:
   - isRequired: true
-    name: --blob-auditing-policy-name -b
-    summary: Name of the blob auditing policy name.
+    name: --blob-auditing-policy-name
+    summary: The name of the blob auditing policy.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -285,5 +272,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/08/2021
+  ms.date: 10/27/2021
   description: Manage SQL auditing policy.

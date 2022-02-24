@@ -32,6 +32,7 @@ directCommands:
                               [--action]
                               [--allow-blob-public-access]
                               [--allow-cross-tenant-replication]
+                              [--allow-protected-append-writes]
                               [--allow-shared-key-access]
                               [--assign-identity]
                               [--azure-storage-sid]
@@ -43,6 +44,7 @@ directCommands:
                               [--domain-name]
                               [--domain-sid]
                               [--edge-zone]
+                              [--enable-alw]
                               [--enable-files-aadds {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-hierarchical-namespace {false, true}]
@@ -58,12 +60,15 @@ directCommands:
                               [--forest-name]
                               [--https-only {false, true}]
                               [--identity-type]
+                              [--immutability-period-since-creation-in-days]
+                              [--immutability-policy-state]
                               [--key-expiration-period-in-days]
                               [--key-vault-user-identity-id]
                               [--kind {BlobStorage, BlockBlobStorage, FileStorage, Storage, StorageV2}]
                               [--location]
                               [--min-tls-version]
                               [--net-bios-domain-name]
+                              [--public-network-access]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--require-infrastructure-encryption]
@@ -104,6 +109,9 @@ directCommands:
   - name: --allow-cross-tenant-replication
     summary: ''
     description: ''
+  - name: --allow-protected-append-writes
+    summary: ''
+    description: ''
   - name: --allow-shared-key-access
     summary: ''
     description: ''
@@ -137,6 +145,9 @@ directCommands:
     summary: Specify the security identifier (SID). Required when --enable-files-adds is set to True.
     description: ''
   - name: --edge-zone
+    summary: ''
+    description: ''
+  - name: --enable-alw
     summary: ''
     description: ''
   - name: --enable-files-aadds
@@ -191,6 +202,12 @@ directCommands:
   - name: --identity-type
     summary: ''
     description: ''
+  - name: --immutability-period-since-creation-in-days
+    summary: ''
+    description: ''
+  - name: --immutability-policy-state
+    summary: ''
+    description: ''
   - name: --key-expiration-period-in-days
     summary: ''
     description: ''
@@ -210,6 +227,9 @@ directCommands:
     description: ''
   - name: --net-bios-domain-name
     summary: Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
+    description: ''
+  - name: --public-network-access
+    summary: ''
     description: ''
   - name: --publish-internet-endpoints
     parameterValueGroup: false, true
@@ -290,7 +310,7 @@ directCommands:
 
     cluster will become primary after failover. For more information, please refer to
 
-    https://docs.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance.
+    https://docs.microsoft.com/azure/storage/common/storage-disaster-recovery-guidance.
   syntax: >-
     az storage account failover [--ids]
                                 [--name]
@@ -404,8 +424,7 @@ directCommands:
   summary: List storage accounts.
   description: ''
   syntax: >-
-    az storage account list [--query-examples]
-                            [--resource-group]
+    az storage account list [--resource-group]
                             [--subscription]
   examples:
   - summary: List all storage accounts in a subscription.
@@ -413,9 +432,6 @@ directCommands:
   - summary: List all storage accounts in a resource group.
     syntax: az storage account list -g MyResourceGroup
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -459,7 +475,6 @@ directCommands:
     az storage account show [--expand]
                             [--ids]
                             [--name]
-                            [--query-examples]
                             [--resource-group]
                             [--subscription]
   examples:
@@ -476,9 +491,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The storage account name.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -576,6 +588,7 @@ directCommands:
                               [--add]
                               [--allow-blob-public-access]
                               [--allow-cross-tenant-replication]
+                              [--allow-protected-append-writes]
                               [--allow-shared-key-access]
                               [--assign-identity]
                               [--azure-storage-sid]
@@ -599,11 +612,14 @@ directCommands:
                               [--https-only {false, true}]
                               [--identity-type]
                               [--ids]
+                              [--immutability-period-since-creation-in-days]
+                              [--immutability-policy-state]
                               [--key-expiration-period-in-days]
                               [--key-vault-user-identity-id]
                               [--min-tls-version]
                               [--name]
                               [--net-bios-domain-name]
+                              [--public-network-access]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--remove]
@@ -631,6 +647,9 @@ directCommands:
     summary: ''
     description: ''
   - name: --allow-cross-tenant-replication
+    summary: ''
+    description: ''
+  - name: --allow-protected-append-writes
     summary: ''
     description: ''
   - name: --allow-shared-key-access
@@ -709,6 +728,12 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --immutability-period-since-creation-in-days
+    summary: ''
+    description: ''
+  - name: --immutability-policy-state
+    summary: ''
+    description: ''
   - name: --key-expiration-period-in-days
     summary: ''
     description: ''
@@ -723,6 +748,9 @@ directCommands:
     description: ''
   - name: --net-bios-domain-name
     summary: Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
+    description: ''
+  - name: --public-network-access
+    summary: ''
     description: ''
   - name: --publish-internet-endpoints
     parameterValueGroup: false, true
@@ -767,11 +795,6 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
-- az_storage_account_blob-inventory-policy
-- az_storage_account_blob-inventory-policy_create
-- az_storage_account_blob-inventory-policy_delete
-- az_storage_account_blob-inventory-policy_show
-- az_storage_account_blob-inventory-policy_update
 - az_storage_account_blob-service-properties
 - az_storage_account_blob-service-properties_show
 - az_storage_account_blob-service-properties_update
@@ -792,6 +815,14 @@ commands:
 - az_storage_account_keys_list
 - az_storage_account_keys_renew
 - az_storage_account_list
+- az_storage_account_local-user
+- az_storage_account_local-user_create
+- az_storage_account_local-user_delete
+- az_storage_account_local-user_list
+- az_storage_account_local-user_list-keys
+- az_storage_account_local-user_regenerate-password
+- az_storage_account_local-user_show
+- az_storage_account_local-user_update
 - az_storage_account_management-policy
 - az_storage_account_management-policy_create
 - az_storage_account_management-policy_delete
@@ -830,5 +861,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/23/2021
+  ms.date: 12/30/2021
   description: Manage storage accounts.

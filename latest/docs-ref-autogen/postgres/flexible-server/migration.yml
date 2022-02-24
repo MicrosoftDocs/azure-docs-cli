@@ -4,6 +4,37 @@ name: az postgres flexible-server migration
 summary: Manage migration workflows for PostgreSQL Flexible Servers.
 description: ''
 directCommands:
+- uid: az_postgres_flexible-server_migration_check-name-availability
+  name: az postgres flexible-server migration check-name-availability
+  summary: Checks if the provided migration-name can be used.
+  description: ''
+  syntax: >-
+    az postgres flexible-server migration check-name-availability --migration-name
+                                                                  [--ids]
+                                                                  [--name]
+                                                                  [--resource-group]
+                                                                  [--subscription]
+  examples:
+  - summary: Check if the migration-name provided is available for your migration workflow.
+    syntax: az postgres flexible-server migration check-name-availability --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  requiredParameters:
+  - isRequired: true
+    name: --migration-name
+    summary: Name of the migration.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Migration target server name.
+    description: ''
+  - name: --resource-group -g
+    summary: Resource Group Name of the migration target server.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_postgres_flexible-server_migration_create
   name: az postgres flexible-server migration create
   summary: Create a new migration workflow for a flexible server.
@@ -16,7 +47,7 @@ directCommands:
                                                  [--subscription]
   examples:
   - summary: Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --properties @"migrationConfig.json"
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --properties "migrationConfig.json"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -24,7 +55,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --properties -b
-    summary: Request properties. Use @{file} to load from a file. For quoting issues in different terminals, see https://github.com/Azure/azure-cli/blob/dev/doc/use_cli_effectively.md#quoting-issues.
+    summary: Request properties. Use double or no quotes to pass in filepath as argument.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -50,7 +81,7 @@ directCommands:
                                                  [--yes]
   examples:
   - summary: Cancel/delete the migration workflow. The migration workflows can be canceled/deleted at any point.
-    syntax: az postgres flexible-server migration delete --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    syntax: az postgres flexible-server migration delete --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
   requiredParameters:
   - isRequired: true
     name: --migration-name
@@ -80,14 +111,13 @@ directCommands:
     az postgres flexible-server migration list [--filter]
                                                [--ids]
                                                [--name]
-                                               [--query-examples]
                                                [--resource-group]
                                                [--subscription]
   examples:
   - summary: List the currently active migrations of a target flexible server.
-    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --filter Active
+    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --filter Active
   - summary: List all (Active/Completed) migrations of a target flexible server.
-    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --filter All
+    syntax: az postgres flexible-server migration list --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --filter All
   optionalParameters:
   - name: --filter
     defaultValue: Active
@@ -98,9 +128,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Migration target server name.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Resource Group Name of the migration target server.
@@ -117,12 +144,11 @@ directCommands:
                                                [--ids]
                                                [--level]
                                                [--name]
-                                               [--query-examples]
                                                [--resource-group]
                                                [--subscription]
   examples:
   - summary: Get the details of a specific migration of a target flexible server.
-    syntax: az postgres flexible-server migration show --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    syntax: az postgres flexible-server migration show --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
   requiredParameters:
   - isRequired: true
     name: --migration-name
@@ -138,9 +164,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Migration target server name.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Resource Group Name of the migration target server.
@@ -161,16 +184,19 @@ directCommands:
                                                  [--overwrite-dbs]
                                                  [--resource-group]
                                                  [--setup-replication]
+                                                 [--start-data-migration]
                                                  [--subscription]
   examples:
   - summary: Allow the migration workflow to setup logical replication on the source. Note that this command will restart the source server.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --setup-replication
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --setup-replication
   - summary: Space-separated list of DBs to migrate. A minimum of 1 and a maximum of 8 DBs can be specified. You can migrate more DBs concurrently using additional migrations. Note that each additional DB affects the performance of the source server.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --db-names db1 db2
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --db-names db1 db2
   - summary: Allow the migration workflow to overwrite the DB on the target.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --overwrite-dbs
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --overwrite-dbs
   - summary: Cutover the data migration. After this is complete, subsequent updates to the source DB will not be migrated to the target.
-    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testServer --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --cutover
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --cutover
+  - summary: This command helps in starting the data migration immediately between the source and target. Any migration scheduled for a future date and time will be cancelled.
+    syntax: az postgres flexible-server migration update --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --start-data-migration
   requiredParameters:
   - isRequired: true
     name: --migration-name
@@ -198,10 +224,14 @@ directCommands:
   - name: --setup-replication
     summary: Allow the migration workflow to setup logical replication on the source. Note that this command will restart the source server.
     description: ''
+  - name: --start-data-migration
+    summary: Reschedule the data migration to start right now.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
+- az_postgres_flexible-server_migration_check-name-availability
 - az_postgres_flexible-server_migration_create
 - az_postgres_flexible-server_migration_delete
 - az_postgres_flexible-server_migration_list

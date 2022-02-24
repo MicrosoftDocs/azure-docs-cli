@@ -1,18 +1,19 @@
 ---
 title: What is the Azure CLI? | Microsoft Docs
-description: Overview - Learn about the Azure CLI, a command-line tool designed to create and manage Azure resources available in Windows, macOS, Linux, and Docker containers.
+description: The Azure Command-Line Interface (CLI) is a command-line tool designed to create and manage Azure resources available in Windows, macOS, Linux, and Docker containers.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 9/21/2021
 ms.topic: overview
 ms.service: azure-cli
 ms.devlang: azurecli 
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, seo-azure-cli
+keywords: command line interface, azure cli, azure command line, azure command line interface, what is cli, azure cli examples
 ---
 # What is the Azure CLI?
 
-The Azure CLI is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources. It allows the execution of commands through a terminal using interactive command-line prompts or a script.
+The Azure Command-Line Interface (CLI) is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources. It allows the execution of commands through a terminal using interactive command-line prompts or a script.
 
 For interactive use, you first launch a shell such as cmd.exe on Windows, or Bash on Linux or macOS, and then issue a command at the shell prompt. To automate repetitive tasks, you assemble the CLI commands into a shell script using the script syntax of your chosen shell, and then you execute the script.
 
@@ -27,6 +28,13 @@ You can install the Azure CLI locally on Linux, Mac, or Windows computers. It ca
 Before running Azure CLI commands, you need to setup your environment.  
 
 [!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
+
+## Azure CLI examples
+This article provides different Azure CLI examples for the following :
+- Subscription syntax
+- Role assignment syntax
+- PowerShell syntax
+
 
 ## Subscription syntax example
 

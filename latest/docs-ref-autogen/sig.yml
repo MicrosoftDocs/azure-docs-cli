@@ -14,6 +14,7 @@ directCommands:
                   [--description]
                   [--location]
                   [--permissions {Groups, Private}]
+                  [--soft-delete {false, true}]
                   [--subscription]
                   [--tags]
   examples:
@@ -38,6 +39,10 @@ directCommands:
   - name: --permissions
     parameterValueGroup: Groups, Private
     summary: This property allows you to specify the permission of sharing gallery.
+    description: ''
+  - name: --soft-delete
+    parameterValueGroup: false, true
+    summary: Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -71,16 +76,12 @@ directCommands:
   summary: List share image galleries.
   description: ''
   syntax: >-
-    az sig list [--query-examples]
-                [--resource-group]
+    az sig list [--resource-group]
                 [--subscription]
   examples:
   - summary: List shared galleries by subscription id.
     syntax: az sig list-shared --location myLocation
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -120,7 +121,6 @@ directCommands:
   syntax: >-
     az sig show [--gallery-name]
                 [--ids]
-                [--query-examples]
                 [--resource-group]
                 [--select]
                 [--subscription]
@@ -131,9 +131,6 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -142,6 +139,25 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sig_show-community
+  name: az sig show-community
+  summary: Get a gallery that has been community (preview).
+  description: Get a gallery that has been community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  syntax: >-
+    az sig show-community --location
+                          --public-gallery-name
+  examples:
+  - summary: Get a gallery that has been community in the given location.
+    syntax: az sig show-community --public-gallery-name publicGalleryName --location myLocation
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --public-gallery-name
+    summary: The public name of community gallery.
     description: ''
 - uid: az_sig_show-shared
   name: az sig show-shared
@@ -181,6 +197,7 @@ directCommands:
                   [--remove]
                   [--select]
                   [--set]
+                  [--soft-delete {false, true}]
                   [--subscription]
   examples:
   - summary: Enable gallery to be shared to subscription or tenant
@@ -217,26 +234,47 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --soft-delete
+    parameterValueGroup: false, true
+    summary: Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_sig_create
 - az_sig_delete
+- az_sig_gallery-application
+- az_sig_gallery-application_create
+- az_sig_gallery-application_delete
+- az_sig_gallery-application_list
+- az_sig_gallery-application_show
+- az_sig_gallery-application_update
+- az_sig_gallery-application_version
+- az_sig_gallery-application_version_create
+- az_sig_gallery-application_version_delete
+- az_sig_gallery-application_version_list
+- az_sig_gallery-application_version_show
+- az_sig_gallery-application_version_update
+- az_sig_gallery-application_wait
 - az_sig_image-definition
 - az_sig_image-definition_create
 - az_sig_image-definition_delete
 - az_sig_image-definition_list
+- az_sig_image-definition_list-community
 - az_sig_image-definition_list-shared
 - az_sig_image-definition_show
+- az_sig_image-definition_show-community
 - az_sig_image-definition_show-shared
 - az_sig_image-definition_update
 - az_sig_image-version
 - az_sig_image-version_create
 - az_sig_image-version_delete
 - az_sig_image-version_list
+- az_sig_image-version_list-community
 - az_sig_image-version_list-shared
 - az_sig_image-version_show
+- az_sig_image-version_show-community
 - az_sig_image-version_show-shared
 - az_sig_image-version_update
 - az_sig_image-version_wait
@@ -244,10 +282,12 @@ commands:
 - az_sig_list-shared
 - az_sig_share
 - az_sig_share_add
+- az_sig_share_enable-community
 - az_sig_share_remove
 - az_sig_share_reset
 - az_sig_share_wait
 - az_sig_show
+- az_sig_show-community
 - az_sig_show-shared
 - az_sig_update
 globalParameters:

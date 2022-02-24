@@ -5,7 +5,7 @@ manager: barbkess
 ms.date: 12/15/2020
 ms.topic: include
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
@@ -36,12 +36,6 @@ curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
 The script can also be downloaded and run locally. You may have to restart your shell in order for changes to take effect.
-
-You can then run the Azure CLI with the `az` command. To sign in, use [az login](/cli/azure/reference-index#az_login) command.
-
-[!INCLUDE [interactive-login](interactive-login.md)]
-
-To learn more about different authentication methods, see [Sign in with Azure CLI](../authenticate-azure-cli.md).
 
 ## Troubleshooting
 

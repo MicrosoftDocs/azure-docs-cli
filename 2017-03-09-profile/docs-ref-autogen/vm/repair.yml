@@ -4,7 +4,7 @@ name: az vm repair
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **vm-repair** extension for Azure CLI and requires version 2.0.67 or higher.  The extension will automatically install the first time you run an **az vm repair** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **vm-repair** extension for the Azure CLI  (version 2.0.67 or higher).  The extension will automatically install the first time you run an **az vm repair** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Auto repair commands to fix VMs.
 description: VM repair command will enable Azure users to self-repair non-bootable VMs by copying the source VM's OS disk and attaching it to a newly created repair VM.
 directCommands:
@@ -66,7 +66,7 @@ directCommands:
   name: az vm repair list-scripts
   summary: List available scripts. Located https://github.com/Azure/repair-script-library.
   description: ''
-  syntax: az vm repair list-scripts
+  syntax: az vm repair list-scripts [--preview]
   examples:
   - summary: List scripts
     syntax: az vm repair list-scripts --verbose
@@ -74,6 +74,12 @@ directCommands:
     syntax: az vm repair list-scripts --query "[?starts_with(id, 'win')]"
   - summary: List scripts with test in its description.
     syntax: az vm repair list-scripts --query "[?contains(description, 'test')]"
+  - summary: List unverified script from your fork of https://github.com/Azure/repair-script-library
+    syntax: az vm repair list-scripts --preview "https://github.com/haagha/repair-script-library/blob/master/map.json"
+  optionalParameters:
+  - name: --preview
+    summary: URL of forked repair script library's map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
+    description: ''
 - uid: az_vm_repair_restore
   name: az vm repair restore
   summary: Replace source VM's OS disk with data disk from repair VM.
@@ -117,6 +123,7 @@ directCommands:
                      --resource-group
                      [--custom-script-file]
                      [--parameters]
+                     [--preview]
                      [--repair-vm-id]
                      [--run-id]
                      [--run-on-repair]
@@ -129,6 +136,8 @@ directCommands:
     syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --parameters hello=hi world=earth --verbose
   - summary: Run a local custom script on the VM.
     syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --custom-script-file ./file.ps1 --verbose
+  - summary: Run unverified script from your fork of https://github.com/Azure/repair-script-library
+    syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --preview "https://github.com/haagha/repair-script-library/blob/master/map.json" --run-id test
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -144,6 +153,9 @@ directCommands:
     description: ''
   - name: --parameters
     summary: Space-separated parameters in the format of '[name=]value'. Positional for bash scripts.
+    description: ''
+  - name: --preview
+    summary: URL of forked repair script library's map.json https://github.com/{user}/repair-script-library/blob/master/map.json.
     description: ''
   - name: --repair-vm-id
     summary: Repair VM resource id.

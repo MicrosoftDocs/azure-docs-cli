@@ -10,14 +10,17 @@ directCommands:
   description: ''
   syntax: >-
     az network lb inbound-nat-rule create --backend-port
-                                          --frontend-port
                                           --lb-name
                                           --name
                                           --protocol {All, Tcp, Udp}
                                           --resource-group
+                                          [--backend-pool-name]
                                           [--enable-tcp-reset {false, true}]
                                           [--floating-ip {false, true}]
                                           [--frontend-ip-name]
+                                          [--frontend-port]
+                                          [--frontend-port-range-end]
+                                          [--frontend-port-range-start]
                                           [--idle-timeout]
                                           [--subscription]
   examples:
@@ -32,10 +35,6 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --backend-port
-    summary: Port number.
-    description: ''
-  - isRequired: true
-    name: --frontend-port
     summary: Port number.
     description: ''
   - isRequired: true
@@ -56,6 +55,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --backend-pool-name
+    summary: The name of the backend address pool.
+    description: ''
   - name: --enable-tcp-reset
     parameterValueGroup: false, true
     summary: Receive bidirectional TCP reset on TCP flow idle timeout or unexpected connection termination. Only used when protocol is set to TCP.
@@ -66,6 +68,15 @@ directCommands:
     description: ''
   - name: --frontend-ip-name
     summary: The name of the frontend IP configuration. If only one exists, omit to use as default.
+    description: ''
+  - name: --frontend-port
+    summary: Port number.
+    description: ''
+  - name: --frontend-port-range-end
+    summary: Port number.
+    description: ''
+  - name: --frontend-port-range-start
+    summary: Port number.
     description: ''
   - name: --idle-timeout
     summary: Idle timeout in minutes.
@@ -111,7 +122,6 @@ directCommands:
   syntax: >-
     az network lb inbound-nat-rule list --lb-name
                                         --resource-group
-                                        [--query-examples]
                                         [--subscription]
   examples:
   - summary: List inbound NAT rules.
@@ -126,9 +136,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -141,7 +148,6 @@ directCommands:
     az network lb inbound-nat-rule show --lb-name
                                         --name
                                         --resource-group
-                                        [--query-examples]
                                         [--subscription]
   examples:
   - summary: Get the details of an inbound NAT rule.
@@ -160,9 +166,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -179,6 +182,8 @@ directCommands:
                                           [--force-string]
                                           [--frontend-ip-name]
                                           [--frontend-port]
+                                          [--frontend-port-range-end]
+                                          [--frontend-port-range-start]
                                           [--idle-timeout]
                                           [--ids]
                                           [--lb-name]
@@ -219,6 +224,12 @@ directCommands:
     summary: The name of the frontend IP configuration.
     description: ''
   - name: --frontend-port
+    summary: Port number.
+    description: ''
+  - name: --frontend-port-range-end
+    summary: Port number.
+    description: ''
+  - name: --frontend-port-range-start
     summary: Port number.
     description: ''
   - name: --idle-timeout
@@ -273,5 +284,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/08/2021
+  ms.date: 01/26/2022
   description: Manage inbound NAT rules of a load balancer.

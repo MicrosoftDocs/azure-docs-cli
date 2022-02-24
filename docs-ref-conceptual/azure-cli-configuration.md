@@ -24,7 +24,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 ## CLI configuration with az config
 
-You set defaults for the CLI with the [az config set](/cli/azure/config#az_config_set) command.
+You set defaults for the CLI with the [az config set](/cli/azure/config#az-config-set) command.
 This command takes a space-separated list of `key=value` pairs as an argument. The provided values are used by the CLI in place of required arguments.
 
 The following table contains a list of available configuration keys.

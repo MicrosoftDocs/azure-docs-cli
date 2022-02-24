@@ -12,8 +12,10 @@ directCommands:
     az aks nodepool add --cluster-name
                         --name
                         --resource-group
+                        [--aks-custom-headers]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
+                        [--enable-fips-image]
                         [--enable-node-public-ip]
                         [--enable-ultra-ssd]
                         [--eviction-policy {Deallocate, Delete}]
@@ -35,6 +37,7 @@ directCommands:
                         [--os-type]
                         [--ppg]
                         [--priority {Regular, Spot}]
+                        [--snapshot-id]
                         [--spot-max-price]
                         [--subscription]
                         [--tags]
@@ -49,6 +52,10 @@ directCommands:
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-ultra-ssd
   - summary: Create a nodepool cluster with a specific OS SKU
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --os-sku Ubuntu
+  - summary: Create a nodepool with FIPS-enabled OS
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --enable-fips-image
+  - summary: create a kubernetes cluster with a snapshot id.
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -63,11 +70,17 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
   - name: --enable-encryption-at-host
     summary: Enable EncryptionAtHost, default value is false.
+    description: ''
+  - name: --enable-fips-image
+    summary: Use FIPS-enabled OS on agent nodes.
     description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
@@ -85,7 +98,7 @@ directCommands:
     description: ''
     valueFrom: '`az aks get-versions`'
   - name: --labels
-    summary: The node labels for the node pool. You can't change the node labels through CLI after the node pool is created. See https://aka.ms/node-labels for syntax of labels.
+    summary: The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
@@ -130,7 +143,6 @@ directCommands:
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --os-type
-    defaultValue: Linux
     summary: The OS Type. Linux or Windows.
     description: ''
   - name: --ppg
@@ -140,6 +152,9 @@ directCommands:
     defaultValue: Regular
     parameterValueGroup: Regular, Spot
     summary: The priority of the node pool.
+    description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to create this nodepool.
     description: ''
   - name: --spot-max-price
     defaultValue: nan
@@ -227,7 +242,6 @@ directCommands:
   syntax: >-
     az aks nodepool list --cluster-name
                          --resource-group
-                         [--query-examples]
                          [--subscription]
   requiredParameters:
   - isRequired: true
@@ -239,9 +253,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -290,7 +301,6 @@ directCommands:
     az aks nodepool show --cluster-name
                          --name
                          --resource-group
-                         [--query-examples]
                          [--subscription]
   requiredParameters:
   - isRequired: true
@@ -306,13 +316,76 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+- uid: az_aks_nodepool_start
+  name: az aks nodepool start
+  summary: Start stopped agent pool in the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool start --cluster-name
+                          --nodepool-name
+                          --resource-group
+                          [--aks-custom-headers]
+                          [--no-wait]
+  examples:
+  - summary: Start agent pool in the managed cluster
+    syntax: az aks nodepool start --nodepool-name nodepool1 -g MyResourceGroup --cluster-name MyManagedCluster
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --nodepool-name
+    summary: Agent pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: az_aks_nodepool_stop
+  name: az aks nodepool stop
+  summary: Stop running agent pool in the managed Kubernetes cluster.
+  description: ''
+  syntax: >-
+    az aks nodepool stop --cluster-name
+                         --nodepool-name
+                         --resource-group
+                         [--aks-custom-headers]
+                         [--no-wait]
+  examples:
+  - summary: Stop agent pool in the managed cluster
+    syntax: az aks nodepool stop --nodepool-name nodepool1 -g MyResourceGroup --cluster-name MyManagedCluster
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --nodepool-name
+    summary: Agent pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_aks_nodepool_update
   name: az aks nodepool update
   summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
@@ -321,8 +394,10 @@ directCommands:
     az aks nodepool update --cluster-name
                            --name
                            --resource-group
+                           [--aks-custom-headers]
                            [--disable-cluster-autoscaler]
                            [--enable-cluster-autoscaler]
+                           [--labels]
                            [--max-count]
                            [--max-surge]
                            [--min-count]
@@ -352,11 +427,17 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --labels
+    summary: The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --max-count
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
@@ -392,10 +473,12 @@ directCommands:
     az aks nodepool upgrade --cluster-name
                             --name
                             --resource-group
+                            [--aks-custom-headers]
                             [--kubernetes-version]
                             [--max-surge]
                             [--no-wait]
                             [--node-image-only]
+                            [--snapshot-id]
                             [--subscription]
   requiredParameters:
   - isRequired: true
@@ -411,6 +494,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Comma-separated key-value pairs to specify custom headers.
+    description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to upgrade the node pool to, such as "1.16.9".
     description: ''
@@ -423,6 +509,9 @@ directCommands:
   - name: --node-image-only
     summary: Only upgrade agent pool's node image.
     description: ''
+  - name: --snapshot-id
+    summary: The source snapshot id used to upgrade this nodepool.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -434,6 +523,8 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_start
+- az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
 globalParameters:
@@ -453,5 +544,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/01/2021
+  ms.date: 01/26/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

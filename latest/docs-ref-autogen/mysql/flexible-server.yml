@@ -39,15 +39,25 @@ directCommands:
     description: ''
 - uid: az_mysql_flexible-server_create
   name: az mysql flexible-server create
-  summary: Create a flexible server.
-  description: ''
+  summary: Create a MySQL flexible server.
+  description: >-
+    Create a MySQL flexible server with custom or default configuration. For more information for network configuration, see
+
+    - Configure public access
+
+    https://docs.microsoft.com/en-us/azure/mysql/flexible-server/how-to-manage-firewall-cli
+
+    - Configure private access
+
+    https://docs.microsoft.com/en-us/azure/mysql/flexible-server/how-to-manage-virtual-network-cli.
   syntax: >-
     az mysql flexible-server create [--address-prefixes]
                                     [--admin-password]
                                     [--admin-user]
                                     [--backup-retention]
                                     [--database-name]
-                                    [--high-availability {Disabled, SameZone, ZoneRedundant}]
+                                    [--geo-redundant-backup {Disabled, Enabled}]
+                                    [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
                                     [--iops]
                                     [--location]
                                     [--name]
@@ -68,32 +78,58 @@ directCommands:
                                     [--yes]
                                     [--zone]
   examples:
-  - summary: Create a MySQL flexible server with default params (resource group, location, servername, username, password) with Public access enabled by default.
-    syntax: az mysql flexible-server create
-  - summary: Create a MySQL flexible server with default params (resource group, location, servername, username, password) with all public IPs (0.0.0.0 - 255.255.255.255).
-    syntax: az mysql flexible-server create --public-access all
-  - summary: Create a MySQL flexible server with default params ( resource group, location, servername, username, password ) with public access without any firewall rules.
-    syntax: az mysql flexible-server create --public-access none
-  - summary: Create a MySQL flexible server with public access and add client IP address to have access to the server
-    syntax: az mysql flexible-server create --public-access <my_client_ip>
-  - summary: Create a MySQL flexible server with public access and add the range of IP address to have access to this server
-    syntax: az mysql flexible-server create --public-access <start_ip_address-end_ip_address>
-  - summary: Create a MySQL flexible server with public access and allow applications from Azure IP addresses to connect to your flexible server
-    syntax: az mysql flexible-server create --public-access 0.0.0.0
-  - summary: Create a MySQL flexible server with specified SKU and storage, using defaults from local context.
-    syntax: az mysql flexible-server create --name testServer --admin-password password
-  - summary: Create a MySQL flexible server using already existing virtual network and subnet. If provided virtual network and subnet does not exists then virtual network and subnet with default address prefix will be created.
-    syntax: az mysql flexible-server create --vnet myVnet --subnet mySubnet
-  - summary: Create a MySQL flexible server using already existing virtual network, subnet, and using the subnet ID. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforMySQL/flexibleServers, if not already delegated.
-    syntax: az mysql flexible-server create --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName}
-  - summary: Create a MySQL flexible server using new virtual network, subnet with non-default address prefix.
-    syntax: az mysql flexible-server create --vnet myVnet --address-prefixes 10.0.0.0/24 --subnet mySubnet --subnet-prefixes 10.0.0.0/24
-  - summary: Create a MySQL flexible server with  parameters set.
+  - summary: Create a MySQL flexible server with custom parameters
     syntax: >-
       az mysql flexible-server create --location northeurope --resource-group testGroup \
-        --name testServer --admin-user username --admin-password password \
-        --sku-name Standard-B1ms --tier Burstable --public-access 0.0.0.0 --storage-size 32 \
-        --tags "key=value" --version 5.7
+        --name testserver --admin-user username --admin-password password \
+        --sku-name Standard_B1ms --tier Burstable --public-access 0.0.0.0 --storage-size 32 \
+        --tags "key=value" --version 5.7 --high-availability ZoneRedundant --zone 1 \
+        --standby-zone 3 --storage-auto-grow Enabled --iops 500
+  - summary: Create a MySQL flexible server with default parameters and public access enabled by default.       Resource group, server name, username, password, and default database will be created by CLI
+    syntax: az mysql flexible-server create
+  - summary: Create a MySQL flexible server with public access and add the range of IP address to have access to this server. The --public-access parameter can be 'All', 'None', <startIpAddress>, or <startIpAddress>-<endIpAddress>
+    syntax: az mysql flexible-server create --resource-group testGroup --name testserver --public-access 125.23.54.31-125.23.54.35
+  - summary: Create a MySQL flexible server with private access. If provided virtual network and subnet do not exists, virtual network and subnet with the specified address prefixes will be created.
+    syntax: az mysql flexible-server create --resource-group testGroup --name testserver --vnet myVnet --subnet mySubnet --address-prefixes 10.0.0.0/16 --subnet-prefixes 10.0.0.0/24
+  - summary: Create a MySQL flexible server using a new subnet resource ID and new private DNS zone resource ID. The subnet and DNS zone can be created in different subscription or resource group.
+    syntax: >-
+      az mysql flexible-server create \
+        --resource-group testGroup --name testserver \
+        --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNetName}/subnets/{SubnetName} \
+        --private-dns-zone /subscriptions/{SubID}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/privateDnsZones/testMySQLFlexibleDnsZone.private.mysql.database.azure.com \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24
+  - summary: Create a MySQL flexible server using existing network resources in the same resource group. The provided subnet should not have any other resource deployed in it and this subnet will be delegated to Microsoft.DBforMySQL/flexibleServers, if not already delegated. The private DNS zone will be linked to the virtual network if not already linked.
+    syntax: >-
+      # create vnet
+
+      az network vnet create --resource-group testGroup --name testVnet --location testLocation --address-prefixes 172.0.0.0/16
+
+
+      # create subnet
+
+      az network vnet subnet create --resource-group testGroup --vnet-name testVnet --address-prefixes 172.0.0.0/24 --name testSubnet
+
+
+      # create private dns zone
+
+      az network private-dns zone create -g testGroup -n testDNS.private.mysql.database.azure.com
+
+
+      az mysql flexible-server create --resource-group testGroup \
+        --name testserver --location testLocation \
+        --subnet /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
+        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.mysql.database.azure.com\
+
+
+      az mysql flexible-server create --resource-group testGroup --name testserver \
+        --vnet testVnet --subnet testSubnet --location testLocation \
+        --private-dns-zone /subscriptions/{SubId}/resourceGroups/{testGroup}/providers/Microsoft.Network/privateDnsZones/testDNS.mysql.database.azure.com
+  - summary: Create a MySQL flexible server using existing network resources in the different resource group / subscription.
+    syntax: >-
+      az mysql flexible-server create --resource-group testGroup \
+         --name testserver --location testLocation \
+        --subnet /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
+        --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.mysql.database.azure.com
   optionalParameters:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -102,20 +138,25 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: supremesalami2
+    defaultValue: eagerchile2
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
     defaultValue: "7"
-    summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+    summary: The number of days a backup is retained. Range of 1 to 35 days. Default is 7 days.
     description: ''
   - name: --database-name -d
     summary: The name of the database to be created when provisioning the database server.
     description: ''
+  - name: --geo-redundant-backup
+    defaultValue: Disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
   - name: --high-availability
     defaultValue: Disabled
-    parameterValueGroup: Disabled, SameZone, ZoneRedundant
-    summary: 'Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time. Allowed values: ZoneRedundant, SameZone, Disabled.'
+    parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
+    summary: Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
   - name: --iops
     summary: Number of IOPS to be allocated for this server. You will get certain amount of free IOPS based on compute and storage provisioned. The default value for IOPS is free IOPS. To learn more about IOPS based on compute and storage, refer to IOPS in Azure Database for MySQL Flexible Server.
@@ -192,9 +233,9 @@ directCommands:
                                     [--yes]
   examples:
   - summary: Delete a flexible server.
-    syntax: az mysql flexible-server delete --resource-group testGroup --name testServer
-  - summary: Delete a flexible server without prompt or confirmation.
-    syntax: az mysql flexible-server delete --resource-group testGroup --name testServer --yes
+    syntax: az mysql flexible-server delete --resource-group testGroup --name testserver
+  - summary: Delete a flexible server without confirmation prompt.
+    syntax: az mysql flexible-server delete --resource-group testGroup --name testserver --yes
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -245,23 +286,102 @@ directCommands:
   - name: --querytext -q
     summary: A query to run against the flexible server.
     description: ''
+- uid: az_mysql_flexible-server_geo-restore
+  name: az mysql flexible-server geo-restore
+  summary: Geo-restore a flexible server from backup.
+  description: ''
+  syntax: >-
+    az mysql flexible-server geo-restore --location
+                                         --source-server
+                                         [--address-prefixes]
+                                         [--ids]
+                                         [--name]
+                                         [--no-wait]
+                                         [--private-dns-zone]
+                                         [--public-access {Disabled, Enabled}]
+                                         [--resource-group]
+                                         [--subnet]
+                                         [--subnet-prefixes]
+                                         [--subscription]
+                                         [--vnet]
+                                         [--yes]
+                                         [--zone]
+  examples:
+  - summary: Geo-restore 'testserver' to a new server 'testserverNew' in location 'newLocation' with the same network configuration. Private access server will use different private dns zone.
+    syntax: az mysql flexible-server geo-restore --resource-group testGroup --name testserverNew --source-server testserver --location newLocation
+  - summary: Geo-estore public access or private access server 'testserver' as a new server 'testserverNew' with new subnet. New vnet, subnet, and private dns zone for the restored server will be provisioned. Please refer to 'flexible-server create' command for more private access scenarios.
+    syntax: >-
+      az mysql flexible-server geo-restore --resource-group testGroup --name testserverNew \
+        --source-server testserver --vnet newVnet --subnet newSubnet \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+        --private-dns-zone testDNS.mysql.database.azure.com --location newLocation
+  - summary: Gep-estore private access server 'testserver' as a new server 'testserverNew' with public access.
+    syntax: az mysql flexible-server geo-restore --resource-group testGroup --name testserverNew  --source-server testserver --public-access Enabled --location newLocation
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --source-server
+    summary: The name or resource ID of the source server to restore from.
+    description: ''
+  optionalParameters:
+  - name: --address-prefixes
+    summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --private-dns-zone
+    summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+    description: ''
+  - name: --public-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Determines the public access.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subnet
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
+    description: ''
+  - name: --subnet-prefixes
+    summary: The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone -z
+    summary: Availability zone into which to provision the resource.
+    description: ''
 - uid: az_mysql_flexible-server_list
   name: az mysql flexible-server list
   summary: List available flexible servers.
   description: ''
   syntax: >-
-    az mysql flexible-server list [--query-examples]
-                                  [--resource-group]
+    az mysql flexible-server list [--resource-group]
                                   [--subscription]
   examples:
   - summary: List all MySQL flexible servers in a subscription.
     syntax: az mysql flexible-server list
   - summary: List all MySQL flexible servers in a resource group.
     syntax: az mysql flexible-server list --resource-group testGroup
+  - summary: List all MySQL flexible servers in a resource group in table format.
+    syntax: az mysql flexible-server list --resource-group testGroup --output table
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -278,6 +398,8 @@ directCommands:
   examples:
   - summary: Lists available sku's in the given region.
     syntax: az mysql flexible-server list-skus -l eastus
+  - summary: Lists available sku's in the given region in table output
+    syntax: az mysql flexible-server list-skus -l eastus -o table
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -299,7 +421,9 @@ directCommands:
                                      [--subscription]
   examples:
   - summary: Restart a flexible server.
-    syntax: az mysql flexible-server restart --resource-group testGroup --name testServer
+    syntax: az mysql flexible-server restart --resource-group testGroup --name testserver
+  - summary: Restart a flexible server with failover
+    syntax: az mysql flexible-server restart --resource-group testGroup --name testserver --failover Forced
   optionalParameters:
   - name: --failover
     summary: 'Forced failover for server restart operation. Allowed values: Forced.'
@@ -337,8 +461,18 @@ directCommands:
                                      [--yes]
                                      [--zone]
   examples:
-  - summary: Restore 'testServer' to a specific point-in-time as a new server 'testServerNew'.
-    syntax: az mysql flexible-server restore --resource-group testGroup --name testServerNew --source-server testServer --restore-time "2017-06-15T13:10:00Z"
+  - summary: Restore 'testserver' to a specific point-in-time as a new server 'testserverNew' with the same network configuration.
+    syntax: az mysql flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver --restore-time "2017-06-15T13:10:00Z"
+  - summary: Restore public access or private access server 'testserver' as a new server 'testserverNew' with new subnet to current point-in-time. New vnet, subnet, and private dns zone for the restored server will be provisioned. Please refer to 'flexible-server create' command for more private access scenarios.
+    syntax: >-
+      az mysql flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server testserver --vnet newVnet --subnet newSubnet \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+        --private-dns-zone testDNS.mysql.database.azure.com
+  - summary: Restore private access server 'testserver' to current point-in-time as a new server 'testserverNew' with public access.
+    syntax: >-
+      az mysql flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server testserver --public-access Enabled
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -362,14 +496,14 @@ directCommands:
     description: ''
   - name: --public-access
     parameterValueGroup: Disabled, Enabled
-    summary: 'Determines the public access. Allowed Values: Enabled, Disabled.'
+    summary: Determines the public access.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2021-09-08T13:28:58+00:00
-    summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00.
+    defaultValue: 2022-02-24T13:30:43+00:00
+    summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
     summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
@@ -396,21 +530,17 @@ directCommands:
   syntax: >-
     az mysql flexible-server show [--ids]
                                   [--name]
-                                  [--query-examples]
                                   [--resource-group]
                                   [--subscription]
   examples:
   - summary: Get the details of a flexible server
-    syntax: az mysql flexible-server show --resource-group testGroup --name testServer
+    syntax: az mysql flexible-server show --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -431,7 +561,7 @@ directCommands:
                                                     [--subscription]
   examples:
   - summary: Show connection strings for cmd and programming languages.
-    syntax: az mysql flexible-server show-connection-string -s testServer -u username -p password -d databasename
+    syntax: az mysql flexible-server show-connection-string -s testserver -u username -p password -d databasename
   optionalParameters:
   - name: --admin-password -p
     defaultValue: '{password}'
@@ -466,7 +596,7 @@ directCommands:
                                    [--subscription]
   examples:
   - summary: Start a flexible server.
-    syntax: az mysql flexible-server start --resource-group testGroup --name testServer
+    syntax: az mysql flexible-server start --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -491,7 +621,7 @@ directCommands:
                                   [--subscription]
   examples:
   - summary: Stop a flexible server.
-    syntax: az mysql flexible-server stop --resource-group testGroup --name testServer
+    syntax: az mysql flexible-server stop --resource-group testGroup --name testserver
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -514,7 +644,7 @@ directCommands:
                                     [--admin-password]
                                     [--backup-retention]
                                     [--force-string]
-                                    [--high-availability {Disabled, SameZone, ZoneRedundant}]
+                                    [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
                                     [--ids]
                                     [--iops]
                                     [--maintenance-window]
@@ -534,7 +664,7 @@ directCommands:
   - summary: Update a flexible server's sku, using local context for server and resource group.
     syntax: az mysql flexible-server update --sku-name Standard_D4ds_v4 --tier GeneralPurpose
   - summary: Update a flexible server's tags.
-    syntax: az mysql flexible-server update --resource-group testGroup --name testServer --tags "k1=v1" "k2=v2"
+    syntax: az mysql flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -543,14 +673,14 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --backup-retention
-    summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+    summary: The number of days a backup is retained. Range of 1 to 35 days. Default is 7 days.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --high-availability
-    parameterValueGroup: Disabled, SameZone, ZoneRedundant
-    summary: 'Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time. Allowed values: ZoneRedundant, SameZone, Disabled.'
+    parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
+    summary: Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -616,7 +746,7 @@ directCommands:
                                   [--updated]
   examples:
   - summary: Wait for the flexible server to satisfy certain conditions.
-    syntax: az mysql flexible-server wait --exists --resource-group testGroup --name testServer
+    syntax: az mysql flexible-server wait --exists --resource-group testGroup --name testserver
   optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -672,6 +802,7 @@ commands:
 - az_mysql_flexible-server_firewall-rule_list
 - az_mysql_flexible-server_firewall-rule_show
 - az_mysql_flexible-server_firewall-rule_update
+- az_mysql_flexible-server_geo-restore
 - az_mysql_flexible-server_list
 - az_mysql_flexible-server_list-skus
 - az_mysql_flexible-server_parameter

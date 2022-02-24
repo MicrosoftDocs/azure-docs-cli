@@ -58,15 +58,17 @@ directCommands:
                      [--runtime]
                      [--scope]
                      [--startup-file]
+                     [--subnet]
                      [--subscription]
                      [--tags]
+                     [--vnet]
   examples:
   - summary: Create a web app with the default configuration.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName
-  - summary: Create a web app with a Java 11 runtime and Java SE 8 web server using '|' delimiter.
-    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java|11|Java SE|8"
-  - summary: Create a web app with a Java 11 runtime and Java SE 8 web server using ':' delimiter.
-    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:8"
+  - summary: Create a web app with a Java 11 runtime using '|' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java|11|Java SE|11"
+  - summary: Create a web app with a Java 11 runtime using ':' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:11"
   - summary: Create a web app with a NodeJS 10.14 runtime and deployed from a local git repository.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|10.14" --deployment-local-git
   - summary: Create a web app with an image from DockerHub.
@@ -95,7 +97,7 @@ directCommands:
     summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
     description: ''
   - name: --deployment-container-image-name -i
-    summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
+    summary: Container image name from Docker Hub, e.g. publisher/image-name:tag.
     description: ''
   - name: --deployment-local-git -l
     summary: Enable local git.
@@ -133,11 +135,17 @@ directCommands:
   - name: --startup-file
     summary: Linux only. The web's startup file.
     description: ''
+  - name: --subnet
+    summary: Name or resource ID of the pre-existing subnet to have the webapp join. The --vnet is argument also needed if specifying subnet by name.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --vnet
+    summary: Name or resource ID of the regional virtual network. If there are multiple vnets of the same name across different resource groups, use vnet resource id to specify which vnet to use. If vnet name is used, by default, the vnet in the same resource group as the webapp will be used. Must be used with --subnet argument.
     description: ''
 - uid: az_webapp_create-remote-connection
   name: az webapp create-remote-connection
@@ -295,18 +303,16 @@ directCommands:
   summary: List web apps.
   description: ''
   syntax: >-
-    az webapp list [--query-examples]
-                   [--resource-group]
+    az webapp list [--resource-group]
                    [--subscription]
   examples:
+  - summary: List all web apps in MyResourceGroup.
+    syntax: az webapp list --resource-group MyResourceGroup
   - summary: List default host name and state for all web apps.
     syntax: 'az webapp list --query "[].{hostName: defaultHostName, state: state}"'
   - summary: List all running web apps.
     syntax: az webapp list --query "[?state=='Running']"
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -381,6 +387,36 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_webapp_scale
+  name: az webapp scale
+  summary: Modify the number of instances of a webapp.
+  description: ''
+  syntax: >-
+    az webapp scale --instance-count
+                    --name
+                    --resource-group
+                    [--slot]
+  examples:
+  - summary: Change the number of instances of MyApp to 2.
+    syntax: az webapp scale -g MyResourceGroup -n MyApp --instance-count 2
+  requiredParameters:
+  - isRequired: true
+    name: --instance-count
+    defaultValue: "1"
+    summary: Number of instances.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
 - uid: az_webapp_show
   name: az webapp show
   summary: Get the details of a web app.
@@ -388,7 +424,6 @@ directCommands:
   syntax: >-
     az webapp show [--ids]
                    [--name]
-                   [--query-examples]
                    [--resource-group]
                    [--slot]
                    [--subscription]
@@ -401,9 +436,6 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
-    description: ''
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -515,7 +547,7 @@ directCommands:
     description: ''
 - uid: az_webapp_up
   name: az webapp up
-  summary: Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app.
+  summary: Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app. Each time the command is successfully run, default argument values for resource group, sku, location, plan, and name are saved for the current directory. These defaults are then used for any arguments not provided on subsequent runs of the command in the same directory.  Use 'az configure' to manage defaults.
   description: ''
   syntax: >-
     az webapp up [--app-service-environment]
@@ -530,7 +562,7 @@ directCommands:
                  [--plan]
                  [--resource-group]
                  [--runtime]
-                 [--sku {B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, P1V2, P1V3, P2V2, P2V3, P3V2, P3V3, PC2, PC3, PC4, S1, S2, S3, SHARED}]
+                 [--sku {B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, P1V2, P1V3, P2V2, P2V3, P3V2, P3V3, PC2, PC3, PC4, S1, S2, S3, SHARED, WS1, WS2, WS3}]
                  [--subscription]
   examples:
   - summary: View the details of the app that will be created, without actually running the operation
@@ -539,10 +571,10 @@ directCommands:
     syntax: az webapp up
   - summary: Create a web app with a specified name
     syntax: az webapp up -n MyUniqueAppName
-  - summary: Create a web app with a specified name and a java|11|Java SE|8 runtime using '|' delimiter
-    syntax: az webapp up -n MyUniqueAppName --runtime "java|11|Java SE|8"
-  - summary: Create a web app with a specified name and a java|11|Java SE|8 runtime using ':' delimiter
-    syntax: az webapp up -n MyUniqueAppName --runtime "java:11:Java SE:8"
+  - summary: Create a web app with a specified name and a Java 11 runtime using '|' delimiter
+    syntax: az webapp up -n MyUniqueAppName --runtime "java|11|Java SE|11"
+  - summary: Create a web app with a specified name and a Java 11 runtime using ':' delimiter
+    syntax: az webapp up -n MyUniqueAppName --runtime "java:11:Java SE:11"
   - summary: Create a web app in a specific region, by running the command from the folder where the code to be deployed exists.
     syntax: az webapp up -l locationName
   - summary: Create a web app and enable log streaming after the deployment operation is complete. This will enable the default configuration required to enable log streaming.
@@ -579,7 +611,7 @@ directCommands:
     summary: Set the OS type for the app to be created.
     description: ''
   - name: --plan -p
-    summary: Name of the appserviceplan associated with the webapp.
+    summary: Name of the app service plan associated with the webapp.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -588,15 +620,15 @@ directCommands:
     summary: 'Canonicalized web runtime in the format of Framework|Version, e.g. "PHP|7.2". Allowed delimiters: "|" or ":". Use `az webapp list-runtimes` for available list.'
     description: ''
   - name: --sku
-    parameterValueGroup: B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, P1V2, P1V3, P2V2, P2V3, P3V2, P3V3, PC2, PC3, PC4, S1, S2, S3, SHARED
-    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), P1V3(Premium V3 Small), P2V3(Premium V3 Medium), P3V3(Premium V3 Large), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large), I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large), I1v2 (Isolated V2 Small), I2v2 (Isolated V2 Medium), I3v2 (Isolated V2 Large).
+    parameterValueGroup: B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, P1V2, P1V3, P2V2, P2V3, P3V2, P3V3, PC2, PC3, PC4, S1, S2, S3, SHARED, WS1, WS2, WS3
+    summary: The pricing tiers, e.g., F1(Free), D1(Shared), B1(Basic Small), B2(Basic Medium), B3(Basic Large), S1(Standard Small), P1V2(Premium V2 Small), P1V3(Premium V3 Small), P2V3(Premium V3 Medium), P3V3(Premium V3 Large), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large), I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large), I1v2 (Isolated V2 Small), I2v2 (Isolated V2 Medium), I3v2 (Isolated V2 Large), WS1 (Logic Apps Workflow Standard 1), WS2 (Logic Apps Workflow Standard 2), WS3 (Logic Apps Workflow Standard 3).
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_webapp_update
   name: az webapp update
-  summary: Update a web app.
+  summary: Update an existing web app.
   description: ''
   syntax: >-
     az webapp update [--add]
@@ -605,7 +637,9 @@ directCommands:
                      [--force-string]
                      [--https-only {false, true}]
                      [--ids]
+                     [--minimum-elastic-instance-count]
                      [--name]
+                     [--prewarmed-instance-count]
                      [--remove]
                      [--resource-group]
                      [--set]
@@ -641,8 +675,14 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --minimum-elastic-instance-count -i
+    summary: Minimum number of instances. App must be in an elastic scale App Service Plan.
+    description: ''
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - name: --prewarmed-instance-count -w
+    summary: Number of preWarmed instances. App must be in an elastic scale App Service Plan.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -755,6 +795,54 @@ commands:
 - az_webapp_config_storage-account_delete
 - az_webapp_config_storage-account_list
 - az_webapp_config_storage-account_update
+- az_webapp_connection
+- az_webapp_connection_create
+- az_webapp_connection_create_appconfig
+- az_webapp_connection_create_confluent-cloud
+- az_webapp_connection_create_cosmos-cassandra
+- az_webapp_connection_create_cosmos-gremlin
+- az_webapp_connection_create_cosmos-mongo
+- az_webapp_connection_create_cosmos-sql
+- az_webapp_connection_create_cosmos-table
+- az_webapp_connection_create_eventhub
+- az_webapp_connection_create_keyvault
+- az_webapp_connection_create_mysql
+- az_webapp_connection_create_mysql-flexible
+- az_webapp_connection_create_postgres
+- az_webapp_connection_create_postgres-flexible
+- az_webapp_connection_create_servicebus
+- az_webapp_connection_create_signalr
+- az_webapp_connection_create_storage-blob
+- az_webapp_connection_create_storage-file
+- az_webapp_connection_create_storage-queue
+- az_webapp_connection_create_storage-table
+- az_webapp_connection_delete
+- az_webapp_connection_list
+- az_webapp_connection_list-configuration
+- az_webapp_connection_list-support-types
+- az_webapp_connection_show
+- az_webapp_connection_update
+- az_webapp_connection_update_appconfig
+- az_webapp_connection_update_confluent-cloud
+- az_webapp_connection_update_cosmos-cassandra
+- az_webapp_connection_update_cosmos-gremlin
+- az_webapp_connection_update_cosmos-mongo
+- az_webapp_connection_update_cosmos-sql
+- az_webapp_connection_update_cosmos-table
+- az_webapp_connection_update_eventhub
+- az_webapp_connection_update_keyvault
+- az_webapp_connection_update_mysql
+- az_webapp_connection_update_mysql-flexible
+- az_webapp_connection_update_postgres
+- az_webapp_connection_update_postgres-flexible
+- az_webapp_connection_update_servicebus
+- az_webapp_connection_update_signalr
+- az_webapp_connection_update_storage-blob
+- az_webapp_connection_update_storage-file
+- az_webapp_connection_update_storage-queue
+- az_webapp_connection_update_storage-table
+- az_webapp_connection_validate
+- az_webapp_connection_wait
 - az_webapp_cors
 - az_webapp_cors_add
 - az_webapp_cors_remove
@@ -812,6 +900,7 @@ commands:
 - az_webapp_log_show
 - az_webapp_log_tail
 - az_webapp_restart
+- az_webapp_scale
 - az_webapp_scan
 - az_webapp_scan_list-result
 - az_webapp_scan_show-result

@@ -129,7 +129,6 @@ directCommands:
   syntax: >-
     az network lb address-pool list --lb-name
                                     --resource-group
-                                    [--query-examples]
                                     [--subscription]
   examples:
   - summary: List address pools.
@@ -144,9 +143,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -159,7 +155,6 @@ directCommands:
     az network lb address-pool show --lb-name
                                     --name
                                     --resource-group
-                                    [--query-examples]
                                     [--subscription]
   examples:
   - summary: Get the details of an address pool.
@@ -178,11 +173,108 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --query-examples
-    summary: Recommend JMESPath string for you. You can copy one of the query and paste it after --query parameter within double quotation marks to see the results. You can add one or more positional keywords so that we can give suggestions based on these key words.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_lb_address-pool_update
+  name: az network lb address-pool update
+  summary: Update an address pool.
+  description: ''
+  syntax: >-
+    az network lb address-pool update --lb-name
+                                      --name
+                                      --resource-group
+                                      [--add]
+                                      [--backend-address]
+                                      [--backend-addresses-config-file]
+                                      [--force-string]
+                                      [--remove]
+                                      [--set]
+                                      [--subscription]
+                                      [--vnet]
+  examples:
+  - summary: Update an address pool with several backend addresses using key-value arguments.
+    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --vnet {VnetResourceId} --backend-address name=addr1 ip-address=10.0.0.1 --backend-address name=addr2 ip-address=10.0.0.3
+  requiredParameters:
+  - isRequired: true
+    name: --lb-name
+    summary: The load balancer name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --backend-address
+    summary: Backend addresses information for backend address pool. If it's used, --vnet is required or subnet is required.
+    description: >-
+      Usage1: --backend-address name=addr1 ip-address=10.0.0.1 --vnet MyVnet
+
+      Usage2: --backend-address name=addr1 ip-address=10.0.0.1 subnet=/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
+
+      Usage3: --backend-address name=addr1 ip-address=10.0.0.1 subnet=subnet1 --vnet MyVnet
+
+
+      name: Required. The name of the backend address.
+
+      ip-address: Required. Ip Address within the Virtual Network.
+
+      subnet: Name or Id of the subnet.
+
+
+      Multiple backend addresses can be specified by using more than one `--backend-address` argument.
+  - name: --backend-addresses-config-file
+    summary: A config file used to set backend addresses. This argument is for experienced users. You may encounter parse errors if the json file is invalid.
+    description: >-
+      Usage: --backend-addresses-config-file @"{config_file.json}"
+
+
+      A example config file is
+
+      [
+        {
+          "name": "address1",
+          "virtualNetwork": "clitestvnet",
+          "ipAddress": "10.0.0.4"
+        },
+        {
+          "name": "address2",
+          "virtualNetwork": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/virtualNetworks/clitestvnet",
+          "ipAddress": "10.0.0.5"
+        },
+        {
+          "name": "address3",
+          "subnet": "subnet3",
+          "ipAddress": "10.0.0.6"
+        },
+        {
+          "name": "address4",
+          "subnet": "/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet4",
+          "ipAddress": "10.0.0.7"
+        }
+      ].
+  - name: --force-string
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vnet
+    summary: Name or Id of the virtual network applied to all backend addresses.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -199,6 +291,7 @@ commands:
 - az_network_lb_address-pool_tunnel-interface_list
 - az_network_lb_address-pool_tunnel-interface_remove
 - az_network_lb_address-pool_tunnel-interface_update
+- az_network_lb_address-pool_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -216,5 +309,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/08/2021
+  ms.date: 01/26/2022
   description: Manage address pools of a load balancer.
