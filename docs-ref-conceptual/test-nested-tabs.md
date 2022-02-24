@@ -75,6 +75,8 @@ Do something in the Azure PowerShell when in Linux ...
 
 ## Simple tab example
 
+When used with linked dependent tabs in the following H2, these tabs act like zone pivots.
+
 # [Azure portal](#tab/azure-portal)
 
 Content for the portal ...
@@ -91,7 +93,7 @@ Content for Azure PowerShell...
 
 ## Dependent tab example
 
-Select a tab in **Simple tab example** to see this tab group refresh.
+Select a tab in **Simple tab example** (above) to see this dependent tab group refresh. 
 
 # [Windows](#tab/windows/azure-portal)
 
