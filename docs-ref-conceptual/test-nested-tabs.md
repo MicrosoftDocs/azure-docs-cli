@@ -29,27 +29,32 @@ Content for Azure CLI...
 Content for Azure PowerShell...
 
 ---
+
 ## Dependent tab example
 
 Select a tab in **Simple tab example** to see this tab group refresh.
 
-# [Azure CLI](#tab/azure-cli/linux)
+# [Azure portal](#tab/azure-portal/azure-portal)
+
+Content for the portal ...
+
+# [Azure CLI](#tab/linux/azure-cli)
 
 Do something in the Azure CLI when in Linux ...
 
-# [Azure CLI](#tab/azure-cli/docker-container)
+# [Azure CLI](#tab/docker-container/azure-cli)
 
 Do something in the Azure CLI when in a Docker container ...
 
-# [Azure CLI](#tab/azure-cli/macOS)
+# [Azure CLI](#tab/macOS/azure-cli)
 
 Do something in the Azure CLI when in macOS
 
-# [Azure PowerShell](#tab/azure-powershell/windows)
+# [Azure PowerShell](#tab/windows/azure-powershell)
 
 Do something in the Azure PowerShell when in Windows ...
 
-# [Azure PowerShell](#tab/azure-powershell/linux)
+# [Azure PowerShell](#tab/linux/azure-powershell)
 
 Do something in the Azure PowerShell when in Linux ...
 
