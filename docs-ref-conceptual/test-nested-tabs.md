@@ -9,6 +9,8 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
+zone_pivot_group_filename: azure/zone-pivot-groups.json
+zone_pivot_groups: cli-linux-installation-method
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login
 ---
 
@@ -66,7 +68,7 @@ Do something in the Azure PowerShell when in Linux ...
 
 ## Nested tabs don't work
 
-# [Azure portal](#tab/azure-portal)
+# [Terraform](#tab/terraform)
 
 Content for the portal ...
 
@@ -78,11 +80,11 @@ Content for the portal ...
 
 ---
 
-# [Azure CLI](#tab/azure-cli)
+# [Java](#tab/java)
 
 Content for Azure CLI...
 
-# [Azure PowerShell](#tab/azure-powershell)
+# [JavaScript](#tab/javascript)
 
 Content for Azure PowerShell...
 
