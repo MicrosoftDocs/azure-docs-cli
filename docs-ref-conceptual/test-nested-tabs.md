@@ -16,6 +16,11 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 
 # H1
 
+When you need "nested conceptual tabs" there are two options:
+
+1. Dependent conceptual tabs
+1. Zone pivots
+
 ## Zone pivot example
 
 The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
