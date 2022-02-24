@@ -13,15 +13,18 @@ keywords:
 ---
 # How to query Azure CLI command output using a JMESPath query
 
-The Azure CLI uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language
-for JSON, giving you the ability to select and modify data from CLI output. Queries are executed on the JSON output before any display formatting.
+The Azure CLI uses the `--query` argument to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, giving you the ability to select and modify data from CLI output.
 
-The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath with a series of small,
-simple examples.
+The `--query` argument is supported by all commands in the Azure CLI. This article covers how to use the features of JMESPath and gives examples of queries. Learn about JMESPath concepts that are useful for querying under the concepts tab. See examples of JMESPath queries under the examples tab.
+
+# [Concepts](#tab/concepts)
+ Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's return value. Queries are executed on the JSON output before any display formatting.
 
 > [!NOTE]
 >
 > When using Azure CLI in PowerShell on Windows, some extra escaping may be necessary for the query argument. Please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md) for more detail.
+
+The escape characters needed in queries differ for different environments. It is recommended to run queries in Azure CloudShell and cmd because these shells require less escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you are using.
 
 ## Dictionary and list CLI results
 
@@ -31,8 +34,7 @@ _could_ return more than one object return an array, and commands that _always_ 
 
 ## Get properties in a dictionary
 
-Working with dictionary results, you can access properties from the top level with just the key. The `.` (__subexpression__) character is used to access
-properties of nested dictionaries. Before introducing queries, take a look at the unmodified output of the `az vm show` command:
+Working with dictionary results, you can access properties from the top level with just the key. The `.` (__subexpression__) character is used to access properties of nested dictionaries. Before introducing queries, take a look at the unmodified output of the `az vm show` command:
 
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM -o json
@@ -78,9 +80,21 @@ The command will output a dictionary. Some content has been omitted.
 
 The following command gets the SSH public keys authorized to connect to the VM by adding a query:
 
+## [Cmd](#tab/cmd)
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
 ```
+---
+## [PowerShell](#tab/powershell)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
+```
+---
+## [Bash](#tab/bash)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
+```
+---
 
 ```json
 [
@@ -96,9 +110,23 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 A common case is that you need to only get _one_ value out of a CLI command, such as an Azure resource ID, a resource name, a username, or a password. In that case, you also often want to store the value in a local environment variable. To get a single property, first make
 sure that you're only getting one property out of the query. Modifying the last example to get only the admin username:
 
+## [Cmd](#tab/cmd)
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
 ```
+---
+## [PowerShell](#tab/powershell)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
+```
+---
+## [Bash](#tab/bash)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
+```
+---
+
+
 
 ```JSON
 "azureuser"
@@ -270,8 +298,7 @@ JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions
 complex predicate expressions. For the full details on predicates and logical operations, see the
 [JMESPath specification](http://jmespath.org/specification.html).
 
-In the last section, we flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted
-to only Linux VMs:
+In the last section, we flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted to only Linux VMs:
 
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
@@ -283,6 +310,20 @@ Name    Admin
 Test-2  sttramer
 TestVM  azureuser
 ```
+
+We can also filter numerical values such as the OS disk size. This example demonstrates how to filter the list of VMs to only display those with a disk size of 10GB or more .
+
+```azurecli-interactive
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`30\`].{Name:name,  admin:osProfile.adminUsername, Disc Size:storageProfile.osDisk.diskSizeGb }" --output table
+```
+
+```output
+Name    Admin
+------  ---------
+Test-2  sttramer
+TestVM  azureuser
+```
+
 
 > [!IMPORTANT]
 >
@@ -364,3 +405,11 @@ with queries. Data is piped as input, and then queries are written and run in th
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
+
+---
+
+# [Examples](#tab/examples)
+
+This section contains examples of complex JMESPath queries for different Azure resources.
+
+---
