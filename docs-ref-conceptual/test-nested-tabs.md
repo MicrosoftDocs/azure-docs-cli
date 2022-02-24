@@ -117,11 +117,11 @@ Do something in the Azure CLI when in macOS
 
 # [Linux](#tab/linux/azure-powershell)
 
-Do something in the Azure PowerShell when in Windows ...
+Do something in the Azure PowerShell when in Linux ...
 
 # [Windows](#tab/windows/azure-powershell)
 
-Do something in the Azure PowerShell when in Linux ...
+Do something in the Azure PowerShell when in Windows...
 
 ---
 
