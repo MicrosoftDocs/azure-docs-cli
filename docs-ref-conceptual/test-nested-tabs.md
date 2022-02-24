@@ -118,23 +118,29 @@ Do something in the Azure PowerShell when in Linux ...
 
 ## Nested tabs don't work
 
-# [Terraform](#tab/terraform)
+# [Lang 1](#tab/lang1)
 
 Content for the portal ...
 
 ## [tab1](#tab/tab11)
 
+OpSys 1
+
 ## [tab2](#tab/tab12)
+
+OpSys 2
 
 ## [tab3](#tab/tab13)
 
+OpSys 3
+
 ---
 
-# [Java](#tab/java)
+# [Lang 2](#tab/lang2)
 
 Content for Azure CLI...
 
-# [JavaScript](#tab/javascript)
+# [Lang 3](#tab/lang3)
 
 Content for Azure PowerShell...
 
@@ -142,7 +148,7 @@ Content for Azure PowerShell...
 
 ## Indented tabs don't work
 
-# [Terraform](#tab/terraform)
+# [Tool 1](#tab/t1)
 
 Content for the portal ...
 
@@ -156,11 +162,11 @@ Content for the portal ...
     
     ---
 
-# [Java](#tab/java)
+# [Tool 2](#tab/t2)
 
 Content for Azure CLI...
 
-# [JavaScript](#tab/javascript)
+# [Tool 3](#tab/t2)
 
 Content for Azure PowerShell...
 
