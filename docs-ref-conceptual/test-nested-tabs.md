@@ -22,11 +22,11 @@ The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-g
 
 ::: zone pivot="apt"
 
-# [Windows](#tab/windows)
+# [apt tab 1](#tab/tab1)
 
 Content for the portal in Windows...
 
-# [Linux](#tab/linux)
+# [apt tab 2](#tab/tab2)
 
 Content for the portal in Linux...
 
@@ -36,15 +36,15 @@ Content for the portal in Linux...
 
 ::: zone pivot="dnf"
 
-# [Linux](#tab/linux)
+# [dnf tab 1](#tab/tab3)
 
 Do something in the Azure CLI when in Linux ...
 
-# [Docker container](#tab/docker-container)
+# [dnf tab 2](#tab/tab4)
 
 Do something in the Azure CLI when in a Docker container ...
 
-# [macOS](#tab/macOS)
+# [dnf tab 3](#tab/tab5)
 
 Do something in the Azure CLI when in macOS
 
@@ -54,11 +54,11 @@ Do something in the Azure CLI when in macOS
 
 ::: zone pivot="zypper"
 
-# [Windows](#tab/windows)
+# [Zypper tab 1](#tab/tab6)
 
 Do something in the Azure PowerShell when in Windows ...
 
-# [Linux](#tab/linux)
+# [Zypper tab 2](#tab/tab7)
 
 Do something in the Azure PowerShell when in Linux ...
 
@@ -122,11 +122,11 @@ Do something in the Azure PowerShell when in Linux ...
 
 Content for the portal ...
 
-## [tab1](#tab/tab1)
+## [tab1](#tab/tab11)
 
-## [tab2](#tab/tab2)
+## [tab2](#tab/tab12)
 
-## [tab3](#tab/tab3)
+## [tab3](#tab/tab13)
 
 ---
 
