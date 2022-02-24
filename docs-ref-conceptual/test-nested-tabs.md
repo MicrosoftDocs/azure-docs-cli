@@ -23,7 +23,9 @@ When you need "nested conceptual tabs" there are two options:
 
 ## Zone pivot example
 
-The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
+* The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  
+* You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  
+* For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
 
 ::: zone pivot="apt"
 
@@ -171,7 +173,7 @@ Content for the portal ...
 
 Content for Azure CLI...
 
-# [Tool 3](#tab/t2)
+# [Tool 3](#tab/t3)
 
 Content for Azure PowerShell...
 
