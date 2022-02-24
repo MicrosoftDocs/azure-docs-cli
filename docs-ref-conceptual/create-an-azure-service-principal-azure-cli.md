@@ -36,13 +36,6 @@ The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac`
 
 When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: password-based authentication, and certificate-based authentication.
 
-> [!NOTE]
->
-> If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing
-> "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
-> If you have specified an incorrect subscription ID, you will receive the error message "The request did not have a subscription or a valid tenant level resource provider."
-> If you have specified an incorrect resource group name, you will receive the error message "Resource group 'name' could not be found."
-
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 >
@@ -68,7 +61,7 @@ az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /
 # Create a service principal with hard-coded values
 az ad sp create-for-rbac --name msdocs-sp-00000 \
                          --role contributor \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/msdocs-rg-00000
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/msdocs-rg-00000
 ```
 
 > [!IMPORTANT]
@@ -87,7 +80,7 @@ For certificate-based authentication, use the `--cert` argument. This argument r
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
                          --cert "-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----"
@@ -96,7 +89,7 @@ az ad sp create-for-rbac --name servicePrincipalName \
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
                          --cert @/path/to/cert.pem
 ```
 
@@ -105,7 +98,7 @@ The `--keyvault` argument can be added to use a certificate in Azure Key Vault. 
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
                          --cert certificateName \
                          --keyvault vaultName
 ```
@@ -115,7 +108,7 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
                          --create-cert
 ```
 
@@ -153,7 +146,7 @@ The `--keyvault` argument can be added to store the certificate in Azure Key Vau
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscription/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
                          --create-cert \
                          --cert certificateName \
                          --keyvault vaultName
@@ -215,10 +208,6 @@ This example adds the **Reader** role and removes the **Contributor** role:
 az role assignment create --assignee APP_ID --role Reader
 az role assignment delete --assignee APP_ID --role Contributor
 ```
-
-> [!NOTE]
-> If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to
-> perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
 
 Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed.
 
@@ -297,6 +286,20 @@ as `az ad sp create-for-rbac`.
 ```azurecli-interactive
 az ad sp credential reset --name APP_ID
 ```
+
+## 7. Troubleshooting
+
+### Insufficient privileges
+If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
+
+### Invalid tenant
+If you have specified an incorrect subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."
+
+### Resource group not found
+If you have specified an incorrect resource group name, you see the error message "Resource group 'name' could not be found."
+
+### Authorization to perform action
+If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
 
 ## See also
 
