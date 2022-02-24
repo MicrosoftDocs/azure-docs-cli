@@ -115,11 +115,11 @@ Do something in the Azure CLI when in a Docker container ...
 
 Do something in the Azure CLI when in macOS
 
-# [Windows](#tab/windows/azure-powershell)
+# [Linux](#tab/windows/azure-powershell)
 
 Do something in the Azure PowerShell when in Windows ...
 
-# [Linux](#tab/linux/azure-powershell)
+# [Windows](#tab/linux/azure-powershell)
 
 Do something in the Azure PowerShell when in Linux ...
 
