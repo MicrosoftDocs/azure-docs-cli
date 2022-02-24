@@ -14,11 +14,11 @@ keywords: microsoft graph, ms graph, active directory graph, ad graph
 
 # Microsoft Graph migration
 
-Due to [the deprecation of Azure Active Directory (Azure AD) Graph](https://docs.microsoft.com/graph/migrate-azure-ad-graph-overview), Azure CLI will be migrated from AD Graph to Microsoft Graph.
+Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), Azure CLI will be migrated from AD Graph to Microsoft Graph.
 
 ## Breaking changes
 
-For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](https://docs.microsoft.com/graph/migrate-azure-ad-graph-property-differences).
+For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
 
 Command argument and behavior breaking changes are listed below.
 
