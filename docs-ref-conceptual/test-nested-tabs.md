@@ -90,7 +90,9 @@ Content for Azure PowerShell...
 
 ## Zone pivot example
 
-:: zone pivot="Azure portal"
+The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
+
+:: zone pivot="apt"
 
 # [Windows](#tab/windows/azure-portal)
 
@@ -104,7 +106,7 @@ Content for the portal in Linux...
 
 ::: zone-end
 
-::: zone pivot="Azure CLI"
+::: zone pivot="dnf"
 
 # [Linux](#tab/linux)
 
@@ -122,7 +124,7 @@ Do something in the Azure CLI when in macOS
 
 ::: zone-end
 
-::: zone pivot="Azure PowerShell"
+::: zone pivot="zypper"
 
 # [Windows](#tab/windows/azure-powershell)
 
