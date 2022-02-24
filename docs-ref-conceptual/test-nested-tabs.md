@@ -88,3 +88,52 @@ Content for Azure PowerShell...
 
 ---
 
+## Zone pivot example
+
+:: zone pivot="Azure portal"
+
+# [Windows](#tab/windows/azure-portal)
+
+Content for the portal in Windows...
+
+# [Linux](#tab/linux/azure-portal)
+
+Content for the portal in Linux...
+
+---
+
+::: zone-end
+
+::: zone pivot="Azure CLI"
+
+# [Linux](#tab/linux)
+
+Do something in the Azure CLI when in Linux ...
+
+# [Docker container](#tab/docker-container)
+
+Do something in the Azure CLI when in a Docker container ...
+
+# [macOS](#tab/macOS)
+
+Do something in the Azure CLI when in macOS
+
+---
+
+::: zone-end
+
+::: zone pivot="Azure PowerShell"
+
+# [Windows](#tab/windows/azure-powershell)
+
+Do something in the Azure PowerShell when in Windows ...
+
+# [Linux](#tab/linux/azure-powershell)
+
+Do something in the Azure PowerShell when in Linux ...
+
+---
+
+::: zone-end
+
+## Next H2
