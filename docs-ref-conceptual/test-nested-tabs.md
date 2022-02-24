@@ -140,4 +140,30 @@ Content for Azure PowerShell...
 
 ---
 
+## Indented tabs don't work
+
+# [Terraform](#tab/terraform)
+
+Content for the portal ...
+
+**Nest tabs via indentation**
+
+    ## [tab4](#tab/tab14)
+    
+    ## [tab5](#tab/tab15)
+    
+    ## [tab6](#tab/tab16)
+    
+    ---
+
+# [Java](#tab/java)
+
+Content for Azure CLI...
+
+# [JavaScript](#tab/javascript)
+
+Content for Azure PowerShell...
+
+---
+
 ## Next H2
