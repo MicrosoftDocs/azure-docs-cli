@@ -40,7 +40,7 @@ Content for the portal in Windows...
 
 # [Linux](#tab/linux/azure-portal)
 
-Content for the portal in Windows...
+Content for the portal in Linux...
 
 # [Linux](#tab/linux/azure-cli)
 
@@ -66,5 +66,25 @@ Do something in the Azure PowerShell when in Linux ...
 
 ## Nested tab example
 
+# [Azure portal](#tab/azure-portal)
 
+Content for the portal ...
+
+## [tab1](#tab/tab1)
+
+## [tab2](#tab/tab2)
+
+## [tab3](#tab/tab3)
+
+---
+
+# [Azure CLI](#tab/azure-cli)
+
+Content for Azure CLI...
+
+# [Azure PowerShell](#tab/azure-powershell)
+
+Content for Azure PowerShell...
+
+---
 
