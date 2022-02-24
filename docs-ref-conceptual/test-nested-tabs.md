@@ -16,6 +16,56 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 
 # H1
 
+## Zone pivot example
+
+The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
+
+:: zone pivot="apt"
+
+# [Windows](#tab/windows)
+
+Content for the portal in Windows...
+
+# [Linux](#tab/linux)
+
+Content for the portal in Linux...
+
+---
+
+::: zone-end
+
+::: zone pivot="dnf"
+
+# [Linux](#tab/linux)
+
+Do something in the Azure CLI when in Linux ...
+
+# [Docker container](#tab/docker-container)
+
+Do something in the Azure CLI when in a Docker container ...
+
+# [macOS](#tab/macOS)
+
+Do something in the Azure CLI when in macOS
+
+---
+
+::: zone-end
+
+::: zone pivot="zypper"
+
+# [Windows](#tab/windows)
+
+Do something in the Azure PowerShell when in Windows ...
+
+# [Linux](#tab/linux)
+
+Do something in the Azure PowerShell when in Linux ...
+
+---
+
+::: zone-end
+
 ## Simple tab example
 
 # [Azure portal](#tab/azure-portal)
@@ -89,55 +139,5 @@ Content for Azure CLI...
 Content for Azure PowerShell...
 
 ---
-
-## Zone pivot example
-
-The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.json_ and _azure-docs-cli/docs-ref-conceptual/zone-pivot-groups.yml_.  You can find similar files with more entries in [MicrosoftDocs/azure-docs-pr/articles/zone-pivot-groups.yml](https://github.com/MicrosoftDocs/azure-docs-pr/blob/main/articles/zone-pivot-groups.yml).  For simplicity, this PR reuses existing zone pivot headers already in these JSON files.
-
-:: zone pivot="apt"
-
-# [Windows](#tab/windows)
-
-Content for the portal in Windows...
-
-# [Linux](#tab/linux)
-
-Content for the portal in Linux...
-
----
-
-::: zone-end
-
-::: zone pivot="dnf"
-
-# [Linux](#tab/linux)
-
-Do something in the Azure CLI when in Linux ...
-
-# [Docker container](#tab/docker-container)
-
-Do something in the Azure CLI when in a Docker container ...
-
-# [macOS](#tab/macOS)
-
-Do something in the Azure CLI when in macOS
-
----
-
-::: zone-end
-
-::: zone pivot="zypper"
-
-# [Windows](#tab/windows)
-
-Do something in the Azure PowerShell when in Windows ...
-
-# [Linux](#tab/linux)
-
-Do something in the Azure PowerShell when in Linux ...
-
----
-
-::: zone-end
 
 ## Next H2
