@@ -84,12 +84,12 @@ The following command gets the SSH public keys authorized to connect to the VM b
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
 ```
----
+
 ## [PowerShell](#tab/powershell)
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
 ```
----
+
 ## [Bash](#tab/bash)
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publicKeys -o json
@@ -111,16 +111,19 @@ A common case is that you need to only get _one_ value out of a CLI command, suc
 sure that you're only getting one property out of the query. Modifying the last example to get only the admin username:
 
 ## [Cmd](#tab/cmd)
+
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
 ```
----
+
 ## [PowerShell](#tab/powershell)
+
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o json
 ```
----
+
 ## [Bash](#tab/bash)
+
 ```azurecli-interactive
 az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
 ```
@@ -406,8 +409,6 @@ pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
 
----
-
 # [Examples](#tab/examples)
 
 This section contains examples of complex JMESPath queries for different Azure resources.
@@ -427,14 +428,12 @@ This example returns the names of VMs whose disks are larger than 10GB.
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{Name:name,  DiskSize:storageProfile.osDisk.diskSizeGb}" --output table
 ```
 
----
 ## [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
 
 ```
 
----
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
