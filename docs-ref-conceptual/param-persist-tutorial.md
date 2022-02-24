@@ -6,7 +6,7 @@ ms.author: dbradish
 manager: barbkess
 ms.prod: azure
 ms.date: 09/16/2021
-ms.topic: conceptual
+ms.topic: tutorial
 ms.devlang: azurecli
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
