@@ -64,7 +64,7 @@ Do something in the Azure PowerShell when in Linux ...
 
 ---
 
-## Nested tab example
+## Nested tabs don't work
 
 # [Azure portal](#tab/azure-portal)
 
@@ -94,11 +94,11 @@ The setup for zone pivots is in _azure-docs-cli/docs-ref-conceptual/zone-pivot-g
 
 :: zone pivot="apt"
 
-# [Windows](#tab/windows/azure-portal)
+# [Windows](#tab/windows)
 
 Content for the portal in Windows...
 
-# [Linux](#tab/linux/azure-portal)
+# [Linux](#tab/linux)
 
 Content for the portal in Linux...
 
@@ -126,11 +126,11 @@ Do something in the Azure CLI when in macOS
 
 ::: zone pivot="zypper"
 
-# [Windows](#tab/windows/azure-powershell)
+# [Windows](#tab/windows)
 
 Do something in the Azure PowerShell when in Windows ...
 
-# [Linux](#tab/linux/azure-powershell)
+# [Linux](#tab/linux)
 
 Do something in the Azure PowerShell when in Linux ...
 
