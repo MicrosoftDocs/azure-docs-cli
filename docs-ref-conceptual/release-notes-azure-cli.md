@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 02/14/2022
+ms.date: 03/01/2022
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,129 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## March 01, 2022
+
+Version 2.34.0
+
+### ACR
+
+* `az acr manifest`: Add new command group to support managing artifact manifests in Azure Container Registries
+* Deprecate `az acr repository show-manifests` command and replace with `acr manifest metadata list` command
+
+### AKS
+
+* `az aks nodepool update`: Add `--node-taints` to allow modify node taints
+* `az aks get-credentials`: Add new parameter `--format` to support specifying the format of returned credential
+* `az aks nodepool`: Allow specifying `--scale-down-mode` in nodepool create and update
+
+### APIM
+
+* `az apim api import`: Update api-id description #18306
+* Fix #21187: `az apim api create/update/import`: Fix header and query param names being swapped
+
+### App Config
+
+* `az appconfig kv import`: Add new parameter `--strict` to support strict import
+
+### App Service
+
+* [BREAKING CHANGE] `az webapp up`: Change supported runtimes
+* [BREAKING CHANGE] `az webapp create`: Change supported runtimes
+* [BREAKING CHANGE] `az webapp list-runtimes`: Add `--os`/`--os-type` argument, change runtimes, change default behavior to return both linux and windows stacks, and deprecate `--linux` argument
+* [BREAKING CHANGE] `az functionapp create`: Take runtime names and versions from API instead of hardcoded list
+* `az functionapp plan`: Update the max value of `--max-burst` to 100
+* `az functionapp list-runtimes`: Add new command to show function app runtimes, versions, and compatible functions versions
+* `az webapp create`: Provide support `--https-only` flag
+* `az webapp deployment github-actions remove`: Fix the bug that path cannot start with a slash
+
+### ARM
+
+* `az account management-group entities`: Add a new command group to support entities (Management Groups and Subscriptions) operations for the authenticated user
+* `az account management-group hierarchy-settings`: Add a new command group to support operations on hierarchy settings defined at the management group level
+* `az account management-group tenant-backfill`: Add a new command group to support backfilling subscriptions for the tenant
+* `az account management-group subscription show`: Get the details of a given subscription under a given management group
+* `az account management-group subscription show-sub-under-mg`: Show what subscription is under a given management group
+* `az account management-group check-name-availability`: Check if a management group name is valid and available
+* `az deployment`: Fix the bug of 'bytes object has no attribute get' for error handling in retry cases
+
+### Backup
+
+* Add private endpoints support for Microsoft.RecoveryServices/vaults
+
+### Compute
+
+* `az vm create`: Fix the issue that VMCustomization is not enabled
+* `az vm disk attach`: Modify help description to guide how to use the `--ids` parameter correctly
+* `az restore-point`: Add new command group to support managing restore point
+* `az vmss create/update`: Add new parameters `--security-type`, `--enable-secure-boot` and `--enable-vtpm` to support Trusted Launch
+* `az vmss create/update`: Add new parameters `--automatic-repairs-action` to support repair action
+* `az vmss create/update`: Add new parameters `--v-cpus-available` and `--v-cpus-per-core` to support VMSize customization
+
+### Cosmos DB
+
+* `az managed-cassandra cluster update`: Fix to allow `--external-seed-nodes` and `--external-gossip-certificates` to be updated by the user
+
+### Eventhub
+
+* `az eventhubs namespace create`: Add `--user-assigned`, `--system-assigned`, `--encryption-config`
+* `az eventhubs namespace identity`: Cmdlets for event hubs identity
+* `az eventhubs namespace encryption`: Cmdlets for event hubs encryption
+* `az servicebus namespace create`: Add `--user-assigned`, `--system-assigned`, `--encryption-config`
+* `az servicebus namespace identity`: Cmdlets for event hubs identity
+* `az servicebus namespace encryption`: Cmdlets for event hubs encryption
+
+### IoT
+
+* `az iot hub create`: Add the `--enforce-data-residency` parameter to support creating resources with data residency enforced (and cross-region disaster recovery disabled)
+* `az iot dps create`: Add the `--enforce-data-residency` parameter to support creating resources with data residency enforced (and cross-region disaster recovery disabled)
+
+### Key Vault
+
+* Fix #21341: `az keyvault update`: Support updating tags
+* `az keyvault key create/import/set-attributes`: Support `--immutable` to mark release policy immutable
+* `az keyvault key import`: Support `--kty oct` to import AES key
+
+### Monitor
+
+* `az monitor log-analytics workspace table`: Add new command `create`, `delete` and `search-job create` to support Microsoft/Custom log/Search Results table operations
+* `az monitor log-analytics workspace update`: Add a new parameter `--data-collection-rule` to support update defaultDataCollectionRuleResourceId
+* `az monitor log-analytics workspace table`: Add new command `restore create` and `migrate` to support Restored logs table/migrate operations
+
+### Network
+
+* `az bastion ssh`: Provide support for Bastion SSH access on Darwin and Linux
+* `az network private-endpoint`: Associate IP configurations and ASGs when creating PE
+
+### Packaging
+
+* [BREAKING CHANGE] Drop Ubuntu 14.04 Trusty Tahr and Debian 8 Jessie support
+* [BREAKING CHANGE] Drop Ubuntu 21.04 Hirsute Hippo support
+* Add Ubuntu 21.10 Impish Indri support
+* Bump embedded Python to 3.8 for deb packages
+
+### Profile
+
+* [BREAKING CHANGE] `az account show`: Drop `--sdk-auth`
+
+### RDBMS
+
+* Fix bug for private dns zone provisioning to vnet resource group in different subscription
+* Enable rdbms-connect extension in Cloud Shell
+
+### Role
+
+* Add warning to `role` and `ad` commands about Microsoft Graph migration
+
+### SQL
+
+* `az sql server create/update`: Add federated client id support
+
+### Storage
+
+* `az storage account create/update`: Support `--sam-account-name` and `--account-type`
+* `az storage blob upload`: Add `--tier`, migrate to track2
+* `az storage blob upload-batch`: Migrate to track2
 
 ## February 14, 2022
 
