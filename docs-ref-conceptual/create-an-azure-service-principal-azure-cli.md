@@ -48,9 +48,9 @@ Without any authentication parameters, password-based authentication is used wit
 
 ```azurecli-interactive
 # Create a service principal
-az ad sp create-for-rbac --name msdocs-sp-00000 \
-                         --role contributor \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/msdocs-rg-00000
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role reader \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 
 # Create a service principal using variables
 let "randomIdentifier=$RANDOM*$RANDOM"  
@@ -59,7 +59,7 @@ roleName="<myRoleName>"
 subscriptionID=$(az account show --query id -o tsv)
 # Verify the ID of the active subscription
 echo "Using subscription ID $subscriptionID"
-resourceGroup="<myResourceGroup>"
+resourceGroup="<myResourceGroupName>"
 
 echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName, and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
@@ -83,7 +83,7 @@ For certificate-based authentication, use the `--cert` argument. This argument r
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert "-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----"
@@ -92,7 +92,7 @@ az ad sp create-for-rbac --name servicePrincipalName \
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert @/path/to/cert.pem
 ```
 
@@ -101,7 +101,7 @@ The `--keyvault` argument can be added to use a certificate in Azure Key Vault. 
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert certificateName \
                          --keyvault vaultName
 ```
@@ -111,7 +111,7 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert
 ```
 
@@ -149,7 +149,7 @@ The `--keyvault` argument can be added to store the certificate in Azure Key Vau
 ```azurecli-interactive
 az ad sp create-for-rbac --name servicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/resourceGroupName \
+                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert \
                          --cert certificateName \
                          --keyvault vaultName
@@ -258,10 +258,10 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 1. Create a resource group to hold all resources used for the same quickstart, tutorial, or development project.
 
     ```azurecli-interactive
-    az group create --location westus --name myResourceGroup
+    az group create --location westus --name myResourceGroupName
     ```
 
-1. Create a resource to an Azure service. Replace `<serviceName>` with the name of the Azure service.
+1. Create a storage account.
 
     For Azure Storage, valid values for the `<KIND>` parameter are:
 
@@ -272,13 +272,13 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
     * StorageV2
 
     ```azurecli-interactive
-    az storage account create --name myStorageAccountName --resource-group myResourceGroup --kind <KIND> --sku F0 --location westus --yes
+    az storage account create --name myStorageAccountName --resource-group myResourceGroupName --kind <KIND> --sku F0 --location westus --yes
     ```
 
-1. Get resource keys for the new resource, which you use in your code to authenticate to the Azure service.
+1. Get resource keys, which you use in your code to authenticate to the Azure storage account.
 
     ```azurecli-interactive
-    az storage account keys list --name myStorageAccountName --resource-group myResourceGroup
+    az storage account keys list --name myStorageAccountName --resource-group myResourceGroupName
     ```
 
 ## 6. Reset credentials
