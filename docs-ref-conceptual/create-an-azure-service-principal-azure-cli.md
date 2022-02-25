@@ -47,7 +47,12 @@ When creating a service principal, you choose the type of sign-in authentication
 Without any authentication parameters, password-based authentication is used with a random password created for you.
 
 ```azurecli-interactive
-# Create a service principal using parameters
+# Create a service principal
+az ad sp create-for-rbac --name msdocs-sp-00000 \
+                         --role contributor \
+                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/msdocs-rg-00000
+
+# Create a service principal using variables
 let "randomIdentifier=$RANDOM*$RANDOM"  
 servicePrincipalName="msdocs-sp-$randomIdentifier"
 roleName="<myRoleName>"
@@ -55,13 +60,11 @@ subscriptionID=$(az account show --query id -o tsv)
 # Verify the ID of the active subscription
 echo "Using subscription ID $subscriptionID"
 resourceGroup="<myResourceGroup>"
-echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleAssignmentName, and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
+
+echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName, and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 
-# Create a service principal with hard-coded values
-az ad sp create-for-rbac --name msdocs-sp-00000 \
-                         --role contributor \
-                         --scope /subscriptions/xxxx0xxx-0xxx-00xx-0000-x0x00x0x0x0x/resourceGroups/msdocs-rg-00000
+
 ```
 
 > [!IMPORTANT]
@@ -205,8 +208,8 @@ The **Contributor** role has full permissions to read and write to an Azure acco
 This example adds the **Reader** role and removes the **Contributor** role:
 
 ```azurecli-interactive
-az role assignment create --assignee APP_ID --role Reader
-az role assignment delete --assignee APP_ID --role Contributor
+az role assignment create --assignee appID --role Reader
+az role assignment delete --assignee appID --role Contributor
 ```
 
 Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed.
@@ -214,7 +217,7 @@ Adding a role _doesn't_ restrict previously assigned permissions. When restricti
 The changes can be verified by listing the assigned roles:
 
 ```azurecli-interactive
-az role assignment list --assignee APP_ID
+az role assignment list --assignee appID
 ```
 
 ## 4. Sign in using a service principal
@@ -224,13 +227,13 @@ Test the new service principal's credentials and permissions by signing in. To s
 To sign in with a service principal using a password:
 
 ```azurecli-interactive
-az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
+az login --service-principal --username appID --password PASSWORD --tenant tenantID
 ```
 
 To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
 ```azurecli-interactive
-az login --service-principal --username APP_ID --tenant TENANT_ID --password /path/to/cert
+az login --service-principal --username appID --tenant tenantID --password /path/to/cert
 ```
 
 To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
@@ -244,21 +247,21 @@ The following section provides an example of how to create an resource for [Azur
 * [az storage account create](/cli/azure/storage/account#az-storage-account-create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
-To sign in with a service principal, you need the `appId`, `tenant`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
 
 1. Log in as the service principal.
 
     ```azurecli-interactive
-    az login --service-principal --username APP_ID --password PASSWORD --tenant TENANT_ID
+    az login --service-principal --username appID --password PASSWORD --tenant tenantID
     ```
 
 1. Create a resource group to hold all resources used for the same quickstart, tutorial, or development project.
 
     ```azurecli-interactive
-    az group create --location WESTUS --name MY_RESOURCE_GROUP
+    az group create --location westus --name myResourceGroup
     ```
 
-1. Create a resource to an Azure service. Replace `<SERVICENAME>` with the name of the Azure service.
+1. Create a resource to an Azure service. Replace `<serviceName>` with the name of the Azure service.
 
     For Azure Storage, valid values for the `<KIND>` parameter are:
 
@@ -269,13 +272,13 @@ To sign in with a service principal, you need the `appId`, `tenant`, and `passwo
     * StorageV2
 
     ```azurecli-interactive
-    az storage account create --name MY_RESOURCE_<SERVICENAME> --resource-group MY_RESOURCE_GROUP --kind <KIND> --sku F0 --location WESTUS --yes
+    az storage account create --name myStorageAccountName --resource-group myResourceGroup --kind <KIND> --sku F0 --location westus --yes
     ```
 
 1. Get resource keys for the new resource, which you use in your code to authenticate to the Azure service.
 
     ```azurecli-interactive
-    az storage account keys list --name MY_RESOURCE_<SERVICENAME> --resource-group MY_RESOURCE_GROUP
+    az storage account keys list --name myStorageAccountName --resource-group myResourceGroup
     ```
 
 ## 6. Reset credentials
@@ -284,7 +287,7 @@ If you forget the credentials for a service principal, use [az ad sp credential 
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
-az ad sp credential reset --name APP_ID
+az ad sp credential reset --name myServicePrincipal_appID_or_name
 ```
 
 ## 7. Troubleshooting
@@ -293,10 +296,10 @@ az ad sp credential reset --name APP_ID
 If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
 ### Invalid tenant
-If you have specified an incorrect subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."
+If you have specified an invalid subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."  Verify the subscription ID through the Azure Portal.  If using variables, use the Bash `echo` command to see the value being passed to the reference command.
 
 ### Resource group not found
-If you have specified an incorrect resource group name, you see the error message "Resource group 'name' could not be found."
+If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  Verify the resource group name through the Azure Portal.  If using variables, use the Bash `echo` command to see the value being passed to the reference command.
 
 ### Authorization to perform action
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
