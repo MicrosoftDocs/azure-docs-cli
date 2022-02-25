@@ -44,7 +44,7 @@ When creating a service principal, you choose the type of sign-in authentication
 
 ### Password-based authentication
 
-With password-based authentication, a random password is created for you.  Along with a `--name`, you must specify a `--role` and a `--scope` as these values do not have a default.
+With password-based authentication, a random password is created for you.  Along with a `--name`, you must specify a `--scope` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -57,18 +57,18 @@ You can also create a service principal using variables.
 ```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"  
 servicePrincipalName="msdocs-sp-$randomIdentifier"
-roleName="<myRoleName>"
+roleName="azureRoleName"
 subscriptionID=$(az account show --query id -o tsv)
 # Verify the ID of the active subscription
 echo "Using subscription ID $subscriptionID"
-resourceGroup="<myResourceGroupName>"
+resourceGroup="myResourceGroupName"
 
 echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 
 ```
 
-The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#6-reset-credentials).
+The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](#6-reset-credentials).
 
 ### Certificate-based authentication
 
@@ -209,7 +209,7 @@ az role assignment create --assignee appID --role Reader
 az role assignment delete --assignee appID --role Contributor
 ```
 
-Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed.
+Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
 
 The changes can be verified by listing the assigned roles:
 
@@ -244,7 +244,7 @@ The following section provides an example of how to create an resource for [Azur
 * [az storage account create](/cli/azure/storage/account#az-storage-account-create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
-To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](#4-sign-in-using-a-service-principal).
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](#1-create-a-service-principal).
 
 1. Log in as the service principal.
 
@@ -293,10 +293,10 @@ az ad sp credential reset --name myServicePrincipal_appID_or_name
 If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
 ### Invalid tenant
-If you have specified an invalid subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."  Verify the subscription ID through the Azure Portal.  If using variables, use the Bash `echo` command to see the value being passed to the reference command.
+If you have specified an invalid subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az account set](/cli/azure/account#az-account-set) to change your subscription or learn [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli).
 
 ### Resource group not found
-If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  Verify the resource group name through the Azure Portal.  If using variables, use the Bash `echo` command to see the value being passed to the reference command.
+If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az group list](/cli/azure/group#az-group-list) to see the resource groups for the current subscription, or learn [How to manage Azure resource groups with the Azure CLI](/cli/azure/manage-azure-groups-azure-cli).
 
 ### Authorization to perform action
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
