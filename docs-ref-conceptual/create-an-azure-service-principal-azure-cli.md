@@ -65,7 +65,6 @@ resourceGroup="myResourceGroupName"
 
 echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
-
 ```
 
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](#6-reset-credentials).
@@ -280,7 +279,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
 ## 6. Reset credentials
 
-If you forget the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same arguments
+If you lose the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same arguments
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
