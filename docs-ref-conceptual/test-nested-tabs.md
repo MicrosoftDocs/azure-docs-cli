@@ -16,10 +16,11 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 
 # H1
 
-When you need "nested conceptual tabs" there are two options:
+When you need "nested conceptual tabs" there are three options:
 
 1. Dependent conceptual tabs
 1. Zone pivots
+1. Use an Include file that contains conceptual tabs
 
 ## Zone pivot example
 
@@ -125,7 +126,11 @@ Do something in the Azure PowerShell when in Windows...
 
 ---
 
-## Nested tabs don't work
+## Use an Include file
+
+[!INCLUDE [Include file](includes/test-nested-tabs-include.md)]
+
+## Nested tabs within a single file don't work
 
 # [Lang 1](#tab/lang1)
 
@@ -155,7 +160,7 @@ Content for Azure PowerShell...
 
 ---
 
-## Indented tabs don't work
+## Indented tabs within a single file don't work
 
 # [Tool 1](#tab/t1)
 
