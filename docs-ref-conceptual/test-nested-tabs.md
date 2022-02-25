@@ -128,7 +128,15 @@ Do something in the Azure PowerShell when in Windows...
 
 ## Use an Include file
 
+# [Tab 1](#tab/tab21)
+
 [!INCLUDE [Include file](includes/test-nested-tabs-include.md)]
+
+# [Tab 2](#tab/tab22)
+
+Content for something else...
+
+---
 
 ## Nested tabs within a single file don't work
 
