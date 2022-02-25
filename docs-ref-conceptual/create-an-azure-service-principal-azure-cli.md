@@ -4,7 +4,7 @@ description: Learn how to create and use service principals with the Azure CLI. 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 03/01/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -44,15 +44,17 @@ When creating a service principal, you choose the type of sign-in authentication
 
 ### Password-based authentication
 
-Without any authentication parameters, password-based authentication is used with a random password created for you.
+With password-based authentication, a random password is created for you.  Along with a `--name`, you must specify a `--role` and a `--scope` as these values do not have a default.
 
 ```azurecli-interactive
-# Create a service principal
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
+```
 
-# Create a service principal using variables
+You can also create a service principal using variables.
+
+```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"  
 servicePrincipalName="msdocs-sp-$randomIdentifier"
 roleName="<myRoleName>"
@@ -61,27 +63,22 @@ subscriptionID=$(az account show --query id -o tsv)
 echo "Using subscription ID $subscriptionID"
 resourceGroup="<myResourceGroupName>"
 
-echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName, and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
+echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 
-
 ```
-
-> [!IMPORTANT]
-> As of Azure CLI 2.0.68, the `--password` parameter to create a service principal with a user-defined password
-> is __no longer supported__ to prevent the accidental use of weak passwords.
 
 The output for a service principal with password authentication includes the `password` key. __Make sure__ you copy this value - it can't be retrieved. If you forget the password, [reset the service principal credentials](#6-reset-credentials).
 
 ### Certificate-based authentication
 
-For certificate-based authentication, use the `--cert` argument. This argument requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
+For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
 
 > [!NOTE]
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name servicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert "-----BEGIN CERTIFICATE-----
@@ -90,7 +87,7 @@ az ad sp create-for-rbac --name servicePrincipalName \
 ```
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name servicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert @/path/to/cert.pem
@@ -99,7 +96,7 @@ az ad sp create-for-rbac --name servicePrincipalName \
 The `--keyvault` argument can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name servicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert certificateName \
@@ -109,7 +106,7 @@ az ad sp create-for-rbac --name servicePrincipalName \
 To create a _self-signed_ certificate for authentication, use the `--create-cert` argument:
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name servicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert
@@ -147,7 +144,7 @@ myCertificateValue
 The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
 
 ```azurecli-interactive
-az ad sp create-for-rbac --name servicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert \
