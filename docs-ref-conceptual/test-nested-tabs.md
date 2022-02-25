@@ -126,7 +126,9 @@ Do something in the Azure PowerShell when in Windows...
 
 ---
 
-## Use an Include file
+## Include file example
+
+**Tab 1** contains an Include file that gives the look of a "nested tab".
 
 # [Tab 1](#tab/tab21)
 
