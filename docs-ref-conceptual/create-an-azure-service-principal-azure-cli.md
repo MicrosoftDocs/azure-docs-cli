@@ -92,7 +92,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --cert @/path/to/cert.pem
 ```
 
-The `--keyvault` argument can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
+The `--keyvault` parameter can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -102,7 +102,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --keyvault vaultName
 ```
 
-To create a _self-signed_ certificate for authentication, use the `--create-cert` argument:
+To create a _self-signed_ certificate for authentication, use the `--create-cert` parameter:
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -116,7 +116,7 @@ Console output:
 ```
 Creating a role assignment under the scope of "/subscriptions/myId"
 Please copy C:\myPath\myNewFile.pem to a safe place.
-When you run 'az login', provide the file path in the --password argument
+When you run 'az login', provide the file path in the --password parameter
 {
   "appId": "myAppId",
   "displayName": "myDisplayName",
@@ -140,7 +140,7 @@ myCertificateValue
 > [!NOTE]
 > The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
 
-The `--keyvault` argument can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` argument is __required__.
+The `--keyvault` parameter can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` parameter is __required__.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -168,15 +168,15 @@ openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 ## 2. Get an existing service principal
 
 A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this
-command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` argument. Getting this list can take a long time, so it's
-recommended that you filter the list with one of the following arguments:
+command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's
+recommended that you filter the list with one of the following parameters:
 
 * `--display-name` requests service principals that have a _prefix_ that match the provided name. The display name of a service principal is the value set with the `--name`
   parameter during creation. If you didn't set `--name` during service principal creation, the name prefix is `azure-cli-`.
 * `--spn` filters on exact service principal name matching. The service principal name always starts with `https://`.
   if the value you used for `--name` wasn't a URI, this value is `https://` followed by the display name.
 * `--show-mine` requests only service principals created by the signed-in user.
-* `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` argument. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
+* `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` parameter. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
 
 The information returned for service principal objects is verbose. To get only the information necessary for sign-in, use the query string
 `[].{id:appId, tenant:appOwnerTenantId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
@@ -204,8 +204,13 @@ The **Contributor** role has full permissions to read and write to an Azure acco
 This example adds the **Reader** role and removes the **Contributor** role:
 
 ```azurecli-interactive
-az role assignment create --assignee appID --role Reader
-az role assignment delete --assignee appID --role Contributor
+az role assignment create --assignee appID \
+                          --role Reader \
+                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+
+az role assignment delete --assignee appID \
+                          --role Contributor \
+                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
 ```
 
 Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
@@ -279,7 +284,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
 ## 6. Reset credentials
 
-If you lose the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same arguments
+If you lose the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same parameters
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
