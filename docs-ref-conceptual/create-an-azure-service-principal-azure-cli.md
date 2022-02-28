@@ -44,9 +44,13 @@ When creating a service principal, you choose the type of sign-in authentication
 
 ### Password-based authentication
 
-With password-based authentication, a random password is created for you.  Along with a `--name`, you must specify a `--scope` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
+With password-based authentication, a random password is created for you.  If you do not specify a `--name` parameter value, a name containing a time stamp will be created for you.  You must specify a `--scope` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
+# Create a service principal with required parameter
+az ad sp create-for-rbac --scope /subscriptions/mySubscriptionID
+
+# Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
@@ -300,7 +304,7 @@ If your account doesn't have permission to create a service principal, `az ad sp
 If you have specified an invalid subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az account set](/cli/azure/account#az-account-set) to change your subscription or learn [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli).
 
 ### Resource group not found
-If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az group list](/cli/azure/group#az-group-list) to see the resource groups for the current subscription, or learn [How to manage Azure resource groups with the Azure CLI](/cli/azure/manage-azure-groups-azure-cli).
+If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  If using variables, use the Bash `echo` command to see the value being passed to both the subscription and reference commands.  Use [az group list](/cli/azure/group#az-group-list) to see the resource groups for the current subscription, or learn [How to manage Azure resource groups with the Azure CLI](/cli/azure/manage-azure-groups-azure-cli).
 
 ### Authorization to perform action
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
