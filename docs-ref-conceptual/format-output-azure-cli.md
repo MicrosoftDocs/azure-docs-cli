@@ -191,10 +191,10 @@ KBDemo020
 
 ## Set the default output format
 
-Use the `az config set` command to set up your environment and establish default settings for output formats. The default output format is `json`.
+Use the `az configure set` command to set up your environment and establish default settings for output formats. The default output format is `json`.
 
 ```azurecli
-az config set core.output=<format>
+az configure set core.output=<format>
 ```
 
 ```output
@@ -215,7 +215,7 @@ What default output format would you like?
  [5] yaml - YAML formatted output. An alternative to JSON. Great for configuration files.
  [6] yamlc - Colored YAML formatted output. An alternative to JSON. Great for configuration files.
  [7] none - No output, except for errors and warnings.
-Please enter a choice [1]:
+Please enter a choice [Default choice(1)]:
 ```
 
 To learn more about configuring your environment, see [Azure CLI configuration](./azure-cli-configuration.md).
