@@ -39,21 +39,21 @@ When creating a service principal, you choose the type of sign-in authentication
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 >
-> To reduce your risk of a compromised service principal, assign a more specific role and narrow the scope to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
+> To reduce your risk of a compromised service principal, assign a more specific role and narrow the scopes to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
 
 
 ### Password-based authentication
 
-With password-based authentication, a random password is created for you.  If you do not specify a `--name` parameter value, a name containing a time stamp will be created for you.  You must specify a `--scope` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
+With password-based authentication, a random password is created for you.  If you do not specify a `--name` parameter value, a name containing a time stamp will be created for you.  You must specify a `--scopes` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
 # Create a service principal with required parameter
-az ad sp create-for-rbac --scope /subscriptions/mySubscriptionID
+az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID
 
 # Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
 You can also create a service principal using variables.
@@ -67,8 +67,8 @@ subscriptionID=$(az account show --query id -o tsv)
 echo "Using subscription ID $subscriptionID"
 resourceGroup="myResourceGroupName"
 
-echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
-az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scope /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
+echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
+az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 ```
 
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](#6-reset-credentials).
@@ -83,7 +83,7 @@ For certificate-based authentication, use the `--cert` parameter. This parameter
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert "-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----"
@@ -92,7 +92,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert @/path/to/cert.pem
 ```
 
@@ -101,7 +101,7 @@ The `--keyvault` parameter can be added to use a certificate in Azure Key Vault.
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --cert certificateName \
                          --keyvault vaultName
 ```
@@ -111,14 +111,14 @@ To create a _self-signed_ certificate for authentication, use the `--create-cert
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert
 ```
 
 Console output:
 
 ```
-Creating a role assignment under the scope of "/subscriptions/myId"
+Creating a role assignment under the scopes of "/subscriptions/myId"
 Please copy C:\myPath\myNewFile.pem to a safe place.
 When you run 'az login', provide the file path in the --password parameter
 {
@@ -149,7 +149,7 @@ The `--keyvault` parameter can be added to store the certificate in Azure Key Va
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
-                         --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert \
                          --cert certificateName \
                          --keyvault vaultName
@@ -210,11 +210,11 @@ This example adds the **Reader** role and removes the **Contributor** role:
 ```azurecli-interactive
 az role assignment create --assignee appID \
                           --role Reader \
-                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 
 az role assignment delete --assignee appID \
                           --role Contributor \
-                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
 Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
