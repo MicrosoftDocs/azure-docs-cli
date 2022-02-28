@@ -210,11 +210,11 @@ This example adds the **Reader** role and removes the **Contributor** role:
 ```azurecli-interactive
 az role assignment create --assignee appID \
                           --role Reader \
-                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
+                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 
 az role assignment delete --assignee appID \
                           --role Contributor \
-                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
+                          --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
 Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
